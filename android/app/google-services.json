@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "492889390260",
+    "project_id": "rentspace-1aebe",
+    "storage_bucket": "rentspace-1aebe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492889390260:android:d47a788705a38d62582be1",
+        "android_client_info": {
+          "package_name": "com.rentspace.app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492889390260-kv6bbdn35qgrdh148lqsq3g07rhemqie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentspace.app.android",
+            "certificate_hash": "06f36549b2518161b0af40e38fe729f4b2d804c1"
+          }
+        },
+        {
+          "client_id": "492889390260-d65qth4eeekff5dgsmch2eu3kj3425pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1DQYzVhAVpUqxNlW8p0llk5FWC6Lqf94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492889390260-d65qth4eeekff5dgsmch2eu3kj3425pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

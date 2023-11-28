@@ -1,0 +1,1938 @@
+
+{
+    "has_error": false,
+    "status_code": 200,
+    "request_time": "2023-08-12T13:10:22.373863Z",
+    "message": "Request successful",
+    "data": [
+        {
+            "id": "bill-36",
+            "name": "Bet9ja (Agent)",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/gcS40wodV9anqqGcIcj9h1gHyP9ifMOKQQ1Mnz3y.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/fSJT1Etq0Dee0H4K02GGYNeTGDyfJjWBus2a5Dry.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/2OvjD7KTJr9twFLEfFQ7EovcHxyRv7CIDRPonRgH.png",
+                "name": "Bet9ja",
+                "slug": "bet9ja"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": "54820",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-52",
+            "name": "BetKing",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/WNv0oCAzutsvSz1seedm5Ui6FtlRWrdfcUDKwO6t.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account ID",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/m0pW2YlTi8jcbsthTISP3XNZ1cb646ZFynkpao7A.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/Oe7J5Sj7NVefgW7tQfOgw7X1aikDTMx3OHlb9EOs.png",
+                "name": "BetKing",
+                "slug": "betking"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-54",
+            "name": "BetWay",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/pKf94E3AZmmPNCDrqNEwDUmU0h3kq24l5zQqFvKY.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/8kBUjIi29kK0nuGtNR59zOQNORMiUAzYzjD5lsvb.jpg",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/qRk54UHxxL9vWDYZ8bMyTc2gCgline0vECKNeDqM.jpg",
+                "name": "BetWay",
+                "slug": "betway"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-55",
+            "name": "MerryBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/07CFRhkl8QAoZCZtHPqgHw4HRmx5cf9o8t0bUSI4.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/KQ7U4t14kIBKbqJnfCMQ3VhaeO0hNry0c2NGiLXc.jpg",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/1Onuva2adPd6EcMO58oh0HGGSycigYHAKEbXORTl.jpg",
+                "name": "MerryBet",
+                "slug": "merrybet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-50",
+            "name": "Bet9ja (Personal)",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/PWX14TA8NSfmp55IHI4puVOQ7R8frXJ9Mnapfu7t.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account  Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/fSJT1Etq0Dee0H4K02GGYNeTGDyfJjWBus2a5Dry.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/2OvjD7KTJr9twFLEfFQ7EovcHxyRv7CIDRPonRgH.png",
+                "name": "Bet9ja",
+                "slug": "bet9ja"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-51",
+            "name": "NairaBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/187AsP2NQmmJCuVf0ux2pdinBc0BAhDP012C2azG.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric|min:1",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Customer ID",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Customer Account Number",
+                    "parameter": "customer_account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/d7tV1uIzVDnU07bMomHmhmsGZts4vuzaPjCBiJPR.jpg",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/JWLpxKTPhqevVLBTSwN7TiegJnJNQlEbFo3WII5m.jpg",
+                "name": "NairaBet",
+                "slug": "nairabet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Customer ID",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-57",
+            "name": "LiveScoreBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/r7Uhqojv3xdYDuX9lpNhDiagjZclXP3m0NKjwGyX.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Customer Name",
+                    "parameter": "customer_name",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/EggjsvISAusQ5QN6ro30BfgHbfPZYcOjd76ImcmI.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/e8pt4czNHE3Y4UzA056sfFgSHefCzfO3pn8njmP4.png",
+                "name": "LivesScore Bet",
+                "slug": "livescorebet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-56",
+            "name": "NaijaBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/3D327UbocbZoRYoGyQGgAJmoi9ex8BTI0pzOGaeU.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/7i1PLKr8Yb07MlsGii9VqKqtKIWqQMkk2clxFehm.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/wbXeV3UXNMOrQCDVYlGvQ7Z2vZq1Ci2cumMmeVFw.png",
+                "name": "NaijaBet",
+                "slug": "naijabet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-53",
+            "name": "1xBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/FN6nDtg13TtUXJDnGMn99n4qjMo3dhyHbegpjq3k.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/KQseMr8DXAyB4gmGQ6jAKGHNmeB5yD7M169LfwMH.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/JwDmtOmjh0ZWX1WHsfABbQrhz4dFQCmmRw8V3sNc.png",
+                "name": "1XBet",
+                "slug": "1xbet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-58",
+            "name": "SupaBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/aMve0ww1VCROM6DVUmKXiLCwUS0e0cHDPK2tSEfo.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/MyqlFimtdxupE3AvOHxXS7VPXw6ZEETA6tY33yNb.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/l79EsOB3MLYvyM2BJtvr7Wwjc9ITRBahbIPzrhpI.png",
+                "name": "SupaBet",
+                "slug": "supabet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-60",
+            "name": "BetLand",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/UeV8u9jjMpYhLlWm6vTCgrd8sGj9s7Byp363cG1G.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [],
+            "validate_parameters": [],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/e0vJBHZmZlrp16tosrjmlCiN0bI2dAeD0YGt4nme.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/DwlUpv0VOXt94MYjwq6PBmYlgSQtMth2vc9mCnfQ.png",
+                "name": "BetLand",
+                "slug": "betland"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": null
+        },
+        {
+            "id": "bill-59",
+            "name": "BangBet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/sC6oZ1ZpneFOWGg5CX5jz2RfG61IkhmxszfqIT20.jpg",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/7OU93TkOEQJxPqpiKKsTpdc3Fobqx23Kck5ZJr2y.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/cefPs39sqtA81qmiceYdF3lzkFRxljV66JcoaO1V.png",
+                "name": "BangBet",
+                "slug": "bangbet"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": null,
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-38",
+            "name": "Winners Golden Bet",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/X3izGNBMea0ZmP9XQx59k04hwKRrVhZxIOFVzMeL.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "100.0000",
+                "international_fixed_charge": "100.0000",
+                "local_cap": null,
+                "international_cap": null,
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/H5zoOBy9woEvHeQsMkAp7KkZ0mD2mDE9a0lIgcFE.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/nTahLm4REDZxrbGkqG7KVZSjqFguh1eGCfHTx6uk.png",
+                "name": "Winners Golden Bet",
+                "slug": "winners-golden-bet"
+            },
+            "subtitle": "NGN 100.00 fee",
+            "ussd_code": "54824",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-39",
+            "name": "Winners Golden Chance",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/eUye9LK2fVU4zrTWSJhqEW8IjWHJ3lYkrroZy20f.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/hyRaohvNtfoK6Mv3YSRA9cQfNxVwkO9bqleQNz3T.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/AanVX0PlrjETWwerL7Fwpt9DrLDzNaB32cia1eKW.png",
+                "name": "Winners Golden Chance",
+                "slug": "winners-golden-chance"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": "54823",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-37",
+            "name": "Western Lotto (Agent)",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/uMqZcxdng9LBqmMhCxnO0T0ZjAm0PHTG1DXfESZp.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/gUIoUd2iI1SZVaBKARwhr2mdWAwDN6jcMqF4flOZ.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/14Y5yik9lAebStPuP3IA5xo4GDejeVXZqotMVPwj.png",
+                "name": "Western Lotto",
+                "slug": "western-lotto"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": "54821",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-47",
+            "name": "ZoomLifeStyle",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/IPSYIVXumG2kiCxyP7gHE0g11taB4jSunMGcdCXD.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "50.0000",
+                "international_fixed_charge": "50.0000",
+                "local_cap": "0.0000",
+                "international_cap": "0.0000",
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/0XYylUDzMB8HEMfzfF1NdSNkREADKJifVit3uNCV.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/EYKsu6jChUhbQEZJ7dPumlqfRxOYp1SpczvFQ5hQ.png",
+                "name": "ZoomLifeStyle",
+                "slug": "zoomlifestyle"
+            },
+            "subtitle": "NGN 50.00 fee",
+            "ussd_code": "54825",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bill-48",
+            "name": "MLotto",
+            "description": null,
+            "icon": "https://cdn.bytelabs.ng/watupay/channels/icons/saBcwoAv3D9hUV7EyqDJbYEzoLQE2b8yrnqe1J1O.png",
+            "has_type": false,
+            "can_validate": true,
+            "has_phone_number": false,
+            "request_details": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "parameter": "amount",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 0,
+                    "is_amount": 1,
+                    "in_validate": false,
+                    "validator": "required|numeric",
+                    "concat_params": null,
+                    "parameter_type": "number",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "validate_parameters": [
+                {
+                    "name": "Account Number",
+                    "parameter": "account_number",
+                    "description": null,
+                    "is_required": true,
+                    "is_type": false,
+                    "in_type": false,
+                    "is_account": 1,
+                    "is_amount": 0,
+                    "in_validate": false,
+                    "validator": "required|string",
+                    "concat_params": null,
+                    "parameter_type": "text",
+                    "options": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": [],
+            "route": {
+                "percent_charge": "0.0000",
+                "international_percent_charge": "0.0000",
+                "fixed_charge": "100.0000",
+                "international_fixed_charge": "100.0000",
+                "local_cap": null,
+                "international_cap": null,
+                "fixed_commission": "0.0000",
+                "percent_commission": "0.0000",
+                "currency_code": "NGN",
+                "is_free": false
+            },
+            "notification_channel": [
+                "-"
+            ],
+            "partner": {
+                "square_icon": "https://cdn.bytelabs.ng/watu/partners/100by100/TUk2ezDBSYzkLPst0hvaUZl8FpKDGczScWsrMhUa.png",
+                "landscape_icon": "https://cdn.bytelabs.ng/watu/partners/160by70/QIQmrIa66qcNjmOqZtQ0isfi2i5jRvL7grkOyFNv.png",
+                "name": "MLotto",
+                "slug": "mlotto"
+            },
+            "subtitle": "NGN 100.00 fee",
+            "ussd_code": "54822",
+            "account_field": {
+                "name": "Account Number",
+                "parameter": "account_number",
+                "description": null,
+                "is_required": true,
+                "is_type": false,
+                "in_type": false,
+                "is_account": 1,
+                "is_amount": 0,
+                "in_validate": false,
+                "validator": "required|string",
+                "concat_params": null,
+                "parameter_type": "text",
+                "options": [
+                    {
+                        "label": "",
+                        "value": ""
+                    }
+                ]
+            }
+        }
+    ],
+    "extra": []
+}

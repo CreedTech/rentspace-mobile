@@ -1,0 +1,13 @@
+//Every one has transaction_ref
+//card, ussd, bank transfer, dva
+//Recurring, one-time
+
+
+
+
+REN
+BOX
+DEP
+TAN
+WAL
+REF
