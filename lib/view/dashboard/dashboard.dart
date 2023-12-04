@@ -1,43 +1,25 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/view/actions/add_card.dart';
-import 'package:rentspace/view/actions/bank_transfer.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
 
-import 'package:rentspace/view/chat/chat_main.dart';
-import 'package:rentspace/view/dashboard/activities_page.dart';
 import 'package:rentspace/view/dashboard/all_activities.dart';
-import 'package:rentspace/view/dashboard/community.dart';
-import 'package:rentspace/view/dashboard/notifications.dart';
-import 'package:rentspace/view/dashboard/user_profile.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:rentspace/view/savings/savings_withdrawal.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
-import 'dart:math';
 import 'dart:async';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
 
 class Dashboard extends StatefulWidget {
   Dashboard({
@@ -127,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
       () => Scaffold(
         //backgroundColor: brandFour,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
@@ -144,7 +126,7 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
@@ -156,7 +138,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Row(
@@ -181,18 +163,15 @@ class _DashboardState extends State<Dashboard> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hi, " +
-                                        userController.user[0].userFirst +
-                                        "👋" +
-                                        dum1.toString(),
-                                    style: TextStyle(
+                                    "Hi, ${userController.user[0].userFirst}👋$dum1",
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                       letterSpacing: 1.0,
                                       fontFamily: "DefaultFontFamily",
                                       color: Colors.white,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     "Let's help you save money",
                                     style: TextStyle(
                                       fontSize: 12.0,
@@ -207,299 +186,304 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
-                      FlipCard(
-                        front: Neumorphic(
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(12)),
-                              depth: 0,
-                              lightSource: LightSource.topLeft,
-                              color: Colors.white),
-                          child: Container(
-                            height: 220,
-                            padding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              image: DecorationImage(
-                                image: AssetImage("assets/card.jpg"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/logo.png',
-                                          height: 24,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Space Wallet" +
-                                              dum1.toString() +
-                                              ((userController.user[0].hasDva ==
-                                                      'true')
-                                                  ? " - DVA"
-                                                  : ""),
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            letterSpacing: 1.0,
-                                            fontFamily: "DefaultFontFamily",
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
+                      (userController.user[0].hasDva == 'true')
+                          ? FlipCard(
+                              front: Neumorphic(
+                                style: NeumorphicStyle(
+                                    shape: NeumorphicShape.concave,
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(12)),
+                                    depth: 0,
+                                    lightSource: LightSource.topLeft,
+                                    color: Colors.white),
+                                child: Container(
+                                  height: 220,
+                                  padding: const EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).canvasColor,
+                                    image: const DecorationImage(
+                                      image: AssetImage("assets/card.jpg"),
+                                      fit: BoxFit.cover,
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          (userController.user[0].hasDva ==
-                                                  'true')
-                                              ? userController.user[0].dvaNumber
-                                                      .substring(0, 3) +
-                                                  '-' +
-                                                  userController
-                                                      .user[0].dvaNumber
-                                                      .substring(3, 6) +
-                                                  '-' +
-                                                  userController
-                                                      .user[0].dvaNumber
-                                                      .substring(6, 10)
-                                              : userController
-                                                      .user[0].userWalletNumber
-                                                      .substring(0, 3) +
-                                                  '-' +
-                                                  userController
-                                                      .user[0].userWalletNumber
-                                                      .substring(3, 6) +
-                                                  '-' +
-                                                  userController
-                                                      .user[0].userWalletNumber
-                                                      .substring(6, 10),
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.8,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "DefaultFontFamily",
-                                            color: Colors.greenAccent,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        (userController.user[0].hasDva ==
-                                                'true')
-                                            ? InkWell(
-                                                onTap: () {
-                                                  Clipboard.setData(
-                                                    ClipboardData(
-                                                      text: userController
-                                                          .user[0].dvaNumber,
-                                                    ),
-                                                  );
-                                                  Fluttertoast.showToast(
-                                                    msg:
-                                                        "Account Number copied to clipboard!",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity:
-                                                        ToastGravity.CENTER,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: brandOne,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0,
-                                                  );
-                                                },
-                                                child: Icon(
-                                                  Icons.copy,
-                                                  size: 16,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/logo.png',
+                                                height: 24,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Space Wallet$dum1${(userController.user[0].hasDva == 'true') ? " - DVA" : ""}",
+                                                style: const TextStyle(
+                                                  fontSize: 20.0,
+                                                  letterSpacing: 1.0,
+                                                  fontFamily:
+                                                      "DefaultFontFamily",
                                                   color: Colors.white,
                                                 ),
-                                              )
-                                            : SizedBox(),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                      width: 280,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      decoration: BoxDecoration(
-                                        color: brandFour,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
-                                        nairaFormaet
-                                            .format(int.tryParse(userController
-                                                .user[0].userWalletBalance))
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 30.0,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 0.9,
-                                          fontFamily: "DefaultFontFamily",
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          (userController.user[0].hasDva ==
-                                                  'false')
-                                              ? userController.user[0].userFirst
-                                                      .toUpperCase() +
-                                                  " " +
-                                                  userController
-                                                      .user[0].userLast
-                                                      .toUpperCase()
-                                              : userController.user[0].dvaName
-                                                  .toUpperCase(),
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            letterSpacing: 0.5,
-                                            color: Colors.white,
-                                            fontFamily: "DefaultFontFamily",
+                                              ),
+                                            ],
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                (userController
+                                                            .user[0].hasDva ==
+                                                        'true')
+                                                    ? '${userController.user[0].dvaNumber.substring(0, 3)}-${userController.user[0].dvaNumber.substring(3, 6)}-${userController.user[0].dvaNumber.substring(6, 10)}'
+                                                    : '${userController.user[0].userWalletNumber.substring(0, 3)}-${userController.user[0].userWalletNumber.substring(3, 6)}-${userController.user[0].userWalletNumber.substring(6, 10)}',
+                                                style: const TextStyle(
+                                                  fontSize: 20.0,
+                                                  letterSpacing: 0.8,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily:
+                                                      "DefaultFontFamily",
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              (userController.user[0].hasDva ==
+                                                      'true')
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        Clipboard.setData(
+                                                          ClipboardData(
+                                                            text: userController
+                                                                .user[0]
+                                                                .dvaNumber,
+                                                          ),
+                                                        );
+                                                        Fluttertoast.showToast(
+                                                          msg:
+                                                              "Account Number copied to clipboard!",
+                                                          toastLength: Toast
+                                                              .LENGTH_SHORT,
+                                                          gravity: ToastGravity
+                                                              .CENTER,
+                                                          timeInSecForIosWeb: 1,
+                                                          backgroundColor:
+                                                              brandOne,
+                                                          textColor:
+                                                              Colors.white,
+                                                          fontSize: 16.0,
+                                                        );
+                                                      },
+                                                      child: const Icon(
+                                                        Icons.copy,
+                                                        size: 16,
+                                                        color: Colors.white,
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            width: 280,
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                            decoration: BoxDecoration(
+                                              color: brandFour,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Text(
+                                              nairaFormaet
+                                                  .format(int.tryParse(
+                                                      userController.user[0]
+                                                          .userWalletBalance))
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontSize: 30.0,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.9,
+                                                fontFamily: "DefaultFontFamily",
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 40,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                (userController
+                                                            .user[0].hasDva ==
+                                                        'false')
+                                                    ? "${userController.user[0].userFirst.toUpperCase()} ${userController.user[0].userLast.toUpperCase()}"
+                                                    : userController
+                                                        .user[0].dvaName
+                                                        .toUpperCase(),
+                                                style: const TextStyle(
+                                                  fontSize: 15.0,
+                                                  letterSpacing: 0.5,
+                                                  color: Colors.white,
+                                                  fontFamily:
+                                                      "DefaultFontFamily",
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        back: Neumorphic(
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(12)),
-                              depth: 0,
-                              lightSource: LightSource.topLeft,
-                              color: Theme.of(context).canvasColor),
-                          child: Container(
-                            height: 220,
-                            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              image: DecorationImage(
-                                image: AssetImage("assets/card.jpg"),
-                                fit: BoxFit.cover,
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          20.0, 10.0, 20.0, 5.0),
-                                      child: Text(
-                                        "Property of RentSpace",
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                          //letterSpacing: 1.0,
-                                          fontFamily: "DefaultFontFamily",
+                              back: Neumorphic(
+                                style: NeumorphicStyle(
+                                    shape: NeumorphicShape.concave,
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(12)),
+                                    depth: 0,
+                                    lightSource: LightSource.topLeft,
+                                    color: Theme.of(context).canvasColor),
+                                child: Container(
+                                  height: 220,
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 10.0, 0.0, 10.0),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).canvasColor,
+                                    image: const DecorationImage(
+                                      image: AssetImage("assets/card.jpg"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                20.0, 10.0, 20.0, 5.0),
+                                            child: Text(
+                                              "Property of RentSpace",
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                                //letterSpacing: 1.0,
+                                                fontFamily: "DefaultFontFamily",
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        color: Colors.black,
+                                        height: 40,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            40.0, 20.0, 40.0, 5.0),
+                                        child: Container(
                                           color: Colors.white,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5.0, 4.0, 5.0, 4.0),
+                                          child: Text(
+                                            (userController.user[0].userId !=
+                                                    "")
+                                                ? userController.user[0].userId
+                                                    .substring(0, 3)
+                                                : "000",
+                                            style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontFamily: "DefaultFontFamily",
+                                              //letterSpacing: 1.0,
+
+                                              color: Colors.black,
+                                            ),
+                                            textAlign: TextAlign.end,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  color: Colors.black,
-                                  height: 40,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      40.0, 20.0, 40.0, 5.0),
-                                  child: Container(
-                                    color: Colors.white,
-                                    width: MediaQuery.of(context).size.width,
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.0, 4.0, 5.0, 4.0),
-                                    child: Text(
-                                      (userController.user[0].userId != "")
-                                          ? userController.user[0].userId
-                                              .substring(0, 3)
-                                          : "000",
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontFamily: "DefaultFontFamily",
-                                        //letterSpacing: 1.0,
-
-                                        color: Colors.black,
+                                      const Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            20.0, 10.0, 20.0, 5.0),
+                                        child: Text(
+                                          "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
+                                          style: TextStyle(
+                                            fontSize: 8.0,
+                                            fontFamily: "DefaultFontFamily",
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       ),
-                                      textAlign: TextAlign.end,
-                                    ),
+                                    ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.0, 10.0, 20.0, 5.0),
-                                  child: Text(
-                                    "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
-                                    style: TextStyle(
-                                      fontSize: 8.0,
-                                      fontFamily: "DefaultFontFamily",
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
+                            )
+                          : Container(
+                              height: 213,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff258AE8),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    top: 0,
+                                    left: 0,
+                                    child: Container()),
+                                ],
+                              ),
+                              // width: ,
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                   decoration: BoxDecoration(
                     color: Theme.of(context).canvasColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Row(
@@ -519,7 +503,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -532,17 +516,17 @@ class _DashboardState extends State<Dashboard> {
                                 SizedBox(
                                   height: 200,
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(30.0),
                                       topRight: Radius.circular(30.0),
                                     ),
                                     child: Container(
                                       color: Theme.of(context).canvasColor,
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 5, 10, 5),
                                       child: Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 50,
                                           ),
                                           Text(
@@ -554,14 +538,14 @@ class _DashboardState extends State<Dashboard> {
                                               fontFamily: "DefaultFontFamily",
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           //card
                                           InkWell(
                                             onTap: () async {
                                               Get.back();
-                                              Get.to(FundWallet());
+                                              Get.to(const FundWallet());
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context)
@@ -573,9 +557,10 @@ class _DashboardState extends State<Dashboard> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                               ),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  20, 5, 20, 5),
-                                              child: Row(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 5, 20, 5),
+                                              child: const Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: [
@@ -610,7 +595,8 @@ class _DashboardState extends State<Dashboard> {
                             child: Container(
                               height: 100,
                               width: MediaQuery.of(context).size.width / 2.5,
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
                               decoration: BoxDecoration(
                                 color: brandFour,
                                 borderRadius: BorderRadius.circular(10),
@@ -620,10 +606,10 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   Image.asset(
                                       "assets/icons/iconset/fundwallet.png"),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4,
                                   ),
-                                  Text(
+                                  const Text(
                                     "Fund Wallet",
                                     style: TextStyle(
                                       fontSize: 12.0,
@@ -641,11 +627,12 @@ class _DashboardState extends State<Dashboard> {
                               (int.tryParse(userController
                                           .user[0].userWalletBalance)! >
                                       0)
-                                  ? Get.to(WalletWithdrawal())
+                                  ? Get.to(const WalletWithdrawal())
                                   : Get.snackbar(
                                       "Wallet Empty!",
                                       'You need to fund your wallet first!',
-                                      animationDuration: Duration(seconds: 1),
+                                      animationDuration:
+                                          const Duration(seconds: 1),
                                       backgroundColor: Colors.red,
                                       colorText: Colors.white,
                                       snackPosition: SnackPosition.BOTTOM,
@@ -654,7 +641,8 @@ class _DashboardState extends State<Dashboard> {
                             child: Container(
                               height: 100,
                               width: MediaQuery.of(context).size.width / 2.5,
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
                               decoration: BoxDecoration(
                                 color: brandFive,
                                 borderRadius: BorderRadius.circular(10),
@@ -665,10 +653,10 @@ class _DashboardState extends State<Dashboard> {
                                   Image.asset(
                                     "assets/icons/iconset/uil_money-withdrawal.png",
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4,
                                   ),
-                                  Text(
+                                  const Text(
                                     "Withdraw Funds",
                                     style: TextStyle(
                                       fontSize: 12.0,
@@ -683,7 +671,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       (userController.user[0].bvn != "" &&
@@ -697,13 +685,13 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(CreateDVA());
+                                  Get.to(const CreateDVA());
                                 },
-                                leading: Icon(
+                                leading: const Icon(
                                   Icons.person_add_outlined,
                                   color: Colors.black,
                                 ),
-                                title: Text(
+                                title: const Text(
                                   "Activate DVA",
                                   style: TextStyle(
                                     fontSize: 15.0,
@@ -713,7 +701,7 @@ class _DashboardState extends State<Dashboard> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                subtitle: Text(
+                                subtitle: const Text(
                                   "Free Dynamic Virtual Account (DVA)",
                                   style: TextStyle(
                                     fontSize: 14.0,
@@ -722,17 +710,17 @@ class _DashboardState extends State<Dashboard> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                trailing: Icon(
+                                trailing: const Icon(
                                   Icons.arrow_right_outlined,
                                   color: Colors.black,
                                 ),
                                 tileColor: Colors.red,
                               ),
                             )
-                          : SizedBox(
+                          : const SizedBox(
                               height: 1,
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       InkWell(
@@ -741,7 +729,7 @@ class _DashboardState extends State<Dashboard> {
                           Get.snackbar(
                             "Coming soon!",
                             'This feature is coming soon to RentSpace!',
-                            animationDuration: Duration(seconds: 1),
+                            animationDuration: const Duration(seconds: 1),
                             backgroundColor: brandOne,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.TOP,
@@ -749,7 +737,7 @@ class _DashboardState extends State<Dashboard> {
                         },
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: brandOne,
@@ -758,8 +746,8 @@ class _DashboardState extends State<Dashboard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
+                                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -783,10 +771,10 @@ class _DashboardState extends State<Dashboard> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
-                              Text(
+                              const Text(
                                 "View the amazing community\nof other Spacers!",
                                 style: TextStyle(
                                   fontSize: 12.0,
@@ -799,12 +787,12 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: brandOne,
@@ -813,8 +801,8 @@ class _DashboardState extends State<Dashboard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Text(
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: const Text(
                                 "Announcement",
                                 style: TextStyle(
                                   fontSize: 16.0,
@@ -824,7 +812,7 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 3,
                             ),
                             StreamBuilder(
@@ -832,10 +820,10 @@ class _DashboardState extends State<Dashboard> {
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 return (!snapshot.hasData)
-                                    ? SizedBox()
+                                    ? const SizedBox()
                                     : Text(
                                         snapshot.data!.docs[0]['body'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
                                           fontFamily: "DefaultFontFamily",
@@ -846,7 +834,7 @@ class _DashboardState extends State<Dashboard> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       SizedBox(
@@ -886,13 +874,13 @@ class _DashboardState extends State<Dashboard> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemCount:
                             (userController.user[0].activities.length < 3)
                                 ? userController.user[0].activities.length
@@ -911,7 +899,7 @@ class _DashboardState extends State<Dashboard> {
                                         'assets/icons/iconset/Group462.png',
                                         height: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
@@ -926,9 +914,9 @@ class _DashboardState extends State<Dashboard> {
                                     ],
                                   ),
                                 )
-                              : Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      10.0, 10, 10.0, 0),
+                              : const Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
                                   child: Text(
                                     "Nothing to show here",
                                     style: TextStyle(
@@ -940,7 +928,7 @@ class _DashboardState extends State<Dashboard> {
                                 );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       (_articles.isNotEmpty)
@@ -972,12 +960,12 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 ListView.builder(
                                   shrinkWrap: true,
-                                  physics: ClampingScrollPhysics(),
+                                  physics: const ClampingScrollPhysics(),
                                   itemCount: _articles.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
@@ -1001,7 +989,7 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ],
                             )
-                          : Text(""),
+                          : const Text(""),
                     ],
                   ),
                 ),

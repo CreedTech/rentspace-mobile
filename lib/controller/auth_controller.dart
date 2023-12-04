@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/view/actions/idle_page.dart';
 import 'package:rentspace/view/actions/biometrics_page.dart';
 import 'package:rentspace/view/actions/confirm_reset_page.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/intro_slider.dart';
 import 'package:rentspace/view/no_connection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
 
 bool hasConnection = false.obs();
@@ -67,10 +63,10 @@ class AuthController extends GetxController {
     }
 
     if (result.toString() == "ConnectivityResult.none") {
-      Get.off(NoConnection());
+      Get.off(const NoConnection());
     } else {
       if (user == null) {
-        Get.offAll(() => IntroScreen());
+        Get.offAll(() => const IntroScreen());
       } else {
         Get.offAll(() => BiometricsPage());
       }
@@ -173,7 +169,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Oops",
         nError,
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -197,7 +193,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Oops",
         nError,
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -210,7 +206,7 @@ class AuthController extends GetxController {
       //showLoading();
       await auth
           .sendPasswordResetEmail(email: email)
-          .then((value) => Get.to(ConfirmResetPage()));
+          .then((value) => Get.to(const ConfirmResetPage()));
     } catch (error) {
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');
@@ -224,7 +220,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Oops",
         nError,
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,

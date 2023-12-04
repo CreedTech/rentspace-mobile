@@ -15,7 +15,7 @@ String dropdownValue = 'User';
 bool isChecked = false;
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -41,7 +41,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _referalController = TextEditingController();
 
   void _doSomething() async {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
     if ((_emailController.text.trim() != "") &&
@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage> {
       Get.snackbar(
         "Invalid",
         'Please fill the form properly to proceed',
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -199,14 +199,14 @@ class _SignupPageState extends State<SignupPage> {
       controller: _phoneController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       maxLength: 11,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Phone number",
           style: TextStyle(
             color: Colors.grey,
@@ -214,21 +214,21 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'e.g 080 123 456 789 ',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -237,7 +237,7 @@ class _SignupPageState extends State<SignupPage> {
     final defaultPinTheme = PinTheme(
       width: 30,
       height: 30,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 20,
         color: Colors.black,
       ),
@@ -271,12 +271,12 @@ class _SignupPageState extends State<SignupPage> {
       enableSuggestions: true,
       cursorColor: Colors.black,
       controller: _referalController,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Referal code (Optional)",
           style: TextStyle(
             color: Colors.grey,
@@ -284,21 +284,21 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'you and your referrer earn 1 point each',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -311,12 +311,12 @@ class _SignupPageState extends State<SignupPage> {
       controller: _firstnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateFirst,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "First name",
           style: TextStyle(
             color: Colors.grey,
@@ -324,22 +324,22 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide:
               BorderSide(color: brandOne, width: 2.0), // Change color to yellow
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'legal first name',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -350,12 +350,12 @@ class _SignupPageState extends State<SignupPage> {
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateLast,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Last name",
           style: TextStyle(
             color: Colors.grey,
@@ -363,21 +363,21 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'legal last name',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -386,7 +386,7 @@ class _SignupPageState extends State<SignupPage> {
     final email = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       controller: _emailController,
@@ -394,7 +394,7 @@ class _SignupPageState extends State<SignupPage> {
       validator: validateMail,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "E-mail",
           style: TextStyle(
             color: Colors.grey,
@@ -402,21 +402,21 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'e.g mymail@inbox.com',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -429,12 +429,12 @@ class _SignupPageState extends State<SignupPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePass,
       obscureText: obscurity,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Password",
           style: TextStyle(
             color: Colors.grey,
@@ -442,19 +442,19 @@ class _SignupPageState extends State<SignupPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         suffix: InkWell(
           onTap: visibility,
           child: lockIcon,
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         suffixIconColor: Colors.black,
@@ -467,9 +467,9 @@ class _SignupPageState extends State<SignupPage> {
     final forgotLabel = InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+            context, MaterialPageRoute(builder: (context) => const LoginPage()));
       },
-      child: Text(
+      child: const Text(
         'I have an account',
         style: TextStyle(
           color: Colors.black,
@@ -486,13 +486,13 @@ class _SignupPageState extends State<SignupPage> {
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
             size: 30,
             color: Colors.black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Sign Up',
           style: TextStyle(
             color: Colors.black,
@@ -513,14 +513,14 @@ class _SignupPageState extends State<SignupPage> {
           ),
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text(
+                  const Text(
                     'First name',
                     style: TextStyle(
                       fontFamily: "DefaultFontFamily",
@@ -528,14 +528,14 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   firstname,
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Last name',
                     style: TextStyle(
                       color: Colors.black,
@@ -543,14 +543,14 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   lastname,
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Email address',
                     style: TextStyle(
                       color: Colors.black,
@@ -558,14 +558,14 @@ class _SignupPageState extends State<SignupPage> {
                       fontFamily: "DefaultFontFamily",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   email,
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Phone number',
                     style: TextStyle(
                       color: Colors.black,
@@ -573,14 +573,14 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   phoneNumber,
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Password',
                     style: TextStyle(
                       color: Colors.black,
@@ -588,11 +588,11 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   password,
-                  Text(
+                  const Text(
                     'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
                     style: TextStyle(
                       color: Colors.black,
@@ -600,10 +600,10 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 10,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Referal code (optional)',
                     style: TextStyle(
                       color: Colors.black,
@@ -611,18 +611,18 @@ class _SignupPageState extends State<SignupPage> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   referal,
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Create transaction pin',
                           style: TextStyle(
                             color: Colors.black,
@@ -633,14 +633,14 @@ class _SignupPageState extends State<SignupPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Confirm transaction pin',
                           style: TextStyle(
                             color: Colors.black,
@@ -651,7 +651,7 @@ class _SignupPageState extends State<SignupPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30.0,
                   ),
                   Padding(
@@ -666,7 +666,7 @@ class _SignupPageState extends State<SignupPage> {
                       children: [
                         GFCheckbox(
                           size: GFSize.SMALL,
-                          activeIcon: Icon(
+                          activeIcon: const Icon(
                             Icons.check,
                             color: Colors.white,
                           ),
@@ -681,7 +681,7 @@ class _SignupPageState extends State<SignupPage> {
                           },
                           value: isChecked,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
                         Text(
@@ -694,7 +694,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(TermsAndConditions());
+                            Get.to(const TermsAndConditions());
                           },
                           child: Text(
                             'Terms of service',
@@ -709,17 +709,10 @@ class _SignupPageState extends State<SignupPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   RoundedLoadingButton(
-                    child: Text(
-                      'Create account',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "DefaultFontFamily",
-                      ),
-                    ),
                     elevation: 0.0,
                     borderRadius: 5.0,
                     successColor: brandOne,
@@ -738,19 +731,26 @@ class _SignupPageState extends State<SignupPage> {
                               _pinTwoController.text.trim())) {
                         _doSomething();
                       } else {
-                        Timer(Duration(seconds: 1), () {
+                        Timer(const Duration(seconds: 1), () {
                           _btnController.stop();
                         });
                         Get.snackbar(
                           "Invalid",
                           'Please fill the form properly to proceed',
-                          animationDuration: Duration(seconds: 1),
+                          animationDuration: const Duration(seconds: 1),
                           backgroundColor: Colors.red,
                           colorText: Colors.white,
                           snackPosition: SnackPosition.BOTTOM,
                         );
                       }
                     },
+                    child: const Text(
+                      'Create account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "DefaultFontFamily",
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 30,

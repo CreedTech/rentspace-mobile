@@ -1,12 +1,10 @@
 import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
-import 'package:rentspace/view/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
-import 'package:getwidget/getwidget.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -47,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _doSomething() async {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
 
@@ -68,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
     final email = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       controller: _emailController,
@@ -76,22 +74,22 @@ class _LoginPageState extends State<LoginPage> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide:
               BorderSide(color: brandOne, width: 2.0), // Change color to yellow
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter your email...',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -102,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
       cursorColor: Colors.black,
       controller: _passwordController,
       obscureText: obscurity,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
@@ -113,21 +111,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide:BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter your password...',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -141,13 +139,13 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
             size: 30,
             color: Colors.black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Sign In',
           style: TextStyle(
             color: Colors.black,
@@ -168,11 +166,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
+              padding: const EdgeInsets.fromLTRB(30, 20, 30, 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Login to your account',
                     style: TextStyle(
                       color: brandFour,
@@ -180,10 +178,10 @@ class _LoginPageState extends State<LoginPage> {
                       fontFamily: "DefaultFontFamily",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
-                  Text(
+                  const Text(
                     'Enter Email',
                     style: TextStyle(
                       color: Colors.black,
@@ -191,14 +189,14 @@ class _LoginPageState extends State<LoginPage> {
                       fontFamily: "DefaultFontFamily",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   email,
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text(
+                  const Text(
                     'Enter Password',
                     style: TextStyle(
                       color: Colors.black,
@@ -206,39 +204,39 @@ class _LoginPageState extends State<LoginPage> {
                       fontFamily: "DefaultFontFamily",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   password,
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   RoundedLoadingButton(
-                    child: Text(
-                      'Proceed',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "DefaultFontFamily",
-                      ),
-                    ),
                     borderRadius: 5.0,
                     elevation: 0.0,
                     successColor: brandOne,
                     color: brandOne,
                     controller: _btnController,
                     onPressed: _doSomething,
+                    child: const Text(
+                      'Proceed',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "DefaultFontFamily",
+                      ),
+                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(ForgotPassword());
+                      Get.to(const ForgotPassword());
                     },
-                    child: Text(
+                    child: const Text(
                       "Forgot password? click here to reset",
                       style: TextStyle(
                         fontFamily: "DefaultFontFamily",
@@ -248,9 +246,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   (currentCount != 0)
                       ? Text(
-                          "Remaining attempts: " +
-                              (5 - currentCount).toString(),
-                          style: TextStyle(
+                          "Remaining attempts: ${5 - currentCount}",
+                          style: const TextStyle(
                             color: Colors.red,
                             fontFamily: "DefaultFontFamily",
                           ),
@@ -258,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                       : Text(
                           d1,
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                 ],

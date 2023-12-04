@@ -64,7 +64,7 @@ dependencies:
   circular_countdown_timer:
   dio:
   font_awesome_flutter:
-  connectivity_plus:
+  connectivity_plus: ^2.3.5
   signature:
   syncfusion_flutter_charts:
   share_plus:

@@ -5,7 +5,6 @@ import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:upgrader/upgrader.dart';
 
 const String logoUrl =
     "https://firebasestorage.googleapis.com/v0/b/rentspace-351c8.appspot.com/o/assets%2Flogo.png?alt=media&token=333339fd-1183-4855-ad79-b8da6fad818b";
@@ -19,7 +18,7 @@ Future<void> main() async {
     Get.put(AuthController());
   });
   runApp(
-    MyApp(),
+    const MyApp(),
   );
 }
 
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeServices().getThemeMode(),
       debugShowCheckedModeBanner: false,
       title: 'RentSpace',
-      home: Scaffold(
+      home: const Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

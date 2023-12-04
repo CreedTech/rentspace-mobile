@@ -61,6 +61,9 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         Navigator.of(context).pop();
       },
       verificationFailed: (FirebaseAuthException e) {
+        print('====================');
+        print('Verification Failed: ${e.message}');
+        print('====================');
         setState(() {
           _isLoading = false;
         });

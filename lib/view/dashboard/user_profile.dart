@@ -91,7 +91,7 @@ class _UserProfileState extends State<UserProfile> {
       Get.snackbar(
         "Profile updated!",
         'Your profile picture has been updated successfully',
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -100,7 +100,7 @@ class _UserProfileState extends State<UserProfile> {
       Get.snackbar(
         "Error",
         error.toString(),
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -127,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
       Get.snackbar(
         "Enabled",
         "Biometrics enabled",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -143,7 +143,7 @@ class _UserProfileState extends State<UserProfile> {
         Get.snackbar(
           "Enabled",
           "Biometrics enabled",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -165,7 +165,7 @@ class _UserProfileState extends State<UserProfile> {
       Get.snackbar(
         "Disabled",
         "Biometrics disabled",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -181,7 +181,7 @@ class _UserProfileState extends State<UserProfile> {
         Get.snackbar(
           "Disabled",
           "Biometrics disabled",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -216,7 +216,7 @@ class _UserProfileState extends State<UserProfile> {
         Get.snackbar(
           "Error",
           "could not authenticate",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -246,7 +246,7 @@ class _UserProfileState extends State<UserProfile> {
         Get.snackbar(
           "Error",
           "could not authenticate",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -278,9 +278,9 @@ class _UserProfileState extends State<UserProfile> {
           ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -295,7 +295,7 @@ class _UserProfileState extends State<UserProfile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       SizedBox(
@@ -313,7 +313,7 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Column(
@@ -324,7 +324,7 @@ class _UserProfileState extends State<UserProfile> {
                             userController.user[0].userFirst +
                                 " " +
                                 userController.user[0].userLast,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 15.0,
                               letterSpacing: 0.5,
                               fontWeight: FontWeight.bold,
@@ -332,12 +332,12 @@ class _UserProfileState extends State<UserProfile> {
                               fontFamily: "DefaultFontFamily",
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
                             "Wallet ID: ${userController.user[0].userWalletNumber}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12.0,
                               letterSpacing: 0.5,
                               color: Colors.white,
@@ -351,7 +351,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
@@ -361,11 +361,11 @@ class _UserProfileState extends State<UserProfile> {
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).canvasColor,
                   ),
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -398,7 +398,7 @@ class _UserProfileState extends State<UserProfile> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: (!_isEmailVerified)
-                            ? Text(
+                            ? const Text(
                                 'click to verify E-mail',
                                 style: TextStyle(
                                   color: Colors.red,
@@ -407,7 +407,7 @@ class _UserProfileState extends State<UserProfile> {
                                   fontSize: 12,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'E-mail Verified',
                                 style: TextStyle(
                                   color: Colors.greenAccent,
@@ -423,7 +423,7 @@ class _UserProfileState extends State<UserProfile> {
                               "Sent",
                               "Verification E-mail has been sent to " +
                                   userController.user[0].email,
-                              animationDuration: Duration(seconds: 2),
+                              animationDuration: const Duration(seconds: 2),
                               backgroundColor: brandOne,
                               colorText: Colors.white,
                               snackPosition: SnackPosition.TOP,
@@ -460,7 +460,7 @@ class _UserProfileState extends State<UserProfile> {
                         subtitle: (userController.user[0].hasVerifiedPhone ==
                                     'false' ||
                                 userController.user[0].hasVerifiedPhone == '')
-                            ? Text(
+                            ? const Text(
                                 'Click to verify phone number',
                                 style: TextStyle(
                                   color: Colors.red,
@@ -469,7 +469,7 @@ class _UserProfileState extends State<UserProfile> {
                                   fontFamily: "DefaultFontFamily",
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'Verified',
                                 style: TextStyle(
                                   color: Colors.greenAccent,
@@ -515,11 +515,11 @@ class _UserProfileState extends State<UserProfile> {
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).canvasColor,
                   ),
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -539,7 +539,7 @@ class _UserProfileState extends State<UserProfile> {
                       ListTile(
                         onTap: () {
                           if (userController.user[0].cardCVV == '') {
-                            Get.to(AddCard());
+                            Get.to(const AddCard());
                           } else {
                             Get.to(BankAndCard());
                           }
@@ -574,7 +574,7 @@ class _UserProfileState extends State<UserProfile> {
                       ListTile(
                         onTap: () {
                           if (userController.user[0].bvn == "") {
-                            Get.to(BvnPage());
+                            Get.to(const BvnPage());
                           } else {
                             Get.to(ViewBvnAndKyc(
                               bvn: userController.user[0].bvn,
@@ -626,11 +626,11 @@ class _UserProfileState extends State<UserProfile> {
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).canvasColor,
                   ),
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -680,7 +680,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       ListTile(
                         onTap: () {
-                          Get.to(ForgotPassword());
+                          Get.to(const ForgotPassword());
                         },
                         leading: Icon(
                           Icons.refresh,
@@ -743,7 +743,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       ListTile(
                         onTap: () {
-                          Get.to(ContactUsPage());
+                          Get.to(const ContactUsPage());
                         },
                         leading: Icon(
                           Icons.call,
@@ -774,7 +774,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       ListTile(
                         onTap: () {
-                          Get.to(FaqsPage());
+                          Get.to(const FaqsPage());
                         },
                         leading: Icon(
                           Icons.bookmark,
@@ -828,7 +828,7 @@ class _UserProfileState extends State<UserProfile> {
                             (hasBiometricStorage.read('hasBiometric') != null &&
                                     hasBiometricStorage.read('hasBiometric') ==
                                         true)
-                                ? Text(
+                                ? const Text(
                                     'disable biometric login',
                                     style: TextStyle(
                                       color: Colors.red,
@@ -837,7 +837,7 @@ class _UserProfileState extends State<UserProfile> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )
-                                : Text(
+                                : const Text(
                                     'enable biometric login for added security',
                                     style: TextStyle(
                                       color: Colors.greenAccent,
@@ -861,8 +861,8 @@ class _UserProfileState extends State<UserProfile> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                padding: EdgeInsets.all(2),
-                                child: Icon(
+                                padding: const EdgeInsets.all(2),
+                                child: const Icon(
                                   Icons.light_mode,
                                   color: brandOne,
                                 ),
@@ -872,8 +872,8 @@ class _UserProfileState extends State<UserProfile> {
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                padding: EdgeInsets.all(2),
-                                child: Icon(
+                                padding: const EdgeInsets.all(2),
+                                child: const Icon(
                                   Icons.dark_mode,
                                   color: brandOne,
                                 ),
@@ -901,16 +901,17 @@ class _UserProfileState extends State<UserProfile> {
                             SizedBox(
                               height: 200,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
                                   topRight: Radius.circular(30.0),
                                 ),
                                 child: Container(
                                   color: Theme.of(context).canvasColor,
-                                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
                                   child: Column(
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 50,
                                       ),
                                       Text(
@@ -922,7 +923,7 @@ class _UserProfileState extends State<UserProfile> {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 30,
                                       ),
                                       //card
@@ -944,9 +945,10 @@ class _UserProfileState extends State<UserProfile> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                               ),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  20, 5, 20, 5),
-                                              child: Text(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 5, 20, 5),
+                                              child: const Text(
                                                 'No',
                                                 style: TextStyle(
                                                   fontSize: 12,
@@ -957,7 +959,7 @@ class _UserProfileState extends State<UserProfile> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 20,
                                           ),
                                           InkWell(
@@ -978,9 +980,10 @@ class _UserProfileState extends State<UserProfile> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                               ),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  20, 5, 20, 5),
-                                              child: Text(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 5, 20, 5),
+                                              child: const Text(
                                                 'Yes',
                                                 style: TextStyle(
                                                   fontSize: 12,
@@ -1043,19 +1046,19 @@ class _UserProfileState extends State<UserProfile> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               InkWell(
                 onLongPress: () {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Viola! You found it!"),
                     duration: Duration(milliseconds: 800),
                   ));
                 },
-                child: Text(""),
+                child: const Text(""),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],
@@ -1064,9 +1067,9 @@ class _UserProfileState extends State<UserProfile> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(ShareAndEarn());
+          Get.to(const ShareAndEarn());
         },
-        child: Icon(
+        child: const Icon(
           Icons.share_outlined,
           size: 30,
           color: Colors.white,

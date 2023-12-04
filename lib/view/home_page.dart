@@ -53,23 +53,23 @@ List<String> transIds = [];
 List<Widget> listWidgets = [
   Dashboard(),
   SavingsPage(),
-  PortfolioPage(),
+  const PortfolioPage(),
   UtilitiesPage(),
   UserProfile()
 ];
 int _selectedIndex = 0;
 
 class CounterNew extends GetxController {
-  GlobalKey _one = GlobalKey();
-  GlobalKey _two = GlobalKey();
-  GlobalKey _three = GlobalKey();
-  GlobalKey _four = GlobalKey();
-  GlobalKey _five = GlobalKey();
-  GlobalKey _six = GlobalKey();
-  GlobalKey _seven = GlobalKey();
-  GlobalKey _eight = GlobalKey();
-  GlobalKey _nine = GlobalKey();
-  GlobalKey _ten = GlobalKey();
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
+  final GlobalKey _three = GlobalKey();
+  final GlobalKey _four = GlobalKey();
+  final GlobalKey _five = GlobalKey();
+  final GlobalKey _six = GlobalKey();
+  final GlobalKey _seven = GlobalKey();
+  final GlobalKey _eight = GlobalKey();
+  final GlobalKey _nine = GlobalKey();
+  final GlobalKey _ten = GlobalKey();
 
   get fewsureHelper1 => _eight;
   get fewsureHelper2 => _nine;
@@ -127,7 +127,7 @@ class _FirstPageState extends State<FirstPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 SizedBox(
@@ -135,7 +135,7 @@ class _FirstPageState extends State<FirstPage> {
                   width: 90,
                   child: Container(
                     height: 40,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage("assets/icons/RentSpace-1011.png"),
                         fit: BoxFit.cover,
@@ -144,7 +144,7 @@ class _FirstPageState extends State<FirstPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -161,10 +161,10 @@ class _FirstPageState extends State<FirstPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                CircularProgressIndicator(
+                const CircularProgressIndicator(
                   color: brandOne,
                 )
               ],
@@ -175,24 +175,24 @@ class _FirstPageState extends State<FirstPage> {
               autoPlay: false,
               onFinish: () {
                 Get.defaultDialog(
-                  titlePadding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                   title: "Discover",
                   content: Container(
                     height: MediaQuery.of(context).size.height / 2,
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: ListView(
                       shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       children: [
                         Image.asset(
                           "assets/discover.png",
                           fit: BoxFit.cover,
                           height: 200,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
                           style: TextStyle(
                             fontSize: 13.0,
@@ -202,10 +202,10 @@ class _FirstPageState extends State<FirstPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
                           style: TextStyle(
                             fontSize: 13.0,
@@ -215,10 +215,10 @@ class _FirstPageState extends State<FirstPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
                           style: TextStyle(
                             fontSize: 13.0,
@@ -228,7 +228,7 @@ class _FirstPageState extends State<FirstPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -244,13 +244,13 @@ class _FirstPageState extends State<FirstPage> {
                         fullWidthButton: true,
                         shape: GFButtonShape.pills,
                         text: "That's Nice",
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_right_outlined,
                           color: Colors.white,
                           size: 18,
                         ),
                         color: brandOne,
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),
@@ -261,7 +261,7 @@ class _FirstPageState extends State<FirstPage> {
                 );
               },
               builder: Builder(
-                builder: (context) => HomePage(),
+                builder: (context) => const HomePage(),
               ),
             ),
           );
@@ -277,7 +277,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   checkStatus() {
     final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
@@ -289,7 +289,7 @@ class _HomePageState extends State<HomePage> {
       var newStatus = data?['status'];
 
       if (newStatus != "active") {
-        Get.to(InActivePage());
+        Get.to(const InActivePage());
       } else {
         print("All good!!!");
       }
@@ -325,7 +325,7 @@ class _HomePageState extends State<HomePage> {
           Get.snackbar(
             "All set!",
             'Your account has been setup successfully!',
-            animationDuration: Duration(seconds: 1),
+            animationDuration: const Duration(seconds: 1),
             backgroundColor: brandOne,
             colorText: Colors.white,
             snackPosition: SnackPosition.TOP,
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> {
           Get.snackbar(
             "Oops...",
             "Something went wrong",
-            animationDuration: Duration(seconds: 2),
+            animationDuration: const Duration(seconds: 2),
             backgroundColor: Colors.red,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage> {
         );
         mustRefer();
         Get.defaultDialog(
-          titlePadding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+          titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
           title: "Welcome Spacer!",
           content: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -370,10 +370,10 @@ class _HomePageState extends State<HomePage> {
                   height: 200,
                   width: 200,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
                   style: TextStyle(
                     fontSize: 13.0,
@@ -397,13 +397,13 @@ class _HomePageState extends State<HomePage> {
                 fullWidthButton: true,
                 shape: GFButtonShape.pills,
                 text: "Start",
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_right_outlined,
                   color: Colors.white,
                   size: 18,
                 ),
                 color: brandOne,
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                 ),
@@ -422,8 +422,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   startShowCase() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ShowCaseWidget.of(context).startShowCase([
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ShowCaseWidget.of(context).startShowCase([
         counter._one,
         counter._two,
         counter._three,
@@ -432,8 +432,8 @@ class _HomePageState extends State<HomePage> {
         /* counter._six,
         counter._seven,
         counter._eight, */
-      ]);
-    });
+      ]),
+    );
   }
 
   @override
@@ -444,7 +444,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       fundedAmount = "0";
     });
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       checkIsOpenedApp();
     });
   }
@@ -466,12 +466,12 @@ class _HomePageState extends State<HomePage> {
         _message = authenticated ? "Authorized" : "Not Authorized";
       });
       if (_message == "Authorized") {
-        Get.to(HomePage());
+        Get.to(const HomePage());
       } else {
         Get.snackbar(
           "Error",
           "Biometrics failed",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -481,7 +481,7 @@ class _HomePageState extends State<HomePage> {
       Get.snackbar(
         "Error",
         "Biometrics failed",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -498,7 +498,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 100,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
               ),
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                 color: Theme.of(context).canvasColor,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -533,13 +533,13 @@ class _HomePageState extends State<HomePage> {
                             text: "Cancel",
                             fullWidthButton: false,
                             color: Colors.greenAccent,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                               fontFamily: "DefaultFontFamily",
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           GFButton(
@@ -550,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                             text: "Exit",
                             fullWidthButton: false,
                             color: Colors.red,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                               fontFamily: "DefaultFontFamily",
@@ -580,26 +580,28 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           body: listWidgets[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Color(0xffECF6FB),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Showcase(
                   key: counter._one,
+                  // titleTextStyle: TextStyle(),
                   title: 'Home',
                   description: 'All your dashboard in one place.',
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,
                   textColor: Colors.white,
-                  overlayPadding: EdgeInsets.all(5),
-                  animationDuration: Duration(seconds: 2),
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
                   child: Image.asset(
                     "assets/icons/home_icon.png",
                     height: 30,
                     width: 30,
+                    color: brandFour,
                   ),
                 ),
                 label: "Home",
-                backgroundColor: brandFour,
               ),
               BottomNavigationBarItem(
                 icon: Showcase(
@@ -610,16 +612,16 @@ class _HomePageState extends State<HomePage> {
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,
-                  overlayPadding: EdgeInsets.all(5),
-                  animationDuration: Duration(seconds: 2),
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
                   child: Image.asset(
                     "assets/icons/savings_icon.png",
                     height: 30,
                     width: 30,
+                    color: brandFour,
                   ),
                 ),
                 label: "Savings",
-                backgroundColor: brandFour,
               ),
               BottomNavigationBarItem(
                 icon: Showcase(
@@ -631,16 +633,17 @@ class _HomePageState extends State<HomePage> {
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,
-                  overlayPadding: EdgeInsets.all(5),
-                  animationDuration: Duration(seconds: 2),
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
                   child: Image.asset(
                     "assets/icons/portfolio_icon.png",
                     height: 30,
                     width: 30,
+                    color: brandFour,
                   ),
                 ),
                 label: "Portfolio",
-                backgroundColor: brandFour,
+                
               ),
               BottomNavigationBarItem(
                 icon: Showcase(
@@ -652,16 +655,17 @@ class _HomePageState extends State<HomePage> {
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,
-                  overlayPadding: EdgeInsets.all(5),
-                  animationDuration: Duration(seconds: 2),
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
                   child: Image.asset(
                     "assets/icons/utility_icon.png",
                     height: 30,
                     width: 30,
+                    color: brandFour,
                   ),
                 ),
                 label: "Utility",
-                backgroundColor: brandFour,
+                
               ),
               BottomNavigationBarItem(
                 icon: Showcase(
@@ -672,16 +676,17 @@ class _HomePageState extends State<HomePage> {
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,
-                  overlayPadding: EdgeInsets.all(5),
-                  animationDuration: Duration(seconds: 2),
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
                   child: Image.asset(
                     "assets/icons/profile_icon.png",
                     height: 30,
                     width: 30,
+                    color: brandFour,
                   ),
                 ),
                 label: "Profile",
-                backgroundColor: brandFour,
+                
               ),
             ],
             currentIndex: _selectedIndex,

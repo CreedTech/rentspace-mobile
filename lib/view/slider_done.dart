@@ -26,7 +26,7 @@ class _SliderDoneState extends State<SliderDone> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/slider_done.jpg"),
             fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class _SliderDoneState extends State<SliderDone> {
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             Padding(
@@ -48,7 +48,7 @@ class _SliderDoneState extends State<SliderDone> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(FaqsPage());
+                      Get.to(const FaqsPage());
                     },
                     child: Image.asset(
                       'assets/icons/faq.png',
@@ -61,8 +61,8 @@ class _SliderDoneState extends State<SliderDone> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,24 +84,24 @@ class _SliderDoneState extends State<SliderDone> {
             ),
             GFButton(
               onPressed: () {
-                Get.to(LoginPage());
+                Get.to(const LoginPage());
               },
               color: brandTwo,
               blockButton: true,
               text: "Login to My Account",
-              icon: Icon(
+              icon: const Icon(
                 Icons.login_outlined,
                 color: Colors.orange,
               ),
             ),
             GFButton(
               onPressed: () {
-                Get.to(SignupPage());
+                Get.to(const SignupPage());
               },
               color: brandOne,
               blockButton: true,
               text: "Become a RentSpace user",
-              icon: Icon(
+              icon: const Icon(
                 Icons.person_outline_rounded,
                 color: Colors.orange,
               ),
