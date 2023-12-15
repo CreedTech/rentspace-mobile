@@ -61,8 +61,17 @@ class _IntroScreenState extends State<IntroScreen> {
 
       pages: [
         PageViewModel(
-          title: "Save. Earn. Repeat",
-          body: "",
+          // title: "Save. Earn. Repeat",
+          titleWidget: Container(
+            height: 200,
+            padding: EdgeInsets.only(top: 0),
+            child: Text('Save. Earn. Repeat'),
+          ),
+          // body: "Yes",
+          bodyWidget: Container(
+            padding: EdgeInsets.only(top: 100),
+            child: Text('Save. Earn. Repeat'),
+          ),
           image: _buildFullscreenImage('assets/slider1.png'),
           decoration: pageDecoration.copyWith(
             titleTextStyle: TextStyle(

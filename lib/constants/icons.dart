@@ -12,12 +12,14 @@ class BookmarkIcon {
 
 class LockIcon {
   Icon close = Icon(
-    Icons.visibility_off,
+    Icons.visibility_off_outlined,
     color: Colors.grey,
+    size: 18,
   );
   Icon open = Icon(
-    Icons.visibility,
+    Icons.visibility_outlined,
     color: Colors.grey,
+    size: 18,
   );
 }
 

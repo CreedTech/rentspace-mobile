@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -55,13 +56,13 @@ class _BiometricsPageState extends State<BiometricsPage> {
         setState(() {
           screenInfo = "App unlocked";
         });
-        Get.to(FirstPage());
+        Get.to(const FirstPage());
       } else {
         _canShowAuth = true;
         Get.snackbar(
           "Error",
           "Biometrics failed",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -71,7 +72,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
       Get.snackbar(
         "Error",
         "Biometrics failed",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -92,7 +93,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
       (hasBiometricStorage.read('hasBiometric') != null &&
               hasBiometricStorage.read('hasBiometric') == true)
           ? checkingForBioMetrics()
-          : Get.to(FirstPage());
+          : Get.to(const FirstPage());
     });
   }
 
@@ -104,49 +105,163 @@ class _BiometricsPageState extends State<BiometricsPage> {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 50,
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: const AssetImage(
+                'assets/slider3.png',
+              ),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5), // Adjust the opacity here
+                BlendMode.darken,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  screenInfo,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "DefaultFontFamily",
-                    color: Theme.of(context).primaryColor,
-                  ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 150),
+                child: Image.asset(
+                  'assets/icons/RentSpaceWhite.png',
+                  // width: 140,
+                  height: 60,
                 ),
-                SizedBox(
-                  height: 30,
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: Text(
+                        screenInfo,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "DefaultFontFamily",
+                          color: Theme.of(context).canvasColor,
+                        ),
+                      ),
+                    ),
+                    Lottie.asset(
+                      'assets/loader.json',
+                      width: 100,
+                      height: 100,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    (_canShowAuth)
+                        ?
+                        //  GFButton(
+                        //     onPressed: () {
+                        //       checkingForBioMetrics();
+                        //     },
+                        //     text: "   Authenticate    ",
+                        //     shape: GFButtonShape.pills,
+                        //   )
+                        Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Navigator.of(context).pushNamed(getStarted);
+                                checkingForBioMetrics();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xff40AAD9),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 15),
+                                textStyle: const TextStyle(
+                                    color: brandFour, fontSize: 13),
+                              ),
+                              child: const Text(
+                                "Authenticate",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            CircularProgressIndicator(
-              color: brandOne,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            (_canShowAuth)
-                ? GFButton(
-                    onPressed: () {
-                      checkingForBioMetrics();
-                    },
-                    text: "   Authenticate    ",
-                    shape: GFButtonShape.pills,
-                  )
-                : SizedBox(),
-          ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 0),
+              //   child: Image.asset(
+              //     'assets/icons/RentSpaceWhite.png',
+              //     // width: 140,
+              //     height: 53,
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 300),
+              //   child: Image.asset(
+              //     'assets/icons/RentSpaceWhite.png',
+              //     // width: 140,
+              //     height: 53,
+              //   ),
+              // ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SizedBox(),
+              ),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     // const SizedBox(
+              //     //   height: 50,
+              //     // ),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Text(
+              //           screenInfo,
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //             fontFamily: "DefaultFontFamily",
+              //             color: Theme.of(context).primaryColor,
+              //           ),
+              //         ),
+              //         const SizedBox(
+              //           height: 30,
+              //         ),
+              //       ],
+              //     ),
+              //     // const SizedBox(
+              //     //   height: 50,
+              //     // ),
+              //     const CircularProgressIndicator(
+              //       color: brandOne,
+              //     ),
+              //     const SizedBox(
+              //       height: 50,
+              //     ),
+              //     (_canShowAuth)
+              //         ? GFButton(
+              //             onPressed: () {
+              //               checkingForBioMetrics();
+              //             },
+              //             text: "   Authenticate    ",
+              //             shape: GFButtonShape.pills,
+              //           )
+              //         : const SizedBox(),
+              //   ],
+              // ),
+            ],
+          ),
         ),
       ),
     );

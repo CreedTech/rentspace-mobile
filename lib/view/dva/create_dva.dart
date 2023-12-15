@@ -119,25 +119,25 @@ class _CreateDVAState extends State<CreateDVA> {
           SizedBox(
             height: 400,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
               ),
               child: Container(
                 color: Theme.of(context).canvasColor,
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.check_circle_outline,
                       color: brandOne,
                       size: 80,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
@@ -150,7 +150,7 @@ class _CreateDVAState extends State<CreateDVA> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -163,7 +163,7 @@ class _CreateDVAState extends State<CreateDVA> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -176,7 +176,7 @@ class _CreateDVAState extends State<CreateDVA> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -189,7 +189,7 @@ class _CreateDVAState extends State<CreateDVA> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     GFButton(
@@ -198,7 +198,7 @@ class _CreateDVAState extends State<CreateDVA> {
                           Get.back();
                         }
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_right_outlined,
                         size: 30,
                         color: Colors.white,
@@ -208,7 +208,7 @@ class _CreateDVAState extends State<CreateDVA> {
                       shape: GFButtonShape.pills,
                       fullWidthButton: true,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
@@ -224,7 +224,7 @@ class _CreateDVAState extends State<CreateDVA> {
         Get.snackbar(
           "Oops",
           "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -237,7 +237,7 @@ class _CreateDVAState extends State<CreateDVA> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -308,39 +308,39 @@ class _CreateDVAState extends State<CreateDVA> {
         }
       },
       maxLength: 10,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Choose new username",
           style: TextStyle(
             color: Colors.grey,
           ),
         ),
         prefixText: "SPACER/",
-        prefixStyle: TextStyle(
+        prefixStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'can contain letters and numbers',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -393,7 +393,7 @@ class _CreateDVAState extends State<CreateDVA> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 100,
                           ),
                           Text(
@@ -405,11 +405,11 @@ class _CreateDVAState extends State<CreateDVA> {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           username,
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
@@ -423,7 +423,7 @@ class _CreateDVAState extends State<CreateDVA> {
                                   : Colors.red,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           GFButton(
@@ -438,7 +438,7 @@ class _CreateDVAState extends State<CreateDVA> {
                                 Get.snackbar(
                                   "Invalid",
                                   "Fill the form properly to proceed",
-                                  animationDuration: Duration(seconds: 1),
+                                  animationDuration: const Duration(seconds: 1),
                                   backgroundColor: Colors.red,
                                   colorText: Colors.white,
                                   snackPosition: SnackPosition.BOTTOM,
@@ -447,7 +447,8 @@ class _CreateDVAState extends State<CreateDVA> {
                             },
                             shape: GFButtonShape.pills,
                             fullWidthButton: true,
-                            child: Text(
+                            color: brandOne,
+                            child: const Text(
                               'Activate DVA',
                               style: TextStyle(
                                 color: Colors.white,
@@ -455,7 +456,6 @@ class _CreateDVAState extends State<CreateDVA> {
                                 fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            color: brandOne,
                           ),
                         ],
                       ),
@@ -465,7 +465,7 @@ class _CreateDVAState extends State<CreateDVA> {
               : Container(
                   height: double.infinity,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/icons/RentSpace-icon.png"),
                         fit: BoxFit.cover,
@@ -475,7 +475,7 @@ class _CreateDVAState extends State<CreateDVA> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       Row(
@@ -489,15 +489,15 @@ class _CreateDVAState extends State<CreateDVA> {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
-                      CircularProgressIndicator(
+                      const CircularProgressIndicator(
                         color: brandOne,
                       ),
                     ],

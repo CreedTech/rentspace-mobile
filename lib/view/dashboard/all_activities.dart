@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:rentspace/constants/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../constants/colors.dart';
 
 class AllActivities extends StatefulWidget {
   List activities;
   int activitiesLength;
   AllActivities({
-    Key? key,
+    super.key,
     required this.activities,
     required this.activitiesLength,
-  }) : super(key: key);
+  });
 
   @override
   _AllActivitiesState createState() => _AllActivitiesState();
@@ -27,39 +28,47 @@ class _AllActivitiesState extends State<AllActivities> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.close,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+          elevation: 0.0,
+          backgroundColor: Theme.of(context).canvasColor,
+          leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Icon(
+              Icons.close,
+              size: 30,
+              color: Theme.of(context).primaryColor,
+            ),
           ),
-        ),
-      ),
+          centerTitle: true,
+          title: Text(
+            'Activities',
+            style: GoogleFonts.nunito(
+              color: brandOne,
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+            ),
+          )),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemCount: widget.activities.length,
           itemBuilder: (BuildContext context, int index) {
             return (widget.activities.isNotEmpty)
                 ? Container(
                     color: Theme.of(context).canvasColor,
-                    padding: const EdgeInsets.fromLTRB(10.0, 10, 10.0, 10),
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Image.asset(
                           'assets/icons/iconset/Group462.png',
-                          height: 40,
+                          height: 48,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -73,8 +82,8 @@ class _AllActivitiesState extends State<AllActivities> {
                       ],
                     ),
                   )
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
+                : const Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
                     child: Text(
                       "Nothing to show here",
                       style: TextStyle(

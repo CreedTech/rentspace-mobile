@@ -12,6 +12,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:rentspace/view/onboarding_slider.dart';
+
+import '../constants/widgets/custom_dialog.dart';
 
 bool hasConnection = false.obs();
 //final loggedinUser = GetStorage();
@@ -66,9 +69,10 @@ class AuthController extends GetxController {
       Get.off(const NoConnection());
     } else {
       if (user == null) {
-        Get.offAll(() => const IntroScreen());
+        Get.offAll(() => const OnboardingSlider());
       } else {
         Get.offAll(() => BiometricsPage());
+        // Get.offAll(() => const OnboardingSlider());
       }
     }
   }
@@ -201,12 +205,17 @@ class AuthController extends GetxController {
     }
   }
 
-  reset(String email) async {
+  reset(BuildContext context, String email) async {
     try {
       //showLoading();
       await auth
           .sendPasswordResetEmail(email: email)
-          .then((value) => Get.to(const ConfirmResetPage()));
+          .then((value) => verification(
+                context,
+                'Reset Link Sent',
+                'A password reset link has been sent to this email, please check your email',
+                'Back to login',
+              ));
     } catch (error) {
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');

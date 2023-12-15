@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider:
-  #google_fonts: ^3.0.1
+  google_fonts:
   carousel_slider: 
   intro_slider: 
   introduction_screen: 
@@ -100,6 +100,16 @@ dependencies:
   jiffy: ^5.0.0
   chat_bubbles: 
   encrypt: 
+  lottie: ^2.7.0
+  top_snackbar_flutter: ^3.1.0
+  iconsax: ^0.0.8
+  icons_plus: ^4.0.0
+  iconic: ^0.0.3
+  dotted_border: ^2.1.0
+  file_picker: ^6.1.1
+  drop_down_list: ^0.0.6
+  cupertino_progress_bar: ^0.2.0
+  flutter_animation_progress_bar: ^2.3.1
   #path_provider: ^2.0.15
   
 

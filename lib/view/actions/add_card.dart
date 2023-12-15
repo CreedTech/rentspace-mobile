@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +11,10 @@ import 'dart:async';
 
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:convert';
+
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AddCard extends StatefulWidget {
   const AddCard({Key? key}) : super(key: key);
@@ -38,6 +42,7 @@ class _AddCardState extends State<AddCard> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _accountNumberController =
       TextEditingController();
+  // final TextEditingController _bankListController = TextEditingController();
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
 
@@ -92,7 +97,7 @@ class _AddCardState extends State<AddCard> {
         Get.snackbar(
           "Error!",
           "Invalid account number",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -109,7 +114,7 @@ class _AddCardState extends State<AddCard> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -189,7 +194,7 @@ class _AddCardState extends State<AddCard> {
       if (int.tryParse(accountValue) == null) {
         return 'enter valid account number';
       }
-      return '';
+      return null;
     }
 
     validateName(nameValue) {
@@ -201,7 +206,7 @@ class _AddCardState extends State<AddCard> {
     }
 
     void _doSomething() async {
-      Timer(Duration(seconds: 1), () {
+      Timer(const Duration(seconds: 1), () {
         _btnController.stop();
       });
       if ((cardNumber != "" &&
@@ -227,81 +232,285 @@ class _AddCardState extends State<AddCard> {
         }).then((value) {
           Get.back();
           print(_bankName);
-          Get.snackbar(
-            "Success!",
-            'Your details have been updated successfully',
-            animationDuration: Duration(seconds: 1),
-            backgroundColor: brandOne,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.TOP,
-          );
+          showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Your details have been updated successfully. !!',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+          // Get.snackbar(
+          //   "Success!",
+          //   'Your details have been updated successfully',
+          //   animationDuration: const Duration(seconds: 1),
+          //   backgroundColor: brandOne,
+          //   colorText: Colors.white,
+          //   snackPosition: SnackPosition.TOP,
+          // );
         }).catchError((error) {
-          Get.snackbar(
-            "Error",
-            error.toString(),
-            animationDuration: Duration(seconds: 2),
+          showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
             backgroundColor: Colors.red,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-          );
+            message: error.toString(),
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+          // Get.snackbar(
+          //   "Error",
+          //   error.toString(),
+          //   animationDuration: const Duration(seconds: 2),
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
         });
       } else {
-        Get.snackbar(
-          "Invalid",
-          "Fill the form properly to proceed.",
-          animationDuration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
+            backgroundColor: Colors.red,
+            message: 'Fill the form properly to proceed.',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Invalid",
+        //   "Fill the form properly to proceed.",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
     }
 
-    final bankOption = Container(
-      height: 50,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
-      child: DropdownButtonHideUnderline(
-        child: GFDropdown(
-          borderRadius: BorderRadius.circular(5),
-          border: const BorderSide(color: Colors.black12, width: 1),
-          dropdownButtonColor: Theme.of(context).canvasColor,
-          value: _currentBankName,
-          hint: Text(
-            'Choose bank',
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.height / 60,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
-            fontSize: MediaQuery.of(context).size.height / 60,
-            color: Theme.of(context).primaryColor,
-          ),
-          focusColor: brandOne,
-          onChanged: (newValue) {
-            setState(() {
-              _currentBankName = newValue.toString();
-              selectedItem = newValue as String?;
-              int index = _bankName.indexOf(selectedItem!);
-              _currentBankCode = _bankCode[index - 1];
-            });
-          },
-          items: _bankName
-              .map((value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  ))
-              .toList(),
+    final bankOption = DropdownButtonFormField(
+      style: GoogleFonts.nunito(
+        color: brandOne,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+      items: _bankName
+          .map((value) => DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              ))
+          .toList(),
+      onChanged: (newValue) {
+        setState(() {
+          _currentBankName = newValue.toString();
+          selectedItem = newValue as String?;
+          int index = _bankName.indexOf(selectedItem!);
+          _currentBankCode = _bankCode[index - 1];
+        });
+      },
+      decoration: InputDecoration(
+        hintText: 'Choose Bank',
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
+        ),
+        contentPadding: const EdgeInsets.all(14),
       ),
     );
+// final banks = Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         // Text(widget.title),
+//         const SizedBox(
+//           height: 5.0,
+//         ),
+//         TextFormField(
+//           controller: _bankListController,
+//           cursorColor: Colors.black,
+//           onTap: widget.isCitySelected
+//               ? () {
+//                   FocusScope.of(context).unfocus();
+//                   onTextFieldTap();
+//                 }
+//               : null,
+//           decoration: InputDecoration(
+//             filled: true,
+//             fillColor: Colors.black12,
+//             contentPadding:
+//                 const EdgeInsets.only(left: 8, bottom: 0, top: 0, right: 15),
+//             hintText: widget.hint,
+//             border: const OutlineInputBorder(
+//               borderSide: BorderSide(
+//                 width: 0,
+//                 style: BorderStyle.none,
+//               ),
+//               borderRadius: BorderRadius.all(
+//                 Radius.circular(8.0),
+//               ),
+//             ),
+//           ),
+//         ),
+//         const SizedBox(
+//           height: 15.0,
+//         ),
+//       ],
+//     );
+    final bankOptions = DropdownMenu(
+      // width: 300,
+      // menuStyle: MenuStyle,
+      enableSearch: true,
+      enableFilter: true,
+      onSelected: (newValue) {
+        setState(() {
+          _currentBankName = newValue.toString();
+          selectedItem = newValue as String?;
+          int index = _bankName.indexOf(selectedItem!);
+          _currentBankCode = _bankCode[index - 1];
+        });
+      },
+      dropdownMenuEntries: _bankName
+          .map((value) => DropdownMenuEntry(
+                value: value,
+                label: value,
+              ))
+          .toList(),
+      hintText: 'Choose Bank',
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
+        ),
+        contentPadding: const EdgeInsets.all(14),
+        filled: false,
+      ),
+    );
+
+    // void showSnackBar(String message) {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text(message)));
+    // }
+
+    // final banks = TextFormField(
+    //   controller: _bankListController,
+    //   cursorColor: Colors.black,
+    //   onTap: () {
+    //     FocusScope.of(context).unfocus();
+    //     DropDownState(
+    //       DropDown(
+    //         isDismissible: true,
+    //         bottomSheetTitle: const Text(
+    //           'List of Banks',
+    //           style: TextStyle(
+    //             fontWeight: FontWeight.bold,
+    //             fontSize: 20.0,
+    //           ),
+    //         ),
+    //         submitButtonChild: const Text(
+    //           'Done',
+    //           style: TextStyle(
+    //             fontSize: 16,
+    //             fontWeight: FontWeight.bold,
+    //           ),
+    //         ),
+    //         data: _bankName
+    //             .map((value) => SelectedListItem(
+    //                   name: value,
+    //                   value: value,
+    //                   isSelected: true,
+    //                 ))
+    //             .toList(),
+    //         selectedItems: (List<dynamic> selectedList) {
+    //           List<String> list = [];
+    //           for (var item in selectedList) {
+    //             if (item is SelectedListItem) {
+    //               list.add(item.name);
+    //               print(item.name);
+    //               // _currentBankName = item.name;
+    //               // selectedItem = item.name;
+    //               // int index = _bankName.indexOf(selectedItem!);
+    //               // _currentBankCode = _bankCode[index - 1];
+    //             }
+    //           }
+
+    //           showSnackBar(selectedList.toString());
+    //         },
+    //         enableMultipleSelection: false,
+    //       ),
+    //     ).showModal(context);
+    //   },
+    //   decoration: InputDecoration(
+    //     filled: true,
+    //     fillColor: Colors.black12,
+    //     contentPadding:
+    //         const EdgeInsets.only(left: 8, bottom: 0, top: 0, right: 15),
+    //     hintText: 'Select Bank',
+    //     border: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         width: 0,
+    //         style: BorderStyle.none,
+    //       ),
+    //       borderRadius: BorderRadius.all(
+    //         Radius.circular(8.0),
+    //       ),
+    //     ),
+    //   ),
+    // );
+
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: brandOne,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
@@ -317,76 +526,81 @@ class _AddCardState extends State<AddCard> {
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
+        centerTitle: true,
+        elevation: 0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+            color: brandOne,
           ),
         ),
         title: Text(
-          '',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
+          'Add Bank & Card Details',
+          style: GoogleFonts.nunito(
+              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: 0.3,
+          //     child: Image.asset(
+          //       'assets/icons/RentSpace-icon.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           ListView(
             children: [
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-                child: Text(
-                  "Add a valid card",
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontFamily: "DefaultFontFamily",
-                    letterSpacing: 0.5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+              //   child: Text(
+              //     "Add a valid card",
+              //     style: TextStyle(
+              //       fontSize: 15.0,
+              //       fontFamily: "DefaultFontFamily",
+              //       letterSpacing: 0.5,
+              //       color: Theme.of(context).primaryColor,
+              //     ),
+              //   ),
+              // ),
               CreditCardWidget(
                 glassmorphismConfig:
                     useGlassMorphism ? Glassmorphism.defaultConfig() : null,
@@ -404,9 +618,8 @@ class _AddCardState extends State<AddCard> {
                 obscureCardCvv: true,
                 isHolderNameVisible: true,
                 cardBgColor: brandOne,
-                //backgroundImage: useBackgroundImage ? 'assets/card.jpg' : null,
+                backgroundImage: 'assets/card.jpg',
                 isSwipeGestureEnabled: true,
-
                 onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                 customCardTypeIcons: <CustomCardTypeIcon>[
                   CustomCardTypeIcon(
@@ -433,18 +646,27 @@ class _AddCardState extends State<AddCard> {
                       isExpiryDateVisible: true,
                       cardHolderName: cardHolderName,
                       expiryDate: expiryDate,
-                      themeColor: Colors.blue,
+                      themeColor: brandOne,
                       textColor: Theme.of(context).primaryColor,
                       cardNumberDecoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: brandOne, width: 2.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2.0), // Change color to yellow
                         ),
                         labelText: 'Number',
                         hintText: 'XXXX XXXX XXXX XXXX',
@@ -460,13 +682,22 @@ class _AddCardState extends State<AddCard> {
                       expiryDateDecoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: brandOne, width: 2.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2.0), // Change color to yellow
                         ),
                         hintStyle: TextStyle(
                           color: Theme.of(context).primaryColor,
@@ -490,13 +721,22 @@ class _AddCardState extends State<AddCard> {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: brandOne, width: 2.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2.0), // Change color to yellow
                         ),
                         labelText: 'CVV',
                         hintText: 'XXX',
@@ -512,13 +752,22 @@ class _AddCardState extends State<AddCard> {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: brandOne, width: 2.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2.0), // Change color to yellow
                         ),
                         labelText: 'Card Holder',
                       ),
@@ -530,10 +779,10 @@ class _AddCardState extends State<AddCard> {
                         (cardValidity == "Valid Card" || cardValidity == "")
                             ? ""
                             : "Invalid Card",
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontSize: 18,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 0.5,
+                          // fontFamily: "DefaultFontFamily",
+                          // letterSpacing: 0.5,
                           color: (cardValidity == "Valid Card")
                               ? Colors.greenAccent
                               : Colors.red,
@@ -545,10 +794,10 @@ class _AddCardState extends State<AddCard> {
                       padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
                       child: Text(
                         (cardExpiry == "Expired Card") ? "Expired Card" : "",
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontSize: 18,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 0.5,
+                          // fontFamily: "DefaultFontFamily",
+                          // letterSpacing: 0.5,
                           color: (cardValidity == "Expired Card")
                               ? Colors.greenAccent
                               : Colors.red,
@@ -557,26 +806,30 @@ class _AddCardState extends State<AddCard> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 20),
+                      padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 20),
                       child: Text(
                         "Add your bank details",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 0.5,
-                          color: Theme.of(context).primaryColor,
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          // fontFamily: "DefaultFontFamily",
+                          // letterSpacing: 0.5,
+                          fontWeight: FontWeight.w500,
+                          color: brandOne,
                         ),
                         textAlign: TextAlign.start,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     (canShowOption)
                         ? Column(
                             children: [
-                              bankOption,
-                              SizedBox(
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
+                                child: bankOption,
+                              ),
+                              const SizedBox(
                                 height: 10,
                               ),
                               Padding(
@@ -591,57 +844,76 @@ class _AddCardState extends State<AddCard> {
                                 const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                             child: Text(
                               "Loading banks...",
-                              style: TextStyle(
+                              style: GoogleFonts.nunito(
                                 fontSize: 16,
-                                fontFamily: "DefaultFontFamily",
+                                // fontFamily: "DefaultFontFamily",
                                 //letterSpacing: 2.0,
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
                     (isChecking)
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
+                        ? const Padding(
+                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
                             child: LinearProgressIndicator(
                               color: brandOne,
                               minHeight: 4,
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                       child: Text(
                         _bankAccountName,
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontSize: 16.0,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 0.5,
+                          // fontFamily: "DefaultFontFamily",
+                          // letterSpacing: 0.5,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                          color: brandOne,
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    RoundedLoadingButton(
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "DefaultFontFamily",
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(350, 50),
+                        backgroundColor: brandTwo,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
                         ),
                       ),
-                      elevation: 0.0,
-                      borderRadius: 5.0,
-                      successColor: brandOne,
-                      color: brandOne,
-                      controller: _btnController,
                       onPressed: () {
                         _doSomething();
                       },
+                      child: const Text(
+                        'Submit',
+                        textAlign: TextAlign.center,
+                      ),
                     ),
+                    
+                    // RoundedLoadingButton(
+                    //   child: const Text(
+                    //     'Submit',
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontFamily: "DefaultFontFamily",
+                    //     ),
+                    //   ),
+                    //   elevation: 0.0,
+                    //   borderRadius: 5.0,
+                    //   successColor: brandOne,
+                    //   color: brandOne,
+                    //   controller: _btnController,
+                    //   onPressed: () {
+                    //     _doSomething();
+                    //   },
+                    // ),
                     const SizedBox(
                       height: 50,
                     ),

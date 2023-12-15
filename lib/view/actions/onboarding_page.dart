@@ -1,12 +1,14 @@
+import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/icons.dart';
@@ -15,14 +17,14 @@ import 'dart:convert';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
-import 'package:rentspace/view/actions/bank_and_card.dart';
 
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
 import 'package:rentspace/view/actions/fund_wallet.dart';
-import 'package:rentspace/view/home_page.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
@@ -36,13 +38,14 @@ const _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 Random _rnd = Random();
 
 class BvnPage extends StatefulWidget {
-  const BvnPage({Key? key}) : super(key: key);
+  const BvnPage({super.key});
 
   @override
   _BvnPageState createState() => _BvnPageState();
 }
 
 final TextEditingController _bvnController = TextEditingController();
+final bvnformKey = GlobalKey<FormState>();
 
 class _BvnPageState extends State<BvnPage> {
   final UserController userController = Get.find();
@@ -150,7 +153,7 @@ class _BvnPageState extends State<BvnPage> {
       if (int.tryParse(bvnValue) == null) {
         return 'enter valid BVN';
       }
-      return '';
+      return null;
     }
 
     //Phone number
@@ -160,7 +163,7 @@ class _BvnPageState extends State<BvnPage> {
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.phone,
@@ -169,29 +172,40 @@ class _BvnPageState extends State<BvnPage> {
       decoration: InputDecoration(
         label: Text(
           "11 digits BVN",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2.0,
+          ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        // fillColor: brandThree,
         hintText: 'e.g 12345678900',
-        hintStyle: TextStyle(
+        contentPadding: const EdgeInsets.all(14),
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -210,205 +224,397 @@ class _BvnPageState extends State<BvnPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: true,
         title: Text(
-          '',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
+          'BVN Details',
+          style: GoogleFonts.nunito(
+              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ListView(
-            children: [
-              (isChecking)
-                  ? LinearProgressIndicator(
-                      color: brandOne,
-                      minHeight: 4,
-                    )
-                  : SizedBox(),
-              SizedBox(
-                height: 100,
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Text(
-                      "Enter BVN",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: "DefaultFontFamily",
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    bvn,
-                    Text(
-                      _mssg,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: "DefaultFontFamily",
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "This BVN verification will attract a charge of ₦45 from your SpaceWallet",
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontFamily: "DefaultFontFamily",
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    (canProceed)
-                        ? GFButton(
-                            onPressed: () {
-                              if (validateBvn(_bvnController.text.trim()) ==
-                                  "") {
-                                Get.to(KycPage(
-                                  bvnValue: _bvnController.text.trim(),
-                                ));
-                              } else {
-                                Get.snackbar(
-                                  "Invalid",
-                                  'Please fill the form properly to proceed',
-                                  animationDuration: Duration(seconds: 1),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  snackPosition: SnackPosition.BOTTOM,
-                                );
-                              }
-                            },
-                            shape: GFButtonShape.pills,
-                            text: "Proceed",
-                            fullWidthButton: true,
-                            icon: Icon(
-                              Icons.arrow_right_outlined,
-                              color: Colors.white,
-                              size: 14,
-                            ),
-                            color: brandOne,
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: "DefaultFontFamily",
-                            ),
-                          )
-                        : GFButton(
-                            onPressed: () {
-                              if ((int.tryParse(userController
-                                      .user[0].userWalletBalance)!) >
-                                  100) {
-                                if (validateBvn(_bvnController.text.trim()) ==
-                                    "") {
-                                  verifyBVN();
-                                } else {
-                                  Get.snackbar(
-                                    "Invalid",
-                                    'Please fill all the form properly to proceed',
-                                    animationDuration: Duration(seconds: 1),
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
-                                }
-                              } else {
-                                Get.bottomSheet(
-                                  SizedBox(
-                                    height: 200,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30.0),
-                                        topRight: Radius.circular(30.0),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 50,
-                                          ),
-                                          Text(
-                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontFamily: "DefaultFontFamily",
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          GFButton(
-                                            onPressed: () {
-                                              Get.back();
-                                              Get.to(FundWallet());
-                                            },
-                                            shape: GFButtonShape.pills,
-                                            text: "Fund Wallet",
-                                            fullWidthButton: true,
-                                            color: brandOne,
-                                            textStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontFamily: "DefaultFontFamily",
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            shape: GFButtonShape.pills,
-                            text: "Verify BVN",
-                            fullWidthButton: true,
-                            icon: Icon(
-                              Icons.arrow_right_outlined,
-                              color: Colors.white,
-                              size: 14,
-                            ),
-                            color: brandOne,
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: "DefaultFontFamily",
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                (isChecking)
+                    ? const LinearProgressIndicator(
+                        color: brandOne,
+                        minHeight: 4,
+                      )
+                    : const SizedBox(),
+                // const SizedBox(
+                //   height: 100,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                  child: Form(
+                    key: bvnformKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // const SizedBox(
+                        //   height: 50,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: Text(
+                            'Enter BVN',
+                            style: GoogleFonts.nunito(
+                              color: brandOne,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              // fontFamily: "DefaultFontFamily",
                             ),
                           ),
-                    const SizedBox(
-                      height: 30,
+                        ),
+                        bvn,
+                        Text(
+                          _mssg,
+                          style: GoogleFonts.nunito(
+                            color: brandOne,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            // fontFamily: "DefaultFontFamily",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "This BVN verification will attract a charge of ₦45 from your SpaceWallet",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: brandOne,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 120,
+                        ),
+                        (canProceed)
+                            ? Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  // width: MediaQuery.of(context).size.width * 2,
+                                  alignment: Alignment.center,
+                                  // height: 110.h,
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(400, 50),
+                                          backgroundColor: brandTwo,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          if (bvnformKey.currentState!
+                                              .validate()) {
+                                            Get.to(KycPage(
+                                              bvnValue:
+                                                  _bvnController.text.trim(),
+                                            ));
+                                          } else {
+                                            showTopSnackBar(
+                                              Overlay.of(context),
+                                              CustomSnackBar.error(
+                                                // backgroundColor: Colors.red,
+                                                message:
+                                                    'Invalid! :). Please fill the form properly to proceed',
+                                                textStyle: GoogleFonts.nunito(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        child: const Text(
+                                          'Proceed',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  // width: MediaQuery.of(context).size.width * 2,
+                                  alignment: Alignment.center,
+                                  // height: 110.h,
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(400, 50),
+                                          backgroundColor: brandTwo,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          if ((int.tryParse(userController
+                                                  .user[0]
+                                                  .userWalletBalance)!) >=
+                                              45) {
+                                            if (bvnformKey.currentState!
+                                                .validate()) {
+                                              verifyBVN();
+                                            } else {
+                                              showTopSnackBar(
+                                                Overlay.of(context),
+                                                CustomSnackBar.error(
+                                                  // backgroundColor: Colors.red,
+                                                  message:
+                                                      'Invalid! :). Please fill the form properly to proceed',
+                                                  textStyle: GoogleFonts.nunito(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                barrierDismissible: true,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      AlertDialog.adaptive(
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                30, 30, 30, 20),
+                                                        elevation: 0,
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                .all(0),
+                                                        scrollable: true,
+                                                        title: null,
+                                                        shape:
+                                                            const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    30),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    30),
+                                                          ),
+                                                        ),
+                                                        content: SizedBox(
+                                                          child: SizedBox(
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      vertical:
+                                                                          40),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical:
+                                                                                15),
+                                                                        child:
+                                                                            Align(
+                                                                          alignment:
+                                                                              Alignment.topCenter,
+                                                                          child:
+                                                                              Text(
+                                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                GoogleFonts.nunito(
+                                                                              color: brandTwo,
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w800,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical:
+                                                                                10),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(3),
+                                                                              child: ElevatedButton(
+                                                                                onPressed: () {
+                                                                                  Get.back();
+                                                                                  Get.to(const FundWallet());
+                                                                                },
+                                                                                style: ElevatedButton.styleFrom(
+                                                                                  backgroundColor: brandTwo,
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(8),
+                                                                                  ),
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                                                                                  textStyle: const TextStyle(color: brandFour, fontSize: 13),
+                                                                                ),
+                                                                                child: const Text(
+                                                                                  "Fund Wallet",
+                                                                                  style: TextStyle(
+                                                                                    color: Colors.white,
+                                                                                    fontWeight: FontWeight.w700,
+                                                                                    fontSize: 16,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  );
+                                                });
+                                          }
+                                        },
+                                        child: const Text(
+                                          'Verify BVN',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                        // GFButton(
+                        //     onPressed: () {
+                        //       if ((int.tryParse(userController
+                        //               .user[0].userWalletBalance)!) >
+                        //           100) {
+                        //         if (validateBvn(_bvnController.text.trim()) ==
+                        //             "") {
+                        //           verifyBVN();
+                        //         } else {
+                        //           Get.snackbar(
+                        //             "Invalid",
+                        //             'Please fill all the form properly to proceed',
+                        //             animationDuration:
+                        //                 const Duration(seconds: 1),
+                        //             backgroundColor: Colors.red,
+                        //             colorText: Colors.white,
+                        //             snackPosition: SnackPosition.BOTTOM,
+                        //           );
+                        //         }
+                        //       } else {
+                        //         Get.bottomSheet(
+                        //           SizedBox(
+                        //             height: 200,
+                        //             child: ClipRRect(
+                        //               borderRadius: const BorderRadius.only(
+                        //                 topLeft: Radius.circular(30.0),
+                        //                 topRight: Radius.circular(30.0),
+                        //               ),
+                        //               child: Column(
+                        //                 children: [
+                        //                   const SizedBox(
+                        //                     height: 50,
+                        //                   ),
+                        //                   Text(
+                        //                     'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                        //                     style: TextStyle(
+                        //                       fontSize: 14,
+                        //                       color: Theme.of(context)
+                        //                           .primaryColor,
+                        //                       fontFamily: "DefaultFontFamily",
+                        //                     ),
+                        //                   ),
+                        //                   const SizedBox(
+                        //                     height: 10,
+                        //                   ),
+                        //                   GFButton(
+                        //                     onPressed: () {
+                        //                       Get.back();
+                        //                       Get.to(const FundWallet());
+                        //                     },
+                        //                     shape: GFButtonShape.pills,
+                        //                     text: "Fund Wallet",
+                        //                     fullWidthButton: true,
+                        //                     color: brandOne,
+                        //                     textStyle: const TextStyle(
+                        //                       color: Colors.white,
+                        //                       fontSize: 12,
+                        //                       fontFamily: "DefaultFontFamily",
+                        //                     ),
+                        //                   )
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         );
+                        //       }
+                        //     },
+                        //     shape: GFButtonShape.pills,
+                        //     text: "Verify BVN",
+                        //     fullWidthButton: true,
+                        //     icon: const Icon(
+                        //       Icons.arrow_right_outlined,
+                        //       color: Colors.white,
+                        //       size: 14,
+                        //     ),
+                        //     color: brandOne,
+                        //     textStyle: const TextStyle(
+                        //       color: Colors.white,
+                        //       fontSize: 12,
+                        //       fontFamily: "DefaultFontFamily",
+                        //     ),
+                        //   )
+
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -416,35 +622,55 @@ class _BvnPageState extends State<BvnPage> {
 
 class KycPage extends StatefulWidget {
   String bvnValue;
-  KycPage({Key? key, required this.bvnValue}) : super(key: key);
+  KycPage({super.key, required this.bvnValue});
 
   @override
   _KycPageState createState() => _KycPageState();
 }
 
 final TextEditingController _kycController = TextEditingController();
+final _kycformKey = GlobalKey<FormState>();
 bool _isUploading = false;
 
 class _KycPageState extends State<KycPage> {
 //upload image
   File? selectedImage;
-  Future getImage() async {
-    var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  PlatformFile? _platformFile;
+  Future selectFile(context) async {
+    final file = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['png', 'jpg', 'jpeg']);
 
-    setState(() {
-      selectedImage = File(_image!.path); // won't have any error now
-    });
-    uploadImg();
+    if (file != null) {
+      setState(() {
+        selectedImage = File(file.files.single.path!);
+        _platformFile = file.files.first;
+      });
+      uploadImg(context);
+    }
   }
+  // Future getImage() async {
+  //   var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-  Future uploadImg() async {
+  //   setState(() {
+  //     selectedImage = File(_image!.path);
+  //   });
+  //   uploadImg();
+  // }
+
+  Future uploadImg(context) async {
     setState(() {
       _isUploading = true;
     });
     var userIdUpdate = FirebaseFirestore.instance.collection('accounts');
+    print('userIdUpdate');
+    print(userIdUpdate);
 
     FirebaseStorage storage = FirebaseStorage.instance;
+    print('storage');
+    print(storage);
     String fileName = basename(selectedImage!.path);
+    print('fileName');
+    print(fileName);
     Reference ref = storage.ref().child(fileName);
     UploadTask uploadTask = ref.putFile(selectedImage!);
     var downloadURL =
@@ -458,67 +684,116 @@ class _KycPageState extends State<KycPage> {
         _isUploading = false;
       });
 
-      Get.snackbar(
-        "Image uploaded!",
-        'Your ID card image has been uploaded successfully',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Your ID card image has been uploaded successfully!!',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Image uploaded!",
+      //   'Your ID card image has been uploaded successfully',
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: brandOne,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.TOP,
+      // );
     }).catchError((error) {
-      Get.snackbar(
-        "Error",
-        error.toString(),
-        animationDuration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      print(error.toString());
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: brandOne,
+          message: 'Error! :(.${error.toString()}',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Error",
+      //   error.toString(),
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     });
   }
+
+  // validateAddress(address) {
+  //   if (address.isEmpty) {
+  //     return 'Address cannot be empty cannot be empty';
+  //   }
+
+  //   return null;
+  // }
 
   //Phone number
   final kyc = TextFormField(
     enableSuggestions: true,
+    autovalidateMode: AutovalidateMode.onUserInteraction,
     cursorColor: Colors.black,
     controller: _kycController,
-    style: TextStyle(
+    style: const TextStyle(
       color: Colors.black,
     ),
     keyboardType: TextInputType.multiline,
     decoration: InputDecoration(
-      label: Text(
-        "KYC : residential address",
-        style: TextStyle(
-          color: Colors.black,
-          fontFamily: "DefaultFontFamily",
-        ),
-      ),
+      // label: Text(
+      //   "KYC : residential address",
+      //   style: GoogleFonts.nunito(
+      //     color: Colors.grey,
+      //     fontSize: 12,
+      //     fontWeight: FontWeight.w400,
+      //   ),
+      // ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(
+          color: Color(0xffE0E0E0),
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: brandOne, width: 2.0),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: brandOne, width: 2.0),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xffE0E0E0),
+        ),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: brandOne, width: 2.0),
+      errorBorder: const OutlineInputBorder(
+        borderSide:
+            BorderSide(color: Colors.red, width: 2.0), // Change color to yellow
       ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: brandOne, width: 2.0),
-      ),
-      filled: true,
+      filled: false,
+      contentPadding: const EdgeInsets.all(14),
       fillColor: brandThree,
-      hintText: 'Enter your KYC',
-      hintStyle: TextStyle(
-        color: Colors.black,
-        fontFamily: "DefaultFontFamily",
-        fontSize: 13,
+      hintText: 'Enter your KYC : residential address...',
+      hintStyle: GoogleFonts.nunito(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
       ),
     ),
+    minLines: 3,
     maxLines: 5,
     maxLength: 200,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Address cannot be empty cannot be empty';
+      }
+
+      return null;
+    },
   );
   @override
   initState() {
@@ -529,9 +804,9 @@ class _KycPageState extends State<KycPage> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: _isUploading,
-      progressIndicator: Center(
+      progressIndicator: const Center(
         child: CircularProgressIndicator(
-          color: Theme.of(context).primaryColor,
+          color: brandTwo,
         ),
       ),
       child: Scaffold(
@@ -549,8 +824,9 @@ class _KycPageState extends State<KycPage> {
               color: Theme.of(context).primaryColor,
             ),
           ),
+          centerTitle: true,
           title: Text(
-            '',
+            'KYC Details',
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 16,
@@ -560,110 +836,249 @@ class _KycPageState extends State<KycPage> {
         ),
         body: Stack(
           children: [
-            Positioned.fill(
-              child: Opacity(
-                opacity: 0.3,
-                child: Image.asset(
-                  'assets/icons/RentSpace-icon.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Positioned.fill(
+            //   child: Opacity(
+            //     opacity: 0.3,
+            //     child: Image.asset(
+            //       'assets/icons/RentSpace-icon.png',
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
             ListView(
               children: [
-                SizedBox(
-                  height: 50,
+                const SizedBox(
+                  height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          getImage();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: brandThree,
-                            border: Border.all(
-                              color: brandOne, // Color of the border
-                              width: 2.0, // Width of the border
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.add_a_photo_outlined,
-                                color: Colors.black,
-                                size: 30,
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      Form(
+                        key: _kycformKey,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12,
+                                bottom: 12,
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Click to upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: "DefaultFontFamily",
+                              child: Container(
+                                alignment: Alignment.topLeft,
+                                child: const Text(
+                                  'KYC: Residential Address',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            kyc,
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 40,
+
+                      const Text(
+                        "Upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: brandOne,
+                            fontWeight: FontWeight.w400),
                       ),
-                      kyc,
-                      SizedBox(
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Center(
+                      //   child: Text(
+                      //     'File should be jpg, png,jpeg',
+                      //     textAlign: TextAlign.center,
+                      //     style: TextStyle(
+                      //         fontSize: 15, color: Colors.grey.shade500),
+                      //   ),
+                      // ),
+                      const SizedBox(
                         height: 20,
                       ),
-                      Center(
-                        child: GFButton(
-                          onPressed: () {
-                            if (_kycController.text.trim() != "" &&
-                                _IDImage != "") {
-                              Get.to(BvnAndKycConfirmPage(
-                                  bvnValue: widget.bvnValue,
-                                  kycValue: _kycController.text.trim(),
-                                  idCardValue: _IDImage));
-                            } else {
-                              Get.snackbar(
-                                "Uncompleted!",
-                                'Please fill in your KYC correctly and upload a valid ID card image to verify.',
-                                animationDuration: Duration(seconds: 1),
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                                snackPosition: SnackPosition.BOTTOM,
-                              );
-                            }
-                          },
-                          shape: GFButtonShape.pills,
-                          text: "Next",
-                          icon: Icon(
-                            Icons.arrow_right_outlined,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                          color: brandOne,
-                          fullWidthButton: true,
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: "DefaultFontFamily",
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      InkWell(
+                        onTap: () {
+                          selectFile(context);
+                        },
+                        child: DottedBorder(
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(10),
+                          dashPattern: const [10, 4],
+                          strokeCap: StrokeCap.round,
+                          color: brandTwo,
+                          child: Container(
+                            // decoration: BoxDecoration(
+                            //   color: brandThree,
+                            //   border: Border.all(
+                            //     color: brandOne, // Color of the border
+                            //     width: 2.0, // Width of the border
+                            //   ),
+                            //   borderRadius: BorderRadius.circular(10),
+                            // ),
+                            width: double.infinity,
+                            height: 150,
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Iconsax.folder_open,
+                                  color: brandTwo,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Select You File [ jpg, png, jpeg ]",
+                                  style: TextStyle(
+                                    color: brandOne,
+                                    fontSize: 12,
+                                    fontFamily: "DefaultFontFamily",
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: brandThree,
+                        //     border: Border.all(
+                        //       color: brandOne, // Color of the border
+                        //       width: 2.0, // Width of the border
+                        //     ),
+                        //     borderRadius: BorderRadius.circular(10),
+                        //   ),
+                        //   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        //   child: const Column(
+                        //     children: [
+                        //       Icon(
+                        //         Icons.add_a_photo_outlined,
+                        //         color: Colors.black,
+                        //         size: 30,
+                        //       ),
+                        //       SizedBox(
+                        //         height: 10,
+                        //       ),
+                        //       Text(
+                        //         "Click to upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
+                        //         style: TextStyle(
+                        //           color: Colors.black,
+                        //           fontSize: 12,
+                        //           fontFamily: "DefaultFontFamily",
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ),
+                      selectedImage != null
+                          ? Container(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Selected File',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade400,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.shade200,
+                                              offset: const Offset(0, 1),
+                                              blurRadius: 3,
+                                              spreadRadius: 2,
+                                            )
+                                          ]),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.file(
+                                                selectedImage!,
+                                                width: 70,
+                                              )),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  _platformFile!.name,
+                                                  style: const TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.black),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  '${(_platformFile!.size / 1024).ceil()} KB',
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color:
+                                                          Colors.grey.shade500),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  // MaterialButton(
+                                  //   minWidth: double.infinity,
+                                  //   height: 45,
+                                  //   onPressed: () {},
+                                  //   color: Colors.black,
+                                  //   child: Text('Upload', style: TextStyle(color: Colors.white),),
+                                  // )
+                                ],
+                              ))
+                          : Container(),
+                      // const SizedBox(
+                      //   height: 40,
+                      // ),
+
                       const SizedBox(
                         height: 30,
                       ),
@@ -671,6 +1086,64 @@ class _KycPageState extends State<KycPage> {
                   ),
                 ),
               ],
+            ),
+            Positioned(
+              bottom: 30,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Container(
+                    // width: MediaQuery.of(context).size.width * 2,
+                    alignment: Alignment.center,
+                    // height: 110.h,
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(400, 50),
+                            backgroundColor: brandTwo,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (_kycformKey.currentState!.validate() &&
+                                _IDImage != "") {
+                              Get.to(BvnAndKycConfirmPage(
+                                  bvnValue: widget.bvnValue,
+                                  kycValue: _kycController.text.trim(),
+                                  idCardValue: _IDImage));
+                            } else {
+                              showTopSnackBar(
+                                Overlay.of(context),
+                                CustomSnackBar.error(
+                                  // backgroundColor: brandOne,
+                                  message:
+                                      ' Please fill in your KYC correctly and upload a valid ID card image to verify.',
+                                  textStyle: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text(
+                            'Next',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -682,17 +1155,18 @@ class _KycPageState extends State<KycPage> {
 class BvnAndKycConfirmPage extends StatefulWidget {
   String bvnValue, kycValue, idCardValue;
   BvnAndKycConfirmPage({
-    Key? key,
+    super.key,
     required this.bvnValue,
     required this.kycValue,
     required this.idCardValue,
-  }) : super(key: key);
+  });
 
   @override
   _BvnAndKycConfirmPageState createState() => _BvnAndKycConfirmPageState();
 }
 
 final TextEditingController _passwordController = TextEditingController();
+final _kycBvnPasswordFormKey = GlobalKey<FormState>();
 bool obscurity = true;
 Icon lockIcon = LockIcon().open;
 String _userPassword = "";
@@ -731,7 +1205,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
     }
   }
 
-  Future verify() async {
+  Future verify(context) async {
     var userUpdate = FirebaseFirestore.instance.collection('accounts');
 
     await userUpdate.doc(userId).update({
@@ -741,98 +1215,248 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
       'id_card': widget.idCardValue,
       'status': 'verified'
     }).then((value) {
-      Get.snackbar(
-        "Success",
-        'BVN & KYC updated!',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-
-      Get.bottomSheet(
-        SizedBox(
-          height: 300,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-            child: Container(
-              color: brandOne,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      'Your BVN & KYC has been updated successfully. Proceed to add Card',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontFamily: "DefaultFontFamily",
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GFButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.to(AddCard());
-                          },
-                          shape: GFButtonShape.pills,
-                          text: "Proceed",
-                          fullWidthButton: false,
-                          color: Colors.greenAccent,
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: "DefaultFontFamily",
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GFButton(
-                          onPressed: () {
-                            for (int i = 0; i < 4; i++) {
-                              Get.back();
-                            }
-                          },
-                          shape: GFButtonShape.pills,
-                          text: "Dismiss",
-                          fullWidthButton: false,
-                          color: Colors.red,
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: "DefaultFontFamily",
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'BVN & KYC updated !!.',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
           ),
         ),
       );
+      // Get.snackbar(
+      //   "Success",
+      //   'BVN & KYC updated!',
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: brandOne,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.TOP,
+      // );
+
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AlertDialog.adaptive(
+                  contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
+                  elevation: 0,
+                  alignment: Alignment.bottomCenter,
+                  insetPadding: const EdgeInsets.all(0),
+                  scrollable: true,
+                  title: null,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  content: SizedBox(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 40),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text(
+                                      'Your BVN & KYC has been updated successfully.\n Proceed to add Card',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
+                                        color: brandOne,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            Get.to(const AddCard());
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: brandTwo,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 15),
+                                            textStyle: const TextStyle(
+                                                color: brandFour, fontSize: 13),
+                                          ),
+                                          child: const Text(
+                                            "Proceed",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            for (int i = 0; i < 4; i++) {
+                                              Get.back();
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 15),
+                                            textStyle: const TextStyle(
+                                                color: brandFour, fontSize: 13),
+                                          ),
+                                          child: const Text(
+                                            "Dismiss",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          });
+
+      // Get.bottomSheet(
+      //   SizedBox(
+      //     height: 300,
+      //     child: ClipRRect(
+      //       borderRadius: const BorderRadius.only(
+      //         topLeft: Radius.circular(30.0),
+      //         topRight: Radius.circular(30.0),
+      //       ),
+      //       child: Container(
+      //         color: brandOne,
+      //         child: Column(
+      //           children: [
+      //             const SizedBox(
+      //               height: 50,
+      //             ),
+      //             const Padding(
+      //               padding: EdgeInsets.all(20.0),
+      //               child: Text(
+      //                 'Your BVN & KYC has been updated successfully. Proceed to add Card',
+      //                 style: TextStyle(
+      //                   fontSize: 16,
+      //                   color: Colors.white,
+      //                   fontFamily: "DefaultFontFamily",
+      //                 ),
+      //               ),
+      //             ),
+      //             Padding(
+      //               padding: const EdgeInsets.all(20.0),
+      //               child: Row(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 children: [
+      //                   GFButton(
+      //                     onPressed: () {
+      //                       Get.back();
+      //                       Get.to(const AddCard());
+      //                     },
+      //                     shape: GFButtonShape.pills,
+      //                     text: "Proceed",
+      //                     fullWidthButton: false,
+      //                     color: Colors.greenAccent,
+      //                     textStyle: const TextStyle(
+      //                       color: Colors.white,
+      //                       fontSize: 12,
+      //                       fontFamily: "DefaultFontFamily",
+      //                     ),
+      //                   ),
+      //                   const SizedBox(
+      //                     width: 20,
+      //                   ),
+      //                   GFButton(
+      //                     onPressed: () {
+      //                       for (int i = 0; i < 4; i++) {
+      //                         Get.back();
+      //                       }
+      //                     },
+      //                     shape: GFButtonShape.pills,
+      //                     text: "Dismiss",
+      //                     fullWidthButton: false,
+      //                     color: Colors.red,
+      //                     textStyle: const TextStyle(
+      //                       color: Colors.white,
+      //                       fontSize: 12,
+      //                       fontFamily: "DefaultFontFamily",
+      //                     ),
+      //                   )
+      //                 ],
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // );
     }).catchError((error) {
-      Get.snackbar(
-        "Error",
-        error.toString(),
-        animationDuration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: brandOne,
+          message: 'Error! :(. ${error.toString()}',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Error",
+      //   error.toString(),
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     });
   }
 
@@ -850,42 +1474,60 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
       enableSuggestions: true,
       cursorColor: Colors.black,
       controller: _passwordController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2.0,
+          ),
+        ),
         suffix: InkWell(
           onTap: visibility,
           child: lockIcon,
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
-        hintText: 'Enter password to submit',
-        hintStyle: TextStyle(
+        suffixIconColor: Colors.black,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
+        hintText: 'Enter Password to Submit',
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
+      validator: (val) {
+        if (val == null || val.isEmpty) {
+          return 'Input your password';
+        }
+        return null;
+      },
     );
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
         backgroundColor: Theme.of(context).canvasColor,
+        elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -896,71 +1538,43 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: true,
         title: Text(
-          'Confirm details',
-          style: TextStyle(
+          'Confirm Details',
+          style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
             fontSize: 16,
-            fontFamily: "DefaultFontFamily",
-            fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: 0.3,
+          //     child: Image.asset(
+          //       'assets/icons/RentSpace-icon.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           ListView(
             children: [
-              SizedBox(
-                height: 50,
-              ),
+              // const SizedBox(
+              //   height: 50,
+              // ),
               Padding(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 5, 0, 5),
-                      child: Text(
-                        "ID card:",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 1.4,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                    //ID Cardvalue
                     Container(
-                      decoration: BoxDecoration(
-                        color: brandThree,
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
-                      child: Image.network(
-                        widget.idCardValue,
-                        height: 200,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                           colors: [
@@ -969,74 +1583,185 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                           ],
                         ),
                       ),
-                      padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "BVN: " + widget.bvnValue,
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "DefaultFontFamily",
-                              letterSpacing: 0.5,
+                            "BVN: ${widget.bvnValue}",
+                            style: GoogleFonts.nunito(
+                              fontSize: 18.0,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
+                          const SizedBox(
+                            height: 20,
                           ),
                           Text(
-                            "KYC: " + widget.kycValue,
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "DefaultFontFamily",
-                              letterSpacing: 0.5,
+                            "KYC: ${widget.kycValue}",
+                            style: GoogleFonts.nunito(
+                              fontSize: 18.0,
                               color: Colors.white,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 5, 0, 5),
+                      child: Text(
+                        "ID card:",
+                        style: GoogleFonts.nunito(
+                          fontSize: 18,
+                          color: brandOne,
+                        ),
+                      ),
+                    ),
+                    //ID Cardvalue
+                    Container(
+                      decoration: BoxDecoration(
+                        color: brandTwo,
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+                      child: Image.network(
+                        widget.idCardValue,
+                        height: 200,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const SizedBox(
                       height: 10.0,
                     ),
-                    password,
-                    SizedBox(
+                    Form(
+                      key: _kycBvnPasswordFormKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'Enter Password to Submit',
+                              style: GoogleFonts.nunito(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          password,
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
                       height: 60,
                     ),
 
-                    GFButton(
-                      onPressed: () {
-                        if (_passwordController.text.trim() != "" &&
-                            _userPassword != "" &&
-                            _passwordController.text.trim() == _userPassword) {
-                          verify();
-                        } else {
-                          Get.snackbar(
-                            "Incorrect password!",
-                            'Please enter the correct password to proceed.',
-                            animationDuration: Duration(seconds: 1),
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-                        }
-                      },
-                      shape: GFButtonShape.pills,
-                      text: "Submit",
-                      fullWidthButton: true,
-                      icon: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Colors.white,
-                        size: 14,
-                      ),
-                      color: brandOne,
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: "DefaultFontFamily",
+                    // GFButton(
+                    //   onPressed: () {
+                    //     if (_passwordController.text.trim() != "" &&
+                    //         _userPassword != "" &&
+                    //         _passwordController.text.trim() == _userPassword) {
+                    //       verify(context);
+                    //     } else {
+                    //       showTopSnackBar(
+                    //         Overlay.of(context),
+                    //         CustomSnackBar.error(
+                    //           // backgroundColor: brandOne,
+                    //           message:
+                    //               'Incorrect password! :(. Please enter the correct password to proceed.',
+                    //           textStyle: GoogleFonts.nunito(
+                    //             fontSize: 14,
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.w700,
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }
+                    //   },
+                    //   shape: GFButtonShape.pills,
+                    //   text: "Submit",
+                    //   fullWidthButton: true,
+                    //   icon: const Icon(
+                    //     Icons.arrow_right_outlined,
+                    //     color: Colors.white,
+                    //     size: 14,
+                    //   ),
+                    //   color: brandOne,
+                    //   textStyle: const TextStyle(
+                    //     color: Colors.white,
+                    //     fontSize: 12,
+                    //     fontFamily: "DefaultFontFamily",
+                    //   ),
+                    // ),
+
+                    Center(
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 2,
+                        alignment: Alignment.center,
+                        // height: 110.h,
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(400, 50),
+                                backgroundColor:
+                                    // _kycBvnPasswordFormKey
+                                    //         .currentState!
+                                    //         .validate()
+                                    //     ?
+                                    brandTwo
+                                // : brandThree
+                                ,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                if (_kycBvnPasswordFormKey.currentState!
+                                        .validate() &&
+                                    _userPassword != "" &&
+                                    _passwordController.text.trim() ==
+                                        _userPassword) {
+                                  verify(context);
+                                } else {
+                                  showTopSnackBar(
+                                    Overlay.of(context),
+                                    CustomSnackBar.error(
+                                      // backgroundColor: brandOne,
+                                      message:
+                                          'Incorrect password! :( . Please enter the correct password to proceed.',
+                                      textStyle: GoogleFonts.nunito(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text(
+                                'Submit',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+
                     const SizedBox(
                       height: 30,
                     ),

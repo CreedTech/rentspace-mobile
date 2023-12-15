@@ -137,7 +137,7 @@ class _SavingsPageState extends State<SavingsPage> {
       () => Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
@@ -149,17 +149,17 @@ class _SavingsPageState extends State<SavingsPage> {
           ),
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 25, 10, 25),
+                  padding: const EdgeInsets.fromLTRB(10, 25, 10, 25),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
@@ -171,8 +171,8 @@ class _SavingsPageState extends State<SavingsPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Total Savings" + dum2,
-                        style: TextStyle(
+                        "Total Savings$dum2",
+                        style: const TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: "DefaultFontFamily",
@@ -182,7 +182,7 @@ class _SavingsPageState extends State<SavingsPage> {
                       ),
                       Text(
                         nairaFormaet.format(totalSavings).toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 40.0,
                           fontFamily: "DefaultFontFamily",
                           letterSpacing: 0.5,
@@ -190,7 +190,7 @@ class _SavingsPageState extends State<SavingsPage> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Container(
@@ -200,7 +200,7 @@ class _SavingsPageState extends State<SavingsPage> {
                           color: brandFour,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -220,30 +220,30 @@ class _SavingsPageState extends State<SavingsPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Theme.of(context).canvasColor,
-                  image: DecorationImage(
-                    image: AssetImage("assets/icons/RentSpace-icon.png"),
-                    fit: BoxFit.cover,
-                    opacity: 0.3,
-                  ),
-                  borderRadius: BorderRadius.only(
+                  // image: const DecorationImage(
+                  //   image: AssetImage("assets/icons/RentSpace-icon.png"),
+                  //   fit: BoxFit.cover,
+                  //   opacity: 0.3,
+                  // ),
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
                 ),
                 child: ListView(
                   shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -252,11 +252,11 @@ class _SavingsPageState extends State<SavingsPage> {
                         InkWell(
                           onTap: () {
                             (rentController.rent.isEmpty)
-                                ? Get.to(SpaceRentIntro())
-                                : Get.to(RentSpaceList());
+                                ? Get.to(const SpaceRentIntro())
+                                : Get.to(const RentSpaceList());
                           },
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width / 2.2,
                             decoration: BoxDecoration(
                               color: brandFive,
@@ -265,7 +265,7 @@ class _SavingsPageState extends State<SavingsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Image.asset(
@@ -273,10 +273,10 @@ class _SavingsPageState extends State<SavingsPage> {
                                   height: 25,
                                   width: 25,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 2,
                                 ),
-                                Text(
+                                const Text(
                                   "SpaceRent",
                                   style: TextStyle(
                                     fontSize: 15.0,
@@ -286,10 +286,10 @@ class _SavingsPageState extends State<SavingsPage> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 1,
                                 ),
-                                Text(
+                                const Text(
                                   "Target savings for rent up to 14% interest per annum.",
                                   style: TextStyle(
                                     fontSize: 12.0,
@@ -298,16 +298,16 @@ class _SavingsPageState extends State<SavingsPage> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 24,
                                 ),
                                 (rentController.rent.isNotEmpty)
-                                    ? SizedBox(
+                                    ? const SizedBox(
                                         height: 30,
                                       )
                                     : GFButton(
                                         onPressed: () {
-                                          Get.to(SpaceRentIntro());
+                                          Get.to(const SpaceRentIntro());
                                         },
                                         color: btnColor,
                                         text: "START SAVING",
@@ -318,226 +318,228 @@ class _SavingsPageState extends State<SavingsPage> {
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            (tankController.tank.isEmpty)
-                                ? Get.to(SpaceTankIntro())
-                                : Get.to(SpaceTankList());
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 2.2,
-                            decoration: BoxDecoration(
-                              color: brandOne,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Image.asset(
-                                  "assets/icons/savings/spacetank.png",
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "SpaceTank",
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontFamily: "DefaultFontFamily",
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 1,
-                                ),
-                                Text(
-                                  "Lock in your savings and get 12% interest upfront.",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.5,
-                                    fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                (tankController.tank.isNotEmpty)
-                                    ? SizedBox(
-                                        height: 30,
-                                      )
-                                    : GFButton(
-                                        onPressed: () {
-                                          Get.to(SpaceTankIntro());
-                                        },
-                                        color: btnColor,
-                                        text: "START SAVING",
-                                        shape: GFButtonShape.pills,
-                                        fullWidthButton: false,
-                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     (tankController.tank.isEmpty)
+                        //         ? Get.to(const SpaceTankIntro())
+                        //         : Get.to(const SpaceTankList());
+                        //   },
+                        //   child: Container(
+                        //     padding: const EdgeInsets.all(10),
+                        //     width: MediaQuery.of(context).size.width / 2.2,
+                        //     decoration: BoxDecoration(
+                        //       color: brandOne,
+                        //       borderRadius: BorderRadius.circular(10),
+                        //     ),
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         const SizedBox(
+                        //           height: 10,
+                        //         ),
+                        //         Image.asset(
+                        //           "assets/icons/savings/spacetank.png",
+                        //           height: 25,
+                        //           width: 25,
+                        //         ),
+                        //         const SizedBox(
+                        //           height: 5,
+                        //         ),
+                        //         const Text(
+                        //           "SpaceTank",
+                        //           style: TextStyle(
+                        //             fontSize: 15.0,
+                        //             fontFamily: "DefaultFontFamily",
+                        //             fontWeight: FontWeight.bold,
+                        //             letterSpacing: 0.5,
+                        //             color: Colors.white,
+                        //           ),
+                        //         ),
+                        //         const SizedBox(
+                        //           height: 1,
+                        //         ),
+                        //         const Text(
+                        //           "Lock in your savings and get 12% interest upfront.",
+                        //           style: TextStyle(
+                        //             fontSize: 12.0,
+                        //             letterSpacing: 0.5,
+                        //             fontFamily: "DefaultFontFamily",
+                        //             color: Colors.white,
+                        //           ),
+                        //         ),
+                        //         const SizedBox(
+                        //           height: 20,
+                        //         ),
+                        //         (tankController.tank.isNotEmpty)
+                        //             ? const SizedBox(
+                        //                 height: 30,
+                        //               )
+                        //             : GFButton(
+                        //                 onPressed: () {
+                        //                   Get.to(const SpaceTankIntro());
+                        //                 },
+                        //                 color: btnColor,
+                        //                 text: "START SAVING",
+                        //                 shape: GFButtonShape.pills,
+                        //                 fullWidthButton: false,
+                        //               ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                     
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            (boxController.box.isEmpty)
-                                ? Get.to(SpaceBoxIntro())
-                                : Get.to(SpaceBoxList());
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 2.2,
-                            decoration: BoxDecoration(
-                              color: brandOne,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Image.asset(
-                                  "assets/icons/savings/spacebox.png",
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "SpaceBox",
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                    fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Save and earn up to 14% interest per annum",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.5,
-                                    fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                (boxController.box.isNotEmpty)
-                                    ? SizedBox(
-                                        height: 35,
-                                      )
-                                    : GFButton(
-                                        onPressed: () {
-                                          Get.to(SpaceBoxIntro());
-                                        },
-                                        color: btnColor,
-                                        text: "START SAVING",
-                                        shape: GFButtonShape.pills,
-                                        fullWidthButton: false,
-                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            (depositController.deposit.isEmpty)
-                                ? Get.to(SpaceDepositIntro())
-                                : Get.to(SpaceDepositList());
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: MediaQuery.of(context).size.width / 2.2,
-                            decoration: BoxDecoration(
-                              color: brandFive,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Image.asset(
-                                  "assets/icons/savings/spacedeposit.png",
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "SpaceDeposit",
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                    fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 1,
-                                ),
-                                Text(
-                                  "Enjoy up to 3.5% quarterly interest payment",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.5,
-                                    fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                (depositController.deposit.isNotEmpty)
-                                    ? SizedBox(
-                                        height: 30,
-                                      )
-                                    : GFButton(
-                                        onPressed: () {
-                                          Get.to(SpaceDepositIntro());
-                                        },
-                                        color: btnColor,
-                                        text: "START SAVING",
-                                        shape: GFButtonShape.pills,
-                                        fullWidthButton: false,
-                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     InkWell(
+                    //       onTap: () {
+                    //         (boxController.box.isEmpty)
+                    //             ? Get.to(const SpaceBoxIntro())
+                    //             : Get.to(const SpaceBoxList());
+                    //       },
+                    //       child: Container(
+                    //         padding: const EdgeInsets.all(10),
+                    //         width: MediaQuery.of(context).size.width / 2.2,
+                    //         decoration: BoxDecoration(
+                    //           color: brandOne,
+                    //           borderRadius: BorderRadius.circular(10),
+                    //         ),
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             const SizedBox(
+                    //               height: 10,
+                    //             ),
+                    //             Image.asset(
+                    //               "assets/icons/savings/spacebox.png",
+                    //               height: 25,
+                    //               width: 25,
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 5,
+                    //             ),
+                    //             const Text(
+                    //               "SpaceBox",
+                    //               style: TextStyle(
+                    //                 fontSize: 15.0,
+                    //                 fontWeight: FontWeight.bold,
+                    //                 letterSpacing: 0.5,
+                    //                 fontFamily: "DefaultFontFamily",
+                    //                 color: Colors.white,
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 5,
+                    //             ),
+                    //             const Text(
+                    //               "Save and earn up to 14% interest per annum",
+                    //               style: TextStyle(
+                    //                 fontSize: 12.0,
+                    //                 letterSpacing: 0.5,
+                    //                 fontFamily: "DefaultFontFamily",
+                    //                 color: Colors.white,
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 20,
+                    //             ),
+                    //             (boxController.box.isNotEmpty)
+                    //                 ? const SizedBox(
+                    //                     height: 35,
+                    //                   )
+                    //                 : GFButton(
+                    //                     onPressed: () {
+                    //                       Get.to(const SpaceBoxIntro());
+                    //                     },
+                    //                     color: btnColor,
+                    //                     text: "START SAVING",
+                    //                     shape: GFButtonShape.pills,
+                    //                     fullWidthButton: false,
+                    //                   ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     InkWell(
+                    //       onTap: () {
+                    //         (depositController.deposit.isEmpty)
+                    //             ? Get.to(const SpaceDepositIntro())
+                    //             : Get.to(const SpaceDepositList());
+                    //       },
+                    //       child: Container(
+                    //         padding: const EdgeInsets.all(10),
+                    //         width: MediaQuery.of(context).size.width / 2.2,
+                    //         decoration: BoxDecoration(
+                    //           color: brandFive,
+                    //           borderRadius: BorderRadius.circular(10),
+                    //         ),
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             const SizedBox(
+                    //               height: 10,
+                    //             ),
+                    //             Image.asset(
+                    //               "assets/icons/savings/spacedeposit.png",
+                    //               height: 25,
+                    //               width: 25,
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 5,
+                    //             ),
+                    //             const Text(
+                    //               "SpaceDeposit",
+                    //               style: TextStyle(
+                    //                 fontSize: 15.0,
+                    //                 fontWeight: FontWeight.bold,
+                    //                 letterSpacing: 0.5,
+                    //                 fontFamily: "DefaultFontFamily",
+                    //                 color: Colors.white,
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 1,
+                    //             ),
+                    //             const Text(
+                    //               "Enjoy up to 3.5% quarterly interest payment",
+                    //               style: TextStyle(
+                    //                 fontSize: 12.0,
+                    //                 letterSpacing: 0.5,
+                    //                 fontFamily: "DefaultFontFamily",
+                    //                 color: Colors.white,
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 24,
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 2,
+                    //             ),
+                    //             (depositController.deposit.isNotEmpty)
+                    //                 ? const SizedBox(
+                    //                     height: 30,
+                    //                   )
+                    //                 : GFButton(
+                    //                     onPressed: () {
+                    //                       Get.to(const SpaceDepositIntro());
+                    //                     },
+                    //                     color: btnColor,
+                    //                     text: "START SAVING",
+                    //                     shape: GFButtonShape.pills,
+                    //                     fullWidthButton: false,
+                    //                   ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                 
                   ],
                 ),
               ),

@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentspace/controller/auto_controller.dart';
 import 'package:rentspace/controller/box_controller.dart';
 import 'package:rentspace/controller/deposit_controller.dart';
@@ -10,6 +13,7 @@ import 'package:rentspace/controller/withdrawal_controller.dart';
 import 'package:rentspace/view/actions/immediate_wallet_funding.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
+import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dashboard/user_profile.dart';
 import 'package:rentspace/view/portfolio/portfolio_page.dart';
 import 'package:rentspace/view/savings/savings_page.dart';
@@ -54,8 +58,9 @@ List<Widget> listWidgets = [
   Dashboard(),
   SavingsPage(),
   const PortfolioPage(),
-  UtilitiesPage(),
-  UserProfile()
+  // UtilitiesPage(),
+  // UserProfile()
+  SettingsPage()
 ];
 int _selectedIndex = 0;
 
@@ -91,6 +96,7 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   bool _hasPutController = false;
+
   @override
   initState() {
     super.initState();
@@ -123,51 +129,67 @@ class _FirstPageState extends State<FirstPage> {
     return (!_hasPutController)
         ? Scaffold(
             backgroundColor: Theme.of(context).canvasColor,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                SizedBox(
-                  height: 30,
-                  width: 90,
-                  child: Container(
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/icons/RentSpace-1011.png"),
-                        fit: BoxFit.cover,
-                      ),
-                      color: Colors.transparent,
-                    ),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage(
+                    'assets/slider3.png',
+                  ),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.5), // Adjust the opacity here
+                    BlendMode.darken,
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Welcome Spacer",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  SizedBox(
+                    height: 30,
+                    width: 90,
+                    child: Container(
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/icons/RentSpace-1011.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        color: Colors.transparent,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const CircularProgressIndicator(
-                  color: brandOne,
-                )
-              ],
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Welcome Spacer",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "DefaultFontFamily",
+                          color: Theme.of(context).canvasColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                ],
+              ),
             ),
           )
         : Scaffold(
@@ -278,6 +300,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
+  // IconData _homeIcon = Iconsax.home_21;
+  // IconData _transactionIcon = Iconsax.transaction_minus;
+  // IconData _supportIcon = Iconsax.message_notif;
+  // IconData _settingsIcon = Iconsax.setting_2;
+
+  // final IconData _defaultHomeIcon = Iconsax.home;
+  // final IconData _defaultTransactionIcon = Iconsax.transaction_minus;
+  // final IconData _defaultSupportIcon = Iconsax.message_notif;
+  // final IconData _defaultSettingsIcon = Iconsax.profile;
 
   checkStatus() {
     final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
@@ -490,6 +522,34 @@ class _HomePageState extends State<HomePage> {
     if (!mounted) return;
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      // if (index == 0) {
+      //   _homeIcon = Iconsax.home_21;
+      //   _transactionIcon = _defaultTransactionIcon;
+      //   _supportIcon = _defaultSupportIcon;
+      //   _settingsIcon = _defaultSettingsIcon;
+      // } else if (index == 1) {
+      //   _transactionIcon = Iconsax.transaction_minus5;
+      //   _supportIcon = _defaultSupportIcon;
+      //   _settingsIcon = _defaultSettingsIcon;
+      //   _homeIcon = _defaultHomeIcon;
+      // } else if (index == 2) {
+      //   _supportIcon = Iconsax.message_notif5;
+      //   _settingsIcon = _defaultSettingsIcon;
+      //   _transactionIcon = _defaultTransactionIcon;
+      //   _homeIcon = _defaultHomeIcon;
+      // } else if (index == 3) {
+      //   _settingsIcon = Icons.settings;
+      //   _supportIcon = _defaultSupportIcon;
+      //   _transactionIcon = _defaultTransactionIcon;
+      //   _homeIcon = _defaultHomeIcon;
+      // }
+
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -578,138 +638,141 @@ class _HomePageState extends State<HomePage> {
           showReleaseNotes: true,
         ),
         child: Scaffold(
-          body: listWidgets[_selectedIndex],
+          body: Center(child: listWidgets[_selectedIndex],),
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Color(0xffECF6FB),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._one,
-                  // titleTextStyle: TextStyle(),
-                  title: 'Home',
-                  description: 'All your dashboard in one place.',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  textColor: Colors.white,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: Image.asset(
-                    "assets/icons/home_icon.png",
-                    height: 30,
-                    width: 30,
-                    color: brandFour,
-                  ),
-                ),
+                icon: _selectedIndex == 0
+                    ? const Icon(Iconsax.home5)
+                    : const Icon(Iconsax.home),
+                // Showcase(
+                //   key: counter._one,
+                //   // titleTextStyle: TextStyle(),
+                //   title: 'Home',
+                //   description: 'All your dashboard in one place.',
+                //   disableAnimation: false,
+                //   showcaseBackgroundColor: brandOne,
+                //   showArrow: true,
+                //   textColor: Colors.white,
+                //   overlayPadding: const EdgeInsets.all(5),
+                //   animationDuration: const Duration(seconds: 2),
+                //   child: Image.asset(
+                //     "assets/icons/home_icon.png",
+                //     height: 30,
+                //     width: 30,
+                //     color: _selectedIndex == 0 ? brandOne : navigationcolorText,
+                //   ),
+                // ),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._two,
-                  title: 'Savings',
-                  textColor: Colors.white,
-                  description: 'Create, manange and grow your savings',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: Image.asset(
-                    "assets/icons/savings_icon.png",
-                    height: 30,
-                    width: 30,
-                    color: brandFour,
-                  ),
-                ),
+                icon: _selectedIndex == 1
+                    ? const Icon(Iconsax.activity5)
+                    : const Icon(Iconsax.activity),
+                //  Showcase(
+                //   key: counter._two,
+                //   title: 'Savings',
+                //   textColor: brandOne,
+                //   description: 'Create, manange and grow your savings',
+                //   disableAnimation: false,
+                //   showcaseBackgroundColor: brandOne,
+                //   showArrow: true,
+                //   overlayPadding: const EdgeInsets.all(5),
+                //   animationDuration: const Duration(seconds: 2),
+                //   child: Image.asset(
+                //     "assets/icons/savings_icon.png",
+                //     height: 30,
+                //     width: 30,
+                //     color: navigationcolorText,
+                //   ),
+                // ),
                 label: "Savings",
               ),
               BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._three,
-                  title: 'Portfolio',
-                  textColor: Colors.white,
-                  description:
-                      'Build your portfolio, improve your finance health',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: Image.asset(
-                    "assets/icons/portfolio_icon.png",
-                    height: 30,
-                    width: 30,
-                    color: brandFour,
-                  ),
-                ),
+                icon: _selectedIndex == 2
+                    ? const Icon(Iconsax.briefcase5)
+                    : const Icon(Iconsax.briefcase),
+                // Showcase(
+                //   key: counter._three,
+                //   title: 'Portfolio',
+                //   textColor: Colors.white,
+                //   description:
+                //       'Build your portfolio, improve your finance health',
+                //   disableAnimation: false,
+                //   showcaseBackgroundColor: brandOne,
+                //   showArrow: true,
+                //   overlayPadding: const EdgeInsets.all(5),
+                //   animationDuration: const Duration(seconds: 2),
+                //   child: Image.asset(
+                //     "assets/icons/portfolio_icon.png",
+                //     height: 30,
+                //     width: 30,
+                //     color: navigationcolorText,
+                //   ),
+                // ),
                 label: "Portfolio",
-                
               ),
+              // BottomNavigationBarItem(
+              //   icon: Showcase(
+              //     key: counter._four,
+              //     title: 'Utility',
+              //     textColor: Colors.white,
+              //     description:
+              //         'Pay your bills directly from your wallet and earn 1 SpacePoint!',
+              //     disableAnimation: false,
+              //     showcaseBackgroundColor: brandOne,
+              //     showArrow: true,
+              //     overlayPadding: const EdgeInsets.all(5),
+              //     animationDuration: const Duration(seconds: 2),
+              //     child: Image.asset(
+              //       "assets/icons/utility_icon.png",
+              //       height: 30,
+              //       width: 30,
+              //       color: brandTwo,
+              //     ),
+              //   ),
+              //   label: "Utility",
+              // ),
               BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._four,
-                  title: 'Utility',
-                  textColor: Colors.white,
-                  description:
-                      'Pay your bills directly from your wallet and earn 1 SpacePoint!',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: Image.asset(
-                    "assets/icons/utility_icon.png",
-                    height: 30,
-                    width: 30,
-                    color: brandFour,
-                  ),
-                ),
-                label: "Utility",
-                
-              ),
-              BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._five,
-                  title: 'Profile',
-                  textColor: Colors.white,
-                  description: 'Manage your account information',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: Image.asset(
-                    "assets/icons/profile_icon.png",
-                    height: 30,
-                    width: 30,
-                    color: brandFour,
-                  ),
-                ),
+                icon: _selectedIndex == 3
+                    ? const Icon(Icons.person)
+                    : const Icon(Icons.person_outline),
+                // Showcase(
+                //   key: counter._five,
+                //   title: 'Profile',
+                //   textColor: Colors.white,
+                //   description: 'Manage your account information',
+                //   disableAnimation: false,
+                //   showcaseBackgroundColor: brandOne,
+                //   showArrow: true,
+                //   overlayPadding: const EdgeInsets.all(5),
+                //   animationDuration: const Duration(seconds: 2),
+                //   child: Icon(Icons.person_outline),
+                // ),
                 label: "Profile",
-                
               ),
             ],
             currentIndex: _selectedIndex,
-            showUnselectedLabels: true,
+            // showUnselectedLabels: true,
             showSelectedLabels: true,
-            selectedItemColor: Colors.black,
-            unselectedLabelStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+
+            selectedItemColor: brandOne,
+            backgroundColor: navigationcolorText,
+            showUnselectedLabels: true,
+            unselectedIconTheme: const IconThemeData(
+              color: navigationcolorText,
             ),
-            selectedLabelStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
-            ),
+            unselectedItemColor: navigationcolorText,
+            unselectedLabelStyle:
+                GoogleFonts.nunito(color: navigationcolorText),
+            selectedIconTheme: const IconThemeData(color: brandOne),
+            selectedLabelStyle: GoogleFonts.nunito(
+                color: brandOne, fontWeight: FontWeight.w700),
             onTap: _onItemTapped,
             key: _bottomNavigationKey,
           ),
         ),
       ),
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }

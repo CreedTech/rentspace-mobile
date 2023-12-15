@@ -11,6 +11,7 @@ const gradientTwo = Color(0xFF418AAC);
 const btnColor = Color(0xFF2183CB);
 const customColorOne = Color(0xFF00283C);
 const customColorTwo = Color(0xFF005B88);
+const navigationcolorText = Color(0xFFB5B5B5);
 
 
 //#E1E1E5

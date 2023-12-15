@@ -321,9 +321,7 @@ class _UserProfileState extends State<UserProfile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            userController.user[0].userFirst +
-                                " " +
-                                userController.user[0].userLast,
+                            "${userController.user[0].userFirst} ${userController.user[0].userLast}",
                             style: const TextStyle(
                               fontSize: 15.0,
                               letterSpacing: 0.5,
@@ -421,8 +419,7 @@ class _UserProfileState extends State<UserProfile> {
                             await _user!.sendEmailVerification();
                             Get.snackbar(
                               "Sent",
-                              "Verification E-mail has been sent to " +
-                                  userController.user[0].email,
+                              "Verification E-mail has been sent to ${userController.user[0].email}",
                               animationDuration: const Duration(seconds: 2),
                               backgroundColor: brandOne,
                               colorText: Colors.white,
