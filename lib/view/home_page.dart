@@ -15,6 +15,7 @@ import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dashboard/user_profile.dart';
+import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:rentspace/view/portfolio/portfolio_page.dart';
 import 'package:rentspace/view/savings/savings_page.dart';
 import 'package:rentspace/view/utility/utilities_page.dart';
@@ -279,11 +280,13 @@ class _FirstPageState extends State<FirstPage> {
                       ),
                     ),
                   ],
-                  barrierDismissible: false,
+                  barrierDismissible: true,
                 );
               },
               builder: Builder(
-                builder: (context) => const HomePage(),
+                builder: (context) => (userController.user[0].bvn == "")
+                    ? CreateDVA()
+                    : const HomePage(),
               ),
             ),
           );
@@ -638,7 +641,9 @@ class _HomePageState extends State<HomePage> {
           showReleaseNotes: true,
         ),
         child: Scaffold(
-          body: Center(child: listWidgets[_selectedIndex],),
+          body: Center(
+            child: listWidgets[_selectedIndex],
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(

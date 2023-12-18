@@ -4,38 +4,38 @@ import 'package:flutter/material.dart';
 class Themes {
   //Light Theme params
   final lightTheme = ThemeData().copyWith(
-    primaryColor: Colors.black,
-    appBarTheme: AppBarTheme(backgroundColor: Colors.white),
+    primaryColor: brandOne,
+    appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.white,
-    iconTheme: IconThemeData(
-      color: Colors.black,
+    iconTheme: const IconThemeData(
+      color: brandOne,
     ),
-    canvasColor: Color(0xFFFFFFFF),
-    cardColor: Color(0xFFF5F5F5),
-    primaryColorLight: Color(0xFFf2eeed),
-    unselectedWidgetColor: Colors.black,
+    canvasColor: const Color(0xFFFFFFFF),
+    cardColor: const Color(0xFFF5F5F5),
+    primaryColorLight: const Color(0xFFf2eeed),
+    unselectedWidgetColor: brandOne,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: Colors.black,
+      secondary: brandOne,
       primary: Colors.white,
     ),
   );
   //Dark Theme params
   final darkTheme = ThemeData().copyWith(
     primaryColor: Colors.white,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.black,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: brandOne,
     ),
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: brandOne,
     unselectedWidgetColor: Colors.white,
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: brandOne,
+      secondary: brandTwo,
       primary: brandOne,
     ),
-    canvasColor: Color(0xFF00283C),
-    cardColor: Color(0xFF363636),
-    primaryColorLight: Color(0xFF363636),
+    canvasColor: const Color(0xFF00283C),
+    cardColor: const Color(0xFF363636),
+    primaryColorLight: const Color(0xFF363636),
   );
 }

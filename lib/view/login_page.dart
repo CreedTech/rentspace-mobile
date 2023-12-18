@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       authController.login(
         _emailController.text.trim(),
         _passwordController.text.trim(),
+        context
       );
     }
   }
@@ -130,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
       cursorColor: Colors.black,
       controller: _passwordController,
       obscureText: obscurity,
-      style: const TextStyle(
+      style: GoogleFonts.nunito(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,

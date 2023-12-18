@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/view/actions/biometrics_page.dart';
 import 'package:rentspace/view/actions/confirm_reset_page.dart';
 import 'package:rentspace/view/intro_slider.dart';
+import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/no_connection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -13,8 +15,12 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/onboarding_slider.dart';
+import 'package:rentspace/view/signup_page.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/widgets/custom_dialog.dart';
+import '../view/home_page.dart';
 
 bool hasConnection = false.obs();
 //final loggedinUser = GetStorage();
@@ -71,6 +77,8 @@ class AuthController extends GetxController {
       if (user == null) {
         Get.offAll(() => const OnboardingSlider());
       } else {
+        print(user);
+        // Get.offAll(() => SignupPage());
         Get.offAll(() => BiometricsPage());
         // Get.offAll(() => const OnboardingSlider());
       }
@@ -87,8 +95,19 @@ class AuthController extends GetxController {
         ),
       );
 
-  register(String email, password, _firstnameController, _lastnameController,
-      _phoneController, _pinOneController, _referalController) async {
+  register(
+      String email,
+      password,
+      _firstnameController,
+      _lastnameController,
+      _phoneController,
+      _pinOneController,
+      _referalController,
+      _usernameController,
+      _addressController,
+      genderValue,
+      dateController,
+      BuildContext context) async {
     try {
       //showLoading();
 
@@ -108,7 +127,9 @@ class AuthController extends GetxController {
           'wallet_balance': '0',
           'firstname': _firstnameController,
           'lastname': _lastnameController,
-          'address': '',
+          'address': _addressController,
+          'date_of_birth': dateController,
+          'gender': genderValue,
           'transaction_pin': _pinOneController,
           'phone': '+234$_phoneController',
           'email': value.user!.email,
@@ -120,7 +141,7 @@ class AuthController extends GetxController {
           'account_number': '',
           'dva_name': '',
           'dva_number': '',
-          'dva_username': '',
+          'dva_username': _usernameController.toString().toUpperCase(),
           'dva_date': '',
           'bank_name': '',
           'account_name': '',
@@ -170,20 +191,29 @@ class AuthController extends GetxController {
       } else {
         nError = error.toString();
       }
-      Get.snackbar(
-        "Oops",
-        nError,
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      if (!context.mounted) return;
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: brandOne,
+          message: nError,
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
     }
   }
 
-  login(String email, password) async {
+  login(String email, password, BuildContext context) async {
+    // BuildContext overlayContext = context;
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Get.to(const FirstPage()));
+      // await Get.to(const FirstPage());
     } catch (error) {
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');
@@ -194,14 +224,27 @@ class AuthController extends GetxController {
       } else {
         nError = error.toString();
       }
-      Get.snackbar(
-        "Oops",
-        nError,
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      if (!context.mounted) return;
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: brandOne,
+          message: nError,
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Oops",
+      //   nError,
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     }
   }
 
@@ -226,13 +269,18 @@ class AuthController extends GetxController {
       } else {
         nError = error.toString();
       }
-      Get.snackbar(
-        "Oops",
-        nError,
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      if (!context.mounted) return;
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: brandOne,
+          message: nError,
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
     }
   }

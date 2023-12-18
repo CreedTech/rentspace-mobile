@@ -62,7 +62,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
         () => Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/icons/RentSpace-icon.png"),
               fit: BoxFit.cover,
@@ -71,14 +71,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
           ),
           child: ListView.builder(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemCount: rentController.rent.length,
               itemBuilder: (context, int index) {
                 return (rentController.rent.isNotEmpty)
                     ? Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
+                            padding: const EdgeInsets.fromLTRB(20, 40, 20, 10),
                             child: badge.Badge(
                               badgeColor: Colors.red,
                               badgeContent: (rentController
@@ -90,18 +90,18 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                           SizedBox(
                                             height: 200,
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
+                                              borderRadius: const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: EdgeInsets.fromLTRB(
+                                                padding: const EdgeInsets.fromLTRB(
                                                     10, 5, 10, 5),
                                                 child: Column(
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 50,
                                                     ),
                                                     Text(
@@ -114,7 +114,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                             .primaryColor,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 30,
                                                     ),
                                                     //card
@@ -141,10 +141,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                       .circular(
                                                                           20),
                                                             ),
-                                                            padding: EdgeInsets
+                                                            padding: const EdgeInsets
                                                                 .fromLTRB(20, 5,
                                                                     20, 5),
-                                                            child: Text(
+                                                            child: const Text(
                                                               'No',
                                                               style: TextStyle(
                                                                 fontSize: 12,
@@ -156,7 +156,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                             ),
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           width: 20,
                                                         ),
                                                         InkWell(
@@ -188,7 +188,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   "SpaceRent Deleted!",
                                                                   'Selected spacerent has been deleted!',
                                                                   animationDuration:
-                                                                      Duration(
+                                                                      const Duration(
                                                                           seconds:
                                                                               1),
                                                                   backgroundColor:
@@ -207,7 +207,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   error
                                                                       .toString(),
                                                                   animationDuration:
-                                                                      Duration(
+                                                                      const Duration(
                                                                           seconds:
                                                                               2),
                                                                   backgroundColor:
@@ -237,10 +237,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                       .circular(
                                                                           20),
                                                             ),
-                                                            padding: EdgeInsets
+                                                            padding: const EdgeInsets
                                                                 .fromLTRB(20, 5,
                                                                     20, 5),
-                                                            child: Text(
+                                                            child: const Text(
                                                               'Yes',
                                                               style: TextStyle(
                                                                 fontSize: 12,
@@ -263,7 +263,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                           ),
                                         );
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.delete_outlined,
                                         color: Colors.white,
                                       ),
@@ -276,7 +276,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                           balance: 0,
                                         ));
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.eject_outlined,
                                         color: Colors.white,
                                       ),
@@ -287,15 +287,15 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                   borderRadius: BorderRadius.circular(10),
                                   color: brandOne,
                                 ),
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 4,
                                     ),
                                     GFListTile(
-                                      title: Text(
+                                      title: const Text(
                                         "My SpaceRent" /* rentController.rent[index].planName +
                                             changeOne */
                                         ,
@@ -312,12 +312,11 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       ),
                                       subTitle: Padding(
                                         padding:
-                                            EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                            const EdgeInsets.fromLTRB(0, 5, 0, 5),
                                         child: Text(
-                                          nairaFormaet.format(rentController
-                                                  .rent[index].targetAmount) +
-                                              " Target",
-                                          style: TextStyle(
+                                          "${nairaFormaet.format(rentController
+                                                  .rent[index].targetAmount)} Target",
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             fontFamily: "DefaultFontFamily",
                                             color: Colors.white,
@@ -341,7 +340,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                     .rent[index].targetAmount))
                                             .toDouble(),
                                         animation: true,
-                                        barRadius: Radius.circular(10.0),
+                                        barRadius: const Radius.circular(10.0),
                                         lineHeight:
                                             MediaQuery.of(context).size.width /
                                                 25,
@@ -351,22 +350,22 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       icon:
                                           (rentController.rent[index].hasPaid ==
                                                   'true')
-                                              ? Icon(
+                                              ? const Icon(
                                                   Icons.check_circle,
                                                   color: Colors.green,
                                                   size: 30,
                                                 )
-                                              : Icon(
+                                              : const Icon(
                                                   Icons.error_outlined,
                                                   color: Colors.red,
                                                   size: 30,
                                                 ),
                                       color: Colors.transparent,
-                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          const EdgeInsets.fromLTRB(20, 0, 20, 0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -381,11 +380,12 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                             },
                                             shape: GFButtonShape.pills,
                                             fullWidthButton: false,
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                               color: brandTwo,
                                               width: 3.0,
                                             ),
-                                            child: Text(
+                                            color: brandOne,
+                                            child: const Text(
                                               '    History    ',
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -393,14 +393,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            color: brandOne,
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                          const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       child: GFAccordion(
                                         expandedIcon: Container(
                                           decoration: BoxDecoration(
@@ -408,8 +407,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
-                                          padding: EdgeInsets.all(2),
-                                          child: Icon(
+                                          padding: const EdgeInsets.all(2),
+                                          child: const Icon(
                                             Icons.remove,
                                             color: brandOne,
                                           ),
@@ -420,14 +419,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
-                                          padding: EdgeInsets.all(2),
-                                          child: Icon(
+                                          padding: const EdgeInsets.all(2),
+                                          child: const Icon(
                                             Icons.add,
                                             color: brandOne,
                                           ),
                                         ),
                                         title: "View details",
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                           color: Colors.black,
                                           fontFamily: "DefaultFontFamily",
                                         ),
@@ -443,77 +442,77 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                           children: [
                                             Text(
                                               'SpaceRent ID: ${rentController.rent[index].rentId}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Created: ${rentController.rent[index].date}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Target no of payments: ${rentController.rent[index].numPayment}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'No of payments: ${rentController.rent[index].currentPayment}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Payment intervals: ${nairaFormaet.format(double.parse(rentController.rent[index].intervalAmount.toString()))} ${rentController.rent[index].interval}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Paid Amount: ${nairaFormaet.format(double.parse(rentController.rent[index].savedAmount.toString()))}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Target Amount: ${nairaFormaet.format(double.parse(rentController.rent[index].targetAmount.toString()))}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
                                               'Remaining Amount: ${nairaFormaet.format(double.parse((rentController.rent[index].targetAmount - rentController.rent[index].savedAmount).toString()))}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: "DefaultFontFamily",
                                               ),
@@ -527,12 +526,12 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                         ],
                       )
-                    : Center(
+                    : const Center(
                         child: Text(
                           "Nothing to show here",
                           style: TextStyle(
@@ -549,14 +548,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
-          Get.to(RentSpaceSubscription());
+          Get.to(const RentSpaceSubscription());
         },
-        child: Icon(
+        backgroundColor: brandOne,
+        child: const Icon(
           Icons.add_outlined,
           size: 30,
           color: Colors.white,
         ),
-        backgroundColor: brandOne,
       ),
       backgroundColor: Theme.of(context).canvasColor,
     );

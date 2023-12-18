@@ -75,7 +75,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.dark(
+              colorScheme: const ColorScheme.dark(
                 primary: Colors.black, // header background color
                 onPrimary: Colors.white,
                 onBackground: Colors.black,
@@ -108,7 +108,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
   int _calculateDaysDifference() {
     final differenceDays =
-        _endDate.add(Duration(days: 1)).difference(DateTime.now()).inDays;
+        _endDate.add(const Duration(days: 1)).difference(DateTime.now()).inDays;
 
     return differenceDays.abs();
   }
@@ -228,13 +228,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       validator: validateFunc,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _amountValue = text),
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "How much is your rent per year?",
           style: TextStyle(
             color: Colors.grey,
@@ -242,21 +242,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Rent amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -270,13 +270,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       validator: validateOldFunc,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _amountValue = text),
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       inputFormatters: [ThousandsFormatter()],
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "How much of your rent is left?",
           style: TextStyle(
             color: Colors.grey,
@@ -284,21 +284,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Rent amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -338,13 +338,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
               child: ListView(
                 shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   Text(
-                    "Let's get you started" + varValue.toString(),
+                    "Let's get you started$varValue",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -352,37 +352,37 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                         letterSpacing: 0.5,
                         color: Theme.of(context).primaryColor),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   (_hasCalculate == 'true')
                       ? Text(
-                          "" + varValue.toString(),
+                          "$varValue",
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: "DefaultFontFamily",
                             color: Theme.of(context).primaryColor,
                           ),
                         )
-                      : Text(""),
+                      : const Text(""),
                   //rent amount input
                   (_hasCalculate == 'true')
                       ? Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             rentAmount,
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                           ],
                         )
-                      : Text(""),
+                      : const Text(""),
 
                   (_hasCalculate == 'true')
                       ? Padding(
-                          padding: EdgeInsets.fromLTRB(30, 2, 30, 2),
+                          padding: const EdgeInsets.fromLTRB(30, 2, 30, 2),
                           child: Center(
                             child: GFButton(
                               onLongPress: () {
@@ -406,7 +406,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                   Get.snackbar(
                                     "Invalid",
                                     'Please enter valid amount to proceed.',
-                                    animationDuration: Duration(seconds: 1),
+                                    animationDuration: const Duration(seconds: 1),
                                     backgroundColor: Colors.red,
                                     colorText: Colors.white,
                                     snackPosition: SnackPosition.BOTTOM,
@@ -415,25 +415,25 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                               },
                               fullWidthButton: true,
                               size: 40,
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.add_outlined,
                                 color: Colors.white,
                                 size: 20,
                               ),
                               text: "Calculate",
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                 fontSize: 13,
                                 fontFamily: "DefaultFontFamily",
                                 color: Colors.white,
                               ),
                               color: brandOne,
-                              padding: EdgeInsets.fromLTRB(20, 2, 20, 2),
+                              padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
                               shape: GFButtonShape.pills,
                             ),
                           ),
                         )
-                      : Text(""),
-                  SizedBox(
+                      : const Text(""),
+                  const SizedBox(
                     height: 20,
                   ),
                   (_hasCalculate == 'true')
@@ -471,7 +471,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   (_hasCreated == 'true')
@@ -480,11 +480,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                           children: <Widget>[
                             Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 rentAmountOld,
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -496,21 +496,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 GFButton(
                                   onPressed: () => _selectEndDate(context),
                                   shape: GFButtonShape.pills,
                                   text: "Select on calendar",
-                                  padding: EdgeInsets.fromLTRB(20, 2, 20, 2),
-                                  icon: Icon(
+                                  padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+                                  icon: const Icon(
                                     Icons.calendar_month_outlined,
                                     color: Colors.white,
                                     size: 18,
                                   ),
                                   color: brandOne,
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontFamily: "DefaultFontFamily",
@@ -518,12 +518,12 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             (_canShowRent == 'true')
                                 ? (_calculateDaysDifference().abs() == 0)
-                                    ? Text("")
+                                    ? const Text("")
                                     : Text(
                                         'Your rent will be due in ${_calculateDaysDifference()} days',
                                         style: TextStyle(
@@ -532,16 +532,16 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       )
-                                : Text(''),
-                            SizedBox(
+                                : const Text(''),
+                            const SizedBox(
                               height: 20,
                             ),
                             (_canShowRent == 'true')
                                 ? InkWell(
                                     onTap: () {
-                                      Get.to(TermsAndConditions());
+                                      Get.to(const TermsAndConditions());
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "By proceeding, you agree with our terms and conditions",
                                       style: TextStyle(
                                         decoration: TextDecoration.underline,
@@ -551,8 +551,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                       textAlign: TextAlign.center,
                                     ),
                                   )
-                                : Text(""),
-                            SizedBox(
+                                : const Text(""),
+                            const SizedBox(
                               height: 20,
                             ),
                             (_canShowRent == 'true' &&
@@ -571,7 +571,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                 .replaceAll(',', '')) !=
                                             null))
                                 ? (_calculateDaysDifference().abs() == 0)
-                                    ? Text(
+                                    ? const Text(
                                         "Invalid date. Pick a different date.",
                                         style: TextStyle(
                                           fontSize: 12,
@@ -631,7 +631,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                 height: 300,
                                                 child: ClipRRect(
                                                   borderRadius:
-                                                      BorderRadius.only(
+                                                      const BorderRadius.only(
                                                     topLeft:
                                                         Radius.circular(30.0),
                                                     topRight:
@@ -641,23 +641,23 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                     color: Theme.of(context)
                                                         .canvasColor,
                                                     padding:
-                                                        EdgeInsets.fromLTRB(
+                                                        const EdgeInsets.fromLTRB(
                                                             10, 5, 10, 5),
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
                                                       children: [
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 50,
                                                         ),
-                                                        Icon(
+                                                        const Icon(
                                                           Icons
                                                               .check_circle_outline,
                                                           color: brandOne,
                                                           size: 80,
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 20,
                                                         ),
                                                         Text(
@@ -671,7 +671,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 .primaryColor,
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 30,
                                                         ),
                                                         GFButton(
@@ -700,7 +700,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                           shape: GFButtonShape
                                                               .pills,
                                                           fullWidthButton: true,
-                                                          child: Text(
+                                                          color: brandOne,
+                                                          child: const Text(
                                                             'Proceed to payment',
                                                             style: TextStyle(
                                                               color:
@@ -710,9 +711,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   "DefaultFontFamily",
                                                             ),
                                                           ),
-                                                          color: brandOne,
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 20,
                                                         ),
                                                       ],
@@ -726,7 +726,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                               "Oops",
                                               "Something went wrong, try again later",
                                               animationDuration:
-                                                  Duration(seconds: 2),
+                                                  const Duration(seconds: 2),
                                               backgroundColor: Colors.red,
                                               colorText: Colors.white,
                                               snackPosition:
@@ -735,7 +735,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           });
                                         },
                                         size: 30.0,
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.add_outlined,
                                           color: Colors.white,
                                           size: 20,
@@ -744,19 +744,19 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                         fullWidthButton: true,
                                         text:
                                             "Click to save ${ch8t.format((((int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! / _calculateDaysDifference())).toInt()))} daily for ${_calculateDaysDifference()} days",
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                           fontSize: 13,
                                           color: Colors.white,
                                           fontFamily: "DefaultFontFamily",
                                         ),
                                         padding:
-                                            EdgeInsets.fromLTRB(0, 2, 0, 2),
+                                            const EdgeInsets.fromLTRB(0, 2, 0, 2),
                                         shape: GFButtonShape.pills,
                                       )
-                                : Text(""),
+                                : const Text(""),
                           ],
                         )
-                      : Text(""),
+                      : const Text(""),
                   (_hasCalculate == 'true')
                       ? (_rentSeventy != 0.0)
                           ? Container(
@@ -764,7 +764,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -777,7 +777,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   ////////Daily payment
@@ -824,29 +824,29 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
+                                              borderRadius: const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: EdgeInsets.fromLTRB(
+                                                padding: const EdgeInsets.fromLTRB(
                                                     10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 50,
                                                     ),
-                                                    Icon(
+                                                    const Icon(
                                                       Icons
                                                           .check_circle_outline,
                                                       color: brandOne,
                                                       size: 80,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                     Text(
@@ -859,7 +859,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                             .primaryColor,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 30,
                                                     ),
                                                     RoundedLoadingButton(
@@ -884,7 +884,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .size
                                                                   .width /
                                                               2,
-                                                      child: Text(
+                                                      color: brandOne,
+                                                      child: const Text(
                                                         'Proceed to payment',
                                                         style: TextStyle(
                                                           color: Colors.white,
@@ -893,9 +894,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                               "DefaultFontFamily",
                                                         ),
                                                       ),
-                                                      color: brandOne,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                   ],
@@ -909,24 +909,24 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           "Oops",
                                           "Something went wrong, try again later",
                                           animationDuration:
-                                              Duration(seconds: 2),
+                                              const Duration(seconds: 2),
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.BOTTOM,
                                         );
                                       });
                                     },
+                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for 335 days',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: "DefaultFontFamily",
                                         fontSize: 13,
                                       ),
                                     ),
-                                    color: brandOne,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   ////////Weekly payment
@@ -971,29 +971,29 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
+                                              borderRadius: const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: EdgeInsets.fromLTRB(
+                                                padding: const EdgeInsets.fromLTRB(
                                                     10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 50,
                                                     ),
-                                                    Icon(
+                                                    const Icon(
                                                       Icons
                                                           .check_circle_outline,
                                                       color: brandOne,
                                                       size: 80,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                     Text(
@@ -1006,7 +1006,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                             .primaryColor,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 30,
                                                     ),
                                                     RoundedLoadingButton(
@@ -1032,7 +1032,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .size
                                                                   .width /
                                                               2,
-                                                      child: Text(
+                                                      color: brandOne,
+                                                      child: const Text(
                                                         'Proceed to payment',
                                                         style: TextStyle(
                                                           fontFamily:
@@ -1041,9 +1042,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                           fontSize: 13,
                                                         ),
                                                       ),
-                                                      color: brandOne,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                   ],
@@ -1057,24 +1057,24 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           "Oops",
                                           "Something went wrong, try again later",
                                           animationDuration:
-                                              Duration(seconds: 2),
+                                              const Duration(seconds: 2),
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.BOTTOM,
                                         );
                                       });
                                     },
+                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for 44 weeks',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 13,
                                         fontFamily: "DefaultFontFamily",
                                       ),
                                     ),
-                                    color: brandOne,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   ////////Monthly payment
@@ -1119,29 +1119,29 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
+                                              borderRadius: const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: EdgeInsets.fromLTRB(
+                                                padding: const EdgeInsets.fromLTRB(
                                                     10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 50,
                                                     ),
-                                                    Icon(
+                                                    const Icon(
                                                       Icons
                                                           .check_circle_outline,
                                                       color: brandOne,
                                                       size: 80,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                     Text(
@@ -1154,7 +1154,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                             .primaryColor,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 30,
                                                     ),
                                                     RoundedLoadingButton(
@@ -1180,7 +1180,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .size
                                                                   .width /
                                                               2,
-                                                      child: Text(
+                                                      color: brandOne,
+                                                      child: const Text(
                                                         'Proceed to payment',
                                                         style: TextStyle(
                                                           color: Colors.white,
@@ -1189,9 +1190,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                               "DefaultFontFamily",
                                                         ),
                                                       ),
-                                                      color: brandOne,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20,
                                                     ),
                                                   ],
@@ -1205,31 +1205,31 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           "Oops",
                                           "Something went wrong, try again later",
                                           animationDuration:
-                                              Duration(seconds: 2),
+                                              const Duration(seconds: 2),
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.BOTTOM,
                                         );
                                       });
                                     },
+                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for 11 months',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 13,
                                         fontFamily: "DefaultFontFamily",
                                       ),
                                     ),
-                                    color: brandOne,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Get.to(TermsAndConditions());
+                                      Get.to(const TermsAndConditions());
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "By proceeding, you agree with our terms and conditions",
                                       style: TextStyle(
                                         decoration: TextDecoration.underline,
@@ -1239,15 +1239,15 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 50,
                                   ),
                                 ],
                               ),
                             )
-                          : Text("")
-                      : Text(""),
-                  SizedBox(
+                          : const Text("")
+                      : const Text(""),
+                  const SizedBox(
                     height: 50,
                   ),
                 ],

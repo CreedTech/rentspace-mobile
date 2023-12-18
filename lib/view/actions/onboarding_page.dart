@@ -209,6 +209,7 @@ class _BvnPageState extends State<BvnPage> {
         ),
       ),
     );
+    
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(

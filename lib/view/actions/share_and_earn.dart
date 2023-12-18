@@ -41,15 +41,15 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: 0.1,
+          //     child: Image.asset(
+          //       'assets/icons/RentSpace-icon.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           ListView(
             children: [
               Padding(

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
+import 'package:rentspace/view/dashboard/personal_details.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -69,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onTap: () {
-                        // Get.to(ProfilePage());
+                        Get.to(PersonalDetails());
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
                       trailing: const Icon(

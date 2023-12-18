@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
@@ -7,22 +8,26 @@ import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../dashboard/confirm_forgot_pin.dart';
 
 class ForgotPin extends StatefulWidget {
-  String password, pin;
-  ForgotPin({Key? key, required this.password, required this.pin})
-      : super(key: key);
+  final String pin;
+  const ForgotPin({super.key, required this.pin});
 
   @override
   _ForgotPinState createState() => _ForgotPinState();
 }
 
 class _ForgotPinState extends State<ForgotPin> {
-  final TextEditingController _pinOneController = TextEditingController();
-  final TextEditingController _pinTwoController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _pinController = TextEditingController();
+  // final TextEditingController _pinTwoController = TextEditingController();
+  // final TextEditingController _passwordController = TextEditingController();
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
+  final changePinformKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {
       setState(() {
@@ -37,70 +42,86 @@ class _ForgotPinState extends State<ForgotPin> {
     }
   }
 
-  Future updatePin() async {
-    var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
-    await userPinUpdate.doc(userId).update({
-      'transaction_pin': _pinOneController.text.trim(),
-    }).then((value) {
-      Get.back();
-      Get.snackbar(
-        "PIN updated!",
-        'Your transaction PIN has been updated successfully',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-    }).catchError((error) {
-      Get.snackbar(
-        "Oops",
-        "something went wrong, please try again",
-        animationDuration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    });
-  }
+  // Future updatePin() async {
+  //   var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
+  //   await userPinUpdate.doc(userId).update({
+  //     'transaction_pin': _pinController.text.trim(),
+  //   }).then((value) {
+  //     Get.back();
+  //     Get.snackbar(
+  //       "PIN updated!",
+  //       'Your transaction PIN has been updated successfully',
+  //       animationDuration: Duration(seconds: 1),
+  //       backgroundColor: brandOne,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //   }).catchError((error) {
+  //     Get.snackbar(
+  //       "Oops",
+  //       "something went wrong, please try again",
+  //       animationDuration: Duration(seconds: 2),
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //   });
+  // }
 
   void _doSomething() async {
-    Timer(Duration(seconds: 1), () {
-      _btnController.stop();
-    });
-    if (_pinOneController.text.trim() == "" ||
-        _pinTwoController.text.trim() == "" ||
-        (_pinOneController.text.trim() != _pinTwoController.text.trim())) {
-      Get.snackbar(
-        "Invalid",
-        'PIN is unacceptable.',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+    // Timer(Duration(seconds: 1), () {
+    //   _btnController.stop();
+    // });
+    // if (_pinOneController.text.trim() == "" ||
+    //     _pinTwoController.text.trim() == "" ||
+    //     (widget.pin != _pinController.text.trim())) {
+    //   Get.snackbar(
+    //     "Invalid",
+    //     'PIN is unacceptable.',
+    //     animationDuration: Duration(seconds: 1),
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+    // }
+    if (_pinController.text.trim() == widget.pin) {
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          // backgroundColor: Colors.red,
+          message: 'PIN cannot be the same as existing one.',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Error!",
+      //   'PIN cannot be the same as existing one.',
+      //   animationDuration: Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     }
-    if (_pinOneController.text.trim() == widget.pin ||
-        _pinTwoController.text.trim() == widget.pin) {
-      Get.snackbar(
-        "Error!",
-        'PIN cannot be the same as existing one.',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } else if (widget.password != _passwordController.text.trim() ||
-        _passwordController.text.trim() == "") {
-      Get.snackbar(
-        "Invalid",
-        'Password is incorrect',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } else {
-      updatePin();
+    // else if (widget.password != _passwordController.text.trim() ||
+    //     _passwordController.text.trim() == "") {
+    //   Get.snackbar(
+    //     "Invalid",
+    //     'Password is incorrect',
+    //     animationDuration: Duration(seconds: 1),
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+
+    // }
+    else {
+      Get.to(ConfirmForgotPin(
+          // password: _passwordController.text.trim(),
+          pin: _pinController.text.trim()));
     }
   }
 
@@ -114,15 +135,15 @@ class _ForgotPinState extends State<ForgotPin> {
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: 30,
-      height: 30,
-      textStyle: TextStyle(
+      width: 50,
+      height: 50,
+      textStyle: const TextStyle(
         fontSize: 20,
-        color: Theme.of(context).primaryColor,
+        color: brandOne,
       ),
       decoration: BoxDecoration(
-        border: Border.all(color: brandOne, width: 2.0),
-        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey, width: 1.0),
+        borderRadius: BorderRadius.circular(5),
       ),
     );
     validatePinOne(pinOneValue) {
@@ -135,83 +156,119 @@ class _ForgotPinState extends State<ForgotPin> {
       if (int.tryParse(pinOneValue) == null) {
         return 'enter valid number';
       }
-      return '';
+      return null;
     }
 
-    validatePinTwo(pinTwoValue) {
-      if (pinTwoValue.isEmpty) {
-        return 'pin cannot be empty';
-      }
-      if (pinTwoValue.length < 4) {
-        return 'pin is incomplete';
-      }
-      if (int.tryParse(pinTwoValue) == null) {
-        return 'enter valid number';
-      }
-      return '';
-    }
+    // validatePinTwo(pinTwoValue) {
+    //   if (pinTwoValue.isEmpty) {
+    //     return 'pin cannot be empty';
+    //   }
+    //   if (pinTwoValue.length < 4) {
+    //     return 'pin is incomplete';
+    //   }
+    //   if (int.tryParse(pinTwoValue) == null) {
+    //     return 'enter valid number';
+    //   }
+    //   return null;
+    // }
+
+    // validatePass(passValue) {
+    //   if (passValue == null || passValue.isEmpty) {
+    //     return 'Input a valid password';
+    //   } else {
+    //     return null;
+    //   }
+    // }
 
     //Pin
-    final pin_one = Pinput(
+    final pin = Pinput(
+      obscureText: true,
       defaultPinTheme: defaultPinTheme,
+      controller: _pinController,
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: const TextStyle(
+          fontSize: 20,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 1.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      length: 4,
       validator: validatePinOne,
       onChanged: validatePinOne,
-      controller: _pinOneController,
-      length: 4,
+      // onCompleted: _doSomething,
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
     //Pin
-    final pin_two = Pinput(
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinTwoController,
-      validator: validatePinTwo,
-      onChanged: validatePinTwo,
-      length: 4,
-      closeKeyboardWhenCompleted: true,
-      keyboardType: TextInputType.number,
-    );
+    // final pin_two = Pinput(
+    //   defaultPinTheme: defaultPinTheme,
+    //   controller: _pinTwoController,
+    //   length: 4,
+    //   validator: validatePinTwo,
+    //   onChanged: validatePinTwo,
+    //   // onCompleted: _doSomething,
+    //   closeKeyboardWhenCompleted: true,
+    //   keyboardType: TextInputType.number,
+    // );
     //Textform field
-    final password = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Colors.black,
-      controller: _passwordController,
-      obscureText: obscurity,
-      style: TextStyle(
-        color: Colors.black,
-      ),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        suffix: InkWell(
-          onTap: visibility,
-          child: lockIcon,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
-        hintText: 'Enter your password...',
-        hintStyle: TextStyle(
-          color: Colors.grey,
-        ),
-      ),
-    );
+    // final password = TextFormField(
+    //   enableSuggestions: true,
+    //   cursorColor: Colors.black,
+    //   controller: _passwordController,
+    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+    //   obscureText: obscurity,
+    //   style: GoogleFonts.nunito(
+    //     color: Colors.black,
+    //   ),
+    //   keyboardType: TextInputType.text,
+    //   decoration: InputDecoration(
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         color: Colors.red,
+    //         width: 2.0,
+    //       ),
+    //     ),
+    //     suffix: InkWell(
+    //       onTap: visibility,
+    //       child: lockIcon,
+    //     ),
+    //     filled: false,
+    //     contentPadding: const EdgeInsets.all(14),
+    //     hintText: 'Enter your password',
+    //     hintStyle: GoogleFonts.nunito(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //   ),
+    //   maxLines: 1,
+    //   validator: validatePass,
+    // );
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
         backgroundColor: Theme.of(context).canvasColor,
+        elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -222,126 +279,100 @@ class _ForgotPinState extends State<ForgotPin> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: true,
         title: Text(
-          'Reset PIN',
-          style: TextStyle(
-            fontFamily: "DefaultFontFamily",
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
+          'Change PIN',
+          style: GoogleFonts.nunito(
+              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                    child: Form(
+                      key: changePinformKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 20),
+                            child: Text(
+                              'Change Transaction PIN',
+                              style: GoogleFonts.nunito(
+                                color: brandOne,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          pin,
+                          const SizedBox(
+                            height: 70,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              // width: MediaQuery.of(context).size.width * 2,
+                              alignment: Alignment.center,
+                              // height: 110.h,
+                              child: Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(250, 50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (changePinformKey.currentState!
+                                          .validate()) {
+                                        _doSomething();
+                                      } else {
+                                        showTopSnackBar(
+                                          Overlay.of(context),
+                                          CustomSnackBar.error(
+                                            // backgroundColor: Colors.red,
+                                            message:
+                                                'Please fill the form properly to proceed',
+                                            textStyle: GoogleFonts.nunito(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: const Text(
+                                      'Proceed',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          ListView(
-            children: [
-              SizedBox(
-                height: 80,
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'New transaction pin',
-                            style: TextStyle(
-                              fontFamily: "DefaultFontFamily",
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          pin_one,
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Confirm transaction pin',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DefaultFontFamily",
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          pin_two,
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    password,
-                    SizedBox(
-                      height: 50,
-                    ),
-                    RoundedLoadingButton(
-                      child: Text(
-                        'Reset',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      elevation: 0.0,
-                      successColor: brandOne,
-                      color: brandOne,
-                      controller: _btnController,
-                      onPressed: () {
-                        if (validatePinOne(
-                                    _pinOneController.text.trim()) ==
-                                "" &&
-                            validatePinTwo(_pinOneController.text.trim()) ==
-                                "" &&
-                            (_pinOneController.text.trim() ==
-                                _pinTwoController.text.trim())) {
-                          _doSomething();
-                        } else {
-                          Timer(Duration(seconds: 1), () {
-                            _btnController.stop();
-                          });
-                          Get.snackbar(
-                            "Invalid pin!",
-                            'Make sure the pins you entered are the same',
-                            animationDuration: Duration(seconds: 1),
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

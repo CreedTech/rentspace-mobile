@@ -136,7 +136,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         Get.snackbar(
           "Error!",
           "Invalid account number",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -153,7 +153,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -240,7 +240,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     setState(() {
       notLoading = false;
     });
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
     var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
@@ -261,7 +261,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         "amount":
             (int.tryParse(_amountController.text.trim())! * 100).toString(),
         "account_number": _accountNumberController.text.trim().toString(),
-        "transaction_reference": "C6NZ61CS_" + getRandom(11),
+        "transaction_reference": "C6NZ61CS_${getRandom(11)}",
         "account_name": _bankAccountName,
       }),
     );
@@ -311,7 +311,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         Get.snackbar(
           "Success!",
           'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -323,7 +323,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         Get.snackbar(
           "Oops",
           "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -333,7 +333,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -344,7 +344,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
   }
 
   void _doLiquidateWallet() async {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
 
@@ -361,7 +361,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       'withdrawal_location': "Space Wallet",
       'liquidation_source': (widget.isWallet)
           ? "Space Wallet"
-          : 'SpaceRent: ' + rentController.rent[widget.index].rentId,
+          : 'SpaceRent: ${rentController.rent[widget.index].rentId}',
     }).then((value) async {
       var walletUpdate = FirebaseFirestore.instance.collection('accounts');
       await walletUpdate.doc(userId).update({
@@ -376,7 +376,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       Get.snackbar(
         "Success!",
         'Savings liquidation process has begun, you will be notified shortly.',
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -385,7 +385,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       Get.snackbar(
         "Oops",
         "Something went wrong, try again later",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -397,7 +397,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     setState(() {
       notLoading = false;
     });
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
     var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
@@ -417,7 +417,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         "amount":
             (int.tryParse(_amountController.text.trim())! * 100).toString(),
         "account_number": _accountNumberController.text.trim().toString(),
-        "transaction_reference": "C6NZ61CS_" + getRandom(11),
+        "transaction_reference": "C6NZ61CS_${getRandom(11)}",
         "account_name": _bankAccountName,
       }),
     );
@@ -466,7 +466,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         Get.snackbar(
           "Success!",
           'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -478,7 +478,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
         Get.snackbar(
           "Oops",
           "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -488,7 +488,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -543,7 +543,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     final bankOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -584,7 +584,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     final fewBankOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -604,12 +604,16 @@ class _RentLiquidateState extends State<RentLiquidate> {
             color: Theme.of(context).primaryColor,
           ),
           focusColor: brandOne,
-          items: [
-            DropdownMenuItem(child: Text('Select bank'), value: 'Select bank'),
-            DropdownMenuItem(child: Text('GTB'), value: '000013'),
-            DropdownMenuItem(child: Text('Access Bank'), value: '000014'),
-            DropdownMenuItem(child: Text('Providus Bank'), value: '000023'),
-            DropdownMenuItem(child: Text('OPay'), value: '100004'),
+          items: const [
+            DropdownMenuItem(
+                value: 'Select bank',
+                child: Text('Select bank')),
+            DropdownMenuItem(value: '000013', child: Text('GTB')),
+            DropdownMenuItem(value: '000014', child: Text('Access Bank')),
+            DropdownMenuItem(
+                value: '000023',
+                child: Text('Providus Bank')),
+            DropdownMenuItem(value: '100004', child: Text('OPay')),
           ],
           onChanged: (newValue) {
             setState(() {
@@ -625,7 +629,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -642,21 +646,21 @@ class _RentLiquidateState extends State<RentLiquidate> {
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -664,7 +668,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     final reasonOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -707,7 +711,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
     final locationOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -751,39 +755,39 @@ class _RentLiquidateState extends State<RentLiquidate> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Enter amount",
           style: TextStyle(
             color: Colors.grey,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -810,7 +814,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
           ? Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/icons/RentSpace-icon.png"),
                   fit: BoxFit.cover,
@@ -823,7 +827,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListView(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           (widget.isWallet)
@@ -845,26 +849,18 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
-                            "Available balance: " +
-                                nairaFormaet.format((rentController
-                                        .rent[widget.index].savedAmount
-                                        .toInt()) -
-                                    ((0.025 *
-                                            rentController
-                                                .rent[widget.index].savedAmount
-                                                .toInt()) +
-                                        20)),
+                            "Available balance: ${nairaFormaet.format((rentController.rent[widget.index].savedAmount.toInt()) - ((0.025 * rentController.rent[widget.index].savedAmount.toInt()) + 20))}",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: "DefaultFontFamily",
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
@@ -891,7 +887,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                   ),
                           ),
                           reasonOption,
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           (!widget.isWallet)
@@ -908,8 +904,10 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
-                          (!widget.isWallet) ? locationOption : SizedBox(),
+                              : const SizedBox(),
+                          (!widget.isWallet)
+                              ? locationOption
+                              : const SizedBox(),
                           (liquidateLocation == "Bank Account" ||
                                   widget.isWallet)
                               ? Column(
@@ -918,7 +916,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                         ? Column(
                                             children: [
                                               fewBankOption,
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Padding(
@@ -944,15 +942,15 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                             ),
                                           ),
                                     (isChecking)
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
+                                        ? const Padding(
+                                            padding: EdgeInsets.fromLTRB(
                                                 20.0, 0, 20.0, 10),
                                             child: LinearProgressIndicator(
                                               color: brandOne,
                                               minHeight: 4,
                                             ),
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           20.0, 10, 20.0, 10),
@@ -969,8 +967,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     ),
                                   ],
                                 )
-                              : Text(""),
-                          SizedBox(
+                              : const Text(""),
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -1001,25 +999,10 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                 const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
                             child: amount,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           RoundedLoadingButton(
-                            child: (widget.isWallet)
-                                ? Text(
-                                    'Withdraw',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
-                                    ),
-                                  )
-                                : Text(
-                                    'Liquidate',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
-                                    ),
-                                  ),
                             elevation: 0.0,
                             successColor: brandOne,
                             color: brandOne,
@@ -1033,7 +1016,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     validateNumber(_accountNumberController.text
                                             .trim()) ==
                                         "") {
-                                  Timer(Duration(seconds: 1), () {
+                                  Timer(const Duration(seconds: 1), () {
                                     _btnController.stop();
                                   });
                                   Get.bottomSheet(
@@ -1041,19 +1024,19 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     SizedBox(
                                       height: 300,
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
+                                        borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(30.0),
                                           topRight: Radius.circular(30.0),
                                         ),
                                         child: Container(
                                           color: Theme.of(context).canvasColor,
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 5, 10, 5),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 50,
                                               ),
                                               Text(
@@ -1092,7 +1075,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                 keyboardType:
                                                     TextInputType.number,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                               Text(
@@ -1106,7 +1089,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 30,
                                               ),
                                               GFButton(
@@ -1123,7 +1106,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                       "Invalid PIN",
                                                       "Enter correct PIN",
                                                       animationDuration:
-                                                          Duration(seconds: 2),
+                                                          const Duration(
+                                                              seconds: 2),
                                                       backgroundColor:
                                                           Colors.red,
                                                       colorText: Colors.white,
@@ -1132,7 +1116,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                     );
                                                   }
                                                 },
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.arrow_right_outlined,
                                                   size: 30,
                                                   color: Colors.white,
@@ -1142,7 +1126,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                 shape: GFButtonShape.pills,
                                                 fullWidthButton: false,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                             ],
@@ -1159,7 +1143,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                               .trim()) ==
                                           "" &&
                                       widget.isWallet == true) {
-                                    Timer(Duration(seconds: 1), () {
+                                    Timer(const Duration(seconds: 1), () {
                                       _btnController.stop();
                                     });
                                     Get.bottomSheet(
@@ -1167,20 +1151,20 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                       SizedBox(
                                         height: 300,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           ),
                                           child: Container(
                                             color:
                                                 Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 10, 5, 10, 5),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Text(
@@ -1219,7 +1203,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   keyboardType:
                                                       TextInputType.number,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                                 Text(
@@ -1233,7 +1217,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 30,
                                                 ),
                                                 GFButton(
@@ -1250,7 +1234,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                         "Invalid PIN",
                                                         "Enter correct PIN",
                                                         animationDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 seconds: 2),
                                                         backgroundColor:
                                                             Colors.red,
@@ -1261,7 +1245,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                       );
                                                     }
                                                   },
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.arrow_right_outlined,
                                                     size: 30,
                                                     color: Colors.white,
@@ -1271,7 +1255,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   shape: GFButtonShape.pills,
                                                   fullWidthButton: false,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                               ],
@@ -1281,7 +1265,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                       ),
                                     );
                                   } else {
-                                    Timer(Duration(seconds: 1), () {
+                                    Timer(const Duration(seconds: 1), () {
                                       _btnController.stop();
                                     });
                                     Get.bottomSheet(
@@ -1289,20 +1273,20 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                       SizedBox(
                                         height: 300,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           ),
                                           child: Container(
                                             color:
                                                 Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 10, 5, 10, 5),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Text(
@@ -1341,7 +1325,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   keyboardType:
                                                       TextInputType.number,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                                 Text(
@@ -1355,7 +1339,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 30,
                                                 ),
                                                 GFButton(
@@ -1372,7 +1356,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                         "Invalid PIN",
                                                         "Enter correct PIN",
                                                         animationDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 seconds: 2),
                                                         backgroundColor:
                                                             Colors.red,
@@ -1383,7 +1367,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                       );
                                                     }
                                                   },
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.arrow_right_outlined,
                                                     size: 30,
                                                     color: Colors.white,
@@ -1393,7 +1377,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                   shape: GFButtonShape.pills,
                                                   fullWidthButton: false,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                               ],
@@ -1407,28 +1391,44 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                   Get.snackbar(
                                     "Invalid",
                                     'Please fill the form properly to proceed',
-                                    animationDuration: Duration(seconds: 1),
+                                    animationDuration:
+                                        const Duration(seconds: 1),
                                     backgroundColor: Colors.red,
                                     colorText: Colors.white,
                                     snackPosition: SnackPosition.BOTTOM,
                                   );
                                 }
                               } else {
-                                Timer(Duration(seconds: 1), () {
+                                Timer(const Duration(seconds: 1), () {
                                   _btnController.stop();
                                 });
                                 Get.snackbar(
                                   "Invalid",
                                   'Please fill the form properly to proceed',
-                                  animationDuration: Duration(seconds: 1),
+                                  animationDuration: const Duration(seconds: 1),
                                   backgroundColor: Colors.red,
                                   colorText: Colors.white,
                                   snackPosition: SnackPosition.BOTTOM,
                                 );
                               }
                             },
+                            child: (widget.isWallet)
+                                ? const Text(
+                                    'Withdraw',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "DefaultFontFamily",
+                                    ),
+                                  )
+                                : const Text(
+                                    'Liquidate',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "DefaultFontFamily",
+                                    ),
+                                  ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                         ],
@@ -1437,7 +1437,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                   : Container(
                       height: double.infinity,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                             image:
                                 AssetImage("assets/icons/RentSpace-icon.png"),
@@ -1448,7 +1448,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           Row(
@@ -1462,15 +1462,15 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
-                          CircularProgressIndicator(
+                          const CircularProgressIndicator(
                             color: brandOne,
                           ),
                         ],
@@ -1480,7 +1480,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
           : Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/icons/RentSpace-icon.png"),
                   fit: BoxFit.cover,
@@ -1510,12 +1510,12 @@ class _RentLiquidateState extends State<RentLiquidate> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   GFButton(
                     onPressed: () async {
-                      Get.to(BvnPage());
+                      Get.to(const BvnPage());
                     },
                     text: "  Begin Verification  ",
                     fullWidthButton: false,

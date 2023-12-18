@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:settings_ui/settings_ui.dart';
@@ -25,12 +26,12 @@ launchEmail({
   final url =
       "mailto: $toEmail?subject=${Uri.encodeFull(subject)}body=${Uri.encodeFull(message)}";
   try {
-    await launch(url);
+    await launchUrl(Uri.parse(url));
   } catch (error) {
     Get.snackbar(
       "Oops",
       "Something went wrong, try again later",
-      animationDuration: Duration(seconds: 1),
+      animationDuration: const Duration(seconds: 1),
       backgroundColor: Colors.red,
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
@@ -56,60 +57,207 @@ class _ContactUsPageState extends State<ContactUsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
+        centerTitle: true,
+        elevation: 0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+            color: brandOne,
           ),
         ),
         title: Text(
-          '',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
+          'Contact Us',
+          style: GoogleFonts.nunito(
+              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.05,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: 0.05,
+          //     child: Image.asset(
+          //       'assets/icons/RentSpace-icon.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
             child: ListView(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               children: [
-                SizedBox(
-                  height: 50,
-                ),
+                // SizedBox(
+                //   height: 50,
+                // ),
                 //bvn value
                 ListView(
                   shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   children: [
-                    Text(
-                      'SOCIAL HANDLES',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
-                        letterSpacing: 1.0,
-                        color: Theme.of(context).primaryColor,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      child: Text(
+                        "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
+                        style: GoogleFonts.nunito(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          // fontFamily: "DefaultFontFamily",
+                          // letterSpacing: 1.0,
+                          color: Theme.of(context).cardColor,
+                        ),
                       ),
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: 350,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: brandTwo.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Phone Number",
+                                  style: GoogleFonts.nunito(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).canvasColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            '+234 (1) 344 4012',
+                                            style: GoogleFonts.nunito(
+                                              color: brandOne,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).cardColor,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15, vertical: 10),
+                                            child: Text(
+                                              'Copy',
+                                              style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            launchUrl(Uri.parse("tel://013444012"));
+                          },
+                          leading: const Icon(
+                            Icons.phone_outlined,
+                            color: brandOne,
+                          ),
+                          title: Text(
+                            'Phone',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "DefaultFontFamily",
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            'click to call: +23413444012',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "DefaultFontFamily",
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_right_outlined,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            launchEmail(
+                                toEmail: 'support@rentspace.tech',
+                                subject: 'Help & support',
+                                message:
+                                    'Hi, could you assist me with..... in the RentSpace app?\nThanks.');
+                          },
+                          leading: const Icon(
+                            Icons.email_outlined,
+                            color: brandOne,
+                          ),
+                          title: Text(
+                            'E-mail',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "DefaultFontFamily",
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            'click to send us a mail: support@rentspace.tech',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "DefaultFontFamily",
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_right_outlined,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ],
                     ),
                     ListTile(
                       onTap: () {
@@ -117,7 +265,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           initialUrl: facebookLink,
                         ));
                       },
-                      leading: FaIcon(
+                      leading: const FaIcon(
                         FontAwesomeIcons.facebook,
                         color: brandOne,
                       ),
@@ -150,7 +298,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           initialUrl: twitterLink,
                         ));
                       },
-                      leading: FaIcon(
+                      leading: const FaIcon(
                         FontAwesomeIcons.twitter,
                         color: brandTwo,
                       ),
@@ -184,7 +332,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           initialUrl: instagramLink,
                         ));
                       },
-                      leading: FaIcon(
+                      leading: const FaIcon(
                         FontAwesomeIcons.instagram,
                         color: Colors.redAccent,
                       ),
@@ -218,7 +366,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           initialUrl: linkedinLink,
                         ));
                       },
-                      leading: FaIcon(
+                      leading: const FaIcon(
                         FontAwesomeIcons.linkedin,
                         color: Colors.lightBlue,
                       ),
@@ -246,86 +394,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
-                    ),
-                    Text(
-                      'HELP & SUPPORT',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0,
-                        fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        launch("tel://013444012");
-                      },
-                      leading: Icon(
-                        Icons.phone_outlined,
-                        color: brandOne,
-                      ),
-                      title: Text(
-                        'Phone',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'click to call: +23413444012',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        launchEmail(
-                            toEmail: 'support@rentspace.tech',
-                            subject: 'Help & support',
-                            message:
-                                'Hi, could you assist me with..... in the RentSpace app?\nThanks.');
-                      },
-                      leading: Icon(
-                        Icons.email_outlined,
-                        color: brandOne,
-                      ),
-                      title: Text(
-                        'E-mail',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'click to send us a mail: support@rentspace.tech',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
                     ),
                   ],
                 ),
@@ -393,7 +463,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
             ),
           ),
           if (_isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: Colors.black,
               ),

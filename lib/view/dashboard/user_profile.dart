@@ -706,38 +706,38 @@ class _UserProfileState extends State<UserProfile> {
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
-                      ListTile(
-                        onTap: () {
-                          Get.to(ForgotPin(
-                            password: userController.user[0].userPassword,
-                            pin: userController.user[0].transactionPIN,
-                          ));
-                        },
-                        leading: Icon(
-                          Icons.pin,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        title: Text(
-                          'Reset transaction PIN',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "DefaultFontFamily",
-                          ),
-                        ),
-                        subtitle: Text(
-                          'reset your 4 digit transaction PIN',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                            fontFamily: "DefaultFontFamily",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Icon(Icons.arrow_right_outlined,
-                            color: Theme.of(context).primaryColor),
-                      ),
+                      // ListTile(
+                      //   onTap: () {
+                      //     Get.to(ForgotPin(
+                      //       password: userController.user[0].userPassword,
+                      //       pin: userController.user[0].transactionPIN,
+                      //     ));
+                      //   },
+                      //   leading: Icon(
+                      //     Icons.pin,
+                      //     color: Theme.of(context).primaryColor,
+                      //   ),
+                      //   title: Text(
+                      //     'Reset transaction PIN',
+                      //     style: TextStyle(
+                      //       color: Theme.of(context).primaryColor,
+                      //       fontSize: 12,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontFamily: "DefaultFontFamily",
+                      //     ),
+                      //   ),
+                      //   subtitle: Text(
+                      //     'reset your 4 digit transaction PIN',
+                      //     style: TextStyle(
+                      //       color: Theme.of(context).primaryColor,
+                      //       fontSize: 12,
+                      //       fontFamily: "DefaultFontFamily",
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      //   trailing: Icon(Icons.arrow_right_outlined,
+                      //       color: Theme.of(context).primaryColor),
+                      // ),
                       ListTile(
                         onTap: () {
                           Get.to(const ContactUsPage());

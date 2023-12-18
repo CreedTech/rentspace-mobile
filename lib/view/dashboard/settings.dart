@@ -12,15 +12,22 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart';
+import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/view/actions/add_card.dart';
+import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/profile.dart';
+import 'package:rentspace/view/dashboard/security.dart';
+import 'package:rentspace/view/login_page.dart';
 
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../constants/db/firebase_db.dart';
+import '../../constants/firebase_auth_constants.dart';
 import '../../constants/theme_services.dart';
 import '../../controller/user_controller.dart';
 import '../actions/bank_and_card.dart';
+import '../actions/share_and_earn.dart';
+import 'dashboard.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -35,6 +42,7 @@ bool _isEmailVerified = false;
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
+bool _themeMode = themeChange.isSavedDarkMode();
 final hasBiometricStorage = GetStorage();
 bool _hasFeeds = true;
 final hasFeedsStorage = GetStorage();
@@ -264,7 +272,7 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -321,16 +329,21 @@ class _SettingsPageState extends State<SettingsPage>
                         Positioned(
                           bottom: 0,
                           right: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: brandOne,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt_outlined,
-                              color: Colors.white,
-                              size: 15,
+                          child: GestureDetector(
+                            onTap: () {
+                              getImage();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: brandOne,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.white,
+                                size: 15,
+                              ),
                             ),
                           ),
                         ),
@@ -412,7 +425,10 @@ class _SettingsPageState extends State<SettingsPage>
                                 ),
                                 Text(
                                   "${valueNotifier.toInt()}%",
-                                  style: GoogleFonts.nunito(color: brandOne, fontWeight: FontWeight.w700,),
+                                  style: GoogleFonts.nunito(
+                                    color: brandOne,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ],
                             ),
@@ -439,7 +455,7 @@ class _SettingsPageState extends State<SettingsPage>
                                       : Colors.cyan)
                                   : Colors.greenAccent,
                               animatedDuration:
-                                  const Duration(milliseconds: 300),
+                                  const Duration(milliseconds: 1000),
                               direction: Axis.horizontal,
                               // verticalDirection: VerticalDirection.up,
                               // displayText: 'mph',
@@ -458,50 +474,6 @@ class _SettingsPageState extends State<SettingsPage>
                     // ),
                   ],
                 ),
-                // SizedBox(
-                //   height: 50,
-                //   child: CircleAvatar(
-                //     backgroundColor: Colors.transparent,
-                //     child: ClipRRect(
-                //       borderRadius: BorderRadius.circular(200),
-                //       child: Image.network(
-                //         userController.user[0].image,
-                //         fit: BoxFit.cover,
-                //         height: 60,
-                //         width: 60,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   width: 10,
-                // ),
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Text(
-                //       "${userController.user[0].userFirst} ${userController.user[0].userLast}",
-                //       style: GoogleFonts.nunito(
-                //         fontSize: 16.0,
-                //         fontWeight: FontWeight.w700,
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                //     const SizedBox(
-                //       height: 5,
-                //     ),
-                //     Text(
-                //       "Wallet ID: ${userController.user[0].userWalletNumber}",
-                //       style: GoogleFonts.nunito(
-                //         fontSize: 12.0,
-                //         letterSpacing: 0.5,
-                //         color: Colors.white,
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ),
             ),
             Padding(
@@ -560,6 +532,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
+                  Get.to(const Security());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
                 trailing: const Icon(
@@ -591,13 +564,23 @@ class _SettingsPageState extends State<SettingsPage>
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                onTap: () {
-                  ThemeServices().changeThemeMode();
-                  // Navigator.pushNamed(context, RouteList.profile);
-                },
-                trailing: const Icon(
-                  Iconsax.arrow_right_3,
-                  color: brandOne,
+                // onTap: () {
+                //   ThemeServices().changeThemeMode();
+                //   // Navigator.pushNamed(context, RouteList.profile);
+                // },
+                trailing: Switch(
+                  activeColor: brandOne,
+                  inactiveTrackColor: brandTwo,
+                  value: themeChange.isSavedDarkMode(),
+                  onChanged: (_themeMode) {
+                    // if(themeChange.isSavedDarkMode()){
+                    //   ThemeServices().changeThemeMode();
+                    // }
+                    ThemeServices().changeThemeMode();
+                    setState(() {
+                      !_themeMode;
+                    });
+                  },
                 ),
               ),
             ),
@@ -624,6 +607,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
+                  Get.to(const ShareAndEarn());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
                 trailing: const Icon(
@@ -722,6 +706,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
+                  Get.to(ContactUsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
                 trailing: const Icon(
@@ -783,8 +768,14 @@ class _SettingsPageState extends State<SettingsPage>
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                onTap: () {
-                  // Navigator.pushNamed(context, RouteList.profile);
+                onTap: () async {
+                  await auth.signOut().then(
+                    (value) {
+                      _user == null;
+                      GetStorage().erase();
+                    },
+                  );
+                  // .then((value) => {Get.to(LoginPage())});
                 },
                 trailing: const Icon(
                   Iconsax.arrow_right_3,

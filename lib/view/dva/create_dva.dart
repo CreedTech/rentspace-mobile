@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +19,10 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:convert';
+
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class CreateDVA extends StatefulWidget {
   const CreateDVA({Key? key}) : super(key: key);
@@ -43,6 +49,8 @@ class _CreateDVAState extends State<CreateDVA> {
   final String collectionName = 'dva';
 
   TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _bvnController = TextEditingController();
+  final bvnformKey = GlobalKey<FormState>();
   var _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   Random _rnd = Random();
   String _payUrl = "";
@@ -69,17 +77,16 @@ class _CreateDVAState extends State<CreateDVA> {
       },
       body: jsonEncode(<String, String>{
         "customer_identifier":
-            "SPACER/${_usernameController.text.trim().toString().toUpperCase()} ${userController.user[0].userFirst} ${userController.user[0].userLast}",
-        "first_name":
-            "SPACER/ - ${_usernameController.text.trim().toString().toUpperCase()}",
+            "SPACER/${userController.user[0].dvaUsername} ${userController.user[0].userFirst} ${userController.user[0].userLast}",
+        "first_name": "SPACER/ - ${userController.user[0].dvaUsername}",
         "last_name": userController.user[0].userLast,
         "mobile_num":
             "0${userController.user[0].userPhone.replaceFirst('+234', '')}",
         "email": userController.user[0].email,
-        "bvn": userController.user[0].bvn,
-        "dob": "03/10/1990",
-        "address": "22 Kota street, UK",
-        "gender": "1"
+        "bvn": _bvnController.text.trim(),
+        "dob": userController.user[0].date_of_birth,
+        "address": userController.user[0].address,
+        "gender": userController.user[0].gender
       }),
     );
     if (response.statusCode == 200) {
@@ -93,16 +100,14 @@ class _CreateDVAState extends State<CreateDVA> {
         'dva_name': vName,
         'dva_date': formattedDate,
         'dva_number': vNum,
-        'dva_username':
-            _usernameController.text.trim().toString().toUpperCase(),
+        'dva_username': userController.user[0].dvaUsername,
       }).then((value) async {
         var walletUpdate = FirebaseFirestore.instance.collection('accounts');
         await walletUpdate.doc(userId).update({
           'has_dva': 'true',
           'dva_name': vName,
           'dva_number': vNum,
-          'dva_username':
-              _usernameController.text.trim().toString().toUpperCase(),
+          'dva_username': userController.user[0].dvaUsername,
           'dva_date': formattedDate,
           "activities": FieldValue.arrayUnion(
             [
@@ -247,6 +252,19 @@ class _CreateDVAState extends State<CreateDVA> {
     }
   }
 
+  doSommething() {
+    print('Printing');
+    print(_bvnController.text.trim());
+    print('userController.user[0].dvaUsername');
+    print(userController.user[0].dvaUsername);
+    print('userController.user[0].date_of_birth');
+    print(userController.user[0].date_of_birth);
+    print('userController.user[0].address');
+    print(userController.user[0].address);
+    print('userController.user[0].gender');
+    print(userController.user[0].gender);
+  }
+
   checkUserNameValidity() async {
     QuerySnapshot querySnapshot =
         await _firestore.collection(collectionName).get();
@@ -294,6 +312,19 @@ class _CreateDVAState extends State<CreateDVA> {
         return 'username cannot include special character';
       }
       return '';
+    }
+
+    validateBvn(bvnValue) {
+      if (bvnValue.isEmpty) {
+        return 'BVN cannot be empty';
+      }
+      if (bvnValue.length < 11) {
+        return 'BVN is invalid';
+      }
+      if (int.tryParse(bvnValue) == null) {
+        return 'enter valid BVN';
+      }
+      return null;
     }
 
     final username = TextFormField(
@@ -347,36 +378,114 @@ class _CreateDVAState extends State<CreateDVA> {
       ),
     );
 
+    final bvn = TextFormField(
+      enableSuggestions: true,
+      cursorColor: Colors.black,
+      controller: _bvnController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validateBvn,
+      style: const TextStyle(
+        color: Colors.black,
+      ),
+      keyboardType: TextInputType.phone,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      maxLength: 11,
+      decoration: InputDecoration(
+        label: Text(
+          "11 digits BVN",
+          style: GoogleFonts.nunito(
+            color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2.0,
+          ),
+        ),
+        filled: false,
+        // fillColor: brandThree,
+        hintText: 'e.g 12345678900',
+        contentPadding: const EdgeInsets.all(14),
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.close,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Icon(
+        //     Icons.close,
+        //     size: 30,
+        //     color: Theme.of(context).primaryColor,
+        //   ),
+        // ),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(50, 50),
+              backgroundColor: brandTwo,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
+              ),
+            ),
+            onPressed: () {
+              if (bvnformKey.currentState!.validate()) {
+                // createNewDVA();
+                createNewDVA();
+              } else {
+                Get.snackbar(
+                  "Invalid",
+                  "Fill the form properly to proceed",
+                  animationDuration: const Duration(seconds: 1),
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }
+            },
+            child: const Text(
+              'Activate DVA',
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
+        ],
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           (notLoading)
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 60, 10, 2),
+                  padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 2),
                   child: ListView(
                     children: [
                       Column(
@@ -384,79 +493,170 @@ class _CreateDVAState extends State<CreateDVA> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              "Create a free Dedicated Virtual Account (DVA)",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: "DefaultFontFamily",
-                                letterSpacing: 0.5,
+                              "Complete your setup to Create your Personalized Free Dedicated Virtual Account (DVA)",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                // fontFamily: "DefaultFontFamily",
+                                // letterSpacing: 0.5,
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
                           const SizedBox(
-                            height: 100,
+                            height: 50,
                           ),
-                          Text(
-                            "Choose New Username",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: "DefaultFontFamily",
-                              letterSpacing: 1.0,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          username,
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            _mssg,
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: "DefaultFontFamily",
-                              letterSpacing: 0.5,
-                              color: (_mssg == "username is available.")
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.red,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          GFButton(
-                            onPressed: () {
-                              if (validateUsername(_usernameController.text
-                                          .trim()
-                                          .replaceAll(',', '')) ==
-                                      "" &&
-                                  (_mssg == "username is available.")) {
-                                createNewDVA();
-                              } else {
-                                Get.snackbar(
-                                  "Invalid",
-                                  "Fill the form properly to proceed",
-                                  animationDuration: const Duration(seconds: 1),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  snackPosition: SnackPosition.BOTTOM,
-                                );
-                              }
-                            },
-                            shape: GFButtonShape.pills,
-                            fullWidthButton: true,
-                            color: brandOne,
-                            child: const Text(
-                              'Activate DVA',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontFamily: "DefaultFontFamily",
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                            child: Form(
+                              key: bvnformKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // const SizedBox(
+                                  //   height: 50,
+                                  // ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 3),
+                                    child: Text(
+                                      'Enter BVN',
+                                      style: GoogleFonts.nunito(
+                                        color: brandOne,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        // fontFamily: "DefaultFontFamily",
+                                      ),
+                                    ),
+                                  ),
+                                  bvn,
+                                  // Text(
+                                  //   _mssg,
+                                  //   style: GoogleFonts.nunito(
+                                  //     color: brandOne,
+                                  //     fontWeight: FontWeight.w700,
+                                  //     fontSize: 16,
+                                  //     // fontFamily: "DefaultFontFamily",
+                                  //   ),
+                                  // ),
+
+                                  const SizedBox(
+                                    height: 120,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      // width: MediaQuery.of(context).size.width * 2,
+                                      alignment: Alignment.center,
+                                      // height: 110.h,
+                                      child: Column(
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(400, 50),
+                                              backgroundColor: brandTwo,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  10,
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              if (bvnformKey.currentState!
+                                                  .validate()) {
+                                                // createNewDVA();
+                                                createNewDVA();
+                                              } else {
+                                                Get.snackbar(
+                                                  "Invalid",
+                                                  "Fill the form properly to proceed",
+                                                  animationDuration:
+                                                      const Duration(
+                                                          seconds: 1),
+                                                  backgroundColor: Colors.red,
+                                                  colorText: Colors.white,
+                                                  snackPosition:
+                                                      SnackPosition.BOTTOM,
+                                                );
+                                              }
+                                            },
+                                            child: const Text(
+                                              'Activate DVA',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
+                          // Text(
+                          //   "Choose New Username",
+                          //   style: TextStyle(
+                          //     fontSize: 20.0,
+                          //     fontFamily: "DefaultFontFamily",
+                          //     letterSpacing: 1.0,
+                          //     color: Theme.of(context).primaryColor,
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // username,
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
+                          // Text(
+                          //   _mssg,
+                          //   style: TextStyle(
+                          //     fontSize: 14.0,
+                          //     fontFamily: "DefaultFontFamily",
+                          //     letterSpacing: 0.5,
+                          //     color: (_mssg == "username is available.")
+                          //         ? Theme.of(context).primaryColor
+                          //         : Colors.red,
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 40,
+                          // ),
+                          // GFButton(
+                          //   onPressed: () {
+                          //     if (bvnformKey.currentState!.validate()) {
+                          //       // createNewDVA();
+                          //       doSommething();
+                          //     } else {
+                          //       Get.snackbar(
+                          //         "Invalid",
+                          //         "Fill the form properly to proceed",
+                          //         animationDuration: const Duration(seconds: 1),
+                          //         backgroundColor: Colors.red,
+                          //         colorText: Colors.white,
+                          //         snackPosition: SnackPosition.BOTTOM,
+                          //       );
+                          //     }
+                          //   },
+                          //   shape: GFButtonShape.pills,
+                          //   fullWidthButton: true,
+                          //   color: brandOne,
+                          //   child: const Text(
+                          //     'Activate DVA',
+                          //     style: TextStyle(
+                          //       color: Colors.white,
+                          //       fontSize: 13,
+                          //       fontFamily: "DefaultFontFamily",
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],
@@ -466,26 +666,26 @@ class _CreateDVAState extends State<CreateDVA> {
                   height: double.infinity,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/icons/RentSpace-icon.png"),
-                        fit: BoxFit.cover,
-                        opacity: 0.1),
-                  ),
+                      // image: DecorationImage(
+                      //     image: AssetImage("assets/icons/RentSpace-icon.png"),
+                      //     fit: BoxFit.cover,
+                      //     opacity: 0.1),
+                      ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
+                      // const SizedBox(
+                      //   height: 50,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Creating DVA...",
-                            style: TextStyle(
+                            style: GoogleFonts.nunito(
                               fontSize: 20,
-                              fontFamily: "DefaultFontFamily",
+                              // fontFamily: "DefaultFontFamily",
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
@@ -494,11 +694,16 @@ class _CreateDVAState extends State<CreateDVA> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const CircularProgressIndicator(
-                        color: brandOne,
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // const CircularProgressIndicator(
+                      //   color: brandOne,
+                      // ),
+                      Lottie.asset(
+                        'assets/loader.json',
+                        width: 100,
+                        height: 100,
                       ),
                     ],
                   ),
