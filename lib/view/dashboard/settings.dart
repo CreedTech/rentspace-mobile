@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cupertino_progress_bar/cupertino_progress_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -18,15 +20,19 @@ import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/profile.dart';
 import 'package:rentspace/view/dashboard/security.dart';
 import 'package:rentspace/view/login_page.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../constants/db/firebase_db.dart';
 import '../../constants/firebase_auth_constants.dart';
 import '../../constants/theme_services.dart';
+import '../../constants/widgets/custom_loader.dart';
 import '../../controller/user_controller.dart';
 import '../actions/bank_and_card.dart';
 import '../actions/share_and_earn.dart';
+import '../faqs.dart';
 import 'dashboard.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -53,13 +59,14 @@ class _SettingsPageState extends State<SettingsPage>
   final UserController userController = Get.find();
   late AnimationController controller;
 
-  Future getImage() async {
+  Future getImage(BuildContext context) async {
     var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       selectedImage = File(_image!.path); // won't have any error now
     });
-    uploadImg();
+    if (!context.mounted) return;
+    uploadImg(context);
   }
 
   Future updateVerification() async {
@@ -72,7 +79,12 @@ class _SettingsPageState extends State<SettingsPage>
     });
   }
 
-  Future uploadImg() async {
+  Future uploadImg(BuildContext context) async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: true,
+    );
     var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
 
     FirebaseStorage storage = FirebaseStorage.instance;
@@ -85,16 +97,30 @@ class _SettingsPageState extends State<SettingsPage>
     await userPinUpdate.doc(userId).update({
       'image': url,
     }).then((value) {
-      Get.back();
-      Get.snackbar(
-        "Profile updated!",
-        'Your profile picture has been updated successfully',
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
+      // Get.back();
+      EasyLoading.dismiss();
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Your profile picture has been updated successfully. !!',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Profile updated!",
+      //   'Your profile picture has been updated successfully',
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: brandOne,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.TOP,
+      // );
     }).catchError((error) {
+      EasyLoading.dismiss();
       Get.snackbar(
         "Error",
         error.toString(),
@@ -313,9 +339,12 @@ class _SettingsPageState extends State<SettingsPage>
                                   BlendMode.darken,
                                 ),
                                 fit: BoxFit.cover,
-                                image: NetworkImage(
+                                image: CachedNetworkImageProvider(
                                   userController.user[0].image,
                                 ),
+                                // NetworkImage(
+                                //   userController.user[0].image,
+                                // ),
                               ),
                             ),
                             // child: Image.network(
@@ -331,7 +360,7 @@ class _SettingsPageState extends State<SettingsPage>
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              getImage();
+                              getImage(context);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(5),
@@ -364,10 +393,17 @@ class _SettingsPageState extends State<SettingsPage>
                               color: brandOne,
                             ),
                           ),
-                          const Icon(
-                            Iconsax.verify5,
-                            color: brandOne,
-                          ),
+                          (_isEmailVerified)
+                              ? const Icon(
+                                  Iconsax.verify5,
+                                  color: brandOne,
+                                )
+                              : SizedBox(),
+
+                          //  ? const Icon(
+                          //   Iconsax.verify5,
+                          //   color: brandOne,
+                          // ):,
                         ],
                       ),
                     ),
@@ -706,7 +742,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
-                  Get.to(ContactUsPage());
+                  Get.to(const ContactUsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
                 trailing: const Icon(
@@ -738,6 +774,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
+                  Get.to(const FaqsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
                 trailing: const Icon(
@@ -771,7 +808,7 @@ class _SettingsPageState extends State<SettingsPage>
                 onTap: () async {
                   await auth.signOut().then(
                     (value) {
-                      _user == null;
+                      // _user == null;
                       GetStorage().erase();
                     },
                   );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/login_page.dart';
 
@@ -87,4 +88,90 @@ void verification(BuildContext context, String message, String subText,
           ),
         );
       });
+}
+
+void errorDialog(BuildContext context, String message, String subText) {
+  Get.bottomSheet(
+    isDismissible: false,
+    SizedBox(
+      height: 300,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
+        ),
+        child: Container(
+          color: Theme.of(context).canvasColor,
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      // color: Colors
+                      //     .red,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(
+                        Iconsax.close_circle,
+                        color: brandOne,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Image.asset(
+                'assets/error.png',
+                width: 80,
+                color: Colors.red,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                message,
+                style: GoogleFonts.nunito(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  // fontFamily:
+                  //     "DefaultFontFamily",
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 22,
+              ),
+              Text(
+                subText,
+                style: GoogleFonts.nunito(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  // fontFamily:
+                  //     "DefaultFontFamily",
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

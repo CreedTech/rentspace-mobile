@@ -21,13 +21,13 @@ void welcomeModal() {
         },
         shape: GFButtonShape.pills,
         text: "Let's go",
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_right_outlined,
           color: brandOne,
           size: 14,
         ),
         color: Colors.white,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           color: Colors.black,
           fontSize: 12,
         ),

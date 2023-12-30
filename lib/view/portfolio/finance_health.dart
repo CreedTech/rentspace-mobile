@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
@@ -20,6 +22,10 @@ import 'package:rentspace/controller/user_controller.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/withdrawal_controller.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../constants/widgets/custom_loader.dart';
 
 class FinanceHealth extends StatefulWidget {
   const FinanceHealth({Key? key}) : super(key: key);
@@ -53,6 +59,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
   final TankController tankController = Get.find();
   final UtilityController utilityController = Get.find();
   final WithdrawalController withdrawalController = Get.find();
+  final financeformKey = GlobalKey<FormState>();
 
   getSavingsAndInterest() {
     if (utilityController.utility.isNotEmpty) {
@@ -153,7 +160,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
       if (int.tryParse(text.replaceAll(',', ''))!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
     final income = TextFormField(
@@ -163,41 +170,50 @@ class _FinanceHealthState extends State<FinanceHealth> {
       controller: _incomeController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateIncome,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
-          "Monthly income?",
-          style: TextStyle(
+          "Monthly income ? ",
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         hintText: 'amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -212,116 +228,233 @@ class _FinanceHealthState extends State<FinanceHealth> {
             Get.back();
           },
           child: Icon(
-            Icons.close,
+            Icons.arrow_back,
             size: 30,
             color: Theme.of(context).primaryColor,
+          ),
+        ),
+        title: const Text(
+          'Finance Health',
+          style: TextStyle(
+            color: brandOne,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
         ),
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: 0.3,
+          //     child: Image.asset(
+          //       'assets/icons/RentSpace-icon.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 80,
-                ),
-                Text(
-                  'Use the following\nassesments to calculate your\nportfolio worth',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontFamily: "DefaultFontFamily",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+            child: Form(
+              key: financeformKey,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  'Your assets are calculated automatically for you.',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 12,
-                    fontFamily: "DefaultFontFamily",
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                income,
-                SizedBox(
-                  height: 10,
-                ),
-                GFButton(
-                  onPressed: () async {
-                    int inflow = (totalSavings +
-                        totalInterest +
-                        (int.tryParse(
-                            userController.user[0].userWalletBalance)!) +
-                        int.tryParse(_incomeController.text
-                            .trim()
-                            .replaceAll(',', ''))!);
-                    int outflow = ((int.tryParse(totalUtility.toString())!) +
-                        (int.tryParse(totalWithdraw.toString())!));
-                    var outcome =
-                        ((((inflow - outflow) / inflow) * 100).toInt());
-
-                    var userHealthUpdate =
-                        FirebaseFirestore.instance.collection('accounts');
-                    await userHealthUpdate.doc(userId).update({
-                      'loan_amount': 0.toString(),
-                      'total_savings': totalSavings.toString(),
-                      'total_interest': totalInterest.toString(),
-                      'total_debts': 0.toString(),
-                      'finance_health': outcome.toString(),
-                    }).then((value) {
-                      Get.back();
-                      Get.snackbar(
-                        "You scored ${outcome.toString()}%",
-                        'Your portfolio has been updated successfully',
-                        animationDuration: Duration(seconds: 1),
-                        backgroundColor: brandOne,
-                        colorText: Colors.white,
-                        snackPosition: SnackPosition.TOP,
-                      );
-                    }).catchError((error) {
-                      Get.snackbar(
-                        "Error",
-                        error.toString(),
-                        animationDuration: Duration(seconds: 2),
-                        backgroundColor: Colors.red,
-                        colorText: Colors.white,
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    });
-                  },
-                  shape: GFButtonShape.square,
-                  fullWidthButton: false,
-                  child: Text(
-                    'Calculate',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontFamily: "DefaultFontFamily",
+                  Text(
+                    'Use the following assesments to calculate your portfolio worth',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.nunito(
+                      color: Theme.of(context).primaryColor,
+                      // fontFamily: "DefaultFontFamily",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
                     ),
                   ),
-                  color: brandOne,
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Your assets are calculated automatically for you.',
+                    style: GoogleFonts.nunito(
+                      color: const Color(0xff4E4B4B),
+                      fontSize: 14,
+                      // fontFamily: "DefaultFontFamily",
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  income,
+                  const SizedBox(
+                    height: 120,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      // width: MediaQuery.of(context).size.width * 2,
+                      alignment: Alignment.center,
+                      // height: 110.h,
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(400, 50),
+                              backgroundColor: brandTwo,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                              EasyLoading.show(
+                                indicator: const CustomLoader(),
+                                maskType: EasyLoadingMaskType.black,
+                                dismissOnTap: true,
+                              );
+                              if (financeformKey.currentState!.validate()) {
+                                int inflow = (totalSavings +
+                                    totalInterest +
+                                    (int.tryParse(userController
+                                        .user[0].userWalletBalance)!) +
+                                    int.tryParse(_incomeController.text
+                                        .trim()
+                                        .replaceAll(',', ''))!);
+                                int outflow = ((int.tryParse(
+                                        totalUtility.toString())!) +
+                                    (int.tryParse(totalWithdraw.toString())!));
+                                var outcome =
+                                    ((((inflow - outflow) / inflow) * 100)
+                                        .toInt());
+
+                                var userHealthUpdate = FirebaseFirestore
+                                    .instance
+                                    .collection('accounts');
+                                await userHealthUpdate.doc(userId).update({
+                                  'loan_amount': 0.toString(),
+                                  'total_savings': totalSavings.toString(),
+                                  'total_interest': totalInterest.toString(),
+                                  'total_debts': 0.toString(),
+                                  'finance_health': outcome.toString(),
+                                }).then((value) {
+                                  EasyLoading.dismiss();
+                                  Get.back();
+                                  showTopSnackBar(
+                                    Overlay.of(context),
+                                    CustomSnackBar.success(
+                                      backgroundColor: brandOne,
+                                      message:
+                                          'You scored ${outcome.toString()}%',
+                                      textStyle: GoogleFonts.nunito(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  );
+                                }).catchError((error) {
+                                  EasyLoading.dismiss();
+                                  Get.snackbar(
+                                    "Error",
+                                    error.toString(),
+                                    animationDuration:
+                                        const Duration(seconds: 2),
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                    snackPosition: SnackPosition.BOTTOM,
+                                  );
+                                });
+                              } else {
+                                EasyLoading.dismiss();
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.error(
+                                    // backgroundColor: Colors.red,
+                                    message:
+                                        'Invalid! :). Please fill the form properly to proceed',
+                                    textStyle: GoogleFonts.nunito(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Calculate',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // GFButton(
+                  //   onPressed: () async {
+                  //     int inflow = (totalSavings +
+                  //         totalInterest +
+                  //         (int.tryParse(
+                  //             userController.user[0].userWalletBalance)!) +
+                  //         int.tryParse(_incomeController.text
+                  //             .trim()
+                  //             .replaceAll(',', ''))!);
+                  //     int outflow = ((int.tryParse(totalUtility.toString())!) +
+                  //         (int.tryParse(totalWithdraw.toString())!));
+                  //     var outcome =
+                  //         ((((inflow - outflow) / inflow) * 100).toInt());
+
+                  //     var userHealthUpdate =
+                  //         FirebaseFirestore.instance.collection('accounts');
+                  //     await userHealthUpdate.doc(userId).update({
+                  //       'loan_amount': 0.toString(),
+                  //       'total_savings': totalSavings.toString(),
+                  //       'total_interest': totalInterest.toString(),
+                  //       'total_debts': 0.toString(),
+                  //       'finance_health': outcome.toString(),
+                  //     }).then((value) {
+                  //       Get.back();
+                  //       Get.snackbar(
+                  //         "You scored ${outcome.toString()}%",
+                  //         'Your portfolio has been updated successfully',
+                  //         animationDuration: const Duration(seconds: 1),
+                  //         backgroundColor: brandOne,
+                  //         colorText: Colors.white,
+                  //         snackPosition: SnackPosition.TOP,
+                  //       );
+                  //     }).catchError((error) {
+                  //       Get.snackbar(
+                  //         "Error",
+                  //         error.toString(),
+                  //         animationDuration: const Duration(seconds: 2),
+                  //         backgroundColor: Colors.red,
+                  //         colorText: Colors.white,
+                  //         snackPosition: SnackPosition.BOTTOM,
+                  //       );
+                  //     });
+                  //   },
+                  //   shape: GFButtonShape.square,
+                  //   fullWidthButton: false,
+                  //   child: const Text(
+                  //     'Calculate',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 13,
+                  //       fontFamily: "DefaultFontFamily",
+                  //     ),
+                  //   ),
+                  //   color: brandOne,
+                  // ),
+
+                  // const SizedBox(
+                  //   height: 50,
+                  // ),
+                ],
+              ),
             ),
           ),
         ],

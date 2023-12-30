@@ -12,6 +12,7 @@ import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/withdrawal_controller.dart';
 import 'package:rentspace/view/actions/immediate_wallet_funding.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
+import 'package:rentspace/view/actions/update_info.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dashboard/user_profile.dart';
@@ -97,6 +98,7 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   bool _hasPutController = false;
+  // final UserController userController = Get.find();
 
   @override
   initState() {
@@ -284,9 +286,15 @@ class _FirstPageState extends State<FirstPage> {
                 );
               },
               builder: Builder(
-                builder: (context) => (userController.user[0].bvn == "")
-                    ? CreateDVA()
-                    : const HomePage(),
+                builder: (context) => (userController.user[0].bvn != "")
+                    ? const HomePage()
+                    : (userController.user[0].dvaUsername == '' ||
+                            userController.user[0].gender == '' ||
+                            userController.user[0].date_of_birth == '' ||
+                            userController.user[0].address == '')
+                        ? UpdateUserInfo()
+                        : CreateDVA(),
+                // : const HomePage(),
               ),
             ),
           );
@@ -695,8 +703,18 @@ class _HomePageState extends State<HomePage> {
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 2
-                    ? const Icon(Iconsax.briefcase5)
-                    : const Icon(Iconsax.briefcase),
+                    ? Image.asset(
+                        "assets/icons/carbon_portfolio.png",
+                        // height: 28,
+                        width: 29,
+                        color: brandOne,
+                      )
+                    : Image.asset(
+                        "assets/icons/carbon_portfolio.png",
+                        // height: 28,
+                        width: 29,
+                        color: navigationcolorText,
+                      ),
                 // Showcase(
                 //   key: counter._three,
                 //   title: 'Portfolio',

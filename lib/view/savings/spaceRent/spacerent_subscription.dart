@@ -679,14 +679,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                             Get.back();
                                                             Get.to(
                                                                 SpaceRentFunding(
-                                                              amount: (((int.tryParse(_rentAmountOldController
+                                                              amount: (int.tryParse(_rentAmountOldController
                                                                           .text
                                                                           .trim()
                                                                           .replaceAll(
                                                                               ',',
-                                                                              ''))! /
-                                                                      _calculateDaysDifference()))
-                                                                  .toInt()),
+                                                                              ''))! ~/
+                                                                      _calculateDaysDifference()),
                                                               date:
                                                                   formattedDate,
                                                               interval: 'daily',
@@ -743,7 +742,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                         color: brandOne,
                                         fullWidthButton: true,
                                         text:
-                                            "Click to save ${ch8t.format((((int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! / _calculateDaysDifference())).toInt()))} daily for ${_calculateDaysDifference()} days",
+                                            "Click to save ${ch8t.format((int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! ~/ _calculateDaysDifference()))} daily for ${_calculateDaysDifference()} days",
                                         textStyle: const TextStyle(
                                           fontSize: 13,
                                           color: Colors.white,

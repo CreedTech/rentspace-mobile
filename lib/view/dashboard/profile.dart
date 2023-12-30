@@ -6,6 +6,9 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 
+import '../../controller/user_controller.dart';
+import '../actions/view_bvn_and_kyc.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -14,15 +17,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final UserController userController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
         leading: GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.back();
           },
           child: const Icon(
@@ -102,7 +106,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onTap: () {
-                        Get.to(BvnPage());
+                        if (userController.user[0].bvn == "") {
+                          Get.to(const BvnPage());
+                        } else {
+                          Get.to(ViewBvnAndKyc(
+                            bvn: userController.user[0].bvn,
+                            hasVerifiedBvn:
+                                userController.user[0].hasVerifiedBvn,
+                            hasVerifiedKyc:
+                                userController.user[0].hasVerifiedKyc,
+                            kyc: userController.user[0].kyc,
+                            idImage: userController.user[0].Idimage,
+                          ));
+                        }
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
                       trailing: const Icon(
@@ -143,7 +159,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   //     ),
                   //   ),
                   // ),
-                
                 ],
               )),
             ],

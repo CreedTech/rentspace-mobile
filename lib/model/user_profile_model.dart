@@ -30,8 +30,8 @@ class User {
   final String cardExpire;
   final String cardHolder;
   final String email;
-  final String gender;
-  final String date_of_birth;
+  String? gender;
+  String? date_of_birth;
   final String referalCode;
   final String referalId;
   late final int referals;
@@ -75,8 +75,8 @@ class User {
     required this.cardExpire,
     required this.cardHolder,
     required this.email,
-    required this.gender,
-    required this.date_of_birth,
+    this.gender,
+    this.date_of_birth,
     required this.referalCode,
     required this.referalId,
     required this.referals,
@@ -122,8 +122,8 @@ class User {
       cardExpire: data['card_expire'],
       cardHolder: data['card_holder'],
       email: data['email'],
-      gender: data['gender'],
-      date_of_birth: data['date_of_birth'],
+      gender: data['gender'] ?? '',
+      date_of_birth: data['date_of_birth'] ?? '',
       referalCode: data['referal_code'],
       referalId: data['referar_id'],
       referals: data['referals'],

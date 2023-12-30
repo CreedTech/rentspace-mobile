@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -58,87 +59,157 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                   children: [
                     Text(
                       userController.user[0].referals.toString(),
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 40.0,
-                        letterSpacing: 1.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                        // letterSpacing: 1.0,
+                        fontWeight: FontWeight.w700,
+                        // fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                     Text(
                       'REFERRAL CODE: ${userController.user[0].referalCode}',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 14.0,
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                        // letterSpacing: 0.5,
+                        fontWeight: FontWeight.w700,
+                        // fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Image.asset(
                 "assets/share.png",
                 width: MediaQuery.of(context).size.width,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Text(
                   "Participate in our exclusive program and seize the opportunity to earn ₦1,000 simply by referring friends through your unique code . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
-                  style: TextStyle(
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
                     fontSize: 16.0,
-                    fontFamily: "DefaultFontFamily",
-                    //fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
+                    // fontFamily: "DefaultFontFamily",
+                    fontWeight: FontWeight.w600,
+                    // letterSpacing: 0.5,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                child: GFButton(
-                  onPressed: () {
-                    Clipboard.setData(
-                      ClipboardData(
-                        text:
-                            "Sign up with my code: ${userController.user[0].referalCode} to earn a free point!",
-                      ),
-                    );
-                    Fluttertoast.showToast(
-                      msg: "Your referal code has been copied to clipboard!",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: brandOne,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                    Share.share(
-                        "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.user[0].referalCode} to sign up and earn a point!");
-                  },
-                  icon: Icon(
-                    Icons.share_outlined,
-                    size: 30,
-                    color: Colors.white,
+                padding: const EdgeInsets.all(40.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    // width: MediaQuery.of(context).size.width * 2,
+                    alignment: Alignment.center,
+                    // height: 110.h,
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            backgroundColor: brandOne,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text:
+                                    "Sign up with my code: ${userController.user[0].referalCode} to earn a free point!",
+                              ),
+                            );
+                            Fluttertoast.showToast(
+                              msg:
+                                  "Your referal code has been copied to clipboard!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: brandOne,
+                                textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            Share.share(
+                                "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.user[0].referalCode} to sign up and earn a point!");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.share_outlined,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Share now!',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  color: brandOne,
-                  shape: GFButtonShape.pills,
-                  padding: EdgeInsets.all(5),
-                  text: "Share now!",
-                  fullWidthButton: true,
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              //   child: GFButton(
+              //     onPressed: () {
+              //       Clipboard.setData(
+              //         ClipboardData(
+              //           text:
+              //               "Sign up with my code: ${userController.user[0].referalCode} to earn a free point!",
+              //         ),
+              //       );
+              //       Fluttertoast.showToast(
+              //         msg: "Your referal code has been copied to clipboard!",
+              //         toastLength: Toast.LENGTH_SHORT,
+              //         gravity: ToastGravity.CENTER,
+              //         timeInSecForIosWeb: 1,
+              //         backgroundColor: brandOne,
+              //         textColor: Colors.white,
+              //         fontSize: 16.0,
+              //       );
+              //       Share.share(
+              //           "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.user[0].referalCode} to sign up and earn a point!");
+              //     },
+              //     icon: const Icon(
+              //       Icons.share_outlined,
+              //       size: 30,
+              //       color: Colors.white,
+              //     ),
+              //     color: brandOne,
+              //     shape: GFButtonShape.pills,
+              //     padding: const EdgeInsets.all(5),
+              //     text: "Share now!",
+              //     fullWidthButton: true,
+              //   ),
+              // ),
             ],
           ),
         ],

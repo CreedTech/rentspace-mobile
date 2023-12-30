@@ -48,7 +48,7 @@ class _AllActivitiesState extends State<AllActivities> {
               fontSize: 22,
               fontWeight: FontWeight.w700,
             ),
-          )),
+          ),),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: ListView.builder(
@@ -60,7 +60,8 @@ class _AllActivitiesState extends State<AllActivities> {
             return (widget.activities.isNotEmpty)
                 ? Container(
                     color: Theme.of(context).canvasColor,
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -73,23 +74,25 @@ class _AllActivitiesState extends State<AllActivities> {
                         ),
                         Text(
                           widget.activities[index],
-                          style: TextStyle(
-                            fontFamily: "DefaultFontFamily",
+                          style: GoogleFonts.nunito(
+                            // fontFamily: "DefaultFontFamily",
                             fontSize: MediaQuery.of(context).size.height / 60,
                             color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
                     ),
                   )
-                : const Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
                     child: Text(
                       "Nothing to show here",
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 22,
-                        fontFamily: "DefaultFontFamily",
-                        color: Colors.red,
+                        // fontFamily: "DefaultFontFamily",
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   );

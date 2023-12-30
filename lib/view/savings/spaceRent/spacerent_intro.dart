@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
@@ -37,86 +38,131 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
         ),
         title: Text(
           'Create Savings Plans',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-            fontFamily: "DefaultFontFamily",
+          style: GoogleFonts.nunito(
+            color: brandOne,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              "assets/icons/savings/spacerent.png",
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: brandOne,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Image.asset(
+                "assets/icons/savings/spacerent.png",
+                height: 15,
+                width: 15,
+              ),
             ),
-            SizedBox(
+            // Image.asset(
+            //   "assets/icons/savings/spacerent.png",
+            // ),
+            const SizedBox(
               height: 20,
             ),
             Text(
               "SpaceRent",
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-                fontFamily: "DefaultFontFamily",
+                fontWeight: FontWeight.w700,
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
               "Save 70% of rent for a minimum of 90 days at an interest up to 14% and get 100% (Terms and conditions apply)",
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 fontSize: 14.0,
-                letterSpacing: 0.5,
-                fontFamily: "DefaultFontFamily",
+                fontWeight: FontWeight.w400,
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            SizedBox(
-              height: 20,
+            const SizedBox(
+              height: 70,
             ),
             Image.asset(
-              "assets/icons/rent_intro_one.png",
+              "assets/space_rent_intro.png",
               width: MediaQuery.of(context).size.width,
             ),
-            SizedBox(
-              height: 40,
+            const SizedBox(
+              height: 70,
             ),
-            GFButton(
-              onPressed: () {
-                Get.to(RentSpaceSubscription());
-              },
-              icon: Icon(
-                Icons.add_circle_outline_outlined,
-                size: 30,
-                color: Colors.white,
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(300, 50),
+                  backgroundColor: brandTwo,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Get.to(const RentSpaceSubscription());
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Create new SpaceRent',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 24,
+                      height: 24,
+                      // padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: brandTwo,
+                        // size: 15,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              color: brandOne,
-              text: "Create new SpaceRent",
-              shape: GFButtonShape.square,
-              fullWidthButton: true,
             ),
-            SizedBox(
+
+            const SizedBox(
               height: 20,
             ),
-            InkWell(
-              onTap: () {
-                Get.to(TermsAndConditions());
-              },
-              child: Text(
-                "By proceeding, you agree with our terms and conditions",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Colors.red,
-                  fontFamily: "DefaultFontFamily",
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Get.to(const TermsAndConditions());
+                },
+                child: Text(
+                  "By proceeding, you agree with our terms and conditions",
+                  style: GoogleFonts.nunito(
+                    decoration: TextDecoration.underline,
+                    color: Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
           ],

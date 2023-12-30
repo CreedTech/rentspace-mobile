@@ -81,7 +81,7 @@ fgetImmediateRentFund() async {
       Get.snackbar(
         "Success!",
         "New payment recorded!\nKeep it up 👍",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,

@@ -308,7 +308,7 @@ class _SecurityState extends State<Security> {
                               fontWeight: FontWeight.w600,
                             )),
                         trailing: Switch(
-                          value: hasBiometricStorage.read('hasBiometric'),
+                          value: hasBiometricStorage.read('hasBiometric') ?? false,
                           onChanged: (_hasBiometric) {
                             print(_hasBiometric);
                             print('hasBiometricStorage');

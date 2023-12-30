@@ -1,7 +1,8 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -9,22 +10,28 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as p;
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 
 import 'dart:math';
+import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'dart:async';
 
 import 'package:rentspace/view/actions/fund_wallet.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../constants/widgets/custom_dialog.dart';
+import '../../constants/widgets/custom_loader.dart';
+import '../home_page.dart';
 
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
@@ -36,6 +43,9 @@ bool isChecking = false;
 bool canProceed = false;
 const _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 Random _rnd = Random();
+String vName = "";
+String vNum = "";
+bool notLoading = true;
 
 class BvnPage extends StatefulWidget {
   const BvnPage({super.key});
@@ -44,11 +54,14 @@ class BvnPage extends StatefulWidget {
   _BvnPageState createState() => _BvnPageState();
 }
 
+
 final TextEditingController _bvnController = TextEditingController();
 final bvnformKey = GlobalKey<FormState>();
-
 class _BvnPageState extends State<BvnPage> {
   final UserController userController = Get.find();
+  final form = intl.NumberFormat.decimalPattern();
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String collectionName = 'dva';
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
           length,
@@ -57,6 +70,262 @@ class _BvnPageState extends State<BvnPage> {
           ),
         ),
       );
+
+  createNewDVA() async {
+    setState(() {
+      notLoading = false;
+    });
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: true,
+    );
+    const String apiUrl = 'https://api-d.squadco.com/virtual-account';
+    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Authorization': 'Bearer $bearerToken',
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode(<String, String>{
+        "customer_identifier":
+            "SPACER/${userController.user[0].dvaUsername} ${userController.user[0].userFirst} ${userController.user[0].userLast}",
+        "first_name": "SPACER/ - ${userController.user[0].dvaUsername}",
+        "last_name": userController.user[0].userLast,
+        "mobile_num":
+            "0${userController.user[0].userPhone.replaceFirst('+234', '')}",
+        "email": userController.user[0].email,
+        "bvn": _bvnController.text.trim().toString(),
+        "dob": userController.user[0].date_of_birth!,
+        "address": userController.user[0].address,
+        "gender": userController.user[0].gender!
+      }),
+    );
+    // EasyLoading.dismiss();
+    if (response.statusCode == 200) {
+      Map<String, dynamic> parsedJson = json.decode(response.body);
+      var updateLiquidate = FirebaseFirestore.instance.collection('dva');
+      setState(() {
+        vNum = parsedJson['data']['virtual_account_number'];
+        vName = parsedJson['data']['customer_identifier'];
+      });
+      await updateLiquidate.add({
+        'dva_name': vName,
+        'dva_date': formattedDate,
+        'dva_number': vNum,
+        'dva_username': userController.user[0].dvaUsername,
+      }).then((value) async {
+        var walletUpdate = FirebaseFirestore.instance.collection('accounts');
+        await walletUpdate.doc(userId).update({
+          'has_dva': 'true',
+          'dva_name': vName,
+          'dva_number': vNum,
+          'dva_username': userController.user[0].dvaUsername,
+          'dva_date': formattedDate,
+          "activities": FieldValue.arrayUnion(
+            [
+              "$formattedDate \nDVA Created",
+            ],
+          ),
+        });
+        setState(() {
+          notLoading = true;
+        });
+        EasyLoading.dismiss();
+        if (!context.mounted) return;
+        Get.bottomSheet(
+          isDismissible: false,
+          SizedBox(
+            height: 400,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+              child: Container(
+                color: Theme.of(context).canvasColor,
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    // const Icon(
+                    //   Icons
+                    //       .check_circle_outline,
+                    //   color: brandOne,
+                    //   size: 80,
+                    // ),
+                    Image.asset(
+                      'assets/check.png',
+                      width: 80,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Wallet Successfully Created',
+                      style: GoogleFonts.nunito(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'DVA Name: $vName',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'DVA Number: $vNum',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'DVA Bank: GTBank',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 2,
+                        alignment: Alignment.center,
+                        // height: 110.h,
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(300, 50),
+                                backgroundColor: brandTwo,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Get.to(const HomePage());
+                                // for (int i = 0; i < 2; i++) {
+                                //   Get.to(HomePage());
+                                // }
+                              },
+                              child: Text(
+                                'Go to HomePage',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // GFButton(
+                    //   onPressed: () {
+                    //     Get.to(
+                    //         HomePage());
+                    //     // for (int i = 0; i < 2; i++) {
+                    //     //   Get.to(HomePage());
+                    //     // }
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons
+                    //         .arrow_right_outlined,
+                    //     size: 30,
+                    //     color:
+                    //         Colors.white,
+                    //   ),
+                    //   color: brandOne,
+                    //   text: "Done",
+                    //   shape: GFButtonShape
+                    //       .pills,
+                    //   fullWidthButton:
+                    //       true,
+                    // ),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }).catchError((error) {
+        setState(() {
+          notLoading = true;
+        });
+        EasyLoading.dismiss();
+        errorDialog(context, "Oops", "Something went wrong, try again later");
+        // Get.snackbar(
+        //   "Oops",
+        //   "Something went wrong, try again later",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
+      });
+    } else {
+      setState(() {
+        notLoading = true;
+      });
+      EasyLoading.dismiss();
+      if (!context.mounted) return;
+      errorDialog(context, "Error!", "Something went wrong");
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
+      print(
+          'Request failed with status: ${response.statusCode}, ${response.body}');
+    }
+  }
 
   bvnDebit() async {
     var walletUpdate = FirebaseFirestore.instance.collection('accounts');
@@ -112,7 +381,8 @@ class _BvnPageState extends State<BvnPage> {
           jsonResponse['data']["middle_name"];
       final phoneNumber = jsonResponse['data']["mobile"];
       if (phoneNumber != "") {
-        bvnDebit();
+        await bvnDebit();
+        await createNewDVA();
       }
       setState(() {
         isChecking = false;
@@ -209,7 +479,7 @@ class _BvnPageState extends State<BvnPage> {
         ),
       ),
     );
-    
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -669,7 +939,7 @@ class _KycPageState extends State<KycPage> {
     FirebaseStorage storage = FirebaseStorage.instance;
     print('storage');
     print(storage);
-    String fileName = basename(selectedImage!.path);
+    String fileName =p.basename(selectedImage!.path);
     print('fileName');
     print(fileName);
     Reference ref = storage.ref().child(fileName);

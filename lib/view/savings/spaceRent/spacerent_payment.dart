@@ -146,7 +146,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -183,7 +183,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                 Get.snackbar(
                   "Error",
                   e.toString(),
-                  animationDuration: Duration(seconds: 2),
+                  animationDuration: const Duration(seconds: 2),
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
                   snackPosition: SnackPosition.BOTTOM,

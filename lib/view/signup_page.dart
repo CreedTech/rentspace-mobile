@@ -1399,10 +1399,9 @@ class _SignupPageState extends State<SignupPage> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        // backgroundColor: const Color(0xffE0E0E0),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {

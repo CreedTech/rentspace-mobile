@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/biometrics_page.dart';
 import 'package:rentspace/view/actions/confirm_reset_page.dart';
 import 'package:rentspace/view/intro_slider.dart';
@@ -19,7 +22,9 @@ import 'package:rentspace/view/signup_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../constants/utils/snackbar.dart';
 import '../constants/widgets/custom_dialog.dart';
+import '../constants/widgets/custom_loader.dart';
 import '../view/home_page.dart';
 
 bool hasConnection = false.obs();
@@ -30,6 +35,7 @@ Random _rnd = Random();
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
+bool isLoading = false.obs();
 
 class AuthController extends GetxController {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
@@ -78,7 +84,7 @@ class AuthController extends GetxController {
         Get.offAll(() => const OnboardingSlider());
       } else {
         print(user);
-        // Get.offAll(() => SignupPage());
+        // Get.offAll(() => LoginPage());
         Get.offAll(() => BiometricsPage());
         // Get.offAll(() => const OnboardingSlider());
       }
@@ -108,12 +114,21 @@ class AuthController extends GetxController {
       genderValue,
       dateController,
       BuildContext context) async {
+    isLoading = true;
     try {
       //showLoading();
+      isLoading = true;
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
+      EasyLoading.dismiss();
 
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
+            EasyLoading.dismiss();
         FirebaseFirestore.instance
             .collection('accounts')
             .doc(value.user!.uid)
@@ -176,12 +191,14 @@ class AuthController extends GetxController {
           'status': 'unverified',
           'finance_health': '0',
         }).then((value) async {
+          EasyLoading.dismiss();
           print("Signed up");
 
           //loggedinUser.write('userName', _firstnameController.toString());
         });
       });
     } catch (error) {
+      EasyLoading.dismiss();
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');
       String nError = "";
@@ -189,6 +206,7 @@ class AuthController extends GetxController {
         nError = error.toString().substring(0, startBracketIndex) +
             error.toString().substring(endBracketIndex + 1);
       } else {
+        EasyLoading.dismiss();
         nError = error.toString();
       }
       if (!context.mounted) return;
@@ -208,13 +226,27 @@ class AuthController extends GetxController {
   }
 
   login(String email, password, BuildContext context) async {
+    isLoading = true;
     // BuildContext overlayContext = context;
     try {
+      isLoading = true;
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+                isLoading = false,
+                EasyLoading.dismiss(),
+              })
           .then((value) => Get.to(const FirstPage()));
+
       // await Get.to(const FirstPage());
     } catch (error) {
+      isLoading = false;
+      EasyLoading.dismiss();
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');
       String nError = "";
@@ -222,21 +254,92 @@ class AuthController extends GetxController {
         nError = error.toString().substring(0, startBracketIndex) +
             error.toString().substring(endBracketIndex + 1);
       } else {
+        isLoading = false;
+        EasyLoading.dismiss();
         nError = error.toString();
       }
       if (!context.mounted) return;
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: brandOne,
-          message: nError,
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      // showSnackBar(context: context, content: nError);
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: null,
+              elevation: 0,
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: const Icon(
+                            Iconsax.close_circle,
+                            color: brandOne,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_24,
+                        color: Colors.red,
+                        size: 75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Oops!!',
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      nError,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: brandOne,
+      //     message: nError,
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Oops",
       //   nError,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:clipboard/clipboard.dart';
 
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({Key? key}) : super(key: key);
@@ -45,8 +46,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   String linkedinLink = 'https://www.linkedin.com/company/rentspace.tech/';
   String instagramLink =
       'https://instagram.com/rentspacetech?igshid=YmMyMTA2M2Y=';
-  String twitterLink =
-      'https://twitter.com/rentspacetech?s=21&t=CjagU14HMYI6fNIamEOpEw';
+  String twitterLink = 'https://x.com/rentspacetech?s=20';
   @override
   initState() {
     super.initState();
@@ -106,296 +106,343 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
                         style: GoogleFonts.nunito(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           // fontFamily: "DefaultFontFamily",
                           // letterSpacing: 1.0,
-                          color: Theme.of(context).cardColor,
+                          color: brandOne,
                         ),
                       ),
                     ),
                     Column(
                       children: [
-                        Container(
-                          width: 350,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: brandTwo.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Phone Number",
-                                  style: GoogleFonts.nunito(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).canvasColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Text(
-                                            '+234 (1) 344 4012',
-                                            style: GoogleFonts.nunito(
-                                              color: brandOne,
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context).cardColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 10),
-                                            child: Text(
-                                              'Copy',
-                                              style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Container(
+                            width: 350,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: brandTwo.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Phone Number",
+                                    style: GoogleFonts.nunito(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).canvasColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              launchUrl(Uri.parse(
+                                                  "tel://+23413444012"));
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: Text(
+                                                '+234 (1) 344 4012',
+                                                style: GoogleFonts.nunito(
+                                                  color: brandOne,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              FlutterClipboard.copy(
+                                                      '+23413444012')
+                                                  .then((result) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Copied to clipboard!",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: brandOne,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    Theme.of(context).cardColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 10),
+                                                child: Text(
+                                                  'Copy',
+                                                  style: GoogleFonts.nunito(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        ListTile(
-                          onTap: () {
-                            launchUrl(Uri.parse("tel://013444012"));
-                          },
-                          leading: const Icon(
-                            Icons.phone_outlined,
-                            color: brandOne,
-                          ),
-                          title: Text(
-                            'Phone',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DefaultFontFamily",
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Container(
+                            width: 350,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: brandTwo.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: Text(
-                            'click to call: +23413444012',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DefaultFontFamily",
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Email address",
+                                    style: GoogleFonts.nunito(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).canvasColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              launchEmail(
+                                                toEmail:
+                                                    'support@rentspace.tech',
+                                                subject: 'Help & support',
+                                                message:
+                                                    'Hi, could you assist me with..... in the RentSpace app?\nThanks.',
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: Text(
+                                                'support@rentspace.tech',
+                                                style: GoogleFonts.nunito(
+                                                  color: brandOne,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              FlutterClipboard.copy(
+                                                      'support@rentspace.tech')
+                                                  .then((result) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Copied to clipboard!",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: brandOne,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    Theme.of(context).cardColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 10),
+                                                child: Text(
+                                                  'Copy',
+                                                  style: GoogleFonts.nunito(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_right_outlined,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            launchEmail(
-                                toEmail: 'support@rentspace.tech',
-                                subject: 'Help & support',
-                                message:
-                                    'Hi, could you assist me with..... in the RentSpace app?\nThanks.');
-                          },
-                          leading: const Icon(
-                            Icons.email_outlined,
-                            color: brandOne,
-                          ),
-                          title: Text(
-                            'E-mail',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DefaultFontFamily",
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: Text(
-                            'click to send us a mail: support@rentspace.tech',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_right_outlined,
-                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],
                     ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(SocialPagesWeb(
-                          initialUrl: facebookLink,
-                        ));
-                      },
-                      leading: const FaIcon(
-                        FontAwesomeIcons.facebook,
-                        color: brandOne,
-                      ),
-                      title: Text(
-                        'Facebook',
-                        style: TextStyle(
-                            fontFamily: "DefaultFontFamily",
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'Like us on Facebook',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(SocialPagesWeb(
-                          initialUrl: twitterLink,
-                        ));
-                      },
-                      leading: const FaIcon(
-                        FontAwesomeIcons.twitter,
-                        color: brandTwo,
-                      ),
-                      title: Text(
-                        'Twitter',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'Follow us on Twitter',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(SocialPagesWeb(
-                          initialUrl: instagramLink,
-                        ));
-                      },
-                      leading: const FaIcon(
-                        FontAwesomeIcons.instagram,
-                        color: Colors.redAccent,
-                      ),
-                      title: Text(
-                        'Instagram',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'follow us on Instagram',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(SocialPagesWeb(
-                          initialUrl: linkedinLink,
-                        ));
-                      },
-                      leading: const FaIcon(
-                        FontAwesomeIcons.linkedin,
-                        color: Colors.lightBlue,
-                      ),
-                      title: Text(
-                        'linkedIn',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        'join us on LinkedIn',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_right_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
                     const SizedBox(
-                      height: 20,
+                      height: 70,
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              'Follow Us on Social Media',
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(SocialPagesWeb(
+                                    initialUrl: facebookLink,
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: brandTwo.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: const Icon(
+                                      FontAwesomeIcons.facebookF,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // print('https://x.com/rentspacetech?s=20');
+                                  Get.to(SocialPagesWeb(
+                                    initialUrl: twitterLink,
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: brandTwo.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: const Icon(
+                                      FontAwesomeIcons.xTwitter,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(SocialPagesWeb(
+                                    initialUrl: instagramLink,
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: brandTwo.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: const Icon(
+                                      FontAwesomeIcons.instagram,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(SocialPagesWeb(
+                                    initialUrl: linkedinLink,
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: brandTwo.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    child: const Icon(
+                                      FontAwesomeIcons.linkedinIn,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -432,6 +479,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
@@ -441,6 +489,14 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
             Icons.close,
             size: 30,
             color: Theme.of(context).primaryColor,
+          ),
+        ),
+        title: const Text(
+          'RentSpace',
+          style: TextStyle(
+            color: brandOne,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
         ),
       ),

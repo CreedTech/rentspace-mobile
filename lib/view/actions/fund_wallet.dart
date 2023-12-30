@@ -73,39 +73,39 @@ class _FundWalletState extends State<FundWallet> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [ThousandsFormatter()],
       validator: validateAmount,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Enter amount",
           style: TextStyle(
             color: Colors.grey,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -145,7 +145,7 @@ class _FundWalletState extends State<FundWallet> {
               children: [
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
                     Text(
@@ -157,11 +157,11 @@ class _FundWalletState extends State<FundWallet> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     amount,
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GFButton(
@@ -183,7 +183,7 @@ class _FundWalletState extends State<FundWallet> {
                           Get.snackbar(
                             "Invalid",
                             "Fill the form properly to proceed",
-                            animationDuration: Duration(seconds: 1),
+                            animationDuration: const Duration(seconds: 1),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.BOTTOM,
@@ -192,7 +192,8 @@ class _FundWalletState extends State<FundWallet> {
                       },
                       shape: GFButtonShape.pills,
                       fullWidthButton: true,
-                      child: Text(
+                      color: brandOne,
+                      child: const Text(
                         'Fund now',
                         style: TextStyle(
                           color: Colors.white,
@@ -200,11 +201,10 @@ class _FundWalletState extends State<FundWallet> {
                           fontFamily: "DefaultFontFamily",
                         ),
                       ),
-                      color: brandOne,
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 (userController.user[0].hasDva == 'true')
@@ -222,7 +222,7 @@ class _FundWalletState extends State<FundWallet> {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Text(
@@ -233,7 +233,7 @@ class _FundWalletState extends State<FundWallet> {
                                 fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -244,7 +244,7 @@ class _FundWalletState extends State<FundWallet> {
                                 fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -255,10 +255,10 @@ class _FundWalletState extends State<FundWallet> {
                                 fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
-                            Text(
+                            const Text(
                               '(Note that this can take few minutes for your transaction to be verified)',
                               style: TextStyle(
                                 color: Colors.red,
@@ -285,7 +285,8 @@ class _FundWalletState extends State<FundWallet> {
                               },
                               shape: GFButtonShape.pills,
                               fullWidthButton: true,
-                              child: Text(
+                              color: brandOne,
+                              child: const Text(
                                 'Copy Account Number',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -293,12 +294,11 @@ class _FundWalletState extends State<FundWallet> {
                                   fontFamily: "DefaultFontFamily",
                                 ),
                               ),
-                              color: brandOne,
                             ),
                           ],
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),

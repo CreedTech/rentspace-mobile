@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,10 +22,13 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:rentspace/view/home_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:convert';
 
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../constants/widgets/custom_loader.dart';
 
 class CreateDVA extends StatefulWidget {
   const CreateDVA({Key? key}) : super(key: key);
@@ -63,10 +69,27 @@ class _CreateDVAState extends State<CreateDVA> {
         ),
       );
 
+  doSomething() {
+    print(userController.user[0].date_of_birth!);
+    print(userController.user[0].gender!);
+    print(userController.user[0].address);
+    print(userController.user[0].email);
+    print(userController.user[0].userFirst);
+    print(userController.user[0].userLast);
+    print(_bvnController.text.trim());
+    print(userController.user[0].dvaUsername);
+    print(userController.user[0].userPhone.replaceFirst('+234', ''));
+  }
+
   createNewDVA() async {
     setState(() {
       notLoading = false;
     });
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: true,
+    );
     const String apiUrl = 'https://api-d.squadco.com/virtual-account';
     const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
     final response = await http.post(
@@ -84,11 +107,12 @@ class _CreateDVAState extends State<CreateDVA> {
             "0${userController.user[0].userPhone.replaceFirst('+234', '')}",
         "email": userController.user[0].email,
         "bvn": _bvnController.text.trim(),
-        "dob": userController.user[0].date_of_birth,
+        "dob": userController.user[0].date_of_birth!,
         "address": userController.user[0].address,
-        "gender": userController.user[0].gender
+        "gender": userController.user[0].gender!
       }),
     );
+    // EasyLoading.dismiss();
     if (response.statusCode == 200) {
       Map<String, dynamic> parsedJson = json.decode(response.body);
       var updateLiquidate = FirebaseFirestore.instance.collection('dva');
@@ -118,7 +142,8 @@ class _CreateDVAState extends State<CreateDVA> {
         setState(() {
           notLoading = true;
         });
-        _usernameController.clear();
+        EasyLoading.dismiss();
+        if (!context.mounted) return;
         Get.bottomSheet(
           isDismissible: false,
           SizedBox(
@@ -137,20 +162,26 @@ class _CreateDVAState extends State<CreateDVA> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Icon(
-                      Icons.check_circle_outline,
-                      color: brandOne,
-                      size: 80,
+                    // const Icon(
+                    //   Icons
+                    //       .check_circle_outline,
+                    //   color: brandOne,
+                    //   size: 80,
+                    // ),
+                    Image.asset(
+                      'assets/check.png',
+                      width: 80,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'DVA Created',
-                      style: TextStyle(
+                      'Wallet Successfully Created',
+                      style: GoogleFonts.nunito(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                        fontWeight: FontWeight.w700,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
@@ -159,11 +190,12 @@ class _CreateDVAState extends State<CreateDVA> {
                       height: 20,
                     ),
                     Text(
-                      'DVA Name: ${vName}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                      'DVA Name: $vName',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
@@ -172,11 +204,12 @@ class _CreateDVAState extends State<CreateDVA> {
                       height: 20,
                     ),
                     Text(
-                      'DVA Number: ${vNum}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                      'DVA Number: $vNum',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
@@ -186,10 +219,11 @@ class _CreateDVAState extends State<CreateDVA> {
                     ),
                     Text(
                       'DVA Bank: GTBank',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        // fontFamily:
+                        //     "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
@@ -197,22 +231,68 @@ class _CreateDVAState extends State<CreateDVA> {
                     const SizedBox(
                       height: 30,
                     ),
-                    GFButton(
-                      onPressed: () {
-                        for (int i = 0; i < 2; i++) {
-                          Get.back();
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.arrow_right_outlined,
-                        size: 30,
-                        color: Colors.white,
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 2,
+                        alignment: Alignment.center,
+                        // height: 110.h,
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(300, 50),
+                                backgroundColor: brandTwo,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Get.to(const HomePage());
+                                // for (int i = 0; i < 2; i++) {
+                                //   Get.to(HomePage());
+                                // }
+                              },
+                              child: Text(
+                                'Go to HomePage',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      color: brandOne,
-                      text: "Done",
-                      shape: GFButtonShape.pills,
-                      fullWidthButton: true,
                     ),
+                    // GFButton(
+                    //   onPressed: () {
+                    //     Get.to(
+                    //         HomePage());
+                    //     // for (int i = 0; i < 2; i++) {
+                    //     //   Get.to(HomePage());
+                    //     // }
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons
+                    //         .arrow_right_outlined,
+                    //     size: 30,
+                    //     color:
+                    //         Colors.white,
+                    //   ),
+                    //   color: brandOne,
+                    //   text: "Done",
+                    //   shape: GFButtonShape
+                    //       .pills,
+                    //   fullWidthButton:
+                    //       true,
+                    // ),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -226,27 +306,32 @@ class _CreateDVAState extends State<CreateDVA> {
         setState(() {
           notLoading = true;
         });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        EasyLoading.dismiss();
+        errorDialog(context, "Oops", "Something went wrong, try again later");
+        // Get.snackbar(
+        //   "Oops",
+        //   "Something went wrong, try again later",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       });
     } else {
       setState(() {
         notLoading = true;
       });
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      EasyLoading.dismiss();
+      if (!context.mounted) return;
+      errorDialog(context, "Error!", "Something went wrong");
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -258,11 +343,11 @@ class _CreateDVAState extends State<CreateDVA> {
     print('userController.user[0].dvaUsername');
     print(userController.user[0].dvaUsername);
     print('userController.user[0].date_of_birth');
-    print(userController.user[0].date_of_birth);
+    // print(userController.user[0].date_of_birth);
     print('userController.user[0].address');
     print(userController.user[0].address);
     print('userController.user[0].gender');
-    print(userController.user[0].gender);
+    // print(userController.user[0].gender);
   }
 
   checkUserNameValidity() async {
@@ -437,46 +522,25 @@ class _CreateDVAState extends State<CreateDVA> {
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Get.back();
-        //   },
-        //   child: Icon(
-        //     Icons.close,
-        //     size: 30,
-        //     color: Theme.of(context).primaryColor,
-        //   ),
-        // ),
         actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(50, 50),
-              backgroundColor: brandTwo,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  10,
+          GestureDetector(
+            onTap: () {
+              Get.to(const HomePage());
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(100),
+                  ),
+              child: Text(
+                'Skip',
+                style: GoogleFonts.nunito(
+                  color: brandOne,
+                  decoration: TextDecoration.underline,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-            onPressed: () {
-              if (bvnformKey.currentState!.validate()) {
-                // createNewDVA();
-                createNewDVA();
-              } else {
-                Get.snackbar(
-                  "Invalid",
-                  "Fill the form properly to proceed",
-                  animationDuration: const Duration(seconds: 1),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                  snackPosition: SnackPosition.BOTTOM,
-                );
-              }
-            },
-            child: const Text(
-              'Activate DVA',
-              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -569,18 +633,23 @@ class _CreateDVAState extends State<CreateDVA> {
                                                   .validate()) {
                                                 // createNewDVA();
                                                 createNewDVA();
+                                                // doSomething();
                                               } else {
-                                                Get.snackbar(
-                                                  "Invalid",
-                                                  "Fill the form properly to proceed",
-                                                  animationDuration:
-                                                      const Duration(
-                                                          seconds: 1),
-                                                  backgroundColor: Colors.red,
-                                                  colorText: Colors.white,
-                                                  snackPosition:
-                                                      SnackPosition.BOTTOM,
-                                                );
+                                                errorDialog(
+                                                    context,
+                                                    'Invalid!!',
+                                                    'Fill the form properly to proceed');
+                                                // Get.snackbar(
+                                                //   "Invalid",
+                                                //   "Fill the form properly to proceed",
+                                                //   animationDuration:
+                                                //       const Duration(
+                                                //           seconds: 1),
+                                                //   backgroundColor: Colors.red,
+                                                //   colorText: Colors.white,
+                                                //   snackPosition:
+                                                //       SnackPosition.BOTTOM,
+                                                // );
                                               }
                                             },
                                             child: const Text(

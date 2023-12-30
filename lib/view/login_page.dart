@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   int currentCount = 0;
   bool isLockedOut = false;
   bool isChecked = false;
+  bool isLoading = false;
 
   bool obscurity = true;
   Icon lockIcon = LockIcon().open;
@@ -54,11 +55,8 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (loginFormKey.currentState!.validate()) {
-      authController.login(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-        context
-      );
+      authController.login(_emailController.text.trim(),
+          _passwordController.text.trim(), context);
     }
   }
 
@@ -187,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
         // } else if (!specialCharRegex.hasMatch(value)) {
         //   return "Password must contain at least one special character (#\$%&*?@).";
         // }
-         else {
+        else {
           return null;
         }
       },
@@ -393,21 +391,59 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 50,
                   ),
-                  RoundedLoadingButton(
-                    borderRadius: 5.0,
-                    elevation: 0.0,
-                    successColor: brandOne,
-                    color: brandFive,
-                    controller: _btnController,
-                    onPressed: _doSomething,
-                    child: Text(
-                      'Proceed',
-                      style: GoogleFonts.nunito(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      // width: MediaQuery.of(context).size.width * 2,
+                      alignment: Alignment.center,
+                      // height: 110.h,
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(300, 50),
+                              backgroundColor: brandTwo,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              _doSomething();
+                            },
+                            child: Text(
+                              'Proceed',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+
+                  // RoundedLoadingButton(
+                  //   borderRadius: 5.0,
+                  //   elevation: 0.0,
+                  //   successColor: brandOne,
+                  //   color: brandFive,
+                  //   controller: _btnController,
+                  //   onPressed: _doSomething,
+                  //   child: Text(
+                  //     'Proceed',
+                  //     style: GoogleFonts.nunito(
+                  //         color: Colors.white,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+
                   // const SizedBox(
                   //   height: 15,
                   // ),

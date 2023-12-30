@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -28,6 +30,7 @@ import 'dart:convert';
 
 import '../../constants/widgets/separator.dart';
 import '../actions/onboarding_page.dart';
+import '../actions/view_bvn_and_kyc.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({
@@ -42,6 +45,7 @@ var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 final themeChange = Get.put(ThemeServices());
 
 final hasFeedsStorage = GetStorage();
+int id = 0;
 
 String _greeting = "";
 bool _hasReferred = false;
@@ -53,12 +57,15 @@ var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 String _isSet = "false";
 var dum1 = "".obs;
+String previousAnnouncementText = '';
 bool hideBalance = false;
 CollectionReference users = FirebaseFirestore.instance.collection('accounts');
 CollectionReference allUsers =
     FirebaseFirestore.instance.collection('accounts');
 final CollectionReference announcements =
     FirebaseFirestore.instance.collection('announcements');
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class _DashboardState extends State<Dashboard> {
   final UserController userController = Get.find();
@@ -82,23 +89,43 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  Future<void> _fetchNews() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://newsapi.org/v2/top-headlines?country=us&category=business&q=finance&apiKey=64963c2e074348b5946d8307df0b5bea'),
+  Future<void> _showAnnouncementNotification(String title, String body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'announcement_channel_id',
+      'Announcement Notifications',
+      channelDescription: 'Notifications for announcements',
+      importance: Importance.max,
+      priority: Priority.high,
     );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
-    if (response.statusCode == 200) {
-      setState(() {
-        _articles = json.decode(response.body)['articles'];
-      });
-    } else {
-      setState(() {
-        _articles = [];
-      });
-      print(response.reasonPhrase);
-    }
+    await flutterLocalNotificationsPlugin.show(
+      id++,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
   }
+  // Future<void> _fetchNews() async {
+  //   final response = await http.get(
+  //     Uri.parse(
+  //         'https://newsapi.org/v2/top-headlines?country=us&category=business&q=finance&apiKey=64963c2e074348b5946d8307df0b5bea'),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       _articles = json.decode(response.body)['articles'];
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _articles = [];
+  //     });
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   late ValueNotifier<double> valueNotifier;
   @override
@@ -110,7 +137,7 @@ class _DashboardState extends State<Dashboard> {
         : valueNotifier = ValueNotifier(
             double.tryParse(userController.user[0].finance_health)!);
     greeting();
-    _fetchNews();
+    // _fetchNews();
   }
 
   @override
@@ -147,14 +174,43 @@ class _DashboardState extends State<Dashboard> {
                                 backgroundColor: Colors.transparent,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
-                                  child: Image.network(
-                                    userController.user[0].image,
+                                  child: CachedNetworkImage(
+                                    imageUrl: userController.user[0].image,
                                     height: 40,
                                     width: 40,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) {
+                                      return Image.asset(
+                                        'assets/icons/RentSpace-icon.png',
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Image.asset(
+                                        'assets/icons/RentSpace-icon.png',
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                    // progressIndicatorBuilder:
+                                    //     (context, url, progress) {
+                                    //   return const CircularProgressIndicator();
+                                    // },
                                   ),
+                                  // Image.network(
+                                  //   userController.user[0].image,
+                                  //   height: 40,
+                                  //   width: 40,
+                                  //   fit: BoxFit.fill,
+                                  // ),
                                 ),
                               ),
+                            ),
+                            const SizedBox(
+                              width: 10,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,7 +575,7 @@ class _DashboardState extends State<Dashboard> {
                                               BorderRadius.circular(10),
                                         ),
                                         child: Text(
-                                          " ${hideBalance ? "NGN 0.00" : "********"}",
+                                          " ${hideBalance ? nairaFormaet.format(int.tryParse(userController.user[0].userWalletBalance)).toString() : "********"}",
                                           style: GoogleFonts.nunito(
                                               fontWeight: FontWeight.w800,
                                               fontSize: 25,
@@ -532,7 +588,20 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(const BvnPage());
+                                        if (userController.user[0].bvn == "") {
+                                          Get.to(const BvnPage());
+                                        } else {
+                                          Get.to(ViewBvnAndKyc(
+                                            bvn: userController.user[0].bvn,
+                                            hasVerifiedBvn: userController
+                                                .user[0].hasVerifiedBvn,
+                                            hasVerifiedKyc: userController
+                                                .user[0].hasVerifiedKyc,
+                                            kyc: userController.user[0].kyc,
+                                            idImage:
+                                                userController.user[0].Idimage,
+                                          ));
+                                        }
                                       },
                                       child: Container(
                                         height: 61,
@@ -1767,22 +1836,42 @@ class _DashboardState extends State<Dashboard> {
                       //         const SizedBox(
                       //           height: 3,
                       //         ),
-                      //         StreamBuilder(
-                      //           stream: announcements.snapshots(),
-                      //           builder: (BuildContext context,
-                      //               AsyncSnapshot<QuerySnapshot> snapshot) {
-                      //             return (!snapshot.hasData)
-                      //                 ? const SizedBox()
-                      //                 : Text(
-                      //                     snapshot.data!.docs[0]['body'],
-                      //                     style: const TextStyle(
-                      //                       color: Colors.white,
-                      //                       fontSize: 16,
-                      //                       fontFamily: "DefaultFontFamily",
-                      //                     ),
-                      //                   );
-                      //           },
-                      //         ),
+
+                      StreamBuilder(
+                          stream: announcements.snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              return const SizedBox();
+                            } else {
+                              String announcementText =
+                                  snapshot.data!.docs[0]['body'];
+
+                              // Check if this is a new announcement (compare with previous announcement)
+                              if (announcementText !=
+                                  previousAnnouncementText) {
+                                _showAnnouncementNotification(
+                                    'New Announcement', announcementText);
+
+                                // Update the previous announcement text
+                                previousAnnouncementText = announcementText;
+                              }
+                              //  _showAnnouncementNotification('New Announcement', announcementText);
+                              return Text(
+                                snapshot.data!.docs[0]['body'],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: "DefaultFontFamily",
+                                ),
+                              );
+                              // },
+                            }
+                          }
+                          // }
+
+                          ),
                       //       ],
                       //     ),
                       //   ),

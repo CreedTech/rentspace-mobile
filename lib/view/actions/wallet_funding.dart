@@ -178,16 +178,16 @@ class _WalletFundingState extends State<WalletFunding> {
                       SizedBox(
                         height: 180,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0),
                           ),
                           child: Container(
                             color: Theme.of(context).canvasColor,
-                            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 40,
                                 ),
                                 Text(
@@ -197,7 +197,7 @@ class _WalletFundingState extends State<WalletFunding> {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Row(
@@ -225,13 +225,13 @@ class _WalletFundingState extends State<WalletFunding> {
                                       }),
                                       color: Colors.cyan,
                                       text: "Digits",
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.copy_outlined,
                                         color: Colors.white,
                                         size: 12,
                                       ),
                                       padding:
-                                          EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
@@ -255,13 +255,13 @@ class _WalletFundingState extends State<WalletFunding> {
                                       }),
                                       color: Colors.pink,
                                       text: "cvv",
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.copy_outlined,
                                         color: Colors.white,
                                         size: 12,
                                       ),
                                       padding:
-                                          EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
@@ -286,19 +286,19 @@ class _WalletFundingState extends State<WalletFunding> {
                                       }),
                                       color: Colors.amber,
                                       text: "Expiry date",
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.copy_outlined,
                                         color: Colors.white,
                                         size: 12,
                                       ),
                                       padding:
-                                          EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 40,
                                 ),
                               ],
@@ -321,7 +321,7 @@ class _WalletFundingState extends State<WalletFunding> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Icon(
                     Icons.copy_outlined,
                     size: 30,
@@ -338,7 +338,7 @@ class _WalletFundingState extends State<WalletFunding> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -352,15 +352,15 @@ class _WalletFundingState extends State<WalletFunding> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
-                CircularProgressIndicator(
+                const CircularProgressIndicator(
                   color: brandOne,
                 ),
               ],
@@ -372,7 +372,7 @@ class _WalletFundingState extends State<WalletFunding> {
                 Get.snackbar(
                   "Error",
                   e.toString(),
-                  animationDuration: Duration(seconds: 2),
+                  animationDuration: const Duration(seconds: 2),
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
                   snackPosition: SnackPosition.BOTTOM,
