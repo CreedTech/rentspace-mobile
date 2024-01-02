@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 class ConfirmResetPage extends StatefulWidget {
@@ -23,36 +24,31 @@ class _ConfirmResetPageState extends State<ConfirmResetPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              child: Icon(
-                Icons.mail,
-                size: 100,
-                color: brandTwo,
-              ),
+            const Icon(
+              Icons.mail,
+              size: 100,
+              color: brandTwo,
             ),
             Text(
               "Check your email",
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 fontSize: 20.0,
-                fontFamily: "DefaultFontFamily",
-                letterSpacing: 4.0,
                 color: Theme.of(context).primaryColor,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               "A password reset link has been sent to your email",
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 fontSize: 14.0,
-                fontFamily: "DefaultFontFamily",
                 color: Theme.of(context).primaryColor,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             InkWell(

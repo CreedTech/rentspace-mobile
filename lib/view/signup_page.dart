@@ -1293,7 +1293,7 @@ class _SignupPageState extends State<SignupPage> {
                                                                                       //   snackPosition: SnackPosition.TOP,
                                                                                       // );
                                                                                     } else {
-                                                                                      authController.register(_emailController.text.trim(), _passwordController.text.trim(), _firstnameController.text.trim(), _lastnameController.text.trim(), _phoneController.text.trim().substring(1), _pinTwoController.text.trim(), _referalController.text.trim(),_usernameController.text.trim(),_addressController.text.trim(),genderValue.toString(),dateController.text, context);
+                                                                                      authController.register(_emailController.text.trim(), _passwordController.text.trim(), _firstnameController.text.trim(), _lastnameController.text.trim(), _phoneController.text.trim().substring(1), _pinTwoController.text.trim(), _referalController.text.trim(), _usernameController.text.trim(), _addressController.text.trim(), genderValue.toString(), dateController.text, context);
                                                                                     }
                                                                                   },
                                                                                   style: ElevatedButton.styleFrom(
@@ -1373,7 +1373,6 @@ class _SignupPageState extends State<SignupPage> {
                 ],
               );
             });
-    
       } else {
         showTopSnackBar(
           Overlay.of(context),
@@ -1812,48 +1811,45 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    RoundedLoadingButton(
-                      elevation: 0.0,
-                      borderRadius: 5.0,
-                      successColor: brandTwo,
-                      color: brandTwo,
-                      controller: _btnController,
-                      onPressed: _doSomething,
-                      // () {
-                      // if (validateFirst(_firstnameController.text.trim()) ==
-                      //         "" &&
-                      //     validateLast(_lastnameController.text.trim()) == "" &&
-                      //     validatePhone(_phoneController.text.trim()) == "" &&
-                      //     validatePass(_passwordController.text.trim()) == "" &&
-                      //     validateMail(_emailController.text.trim()) == "" &&
-                      //     validatePinOne(_pinOneController.text.trim()) == "" &&
-                      //     validatePinTwo(_pinOneController.text.trim()) == "" &&
-                      //     (_pinOneController.text.trim() ==
-                      //         _pinTwoController.text.trim())) {
-                      //   _doSomething();
-                      // } else {
-                      //   Timer(const Duration(seconds: 1), () {
-                      //     _btnController.stop();
-                      //   });
-                      //   Get.snackbar(
-                      //     "Invalid",
-                      //     'Please fill the form properly to proceed',
-                      //     animationDuration: const Duration(seconds: 1),
-                      //     backgroundColor: Colors.red,
-                      //     colorText: Colors.white,
-                      //     snackPosition: SnackPosition.BOTTOM,
-                      //   );
-                      // }
-                      // _doSomething();
-                      // },
-                      child: const Text(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 50),
+                        backgroundColor: brandTwo,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        _doSomething();
+                      },
+                      child: Text(
                         'Create account',
-                        style: TextStyle(
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.nunito(
                           color: Colors.white,
-                          fontFamily: "DefaultFontFamily",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
+                    // RoundedLoadingButton(
+                    //   elevation: 0.0,
+                    //   borderRadius: 5.0,
+                    //   successColor: brandTwo,
+                    //   color: brandTwo,
+                    //   controller: _btnController,
+                    //   onPressed: _doSomething,
+                    //   child: Text(
+                    //     'Create account',
+                    //     style: GoogleFonts.nunito(
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
+
                     const SizedBox(
                       height: 30,
                     ),

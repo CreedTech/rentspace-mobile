@@ -393,7 +393,7 @@ class _SettingsPageState extends State<SettingsPage>
                               color: brandOne,
                             ),
                           ),
-                          (_isEmailVerified)
+                          (userController.user[0].status == 'verified')
                               ? const Icon(
                                   Iconsax.verify5,
                                   color: brandOne,
@@ -806,12 +806,111 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () async {
-                  await auth.signOut().then(
-                    (value) {
-                      // _user == null;
-                      GetStorage().erase();
-                    },
+                  Get.bottomSheet(
+                    SizedBox(
+                      height: 250,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                        child: Container(
+                          color: Theme.of(context).canvasColor,
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Text(
+                                'Are you sure you want to logout?',
+                                style: GoogleFonts.nunito(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  // fontFamily: "DefaultFontFamily",
+                                  color: brandOne,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              //card
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        await auth.signOut().then(
+                                          (value) {
+                                            // _user == null;
+                                            GetStorage().erase();
+                                          },
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40, vertical: 15),
+                                        textStyle: const TextStyle(
+                                            color: brandFour, fontSize: 13),
+                                      ),
+                                      child: const Text(
+                                        "Yes",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: brandTwo,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40, vertical: 15),
+                                        textStyle: const TextStyle(
+                                            color: brandFour, fontSize: 13),
+                                      ),
+                                      child: const Text(
+                                        "No",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //card
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   );
+
                   // .then((value) => {Get.to(LoginPage())});
                 },
                 trailing: const Icon(

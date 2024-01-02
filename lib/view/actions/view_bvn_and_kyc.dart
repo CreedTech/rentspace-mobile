@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 class ViewBvnAndKyc extends StatefulWidget {
@@ -43,17 +44,16 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
         ),
         title: Text(
           'Details',
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
             fontSize: 16,
-            fontFamily: "DefaultFontFamily",
           ),
         ),
       ),
       body: ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           //ID Cardvalue
@@ -65,14 +65,14 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
                   color: brandOne, // Color of the border
                   width: 2.0, // Width of the border
                 ),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/icons/RentSpace-icon.png'),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
                 //borderRadius: BorderRadius.circular(20),
               ),
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
+              padding: const EdgeInsets.fromLTRB(1, 1, 1, 1),
               child: Image.network(
                 widget.idImage,
                 fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
             ),
           ),
           //bvn value
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
 
@@ -93,18 +93,18 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
                   color: brandOne, // Color of the border
                   width: 2.0, // Width of the border
                 ),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/icons/RentSpace-icon.png'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(0),
               ),
-              padding: EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 1.0),
+              padding: const EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 1.0),
               child: SizedBox(
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(0),
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
@@ -113,42 +113,38 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
                       ],
                     ),
                   ),
-                  padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "BVN: " + widget.bvn,
-                        style: TextStyle(
+                        "BVN: ${widget.bvn}",
+                        style: GoogleFonts.nunito(
                           fontSize: 15.0,
-                          letterSpacing: 0.4,
                           height: 2,
                           fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.white,
                         height: 5.0,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "KYC: " + widget.kyc,
-                        style: TextStyle(
+                        "KYC: ${widget.kyc}",
+                        style: GoogleFonts.nunito(
                           fontSize: 15.0,
-                          fontWeight: FontWeight.w100,
-                          fontFamily: "DefaultFontFamily",
-                          letterSpacing: 0.4,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -157,7 +153,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

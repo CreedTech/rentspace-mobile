@@ -599,9 +599,9 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                             username,
                             Text(
                               _mssg,
-                              style: TextStyle(
+                              style: GoogleFonts.nunito(
                                 fontSize: 14.0,
-                                fontFamily: "DefaultFontFamily",
+                                // fontFamily: "DefaultFontFamily",
                                 // letterSpacing: 0.5,
                                 color: (_mssg == "username is available.")
                                     ? Theme.of(context).primaryColor

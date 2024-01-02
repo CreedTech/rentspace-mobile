@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
@@ -137,10 +138,9 @@ class _BiometricsPageState extends State<BiometricsPage> {
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: Text(
                         screenInfo,
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
                           color: Theme.of(context).canvasColor,
                         ),
                       ),
@@ -179,9 +179,9 @@ class _BiometricsPageState extends State<BiometricsPage> {
                                 textStyle: const TextStyle(
                                     color: brandFour, fontSize: 13),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "Authenticate",
-                                style: TextStyle(
+                                style: GoogleFonts.nunito(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,

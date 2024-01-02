@@ -31,6 +31,8 @@ import 'dart:convert';
 import '../../constants/widgets/separator.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/view_bvn_and_kyc.dart';
+import '../chat/chat_main.dart';
+import 'notifications.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({
@@ -146,8 +148,10 @@ class _DashboardState extends State<Dashboard> {
       () => Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Image.asset('assets/chatbot.png'),
+          onPressed: () {
+            Get.to(const ChatMain());
+          },
+          child: const Icon(Icons.support_agent_sharp),
         ),
         body: SafeArea(
           child: Padding(
@@ -236,12 +240,17 @@ class _DashboardState extends State<Dashboard> {
                             )
                           ],
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.notifications_outlined,
-                            color: brandOne,
-                            size: 22,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(NotificationsPage());
+                            },
+                            child: Icon(
+                              Icons.notifications_outlined,
+                              color: brandOne,
+                              size: 22,
+                            ),
                           ),
                         ),
                       ],
@@ -741,16 +750,17 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(
                   height: 10,
                 ),
-                ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: (userController.user[0].activities.length < 3)
-                      ? userController.user[0].activities.length
-                      : 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    return (userController.user[0].activities[index].isNotEmpty)
-                        ? Container(
+                userController.user[0].activities.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount:
+                            (userController.user[0].activities.length < 3)
+                                ? userController.user[0].activities.length
+                                : 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
                             color: Theme.of(context).canvasColor,
                             padding:
                                 const EdgeInsets.fromLTRB(10.0, 10, 10.0, 10),
@@ -774,20 +784,23 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ],
                             ),
-                          )
-                        : const Padding(
-                            padding: EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
-                            child: Text(
-                              "Nothing to show here",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontFamily: "DefaultFontFamily",
-                                color: Colors.red,
-                              ),
-                            ),
                           );
-                  },
-                ),
+                        },
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child: Text(
+                            "No Activites Yet",
+                            style: GoogleFonts.nunito(
+                              fontSize: 20,
+                              // fontFamily: "DefaultFontFamily",
+                              color: brandOne,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -830,34 +843,43 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                           ),
-                          const Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Iconsax.verify5,
-                                color: brandOne,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'BVN Setup',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                          GestureDetector(
+                            onTap: () {},
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  (userController.user[0].hasVerifiedBvn ==
+                                          'false')
+                                      ? Iconsax.verify
+                                      : Iconsax.verify5,
+                                  color: brandOne,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'BVN Setup',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                           ),
                           const MySeparator(),
-                          const Row(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(
-                                Iconsax.verify,
+                                (userController.user[0].hasVerifiedKyc ==
+                                        'false')
+                                    ? Iconsax.verify
+                                    : Iconsax.verify5,
                                 color: brandOne,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Text(
+                              const Text(
                                 'KYC Setup',
                                 textAlign: TextAlign.center,
                               ),

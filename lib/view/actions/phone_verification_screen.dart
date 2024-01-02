@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
@@ -51,7 +52,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
 
     await _auth.verifyPhoneNumber(
       phoneNumber: userController.user[0].userPhone,
-      timeout: Duration(seconds: 30),
+      timeout: const Duration(seconds: 30),
       verificationCompleted: (PhoneAuthCredential credential) async {
         //await _auth.signInWithCredential(credential);
         setState(() {
@@ -70,7 +71,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         Get.snackbar(
           "Error",
           "Try again later",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -85,7 +86,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         Get.snackbar(
           "Waiting for OTP",
           "An OTP has been sent to ${userController.user[0].userPhone}",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -130,7 +131,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
       Get.snackbar(
         "Verified!",
         "Your phone number has been verified",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -142,7 +143,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
       Get.snackbar(
         "Error",
         "The OTP could not be verified, try again later",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -184,37 +185,30 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                 children: [
                   (!_otpSent)
                       ? Text(
-                          "OTP will be sent to " +
-                              userController.user[0].userPhone,
-                          style: TextStyle(
+                          "OTP will be sent to ${userController.user[0].userPhone}",
+                          style: GoogleFonts.nunito(
                             fontSize: 15.0,
-                            letterSpacing: 4.0,
-                            fontFamily: "DefaultFontFamily",
                             color: Theme.of(context).primaryColor,
                           ),
                           textAlign: TextAlign.center,
                         )
                       : Text(
-                          "OTP has been sent to " +
-                              userController.user[0].userPhone,
-                          style: TextStyle(
+                          "OTP has been sent to ${userController.user[0].userPhone}",
+                          style: GoogleFonts.nunito(
                             fontSize: 18.0,
-                            fontFamily: "DefaultFontFamily",
-                            letterSpacing: 0.5,
                             color: Theme.of(context).primaryColor,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   (!_otpSent)
                       ? RoundedLoadingButton(
                           child: Text(
                             'Send OTP',
-                            style: TextStyle(
+                            style: GoogleFonts.nunito(
                               color: Colors.white,
-                              fontFamily: "DefaultFontFamily",
                             ),
                           ),
                           elevation: 0.0,
@@ -222,14 +216,14 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           color: brandOne,
                           controller: _btnController,
                           onPressed: () {
-                            Timer(Duration(seconds: 2), () {
+                            Timer(const Duration(seconds: 2), () {
                               _btnController.stop();
                             });
                             _sendOTP();
                           },
                         )
-                      : Text(""),
-                  SizedBox(
+                      : const Text(""),
+                  const SizedBox(
                     height: 20,
                   ),
                   if (_otpSent)
@@ -238,50 +232,70 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                       cursorColor: Colors.black,
                       controller: _otpController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      style: TextStyle(
-                        color: Colors.black,
+                      style: GoogleFonts.nunito(
+                        color: brandOne,
                       ),
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         label: Text(
                           "OTP",
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             color: Colors.grey,
-                            fontFamily: "DefaultFontFamily",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: brandOne, width: 2.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xffE0E0E0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2.0), // Change color to yellow
                         ),
-                        filled: true,
-                        fillColor: brandThree,
+                        filled: false,
+                        contentPadding: const EdgeInsets.all(14),
                         hintText: 'enter your OTP ',
-                        hintStyle: TextStyle(
+                        hintStyle: GoogleFonts.nunito(
                           color: Colors.grey,
-                          fontFamily: "DefaultFontFamily",
-                          fontSize: 13,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
                   if (_otpSent)
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                   if (_otpSent)
-                    GFButton(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 50),
+                        backgroundColor: brandTwo,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                      ),
                       onPressed: () {
                         if (_otpController.text.trim() == "") {
                           Get.snackbar(
                             "Empty",
                             "OTP cannot be empty",
-                            animationDuration: Duration(seconds: 1),
+                            animationDuration: const Duration(seconds: 1),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.BOTTOM,
@@ -290,17 +304,41 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                           _verifyOTP();
                         }
                       },
-                      color: brandOne,
-                      fullWidthButton: true,
-                      shape: GFButtonShape.pills,
                       child: Text(
                         'Verify OTP',
-                        style: TextStyle(
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.nunito(
                           color: Colors.white,
-                          fontFamily: "DefaultFontFamily",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
+                  // GFButton(
+                  //   onPressed: () {
+                  //     if (_otpController.text.trim() == "") {
+                  //       Get.snackbar(
+                  //         "Empty",
+                  //         "OTP cannot be empty",
+                  //         animationDuration: const Duration(seconds: 1),
+                  //         backgroundColor: Colors.red,
+                  //         colorText: Colors.white,
+                  //         snackPosition: SnackPosition.BOTTOM,
+                  //       );
+                  //     } else {
+                  //       _verifyOTP();
+                  //     }
+                  //   },
+                  //   color: brandOne,
+                  //   fullWidthButton: true,
+                  //   shape: GFButtonShape.pills,
+                  //   child: Text(
+                  //     'Verify OTP',
+                  //     style: GoogleFonts.nunito(
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

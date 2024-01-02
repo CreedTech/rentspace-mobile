@@ -286,14 +286,15 @@ class _FirstPageState extends State<FirstPage> {
                 );
               },
               builder: Builder(
-                builder: (context) => (userController.user[0].bvn != "")
-                    ? const HomePage()
-                    : (userController.user[0].dvaUsername == '' ||
-                            userController.user[0].gender == '' ||
-                            userController.user[0].date_of_birth == '' ||
-                            userController.user[0].address == '')
-                        ? UpdateUserInfo()
-                        : CreateDVA(),
+                builder: (context) => const HomePage(),
+                //  (context) => (userController.user[0].bvn != "")
+                //     ? const HomePage()
+                //     : (userController.user[0].dvaUsername == '' ||
+                //             userController.user[0].gender == '' ||
+                //             userController.user[0].date_of_birth == '' ||
+                //             userController.user[0].address == '')
+                //         ? UpdateUserInfo()
+                //         : CreateDVA(),
                 // : const HomePage(),
               ),
             ),
@@ -567,7 +568,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async {
         Get.bottomSheet(
           SizedBox(
-            height: 100,
+            height: 250,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
@@ -575,67 +576,166 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Container(
                 color: Theme.of(context).canvasColor,
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-                      child: Text(
-                        'Are you sure you want to exit?',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
+                    Text(
+                      'Are you sure you want to exit?',
+                      style: GoogleFonts.nunito(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        // fontFamily: "DefaultFontFamily",
+                        color: brandOne,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GFButton(
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    //card
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              exit(0);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 15),
+                              textStyle: const TextStyle(
+                                  color: brandFour, fontSize: 13),
+                            ),
+                            child: const Text(
+                              "Yes",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: ElevatedButton(
                             onPressed: () {
                               Get.back();
                             },
-                            shape: GFButtonShape.pills,
-                            text: "Cancel",
-                            fullWidthButton: false,
-                            color: Colors.greenAccent,
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: "DefaultFontFamily",
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: brandTwo,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 15),
+                              textStyle: const TextStyle(
+                                  color: brandFour, fontSize: 13),
+                            ),
+                            child: const Text(
+                              "No",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          GFButton(
-                            onPressed: () {
-                              exit(0);
-                            },
-                            shape: GFButtonShape.pills,
-                            text: "Exit",
-                            fullWidthButton: false,
-                            color: Colors.red,
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: "DefaultFontFamily",
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+
+                    //card
                   ],
                 ),
               ),
             ),
           ),
         );
+
+        // Get.bottomSheet(
+        //   SizedBox(
+        //     height: 100,
+        //     child: ClipRRect(
+        //       borderRadius: const BorderRadius.only(
+        //         topLeft: Radius.circular(30.0),
+        //         topRight: Radius.circular(30.0),
+        //       ),
+        //       child: Container(
+        //         color: Theme.of(context).canvasColor,
+        //         child: Column(
+        //           children: [
+        //             const SizedBox(
+        //               height: 10,
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+        //               child: Text(
+        //                 'Are you sure you want to exit?',
+        //                 style: TextStyle(
+        //                   fontSize: 16,
+        //                   color: Theme.of(context).primaryColor,
+        //                   fontFamily: "DefaultFontFamily",
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+        //               child: Row(
+        //                 mainAxisAlignment: MainAxisAlignment.center,
+        //                 children: [
+        //                   GFButton(
+        //                     onPressed: () {
+        //                       Get.back();
+        //                     },
+        //                     shape: GFButtonShape.pills,
+        //                     text: "Cancel",
+        //                     fullWidthButton: false,
+        //                     color: Colors.greenAccent,
+        //                     textStyle: const TextStyle(
+        //                       color: Colors.white,
+        //                       fontSize: 12,
+        //                       fontFamily: "DefaultFontFamily",
+        //                     ),
+        //                   ),
+        //                   const SizedBox(
+        //                     width: 20,
+        //                   ),
+        //                   GFButton(
+        //                     onPressed: () {
+        //                       exit(0);
+        //                     },
+        //                     shape: GFButtonShape.pills,
+        //                     text: "Exit",
+        //                     fullWidthButton: false,
+        //                     color: Colors.red,
+        //                     textStyle: const TextStyle(
+        //                       color: Colors.white,
+        //                       fontSize: 12,
+        //                       fontFamily: "DefaultFontFamily",
+        //                     ),
+        //                   )
+        //                 ],
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // );
+
         return false;
       },
       child: UpgradeAlert(

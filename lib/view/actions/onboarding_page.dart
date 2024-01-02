@@ -433,7 +433,7 @@ class _BvnPageState extends State<BvnPage> {
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: const TextStyle(
+      style: GoogleFonts.nunito(
         color: Colors.black,
       ),
       keyboardType: TextInputType.phone,
@@ -1098,10 +1098,10 @@ class _KycPageState extends State<KycPage> {
           centerTitle: true,
           title: Text(
             'KYC Details',
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               color: Theme.of(context).primaryColor,
               fontSize: 16,
-              fontFamily: "DefaultFontFamily",
+              // fontFamily: "DefaultFontFamily",
             ),
           ),
         ),
@@ -1204,23 +1204,22 @@ class _KycPageState extends State<KycPage> {
                             width: double.infinity,
                             height: 150,
                             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            child: const Column(
+                            child:  Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
+                                const Icon(
                                   Iconsax.folder_open,
                                   color: brandTwo,
                                   size: 40,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
                                   "Select You File [ jpg, png, jpeg ]",
-                                  style: TextStyle(
+                                  style: GoogleFonts.nunito(
                                     color: brandOne,
                                     fontSize: 12,
-                                    fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                               ],

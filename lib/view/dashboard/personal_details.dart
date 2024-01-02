@@ -147,7 +147,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                   fontWeight: FontWeight.w600,
                                 )),
                         onTap: () async {
-                          if (!_isEmailVerified) {
+                          if (userController.user[0].hasVerifiedPhone ==
+                                  'false' ||
+                              userController.user[0].hasVerifiedPhone == '') {
                             await _user!.sendEmailVerification();
                             if (!context.mounted) return;
                             showTopSnackBar(
@@ -171,7 +173,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                             _user!.reload();
                           }
                         },
-                        trailing: (!_isEmailVerified)
+                        trailing: (userController.user[0].hasVerifiedPhone ==
+                                    'false' ||
+                                userController.user[0].hasVerifiedPhone == '')
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -324,7 +328,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     //     // ),
                     //   ),
                     // ),
-                 
                   ],
                 ),
               ),

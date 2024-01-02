@@ -233,17 +233,17 @@ class _AddCardState extends State<AddCard> {
           Get.back();
           print(_bankName);
           showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Your details have been updated successfully. !!',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: brandOne,
+              message: 'Your details have been updated successfully. !!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          );
           // Get.snackbar(
           //   "Success!",
           //   'Your details have been updated successfully',
@@ -254,17 +254,17 @@ class _AddCardState extends State<AddCard> {
           // );
         }).catchError((error) {
           showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Colors.red,
-            message: error.toString(),
-            textStyle: GoogleFonts.nunito(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+            Overlay.of(context),
+            CustomSnackBar.error(
+              backgroundColor: Colors.red,
+              message: error.toString(),
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        );
+          );
           // Get.snackbar(
           //   "Error",
           //   error.toString(),
@@ -571,7 +571,7 @@ class _AddCardState extends State<AddCard> {
         title: Text(
           'Add Bank & Card Details',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: brandOne, fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -585,343 +585,325 @@ class _AddCardState extends State<AddCard> {
           //     ),
           //   ),
           // ),
-          ListView(
-            children: [
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-              //   child: Text(
-              //     "Add a valid card",
-              //     style: TextStyle(
-              //       fontSize: 15.0,
-              //       fontFamily: "DefaultFontFamily",
-              //       letterSpacing: 0.5,
-              //       color: Theme.of(context).primaryColor,
-              //     ),
-              //   ),
-              // ),
-              CreditCardWidget(
-                glassmorphismConfig:
-                    useGlassMorphism ? Glassmorphism.defaultConfig() : null,
-                cardNumber: cardNumber,
-                expiryDate: expiryDate,
-                cardHolderName: cardHolderName,
-                cvvCode: cvvCode,
-                bankName: '   ',
-                frontCardBorder:
-                    !useGlassMorphism ? Border.all(color: Colors.grey) : null,
-                backCardBorder:
-                    !useGlassMorphism ? Border.all(color: Colors.grey) : null,
-                showBackView: isCvvFocused,
-                obscureCardNumber: true,
-                obscureCardCvv: true,
-                isHolderNameVisible: true,
-                cardBgColor: brandOne,
-                backgroundImage: 'assets/card.jpg',
-                isSwipeGestureEnabled: true,
-                onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-                customCardTypeIcons: <CustomCardTypeIcon>[
-                  CustomCardTypeIcon(
-                    cardType: CardType.mastercard,
-                    cardImage: Image.asset(
-                      'assets/icons/mastercard.png',
-                      height: 48,
-                      width: 48,
-                    ),
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    CreditCardForm(
-                      formKey: formKey,
-                      obscureCvv: false,
-                      obscureNumber: false,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      isHolderNameVisible: true,
-                      isCardNumberVisible: true,
-                      isExpiryDateVisible: true,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
-                      themeColor: brandOne,
-                      textColor: Theme.of(context).primaryColor,
-                      cardNumberDecoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.red,
-                              width: 2.0), // Change color to yellow
-                        ),
-                        labelText: 'Number',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              children: [
+                CreditCardWidget(
+                  glassmorphismConfig:
+                      useGlassMorphism ? Glassmorphism.defaultConfig() : null,
+                  cardNumber: cardNumber,
+                  expiryDate: expiryDate,
+                  cardHolderName: cardHolderName,
+                  cvvCode: cvvCode,
+                  bankName: '   ',
+                  frontCardBorder:
+                      !useGlassMorphism ? Border.all(color: Colors.grey) : null,
+                  backCardBorder:
+                      !useGlassMorphism ? Border.all(color: Colors.grey) : null,
+                  showBackView: isCvvFocused,
+                  obscureCardNumber: true,
+                  obscureCardCvv: true,
+                  isHolderNameVisible: true,
+                  cardBgColor: brandOne,
+                  backgroundImage: 'assets/card.jpg',
+                  isSwipeGestureEnabled: true,
+                  onCreditCardWidgetChange:
+                      (CreditCardBrand creditCardBrand) {},
+                  customCardTypeIcons: <CustomCardTypeIcon>[
+                    CustomCardTypeIcon(
+                      cardType: CardType.mastercard,
+                      cardImage: Image.asset(
+                        'assets/icons/mastercard.png',
+                        height: 48,
+                        width: 48,
                       ),
-                      expiryDateDecoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.red,
-                              width: 2.0), // Change color to yellow
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        labelText: 'Expiry Date',
-                        hintText: 'XX/XX',
-                      ),
-                      cvvCodeDecoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.red,
-                              width: 2.0), // Change color to yellow
-                        ),
-                        labelText: 'CVV',
-                        hintText: 'XXX',
-                      ),
-                      cardHolderDecoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: "DefaultFontFamily",
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: brandOne, width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffE0E0E0),
-                          ),
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.red,
-                              width: 2.0), // Change color to yellow
-                        ),
-                        labelText: 'Card Holder',
-                      ),
-                      onCreditCardModelChange: onCreditCardModelChange,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
-                      child: Text(
-                        (cardValidity == "Valid Card" || cardValidity == "")
-                            ? ""
-                            : "Invalid Card",
-                        style: GoogleFonts.nunito(
-                          fontSize: 18,
-                          // fontFamily: "DefaultFontFamily",
-                          // letterSpacing: 0.5,
-                          color: (cardValidity == "Valid Card")
-                              ? Colors.greenAccent
-                              : Colors.red,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
-                      child: Text(
-                        (cardExpiry == "Expired Card") ? "Expired Card" : "",
-                        style: GoogleFonts.nunito(
-                          fontSize: 18,
-                          // fontFamily: "DefaultFontFamily",
-                          // letterSpacing: 0.5,
-                          color: (cardValidity == "Expired Card")
-                              ? Colors.greenAccent
-                              : Colors.red,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 20),
-                      child: Text(
-                        "Add your bank details",
-                        style: GoogleFonts.nunito(
-                          fontSize: 16,
-                          // fontFamily: "DefaultFontFamily",
-                          // letterSpacing: 0.5,
-                          fontWeight: FontWeight.w500,
-                          color: brandOne,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    (canShowOption)
-                        ? Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
-                                child: bankOption,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
-                                child: accountNumber,
-                              ),
-                            ],
-                          )
-                        : Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
-                            child: Text(
-                              "Loading banks...",
-                              style: GoogleFonts.nunito(
-                                fontSize: 16,
-                                // fontFamily: "DefaultFontFamily",
-                                //letterSpacing: 2.0,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                    (isChecking)
-                        ? const Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
-                            child: LinearProgressIndicator(
-                              color: brandOne,
-                              minHeight: 4,
-                            ),
-                          )
-                        : const SizedBox(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
-                      child: Text(
-                        _bankAccountName,
-                        style: GoogleFonts.nunito(
-                          fontSize: 16.0,
-                          // fontFamily: "DefaultFontFamily",
-                          // letterSpacing: 0.5,
-                          fontWeight: FontWeight.bold,
-                          color: brandOne,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(350, 50),
-                        backgroundColor: brandTwo,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            10,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        _doSomething();
-                      },
-                      child: const Text(
-                        'Submit',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    
-                    // RoundedLoadingButton(
-                    //   child: const Text(
-                    //     'Submit',
-                    //     style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontFamily: "DefaultFontFamily",
-                    //     ),
-                    //   ),
-                    //   elevation: 0.0,
-                    //   borderRadius: 5.0,
-                    //   successColor: brandOne,
-                    //   color: brandOne,
-                    //   controller: _btnController,
-                    //   onPressed: () {
-                    //     _doSomething();
-                    //   },
-                    // ),
-                    const SizedBox(
-                      height: 50,
                     ),
                   ],
                 ),
-              ),
-            ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      CreditCardForm(
+                        formKey: formKey,
+                        obscureCvv: false,
+                        obscureNumber: false,
+                        cardNumber: cardNumber,
+                        cvvCode: cvvCode,
+                        isHolderNameVisible: true,
+                        isCardNumberVisible: true,
+                        isExpiryDateVisible: true,
+                        cardHolderName: cardHolderName,
+                        expiryDate: expiryDate,
+                        themeColor: brandOne,
+                        textColor: Theme.of(context).primaryColor,
+                        cardNumberDecoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 2.0), // Change color to yellow
+                          ),
+                          labelText: 'Number',
+                          hintText: 'XXXX XXXX XXXX XXXX',
+                          hintStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          labelStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        expiryDateDecoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 2.0), // Change color to yellow
+                          ),
+                          hintStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          labelStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          labelText: 'Expiry Date',
+                          hintText: 'XX/XX',
+                        ),
+                        cvvCodeDecoration: InputDecoration(
+                          hintStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          labelStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 2.0), // Change color to yellow
+                          ),
+                          labelText: 'CVV',
+                          hintText: 'XXX',
+                        ),
+                        cardHolderDecoration: InputDecoration(
+                          hintStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          labelStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffE0E0E0),
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.red,
+                                width: 2.0), // Change color to yellow
+                          ),
+                          labelText: 'Card Holder',
+                        ),
+                        onCreditCardModelChange: onCreditCardModelChange,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
+                        child: Text(
+                          (cardValidity == "Valid Card" || cardValidity == "")
+                              ? ""
+                              : "Invalid Card",
+                          style: GoogleFonts.nunito(
+                            fontSize: 18,
+                            // fontFamily: "DefaultFontFamily",
+                            // letterSpacing: 0.5,
+                            color: (cardValidity == "Valid Card")
+                                ? Colors.greenAccent
+                                : Colors.red,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
+                        child: Text(
+                          (cardExpiry == "Expired Card") ? "Expired Card" : "",
+                          style: GoogleFonts.nunito(
+                            fontSize: 18,
+                            // fontFamily: "DefaultFontFamily",
+                            // letterSpacing: 0.5,
+                            color: (cardValidity == "Expired Card")
+                                ? Colors.greenAccent
+                                : Colors.red,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 20),
+                        child: Text(
+                          "Add your bank details",
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            // fontFamily: "DefaultFontFamily",
+                            // letterSpacing: 0.5,
+                            fontWeight: FontWeight.w500,
+                            color: brandOne,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      (canShowOption)
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      15.0, 2, 15.0, 2),
+                                  child: bankOption,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      15.0, 2, 15.0, 2),
+                                  child: accountNumber,
+                                ),
+                              ],
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
+                              child: Text(
+                                "Loading banks...",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 16,
+                                  // fontFamily: "DefaultFontFamily",
+                                  //letterSpacing: 2.0,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                      (isChecking)
+                          ? const Padding(
+                              padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
+                              child: LinearProgressIndicator(
+                                color: brandOne,
+                                minHeight: 4,
+                              ),
+                            )
+                          : const SizedBox(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
+                        child: Text(
+                          _bankAccountName,
+                          style: GoogleFonts.nunito(
+                            fontSize: 16.0,
+                            // fontFamily: "DefaultFontFamily",
+                            // letterSpacing: 0.5,
+                            fontWeight: FontWeight.bold,
+                            color: brandOne,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(350, 50),
+                          backgroundColor: brandTwo,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          _doSomething();
+                        },
+                        child: const Text(
+                          'Submit',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+
+                      // RoundedLoadingButton(
+                      //   child: const Text(
+                      //     'Submit',
+                      //     style: TextStyle(
+                      //       color: Colors.white,
+                      //       fontFamily: "DefaultFontFamily",
+                      //     ),
+                      //   ),
+                      //   elevation: 0.0,
+                      //   borderRadius: 5.0,
+                      //   successColor: brandOne,
+                      //   color: brandOne,
+                      //   controller: _btnController,
+                      //   onPressed: () {
+                      //     _doSomething();
+                      //   },
+                      // ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

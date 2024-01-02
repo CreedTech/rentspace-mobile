@@ -161,13 +161,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // SizedBox(
                     //   height: 40,
                     // ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Forgot Password',
@@ -201,11 +201,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 3),
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
                                   'Enter Email',
                                   style: GoogleFonts.nunito(
-                                    color: Colors.black,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
                                     // fontFamily: "DefaultFontFamily",

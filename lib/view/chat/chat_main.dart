@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -14,18 +16,45 @@ class ChatMain extends StatefulWidget {
   _ChatMainState createState() => _ChatMainState();
 }
 
+int id = 0;
 const _chars = '1234567890';
 Random _rnd = Random();
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 String responseBody = "";
+var dum1 = "".obs;
+String previousAnnouncementText = '';
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class _ChatMainState extends State<ChatMain> {
   final TextEditingController _textController = TextEditingController();
   final CollectionReference messages =
       FirebaseFirestore.instance.collection('chat');
   final UserController userController = Get.find();
+  final ScrollController _scrollController = ScrollController();
+
+  Future<void> _showChatNotification(String title, String body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'chat_channel_id',
+      'Chat Notifications',
+      channelDescription: 'Notifications for chats',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      id++,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
 
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
@@ -39,10 +68,29 @@ class _ChatMainState extends State<ChatMain> {
   @override
   initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
     setState(() {
       responseBody = "";
     });
     _textController.clear();
+  }
+
+  void _scrollListener() {
+    // if (_scrollController.offset >=
+    //         _scrollController.position.maxScrollExtent &&
+    //     !_scrollController.position.outOfRange) {
+    //   // User has scrolled to the bottom, do nothing
+    // } else {
+    //   // Scroll to the bottom when a new message is added
+    //   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    // }
+    // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,114 +112,278 @@ class _ChatMainState extends State<ChatMain> {
         ),
         title: Text(
           'How can we help?',
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
             fontSize: 16,
-            fontFamily: "DefaultFontFamily",
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
+          Expanded(
+            child: StreamBuilder(
+              stream:
+                  messages.orderBy('timestamp', descending: false).snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return const CircularProgressIndicator();
+                return ListView.separated(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                        // height: 10,
+                        );
+                  },
+                  reverse: false,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ((snapshot.data!.docs[index]['user_id'] ==
+                            userController.user[0].id))
+                        ? (snapshot.data!.docs[index]['type'] == "user")
+                            ? _buildMessageRow(context, snapshot, index)
+                            : _buildAdminMessageRow(context, snapshot, index)
+                        : const SizedBox();
+                  },
+                );
+              },
             ),
           ),
-          Column(
-            children: <Widget>[
-              Flexible(
-                child: StreamBuilder(
-                  stream: messages
-                      .orderBy('timestamp', descending: false)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return CircularProgressIndicator();
-
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListView.builder(
-                        reverse: false,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ((snapshot.data!.docs[index]['user_id'] ==
-                                  userController.user[0].id))
-                              ? ((snapshot.data!.docs[index]['type'] == "user"))
-                                  ? BubbleSpecialThree(
-                                      text: snapshot.data!.docs[index]['body'],
-                                      color: brandTwo,
-                                      tail: true,
-                                      isSender: true,
-                                      textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "DefaultFontFamily",
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  : BubbleSpecialThree(
-                                      text: snapshot.data!.docs[index]['body'],
-                                      color: customColorTwo,
-                                      tail: true,
-                                      isSender: false,
-                                      textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: "DefaultFontFamily",
-                                      ),
-                                    )
-                              : SizedBox();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Divider(height: 1.0),
-              _buildTextComposer(),
-            ],
-          ),
+          _buildTextComposer(),
         ],
       ),
     );
   }
 
-  Widget _buildTextComposer() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: TextField(
-              controller: _textController,
-              //onSubmitted: _handleSubmitted,
-              decoration: InputDecoration.collapsed(
-                hintText: "Send a message",
-                fillColor: Theme.of(context).canvasColor,
-                hintStyle: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: "DefaultFontFamily",
+  Row _buildAdminMessageRow(BuildContext context,
+      AsyncSnapshot<QuerySnapshot<Object?>> snapshot, int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          width: 20,
+        ),
+        const CircleAvatar(
+          backgroundImage: AssetImage(
+            'assets/icons/RentSpace-icon2.png',
+          ),
+          backgroundColor: brandOne,
+          radius: 15,
+          // child: Image.asset('assets/icons/RentSpace-icon2.png'),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Container(
+          padding: const EdgeInsets.only(
+            top: 5,
+            bottom: 5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                constraints: BoxConstraints(
+                  maxHeight: 250,
+                  minHeight: 40,
+                  minWidth: MediaQuery.of(context).size.width * 0.1,
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                ),
+                decoration: const BoxDecoration(
+                  color: brandOne,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    top: 10,
+                    bottom: 5,
+                    right: 5,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text(
+                          snapshot.data!.docs[index]['body'],
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.done_all,
+                        color: Colors.white,
+                        size: 14,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              style: TextStyle(
-                fontFamily: "DefaultFontFamily",
-                color: Theme.of(context).primaryColor,
+              const SizedBox(
+                height: 2,
               ),
+              Text(
+                snapshot.data!.docs[index]['timestamp'] != null
+                    ? DateFormat.jm().format(
+                        snapshot.data!.docs[index]['timestamp'].toDate())
+                    : '',
+                style: GoogleFonts.nunito(
+                  fontSize: 12,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 30,
+        ),
+      ],
+    );
+  }
+
+  Row _buildMessageRow(BuildContext context,
+      AsyncSnapshot<QuerySnapshot<Object?>> snapshot, int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const SizedBox(
+          width: 30,
+        ),
+        Container(
+          padding: const EdgeInsets.only(
+            top: 5,
+            bottom: 5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 40,
+                  maxHeight: 250,
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                  minWidth: MediaQuery.of(context).size.width * 0.1,
+                ),
+                decoration: const BoxDecoration(
+                  color: brandTwo,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    top: 10,
+                    bottom: 5,
+                    right: 5,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text(
+                          snapshot.data!.docs[index]['body'],
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.done_all,
+                        color: Colors.white,
+                        size: 14,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              Text(
+                snapshot.data!.docs[index]['timestamp'] != null
+                    ? DateFormat.jm().format(
+                        snapshot.data!.docs[index]['timestamp'].toDate())
+                    : '',
+                style: GoogleFonts.nunito(
+                  fontSize: 12,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        CircleAvatar(
+          backgroundImage: NetworkImage(userController.user[0].image),
+          radius: 10,
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextComposer() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      decoration: BoxDecoration(
+        // color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 20,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              cursorColor: Colors.black,
+              textInputAction: TextInputAction.send,
+              controller: _textController,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(color: brandOne, width: 2.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(color: brandOne, width: 2.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(
+                    color: Color(0xffE0E0E0),
+                  ),
+                ),
+                hintText: "Send a message",
+              ),
+              onEditingComplete: () => _handleSubmitted(_textController.text),
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 4.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.send,
-                color: brandTwo,
-              ),
-              onPressed: () => _handleSubmitted(_textController.text),
-            ),
+          IconButton(
+            onPressed: () => _handleSubmitted(_textController.text),
+            icon: const Icon(Icons.send),
           ),
         ],
       ),
@@ -221,6 +433,12 @@ class _ChatMainState extends State<ChatMain> {
         });
       }
     }
+    if (responseBody != previousAnnouncementText) {
+      _showChatNotification('Rentty', responseBody);
+
+      // Update the previous announcement text
+      previousAnnouncementText = responseBody;
+    }
     sendResponse();
   }
 
@@ -239,7 +457,7 @@ class _ChatMainState extends State<ChatMain> {
           'user_id': userController.user[0].id,
         },
       ).then((value) {
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(const Duration(seconds: 3), () {
           getResponse(text.trim());
         });
       });
