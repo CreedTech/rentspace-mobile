@@ -24,7 +24,7 @@ class _BankTransferState extends State<BankTransfer> {
             floating: false,
             snap: false,
             stretch: true,
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: Colors.white),
             expandedHeight: MediaQuery.of(context).size.height / 2.5,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -36,7 +36,7 @@ class _BankTransferState extends State<BankTransfer> {
                       'assets/icons/logo.png',
                       height: 80,
                     ),
-                    Text(
+                    const Text(
                       "Bank transfer",
                       style: TextStyle(
                         fontSize: 40.0,
@@ -45,10 +45,10 @@ class _BankTransferState extends State<BankTransfer> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       "Transfer to the account details below. make sure to include you user ID in the description/narration. Note that it might take few minutes for your wallet to reflect the fund.",
                       style: TextStyle(
                         fontSize: 10.0,
@@ -57,7 +57,7 @@ class _BankTransferState extends State<BankTransfer> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],
@@ -68,7 +68,7 @@ class _BankTransferState extends State<BankTransfer> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 //bvn value
@@ -78,16 +78,16 @@ class _BankTransferState extends State<BankTransfer> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       InkWell(
                         onTap: () {
                           Clipboard.setData(
-                            ClipboardData(text: "RENTSPACE TECHNOLOGIES LTD"),
+                            const ClipboardData(text: "RENTSPACE TECHNOLOGIES LTD"),
                           );
                           Fluttertoast.showToast(
                               msg: "copied to clipboard!",
@@ -112,7 +112,7 @@ class _BankTransferState extends State<BankTransfer> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Container(
@@ -120,8 +120,8 @@ class _BankTransferState extends State<BankTransfer> {
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              padding: EdgeInsets.all(4),
-                              child: Icon(
+                              padding: const EdgeInsets.all(4),
+                              child: const Icon(
                                 Icons.copy,
                                 size: 14,
                                 color: Colors.white,
@@ -130,13 +130,13 @@ class _BankTransferState extends State<BankTransfer> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       InkWell(
                         onTap: () {
                           Clipboard.setData(
-                            ClipboardData(text: "5401254162"),
+                            const ClipboardData(text: "5401254162"),
                           );
                           Fluttertoast.showToast(
                               msg: "copied to clipboard!",
@@ -157,7 +157,7 @@ class _BankTransferState extends State<BankTransfer> {
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Container(
@@ -165,8 +165,8 @@ class _BankTransferState extends State<BankTransfer> {
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              padding: EdgeInsets.all(4),
-                              child: Icon(
+                              padding: const EdgeInsets.all(4),
+                              child: const Icon(
                                 Icons.copy,
                                 size: 14,
                                 color: Colors.white,
@@ -175,7 +175,7 @@ class _BankTransferState extends State<BankTransfer> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -190,7 +190,7 @@ class _BankTransferState extends State<BankTransfer> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       InkWell(
@@ -219,7 +219,7 @@ class _BankTransferState extends State<BankTransfer> {
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Container(
@@ -227,8 +227,8 @@ class _BankTransferState extends State<BankTransfer> {
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              padding: EdgeInsets.all(4),
-                              child: Icon(
+                              padding: const EdgeInsets.all(4),
+                              child: const Icon(
                                 Icons.copy,
                                 size: 14,
                                 color: Colors.white,

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:pinput/pinput.dart';
@@ -259,27 +260,167 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           notLoading = true;
         });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: null,
+                elevation: 0,
+                content: SizedBox(
+                  height: 250,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              // color: brandOne,
+                            ),
+                            child: const Icon(
+                              Iconsax.close_circle,
+                              color: brandOne,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Iconsax.warning_24,
+                          color: Colors.red,
+                          size: 75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Oops!',
+                        style: GoogleFonts.nunito(
+                          color: Colors.red,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Something went wrong, try again later",
+                        textAlign: TextAlign.center,
+                        style:
+                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
+
+        // Get.snackbar(
+        //   "Oops",
+        //   "Something went wrong, try again later",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       });
     } else {
       setState(() {
         notLoading = true;
       });
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: null,
+              elevation: 0,
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: const Icon(
+                            Iconsax.close_circle,
+                            color: brandOne,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_24,
+                        color: Colors.red,
+                        size: 75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Error!',
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "something went wrong",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -506,7 +647,9 @@ class _SignupPageState extends State<SignupPage> {
         ),
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+            color: Colors.red,
+            width: 2.0,
+          ), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -891,18 +1034,88 @@ class _SignupPageState extends State<SignupPage> {
         if (age < minimumAge) {
           // Show an error message or handle the validation as needed.
           if (!context.mounted) return;
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              // backgroundColor: brandOne,
-              message: 'Error! :(. Age must be at least $minimumAge years.',
-              textStyle: GoogleFonts.nunito(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: null,
+                  elevation: 0,
+                  content: SizedBox(
+                    height: 250,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                // color: brandOne,
+                              ),
+                              child: const Icon(
+                                Iconsax.close_circle,
+                                color: brandOne,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Iconsax.warning_24,
+                            color: Colors.red,
+                            size: 75,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          'Error! :(',
+                          style: GoogleFonts.nunito(
+                            color: Colors.red,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Age must be at least $minimumAge years.",
+                          textAlign: TextAlign.center,
+                          style:
+                              GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+
+          // showTopSnackBar(
+          //   Overlay.of(context),
+          //   CustomSnackBar.error(
+          //     // backgroundColor: brandOne,
+          //     message: 'Error! :(. Age must be at least $minimumAge years.',
+          //     textStyle: GoogleFonts.nunito(
+          //       fontSize: 14,
+          //       color: Colors.white,
+          //       fontWeight: FontWeight.w700,
+          //     ),
+          //   ),
+          // );
         } else {
           setState(() {
             selectedDate = picked;
@@ -1272,18 +1485,87 @@ class _SignupPageState extends State<SignupPage> {
                                                                                     print(_pinOneController.text.trim());
                                                                                     print(_pinTwoController.text.trim());
                                                                                     if (_pinOneController.text.trim() != _pinTwoController.text.trim()) {
-                                                                                      showTopSnackBar(
-                                                                                        Overlay.of(context),
-                                                                                        CustomSnackBar.error(
-                                                                                          // backgroundColor: brandOne,
-                                                                                          message: 'Pin does not match',
-                                                                                          textStyle: GoogleFonts.nunito(
-                                                                                            fontSize: 14,
-                                                                                            color: Colors.white,
-                                                                                            fontWeight: FontWeight.w700,
-                                                                                          ),
-                                                                                        ),
-                                                                                      );
+                                                                                      showDialog(
+                                                                                          context: context,
+                                                                                          barrierDismissible: false,
+                                                                                          builder: (BuildContext context) {
+                                                                                            return AlertDialog(
+                                                                                              shape: RoundedRectangleBorder(
+                                                                                                borderRadius: BorderRadius.circular(10),
+                                                                                              ),
+                                                                                              title: null,
+                                                                                              elevation: 0,
+                                                                                              content: SizedBox(
+                                                                                                height: 250,
+                                                                                                child: Column(
+                                                                                                  children: [
+                                                                                                    GestureDetector(
+                                                                                                      onTap: () {
+                                                                                                        Navigator.of(context).pop();
+                                                                                                      },
+                                                                                                      child: Align(
+                                                                                                        alignment: Alignment.topRight,
+                                                                                                        child: Container(
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            borderRadius: BorderRadius.circular(30),
+                                                                                                            // color: brandOne,
+                                                                                                          ),
+                                                                                                          child: const Icon(
+                                                                                                            Iconsax.close_circle,
+                                                                                                            color: brandOne,
+                                                                                                            size: 30,
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    const Align(
+                                                                                                      alignment: Alignment.center,
+                                                                                                      child: Icon(
+                                                                                                        Iconsax.warning_24,
+                                                                                                        color: Colors.red,
+                                                                                                        size: 75,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    const SizedBox(
+                                                                                                      height: 12,
+                                                                                                    ),
+                                                                                                    Text(
+                                                                                                      'Error!',
+                                                                                                      style: GoogleFonts.nunito(
+                                                                                                        color: Colors.red,
+                                                                                                        fontSize: 28,
+                                                                                                        fontWeight: FontWeight.w800,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    const SizedBox(
+                                                                                                      height: 5,
+                                                                                                    ),
+                                                                                                    Text(
+                                                                                                      "Pin does not match",
+                                                                                                      textAlign: TextAlign.center,
+                                                                                                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                                                                                                    ),
+                                                                                                    const SizedBox(
+                                                                                                      height: 10,
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ),
+                                                                                            );
+                                                                                          });
+
+                                                                                      // showTopSnackBar(
+                                                                                      //   Overlay.of(context),
+                                                                                      //   CustomSnackBar.error(
+                                                                                      //     // backgroundColor: brandOne,
+                                                                                      //     message: 'Pin does not match',
+                                                                                      //     textStyle: GoogleFonts.nunito(
+                                                                                      //       fontSize: 14,
+                                                                                      //       color: Colors.white,
+                                                                                      //       fontWeight: FontWeight.w700,
+                                                                                      //     ),
+                                                                                      //   ),
+                                                                                      // );
                                                                                       // Get.snackbar(
                                                                                       //   "Pin Mismatch",
                                                                                       //   'Pin does not match',
@@ -1374,18 +1656,89 @@ class _SignupPageState extends State<SignupPage> {
               );
             });
       } else {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Colors.red,
-            message: 'Please fill the form properly to proceed',
-            textStyle: GoogleFonts.nunito(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: null,
+                elevation: 0,
+                content: SizedBox(
+                  height: 250,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              // color: brandOne,
+                            ),
+                            child: const Icon(
+                              Iconsax.close_circle,
+                              color: brandOne,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Iconsax.warning_24,
+                          color: Colors.red,
+                          size: 75,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Error!',
+                        style: GoogleFonts.nunito(
+                          color: Colors.red,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Please fill the form properly to proceed",
+                        textAlign: TextAlign.center,
+                        style:
+                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
+
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     backgroundColor: Colors.red,
+        //     message: 'Please fill the form properly to proceed',
+        //     textStyle: GoogleFonts.nunito(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w700,
+        //     ),
+        //   ),
+        // );
+
         // Get.snackbar(
         //   "Invalid",
         //   'Please fill the form properly to proceed',
@@ -1811,27 +2164,29 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 50),
-                        backgroundColor: brandTwo,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            10,
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          backgroundColor: brandTwo,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
                           ),
                         ),
-                      ),
-                      onPressed: () {
-                        _doSomething();
-                      },
-                      child: Text(
-                        'Create account',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        onPressed: () {
+                          _doSomething();
+                        },
+                        child: Text(
+                          'Create account',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),

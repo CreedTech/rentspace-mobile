@@ -13,6 +13,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/user_controller.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class BankAndCard extends StatefulWidget {
   BankAndCard({
     Key? key,
@@ -418,18 +420,22 @@ class _BankAndCardState extends State<BankAndCard> {
                                                     );
                                                     Get.back();
                                                   }).catchError((error) {
-                                                    Get.snackbar(
-                                                      "Error",
-                                                      error.toString(),
-                                                      animationDuration:
-                                                          const Duration(
-                                                              seconds: 2),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      colorText: Colors.white,
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                    );
+                                                    customErrorDialog(
+                                                        context,
+                                                        "Error",
+                                                        error.toString());
+                                                    // Get.snackbar(
+                                                    //   "Error",
+                                                    //   error.toString(),
+                                                    //   animationDuration:
+                                                    //       const Duration(
+                                                    //           seconds: 2),
+                                                    //   backgroundColor:
+                                                    //       Colors.red,
+                                                    //   colorText: Colors.white,
+                                                    //   snackPosition:
+                                                    //       SnackPosition.BOTTOM,
+                                                    // );
                                                   });
                                                 },
                                                 style: ElevatedButton.styleFrom(

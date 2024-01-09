@@ -9,6 +9,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../constants/colors.dart';
 import '../../constants/db/firebase_db.dart';
 import '../../constants/icons.dart';
+import '../../constants/widgets/custom_dialog.dart';
 
 class ConfirmForgotPin extends StatefulWidget {
   final String pin;
@@ -68,18 +69,22 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
       //   snackPosition: SnackPosition.TOP,
       // );
     }).catchError((error) {
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          backgroundColor: Colors.red,
-          message: 'Oops (: Something went wrong, please try again',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      if (context.mounted) {
+        customErrorDialog(
+            context, 'Oops (:', "Something went wrong, please try again");
+      }
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     backgroundColor: Colors.red,
+      //     message: 'Oops (: Something went wrong, please try again',
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Oops",
       //   "something went wrong, please try again",
@@ -96,18 +101,21 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
     //   _btnController.stop();
     // });
     if ((widget.pin != _pinConfirmController.text.trim())) {
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          backgroundColor: Colors.red,
-          message: 'Pin does not match!!',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      if (context.mounted) {
+        customErrorDialog(context, 'Invalid', "Pin does not match!!");
+      }
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     backgroundColor: Colors.red,
+      //     message: 'Pin does not match!!',
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Invalid",
       //   'PIN is unacceptable.',
@@ -271,19 +279,24 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
                                           .validate()) {
                                         _doSomething();
                                       } else {
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.error(
-                                            // backgroundColor: Colors.red,
-                                            message:
-                                                'Please fill the form properly to proceed',
-                                            textStyle: GoogleFonts.nunito(
-                                              fontSize: 14,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
+                                        customErrorDialog(
+                                          context,
+                                          'Invalid',
+                                          "Please fill the form properly to proceed",
                                         );
+                                        // showTopSnackBar(
+                                        //   Overlay.of(context),
+                                        //   CustomSnackBar.error(
+                                        //     // backgroundColor: Colors.red,
+                                        //     message:
+                                        //         'Please fill the form properly to proceed',
+                                        //     textStyle: GoogleFonts.nunito(
+                                        //       fontSize: 14,
+                                        //       color: Colors.white,
+                                        //       fontWeight: FontWeight.w700,
+                                        //     ),
+                                        //   ),
+                                        // );
                                       }
                                     },
                                     child: const Text(

@@ -9,6 +9,8 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../constants/widgets/custom_dialog.dart';
+
 String fundedAmount = "0";
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
@@ -180,6 +182,13 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
               userAgent: 'random',
               debuggingEnabled: true,
               onWebResourceError: (e) {
+                if (context.mounted) {
+                  customErrorDialog(
+                    context,
+                    'Error',
+                    e.toString(),
+                  );
+                }
                 Get.snackbar(
                   "Error",
                   e.toString(),

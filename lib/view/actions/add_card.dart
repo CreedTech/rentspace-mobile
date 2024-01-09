@@ -16,6 +16,8 @@ import 'dart:convert';
 
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class AddCard extends StatefulWidget {
   const AddCard({Key? key}) : super(key: key);
 
@@ -94,14 +96,16 @@ class _AddCardState extends State<AddCard> {
           _bankAccountName = "";
           isChecking = false;
         });
-        Get.snackbar(
-          "Error!",
-          "Invalid account number",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (!context.mounted) return;
+        customErrorDialog(context, "Error", 'Invalid account number');
+        // Get.snackbar(
+        //   "Error!",
+        //   "Invalid account number",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       //print(response.body);
@@ -111,14 +115,16 @@ class _AddCardState extends State<AddCard> {
         _bankAccountName = "";
         isChecking = false;
       });
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (!context.mounted) return;
+      customErrorDialog(context, "Error", 'Something went wrong');
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -253,18 +259,20 @@ class _AddCardState extends State<AddCard> {
           //   snackPosition: SnackPosition.TOP,
           // );
         }).catchError((error) {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              backgroundColor: Colors.red,
-              message: error.toString(),
-              textStyle: GoogleFonts.nunito(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
+          if (!context.mounted) return;
+          customErrorDialog(context, "Error", error.toString());
+          // showTopSnackBar(
+          //   Overlay.of(context),
+          //   CustomSnackBar.error(
+          //     backgroundColor: Colors.red,
+          //     message: error.toString(),
+          //     textStyle: GoogleFonts.nunito(
+          //       fontSize: 14,
+          //       color: Colors.white,
+          //       fontWeight: FontWeight.w700,
+          //     ),
+          //   ),
+          // );
           // Get.snackbar(
           //   "Error",
           //   error.toString(),
@@ -275,18 +283,21 @@ class _AddCardState extends State<AddCard> {
           // );
         });
       } else {
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.error(
-            backgroundColor: Colors.red,
-            message: 'Fill the form properly to proceed.',
-            textStyle: GoogleFonts.nunito(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
+        if (!context.mounted) return;
+        customErrorDialog(
+            context, "Invalid", 'Fill the form properly to proceed.');
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     backgroundColor: Colors.red,
+        //     message: 'Fill the form properly to proceed.',
+        //     textStyle: GoogleFonts.nunito(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w700,
+        //     ),
+        //   ),
+        // );
         // Get.snackbar(
         //   "Invalid",
         //   "Fill the form properly to proceed.",

@@ -18,6 +18,8 @@ import 'package:badges/badges.dart' as badge;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../constants/widgets/custom_dialog.dart';
+
 class RentSpaceList extends StatefulWidget {
   const RentSpaceList({Key? key}) : super(key: key);
 
@@ -870,23 +872,33 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                                 for (var doc in snapshot.docs) {
                                                                                   await doc.reference.delete().then((value) {
                                                                                     Get.back();
-                                                                                    Get.snackbar(
-                                                                                      "SpaceRent Deleted!",
-                                                                                      'Selected spacerent has been deleted!',
-                                                                                      animationDuration: const Duration(seconds: 1),
-                                                                                      backgroundColor: brandOne,
-                                                                                      colorText: Colors.white,
-                                                                                      snackPosition: SnackPosition.TOP,
-                                                                                    );
+                                                                                    if (context.mounted) {
+                                                                                      customErrorDialog(context, 'SpaceRent Deleted!', 'Selected spacerent has been deleted!');
+                                                                                    }
+                                                                                    // Get.snackbar(
+                                                                                    //   "SpaceRent Deleted!",
+                                                                                    //   'Selected spacerent has been deleted!',
+                                                                                    //   animationDuration: const Duration(seconds: 1),
+                                                                                    //   backgroundColor: brandOne,
+                                                                                    //   colorText: Colors.white,
+                                                                                    //   snackPosition: SnackPosition.TOP,
+                                                                                    // );
                                                                                   }).catchError((error) {
-                                                                                    Get.snackbar(
-                                                                                      "Error",
-                                                                                      error.toString(),
-                                                                                      animationDuration: const Duration(seconds: 2),
-                                                                                      backgroundColor: Colors.red,
-                                                                                      colorText: Colors.white,
-                                                                                      snackPosition: SnackPosition.BOTTOM,
-                                                                                    );
+                                                                                    if (context.mounted) {
+                                                                                      customErrorDialog(
+                                                                                        context,
+                                                                                        'Error',
+                                                                                        error.toString(),
+                                                                                      );
+                                                                                    }
+                                                                                    // Get.snackbar(
+                                                                                    //   "Error",
+                                                                                    //   error.toString(),
+                                                                                    //   animationDuration: const Duration(seconds: 2),
+                                                                                    //   backgroundColor: Colors.red,
+                                                                                    //   colorText: Colors.white,
+                                                                                    //   snackPosition: SnackPosition.BOTTOM,
+                                                                                    // );
                                                                                   });
                                                                                 }
                                                                               },
@@ -1686,7 +1698,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       // const SizedBox(
                                       //   height: 40,
                                       // ),
-                                   
                                     ],
                                   )
                                 : const Center(

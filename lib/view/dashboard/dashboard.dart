@@ -4,6 +4,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,7 +29,9 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 
+import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/separator.dart';
+import '../../services/implementations/notification_service.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/view_bvn_and_kyc.dart';
 import '../chat/chat_main.dart';
@@ -129,10 +132,16 @@ class _DashboardState extends State<Dashboard> {
   //   }
   // }
 
+  final CollectionReference notifications =
+      FirebaseFirestore.instance.collection('notifications');
   late ValueNotifier<double> valueNotifier;
   @override
   initState() {
     super.initState();
+    Provider.of<NotificationService>(context, listen: false)
+        .fetchNotificationsFromFirestore();
+
+    // addNotification('test', 'Testing notifications');
 
     userController.user.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
@@ -140,6 +149,21 @@ class _DashboardState extends State<Dashboard> {
             double.tryParse(userController.user[0].finance_health)!);
     greeting();
     // _fetchNews();
+  }
+
+  // Function to add a notification
+  Future<void> addNotification(String title, String message) async {
+    try {
+      await notifications.add({
+        'title': title,
+        'message': message,
+        'timestamp': FieldValue.serverTimestamp(),
+        'isRead': false
+      });
+      print('Notification added successfully.');
+    } catch (error) {
+      print('Error adding notification: $error');
+    }
   }
 
   @override
@@ -240,19 +264,44 @@ class _DashboardState extends State<Dashboard> {
                             )
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(NotificationsPage());
-                            },
-                            child: Icon(
-                              Icons.notifications_outlined,
-                              color: brandOne,
-                              size: 22,
+                        Consumer<NotificationService>(
+                            builder: (context, notificationService, _) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () async {
+                                await notificationService
+                                    .fetchNotificationsFromFirestore();
+                                Get.to(const NotificationsPage());
+                              },
+                              child: Stack(
+                                children: [
+                                  const Icon(
+                                    Icons.notifications_outlined,
+                                    color: brandOne,
+                                    size: 22,
+                                  ),
+                                  if (notificationService.hasUnreadNotification)
+                                    Positioned(
+                                      top: -3.0,
+                                      right: 0.0,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(2.0),
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                        ),
+                                        child: const Text(
+                                          '•',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                       ],
                     ),
                     const SizedBox(
@@ -1316,23 +1365,33 @@ class _DashboardState extends State<Dashboard> {
                                                                       //     snackPosition:
                                                                       //         SnackPosition.BOTTOM,
                                                                       //   );
-                                                                      showTopSnackBar(
-                                                                          Overlay.of(
-                                                                              context),
-                                                                          CustomSnackBar
-                                                                              .error(
-                                                                            backgroundColor:
-                                                                                Colors.red,
-                                                                            message:
-                                                                                'Wallet Empty! :). You need to fund your wallet first!',
-                                                                            textStyle:
-                                                                                GoogleFonts.nunito(
-                                                                              fontSize: 14,
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
+                                                                      customErrorDialog(
+                                                                          context,
+                                                                          'Wallet Empty! :)',
+                                                                          'You need to fund your wallet first!',
                                                                         );
+                                                                  // showTopSnackBar(
+                                                                  //   Overlay.of(
+                                                                  //       context),
+                                                                  //   CustomSnackBar
+                                                                  //       .error(
+                                                                  //     backgroundColor:
+                                                                  //         Colors
+                                                                  //             .red,
+                                                                  //     message:
+                                                                  //         'Wallet Empty! :). You need to fund your wallet first!',
+                                                                  //     textStyle:
+                                                                  //         GoogleFonts
+                                                                  //             .nunito(
+                                                                  //       fontSize:
+                                                                  //           14,
+                                                                  //       color: Colors
+                                                                  //           .white,
+                                                                  //       fontWeight:
+                                                                  //           FontWeight.w700,
+                                                                  //     ),
+                                                                  //   ),
+                                                                  // );
                                                                 },
                                                                 style: ElevatedButton
                                                                     .styleFrom(

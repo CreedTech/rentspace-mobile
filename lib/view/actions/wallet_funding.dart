@@ -18,6 +18,8 @@ import 'package:get_storage/get_storage.dart';
 import 'dart:io';
 import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class WalletFunding extends StatefulWidget {
   int amount, numPayment;
   String savingsID, date, interval;
@@ -166,14 +168,17 @@ class _WalletFundingState extends State<WalletFunding> {
           GestureDetector(
             onTap: () {
               (cardCvv == '' || cardDigit == '' || cardExpire == '')
-                  ? Get.snackbar(
-                      "Card not found!",
-                      'You need to add a card to suggest details during in-app payment.',
-                      animationDuration: const Duration(seconds: 1),
-                      backgroundColor: Colors.red,
-                      colorText: Colors.white,
-                      snackPosition: SnackPosition.BOTTOM,
-                    )
+                  ? customErrorDialog(context, 'Card not found!',
+                      "You need to add a card to suggest details during in-app payment.")
+
+                  // Get.snackbar(
+                  //     "Card not found!",
+                  //     'You need to add a card to suggest details during in-app payment.',
+                  //     animationDuration: const Duration(seconds: 1),
+                  //     backgroundColor: Colors.red,
+                  //     colorText: Colors.white,
+                  //     snackPosition: SnackPosition.BOTTOM,
+                  //   )
                   : Get.bottomSheet(
                       SizedBox(
                         height: 180,
@@ -230,8 +235,8 @@ class _WalletFundingState extends State<WalletFunding> {
                                         color: Colors.white,
                                         size: 12,
                                       ),
-                                      padding:
-                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
@@ -260,8 +265,8 @@ class _WalletFundingState extends State<WalletFunding> {
                                         color: Colors.white,
                                         size: 12,
                                       ),
-                                      padding:
-                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
@@ -291,8 +296,8 @@ class _WalletFundingState extends State<WalletFunding> {
                                         color: Colors.white,
                                         size: 12,
                                       ),
-                                      padding:
-                                          const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 4, 10, 4),
                                       shape: GFButtonShape.pills,
                                       size: 26,
                                     ),
@@ -369,14 +374,17 @@ class _WalletFundingState extends State<WalletFunding> {
               javascriptMode: JavascriptMode.unrestricted,
               debuggingEnabled: true,
               onWebResourceError: (e) {
-                Get.snackbar(
-                  "Error",
-                  e.toString(),
-                  animationDuration: const Duration(seconds: 2),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                  snackPosition: SnackPosition.BOTTOM,
-                );
+                if (context.mounted) {
+                  customErrorDialog(context, 'Error', e.toString());
+                }
+                // Get.snackbar(
+                //   "Error",
+                //   e.toString(),
+                //   animationDuration: const Duration(seconds: 2),
+                //   backgroundColor: Colors.red,
+                //   colorText: Colors.white,
+                //   snackPosition: SnackPosition.BOTTOM,
+                // );
               },
               userAgent: 'random',
               onPageFinished: (val) {

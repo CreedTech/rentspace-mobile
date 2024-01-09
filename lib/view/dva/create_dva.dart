@@ -307,7 +307,14 @@ class _CreateDVAState extends State<CreateDVA> {
           notLoading = true;
         });
         EasyLoading.dismiss();
-        errorDialog(context, "Oops", "Something went wrong, try again later");
+        if (context.mounted) {
+          customErrorDialog(
+            context,
+            'Oops',
+            'Something went wrong, try again later',
+          );
+        }
+        // errorDialog(context, "Oops", "Something went wrong, try again later");
         // Get.snackbar(
         //   "Oops",
         //   "Something went wrong, try again later",
@@ -323,7 +330,14 @@ class _CreateDVAState extends State<CreateDVA> {
       });
       EasyLoading.dismiss();
       if (!context.mounted) return;
-      errorDialog(context, "Error!", "Something went wrong");
+      if (context.mounted) {
+        customErrorDialog(
+          context,
+          'Error!',
+          'Something went wrong',
+        );
+      }
+      // errorDialog(context, "Error!", "Something went wrong");
       // Get.snackbar(
       //   "Error!",
       //   "something went wrong",
@@ -635,10 +649,17 @@ class _CreateDVAState extends State<CreateDVA> {
                                                 createNewDVA();
                                                 // doSomething();
                                               } else {
-                                                errorDialog(
+                                                if (context.mounted) {
+                                                  customErrorDialog(
                                                     context,
                                                     'Invalid!!',
-                                                    'Fill the form properly to proceed');
+                                                    'Fill the form properly to proceed',
+                                                  );
+                                                }
+                                                // errorDialog(
+                                                //     context,
+                                                //     'Invalid!!',
+                                                //     'Fill the form properly to proceed');
                                                 // Get.snackbar(
                                                 //   "Invalid",
                                                 //   "Fill the form properly to proceed",

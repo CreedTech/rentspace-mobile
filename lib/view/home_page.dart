@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -5,21 +7,17 @@ import 'package:lottie/lottie.dart';
 import 'package:rentspace/controller/auto_controller.dart';
 import 'package:rentspace/controller/box_controller.dart';
 import 'package:rentspace/controller/deposit_controller.dart';
+import 'package:rentspace/controller/notification_controller.dart';
 import 'package:rentspace/controller/rent_controller.dart';
 import 'package:rentspace/controller/tank_controller.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/withdrawal_controller.dart';
-import 'package:rentspace/view/actions/immediate_wallet_funding.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
-import 'package:rentspace/view/actions/update_info.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
-import 'package:rentspace/view/dashboard/user_profile.dart';
-import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:rentspace/view/portfolio/portfolio_page.dart';
 import 'package:rentspace/view/savings/savings_page.dart';
-import 'package:rentspace/view/utility/utilities_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -104,6 +102,7 @@ class _FirstPageState extends State<FirstPage> {
   initState() {
     super.initState();
     Get.put(UserController());
+    Get.put(NotificationController());
     Get.put(WithdrawalController());
     Get.put(UtilityController());
     Get.put(RentController());
@@ -112,6 +111,9 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(TankController());
     Get.put(DepositController());
 
+    // setState(() {
+    //   _hasPutController = true;
+    // });
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _hasPutController = true;
@@ -122,6 +124,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     Get.put(UserController());
+    Get.put(NotificationController());
     Get.put(UtilityController());
     Get.put(WithdrawalController());
     Get.put(RentController());
@@ -196,108 +199,120 @@ class _FirstPageState extends State<FirstPage> {
             ),
           )
         : Scaffold(
-            body: ShowCaseWidget(
-              autoPlay: false,
-              onFinish: () {
-                Get.defaultDialog(
-                  titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                  title: "Discover",
-                  content: Container(
-                    height: MediaQuery.of(context).size.height / 2,
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      children: [
-                        Image.asset(
-                          "assets/discover.png",
-                          fit: BoxFit.cover,
-                          height: 200,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            letterSpacing: 0.5,
-                            fontFamily: "DefaultFontFamily",
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            letterSpacing: 0.5,
-                            fontFamily: "DefaultFontFamily",
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            letterSpacing: 0.5,
-                            fontFamily: "DefaultFontFamily",
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                      child: GFButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        fullWidthButton: true,
-                        shape: GFButtonShape.pills,
-                        text: "That's Nice",
-                        icon: const Icon(
-                          Icons.arrow_right_outlined,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        color: brandOne,
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                  barrierDismissible: true,
-                );
-              },
-              builder: Builder(
-                builder: (context) => const HomePage(),
-                //  (context) => (userController.user[0].bvn != "")
-                //     ? const HomePage()
-                //     : (userController.user[0].dvaUsername == '' ||
-                //             userController.user[0].gender == '' ||
-                //             userController.user[0].date_of_birth == '' ||
-                //             userController.user[0].address == '')
-                //         ? UpdateUserInfo()
-                //         : CreateDVA(),
-                // : const HomePage(),
-              ),
+            body: Builder(
+              builder: (context) => const HomePage(),
+              //  (context) => (userController.user[0].bvn != "")
+              //     ? const HomePage()
+              //     : (userController.user[0].dvaUsername == '' ||
+              //             userController.user[0].gender == '' ||
+              //             userController.user[0].date_of_birth == '' ||
+              //             userController.user[0].address == '')
+              //         ? UpdateUserInfo()
+              //         : CreateDVA(),
+              // : const HomePage(),
             ),
+            // ShowCaseWidget(
+            //   autoPlay: true,
+            //   onFinish: () {
+            //     Get.defaultDialog(
+            //       titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+            //       title: "Discover",
+            //       content: Container(
+            //         height: MediaQuery.of(context).size.height / 2,
+            //         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            //         child: ListView(
+            //           shrinkWrap: true,
+            //           physics: const ClampingScrollPhysics(),
+            //           children: [
+            //             Image.asset(
+            //               "assets/discover.png",
+            //               fit: BoxFit.cover,
+            //               height: 200,
+            //             ),
+            //             const SizedBox(
+            //               height: 10,
+            //             ),
+            //             const Text(
+            //               "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
+            //               style: TextStyle(
+            //                 fontSize: 13.0,
+            //                 letterSpacing: 0.5,
+            //                 fontFamily: "DefaultFontFamily",
+            //                 color: Colors.black,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //             const SizedBox(
+            //               height: 10,
+            //             ),
+            //             const Text(
+            //               "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
+            //               style: TextStyle(
+            //                 fontSize: 13.0,
+            //                 letterSpacing: 0.5,
+            //                 fontFamily: "DefaultFontFamily",
+            //                 color: Colors.black,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //             const SizedBox(
+            //               height: 10,
+            //             ),
+            //             const Text(
+            //               "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
+            //               style: TextStyle(
+            //                 fontSize: 13.0,
+            //                 letterSpacing: 0.5,
+            //                 fontFamily: "DefaultFontFamily",
+            //                 color: Colors.black,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //             const SizedBox(
+            //               height: 10,
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       actions: <Widget>[
+            //         Padding(
+            //           padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+            //           child: GFButton(
+            //             onPressed: () {
+            //               Get.back();
+            //             },
+            //             fullWidthButton: true,
+            //             shape: GFButtonShape.pills,
+            //             text: "That's Nice",
+            //             icon: const Icon(
+            //               Icons.arrow_right_outlined,
+            //               color: Colors.white,
+            //               size: 18,
+            //             ),
+            //             color: brandOne,
+            //             textStyle: const TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 16,
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //       barrierDismissible: true,
+            //     );
+            //   },
+            //   builder: Builder(
+            //     builder: (context) => const HomePage(),
+            //     //  (context) => (userController.user[0].bvn != "")
+            //     //     ? const HomePage()
+            //     //     : (userController.user[0].dvaUsername == '' ||
+            //     //             userController.user[0].gender == '' ||
+            //     //             userController.user[0].date_of_birth == '' ||
+            //     //             userController.user[0].address == '')
+            //     //         ? UpdateUserInfo()
+            //     //         : CreateDVA(),
+            //     // : const HomePage(),
+            //   ),
+            // ),
           );
   }
 }
@@ -363,7 +378,7 @@ class _HomePageState extends State<HomePage> {
         }).then((value) {
           docSnapshot.reference.update({
             'referals': 1,
-            'referar_id': "@" + userController.user[0].referalId + "@"
+            'referar_id': "@${userController.user[0].referalId}@"
           });
           //R09K673ELR
           Get.snackbar(
@@ -375,14 +390,83 @@ class _HomePageState extends State<HomePage> {
             snackPosition: SnackPosition.TOP,
           );
         }).catchError((error) {
-          Get.snackbar(
-            "Oops...",
-            "Something went wrong",
-            animationDuration: const Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-          );
+          showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: null,
+              elevation: 0,
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: const Icon(
+                            Iconsax.close_circle,
+                            color: brandOne,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_24,
+                        color: Colors.red,
+                        size: 75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      "Oops...",
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Something went wrong",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+     
+          // Get.snackbar(
+          //   "Oops...",
+          //   "Something went wrong",
+          //   animationDuration: const Duration(seconds: 2),
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
         });
       }
     } else {
@@ -512,24 +596,163 @@ class _HomePageState extends State<HomePage> {
       if (_message == "Authorized") {
         Get.to(const HomePage());
       } else {
-        Get.snackbar(
-          "Error",
-          "Biometrics failed",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: null,
+              elevation: 0,
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: const Icon(
+                            Iconsax.close_circle,
+                            color: brandOne,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_24,
+                        color: Colors.red,
+                        size: 75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Error',
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Biometrics failed",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+      
+        // Get.snackbar(
+        //   "Error",
+        //   "Biometrics failed",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
     } catch (e) {
-      Get.snackbar(
-        "Error",
-        "Biometrics failed",
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: null,
+              elevation: 0,
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: const Icon(
+                            Iconsax.close_circle,
+                            color: brandOne,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_24,
+                        color: Colors.red,
+                        size: 75,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Error',
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Biometrics failed",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+      
+      // Get.snackbar(
+      //   "Error",
+      //   "Biometrics failed",
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     }
     if (!mounted) return;
   }

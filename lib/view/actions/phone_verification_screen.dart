@@ -10,6 +10,8 @@ import 'package:rentspace/controller/user_controller.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class PhoneVerificationScreen extends StatefulWidget {
   PhoneVerificationScreen({
     Key? key,
@@ -68,14 +70,15 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         setState(() {
           _isLoading = false;
         });
-        Get.snackbar(
-          "Error",
-          "Try again later",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', 'Try again later');
+        // Get.snackbar(
+        //   "Error",
+        //   "Try again later",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       },
       codeSent: (String verificationId, int? resendToken) {
         setState(() {
@@ -140,14 +143,17 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
       setState(() {
         _isLoading = false;
       });
-      Get.snackbar(
-        "Error",
-        "The OTP could not be verified, try again later",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(context, 'Error', 'The OTP could not be verified, try again later');
+      }
+      // Get.snackbar(
+      //   "Error",
+      //   "The OTP could not be verified, try again later",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     }
   }
 
@@ -292,14 +298,16 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                       ),
                       onPressed: () {
                         if (_otpController.text.trim() == "") {
-                          Get.snackbar(
-                            "Empty",
-                            "OTP cannot be empty",
-                            animationDuration: const Duration(seconds: 1),
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
+                          customErrorDialog(
+                              context, 'Empty', 'OTP cannot be empty');
+                          // Get.snackbar(
+                          //   "Empty",
+                          //   "OTP cannot be empty",
+                          //   animationDuration: const Duration(seconds: 1),
+                          //   backgroundColor: Colors.red,
+                          //   colorText: Colors.white,
+                          //   snackPosition: SnackPosition.BOTTOM,
+                          // );
                         } else {
                           _verifyOTP();
                         }

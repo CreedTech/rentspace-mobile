@@ -117,7 +117,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Create new SpaceRent',
+                      'Create SpaceRent',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.nunito(
                         color: Colors.white,

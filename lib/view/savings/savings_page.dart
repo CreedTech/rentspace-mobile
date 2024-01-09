@@ -21,6 +21,8 @@ import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
 import 'package:rentspace/view/savings/spaceTank/spacetank_intro.dart';
 import 'package:rentspace/view/savings/spaceTank/spacetank_list.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SavingsPage extends StatefulWidget {
   SavingsPage({
@@ -313,7 +315,6 @@ class _SavingsPageState extends State<SavingsPage> {
                 //   ),
                 // ),
 
-                
                 Flexible(
                   child: GridView.count(
                     crossAxisCount: 2,
@@ -339,9 +340,21 @@ class _SavingsPageState extends State<SavingsPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          (tankController.tank.isEmpty)
-                              ? Get.to(const SpaceTankIntro())
-                              : Get.to(const SpaceTankList());
+                          // (tankController.tank.isEmpty)
+                          //     ? Get.to(const SpaceTankIntro())
+                          //     : Get.to(const SpaceTankList());
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            CustomSnackBar.success(
+                              backgroundColor: brandOne,
+                              message: 'Coming Soon. !!',
+                              textStyle: GoogleFonts.nunito(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          );
                         },
                         child: _savingsWidget(
                           'assets/icons/safe_tank.png',
@@ -376,14 +389,27 @@ class _SavingsPageState extends State<SavingsPage> {
                       //     '3.5% interest quarterly.',
                       //   ),
                       // ),
-                   
                     ],
                   ),
                 ),
               ],
             ),
-            const Center(
-              child: Text('Coming Soon'),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/icons/cooming_soon.png',
+                ),
+                Text(
+                  'Coming Soon!!!',
+                  style: GoogleFonts.nunito(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: brandOne,
+                  ),
+                )
+              ],
             ),
           ],
         ),

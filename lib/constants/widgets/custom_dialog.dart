@@ -175,3 +175,75 @@ void errorDialog(BuildContext context, String message, String subText) {
     ),
   );
 }
+
+void customErrorDialog(
+    BuildContext context, String message, String subText) async {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: null,
+          elevation: 0,
+          content: SizedBox(
+            height: 250,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        // color: brandOne,
+                      ),
+                      child: const Icon(
+                        Iconsax.close_circle,
+                        color: brandOne,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+                const Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Iconsax.warning_24,
+                    color: Colors.red,
+                    size: 75,
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Invalid PIN',
+                  style: GoogleFonts.nunito(
+                    color: Colors.red,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Enter correct PIN",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}

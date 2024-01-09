@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +19,12 @@ class _CustomTransactionDetailsCardState
   @override
   initState() {
     super.initState();
-    print('rentController.rent[widget.current].hasPaid');
-    print(rentController.rent[widget.current].id);
+    if (kDebugMode) {
+      print('rentController.rent[widget.current].hasPaid');
+    }
+    if (kDebugMode) {
+      print(rentController.rent[widget.current].id);
+    }
   }
 
   final RentController rentController = Get.find();
@@ -48,7 +53,7 @@ class _CustomTransactionDetailsCardState
           ),
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
           // Text(rentController.rent[widget.current].hasPaid),
         ],

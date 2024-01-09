@@ -25,6 +25,7 @@ import 'package:rentspace/controller/withdrawal_controller.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 
 class FinanceHealth extends StatefulWidget {
@@ -358,31 +359,45 @@ class _FinanceHealthState extends State<FinanceHealth> {
                                   );
                                 }).catchError((error) {
                                   EasyLoading.dismiss();
-                                  Get.snackbar(
-                                    "Error",
-                                    error.toString(),
-                                    animationDuration:
-                                        const Duration(seconds: 2),
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
+                                  if (context.mounted) {
+                                    customErrorDialog(
+                                      context,
+                                      'Error',
+                                      error.toString(),
+                                    );
+                                  }
+                                  // Get.snackbar(
+                                  //   "Error",
+                                  //   error.toString(),
+                                  //   animationDuration:
+                                  //       const Duration(seconds: 2),
+                                  //   backgroundColor: Colors.red,
+                                  //   colorText: Colors.white,
+                                  //   snackPosition: SnackPosition.BOTTOM,
+                                  // );
                                 });
                               } else {
                                 EasyLoading.dismiss();
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  CustomSnackBar.error(
-                                    // backgroundColor: Colors.red,
-                                    message:
-                                        'Invalid! :). Please fill the form properly to proceed',
-                                    textStyle: GoogleFonts.nunito(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                );
+                                 if (context.mounted) {
+                                    customErrorDialog(
+                                      context,
+                                      'Invalid! :)',
+                                      'Please fill the form properly to proceed',
+                                    );
+                                  }
+                                // showTopSnackBar(
+                                //   Overlay.of(context),
+                                //   CustomSnackBar.error(
+                                //     // backgroundColor: Colors.red,
+                                //     message:
+                                //         'Invalid! :). Please fill the form properly to proceed',
+                                //     textStyle: GoogleFonts.nunito(
+                                //       fontSize: 14,
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.w700,
+                                //     ),
+                                //   ),
+                                // );
                               }
                             },
                             child: const Text(

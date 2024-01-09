@@ -4,9 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/biometrics_page.dart';
-import 'package:rentspace/view/actions/confirm_reset_page.dart';
-import 'package:rentspace/view/intro_slider.dart';
-import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/no_connection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -18,11 +15,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/onboarding_slider.dart';
-import 'package:rentspace/view/signup_page.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../constants/utils/snackbar.dart';
 import '../constants/widgets/custom_dialog.dart';
 import '../constants/widgets/custom_loader.dart';
 import '../view/home_page.dart';
@@ -210,18 +203,20 @@ class AuthController extends GetxController {
         nError = error.toString();
       }
       if (!context.mounted) return;
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: brandOne,
-          message: nError,
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+        customErrorDialog(
+            context, "Error", nError);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: brandOne,
+      //     message: nError,
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
     }
   }
 
@@ -373,18 +368,19 @@ class AuthController extends GetxController {
         nError = error.toString();
       }
       if (!context.mounted) return;
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: brandOne,
-          message: nError,
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      customErrorDialog(context, "Error", nError);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: brandOne,
+      //     message: nError,
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
     }
   }
 

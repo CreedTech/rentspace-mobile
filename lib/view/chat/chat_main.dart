@@ -9,6 +9,8 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class ChatMain extends StatefulWidget {
   const ChatMain({Key? key}) : super(key: key);
 
@@ -406,8 +408,12 @@ class _ChatMainState extends State<ChatMain> {
         responseBody = "";
       });
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Failed to send message. Please try again.')));
+      if (context.mounted) {
+        customErrorDialog(
+            context, 'Oops (:', "Failed to send message. Please try again.");
+      }
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text('Failed to send message. Please try again.')));
       setState(() {
         responseBody = "";
       });
@@ -462,8 +468,12 @@ class _ChatMainState extends State<ChatMain> {
         });
       });
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Failed to send message. Please try again.')));
+      if (context.mounted) {
+        customErrorDialog(
+            context, 'Oops (:', "Failed to send message. Please try again.");
+      }
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text('Failed to send message. Please try again.')));
     }
   }
 }

@@ -11,6 +11,7 @@ import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
 import '../dashboard/confirm_forgot_pin.dart';
 
 class ForgotPin extends StatefulWidget {
@@ -85,18 +86,19 @@ class _ForgotPinState extends State<ForgotPin> {
     //   );
     // }
     if (_pinController.text.trim() == widget.pin) {
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: Colors.red,
-          message: 'PIN cannot be the same as existing one.',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      customErrorDialog(context, "Invalid!", "PIN cannot be the same as existing one.");
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: Colors.red,
+      //     message: 'PIN cannot be the same as existing one.',
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Error!",
       //   'PIN cannot be the same as existing one.',
@@ -340,19 +342,20 @@ class _ForgotPinState extends State<ForgotPin> {
                                           .validate()) {
                                         _doSomething();
                                       } else {
-                                        showTopSnackBar(
-                                          Overlay.of(context),
-                                          CustomSnackBar.error(
-                                            // backgroundColor: Colors.red,
-                                            message:
-                                                'Please fill the form properly to proceed',
-                                            textStyle: GoogleFonts.nunito(
-                                              fontSize: 14,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        );
+                                        customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                                        // showTopSnackBar(
+                                        //   Overlay.of(context),
+                                        //   CustomSnackBar.error(
+                                        //     // backgroundColor: Colors.red,
+                                        //     message:
+                                        //         'Please fill the form properly to proceed',
+                                        //     textStyle: GoogleFonts.nunito(
+                                        //       fontSize: 14,
+                                        //       color: Colors.white,
+                                        //       fontWeight: FontWeight.w700,
+                                        //     ),
+                                        //   ),
+                                        // );
                                       }
                                     },
                                     child: const Text(

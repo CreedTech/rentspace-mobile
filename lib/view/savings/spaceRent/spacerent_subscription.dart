@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -12,6 +14,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+
+import '../../../constants/widgets/custom_dialog.dart';
 
 class RentSpaceSubscription extends StatefulWidget {
   const RentSpaceSubscription({Key? key}) : super(key: key);
@@ -169,7 +173,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       if (int.tryParse(text.trim().replaceAll(',', ''))!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
     //validation function
@@ -193,7 +197,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       if (int.tryParse(text.trim().replaceAll(',', ''))!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
 ///////calculate rent
@@ -234,31 +238,39 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
-        label: const Text(
+        label: Text(
           "How much is your rent per year?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         hintText: 'Rent amount in Naira',
-        hintStyle: const TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -276,31 +288,39 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       inputFormatters: [ThousandsFormatter()],
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: const Text(
+        label: Text(
           "How much of your rent is left?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         hintText: 'Rent amount in Naira',
-        hintStyle: const TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -325,15 +345,15 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         ),
         body: Stack(
           children: [
-            Positioned.fill(
-              child: Opacity(
-                opacity: 0.3,
-                child: Image.asset(
-                  'assets/icons/RentSpace-icon.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Positioned.fill(
+            //   child: Opacity(
+            //     opacity: 0.3,
+            //     child: Image.asset(
+            //       'assets/icons/RentSpace-icon.png',
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
               child: ListView(
@@ -341,16 +361,17 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                 physics: const ClampingScrollPhysics(),
                 children: [
                   const SizedBox(
-                    height: 100,
+                    height: 10,
                   ),
-                  Text(
-                    "Let's get you started$varValue",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DefaultFontFamily",
-                        letterSpacing: 0.5,
-                        color: Theme.of(context).primaryColor),
+                  Center(
+                    child: Text(
+                      "We Simplified the process for you$varValue",
+                      style: GoogleFonts.nunito(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          // letterSpacing: 0.5,
+                          color: Theme.of(context).primaryColor),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -358,9 +379,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                   (_hasCalculate == 'true')
                       ? Text(
                           "$varValue",
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
                             color: Theme.of(context).primaryColor,
                           ),
                         )
@@ -384,7 +404,17 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                       ? Padding(
                           padding: const EdgeInsets.fromLTRB(30, 2, 30, 2),
                           child: Center(
-                            child: GFButton(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(300, 50),
+                                backgroundColor: brandTwo,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
                               onLongPress: () {
                                 setState(() {
                                   _amountValue = "";
@@ -397,39 +427,85 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 if (validateFunc(_rentAmountController.text
                                         .trim()
                                         .replaceAll(',', '')) ==
-                                    '') {
+                                    null) {
                                   calculateRent(double.tryParse(
                                       _rentAmountController.text
                                           .trim()
                                           .replaceAll(',', '')));
                                 } else {
-                                  Get.snackbar(
-                                    "Invalid",
-                                    'Please enter valid amount to proceed.',
-                                    animationDuration: const Duration(seconds: 1),
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
+                                  if (context.mounted) {
+                                    customErrorDialog(context, 'Invalid',
+                                        "Please enter valid amount to proceed.");
+                                  }
+
+                                  // Get.snackbar(
+                                  //   "Invalid",
+                                  //   'Please enter valid amount to proceed.',
+                                  //   animationDuration:
+                                  //       const Duration(seconds: 1),
+                                  //   backgroundColor: Colors.red,
+                                  //   colorText: Colors.white,
+                                  //   snackPosition: SnackPosition.BOTTOM,
+                                  // );
                                 }
                               },
-                              fullWidthButton: true,
-                              size: 40,
-                              icon: const Icon(
-                                Icons.add_outlined,
-                                color: Colors.white,
-                                size: 20,
+                              child: Text(
+                                'Calculate',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                              text: "Calculate",
-                              textStyle: const TextStyle(
-                                fontSize: 13,
-                                fontFamily: "DefaultFontFamily",
-                                color: Colors.white,
-                              ),
-                              color: brandOne,
-                              padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-                              shape: GFButtonShape.pills,
                             ),
+                            // GFButton(
+                            //   onLongPress: () {
+                            //     setState(() {
+                            //       _amountValue = "";
+                            //       _rentValue = 0.0;
+                            //       _rentSeventy = 0.0;
+                            //       _rentThirty = 0.0;
+                            //     });
+                            //   },
+                            //   onPressed: () {
+                            //     if (validateFunc(_rentAmountController.text
+                            //             .trim()
+                            //             .replaceAll(',', '')) ==
+                            //         '') {
+                            //       calculateRent(double.tryParse(
+                            //           _rentAmountController.text
+                            //               .trim()
+                            //               .replaceAll(',', '')));
+                            //     } else {
+                            //       Get.snackbar(
+                            //         "Invalid",
+                            //         'Please enter valid amount to proceed.',
+                            //         animationDuration:
+                            //             const Duration(seconds: 1),
+                            //         backgroundColor: Colors.red,
+                            //         colorText: Colors.white,
+                            //         snackPosition: SnackPosition.BOTTOM,
+                            //       );
+                            //     }
+                            //   },
+                            //   fullWidthButton: true,
+                            //   size: 40,
+                            //   icon: const Icon(
+                            //     Icons.add_outlined,
+                            //     color: Colors.white,
+                            //     size: 20,
+                            //   ),
+                            //   text: "Calculate",
+                            //   textStyle: const TextStyle(
+                            //     fontSize: 13,
+                            //     fontFamily: "DefaultFontFamily",
+                            //     color: Colors.white,
+                            //   ),
+                            //   color: brandOne,
+                            //   padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+                            //   shape: GFButtonShape.pills,
+                            // ),
                           ),
                         )
                       : const Text(""),
@@ -446,8 +522,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                           },
                           child: Text(
                             "Already paying for a rent? click here",
-                            style: TextStyle(
-                              fontFamily: "DefaultFontFamily",
+                            style: GoogleFonts.nunito(
                               decoration: TextDecoration.underline,
                               color: Theme.of(context).primaryColor,
                             ),
@@ -463,17 +538,16 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                           },
                           child: Text(
                             "Paying for a new rent? click here",
-                            style: TextStyle(
-                              fontFamily: "DefaultFontFamily",
+                            style: GoogleFonts.nunito(
                               decoration: TextDecoration.underline,
                               color: Theme.of(context).primaryColor,
                             ),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   (_hasCreated == 'true')
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -485,13 +559,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 ),
                                 rentAmountOld,
                                 const SizedBox(
-                                  height: 20,
+                                  height: 50,
                                 ),
                                 Text(
                                   'When is your current rent due?\n${DateFormat('dd/MM/yyyy').format(_endDate)}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: "DefaultFontFamily",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
                                     color: Theme.of(context).primaryColor,
                                   ),
                                   textAlign: TextAlign.center,
@@ -499,36 +573,72 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                GFButton(
-                                  onPressed: () => _selectEndDate(context),
-                                  shape: GFButtonShape.pills,
-                                  text: "Select on calendar",
-                                  padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-                                  icon: const Icon(
-                                    Icons.calendar_month_outlined,
-                                    color: Colors.white,
-                                    size: 18,
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(200, 50),
+                                    maximumSize: const Size(250, 50),
+                                    backgroundColor: brandTwo,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        10,
+                                      ),
+                                    ),
                                   ),
-                                  color: brandOne,
-                                  textStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontFamily: "DefaultFontFamily",
+                                  onPressed: () => _selectEndDate(context),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: Colors.white,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Select on calendar',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.nunito(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
+                                // GFButton(
+                                //   onPressed: () => _selectEndDate(context),
+                                //   shape: GFButtonShape.pills,
+                                //   text: "Select on calendar",
+                                //   padding:
+                                //       const EdgeInsets.fromLTRB(20, 2, 20, 2),
+                                //   icon: const Icon(
+                                //     Icons.calendar_month_outlined,
+                                //     color: Colors.white,
+                                //     size: 18,
+                                //   ),
+                                //   color: brandOne,
+                                //   textStyle: GoogleFonts.nunito(
+                                //     color: Colors.white,
+                                //     fontSize: 16,
+                                //   ),
+                                // ),
                               ],
                             ),
                             const SizedBox(
-                              height: 5,
+                              height: 15,
                             ),
                             (_canShowRent == 'true')
                                 ? (_calculateDaysDifference().abs() == 0)
                                     ? const Text("")
                                     : Text(
                                         'Your rent will be due in ${_calculateDaysDifference()} days',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: "DefaultFontFamily",
+                                        style: GoogleFonts.nunito(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       )
@@ -541,12 +651,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                     onTap: () {
                                       Get.to(const TermsAndConditions());
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "By proceeding, you agree with our terms and conditions",
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         decoration: TextDecoration.underline,
                                         color: Colors.red,
-                                        fontFamily: "DefaultFontFamily",
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -557,200 +666,417 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                             ),
                             (_canShowRent == 'true' &&
                                     (_rentAmountOldController.text
-                                                .trim()
-                                                .replaceAll(',', '') !=
-                                            "" &&
+                                            .trim()
+                                            .replaceAll(',', '')
+                                            .isNotEmpty &&
                                         validateOldFunc(_rentAmountOldController
                                                 .text
                                                 .trim()
                                                 .replaceAll(',', '')) ==
-                                            "" &&
+                                            null &&
                                         int.tryParse(_rentAmountOldController
                                                 .text
                                                 .trim()
                                                 .replaceAll(',', '')) !=
                                             null))
                                 ? (_calculateDaysDifference().abs() == 0)
-                                    ? const Text(
-                                        "Invalid date. Pick a different date.",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: "DefaultFontFamily",
-                                          color: Colors.red,
-                                        ),
-                                      )
-                                    : GFButton(
-                                        onPressed: () async {
-                                          var userUpdate = FirebaseFirestore
-                                              .instance
-                                              .collection('accounts');
-                                          var updateRent = FirebaseFirestore
-                                              .instance
-                                              .collection('rent_space');
+                                    ? Builder(builder: (context) {
+                                        return Text(
+                                          "Invalid date. Pick a different date.",
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 12,
+                                            color: Colors.red,
+                                          ),
+                                        );
+                                      })
+                                    : Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 50,
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(100, 50),
+                                              maximumSize: const Size(350, 50),
+                                              backgroundColor: brandTwo,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  10,
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () async {
+                                              var userUpdate = FirebaseFirestore
+                                                  .instance
+                                                  .collection('accounts');
+                                              var updateRent = FirebaseFirestore
+                                                  .instance
+                                                  .collection('rent_space');
 
-                                          await updateRent.add({
-                                            'user_id': _userID,
-                                            'id': _id,
-                                            'rentspace_id': _rentSpaceID,
-                                            'date': formattedDate,
-                                            'interval_amount': (((int.tryParse(
+                                              await updateRent.add({
+                                                'user_id': _userID,
+                                                'id': _id,
+                                                'rentspace_id': _rentSpaceID,
+                                                'date': formattedDate,
+                                                'interval_amount': (((int.tryParse(
+                                                            _rentAmountOldController
+                                                                .text
+                                                                .trim()
+                                                                .replaceAll(
+                                                                    ',', ''))! /
+                                                        _calculateDaysDifference()))
+                                                    .toDouble()),
+                                                'target_amount': int.tryParse(
                                                         _rentAmountOldController
                                                             .text
                                                             .trim()
                                                             .replaceAll(
-                                                                ',', ''))! /
-                                                    _calculateDaysDifference()))
-                                                .toDouble()),
-                                            'target_amount': int.tryParse(
-                                                    _rentAmountOldController
-                                                        .text
-                                                        .trim()
-                                                        .replaceAll(',', ''))!
-                                                .toDouble(),
-                                            'paid_amount': 0,
-                                            'interval': 'daily',
-                                            'has_paid': 'false',
-                                            'status': 'active',
-                                            'history': _history,
-                                            'is_new': 'false',
-                                            'no_of_payments': '0',
-                                            'current_payment': '0',
-                                            'token': ''
-                                          });
-                                          await userUpdate.doc(userId).update({
-                                            'has_rent': 'true',
-                                            "activities": FieldValue.arrayUnion(
-                                              [
-                                                "$formattedDate \nSaving for rent\n${ch8t.format(double.tryParse(_rentAmountOldController.text.trim().replaceAll(',', '')))} target amount.",
-                                              ],
-                                            ),
-                                          }).then((value) {
-                                            Get.bottomSheet(
-                                              isDismissible: true,
-                                              SizedBox(
-                                                height: 300,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(30.0),
-                                                    topRight:
-                                                        Radius.circular(30.0),
-                                                  ),
-                                                  child: Container(
-                                                    color: Theme.of(context)
-                                                        .canvasColor,
-                                                    padding:
-                                                        const EdgeInsets.fromLTRB(
-                                                            10, 5, 10, 5),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 50,
-                                                        ),
-                                                        const Icon(
-                                                          Icons
-                                                              .check_circle_outline,
-                                                          color: brandOne,
-                                                          size: 80,
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Text(
-                                                          'RentSpace created',
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontFamily:
-                                                                "DefaultFontFamily",
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 30,
-                                                        ),
-                                                        GFButton(
-                                                          onPressed: () async {
-                                                            Get.back();
-                                                            Get.to(
-                                                                SpaceRentFunding(
-                                                              amount: (int.tryParse(_rentAmountOldController
-                                                                          .text
-                                                                          .trim()
-                                                                          .replaceAll(
-                                                                              ',',
-                                                                              ''))! ~/
-                                                                      _calculateDaysDifference()),
-                                                              date:
-                                                                  formattedDate,
-                                                              interval: 'daily',
-                                                              numPayment: 0,
-                                                              refId:
-                                                                  _rentSpaceID,
-                                                              userID: _userID,
-                                                            ));
-                                                            resetCalculator();
-                                                          },
-                                                          shape: GFButtonShape
-                                                              .pills,
-                                                          fullWidthButton: true,
-                                                          color: brandOne,
-                                                          child: const Text(
-                                                            'Proceed to payment',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 13,
-                                                              fontFamily:
-                                                                  "DefaultFontFamily",
+                                                                ',', ''))!
+                                                    .toDouble(),
+                                                'paid_amount': 0,
+                                                'interval': 'daily',
+                                                'has_paid': 'false',
+                                                'status': 'active',
+                                                'history': _history,
+                                                'is_new': 'false',
+                                                'no_of_payments': '0',
+                                                'current_payment': '0',
+                                                'token': ''
+                                              });
+                                              await userUpdate
+                                                  .doc(userId)
+                                                  .update({
+                                                'has_rent': 'true',
+                                                "activities":
+                                                    FieldValue.arrayUnion(
+                                                  [
+                                                    "$formattedDate \nSaving for rent\n${ch8t.format(double.tryParse(_rentAmountOldController.text.trim().replaceAll(',', '')))} target amount.",
+                                                  ],
+                                                ),
+                                              }).then((value) {
+                                                Get.bottomSheet(
+                                                  isDismissible: false,
+                                                  SizedBox(
+                                                    height: 400,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                30.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                30.0),
+                                                      ),
+                                                      child: Container(
+                                                        color: Theme.of(context)
+                                                            .canvasColor,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                10, 47, 10, 24),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            const SizedBox(
+                                                              height: 30,
                                                             ),
-                                                          ),
+                                                            // const Icon(
+                                                            //   Icons
+                                                            //       .check_circle_outline,
+                                                            //   color: brandOne,
+                                                            //   size: 80,
+                                                            // ),
+                                                            Image.asset(
+                                                              'assets/check.png',
+                                                              width: 120,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(
+                                                              'SpaceRent Created',
+                                                              style: GoogleFonts
+                                                                  .nunito(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                // fontFamily:
+                                                                //     "DefaultFontFamily",
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          48),
+                                                              child: Text(
+                                                                'Your SpaceRent savings has been created successfully kindly proceed to make payment',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .nunito(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  // fontFamily:
+                                                                  //     "DefaultFontFamily",
+                                                                  color: Color(
+                                                                      0xff828282),
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ),
+
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Align(
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
+                                                              child: Container(
+                                                                // width: MediaQuery.of(context).size.width * 2,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                // height: 110.h,
+                                                                child: Column(
+                                                                  children: [
+                                                                    ElevatedButton(
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        minimumSize: const Size(
+                                                                            300,
+                                                                            50),
+                                                                        backgroundColor:
+                                                                            brandTwo,
+                                                                        elevation:
+                                                                            0,
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(
+                                                                            10,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      onPressed:
+                                                                          () async {
+                                                                        Get.back();
+                                                                        Get.to(
+                                                                            SpaceRentFunding(
+                                                                          amount:
+                                                                              (int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! ~/ _calculateDaysDifference()),
+                                                                          date:
+                                                                              formattedDate,
+                                                                          interval:
+                                                                              'daily',
+                                                                          numPayment:
+                                                                              0,
+                                                                          refId:
+                                                                              _rentSpaceID,
+                                                                          userID:
+                                                                              _userID,
+                                                                        ));
+                                                                        resetCalculator();
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        'Proceed To Payment',
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: GoogleFonts
+                                                                            .nunito(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              16,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            // GFButton(
+                                                            //   onPressed: () {
+                                                            //     Get.to(
+                                                            //         HomePage());
+                                                            //     // for (int i = 0; i < 2; i++) {
+                                                            //     //   Get.to(HomePage());
+                                                            //     // }
+                                                            //   },
+                                                            //   icon: const Icon(
+                                                            //     Icons
+                                                            //         .arrow_right_outlined,
+                                                            //     size: 30,
+                                                            //     color:
+                                                            //         Colors.white,
+                                                            //   ),
+                                                            //   color: brandOne,
+                                                            //   text: "Done",
+                                                            //   shape: GFButtonShape
+                                                            //       .pills,
+                                                            //   fullWidthButton:
+                                                            //       true,
+                                                            // ),
+
+                                                            const SizedBox(
+                                                              height: 20,
+                                                            ),
+                                                          ],
                                                         ),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
                                                   ),
+                                                );
+                                              }).catchError((error) {
+                                                showDialog(
+                                                    context: context,
+                                                    barrierDismissible: false,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        title: null,
+                                                        elevation: 0,
+                                                        content: SizedBox(
+                                                          height: 250,
+                                                          child: Column(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topRight,
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              30),
+                                                                      // color: brandOne,
+                                                                    ),
+                                                                    child:
+                                                                        const Icon(
+                                                                      Iconsax
+                                                                          .close_circle,
+                                                                      color:
+                                                                          brandOne,
+                                                                      size: 30,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Icon(
+                                                                  Iconsax
+                                                                      .warning_24,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  size: 75,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 12,
+                                                              ),
+                                                              Text(
+                                                                'Oops!!',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .nunito(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize: 28,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Text(
+                                                                'Something went wrong, try again later',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: GoogleFonts
+                                                                    .nunito(
+                                                                        color:
+                                                                            brandOne,
+                                                                        fontSize:
+                                                                            18),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                              });
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  Icons.add_outlined,
+                                                  color: Colors.white,
+                                                  size: 20,
                                                 ),
-                                              ),
-                                            );
-                                          }).catchError((error) {
-                                            Get.snackbar(
-                                              "Oops",
-                                              "Something went wrong, try again later",
-                                              animationDuration:
-                                                  const Duration(seconds: 2),
-                                              backgroundColor: Colors.red,
-                                              colorText: Colors.white,
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                            );
-                                          });
-                                        },
-                                        size: 30.0,
-                                        icon: const Icon(
-                                          Icons.add_outlined,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        color: brandOne,
-                                        fullWidthButton: true,
-                                        text:
-                                            "Click to save ${ch8t.format((int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! ~/ _calculateDaysDifference()))} daily for ${_calculateDaysDifference()} days",
-                                        textStyle: const TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.white,
-                                          fontFamily: "DefaultFontFamily",
-                                        ),
-                                        padding:
-                                            const EdgeInsets.fromLTRB(0, 2, 0, 2),
-                                        shape: GFButtonShape.pills,
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  "Click to save ${ch8t.format((int.tryParse(_rentAmountOldController.text.trim().replaceAll(',', ''))! ~/ _calculateDaysDifference()))} daily for ${_calculateDaysDifference()} days",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.nunito(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       )
                                 : const Text(""),
                           ],
@@ -769,19 +1095,26 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 children: [
                                   Text(
                                     "",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 16,
-                                      fontFamily: "DefaultFontFamily",
-                                      letterSpacing: 0.5,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 100,
                                   ),
                                   ////////Daily payment
-                                  GFButton(
-                                    shape: GFButtonShape.pills,
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(100, 50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       Timer(const Duration(seconds: 1), () {
                                         _dailyModalController.stop();
@@ -823,15 +1156,17 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: const BorderRadius.only(
+                                              borderRadius:
+                                                  const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    10, 5, 10, 5),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
@@ -850,10 +1185,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                     ),
                                                     Text(
                                                       'RentSpace created',
-                                                      style: TextStyle(
+                                                      style: GoogleFonts.nunito(
                                                         fontSize: 16,
-                                                        fontFamily:
-                                                            "DefaultFontFamily",
                                                         color: Theme.of(context)
                                                             .primaryColor,
                                                       ),
@@ -884,13 +1217,12 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .width /
                                                               2,
                                                       color: brandOne,
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Proceed to payment',
-                                                        style: TextStyle(
+                                                        style:
+                                                            GoogleFonts.nunito(
                                                           color: Colors.white,
                                                           fontSize: 13,
-                                                          fontFamily:
-                                                              "DefaultFontFamily",
                                                         ),
                                                       ),
                                                     ),
@@ -904,33 +1236,117 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
-                                        Get.snackbar(
-                                          "Oops",
-                                          "Something went wrong, try again later",
-                                          animationDuration:
-                                              const Duration(seconds: 2),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                title: null,
+                                                elevation: 0,
+                                                content: SizedBox(
+                                                  height: 250,
+                                                  child: Column(
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              // color: brandOne,
+                                                            ),
+                                                            child: const Icon(
+                                                              Iconsax
+                                                                  .close_circle,
+                                                              color: brandOne,
+                                                              size: 30,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Icon(
+                                                          Iconsax.warning_24,
+                                                          color: Colors.red,
+                                                          size: 75,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12,
+                                                      ),
+                                                      Text(
+                                                        'Oops!!',
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          color: Colors.red,
+                                                          fontSize: 28,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        'Oops! \n Something went wrong, try again later',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                                color: brandOne,
+                                                                fontSize: 18),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
                                       });
                                     },
-                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for 335 days',
-                                      style: const TextStyle(
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
                                         color: Colors.white,
-                                        fontFamily: "DefaultFontFamily",
-                                        fontSize: 13,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
+
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   ////////Weekly payment
-                                  GFButton(
-                                    shape: GFButtonShape.pills,
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(100, 50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       _weeklyModalController.stop();
                                       var userUpdate = FirebaseFirestore
@@ -970,15 +1386,17 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: const BorderRadius.only(
+                                              borderRadius:
+                                                  const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    10, 5, 10, 5),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
@@ -997,10 +1415,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                     ),
                                                     Text(
                                                       'RentSpace created',
-                                                      style: TextStyle(
+                                                      style: GoogleFonts.nunito(
                                                         fontSize: 16,
-                                                        fontFamily:
-                                                            "DefaultFontFamily",
                                                         color: Theme.of(context)
                                                             .primaryColor,
                                                       ),
@@ -1032,11 +1448,10 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .width /
                                                               2,
                                                       color: brandOne,
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Proceed to payment',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              "DefaultFontFamily",
+                                                        style:
+                                                            GoogleFonts.nunito(
                                                           color: Colors.white,
                                                           fontSize: 13,
                                                         ),
@@ -1052,33 +1467,117 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
-                                        Get.snackbar(
-                                          "Oops",
-                                          "Something went wrong, try again later",
-                                          animationDuration:
-                                              const Duration(seconds: 2),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                title: null,
+                                                elevation: 0,
+                                                content: SizedBox(
+                                                  height: 250,
+                                                  child: Column(
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              // color: brandOne,
+                                                            ),
+                                                            child: const Icon(
+                                                              Iconsax
+                                                                  .close_circle,
+                                                              color: brandOne,
+                                                              size: 30,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Icon(
+                                                          Iconsax.warning_24,
+                                                          color: Colors.red,
+                                                          size: 75,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12,
+                                                      ),
+                                                      Text(
+                                                        'Oops!!',
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          color: Colors.red,
+                                                          fontSize: 28,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        'Oops! \n Something went wrong, try again later',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                                color: brandOne,
+                                                                fontSize: 18),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
                                       });
                                     },
-                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for 44 weeks',
-                                      style: const TextStyle(
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
                                         color: Colors.white,
-                                        fontSize: 13,
-                                        fontFamily: "DefaultFontFamily",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
+
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   ////////Monthly payment
-                                  GFButton(
-                                    shape: GFButtonShape.pills,
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(100, 50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       _monthlyModalController.stop();
                                       var userUpdate = FirebaseFirestore
@@ -1118,15 +1617,17 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           SizedBox(
                                             height: 300,
                                             child: ClipRRect(
-                                              borderRadius: const BorderRadius.only(
+                                              borderRadius:
+                                                  const BorderRadius.only(
                                                 topLeft: Radius.circular(30.0),
                                                 topRight: Radius.circular(30.0),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    10, 5, 10, 5),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 10, 5),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
@@ -1145,10 +1646,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                     ),
                                                     Text(
                                                       'RentSpace created',
-                                                      style: TextStyle(
+                                                      style: GoogleFonts.nunito(
                                                         fontSize: 16,
-                                                        fontFamily:
-                                                            "DefaultFontFamily",
                                                         color: Theme.of(context)
                                                             .primaryColor,
                                                       ),
@@ -1180,13 +1679,12 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   .width /
                                                               2,
                                                       color: brandOne,
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Proceed to payment',
-                                                        style: TextStyle(
+                                                        style:
+                                                            GoogleFonts.nunito(
                                                           color: Colors.white,
                                                           fontSize: 13,
-                                                          fontFamily:
-                                                              "DefaultFontFamily",
                                                         ),
                                                       ),
                                                     ),
@@ -1200,24 +1698,98 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
-                                        Get.snackbar(
-                                          "Oops",
-                                          "Something went wrong, try again later",
-                                          animationDuration:
-                                              const Duration(seconds: 2),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                title: null,
+                                                elevation: 0,
+                                                content: SizedBox(
+                                                  height: 250,
+                                                  child: Column(
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30),
+                                                              // color: brandOne,
+                                                            ),
+                                                            child: const Icon(
+                                                              Iconsax
+                                                                  .close_circle,
+                                                              color: brandOne,
+                                                              size: 30,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Icon(
+                                                          Iconsax.warning_24,
+                                                          color: Colors.red,
+                                                          size: 75,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 12,
+                                                      ),
+                                                      Text(
+                                                        'Oops!!',
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          color: Colors.red,
+                                                          fontSize: 28,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        'Oops! \n Something went wrong, try again later',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                                color: brandOne,
+                                                                fontSize: 18),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
                                       });
                                     },
-                                    color: brandOne,
                                     child: Text(
                                       'save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for 11 months',
-                                      style: const TextStyle(
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
                                         color: Colors.white,
-                                        fontSize: 13,
-                                        fontFamily: "DefaultFontFamily",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
@@ -1228,12 +1800,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                     onTap: () {
                                       Get.to(const TermsAndConditions());
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "By proceeding, you agree with our terms and conditions",
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         decoration: TextDecoration.underline,
                                         color: Colors.red,
-                                        fontFamily: "DefaultFontFamily",
                                       ),
                                       textAlign: TextAlign.center,
                                     ),

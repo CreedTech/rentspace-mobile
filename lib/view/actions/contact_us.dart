@@ -12,6 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:clipboard/clipboard.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({Key? key}) : super(key: key);
 
@@ -19,7 +21,8 @@ class ContactUsPage extends StatefulWidget {
   _ContactUsPageState createState() => _ContactUsPageState();
 }
 
-launchEmail({
+launchEmail(
+  BuildContext context, {
   required String toEmail,
   required String subject,
   required String message,
@@ -29,14 +32,18 @@ launchEmail({
   try {
     await launchUrl(Uri.parse(url));
   } catch (error) {
-    Get.snackbar(
-      "Oops",
-      "Something went wrong, try again later",
-      animationDuration: const Duration(seconds: 1),
-      backgroundColor: Colors.red,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    if (context.mounted) {
+      customErrorDialog(
+          context, "Invalid!", "Please fill the form properly to proceed");
+    }
+    // Get.snackbar(
+    //   "Oops",
+    //   "Something went wrong, try again later",
+    //   animationDuration: const Duration(seconds: 1),
+    //   backgroundColor: Colors.red,
+    //   colorText: Colors.white,
+    //   snackPosition: SnackPosition.BOTTOM,
+    // );
   }
 }
 
@@ -261,6 +268,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                           GestureDetector(
                                             onTap: () {
                                               launchEmail(
+                                                context,
                                                 toEmail:
                                                     'support@rentspace.tech',
                                                 subject: 'Help & support',

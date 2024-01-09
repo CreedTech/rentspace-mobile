@@ -11,6 +11,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:upgrader/upgrader.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+import '../../constants/widgets/custom_loader.dart';
+
 class BiometricsPage extends StatefulWidget {
   BiometricsPage({
     Key? key,
@@ -25,7 +28,7 @@ String _message = "Not Authorized";
 bool _hasBiometric = false;
 bool _canShowAuth = false;
 final hasBiometricStorage = GetStorage();
-String screenInfo = "Loading awesomeness...";
+String screenInfo = "";
 
 class _BiometricsPageState extends State<BiometricsPage> {
   Timer? _inactivityTimer;
@@ -60,24 +63,30 @@ class _BiometricsPageState extends State<BiometricsPage> {
         Get.to(const FirstPage());
       } else {
         _canShowAuth = true;
-        Get.snackbar(
-          "Error",
-          "Biometrics failed",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (context.mounted) {
+          customErrorDialog(context, "Error", "Biometrics failed");
+        }
+        // Get.snackbar(
+        //   "Error",
+        //   "Biometrics failed",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
     } catch (e) {
-      Get.snackbar(
-        "Error",
-        "Biometrics failed",
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(context, "Error", "Biometrics failed");
+      }
+      // Get.snackbar(
+      //   "Error",
+      //   "Biometrics failed",
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     }
     if (!mounted) return;
   }
@@ -86,7 +95,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
   initState() {
     super.initState();
     setState(() {
-      screenInfo = "Loading awesomeness...";
+      screenInfo = "";
       _canShowAuth = false;
     });
 
@@ -145,11 +154,12 @@ class _BiometricsPageState extends State<BiometricsPage> {
                         ),
                       ),
                     ),
-                    Lottie.asset(
-                      'assets/loader.json',
-                      width: 100,
-                      height: 100,
-                    ),
+                    CustomLoader(),
+                    // Lottie.asset(
+                    //   'assets/loader.json',
+                    //   width: 100,
+                    //   height: 100,
+                    // ),
                     const SizedBox(
                       height: 30,
                     ),

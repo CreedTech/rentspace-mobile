@@ -16,6 +16,8 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../constants/widgets/custom_dialog.dart';
+
 class RentLiquidate extends StatefulWidget {
   int index, balance;
   bool isWallet;
@@ -133,14 +135,21 @@ class _RentLiquidateState extends State<RentLiquidate> {
           _bankAccountName = "";
           isChecking = false;
         });
-        Get.snackbar(
-          "Error!",
-          "Invalid account number",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (context.mounted) {
+          customErrorDialog(
+            context,
+            'Error!',
+            'Invalid account number',
+          );
+        }
+        // Get.snackbar(
+        //   "Error!",
+        //   "Invalid account number",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       //print(response.body);
@@ -150,14 +159,21 @@ class _RentLiquidateState extends State<RentLiquidate> {
         _bankAccountName = "";
         isChecking = false;
       });
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(
+          context,
+          'Error!',
+          'Something went wrong',
+        );
+      }
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -320,24 +336,38 @@ class _RentLiquidateState extends State<RentLiquidate> {
         setState(() {
           notLoading = true;
         });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (context.mounted) {
+          customErrorDialog(
+            context,
+            'Oops',
+            'Something went wrong, try again later',
+          );
+        }
+        // Get.snackbar(
+        //   "Oops",
+        //   "Something went wrong, try again later",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       });
     } else {
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(
+          context,
+          'Error!',
+          'Something went wrong',
+        );
+      }
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -382,14 +412,21 @@ class _RentLiquidateState extends State<RentLiquidate> {
         snackPosition: SnackPosition.TOP,
       );
     }).catchError((error) {
-      Get.snackbar(
-        "Oops",
-        "Something went wrong, try again later",
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(
+          context,
+          'Oops',
+          'Something went wrong, try again later',
+        );
+      }
+      // Get.snackbar(
+      //   "Oops",
+      //   "Something went wrong, try again later",
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     });
   }
 
@@ -475,24 +512,38 @@ class _RentLiquidateState extends State<RentLiquidate> {
         setState(() {
           notLoading = true;
         });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (context.mounted) {
+          customErrorDialog(
+            context,
+            'Oops',
+            'Something went wrong, try again later',
+          );
+        }
+        // Get.snackbar(
+        //   "Oops",
+        //   "Something went wrong, try again later",
+        //   animationDuration: const Duration(seconds: 2),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       });
     } else {
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (context.mounted) {
+        customErrorDialog(
+          context,
+          'Error!',
+          'Something went wrong',
+        );
+      }
+      // Get.snackbar(
+      //   "Error!",
+      //   "something went wrong",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
@@ -605,14 +656,10 @@ class _RentLiquidateState extends State<RentLiquidate> {
           ),
           focusColor: brandOne,
           items: const [
-            DropdownMenuItem(
-                value: 'Select bank',
-                child: Text('Select bank')),
+            DropdownMenuItem(value: 'Select bank', child: Text('Select bank')),
             DropdownMenuItem(value: '000013', child: Text('GTB')),
             DropdownMenuItem(value: '000014', child: Text('Access Bank')),
-            DropdownMenuItem(
-                value: '000023',
-                child: Text('Providus Bank')),
+            DropdownMenuItem(value: '000023', child: Text('Providus Bank')),
             DropdownMenuItem(value: '100004', child: Text('OPay')),
           ],
           onChanged: (newValue) {
@@ -1102,18 +1149,25 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                     Get.back();
                                                     _doLiquidateBank();
                                                   } else {
-                                                    Get.snackbar(
-                                                      "Invalid PIN",
-                                                      "Enter correct PIN",
-                                                      animationDuration:
-                                                          const Duration(
-                                                              seconds: 2),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      colorText: Colors.white,
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                    );
+                                                    if (context.mounted) {
+                                                      customErrorDialog(
+                                                        context,
+                                                        'Invalid PIN',
+                                                        'Enter correct PIN',
+                                                      );
+                                                    }
+                                                    // Get.snackbar(
+                                                    //   "Invalid PIN",
+                                                    //   "Enter correct PIN",
+                                                    //   animationDuration:
+                                                    //       const Duration(
+                                                    //           seconds: 2),
+                                                    //   backgroundColor:
+                                                    //       Colors.red,
+                                                    //   colorText: Colors.white,
+                                                    //   snackPosition:
+                                                    //       SnackPosition.BOTTOM,
+                                                    // );
                                                   }
                                                 },
                                                 icon: const Icon(
@@ -1230,19 +1284,26 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                       Get.back();
                                                       _doWallet();
                                                     } else {
-                                                      Get.snackbar(
-                                                        "Invalid PIN",
-                                                        "Enter correct PIN",
-                                                        animationDuration:
-                                                            const Duration(
-                                                                seconds: 2),
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        colorText: Colors.white,
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
+                                                      if (context.mounted) {
+                                                        customErrorDialog(
+                                                          context,
+                                                          'Invalid PIN',
+                                                          'Enter correct PIN',
+                                                        );
+                                                      }
+                                                      // Get.snackbar(
+                                                      //   "Invalid PIN",
+                                                      //   "Enter correct PIN",
+                                                      //   animationDuration:
+                                                      //       const Duration(
+                                                      //           seconds: 2),
+                                                      //   backgroundColor:
+                                                      //       Colors.red,
+                                                      //   colorText: Colors.white,
+                                                      //   snackPosition:
+                                                      //       SnackPosition
+                                                      //           .BOTTOM,
+                                                      // );
                                                     }
                                                   },
                                                   icon: const Icon(
@@ -1352,19 +1413,26 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                       Get.back();
                                                       _doLiquidateWallet();
                                                     } else {
-                                                      Get.snackbar(
-                                                        "Invalid PIN",
-                                                        "Enter correct PIN",
-                                                        animationDuration:
-                                                            const Duration(
-                                                                seconds: 2),
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        colorText: Colors.white,
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
+                                                      if (context.mounted) {
+                                                        customErrorDialog(
+                                                          context,
+                                                          'Invalid PIN',
+                                                          'Enter correct PIN',
+                                                        );
+                                                      }
+                                                      // Get.snackbar(
+                                                      //   "Invalid PIN",
+                                                      //   "Enter correct PIN",
+                                                      //   animationDuration:
+                                                      //       const Duration(
+                                                      //           seconds: 2),
+                                                      //   backgroundColor:
+                                                      //       Colors.red,
+                                                      //   colorText: Colors.white,
+                                                      //   snackPosition:
+                                                      //       SnackPosition
+                                                      //           .BOTTOM,
+                                                      // );
                                                     }
                                                   },
                                                   icon: const Icon(
@@ -1388,28 +1456,42 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                     );
                                   }
                                 } else {
-                                  Get.snackbar(
-                                    "Invalid",
-                                    'Please fill the form properly to proceed',
-                                    animationDuration:
-                                        const Duration(seconds: 1),
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
+                                  if (context.mounted) {
+                                    customErrorDialog(
+                                      context,
+                                      'Invalid',
+                                      'Please fill the form properly to proceed',
+                                    );
+                                  }
+                                  // Get.snackbar(
+                                  //   "Invalid",
+                                  //   'Please fill the form properly to proceed',
+                                  //   animationDuration:
+                                  //       const Duration(seconds: 1),
+                                  //   backgroundColor: Colors.red,
+                                  //   colorText: Colors.white,
+                                  //   snackPosition: SnackPosition.BOTTOM,
+                                  // );
                                 }
                               } else {
                                 Timer(const Duration(seconds: 1), () {
                                   _btnController.stop();
                                 });
-                                Get.snackbar(
-                                  "Invalid",
-                                  'Please fill the form properly to proceed',
-                                  animationDuration: const Duration(seconds: 1),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  snackPosition: SnackPosition.BOTTOM,
-                                );
+                                if (context.mounted) {
+                                  customErrorDialog(
+                                    context,
+                                    'Invalid',
+                                    'Please fill the form properly to proceed',
+                                  );
+                                }
+                                // Get.snackbar(
+                                //   "Invalid",
+                                //   'Please fill the form properly to proceed',
+                                //   animationDuration: const Duration(seconds: 1),
+                                //   backgroundColor: Colors.red,
+                                //   colorText: Colors.white,
+                                //   snackPosition: SnackPosition.BOTTOM,
+                                // );
                               }
                             },
                             child: (widget.isWallet)

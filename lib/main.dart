@@ -12,7 +12,8 @@ import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
-
+import 'package:provider/provider.dart';
+import 'services/implementations/notification_service.dart';
 import 'view/splash_screen.dart';
 
 const String logoUrl =
@@ -185,30 +186,33 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // ToastContext().init(context);
-    return GetMaterialApp(
-      theme: Themes().lightTheme,
-      darkTheme: Themes().darkTheme,
-      themeMode: ThemeServices().getThemeMode(),
-      debugShowCheckedModeBanner: false,
-      title: 'RentSpace',
-      home: const SplashScreen(),
-      builder: EasyLoading.init(),
-      // const Scaffold(
-      //   backgroundColor: Colors.white,
-      //   body: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     // ignore: prefer_const_literals_to_create_immutables
-      //     children: [
-      //       Center(
-      //         child: CircularProgressIndicator(
-      //           backgroundColor: Colors.white,
-      //           color: Colors.black,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+    return ChangeNotifierProvider(
+      create: (_) => NotificationService(),
+      child: GetMaterialApp(
+        theme: Themes().lightTheme,
+        darkTheme: Themes().darkTheme,
+        themeMode: ThemeServices().getThemeMode(),
+        debugShowCheckedModeBanner: false,
+        title: 'RentSpace',
+        home: const SplashScreen(),
+        builder: EasyLoading.init(),
+        // const Scaffold(
+        //   backgroundColor: Colors.white,
+        //   body: Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     // ignore: prefer_const_literals_to_create_immutables
+        //     children: [
+        //       Center(
+        //         child: CircularProgressIndicator(
+        //           backgroundColor: Colors.white,
+        //           color: Colors.black,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+      ),
     );
   }
 }

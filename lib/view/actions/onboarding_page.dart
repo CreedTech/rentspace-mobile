@@ -54,9 +54,9 @@ class BvnPage extends StatefulWidget {
   _BvnPageState createState() => _BvnPageState();
 }
 
-
 final TextEditingController _bvnController = TextEditingController();
 final bvnformKey = GlobalKey<FormState>();
+
 class _BvnPageState extends State<BvnPage> {
   final UserController userController = Get.find();
   final form = intl.NumberFormat.decimalPattern();
@@ -297,7 +297,7 @@ class _BvnPageState extends State<BvnPage> {
           notLoading = true;
         });
         EasyLoading.dismiss();
-        errorDialog(context, "Oops", "Something went wrong, try again later");
+        customErrorDialog(context, "Oops", "Something went wrong, try again later");
         // Get.snackbar(
         //   "Oops",
         //   "Something went wrong, try again later",
@@ -313,7 +313,7 @@ class _BvnPageState extends State<BvnPage> {
       });
       EasyLoading.dismiss();
       if (!context.mounted) return;
-      errorDialog(context, "Error!", "Something went wrong");
+      customErrorDialog(context, "Error!", "Something went wrong");
       // Get.snackbar(
       //   "Error!",
       //   "something went wrong",
@@ -939,7 +939,7 @@ class _KycPageState extends State<KycPage> {
     FirebaseStorage storage = FirebaseStorage.instance;
     print('storage');
     print(storage);
-    String fileName =p.basename(selectedImage!.path);
+    String fileName = p.basename(selectedImage!.path);
     print('fileName');
     print(fileName);
     Reference ref = storage.ref().child(fileName);
@@ -977,18 +977,19 @@ class _KycPageState extends State<KycPage> {
       // );
     }).catchError((error) {
       print(error.toString());
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: brandOne,
-          message: 'Error! :(.${error.toString()}',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      customErrorDialog(context, 'Error', error.toString());
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: brandOne,
+      //     message: 'Error! :(.${error.toString()}',
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Error",
       //   error.toString(),
@@ -1204,7 +1205,7 @@ class _KycPageState extends State<KycPage> {
                             width: double.infinity,
                             height: 150,
                             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            child:  Column(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(
@@ -1389,19 +1390,21 @@ class _KycPageState extends State<KycPage> {
                                   kycValue: _kycController.text.trim(),
                                   idCardValue: _IDImage));
                             } else {
-                              showTopSnackBar(
-                                Overlay.of(context),
-                                CustomSnackBar.error(
-                                  // backgroundColor: brandOne,
-                                  message:
-                                      ' Please fill in your KYC correctly and upload a valid ID card image to verify.',
-                                  textStyle: GoogleFonts.nunito(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              );
+                              customErrorDialog(context, 'Error',
+                                  'Please fill in your KYC correctly and upload a valid ID card image to verify.');
+                              // showTopSnackBar(
+                              //   Overlay.of(context),
+                              //   CustomSnackBar.error(
+                              //     // backgroundColor: brandOne,
+                              //     message:
+                              //         ' Please fill in your KYC correctly and upload a valid ID card image to verify.',
+                              //     textStyle: GoogleFonts.nunito(
+                              //       fontSize: 14,
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.w700,
+                              //     ),
+                              //   ),
+                              // );
                             }
                           },
                           child: const Text(
@@ -1707,18 +1710,19 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
       //   ),
       // );
     }).catchError((error) {
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.error(
-          // backgroundColor: brandOne,
-          message: 'Error! :(. ${error.toString()}',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
+      customErrorDialog(context, 'Error', error.toString());
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     // backgroundColor: brandOne,
+      //     message: 'Error! :(. ${error.toString()}',
+      //     textStyle: GoogleFonts.nunito(
+      //       fontSize: 14,
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w700,
+      //     ),
+      //   ),
+      // );
       // Get.snackbar(
       //   "Error",
       //   error.toString(),
@@ -2007,19 +2011,23 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                         _userPassword) {
                                   verify(context);
                                 } else {
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.error(
-                                      // backgroundColor: brandOne,
-                                      message:
-                                          'Incorrect password! :( . Please enter the correct password to proceed.',
-                                      textStyle: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  );
+                                  customErrorDialog(
+                                      context,
+                                      'Incorrect password! ',
+                                      'Please enter the correct password to proceed.');
+                                  // showTopSnackBar(
+                                  //   Overlay.of(context),
+                                  //   CustomSnackBar.error(
+                                  //     // backgroundColor: brandOne,
+                                  //     message:
+                                  //         'Incorrect password! :( . Please enter the correct password to proceed.',
+                                  //     textStyle: GoogleFonts.nunito(
+                                  //       fontSize: 14,
+                                  //       color: Colors.white,
+                                  //       fontWeight: FontWeight.w700,
+                                  //     ),
+                                  //   ),
+                                  // );
                                 }
                               },
                               child: const Text(

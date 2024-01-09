@@ -18,6 +18,8 @@ import 'package:flutter/services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+
 class FundWallet extends StatefulWidget {
   const FundWallet({Key? key}) : super(key: key);
 
@@ -198,19 +200,20 @@ class _FundWalletState extends State<FundWallet> {
                               savingsID: userController.user[0].userId,
                             ));
                           } else {
-                            showTopSnackBar(
-                              Overlay.of(context),
-                              CustomSnackBar.error(
-                                // backgroundColor: Colors.red,
-                                message:
-                                    'Invalid! :). Please fill the form properly to proceed',
-                                textStyle: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            );
+                            customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                            // showTopSnackBar(
+                            //   Overlay.of(context),
+                            //   CustomSnackBar.error(
+                            //     // backgroundColor: Colors.red,
+                            //     message:
+                            //         'Invalid! :). Please fill the form properly to proceed',
+                            //     textStyle: GoogleFonts.nunito(
+                            //       fontSize: 14,
+                            //       color: Colors.white,
+                            //       fontWeight: FontWeight.w700,
+                            //     ),
+                            //   ),
+                            // );
                           }
                         },
                         child: const Text(
