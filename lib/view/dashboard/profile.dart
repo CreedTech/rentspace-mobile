@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onTap: () {
-                        Get.to(PersonalDetails());
+                        Get.to(const PersonalDetails());
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
                       trailing: const Icon(

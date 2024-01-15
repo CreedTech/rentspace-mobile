@@ -129,7 +129,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                       ),
                     ],
                   )
-                : ListView.builder(
+                : 
+                ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),

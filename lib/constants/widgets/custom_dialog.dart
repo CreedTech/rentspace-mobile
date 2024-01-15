@@ -223,7 +223,7 @@ void customErrorDialog(
                   height: 12,
                 ),
                 Text(
-                  'Invalid PIN',
+                  message,
                   style: GoogleFonts.nunito(
                     color: Colors.red,
                     fontSize: 28,
@@ -234,7 +234,7 @@ void customErrorDialog(
                   height: 5,
                 ),
                 Text(
-                  "Enter correct PIN",
+                  subText,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
                 ),

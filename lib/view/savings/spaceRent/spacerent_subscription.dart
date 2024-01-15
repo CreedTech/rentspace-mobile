@@ -110,6 +110,33 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
     }
   }
 
+  int _calculateMonthsDifference() {
+    final differenceMonths = _endDate
+            .add(const Duration(days: 1))
+            .difference(DateTime.now())
+            .inDays ~/
+        30; // Calculate difference in months
+
+    return differenceMonths.abs();
+  }
+
+  int _calculateWeeksDifference() {
+    final differenceMonths = _calculateMonthsDifference();
+    final differenceWeeks = differenceMonths * 4; // Assuming 4 weeks in a month
+
+    return differenceWeeks.abs();
+  }
+
+  String _formatWeeksDifference() {
+    final weeksDifference = _calculateWeeksDifference();
+    return '$weeksDifference weeks';
+  }
+
+  bool isWithinRange() {
+    int monthsDifference = _calculateMonthsDifference();
+    return monthsDifference >= 6 && monthsDifference <= 11;
+  }
+
   int _calculateDaysDifference() {
     final differenceDays =
         _endDate.add(const Duration(days: 1)).difference(DateTime.now()).inDays;
@@ -632,10 +659,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                               height: 15,
                             ),
                             (_canShowRent == 'true')
-                                ? (_calculateDaysDifference().abs() == 0)
+                                ? (!isWithinRange())
                                     ? const Text("")
                                     : Text(
-                                        'Your rent will be due in ${_calculateDaysDifference()} days',
+                                        'Your rent will be due in ${_calculateDaysDifference()} days (approximately ${_formatWeeksDifference()}) (approximately ${_calculateMonthsDifference()} months)',
+                                        textAlign: TextAlign.center,
                                         style: GoogleFonts.nunito(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
@@ -679,8 +707,12 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                 .trim()
                                                 .replaceAll(',', '')) !=
                                             null))
-                                ? (_calculateDaysDifference().abs() == 0)
+                                ? (!isWithinRange())
                                     ? Builder(builder: (context) {
+                                        // customErrorDialog(
+                                        //     context,
+                                        //     'Invalid date',
+                                        //     'Date Must be within 6-11 months');
                                         return Text(
                                           "Invalid date. Pick a different date.",
                                           style: GoogleFonts.nunito(
