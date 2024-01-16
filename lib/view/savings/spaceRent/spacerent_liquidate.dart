@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +17,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 
 import '../../../constants/widgets/custom_dialog.dart';
@@ -22,11 +27,11 @@ class RentLiquidate extends StatefulWidget {
   int index, balance;
   bool isWallet;
   RentLiquidate({
-    Key? key,
+    super.key,
     required this.index,
     required this.balance,
     required this.isWallet,
-  }) : super(key: key);
+  });
 
   @override
   _RentLiquidateState createState() => _RentLiquidateState();
@@ -324,6 +329,18 @@ class _RentLiquidateState extends State<RentLiquidate> {
           notLoading = true;
         });
         Get.back();
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Wallet withdrawal successful.',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
         Get.snackbar(
           "Success!",
           'Liquidation successful.',

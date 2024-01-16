@@ -32,7 +32,7 @@ void verification(BuildContext context, String message, String subText,
                   Text(
                     message,
                     style: GoogleFonts.nunito(
-                      color: const Color(0xff105182),
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -44,7 +44,7 @@ void verification(BuildContext context, String message, String subText,
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -203,9 +203,9 @@ void customErrorDialog(
                         borderRadius: BorderRadius.circular(30),
                         // color: brandOne,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Iconsax.close_circle,
-                        color: brandOne,
+                        color: Theme.of(context).primaryColor,
                         size: 30,
                       ),
                     ),
@@ -236,7 +236,7 @@ void customErrorDialog(
                 Text(
                   subText,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                  style: GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                 ),
                 const SizedBox(
                   height: 10,

@@ -71,9 +71,9 @@ class _LoginPageState extends State<LoginPage> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -126,11 +126,11 @@ class _LoginPageState extends State<LoginPage> {
     final password = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       obscureText: obscurity,
       style: GoogleFonts.nunito(
-        color: Colors.black,
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -194,25 +194,25 @@ class _LoginPageState extends State<LoginPage> {
     //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         // backgroundColor: const Color(0xffE0E0E0),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child:  Icon(
             Icons.arrow_back,
             size: 25,
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title:  Text(
           'Back',
           style: TextStyle(
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
@@ -241,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         'Login to your account',
                         style: GoogleFonts.nunito(
-                          color: brandFour,
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
                           // fontFamily: "DefaultFontFamily",
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 'Enter Email',
                                 style: GoogleFonts.nunito(
-                                  color: Colors.black,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
                                   // fontFamily: "DefaultFontFamily",
@@ -294,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 'Enter Password',
                                 style: GoogleFonts.nunito(
-                                  color: Colors.black,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
                                   // fontFamily: "DefaultFontFamily",

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,6 +22,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class WalletWithdrawal extends StatefulWidget {
   const WalletWithdrawal({Key? key}) : super(key: key);
@@ -345,14 +349,26 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           notLoading = true;
         });
         Get.back();
-        Get.snackbar(
-          "Success!",
-          'Wallet withdrawal successful.',
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Wallet withdrawal successful.',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Success!",
+        //   'Wallet withdrawal successful.',
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: brandOne,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.TOP,
+        // );
       }).catchError((error) {
         setState(() {
           notLoading = true;

@@ -75,13 +75,13 @@ class _FundWalletState extends State<FundWallet> {
 
     final amount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [ThousandsFormatter()],
       validator: validateAmount,
-      style: const TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -146,7 +146,7 @@ class _FundWalletState extends State<FundWallet> {
         title: Text(
           'Fund Wallet',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 20, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -200,7 +200,8 @@ class _FundWalletState extends State<FundWallet> {
                               savingsID: userController.user[0].userId,
                             ));
                           } else {
-                            customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                            customErrorDialog(context, "Invalid!",
+                                "Please fill the form properly to proceed");
                             // showTopSnackBar(
                             //   Overlay.of(context),
                             //   CustomSnackBar.error(

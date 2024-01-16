@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -9,9 +11,12 @@ import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:async';
+
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 String _hasBvn = "";
 String _hasKyc = "";
@@ -383,36 +388,52 @@ class _LoanPageState extends State<LoanPage> {
                             _interest = 0;
                             duration = 'Days';
                           });
-                          Get.snackbar(
-                            "Received",
-                            "Loan request received",
-                            animationDuration: Duration(seconds: 2),
-                            backgroundColor: brandOne,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.TOP,
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            CustomSnackBar.success(
+                              backgroundColor: brandOne,
+                              message: 'Loan request received',
+                              textStyle: GoogleFonts.nunito(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           );
+                          // Get.snackbar(
+                          //   "Received",
+                          //   "Loan request received",
+                          //   animationDuration: Duration(seconds: 2),
+                          //   backgroundColor: brandOne,
+                          //   colorText: Colors.white,
+                          //   snackPosition: SnackPosition.TOP,
+                          // );
                         }).catchError((error) {
-                          Get.snackbar(
-                            "Oops",
-                            "Something went wrong, try again later",
-                            animationDuration: Duration(seconds: 2),
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
+                          customErrorDialog(context, 'Oops',
+                              'Something went wrong, try again later');
+                          // Get.snackbar(
+                          //   "Oops",
+                          //   "Something went wrong, try again later",
+                          //   animationDuration: Duration(seconds: 2),
+                          //   backgroundColor: Colors.red,
+                          //   colorText: Colors.white,
+                          //   snackPosition: SnackPosition.BOTTOM,
+                          // );
                         });
                       } else {
                         Timer(Duration(seconds: 1), () {
                           _btnController.stop();
                         });
-                        Get.snackbar(
-                          "Invalid",
-                          'Please fill the form properly to proceed',
-                          animationDuration: Duration(seconds: 1),
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                          snackPosition: SnackPosition.BOTTOM,
-                        );
+                        customErrorDialog(context, 'Invalid',
+                            'Please fill the form properly to proceed');
+                        // Get.snackbar(
+                        //   "Invalid",
+                        //   'Please fill the form properly to proceed',
+                        //   animationDuration: Duration(seconds: 1),
+                        //   backgroundColor: Colors.red,
+                        //   colorText: Colors.white,
+                        //   snackPosition: SnackPosition.BOTTOM,
+                        // );
                       }
                     },
                   ),

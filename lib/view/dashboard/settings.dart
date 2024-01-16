@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,7 +21,6 @@ import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/profile.dart';
 import 'package:rentspace/view/dashboard/security.dart';
-import 'package:rentspace/view/login_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -28,6 +29,7 @@ import 'package:get_storage/get_storage.dart';
 import '../../constants/db/firebase_db.dart';
 import '../../constants/firebase_auth_constants.dart';
 import '../../constants/theme_services.dart';
+import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/user_controller.dart';
 import '../actions/bank_and_card.dart';
@@ -121,14 +123,15 @@ class _SettingsPageState extends State<SettingsPage>
       // );
     }).catchError((error) {
       EasyLoading.dismiss();
-      Get.snackbar(
-        "Error",
-        error.toString(),
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      customErrorDialog(context, 'Error', error.toString());
+      // Get.snackbar(
+      //   "Error",
+      //   error.toString(),
+      //   animationDuration: const Duration(seconds: 2),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     });
   }
 
@@ -154,19 +157,31 @@ class _SettingsPageState extends State<SettingsPage>
     print(_isEmailVerified);
   }
 
-  enableBiometrics() {
+  enableBiometrics(BuildContext context) {
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == false) {
       hasBiometricStorage.write('hasBiometric', true);
       Get.back();
-      Get.snackbar(
-        "Enabled",
-        "Biometrics enabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics enabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Enabled",
+      //   "Biometrics enabled",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: brandOne,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.TOP,
+      // );
       if (hasBiometricStorage.read('hasBiometric') == false) {
         setState(
           () {
@@ -175,14 +190,26 @@ class _SettingsPageState extends State<SettingsPage>
           },
         );
         Get.back();
-        Get.snackbar(
-          "Enabled",
-          "Biometrics enabled",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics enabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Enabled",
+        //   "Biometrics enabled",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: brandOne,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.TOP,
+        // );
       } else {
         return;
       }
@@ -192,19 +219,31 @@ class _SettingsPageState extends State<SettingsPage>
     //print()
   }
 
-  disableBiometrics() {
+  disableBiometrics(BuildContext context) {
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == true) {
       hasBiometricStorage.write('hasBiometric', false);
       Get.back();
-      Get.snackbar(
-        "Disabled",
-        "Biometrics disabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics disabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Disabled",
+      //   "Biometrics disabled",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       if (hasBiometricStorage.read('hasBiometric') == true) {
         setState(
           () {
@@ -213,14 +252,26 @@ class _SettingsPageState extends State<SettingsPage>
           },
         );
         Get.back();
-        Get.snackbar(
-          "Disabled",
-          "Biometrics disabled",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics disabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Disabled",
+        //   "Biometrics disabled",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       } else {
         return;
       }
@@ -236,7 +287,7 @@ class _SettingsPageState extends State<SettingsPage>
     return canCheckBiometrics;
   }
 
-  Future<void> _authenticateMe() async {
+  Future<void> _authenticateMe(BuildContext context) async {
     bool authenticated = false;
     try {
       authenticated = await _localAuthentication.authenticate(
@@ -246,16 +297,17 @@ class _SettingsPageState extends State<SettingsPage>
         _message = authenticated ? "Authorized" : "Not Authorized";
       });
       if (authenticated) {
-        enableBiometrics();
+        enableBiometrics(context);
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
+        // Get.snackbar(
+        //   "Error",
+        //   "could not authenticate",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       print("Authenticated");
@@ -265,7 +317,7 @@ class _SettingsPageState extends State<SettingsPage>
     if (!mounted) return;
   }
 
-  Future<void> _NotAuthenticateMe() async {
+  Future<void> _NotAuthenticateMe(BuildContext context) async {
     bool authenticated = false;
     try {
       authenticated = await _localAuthentication.authenticate(
@@ -276,16 +328,17 @@ class _SettingsPageState extends State<SettingsPage>
       });
 
       if (authenticated) {
-        disableBiometrics();
+        disableBiometrics(context);
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
+        // Get.snackbar(
+        //   "Error",
+        //   "could not authenticate",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       print("Authenticated");

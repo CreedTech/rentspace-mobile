@@ -12,6 +12,8 @@ import 'package:rentspace/view/actions/add_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/user_controller.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -58,7 +60,7 @@ class _BankAndCardState extends State<BankAndCard> {
           title: Text(
             'Bank & Card Details',
             style: GoogleFonts.nunito(
-                color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+                color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
           ),
         ),
         body: Padding(
@@ -264,6 +266,7 @@ class _BankAndCardState extends State<BankAndCard> {
                             style: GoogleFonts.nunito(
                               fontSize: 17,
                               fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -286,7 +289,7 @@ class _BankAndCardState extends State<BankAndCard> {
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
                                   fontWeight: FontWeight.w400,
-                                  color: const Color(0xff828282),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -299,7 +302,7 @@ class _BankAndCardState extends State<BankAndCard> {
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
                                   fontWeight: FontWeight.w700,
-                                  color: brandOne,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -308,9 +311,6 @@ class _BankAndCardState extends State<BankAndCard> {
                               Text(
                                 userController.user[0].accountNumber,
                                 style: GoogleFonts.nunito(
-                                  fontSize: 15.0,
-                                  // fontFamily: "DefaultFontFamily",
-                                  letterSpacing: 0.5,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -407,17 +407,33 @@ class _BankAndCardState extends State<BankAndCard> {
                                                   }).then((value) {
                                                     Get.back();
                                                     print(userId);
-                                                    Get.snackbar(
-                                                      "deleted!",
-                                                      'Your card has been deleted successfully',
-                                                      animationDuration:
-                                                          const Duration(
-                                                              seconds: 1),
-                                                      backgroundColor: brandOne,
-                                                      colorText: Colors.white,
-                                                      snackPosition:
-                                                          SnackPosition.TOP,
+                                                    showTopSnackBar(
+                                                      Overlay.of(context),
+                                                      CustomSnackBar.success(
+                                                        backgroundColor:
+                                                            brandOne,
+                                                        message:
+                                                            'Your card has been deleted successfully',
+                                                        textStyle:
+                                                            GoogleFonts.nunito(
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
                                                     );
+                                                    // Get.snackbar(
+                                                    //   "deleted!",
+                                                    //   'Your card has been deleted successfully',
+                                                    //   animationDuration:
+                                                    //       const Duration(
+                                                    //           seconds: 1),
+                                                    //   backgroundColor: brandOne,
+                                                    //   colorText: Colors.white,
+                                                    //   snackPosition:
+                                                    //       SnackPosition.TOP,
+                                                    // );
                                                     Get.back();
                                                   }).catchError((error) {
                                                     customErrorDialog(

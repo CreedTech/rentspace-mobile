@@ -1,10 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/forgot_pin_intro.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 import '../../controller/user_controller.dart';
@@ -31,14 +36,20 @@ class _SecurityState extends State<Security> {
         hasBiometricStorage.read('hasBiometric') == false) {
       hasBiometricStorage.write('hasBiometric', true);
       Get.back();
-      Get.snackbar(
-        "Enabled",
-        "Biometrics enabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
+
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics enabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      
       if (hasBiometricStorage.read('hasBiometric') == false) {
         setState(
           () {
@@ -47,14 +58,19 @@ class _SecurityState extends State<Security> {
           },
         );
         Get.back();
-        Get.snackbar(
-          "Enabled",
-          "Biometrics enabled",
-          animationDuration: const Duration(seconds: 1),
+         showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
           backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
-        );
+          message: 'Biometrics enabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+       
       } else {
         return;
       }
@@ -69,14 +85,26 @@ class _SecurityState extends State<Security> {
         hasBiometricStorage.read('hasBiometric') == true) {
       hasBiometricStorage.write('hasBiometric', false);
       Get.back();
-      Get.snackbar(
-        "Disabled",
-        "Biometrics disabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+       showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics disabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+      // Get.snackbar(
+      //   "Disabled",
+      //   "Biometrics disabled",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
       if (hasBiometricStorage.read('hasBiometric') == true) {
         setState(
           () {
@@ -85,14 +113,26 @@ class _SecurityState extends State<Security> {
           },
         );
         Get.back();
-        Get.snackbar(
-          "Disabled",
-          "Biometrics disabled",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+         showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics disabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+        // Get.snackbar(
+        //   "Disabled",
+        //   "Biometrics disabled",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       } else {
         return;
       }
@@ -120,14 +160,15 @@ class _SecurityState extends State<Security> {
       if (authenticated) {
         enableBiometrics();
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
+        // Get.snackbar(
+        //   "Error",
+        //   "could not authenticate",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       print("Authenticated");
@@ -150,14 +191,15 @@ class _SecurityState extends State<Security> {
       if (authenticated) {
         disableBiometrics();
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
+        // Get.snackbar(
+        //   "Error",
+        //   "could not authenticate",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
 
       print("Authenticated");
@@ -308,7 +350,8 @@ class _SecurityState extends State<Security> {
                               fontWeight: FontWeight.w600,
                             )),
                         trailing: Switch(
-                          value: hasBiometricStorage.read('hasBiometric') ?? false,
+                          value:
+                              hasBiometricStorage.read('hasBiometric') ?? false,
                           onChanged: (_hasBiometric) {
                             print(_hasBiometric);
                             print('hasBiometricStorage');

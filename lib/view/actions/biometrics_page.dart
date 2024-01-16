@@ -150,11 +150,11 @@ class _BiometricsPageState extends State<BiometricsPage> {
                         style: GoogleFonts.nunito(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
-                    CustomLoader(),
+                    const CustomLoader(),
                     // Lottie.asset(
                     //   'assets/loader.json',
                     //   width: 100,

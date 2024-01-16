@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
@@ -351,9 +352,8 @@ class _WalletFundingState extends State<WalletFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 20,
-                        fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),

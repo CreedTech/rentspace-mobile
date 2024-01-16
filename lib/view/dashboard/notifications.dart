@@ -46,12 +46,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 32,
+          vertical: 2,
         ),
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 2),
               child: Consumer<NotificationService>(
                   builder: (context, notificationService, _) {
                 print('notification');

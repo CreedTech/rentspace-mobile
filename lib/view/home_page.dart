@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/auto_controller.dart';
 import 'package:rentspace/controller/box_controller.dart';
 import 'package:rentspace/controller/deposit_controller.dart';
@@ -31,6 +32,8 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:once/once.dart';
 import 'package:intl/intl.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:upgrader/upgrader.dart';
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
@@ -175,25 +178,25 @@ class _FirstPageState extends State<FirstPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Welcome Spacer",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "DefaultFontFamily",
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      // Text(
+                      //   "Welcome Spacer",
+                      //   style: GoogleFonts.nunito(
+                      //     fontSize: 30,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Theme.of(context).canvasColor,
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  Lottie.asset(
-                    'assets/loader.json',
-                    width: 100,
-                    height: 100,
-                  ),
+                  CustomLoader(),
+                  // Lottie.asset(
+                  //   'assets/loader.json',
+                  //   width: 100,
+                  //   height: 100,
+                  // ),
                 ],
               ),
             ),
@@ -381,84 +384,97 @@ class _HomePageState extends State<HomePage> {
             'referar_id': "@${userController.user[0].referalId}@"
           });
           //R09K673ELR
-          Get.snackbar(
-            "All set!",
-            'Your account has been setup successfully!',
-            animationDuration: const Duration(seconds: 1),
-            backgroundColor: brandOne,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.TOP,
+           showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: brandOne,
+              message: 'Your account has been setup successfully!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           );
+          // Get.snackbar(
+          //   "All set!",
+          //   'Your account has been setup successfully!',
+          //   animationDuration: const Duration(seconds: 1),
+          //   backgroundColor: brandOne,
+          //   colorText: Colors.white,
+          //   snackPosition: SnackPosition.TOP,
+          // );
         }).catchError((error) {
           showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: null,
-              elevation: 0,
-              content: SizedBox(
-                height: 250,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            // color: brandOne,
-                          ),
-                          child: const Icon(
-                            Iconsax.close_circle,
-                            color: brandOne,
-                            size: 30,
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: null,
+                  elevation: 0,
+                  content: SizedBox(
+                    height: 250,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                // color: brandOne,
+                              ),
+                              child: Icon(
+                                Iconsax.close_circle,
+                                color: Theme.of(context).primaryColor,
+                                size: 30,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Iconsax.warning_24,
+                            color: Colors.red,
+                            size: 75,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          "Oops...",
+                          style: GoogleFonts.nunito(
+                            color: Colors.red,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Something went wrong",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                              color: Colors.red, fontSize: 18),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Iconsax.warning_24,
-                        color: Colors.red,
-                        size: 75,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Oops...",
-                      style: GoogleFonts.nunito(
-                        color: Colors.red,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Something went wrong",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-     
+                  ),
+                );
+              });
+
           // Get.snackbar(
           //   "Oops...",
           //   "Something went wrong",
@@ -501,13 +517,11 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
+                Text(
                   "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
-                  style: TextStyle(
+                  style: GoogleFonts.nunito(
                     fontSize: 13.0,
-                    letterSpacing: 0.5,
-                    fontFamily: "DefaultFontFamily",
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -597,74 +611,75 @@ class _HomePageState extends State<HomePage> {
         Get.to(const HomePage());
       } else {
         showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: null,
-              elevation: 0,
-              content: SizedBox(
-                height: 250,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            // color: brandOne,
-                          ),
-                          child: const Icon(
-                            Iconsax.close_circle,
-                            color: brandOne,
-                            size: 30,
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: null,
+                elevation: 0,
+                content: SizedBox(
+                  height: 250,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              // color: brandOne,
+                            ),
+                            child: Icon(
+                              Iconsax.close_circle,
+                              color: Theme.of(context).primaryColor,
+                              size: 30,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Iconsax.warning_24,
-                        color: Colors.red,
-                        size: 75,
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Iconsax.warning_24,
+                          color: Colors.red,
+                          size: 75,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      'Error',
-                      style: GoogleFonts.nunito(
-                        color: Colors.red,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
+                      const SizedBox(
+                        height: 12,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Biometrics failed",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
+                      Text(
+                        'Error',
+                        style: GoogleFonts.nunito(
+                          color: Colors.red,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Biometrics failed",
+                        textAlign: TextAlign.center,
+                        style:
+                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          });
-      
+              );
+            });
+
         // Get.snackbar(
         //   "Error",
         //   "Biometrics failed",
@@ -701,9 +716,9 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(30),
                             // color: brandOne,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Iconsax.close_circle,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             size: 30,
                           ),
                         ),
@@ -734,7 +749,8 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       "Biometrics failed",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                      style:
+                          GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                     ),
                     const SizedBox(
                       height: 10,
@@ -744,7 +760,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           });
-      
+
       // Get.snackbar(
       //   "Error",
       //   "Biometrics failed",
@@ -811,7 +827,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         // fontFamily: "DefaultFontFamily",
-                        color: brandOne,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                     const SizedBox(

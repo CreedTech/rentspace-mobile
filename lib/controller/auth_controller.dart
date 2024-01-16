@@ -121,7 +121,7 @@ class AuthController extends GetxController {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-            EasyLoading.dismiss();
+        EasyLoading.dismiss();
         FirebaseFirestore.instance
             .collection('accounts')
             .doc(value.user!.uid)
@@ -203,8 +203,7 @@ class AuthController extends GetxController {
         nError = error.toString();
       }
       if (!context.mounted) return;
-        customErrorDialog(
-            context, "Error", nError);
+      customErrorDialog(context, "Error", nError);
       // showTopSnackBar(
       //   Overlay.of(context),
       //   CustomSnackBar.error(
@@ -280,9 +279,9 @@ class AuthController extends GetxController {
                             borderRadius: BorderRadius.circular(30),
                             // color: brandOne,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Iconsax.close_circle,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             size: 30,
                           ),
                         ),
@@ -313,7 +312,8 @@ class AuthController extends GetxController {
                     Text(
                       nError,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                      style:
+                          GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                     ),
                     const SizedBox(
                       height: 10,
@@ -349,14 +349,14 @@ class AuthController extends GetxController {
   reset(BuildContext context, String email) async {
     try {
       //showLoading();
-      await auth
-          .sendPasswordResetEmail(email: email)
-          .then((value) => verification(
-                context,
-                'Reset Link Sent',
-                'A password reset link has been sent to this email, please check your email',
-                'Back to login',
-              ));
+      await auth.sendPasswordResetEmail(email: email).then(
+            (value) => verification(
+              context,
+              'Reset Link Sent',
+              'A password reset link has been sent to this email, please check your email',
+              'Back to login',
+            ),
+          );
     } catch (error) {
       int startBracketIndex = error.toString().indexOf('[');
       int endBracketIndex = error.toString().indexOf(']');

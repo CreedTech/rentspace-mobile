@@ -65,9 +65,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -127,16 +127,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
             size: 25,
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'Back',
           style: TextStyle(
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
@@ -172,7 +172,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         Text(
                           'Forgot Password',
                           style: GoogleFonts.nunito(
-                            color: brandFour,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                             // fontFamily: "DefaultFontFamily",
@@ -221,20 +221,38 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     const SizedBox(
                       height: 34,
                     ),
-                    RoundedLoadingButton(
-                      elevation: 0.0,
-                      borderRadius: 8.0,
-                      successColor: brandOne,
-                      color: brandFive,
-                      controller: _btnController,
-                      onPressed: _doSomething,
-                      child: Text(
-                        'Send link',
-                        style: GoogleFonts.nunito(
-                          color: Colors.white,
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(300, 50),
+                          backgroundColor: brandTwo,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: _doSomething,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Send link',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                           
+                          ],
                         ),
                       ),
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),

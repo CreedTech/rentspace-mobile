@@ -311,7 +311,7 @@ class _AddCardState extends State<AddCard> {
 
     final bankOption = DropdownButtonFormField(
       style: GoogleFonts.nunito(
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
@@ -518,9 +518,9 @@ class _AddCardState extends State<AddCard> {
 
     final accountNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       style: GoogleFonts.nunito(
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
@@ -574,15 +574,15 @@ class _AddCardState extends State<AddCard> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child:  Icon(
             Icons.arrow_back,
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         title: Text(
           'Add Bank & Card Details',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 20, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -806,7 +806,7 @@ class _AddCardState extends State<AddCard> {
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
                             fontWeight: FontWeight.w500,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -846,10 +846,10 @@ class _AddCardState extends State<AddCard> {
                               ),
                             ),
                       (isChecking)
-                          ? const Padding(
+                          ?  Padding(
                               padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
                               child: LinearProgressIndicator(
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 minHeight: 4,
                               ),
                             )

@@ -285,9 +285,9 @@ class _SignupPageState extends State<SignupPage> {
                               borderRadius: BorderRadius.circular(30),
                               // color: brandOne,
                             ),
-                            child: const Icon(
+                            child:  Icon(
                               Iconsax.close_circle,
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               size: 30,
                             ),
                           ),
@@ -319,7 +319,7 @@ class _SignupPageState extends State<SignupPage> {
                         "Something went wrong, try again later",
                         textAlign: TextAlign.center,
                         style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -602,11 +602,11 @@ class _SignupPageState extends State<SignupPage> {
 
     final username = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _usernameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       validator: validateUsername,
@@ -627,7 +627,7 @@ class _SignupPageState extends State<SignupPage> {
         ),
         prefixText: "SPACER/",
         prefixStyle: GoogleFonts.nunito(
-          color: Colors.grey,
+          color: Theme.of(context).primaryColor,
           fontSize: 13,
           fontWeight: FontWeight.w400,
         ),
@@ -665,12 +665,12 @@ class _SignupPageState extends State<SignupPage> {
     //Phone number
     final phoneNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _phoneController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -716,9 +716,9 @@ class _SignupPageState extends State<SignupPage> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
         fontSize: 20,
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: brandTwo, width: 1.0),
@@ -749,10 +749,10 @@ class _SignupPageState extends State<SignupPage> {
 //Address
     final referal = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _referalController,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -797,11 +797,11 @@ class _SignupPageState extends State<SignupPage> {
     //firstname
     final firstname = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _firstnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -845,11 +845,11 @@ class _SignupPageState extends State<SignupPage> {
     );
     final lastname = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -895,9 +895,9 @@ class _SignupPageState extends State<SignupPage> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -943,12 +943,12 @@ class _SignupPageState extends State<SignupPage> {
     //password field
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -1059,9 +1059,9 @@ class _SignupPageState extends State<SignupPage> {
                                 borderRadius: BorderRadius.circular(30),
                                 // color: brandOne,
                               ),
-                              child: const Icon(
+                              child:  Icon(
                                 Iconsax.close_circle,
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 size: 30,
                               ),
                             ),
@@ -1093,7 +1093,7 @@ class _SignupPageState extends State<SignupPage> {
                           "Age must be at least $minimumAge years.",
                           textAlign: TextAlign.center,
                           style:
-                              GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                              GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                         ),
                         const SizedBox(
                           height: 10,
@@ -1127,9 +1127,9 @@ class _SignupPageState extends State<SignupPage> {
 
     final dob = TextFormField(
       controller: dateController,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       readOnly: true,
       onTap: () => _selectDate(context),
@@ -1169,12 +1169,12 @@ class _SignupPageState extends State<SignupPage> {
 
     final bvn = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: const TextStyle(
-        color: Colors.black,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -1223,9 +1223,9 @@ class _SignupPageState extends State<SignupPage> {
     final address = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style:  TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
 
       minLines: 3,
@@ -1274,7 +1274,7 @@ class _SignupPageState extends State<SignupPage> {
 
     final gender = DropdownButtonFormField(
       style: GoogleFonts.nunito(
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
@@ -1326,13 +1326,6 @@ class _SignupPageState extends State<SignupPage> {
         _btnController.stop();
       });
       if (registerFormKey.currentState!.validate() && isChecked == true) {
-        // print(_firstnameController.text.trim());
-        // print(_lastnameController.text.trim());
-        // print(_usernameController.text.trim());
-        // print(_emailController.text.trim());
-        // print(_bvnController.text.trim());
-        // print(_addressController.text.trim());
-        // print(_phoneController.text.trim());
         print(genderValue.toString());
         print(dateController.text);
 
@@ -1681,9 +1674,9 @@ class _SignupPageState extends State<SignupPage> {
                               borderRadius: BorderRadius.circular(30),
                               // color: brandOne,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Iconsax.close_circle,
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               size: 30,
                             ),
                           ),
@@ -1715,7 +1708,7 @@ class _SignupPageState extends State<SignupPage> {
                         "Please fill the form properly to proceed",
                         textAlign: TextAlign.center,
                         style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -1726,27 +1719,6 @@ class _SignupPageState extends State<SignupPage> {
               );
             });
 
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     backgroundColor: Colors.red,
-        //     message: 'Please fill the form properly to proceed',
-        //     textStyle: GoogleFonts.nunito(
-        //       fontSize: 14,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.w700,
-        //     ),
-        //   ),
-        // );
-
-        // Get.snackbar(
-        //   "Invalid",
-        //   'Please fill the form properly to proceed',
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
       }
     }
 
@@ -1759,16 +1731,16 @@ class _SignupPageState extends State<SignupPage> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
             size: 25,
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'Sign up',
           style: TextStyle(
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
@@ -1795,7 +1767,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'First Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1816,7 +1788,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Last Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1837,7 +1809,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'User Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1847,9 +1819,8 @@ class _SignupPageState extends State<SignupPage> {
                         username,
                         Text(
                           _mssg,
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             fontSize: 14.0,
-                            fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
                             color: (_mssg == "username is available.")
                                 ? Theme.of(context).primaryColor
@@ -1869,7 +1840,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Email Address',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1890,7 +1861,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Phone Number',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1911,7 +1882,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Password',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1982,7 +1953,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Date Of Birth',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2003,7 +1974,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Residential Address',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2024,7 +1995,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Gender',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2045,7 +2016,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: Text(
                             'Referral Code(Optional)',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2140,7 +2111,7 @@ class _SignupPageState extends State<SignupPage> {
                             'You agree to our ',
                             style: GoogleFonts.nunito(
                               fontSize: 12,
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),

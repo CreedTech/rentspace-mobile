@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -705,15 +706,17 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                                       // createNewDVA();
                                       updateUserInfo();
                                     } else {
-                                      Get.snackbar(
-                                        "Invalid",
-                                        "Fill the form properly to proceed",
-                                        animationDuration:
-                                            const Duration(seconds: 1),
-                                        backgroundColor: Colors.red,
-                                        colorText: Colors.white,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                      );
+                                      customErrorDialog(
+                                          context, 'Invalid', 'Fill the form properly to proceed');
+                                      // Get.snackbar(
+                                      //   "Invalid",
+                                      //   "Fill the form properly to proceed",
+                                      //   animationDuration:
+                                      //       const Duration(seconds: 1),
+                                      //   backgroundColor: Colors.red,
+                                      //   colorText: Colors.white,
+                                      //   snackPosition: SnackPosition.BOTTOM,
+                                      // );
                                     }
                                   },
                                   child: Text(
