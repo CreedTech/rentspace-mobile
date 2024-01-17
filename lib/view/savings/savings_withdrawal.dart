@@ -25,6 +25,8 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../constants/widgets/custom_loader.dart';
+
 class WalletWithdrawal extends StatefulWidget {
   const WalletWithdrawal({Key? key}) : super(key: key);
 
@@ -1501,9 +1503,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 width: 20,
                                                 height: 20,
                                                 child:
-                                                    CircularProgressIndicator(
-                                                  color: brandOne,
-                                                ),
+                                                   CustomLoader(),
                                               ),
                                             ],
                                           ),
@@ -2163,9 +2163,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             const SizedBox(
                               height: 50,
                             ),
-                            const CircularProgressIndicator(
-                              color: brandOne,
-                            ),
+                            const CustomLoader(),
                           ],
                         ),
                       ),

@@ -71,7 +71,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         title: Text(
           'Personal Info',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -92,7 +94,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.user,
@@ -102,7 +104,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         title: Text(
                           'Full Name',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
@@ -110,8 +112,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                           "${userController.user[0].userFirst} ${userController.user[0].userLast}",
                           style: GoogleFonts.nunito(
-                            color: brandOne,
-                            fontSize: 16,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -124,7 +126,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Icons.mail_outline,
@@ -134,7 +136,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         title: Text(
                           'Email',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
@@ -142,8 +144,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle:
                             Text(obscureEmail(userController.user[0].email),
                                 style: GoogleFonts.nunito(
-                                  color: brandOne,
-                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 )),
                         onTap: () async {
@@ -189,9 +191,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                       GoogleFonts.nunito(color: Colors.white),
                                 ),
                               )
-                            : const Icon(
+                            :  Icon(
                                 Iconsax.verify5,
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                         //  const Icon(
                         //   Iconsax.edit,
@@ -206,7 +208,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.call,
@@ -216,15 +218,15 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         title: Text(
                           'Phone',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(userController.user[0].userPhone,
                             style: GoogleFonts.nunito(
-                              color: brandOne,
-                              fontSize: 16,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
@@ -249,9 +251,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                       GoogleFonts.nunito(color: Colors.white),
                                 ),
                               )
-                            : const Icon(
+                            :  Icon(
                                 Iconsax.verify5,
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                         //  const Icon(
                         //   Iconsax.edit,

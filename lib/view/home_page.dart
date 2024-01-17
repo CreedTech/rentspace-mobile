@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/auto_controller.dart';
 import 'package:rentspace/controller/box_controller.dart';
@@ -29,7 +28,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:once/once.dart';
 import 'package:intl/intl.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -63,7 +61,7 @@ List<Widget> listWidgets = [
   const PortfolioPage(),
   // UtilitiesPage(),
   // UserProfile()
-  SettingsPage()
+  const SettingsPage()
 ];
 int _selectedIndex = 0;
 
@@ -175,7 +173,7 @@ class _FirstPageState extends State<FirstPage> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Text(
@@ -191,7 +189,7 @@ class _FirstPageState extends State<FirstPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  CustomLoader(),
+                  const CustomLoader(),
                   // Lottie.asset(
                   //   'assets/loader.json',
                   //   width: 100,
@@ -384,7 +382,7 @@ class _HomePageState extends State<HomePage> {
             'referar_id': "@${userController.user[0].referalId}@"
           });
           //R09K673ELR
-           showTopSnackBar(
+          showTopSnackBar(
             Overlay.of(context),
             CustomSnackBar.success(
               backgroundColor: brandOne,
@@ -690,7 +688,6 @@ class _HomePageState extends State<HomePage> {
         // );
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
       showDialog(
           context: context,
           barrierDismissible: false,
@@ -1129,7 +1126,9 @@ class _HomePageState extends State<HomePage> {
                 GoogleFonts.nunito(color: navigationcolorText),
             selectedIconTheme: const IconThemeData(color: brandOne),
             selectedLabelStyle: GoogleFonts.nunito(
-                color: brandOne, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w700,
+            ),
             onTap: _onItemTapped,
             key: _bottomNavigationKey,
           ),

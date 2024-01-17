@@ -48,25 +48,7 @@ doSomeThing() {
 
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   final RentController rentController = Get.find();
-  // List _payments = [
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  // ];
+
   List _payments = [];
 
   @override
@@ -75,7 +57,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
     print(_payments.length);
     // doSomeThing();
     setState(() {
-      _payments = rentController.rent[widget.current].history.reversed.toList();
+      _payments = rentController.rent[0].history.reversed.toList();
     });
   }
 
@@ -95,10 +77,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'Transaction History',
-          style: TextStyle(
-            color: brandOne,
+          style: GoogleFonts.nunito(
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 20,
           ),
@@ -113,24 +95,22 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        'assets/empty_state.png',
+                        'assets/card_empty.png',
                         height: 500,
                       ),
-                      const Center(
+                      Center(
                         child: Text(
                           "Nothing to show",
                           style: TextStyle(
                             fontSize: 20,
-                            fontFamily: "DefaultFontFamily",
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ],
                   )
-                : 
-                ListView.builder(
+                : ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
@@ -143,7 +123,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: brandTwo.withOpacity(0.2),
+                              color: Theme.of(context).cardColor,
                             ),
                             child: Image.asset(
                               "assets/icons/savings/spacerent.png",
@@ -155,7 +135,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           title: Text(
                             'Space Rent Saving',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
                             ),
@@ -179,133 +159,18 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           trailing: Text(
                             '+ ${_payments[index].split(" ").last}',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       );
-                      // return Padding(
-                      //   padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
-                      //   child: Container(
-                      //     color: Colors.transparent,
-                      //     padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         Icon(
-                      //           Icons.radio_button_checked_outlined,
-                      //           color: Theme.of(context).primaryColor,
-                      //           size: 20,
-                      //         ),
-                      //         const SizedBox(
-                      //           width: 10,
-                      //         ),
-                      //         Text(
-                      //           _payments[index],
-                      //           style: TextStyle(
-                      //             fontSize: 20,
-                      //             color: Theme.of(context).primaryColor,
-                      //             fontFamily: "DefaultFontFamily",
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // );
                     },
                   ),
           ],
         ),
       ),
-      //  Container(
-      //   height: double.infinity,
-      //   width: double.infinity,
-      //   // decoration: const BoxDecoration(
-      //   //   image: DecorationImage(
-      //   //     image: AssetImage("assets/icons/RentSpace-icon.png"),
-      //   //     fit: BoxFit.cover,
-      //   //     opacity: 0.1,
-      //   //   ),
-      //   // ),
-      //   child: ListView(
-      //     scrollDirection: Axis.vertical,
-      //     shrinkWrap: true,
-      //     physics: const ClampingScrollPhysics(),
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: [
-      //             Text(
-      //               'Transaction history',
-      //               style: TextStyle(
-      //                 fontFamily: "DefaultFontFamily",
-      //                 color: Theme.of(context).primaryColor,
-      //                 fontWeight: FontWeight.bold,
-      //                 fontSize: 16,
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       rentController.rent[widget.current].history.isEmpty
-      //           ? const Center(
-      //               child: Text(
-      //                 "Nothing to show",
-      //                 style: TextStyle(
-      //                   fontSize: 20,
-      //                   fontFamily: "DefaultFontFamily",
-      //                   color: brandOne,
-      //                   fontWeight: FontWeight.bold,
-      //                 ),
-      //               ),
-      //             )
-      //           : ListView.builder(
-      //               scrollDirection: Axis.vertical,
-      //               shrinkWrap: true,
-      //               physics: const ClampingScrollPhysics(),
-      //               itemCount: 20,
-      //               itemBuilder: (BuildContext context, int index) {
-      //                 return Padding(
-      //                   padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
-      //                   child: Container(
-      //                     color: Colors.transparent,
-      //                     padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-      //                     child: Row(
-      //                       mainAxisAlignment: MainAxisAlignment.start,
-      //                       children: [
-      //                         Icon(
-      //                           Icons.radio_button_checked_outlined,
-      //                           color: Theme.of(context).primaryColor,
-      //                           size: 20,
-      //                         ),
-      //                         const SizedBox(
-      //                           width: 10,
-      //                         ),
-      //                         Text(
-      //                           'yo',
-      //                           style: TextStyle(
-      //                             fontSize: 20,
-      //                             color: Theme.of(context).primaryColor,
-      //                             fontFamily: "DefaultFontFamily",
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 );
-      //               },
-      //             ),
-      //     ],
-      //   ),
-      // ),
-
       backgroundColor: Theme.of(context).canvasColor,
     );
   }

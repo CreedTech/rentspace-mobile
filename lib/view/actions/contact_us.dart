@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 
 import 'package:settings_ui/settings_ui.dart';
 import 'dart:io';
@@ -70,15 +71,18 @@ class _ContactUsPageState extends State<ContactUsPage> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         title: Text(
           'Contact Us',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+            color: Theme.of(context).primaryColor,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       body: Stack(
@@ -116,7 +120,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           fontWeight: FontWeight.w500,
                           // fontFamily: "DefaultFontFamily",
                           // letterSpacing: 1.0,
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -161,8 +165,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              launchUrl(Uri.parse(
-                                                  "tel://+23413444012"));
+                                              launchUrl(
+                                                Uri.parse("tel://+23413444012"),
+                                              );
                                             },
                                             child: Padding(
                                               padding:
@@ -171,7 +176,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                               child: Text(
                                                 '+234 (1) 344 4012',
                                                 style: GoogleFonts.nunito(
-                                                  color: brandOne,
+                                                  color: Theme.of(context).colorScheme.secondary,
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -198,7 +203,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color:
-                                                    Theme.of(context).cardColor,
+                                                    Theme.of(context).primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
@@ -211,7 +216,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                   'Copy',
                                                   style: GoogleFonts.nunito(
                                                       color: Theme.of(context)
-                                                          .primaryColor,
+                                                          .colorScheme.primary,
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w700),
@@ -283,7 +288,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                               child: Text(
                                                 'support@rentspace.tech',
                                                 style: GoogleFonts.nunito(
-                                                  color: brandOne,
+                                                  color: Theme.of(context).colorScheme.secondary,
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -310,7 +315,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color:
-                                                    Theme.of(context).cardColor,
+                                                    Theme.of(context).primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
@@ -323,7 +328,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                   'Copy',
                                                   style: GoogleFonts.nunito(
                                                       color: Theme.of(context)
-                                                          .primaryColor,
+                                                          .colorScheme.primary,
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w700),
@@ -528,9 +533,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
           ),
           if (_isLoading)
             const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-              ),
+              child: CustomLoader(),
             ),
         ],
       ),

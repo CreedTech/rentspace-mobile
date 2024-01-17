@@ -70,21 +70,7 @@ class _ForgotPinState extends State<ForgotPin> {
   // }
 
   void _doSomething() async {
-    // Timer(Duration(seconds: 1), () {
-    //   _btnController.stop();
-    // });
-    // if (_pinOneController.text.trim() == "" ||
-    //     _pinTwoController.text.trim() == "" ||
-    //     (widget.pin != _pinController.text.trim())) {
-    //   Get.snackbar(
-    //     "Invalid",
-    //     'PIN is unacceptable.',
-    //     animationDuration: Duration(seconds: 1),
-    //     backgroundColor: Colors.red,
-    //     colorText: Colors.white,
-    //     snackPosition: SnackPosition.BOTTOM,
-    //   );
-    // }
+
     if (_pinController.text.trim() == widget.pin) {
       customErrorDialog(context, "Invalid!", "PIN cannot be the same as existing one.");
       // showTopSnackBar(
@@ -139,9 +125,9 @@ class _ForgotPinState extends State<ForgotPin> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: const TextStyle(
+      textStyle:  GoogleFonts.nunito(
         fontSize: 20,
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1.0),
@@ -190,9 +176,9 @@ class _ForgotPinState extends State<ForgotPin> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: const TextStyle(
+        textStyle:  GoogleFonts.nunito(
           fontSize: 20,
-          color: brandOne,
+          color: Theme.of(context).primaryColor,
         ),
         decoration: BoxDecoration(
           border: Border.all(color: brandTwo, width: 1.0),
@@ -285,7 +271,7 @@ class _ForgotPinState extends State<ForgotPin> {
         title: Text(
           'Change PIN',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -307,7 +293,7 @@ class _ForgotPinState extends State<ForgotPin> {
                             child: Text(
                               'Change Transaction PIN',
                               style: GoogleFonts.nunito(
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
                                 // fontFamily: "DefaultFontFamily",
@@ -342,7 +328,7 @@ class _ForgotPinState extends State<ForgotPin> {
                                           .validate()) {
                                         _doSomething();
                                       } else {
-                                        customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                                        customErrorDialog(context, "Invalid!", "Please Input your pin to proceed");
                                         // showTopSnackBar(
                                         //   Overlay.of(context),
                                         //   CustomSnackBar.error(

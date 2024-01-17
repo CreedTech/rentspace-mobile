@@ -17,6 +17,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../constants/widgets/custom_dialog.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../dashboard/dashboard.dart';
+
 class RentSpaceList extends StatefulWidget {
   const RentSpaceList({Key? key}) : super(key: key);
 
@@ -113,16 +115,16 @@ class _RentSpaceListState extends State<RentSpaceList> {
     return Scaffold(
       appBar: AppBar(
         // toolbarHeight: 105.0,
-        backgroundColor: brandOne,
+        backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 1.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
             size: 30,
-            color: Theme.of(context).canvasColor,
+            color: Colors.white,
           ),
         ),
         // centerTitle: true,
@@ -161,7 +163,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                             .format(rentController.rent[0].savedAmount)
                             .toString(),
                         style: GoogleFonts.nunito(
-                          color: const Color(0xffF2F2F2),
+                          color: Theme.of(context).colorScheme.background,
                           fontWeight: FontWeight.w800,
                           fontSize: 31,
                         ),
@@ -182,7 +184,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 .format(rentController.rent[0].targetAmount)
                                 .toString(),
                             style: GoogleFonts.nunito(
-                              color: const Color(0xffF2F2F2),
+                              color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -236,7 +238,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 .format(rentController.rent[0].intervalAmount)
                                 .toString(),
                             style: GoogleFonts.nunito(
-                              color: const Color(0xffF2F2F2),
+                              color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -258,7 +260,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 rentController.rent[0].interval.substring(1),
                             // intl.capitalizedFirst(rentController.rent[0].interval),
                             style: GoogleFonts.nunito(
-                              color: const Color(0xffF2F2F2),
+                              color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -278,7 +280,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 height: 56,
                                 // padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.13),
+                                  color: (themeChange.isSavedDarkMode())
+                                      ? Colors.white
+                                      : Colors.white.withOpacity(0.13),
                                   borderRadius: BorderRadius.circular(43),
                                 ),
                                 child: Center(
@@ -290,7 +294,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       Text(
                                         'Interest Accrued:',
                                         style: GoogleFonts.nunito(
-                                          color: Colors.white.withOpacity(0.75),
+                                          color: (themeChange.isSavedDarkMode())
+                                              ? brandTwo
+                                              : Colors.white.withOpacity(0.75),
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         ),
@@ -304,7 +310,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                     0.7))
                                             .toString(),
                                         style: GoogleFonts.nunito(
-                                          color: const Color(0xffF2F2F2),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
                                         ),
@@ -322,7 +330,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 height: 56,
                                 // padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.13),
+                                  color: (themeChange.isSavedDarkMode())
+                                      ? Colors.white
+                                      : Colors.white.withOpacity(0.13),
                                   borderRadius: BorderRadius.circular(43),
                                 ),
                                 child: Center(
@@ -334,7 +344,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       Text(
                                         'Interest Rate:',
                                         style: GoogleFonts.nunito(
-                                          color: Colors.white.withOpacity(0.75),
+                                          color: (themeChange.isSavedDarkMode())
+                                              ? brandTwo
+                                              : Colors.white.withOpacity(0.75),
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         ),
@@ -342,7 +354,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       Text(
                                         '30%',
                                         style: GoogleFonts.nunito(
-                                          color: const Color(0xffF2F2F2),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
                                         ),
@@ -369,7 +383,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                           Text(
                             formattedNextDate.toString(),
                             style: GoogleFonts.nunito(
-                              color: Colors.white.withOpacity(0.75),
+                              color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -503,15 +517,19 @@ class _RentSpaceListState extends State<RentSpaceList> {
               //  Stack()
               Container(
                 height: MediaQuery.of(context).size.height - 400,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(26),
                       topRight: Radius.circular(26)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 20, top: 20, bottom: 5, right: 20),
+                    left: 20,
+                    top: 20,
+                    bottom: 5,
+                    right: 20,
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
                       // color: brandThree,
@@ -533,23 +551,23 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 style: GoogleFonts.nunito(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w700,
-                                  color: brandOne,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              InkWell(
+                              GestureDetector(
                                 onTap: () {
-                                  // Get.to(AllActivities(
-                                  //   activities: userController.user[0].activities,
-                                  //   activitiesLength:
-                                  //       userController.user[0].activities.length,
-                                  // ));
+                                // print(int.parse(rentController.rent[0].id));
+                                  Get.to(SpaceRentHistory(
+                                    current:
+                                        0,
+                                  ));
                                 },
                                 child: Text(
                                   "See All",
                                   style: GoogleFonts.nunito(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w700,
-                                    color: brandTwo,
+                                    color: Theme.of(context).primaryColor,
                                     // decoration: TextDecoration.underline,
                                   ),
                                 ),
@@ -563,16 +581,15 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Image.asset(
-                                    'assets/empty_state.png',
+                                    'assets/card_empty.png',
                                     height: 200,
                                   ),
-                                  const Center(
+                                  Center(
                                     child: Text(
                                       "Nothing to show",
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         fontSize: 20,
-                                        fontFamily: "DefaultFontFamily",
-                                        color: brandOne,
+                                        color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -614,19 +631,23 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       child: ListTile(
                                         leading: Container(
                                           padding: const EdgeInsets.all(12),
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: brandOne,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.arrow_outward_sharp,
-                                            color: Colors.white,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                           ),
                                         ),
                                         title: Text(
                                           'Space Rent Saving',
                                           style: GoogleFonts.nunito(
-                                            color: brandOne,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 17,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -651,7 +672,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                               .split(" ")
                                               .last,
                                           style: GoogleFonts.nunito(
-                                            color: brandOne,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -671,19 +693,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
         ),
       ),
 
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Add your onPressed code here!
-      //     Get.to(const RentSpaceSubscription());
-      //   },
-      //   backgroundColor: brandOne,
-      //   child: const Icon(
-      //     Icons.add_outlined,
-      //     size: 30,
-      //     color: Colors.white,
-      //   ),
-      // ),
-      backgroundColor: brandOne,
+      backgroundColor: Theme.of(context).primaryColorLight,
     );
   }
 }

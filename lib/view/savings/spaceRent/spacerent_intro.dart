@@ -6,6 +6,8 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 
+import '../../dashboard/dashboard.dart';
+
 class SpaceRentIntro extends StatefulWidget {
   const SpaceRentIntro({Key? key}) : super(key: key);
 
@@ -39,7 +41,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
         title: Text(
           'Create Savings Plans',
           style: GoogleFonts.nunito(
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 20,
           ),
@@ -63,9 +65,6 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                 width: 15,
               ),
             ),
-            // Image.asset(
-            //   "assets/icons/savings/spacerent.png",
-            // ),
             const SizedBox(
               height: 20,
             ),
@@ -91,10 +90,16 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
             const SizedBox(
               height: 70,
             ),
-            Image.asset(
-              "assets/space_rent_intro.png",
-              width: MediaQuery.of(context).size.width,
-            ),
+            // (Theme.of)
+            (themeChange.isSavedDarkMode())
+                ? Image.asset(
+                    "assets/space_rent_intro_one.png",
+                    width: MediaQuery.of(context).size.width,
+                  )
+                : Image.asset(
+                    "assets/space_rent_intro.png",
+                    width: MediaQuery.of(context).size.width,
+                  ),
             const SizedBox(
               height: 70,
             ),

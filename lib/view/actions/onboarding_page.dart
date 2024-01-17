@@ -297,7 +297,8 @@ class _BvnPageState extends State<BvnPage> {
           notLoading = true;
         });
         EasyLoading.dismiss();
-        customErrorDialog(context, "Oops", "Something went wrong, try again later");
+        customErrorDialog(
+            context, "Oops", "Something went wrong, try again later");
         // Get.snackbar(
         //   "Oops",
         //   "Something went wrong, try again later",
@@ -429,12 +430,12 @@ class _BvnPageState extends State<BvnPage> {
     //Phone number
     final bvn = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
       style: GoogleFonts.nunito(
-        color: Colors.black,
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -499,7 +500,9 @@ class _BvnPageState extends State<BvnPage> {
         title: Text(
           'BVN Details',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -531,7 +534,7 @@ class _BvnPageState extends State<BvnPage> {
                           child: Text(
                             'Enter BVN',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -557,7 +560,7 @@ class _BvnPageState extends State<BvnPage> {
                           style: GoogleFonts.nunito(
                             fontSize: 12.0,
                             fontWeight: FontWeight.bold,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         const SizedBox(
@@ -591,19 +594,10 @@ class _BvnPageState extends State<BvnPage> {
                                                   _bvnController.text.trim(),
                                             ));
                                           } else {
-                                            showTopSnackBar(
-                                              Overlay.of(context),
-                                              CustomSnackBar.error(
-                                                // backgroundColor: Colors.red,
-                                                message:
-                                                    'Invalid! :). Please fill the form properly to proceed',
-                                                textStyle: GoogleFonts.nunito(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            );
+                                            customErrorDialog(
+                                                context,
+                                                'Invalid! :)',
+                                                'Please fill the form properly to proceed');
                                           }
                                         },
                                         child: const Text(
@@ -643,19 +637,10 @@ class _BvnPageState extends State<BvnPage> {
                                                 .validate()) {
                                               verifyBVN();
                                             } else {
-                                              showTopSnackBar(
-                                                Overlay.of(context),
-                                                CustomSnackBar.error(
-                                                  // backgroundColor: Colors.red,
-                                                  message:
-                                                      'Invalid! :). Please fill the form properly to proceed',
-                                                  textStyle: GoogleFonts.nunito(
-                                                    fontSize: 14,
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              );
+                                              customErrorDialog(
+                                                  context,
+                                                  'Invalid! :)',
+                                                  'Please fill the form properly to proceed');
                                             }
                                           } else {
                                             showDialog(
@@ -726,7 +711,7 @@ class _BvnPageState extends State<BvnPage> {
                                                                                 GoogleFonts.nunito(
                                                                               color: brandTwo,
                                                                               fontSize: 20,
-                                                                              fontWeight: FontWeight.w800,
+                                                                              fontWeight: FontWeight.w600,
                                                                             ),
                                                                           ),
                                                                         ),
@@ -1010,63 +995,6 @@ class _KycPageState extends State<KycPage> {
   // }
 
   //Phone number
-  final kyc = TextFormField(
-    enableSuggestions: true,
-    autovalidateMode: AutovalidateMode.onUserInteraction,
-    cursorColor: Colors.black,
-    controller: _kycController,
-    style: const TextStyle(
-      color: Colors.black,
-    ),
-    keyboardType: TextInputType.multiline,
-    decoration: InputDecoration(
-      // label: Text(
-      //   "KYC : residential address",
-      //   style: GoogleFonts.nunito(
-      //     color: Colors.grey,
-      //     fontSize: 12,
-      //     fontWeight: FontWeight.w400,
-      //   ),
-      // ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(
-          color: Color(0xffE0E0E0),
-        ),
-      ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: brandOne, width: 2.0),
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(0xffE0E0E0),
-        ),
-      ),
-      errorBorder: const OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Colors.red, width: 2.0), // Change color to yellow
-      ),
-      filled: false,
-      contentPadding: const EdgeInsets.all(14),
-      fillColor: brandThree,
-      hintText: 'Enter your KYC : residential address...',
-      hintStyle: GoogleFonts.nunito(
-        color: Colors.grey,
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-      ),
-    ),
-    minLines: 3,
-    maxLines: 5,
-    maxLength: 200,
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Address cannot be empty cannot be empty';
-      }
-
-      return null;
-    },
-  );
   @override
   initState() {
     super.initState();
@@ -1074,12 +1002,68 @@ class _KycPageState extends State<KycPage> {
 
   @override
   Widget build(BuildContext context) {
+    final kyc = TextFormField(
+      enableSuggestions: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      cursorColor: Theme.of(context).primaryColor,
+      controller: _kycController,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
+      ),
+      keyboardType: TextInputType.multiline,
+      decoration: InputDecoration(
+        // label: Text(
+        //   "KYC : residential address",
+        //   style: GoogleFonts.nunito(
+        //     color: Colors.grey,
+        //     fontSize: 12,
+        //     fontWeight: FontWeight.w400,
+        //   ),
+        // ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
+        ),
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
+        fillColor: brandThree,
+        hintText: 'Enter your KYC : residential address...',
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      minLines: 3,
+      maxLines: 5,
+      maxLength: 200,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Address cannot be empty cannot be empty';
+        }
+
+        return null;
+      },
+    );
+
     return ModalProgressHUD(
       inAsyncCall: _isUploading,
       progressIndicator: const Center(
-        child: CircularProgressIndicator(
-          color: brandTwo,
-        ),
+        child: CustomLoader(),
       ),
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
@@ -1141,12 +1125,13 @@ class _KycPageState extends State<KycPage> {
                               ),
                               child: Container(
                                 alignment: Alignment.topLeft,
-                                child: const Text(
+                                child: Text(
                                   'KYC: Residential Address',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -1158,13 +1143,14 @@ class _KycPageState extends State<KycPage> {
                         ),
                       ),
 
-                      const Text(
+                      Text(
                         "Upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: brandOne,
-                            fontWeight: FontWeight.w400),
+                        style: GoogleFonts.nunito(
+                          fontSize: 14,
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       // SizedBox(
                       //   height: 10,
@@ -1219,7 +1205,7 @@ class _KycPageState extends State<KycPage> {
                                 Text(
                                   "Select You File [ jpg, png, jpeg ]",
                                   style: GoogleFonts.nunito(
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -1308,9 +1294,10 @@ class _KycPageState extends State<KycPage> {
                                               children: [
                                                 Text(
                                                   _platformFile!.name,
-                                                  style: const TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.black),
+                                                  style: GoogleFonts.nunito(
+                                                    fontSize: 13,
+                                                    color: Colors.grey.shade800,
+                                                  ),
                                                 ),
                                                 const SizedBox(
                                                   height: 5,
@@ -1318,9 +1305,9 @@ class _KycPageState extends State<KycPage> {
                                                 Text(
                                                   '${(_platformFile!.size / 1024).ceil()} KB',
                                                   style: TextStyle(
-                                                      fontSize: 13,
-                                                      color:
-                                                          Colors.grey.shade500),
+                                                    fontSize: 13,
+                                                    color: Colors.grey.shade800,
+                                                  ),
                                                 ),
                                                 const SizedBox(
                                                   height: 5,
@@ -1392,19 +1379,6 @@ class _KycPageState extends State<KycPage> {
                             } else {
                               customErrorDialog(context, 'Error',
                                   'Please fill in your KYC correctly and upload a valid ID card image to verify.');
-                              // showTopSnackBar(
-                              //   Overlay.of(context),
-                              //   CustomSnackBar.error(
-                              //     // backgroundColor: brandOne,
-                              //     message:
-                              //         ' Please fill in your KYC correctly and upload a valid ID card image to verify.',
-                              //     textStyle: GoogleFonts.nunito(
-                              //       fontSize: 14,
-                              //       color: Colors.white,
-                              //       fontWeight: FontWeight.w700,
-                              //     ),
-                              //   ),
-                              // );
                             }
                           },
                           child: const Text(
@@ -1500,14 +1474,6 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
           ),
         ),
       );
-      // Get.snackbar(
-      //   "Success",
-      //   'BVN & KYC updated!',
-      //   animationDuration: const Duration(seconds: 1),
-      //   backgroundColor: brandOne,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.TOP,
-      // );
 
       showDialog(
           context: context,
@@ -1547,9 +1513,9 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                       'Your BVN & KYC has been updated successfully.\n Proceed to add Card',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
-                                        color: brandOne,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 20,
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ),
@@ -1587,6 +1553,9 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                             ),
                                           ),
                                         ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(3),
@@ -1634,103 +1603,8 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
               ],
             );
           });
-
-      // Get.bottomSheet(
-      //   SizedBox(
-      //     height: 300,
-      //     child: ClipRRect(
-      //       borderRadius: const BorderRadius.only(
-      //         topLeft: Radius.circular(30.0),
-      //         topRight: Radius.circular(30.0),
-      //       ),
-      //       child: Container(
-      //         color: brandOne,
-      //         child: Column(
-      //           children: [
-      //             const SizedBox(
-      //               height: 50,
-      //             ),
-      //             const Padding(
-      //               padding: EdgeInsets.all(20.0),
-      //               child: Text(
-      //                 'Your BVN & KYC has been updated successfully. Proceed to add Card',
-      //                 style: TextStyle(
-      //                   fontSize: 16,
-      //                   color: Colors.white,
-      //                   fontFamily: "DefaultFontFamily",
-      //                 ),
-      //               ),
-      //             ),
-      //             Padding(
-      //               padding: const EdgeInsets.all(20.0),
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.center,
-      //                 children: [
-      //                   GFButton(
-      //                     onPressed: () {
-      //                       Get.back();
-      //                       Get.to(const AddCard());
-      //                     },
-      //                     shape: GFButtonShape.pills,
-      //                     text: "Proceed",
-      //                     fullWidthButton: false,
-      //                     color: Colors.greenAccent,
-      //                     textStyle: const TextStyle(
-      //                       color: Colors.white,
-      //                       fontSize: 12,
-      //                       fontFamily: "DefaultFontFamily",
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 20,
-      //                   ),
-      //                   GFButton(
-      //                     onPressed: () {
-      //                       for (int i = 0; i < 4; i++) {
-      //                         Get.back();
-      //                       }
-      //                     },
-      //                     shape: GFButtonShape.pills,
-      //                     text: "Dismiss",
-      //                     fullWidthButton: false,
-      //                     color: Colors.red,
-      //                     textStyle: const TextStyle(
-      //                       color: Colors.white,
-      //                       fontSize: 12,
-      //                       fontFamily: "DefaultFontFamily",
-      //                     ),
-      //                   )
-      //                 ],
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // );
     }).catchError((error) {
       customErrorDialog(context, 'Error', error.toString());
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     // backgroundColor: brandOne,
-      //     message: 'Error! :(. ${error.toString()}',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
-      // Get.snackbar(
-      //   "Error",
-      //   error.toString(),
-      //   animationDuration: const Duration(seconds: 2),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
     });
   }
 
@@ -1746,12 +1620,12 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
   Widget build(BuildContext context) {
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: const TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -1891,9 +1765,12 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                         "ID card:",
                         style: GoogleFonts.nunito(
                           fontSize: 18,
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     //ID Cardvalue
                     Container(
@@ -1925,7 +1802,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                             child: Text(
                               'Enter Password to Submit',
                               style: GoogleFonts.nunito(
-                                color: Colors.black,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
                                 // fontFamily: "DefaultFontFamily",
@@ -1939,44 +1816,6 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                     const SizedBox(
                       height: 60,
                     ),
-
-                    // GFButton(
-                    //   onPressed: () {
-                    //     if (_passwordController.text.trim() != "" &&
-                    //         _userPassword != "" &&
-                    //         _passwordController.text.trim() == _userPassword) {
-                    //       verify(context);
-                    //     } else {
-                    //       showTopSnackBar(
-                    //         Overlay.of(context),
-                    //         CustomSnackBar.error(
-                    //           // backgroundColor: brandOne,
-                    //           message:
-                    //               'Incorrect password! :(. Please enter the correct password to proceed.',
-                    //           textStyle: GoogleFonts.nunito(
-                    //             fontSize: 14,
-                    //             color: Colors.white,
-                    //             fontWeight: FontWeight.w700,
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }
-                    //   },
-                    //   shape: GFButtonShape.pills,
-                    //   text: "Submit",
-                    //   fullWidthButton: true,
-                    //   icon: const Icon(
-                    //     Icons.arrow_right_outlined,
-                    //     color: Colors.white,
-                    //     size: 14,
-                    //   ),
-                    //   color: brandOne,
-                    //   textStyle: const TextStyle(
-                    //     color: Colors.white,
-                    //     fontSize: 12,
-                    //     fontFamily: "DefaultFontFamily",
-                    //   ),
-                    // ),
 
                     Center(
                       child: Container(
@@ -2015,19 +1854,6 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                       context,
                                       'Incorrect password! ',
                                       'Please enter the correct password to proceed.');
-                                  // showTopSnackBar(
-                                  //   Overlay.of(context),
-                                  //   CustomSnackBar.error(
-                                  //     // backgroundColor: brandOne,
-                                  //     message:
-                                  //         'Incorrect password! :( . Please enter the correct password to proceed.',
-                                  //     textStyle: GoogleFonts.nunito(
-                                  //       fontSize: 14,
-                                  //       color: Colors.white,
-                                  //       fontWeight: FontWeight.w700,
-                                  //     ),
-                                  //   ),
-                                  // );
                                 }
                               },
                               child: const Text(

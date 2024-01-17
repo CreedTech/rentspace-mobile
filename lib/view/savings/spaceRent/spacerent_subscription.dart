@@ -76,21 +76,24 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
   Future<void> _selectEndDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
               colorScheme: const ColorScheme.dark(
-                primary: Colors.black, // header background color
+                primaryContainer: brandTwo,
+                primary: brandTwo, // header background color
                 onPrimary: Colors.white,
-                onBackground: Colors.black,
+                onBackground: brandTwo,
+                // onSecondary: brandTwo,
 
-                outline: Colors.black,
-                background: Colors.black,
-                onSurface: Colors.black, // body text color
+                outline: brandTwo,
+                background: brandTwo,
+                onSurface: brandTwo, // body text color
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: Colors.black, // button text color
+                  foregroundColor: brandTwo, // button text color
                 ),
               ),
             ),
@@ -253,14 +256,14 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
     final rentAmount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _rentAmountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateFunc,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _amountValue = text),
-      style: const TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
@@ -303,14 +306,14 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
     );
     final rentAmountOld = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _rentAmountOldController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateOldFunc,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _amountValue = text),
-      style: const TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       inputFormatters: [ThousandsFormatter()],
       keyboardType: TextInputType.number,
@@ -394,10 +397,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                     child: Text(
                       "We Simplified the process for you$varValue",
                       style: GoogleFonts.nunito(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          // letterSpacing: 0.5,
-                          color: Theme.of(context).primaryColor),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        // letterSpacing: 0.5,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -486,53 +490,6 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 ),
                               ),
                             ),
-                            // GFButton(
-                            //   onLongPress: () {
-                            //     setState(() {
-                            //       _amountValue = "";
-                            //       _rentValue = 0.0;
-                            //       _rentSeventy = 0.0;
-                            //       _rentThirty = 0.0;
-                            //     });
-                            //   },
-                            //   onPressed: () {
-                            //     if (validateFunc(_rentAmountController.text
-                            //             .trim()
-                            //             .replaceAll(',', '')) ==
-                            //         '') {
-                            //       calculateRent(double.tryParse(
-                            //           _rentAmountController.text
-                            //               .trim()
-                            //               .replaceAll(',', '')));
-                            //     } else {
-                            //       Get.snackbar(
-                            //         "Invalid",
-                            //         'Please enter valid amount to proceed.',
-                            //         animationDuration:
-                            //             const Duration(seconds: 1),
-                            //         backgroundColor: Colors.red,
-                            //         colorText: Colors.white,
-                            //         snackPosition: SnackPosition.BOTTOM,
-                            //       );
-                            //     }
-                            //   },
-                            //   fullWidthButton: true,
-                            //   size: 40,
-                            //   icon: const Icon(
-                            //     Icons.add_outlined,
-                            //     color: Colors.white,
-                            //     size: 20,
-                            //   ),
-                            //   text: "Calculate",
-                            //   textStyle: const TextStyle(
-                            //     fontSize: 13,
-                            //     fontFamily: "DefaultFontFamily",
-                            //     color: Colors.white,
-                            //   ),
-                            //   color: brandOne,
-                            //   padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-                            //   shape: GFButtonShape.pills,
-                            // ),
                           ),
                         )
                       : const Text(""),
@@ -1020,12 +977,12 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                               30),
                                                                       // color: brandOne,
                                                                     ),
-                                                                    child:
-                                                                        const Icon(
+                                                                    child: Icon(
                                                                       Iconsax
                                                                           .close_circle,
-                                                                      color:
-                                                                          brandOne,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor,
                                                                       size: 30,
                                                                     ),
                                                                   ),
@@ -1067,12 +1024,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
-                                                                style: GoogleFonts
-                                                                    .nunito(
-                                                                        color:
-                                                                            brandOne,
-                                                                        fontSize:
-                                                                            18),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .nunito(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize: 18,
+                                                                ),
                                                               ),
                                                               const SizedBox(
                                                                 height: 10,
@@ -1268,6 +1226,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
+                                        customErrorDialog(context, 'Oops!!',
+                                            'Something went wrong, try again later');
                                         showDialog(
                                             context: context,
                                             barrierDismissible: false,
@@ -1351,10 +1311,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                 ),
                                               );
                                             });
+                                        //
                                       });
                                     },
                                     child: Text(
-                                      'save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for 335 days',
+                                      'Save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for 335 days',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
@@ -1499,93 +1460,95 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                title: null,
-                                                elevation: 0,
-                                                content: SizedBox(
-                                                  height: 250,
-                                                  child: Column(
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .topRight,
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30),
-                                                              // color: brandOne,
-                                                            ),
-                                                            child: const Icon(
-                                                              Iconsax
-                                                                  .close_circle,
-                                                              color: brandOne,
-                                                              size: 30,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Icon(
-                                                          Iconsax.warning_24,
-                                                          color: Colors.red,
-                                                          size: 75,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 12,
-                                                      ),
-                                                      Text(
-                                                        'Oops!!',
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                          color: Colors.red,
-                                                          fontSize: 28,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        'Oops! \n Something went wrong, try again later',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                                color: brandOne,
-                                                                fontSize: 18),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            });
+                                        customErrorDialog(context, 'Oops!!',
+                                            'Something went wrong, try again later');
+                                        // showDialog(
+                                        //     context: context,
+                                        //     barrierDismissible: false,
+                                        //     builder: (BuildContext context) {
+                                        //       return AlertDialog(
+                                        //         shape: RoundedRectangleBorder(
+                                        //           borderRadius:
+                                        //               BorderRadius.circular(10),
+                                        //         ),
+                                        //         title: null,
+                                        //         elevation: 0,
+                                        //         content: SizedBox(
+                                        //           height: 250,
+                                        //           child: Column(
+                                        //             children: [
+                                        //               GestureDetector(
+                                        //                 onTap: () {
+                                        //                   Navigator.of(context)
+                                        //                       .pop();
+                                        //                 },
+                                        //                 child: Align(
+                                        //                   alignment: Alignment
+                                        //                       .topRight,
+                                        //                   child: Container(
+                                        //                     decoration:
+                                        //                         BoxDecoration(
+                                        //                       borderRadius:
+                                        //                           BorderRadius
+                                        //                               .circular(
+                                        //                                   30),
+                                        //                       // color: brandOne,
+                                        //                     ),
+                                        //                     child: const Icon(
+                                        //                       Iconsax
+                                        //                           .close_circle,
+                                        //                       color: brandOne,
+                                        //                       size: 30,
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ),
+                                        //               const Align(
+                                        //                 alignment:
+                                        //                     Alignment.center,
+                                        //                 child: Icon(
+                                        //                   Iconsax.warning_24,
+                                        //                   color: Colors.red,
+                                        //                   size: 75,
+                                        //                 ),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 12,
+                                        //               ),
+                                        //               Text(
+                                        //                 'Oops!!',
+                                        //                 style:
+                                        //                     GoogleFonts.nunito(
+                                        //                   color: Colors.red,
+                                        //                   fontSize: 28,
+                                        //                   fontWeight:
+                                        //                       FontWeight.w800,
+                                        //                 ),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 5,
+                                        //               ),
+                                        //               Text(
+                                        //                 'Oops! \n Something went wrong, try again later',
+                                        //                 textAlign:
+                                        //                     TextAlign.center,
+                                        //                 style:
+                                        //                     GoogleFonts.nunito(
+                                        //                         color: brandOne,
+                                        //                         fontSize: 18),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 10,
+                                        //               ),
+                                        //             ],
+                                        //           ),
+                                        //         ),
+                                        //       );
+                                        //     });
                                       });
                                     },
                                     child: Text(
-                                      'save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for 44 weeks',
+                                      'Save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for 44 weeks',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
@@ -1730,93 +1693,96 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         );
                                       }).catchError((error) {
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                title: null,
-                                                elevation: 0,
-                                                content: SizedBox(
-                                                  height: 250,
-                                                  child: Column(
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .topRight,
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30),
-                                                              // color: brandOne,
-                                                            ),
-                                                            child: const Icon(
-                                                              Iconsax
-                                                                  .close_circle,
-                                                              color: brandOne,
-                                                              size: 30,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Icon(
-                                                          Iconsax.warning_24,
-                                                          color: Colors.red,
-                                                          size: 75,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 12,
-                                                      ),
-                                                      Text(
-                                                        'Oops!!',
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                          color: Colors.red,
-                                                          fontSize: 28,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        'Oops! \n Something went wrong, try again later',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                                color: brandOne,
-                                                                fontSize: 18),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            });
+                                        customErrorDialog(context, 'Oops!!',
+                                            'Something went wrong, try again later');
+                                        // showDialog(
+                                        //     context: context,
+                                        //     barrierDismissible: false,
+                                        //     builder: (BuildContext context) {
+                                        //       return AlertDialog(
+                                        //         shape: RoundedRectangleBorder(
+                                        //           borderRadius:
+                                        //               BorderRadius.circular(10),
+                                        //         ),
+                                        //         title: null,
+                                        //         elevation: 0,
+                                        //         content: SizedBox(
+                                        //           height: 250,
+                                        //           child: Column(
+                                        //             children: [
+                                        //               GestureDetector(
+                                        //                 onTap: () {
+                                        //                   Navigator.of(context)
+                                        //                       .pop();
+                                        //                 },
+                                        //                 child: Align(
+                                        //                   alignment: Alignment
+                                        //                       .topRight,
+                                        //                   child: Container(
+                                        //                     decoration:
+                                        //                         BoxDecoration(
+                                        //                       borderRadius:
+                                        //                           BorderRadius
+                                        //                               .circular(
+                                        //                                   30),
+                                        //                       // color: brandOne,
+                                        //                     ),
+                                        //                     child: const Icon(
+                                        //                       Iconsax
+                                        //                           .close_circle,
+                                        //                       color: brandOne,
+                                        //                       size: 30,
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ),
+                                        //               const Align(
+                                        //                 alignment:
+                                        //                     Alignment.center,
+                                        //                 child: Icon(
+                                        //                   Iconsax.warning_24,
+                                        //                   color: Colors.red,
+                                        //                   size: 75,
+                                        //                 ),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 12,
+                                        //               ),
+                                        //               Text(
+                                        //                 'Oops!!',
+                                        //                 style:
+                                        //                     GoogleFonts.nunito(
+                                        //                   color: Colors.red,
+                                        //                   fontSize: 28,
+                                        //                   fontWeight:
+                                        //                       FontWeight.w800,
+                                        //                 ),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 5,
+                                        //               ),
+                                        //               Text(
+                                        //                 'Oops! \n Something went wrong, try again later',
+                                        //                 textAlign:
+                                        //                     TextAlign.center,
+                                        //                 style:
+                                        //                     GoogleFonts.nunito(
+                                        //                         color: brandOne,
+                                        //                         fontSize: 18),
+                                        //               ),
+                                        //               const SizedBox(
+                                        //                 height: 10,
+                                        //               ),
+                                        //             ],
+                                        //           ),
+                                        //         ),
+                                        //       );
+                                        //     });
+                                     
                                       });
                                     },
                                     child: Text(
-                                      'save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for 11 months',
+                                      'Save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for 11 months',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,

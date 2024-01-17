@@ -24,10 +24,10 @@ class _ConfirmResetPageState extends State<ConfirmResetPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(
+            Icon(
               Icons.mail,
               size: 100,
-              color: brandTwo,
+              color: Theme.of(context).primaryColor,
             ),
             Text(
               "Check your email",

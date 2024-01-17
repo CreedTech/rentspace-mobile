@@ -12,11 +12,12 @@ class Themes {
     ),
     canvasColor: const Color(0xFFFFFFFF),
     cardColor: brandTwo.withOpacity(0.2),
-    primaryColorLight: const Color(0xFFf2eeed),
+    primaryColorLight: brandOne,
     unselectedWidgetColor: brandOne,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandOne,
       primary: Colors.white,
+      background: Colors.white,
     ),
   );
 
@@ -26,7 +27,7 @@ class Themes {
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff1B1C1E),
     ),
-    scaffoldBackgroundColor: Color(0xff1B1C1E),
+    scaffoldBackgroundColor: const Color(0xff1B1C1E),
     unselectedWidgetColor: Colors.white,
     iconTheme: const IconThemeData(
       color: Colors.white,
@@ -34,9 +35,10 @@ class Themes {
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandTwo,
       primary: brandOne,
+      background: brandTwo,
     ),
     canvasColor: const Color(0xff1B1C1E),
     cardColor: const Color(0xFFFFFFFF),
-    primaryColorLight: const Color(0xFF363636),
+    primaryColorLight: const Color(0xff1B1C1E),
   );
 }

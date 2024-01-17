@@ -359,7 +359,7 @@ class _SettingsPageState extends State<SettingsPage>
           children: [
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Container(
+              child: SizedBox(
                 // height: 80,
                 width: MediaQuery.of(context).size.width - 20,
                 // decoration: BoxDecoration(
@@ -374,7 +374,9 @@ class _SettingsPageState extends State<SettingsPage>
                         Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            border: Border.all(color: brandOne, width: 1),
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 1),
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Container(
@@ -418,7 +420,7 @@ class _SettingsPageState extends State<SettingsPage>
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: const Icon(
@@ -443,15 +445,16 @@ class _SettingsPageState extends State<SettingsPage>
                             style: GoogleFonts.nunito(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w700,
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                           (userController.user[0].status == 'verified')
-                              ? const Icon(
+                              ? Icon(
                                   Iconsax.verify5,
-                                  color: brandOne,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
 
                           //  ? const Icon(
                           //   Iconsax.verify5,
@@ -470,8 +473,11 @@ class _SettingsPageState extends State<SettingsPage>
                             style: GoogleFonts.nunito(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w400,
-                              color: brandTwo,
+                              color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          const SizedBox(
+                            width: 4,
                           ),
                           const Icon(
                             Iconsax.copy,
@@ -503,13 +509,15 @@ class _SettingsPageState extends State<SettingsPage>
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: brandOne,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: Text(
                                     'Financial Health',
-                                    style:
-                                        GoogleFonts.nunito(color: Colors.white),
+                                    style: GoogleFonts.nunito(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -572,7 +580,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.user,
@@ -582,7 +590,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Profile',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -591,9 +599,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const ProfilePage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -605,7 +613,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.security_safe,
@@ -615,7 +623,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Security',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -624,9 +632,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const Security());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -638,7 +646,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.brush_3,
@@ -648,7 +656,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Theme',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -658,7 +666,7 @@ class _SettingsPageState extends State<SettingsPage>
                 //   // Navigator.pushNamed(context, RouteList.profile);
                 // },
                 trailing: Switch(
-                  activeColor: brandOne,
+                  activeColor: Theme.of(context).primaryColor,
                   inactiveTrackColor: brandTwo,
                   value: themeChange.isSavedDarkMode(),
                   onChanged: (_themeMode) {
@@ -680,7 +688,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.share,
@@ -690,7 +698,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Referral',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -699,44 +707,13 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const ShareAndEarn());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 7),
-            //   child: ListTile(
-            //     leading: Container(
-            //       padding: const EdgeInsets.all(9),
-            //       decoration: BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         color: brandTwo.withOpacity(0.2),
-            //       ),
-            //       child: const Icon(
-            //         Iconsax.share,
-            //         color: brandOne,
-            //       ),
-            //     ),
-            //     title: Text(
-            //       'Referral',
-            //       style: GoogleFonts.nunito(
-            //         color: brandOne,
-            //         fontSize: 17,
-            //         fontWeight: FontWeight.w600,
-            //       ),
-            //     ),
-            //     onTap: () {
-            //       // Navigator.pushNamed(context, RouteList.profile);
-            //     },
-            //     trailing: const Icon(
-            //       Iconsax.arrow_right_3,
-            //       color: brandOne,
-            //     ),
-            //   ),
-            // ),
-
+ 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7),
               child: ListTile(
@@ -744,7 +721,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.card,
@@ -754,7 +731,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Bank & Card Details',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -766,9 +743,9 @@ class _SettingsPageState extends State<SettingsPage>
                     Get.to(BankAndCard());
                   }
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -779,7 +756,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.call,
@@ -789,7 +766,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Contact Us',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -798,9 +775,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const ContactUsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -811,7 +788,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.information,
@@ -821,7 +798,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'FAQs',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -830,9 +807,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const FaqsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -853,7 +830,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Logout',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -881,7 +858,7 @@ class _SettingsPageState extends State<SettingsPage>
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   // fontFamily: "DefaultFontFamily",
-                                  color: brandOne,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -966,9 +943,9 @@ class _SettingsPageState extends State<SettingsPage>
 
                   // .then((value) => {Get.to(LoginPage())});
                 },
-                trailing: const Icon(
+                trailing:  Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

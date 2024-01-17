@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -206,10 +207,8 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         ),
       ),
       body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
+          ? const Center(
+              child: CustomLoader(),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),

@@ -8,6 +8,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'dart:convert';
 import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
@@ -365,9 +366,7 @@ class _WalletFundingState extends State<WalletFunding> {
                 const SizedBox(
                   height: 50,
                 ),
-                const CircularProgressIndicator(
-                  color: brandOne,
-                ),
+                const CustomLoader(),
               ],
             )
           : WebView(

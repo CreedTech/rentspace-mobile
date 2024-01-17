@@ -49,7 +49,7 @@ class _SecurityState extends State<Security> {
           ),
         ),
       );
-      
+
       if (hasBiometricStorage.read('hasBiometric') == false) {
         setState(
           () {
@@ -58,19 +58,18 @@ class _SecurityState extends State<Security> {
           },
         );
         Get.back();
-         showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Biometrics enabled',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics enabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      );
-       
+        );
       } else {
         return;
       }
@@ -85,7 +84,7 @@ class _SecurityState extends State<Security> {
         hasBiometricStorage.read('hasBiometric') == true) {
       hasBiometricStorage.write('hasBiometric', false);
       Get.back();
-       showTopSnackBar(
+      showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.success(
           backgroundColor: brandOne,
@@ -113,18 +112,18 @@ class _SecurityState extends State<Security> {
           },
         );
         Get.back();
-         showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Biometrics disabled',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics disabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      );
+        );
         // Get.snackbar(
         //   "Disabled",
         //   "Biometrics disabled",
@@ -230,7 +229,9 @@ class _SecurityState extends State<Security> {
         title: Text(
           'Security',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -251,7 +252,7 @@ class _SecurityState extends State<Security> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.password_check,
@@ -261,7 +262,7 @@ class _SecurityState extends State<Security> {
                         title: Text(
                           'Reset Password',
                           style: GoogleFonts.nunito(
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 17,
                             fontWeight: FontWeight.w600,
                           ),
@@ -269,9 +270,9 @@ class _SecurityState extends State<Security> {
                         onTap: () {
                           Get.to(const ForgotPassword());
                         },
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right_3,
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -282,7 +283,7 @@ class _SecurityState extends State<Security> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.password_check,
@@ -290,7 +291,7 @@ class _SecurityState extends State<Security> {
                           ),
                         ),
                         onTap: () {
-                          Get.to(ForgotPinIntro());
+                          Get.to(const ForgotPinIntro());
                           // Get.to(ForgotPin(
                           //   password: userController.user[0].userPassword,
                           //   pin: userController.user[0].transactionPIN,
@@ -299,14 +300,14 @@ class _SecurityState extends State<Security> {
                         title: Text(
                           'Change PIN',
                           style: GoogleFonts.nunito(
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 17,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right_3,
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -317,9 +318,9 @@ class _SecurityState extends State<Security> {
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
-                          child: const Icon(
+                          child:  const Icon(
                             Iconsax.finger_scan,
                             color: brandOne,
                           ),
@@ -333,7 +334,7 @@ class _SecurityState extends State<Security> {
                         title: Text(
                           'Biometrics Login',
                           style: GoogleFonts.nunito(
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 17,
                             fontWeight: FontWeight.w600,
                           ),
@@ -345,9 +346,9 @@ class _SecurityState extends State<Security> {
                                 ? 'Disable Biometrics'
                                 : 'Enable Biometrics',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
                             )),
                         trailing: Switch(
                           value:
