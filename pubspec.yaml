@@ -117,6 +117,8 @@ dependencies:
   flutter_easyloading: ^3.0.5
   flutter_local_notifications: ^16.2.0
   timeago: ^3.6.0
+  sizer: ^2.0.15
+  flutter_screenutil: ^5.9.0
   #path_provider: ^2.0.15
   
 

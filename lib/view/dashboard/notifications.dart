@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rentspace/controller/notification_controller.dart';
 
 import '../../constants/colors.dart';
-import '../../model/notification_model.dart';
 import '../../services/implementations/notification_service.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -39,14 +39,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
           'Notifications',
           style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
-            fontSize: 16,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 2,
+        padding:  EdgeInsets.symmetric(
+          horizontal: 20.w,
+          vertical: 2.h,
         ),
         child: Stack(
           children: [
@@ -72,21 +73,20 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           leading: Stack(
                             children: [
                               Container(
-                                width: 48,
-                                height: 48,
+                                // width: 48,
+                                // height: 48,
+                                padding: EdgeInsets.all(15.sp),
                                 decoration: const BoxDecoration(
-                                  color: brandTwo,
+                                  color: brandThree,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(50),
                                   ),
                                 ),
                                 child: Image.asset(
-                                  'assets/icons/RentSpace-icon2.png',
-                                  color: notifications.isRead
-                                      ? Colors.black
-                                      : Colors.white,
+                                  'assets/icons/notification-box.png',
+                                  color: brandOne,
                                   // width: 24.w,
-                                  scale: 4,
+                                  // scale: 4,
                                 ),
                               ),
                               !notifications.isRead

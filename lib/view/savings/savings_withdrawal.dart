@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -580,7 +581,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     }
 
     final bankOption = Container(
-      height: 450,
+      height: 450.h,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
@@ -592,13 +593,13 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           hint: Text(
             'Choose bank',
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.height / 60,
+              fontSize: MediaQuery.of(context).size.height / 60.sp,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.height / 60,
+            fontSize: MediaQuery.of(context).size.height / 60.sp,
             color: Theme.of(context).primaryColor,
           ),
           focusColor: brandOne,
@@ -620,10 +621,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       ),
     );
 
-    final bankOption2 = DropdownButtonFormField<String>(
+    final bankOption2 = DropdownButtonFormField(
       style: GoogleFonts.nunito(
         color: brandOne,
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w600,
       ),
       items: const [
@@ -845,6 +846,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         DropdownMenuItem(
             value: '090171', child: Text('Mainstreet Microfinance Bank')),
       ],
+     
       onChanged: (newValue) {
         setState(() {
           _currentBankName = newValue.toString();
@@ -855,7 +857,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         hintText: 'Choose Bank',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
@@ -1502,8 +1504,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               const SizedBox(
                                                 width: 20,
                                                 height: 20,
-                                                child:
-                                                   CustomLoader(),
+                                                child: CustomLoader(),
                                               ),
                                             ],
                                           ),

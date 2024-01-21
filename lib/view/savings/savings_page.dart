@@ -195,36 +195,36 @@ class _SavingsPageState extends State<SavingsPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            decoration: BoxDecoration(
-                              color: brandTwo,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              "Earn up to 14% returns",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
-                                fontSize: 15.0,
-                                // fontFamily: "DefaultFontFamily",
-                                // letterSpacing: 0.5,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(20.0),
+                        //   child: Container(
+                        //     padding: const EdgeInsets.symmetric(
+                        //         horizontal: 15, vertical: 5),
+                        //     decoration: BoxDecoration(
+                        //       color: brandTwo,
+                        //       borderRadius: BorderRadius.circular(20),
+                        //     ),
+                        //     child: Text(
+                        //       "Earn up to 14% returns",
+                        //       textAlign: TextAlign.center,
+                        //       style: GoogleFonts.nunito(
+                        //         fontSize: 15.0,
+                        //         // fontFamily: "DefaultFontFamily",
+                        //         // letterSpacing: 0.5,
+                        //         fontWeight: FontWeight.w700,
+                        //         color: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         //  const SizedBox(
                         //    width: 15,
                         //  ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 50),
+                          padding: const EdgeInsets.only(bottom: 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -290,57 +290,6 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //       left: 20, top: 15, bottom: 0, right: 20),
-                //   child: Column(
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Text(
-                //             'Total Savings',
-                //             style: GoogleFonts.nunito(
-                //               fontSize: 14.0,
-                //               fontWeight: FontWeight.w400,
-                //               // fontFamily: "DefaultFontFamily",
-                //               // letterSpacing: 0.5,
-                //               color: const Color(0xff4F4F4F),
-                //             ),
-                //           ),
-                //           GestureDetector(
-                //             onTap: () {
-                //               setState(() {
-                //                 hideBalance = !hideBalance;
-                //               });
-                //             },
-                //             child: Icon(
-                //               hideBalance
-                //                   ? Icons.visibility_off_outlined
-                //                   : Icons.visibility_outlined,
-                //               color: const Color(0xff4F4F4F),
-                //               size: 17,
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //       Row(
-                //         children: [
-                //           Text(
-                //             " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "********"}",
-                //             style: GoogleFonts.nunito(
-                //               fontSize: 25.0,
-                //               // fontFamily: "DefaultFontFamily",
-                //               // letterSpacing: 0.5,
-                //               fontWeight: FontWeight.w700,
-                //               color: const Color(0xff4F4F4F),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 20,
@@ -349,12 +298,12 @@ class _SavingsPageState extends State<SavingsPage> {
                     right: 20,
                   ),
                   child: Container(
-                    padding: const  EdgeInsets.only(
-                            left: 10,
-                            top: 10,
-                            bottom: 20,
-                            right: 10,
-                          ),
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      top: 10,
+                      bottom: 20,
+                      right: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: brandTwo.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(10),
@@ -404,26 +353,28 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/icons/cooming_soon.png',
-                ),
-                Text(
-                  'Coming Soon!!!',
-                  style: GoogleFonts.nunito(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                )
-              ],
-            ),
+            ((rentController.rent[0].savedAmount) !=
+                    (rentController.rent[0].targetAmount * 0.7))
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icons/cooming_soon.png',
+                      ),
+                      Text(
+                        'Coming Soon!!!',
+                        style: GoogleFonts.nunito(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(),
           ],
         ),
       ),
@@ -498,83 +449,6 @@ class _SavingsPageState extends State<SavingsPage> {
             ),
           ),
         ),
-
-        //  Padding(
-        //   padding: const EdgeInsets.all(20.0),
-        //   child: Stack(
-        //     children: [
-        //       Positioned(
-        //         bottom: 5,
-        //         right: 10,
-        //         child: Transform.scale(
-        //           scale: 1.4, // Adjust the scale as needed
-        //           child: Image.asset(
-        //             imageIcon,
-        //             color: brandOne.withOpacity(0.3),
-        //           ),
-        //         ),
-        //       ),
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //         children: [
-        //           Row(
-        //             children: [
-        //               Container(
-        //                 width: 48,
-        //                         height: 48,
-        //                 // padding: const EdgeInsets.all(9),
-        //                 decoration: BoxDecoration(
-        //                   shape: BoxShape.circle,
-        //                   color: brandTwo.withOpacity(0.2),
-        //                 ),
-        //                 child: Image.asset(
-        //                 imageIcon,
-        //                 scale: 3,
-        //                 color: brandOne,
-        //               ),
-        //               ),
-
-        //               // const SizedBox(
-        //               //   width: 10,
-        //               // ),
-        //               Text(
-        //                 title,
-        //                 style: GoogleFonts.nunito(
-        //                   fontSize: 16.0,
-        //                   // fontFamily: "DefaultFontFamily",
-        //                   // letterSpacing: 0.5,
-        //                   fontWeight: FontWeight.w700,
-        //                   color: Colors.white,
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //           Text(
-        //             subTitle,
-        //             style: GoogleFonts.nunito(
-        //               fontSize: 10.0,
-        //               // fontFamily: "DefaultFontFamily",
-        //               // letterSpacing: 0.5,
-        //               fontWeight: FontWeight.w400,
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //           Text(
-        //             interest,
-        //             style: GoogleFonts.nunito(
-        //               fontSize: 10.0,
-        //               // fontFamily: "DefaultFontFamily",
-        //               // letterSpacing: 0.5,
-        //               fontWeight: FontWeight.w400,
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:rentspace/controller/auth_controller.dart';
@@ -13,6 +14,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+import 'constants/component_constannt.dart';
 import 'services/implementations/notification_service.dart';
 import 'view/splash_screen.dart';
 
@@ -185,33 +188,42 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    setUpScreenUtils(context);
+    setStatusBar();
     // ToastContext().init(context);
     return ChangeNotifierProvider(
       create: (_) => NotificationService(),
-      child: GetMaterialApp(
-        theme: Themes().lightTheme,
-        darkTheme: Themes().darkTheme,
-        themeMode: ThemeServices().getThemeMode(),
-        debugShowCheckedModeBanner: false,
-        title: 'RentSpace',
-        home: const SplashScreen(),
-        builder: EasyLoading.init(),
-        // const Scaffold(
-        //   backgroundColor: Colors.white,
-        //   body: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     // ignore: prefer_const_literals_to_create_immutables
-        //     children: [
-        //       Center(
-        //         child: CircularProgressIndicator(
-        //           backgroundColor: Colors.white,
-        //           color: Colors.black,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
+      child: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: false,
+        builder: (contex, child) {
+          return GetMaterialApp(
+            theme: Themes().lightTheme,
+            darkTheme: Themes().darkTheme,
+            themeMode: ThemeServices().getThemeMode(),
+            debugShowCheckedModeBanner: false,
+            title: 'RentSpace',
+            home: const SplashScreen(),
+            builder: EasyLoading.init(),
+            // const Scaffold(
+            //   backgroundColor: Colors.white,
+            //   body: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     // ignore: prefer_const_literals_to_create_immutables
+            //     children: [
+            //       Center(
+            //         child: CircularProgressIndicator(
+            //           backgroundColor: Colors.white,
+            //           color: Colors.black,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+          );
+        },
       ),
     );
   }

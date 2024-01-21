@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
@@ -153,14 +154,14 @@ class _FirstPageState extends State<FirstPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 50,
+                  SizedBox(
+                    height: 50.h,
                   ),
                   SizedBox(
-                    height: 30,
-                    width: 90,
+                    height: 30.h,
+                    width: 90.w,
                     child: Container(
-                      height: 40,
+                      height: 40.h,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/icons/RentSpace-1011.png"),
@@ -170,8 +171,8 @@ class _FirstPageState extends State<FirstPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
+                  SizedBox(
+                    height: 50.h,
                   ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -186,8 +187,8 @@ class _FirstPageState extends State<FirstPage> {
                       // ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   const CustomLoader(),
                   // Lottie.asset(
@@ -388,7 +389,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: brandOne,
               message: 'Your account has been setup successfully!',
               textStyle: GoogleFonts.nunito(
-                fontSize: 14,
+                fontSize: 14.sp,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
@@ -409,12 +410,12 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.sp),
                   ),
                   title: null,
                   elevation: 0,
                   content: SizedBox(
-                    height: 250,
+                    height: 250.h,
                     child: Column(
                       children: [
                         GestureDetector(
@@ -425,47 +426,47 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.topRight,
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.sp),
                                 // color: brandOne,
                               ),
                               child: Icon(
                                 Iconsax.close_circle,
                                 color: Theme.of(context).primaryColor,
-                                size: 30,
+                                size: 30.sp,
                               ),
                             ),
                           ),
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.center,
                           child: Icon(
                             Iconsax.warning_24,
                             color: Colors.red,
-                            size: 75,
+                            size: 75.sp,
                           ),
                         ),
-                        const SizedBox(
-                          height: 12,
+                        SizedBox(
+                          height: 12.h,
                         ),
                         Text(
                           "Oops...",
                           style: GoogleFonts.nunito(
                             color: Colors.red,
-                            fontSize: 28,
+                            fontSize: 28.sp,
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: 5.h,
                         ),
                         Text(
                           "Something went wrong",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.nunito(
-                              color: Colors.red, fontSize: 18),
+                              color: Colors.red, fontSize: 18.sp),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: 10.h,
                         ),
                       ],
                     ),
@@ -500,25 +501,25 @@ class _HomePageState extends State<HomePage> {
         );
         mustRefer();
         Get.defaultDialog(
-          titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+          titlePadding: EdgeInsets.fromLTRB(0.w, 50.h, 0.w, 0.h),
           title: "Welcome Spacer!",
           content: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
             child: Column(
               children: [
                 Image.asset(
                   "assets/ava_intro.png",
                   fit: BoxFit.fill,
-                  height: 200,
-                  width: 200,
+                  height: 200.h,
+                  width: 200.w,
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 10.h,
                 ),
                 Text(
                   "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
                   style: GoogleFonts.nunito(
-                    fontSize: 13.0,
+                    fontSize: 13.0.sp,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -528,7 +529,12 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+              padding: EdgeInsets.fromLTRB(
+                10.w,
+                0.h,
+                10.w,
+                20.h,
+              ),
               child: GFButton(
                 onPressed: () {
                   Get.back();
@@ -537,13 +543,13 @@ class _HomePageState extends State<HomePage> {
                 fullWidthButton: true,
                 shape: GFButtonShape.pills,
                 text: "Start",
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_right_outlined,
                   color: Colors.white,
-                  size: 18,
+                  size: 18.sp,
                 ),
                 color: brandOne,
-                textStyle: const TextStyle(
+                textStyle: GoogleFonts.nunito(
                   color: Colors.white,
                   fontSize: 16,
                 ),
@@ -614,12 +620,12 @@ class _HomePageState extends State<HomePage> {
             builder: (BuildContext context) {
               return AlertDialog(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.sp),
                 ),
                 title: null,
                 elevation: 0,
                 content: SizedBox(
-                  height: 250,
+                  height: 250.h,
                   child: Column(
                     children: [
                       GestureDetector(
@@ -630,47 +636,47 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.topRight,
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(30.sp),
                               // color: brandOne,
                             ),
                             child: Icon(
                               Iconsax.close_circle,
                               color: Theme.of(context).primaryColor,
-                              size: 30,
+                              size: 30.sp,
                             ),
                           ),
                         ),
                       ),
-                      const Align(
+                      Align(
                         alignment: Alignment.center,
                         child: Icon(
                           Iconsax.warning_24,
                           color: Colors.red,
-                          size: 75,
+                          size: 75.sp,
                         ),
                       ),
-                      const SizedBox(
-                        height: 12,
+                      SizedBox(
+                        height: 12.sp,
                       ),
                       Text(
                         'Error',
                         style: GoogleFonts.nunito(
                           color: Colors.red,
-                          fontSize: 28,
+                          fontSize: 28.sp,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Text(
                         "Biometrics failed",
                         textAlign: TextAlign.center,
-                        style:
-                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
+                        style: GoogleFonts.nunito(
+                            color: Colors.red, fontSize: 18.sp),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: 10.h,
                       ),
                     ],
                   ),
@@ -694,12 +700,12 @@ class _HomePageState extends State<HomePage> {
           builder: (BuildContext context) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.sp),
               ),
               title: null,
               elevation: 0,
               content: SizedBox(
-                height: 250,
+                height: 250.h,
                 child: Column(
                   children: [
                     GestureDetector(
@@ -710,47 +716,49 @@ class _HomePageState extends State<HomePage> {
                         alignment: Alignment.topRight,
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.sp),
                             // color: brandOne,
                           ),
                           child: Icon(
                             Iconsax.close_circle,
                             color: Theme.of(context).primaryColor,
-                            size: 30,
+                            size: 30.sp,
                           ),
                         ),
                       ),
                     ),
-                    const Align(
+                    Align(
                       alignment: Alignment.center,
                       child: Icon(
                         Iconsax.warning_24,
                         color: Colors.red,
-                        size: 75,
+                        size: 75.sp,
                       ),
                     ),
-                    const SizedBox(
-                      height: 12,
+                    SizedBox(
+                      height: 12.h,
                     ),
                     Text(
                       'Error',
                       style: GoogleFonts.nunito(
                         color: Colors.red,
-                        fontSize: 28,
+                        fontSize: 28.sp,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
+                    SizedBox(
+                      height: 5.h,
                     ),
                     Text(
                       "Biometrics failed",
                       textAlign: TextAlign.center,
-                      style:
-                          GoogleFonts.nunito(color: Colors.red, fontSize: 18),
+                      style: GoogleFonts.nunito(
+                        color: Colors.red,
+                        fontSize: 18.sp,
+                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 10.h,
                     ),
                   ],
                 ),
@@ -804,38 +812,43 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async {
         Get.bottomSheet(
           SizedBox(
-            height: 250,
+            height: 250.h,
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0.sp),
+                topRight: Radius.circular(30.0.sp),
               ),
               child: Container(
                 color: Theme.of(context).canvasColor,
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding: EdgeInsets.fromLTRB(
+                  10.w,
+                  5.h,
+                  10.w,
+                  5.h,
+                ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 50,
+                    SizedBox(
+                      height: 50.h,
                     ),
                     Text(
                       'Are you sure you want to exit?',
                       style: GoogleFonts.nunito(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         // fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     //card
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(3),
+                          padding: EdgeInsets.all(3.sp),
                           child: ElevatedButton(
                             onPressed: () async {
                               exit(0);
@@ -843,28 +856,32 @@ class _HomePageState extends State<HomePage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.sp),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 15),
-                              textStyle: const TextStyle(
-                                  color: brandFour, fontSize: 13),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 40.w,
+                                vertical: 15.h,
+                              ),
+                              textStyle: GoogleFonts.nunito(
+                                color: brandFour,
+                                fontSize: 13.sp,
+                              ),
                             ),
-                            child: const Text(
+                            child: Text(
                               "Yes",
-                              style: TextStyle(
+                              style: GoogleFonts.nunito(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 20,
+                        SizedBox(
+                          width: 20.w,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(3),
+                          padding: EdgeInsets.all(3.sp),
                           child: ElevatedButton(
                             onPressed: () {
                               Get.back();
@@ -872,19 +889,21 @@ class _HomePageState extends State<HomePage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: brandTwo,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.sp),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 15),
-                              textStyle: const TextStyle(
-                                  color: brandFour, fontSize: 13),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 40.w,
+                                vertical: 15.h,
+                              ),
+                              textStyle: GoogleFonts.nunito(
+                                  color: brandFour, fontSize: 13.sp),
                             ),
-                            child: const Text(
+                            child: Text(
                               "No",
-                              style: TextStyle(
+                              style: GoogleFonts.nunito(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                           ),
@@ -1042,13 +1061,13 @@ class _HomePageState extends State<HomePage> {
                     ? Image.asset(
                         "assets/icons/carbon_portfolio.png",
                         // height: 28,
-                        width: 29,
+                        width: 29.w,
                         color: brandOne,
                       )
                     : Image.asset(
                         "assets/icons/carbon_portfolio.png",
                         // height: 28,
-                        width: 29,
+                        width: 29.w,
                         color: navigationcolorText,
                       ),
                 // Showcase(
