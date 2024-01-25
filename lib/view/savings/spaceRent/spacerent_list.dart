@@ -307,20 +307,28 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            Text(
-                                              nairaFormaet
-                                                  .format(rentController.rent[0]
-                                                          .targetAmount -
-                                                      (rentController.rent[0]
-                                                              .targetAmount *
-                                                          0.7))
-                                                  .toString(),
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .background,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 15,
+                                              ),
+                                              child: Text(
+                                                nairaFormaet
+                                                    .format(rentController
+                                                            .rent[0]
+                                                            .targetAmount -
+                                                        (rentController.rent[0]
+                                                                .targetAmount *
+                                                            0.7))
+                                                    .toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .background,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -667,25 +675,44 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
-                                              // subtitle: Text(
-                                              //   formattedTimeAgo,
-                                              //   style: GoogleFonts.nunito(
-                                              //     color: brandTwo,
-                                              //     fontSize: 12,
-                                              //     fontWeight: FontWeight.w400,
-                                              //   ),
-                                              // ),
+                                              subtitle: Text(
+                                                _formatTime(DateTime.parse(
+                                                        (rentController.rent[0]
+                                                            .history.reversed
+                                                            .toList()[index]
+                                                            .split(" ")[0]
+                                                            .substring(
+                                                                0,
+                                                                rentController
+                                                                        .rent[0]
+                                                                        .history
+                                                                        .reversed
+                                                                        .toList()[
+                                                                            index]
+                                                                        .split(
+                                                                            " ")[0]
+                                                                        .length -
+                                                                    4))))
+                                                    .toString(),
+                                                style: GoogleFonts.nunito(
+                                                  color: brandTwo,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
                                               // onTap: () {
                                               //   Get.to(
                                               //       CustomTransactionDetailsCard(current: index));
                                               //   // Navigator.pushNamed(context, RouteList.profile);
                                               // },
                                               trailing: Text(
-                                                rentController
-                                                    .rent[0].history.reversed
-                                                    .toList()[index]
-                                                    .split(" ")
-                                                    .last,
+                                                '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}'
+                                                // rentController
+                                                //     .rent[0].history.reversed
+                                                //     .toList()[index]
+                                                //     .split(" ")
+                                                //     .last
+                                                ,
                                                 style: GoogleFonts.nunito(
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -767,5 +794,28 @@ class _RentSpaceListState extends State<RentSpaceList> {
           ? Theme.of(context).primaryColorLight
           : Theme.of(context).canvasColor,
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final difference = now.difference(time);
+
+    if (difference.inDays > 0) {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
+    } else {
+      return 'just now';
+    }
+  }
+
+  String extractAmount(String input) {
+    final nairaIndex = input.indexOf('₦');
+    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
+      return input.substring(nairaIndex + 1).trim();
+    }
+    return '';
   }
 }

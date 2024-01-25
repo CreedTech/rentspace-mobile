@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -41,6 +42,7 @@ double _rentValue = 0.0;
 double _rentSeventy = 0.0;
 int _daysDifference = 1;
 double _rentThirty = 0.0;
+double _holdingFee = 0.0;
 //savings goals
 double _dailyValue = 0.0;
 double _weeklyValue = 0.0;
@@ -251,6 +253,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       setState(() {
         _rentThirty = (rent - (rent * 0.7));
         _rentSeventy = (rent * 0.7);
+        _holdingFee = 0.01 * _rentSeventy;
         _rentValue = rent;
         _hasCalculate = 'true';
         _hasCreated = 'false';
@@ -277,7 +280,19 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateFunc,
       // update the state variable when the text changes
-      onChanged: (text) => setState(() => _amountValue = text),
+      onChanged: (text) {
+        setState(() {
+      _amountValue = "";
+      _rentValue = 0.0;
+      _rentSeventy = 0.0;
+      _rentThirty = 0.0;
+      _holdingFee = 0.0;
+      _hasCalculate = 'true';
+      _hasCreated = 'false';
+      _canShowRent = 'false';
+    });
+        setState(() => _amountValue = text);
+      },
       style: GoogleFonts.nunito(
         color: Theme.of(context).primaryColor,
       ),
@@ -380,19 +395,19 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
             return Theme(
               data: Theme.of(context).copyWith(
                 colorScheme: const ColorScheme.dark(
-                  primaryContainer: brandTwo,
-                  primary: brandTwo, // header background color
+                  primaryContainer: brandOne,
+                  primary: brandOne, // header background color
                   onPrimary: Colors.white,
-                  onBackground: brandTwo,
+                  onBackground: brandOne,
                   // onSecondary: brandTwo,
 
-                  outline: brandTwo,
-                  background: brandTwo,
-                  onSurface: brandTwo, // body text color
+                  outline: brandOne,
+                  background: brandOne,
+                  onSurface: brandOne, // body text color
                 ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
-                    foregroundColor: brandTwo, // button text color
+                    foregroundColor: brandOne, // button text color
                   ),
                 ),
               ),
@@ -457,7 +472,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                     child: Text(
                       "We Simplified the process for you$varValue",
                       style: GoogleFonts.nunito(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         // letterSpacing: 0.5,
                         color: Theme.of(context).primaryColor,
@@ -496,19 +511,43 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                       : Column(
                           children: [
                             const SizedBox(
-                              height: 50,
+                              height: 20,
                             ),
                             Text(
-                              'Your rent will be due in ${_calculateDaysDifference()} days (approximately ${_formatWeeksDifference()}) (approximately ${_calculateMonthsDifference()} months)',
+                              'Your rent will be due in ${_calculateDaysDifference()} days',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 10,
+                            ),
+                            Text(
+                              'Your rent will be due in approximately ${_formatWeeksDifference()}',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Your rent will be due in approximately ${_calculateMonthsDifference()} months',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                           ],
                         ),
@@ -520,7 +559,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
-                            backgroundColor: brandTwo,
+                            backgroundColor: brandOne,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
@@ -536,10 +575,10 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.calendar_month_outlined,
                                 color: Colors.white,
-                                size: 18,
+                                size: 18.sp,
                               ),
                               const SizedBox(
                                 width: 10,
@@ -549,8 +588,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
                                   color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
@@ -587,11 +626,13 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                               //     context,
                               //     'Invalid date',
                               //     'Date Must be within 6-11 months');
-                              return Text(
-                                "Invalid date. Pick a different date.",
-                                style: GoogleFonts.nunito(
-                                  fontSize: 12,
-                                  color: Colors.red,
+                              return Center(
+                                child: Text(
+                                  "Invalid date. Pick a different date.",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 12.sp,
+                                    color: Colors.red,
+                                  ),
                                 ),
                               );
                             })
@@ -622,7 +663,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(300, 50),
                                           maximumSize: const Size(400, 50),
-                                          backgroundColor: brandTwo,
+                                          backgroundColor: brandOne,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -671,7 +712,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                             Get.bottomSheet(
                                               isDismissible: true,
                                               SizedBox(
-                                                height: 300,
+                                                height: 400,
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       const BorderRadius.only(
@@ -706,11 +747,88 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                           'RentSpace created',
                                                           style: GoogleFonts
                                                               .nunito(
-                                                            fontSize: 16,
+                                                            fontSize: 16.sp,
                                                             color: Theme.of(
                                                                     context)
                                                                 .primaryColor,
                                                           ),
+                                                        ),
+
+                                                        Column(
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  'Total Rent: ',
+                                                                  style: GoogleFonts
+                                                                      .nunito(
+                                                                    fontSize: 16.sp,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  ch8t
+                                                                      .format(double
+                                                                          .tryParse(
+                                                                              _amountValue
+                                                                                  .toString()))
+                                                                      .toString(),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                  style: GoogleFonts
+                                                                      .nunito(
+                                                                    fontSize: 16.sp,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  'Holding Fee: ',
+                                                                  style: GoogleFonts
+                                                                      .nunito(
+                                                                    fontSize: 16.sp,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  ch8t
+                                                                      .format(double
+                                                                          .tryParse(
+                                                                              _holdingFee
+                                                                                  .toString()))
+                                                                      .toString(),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                  style: GoogleFonts
+                                                                      .nunito(
+                                                                    fontSize: 16.sp,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          
+                                                          ],
                                                         ),
                                                         const SizedBox(
                                                           height: 30,
@@ -733,7 +851,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                             300,
                                                                             50),
                                                                     backgroundColor:
-                                                                        brandTwo,
+                                                                        brandOne,
                                                                     elevation:
                                                                         0,
                                                                     shape:
@@ -775,10 +893,10 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                       color: Colors
                                                                           .white,
                                                                       fontSize:
-                                                                          16,
+                                                                          14.sp,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w700,
+                                                                              .w500,
                                                                     ),
                                                                   ),
                                                                 ),
@@ -900,8 +1018,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
@@ -914,7 +1032,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(300, 50),
                                           maximumSize: const Size(400, 50),
-                                          backgroundColor: brandTwo,
+                                          backgroundColor: brandOne,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -996,7 +1114,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                           'RentSpace created',
                                                           style: GoogleFonts
                                                               .nunito(
-                                                            fontSize: 16,
+                                                            fontSize: 16.sp,
                                                             color: Theme.of(
                                                                     context)
                                                                 .primaryColor,
@@ -1023,7 +1141,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                             300,
                                                                             50),
                                                                     backgroundColor:
-                                                                        brandTwo,
+                                                                        brandOne,
                                                                     elevation:
                                                                         0,
                                                                     shape:
@@ -1065,10 +1183,10 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                       color: Colors
                                                                           .white,
                                                                       fontSize:
-                                                                          16,
+                                                                          14.sp,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w700,
+                                                                              .w500,
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1178,8 +1296,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
@@ -1192,7 +1310,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(300, 50),
                                           maximumSize: const Size(400, 50),
-                                          backgroundColor: brandTwo,
+                                          backgroundColor: brandOne,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -1274,7 +1392,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                           'RentSpace created',
                                                           style: GoogleFonts
                                                               .nunito(
-                                                            fontSize: 16,
+                                                            fontSize: 16.sp,
                                                             color: Theme.of(
                                                                     context)
                                                                 .primaryColor,
@@ -1301,7 +1419,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                             300,
                                                                             50),
                                                                     backgroundColor:
-                                                                        brandTwo,
+                                                                        brandOne,
                                                                     elevation:
                                                                         0,
                                                                     shape:
@@ -1343,10 +1461,10 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                       color: Colors
                                                                           .white,
                                                                       fontSize:
-                                                                          16,
+                                                                          14.sp,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w700,
+                                                                              .w500,
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1373,8 +1491,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
@@ -1391,6 +1509,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                             decoration:
                                                 TextDecoration.underline,
                                             color: Colors.red,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
@@ -1422,6 +1542,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       _rentValue = 0.0;
       _rentSeventy = 0.0;
       _rentThirty = 0.0;
+      _holdingFee = 0.0;
       _hasCalculate = 'true';
       _hasCreated = 'false';
       _canShowRent = 'false';

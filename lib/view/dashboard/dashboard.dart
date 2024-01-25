@@ -1010,7 +1010,7 @@ class _DashboardState extends State<Dashboard> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
                     child: Column(
                       children: [
                         Row(
@@ -1094,11 +1094,11 @@ class _DashboardState extends State<Dashboard> {
                                                             'Securely top up your wallet',
                                                             style: GoogleFonts
                                                                 .nunito(
-                                                              color: brandTwo,
-                                                              fontSize: 20.sp,
+                                                              color: brandOne,
+                                                              fontSize: 16.sp,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w800,
+                                                                      .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -1132,7 +1132,7 @@ class _DashboardState extends State<Dashboard> {
                                                                           50),
 
                                                                   backgroundColor:
-                                                                      brandTwo,
+                                                                      brandOne,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
@@ -1152,14 +1152,14 @@ class _DashboardState extends State<Dashboard> {
                                                                           13),
                                                                 ),
                                                                 child:
-                                                                    const Row(
+                                                                     Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    Icon(Iconsax
+                                                                    const Icon(Iconsax
                                                                         .card),
-                                                                    SizedBox(
+                                                                    const SizedBox(
                                                                       width: 10,
                                                                     ),
                                                                     Text(
@@ -1169,9 +1169,9 @@ class _DashboardState extends State<Dashboard> {
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight.w700,
+                                                                            FontWeight.w500,
                                                                         fontSize:
-                                                                            16,
+                                                                            16.sp,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1331,11 +1331,11 @@ class _DashboardState extends State<Dashboard> {
                                                             'Withdraw your Secured Funds',
                                                             style: GoogleFonts
                                                                 .nunito(
-                                                              color: brandTwo,
+                                                              color: brandOne,
                                                               fontSize: 16.sp,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w800,
+                                                                      .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -1380,28 +1380,7 @@ class _DashboardState extends State<Dashboard> {
                                                                           'Wallet Empty! :)',
                                                                           'You need to fund your wallet first!',
                                                                         );
-                                                                  // showTopSnackBar(
-                                                                  //   Overlay.of(
-                                                                  //       context),
-                                                                  //   CustomSnackBar
-                                                                  //       .error(
-                                                                  //     backgroundColor:
-                                                                  //         Colors
-                                                                  //             .red,
-                                                                  //     message:
-                                                                  //         'Wallet Empty! :). You need to fund your wallet first!',
-                                                                  //     textStyle:
-                                                                  //         GoogleFonts
-                                                                  //             .nunito(
-                                                                  //       fontSize:
-                                                                  //           14,
-                                                                  //       color: Colors
-                                                                  //           .white,
-                                                                  //       fontWeight:
-                                                                  //           FontWeight.w700,
-                                                                  //     ),
-                                                                  //   ),
-                                                                  // );
+                                                          
                                                                 },
                                                                 style: ElevatedButton
                                                                     .styleFrom(
@@ -1414,7 +1393,7 @@ class _DashboardState extends State<Dashboard> {
                                                                           300,
                                                                           50),
                                                                   backgroundColor:
-                                                                      brandTwo,
+                                                                      brandOne,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
@@ -1454,7 +1433,7 @@ class _DashboardState extends State<Dashboard> {
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight.w700,
+                                                                            FontWeight.w500,
                                                                         fontSize:
                                                                             14.sp,
                                                                       ),
@@ -1485,7 +1464,7 @@ class _DashboardState extends State<Dashboard> {
                             alignment: Alignment.topLeft,
                             child: Container(
                               height: 49.h,
-                              width: 170.w,
+                              width: 180.w,
                               decoration: BoxDecoration(
                                 color: brandTwo,
                                 borderRadius: BorderRadius.circular(30.sp),
@@ -1504,8 +1483,8 @@ class _DashboardState extends State<Dashboard> {
                                     'Withdraw Now',
                                     style: GoogleFonts.nunito(
                                       color: Colors.white,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   )
                                 ],

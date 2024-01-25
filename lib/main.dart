@@ -7,11 +7,13 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
+import 'package:rentspace/controller/announcement_controller.dart';
 import 'package:rentspace/controller/auth_controller.dart';
 import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/view/dashboard/notifications.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -50,7 +52,7 @@ Future<void> main() async {
   await GetStorage.init();
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
-  await firebaseInitialization.then((value) {
+  await firebaseInitialization.then((value) async {
     Get.put(AuthController());
     // Get.put(UserController());
   });
@@ -83,7 +85,7 @@ Future<void> initNotifications() async {
     switch (notificationResponse.notificationResponseType) {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
-        Get.to(SettingsPage());
+        Get.to(NotificationsPage());
         break;
       case NotificationResponseType.selectedNotificationAction:
         if (notificationResponse.actionId == navigationActionId) {
@@ -206,6 +208,7 @@ class _MyAppState extends State<MyApp> {
             title: 'RentSpace',
             home: const SplashScreen(),
             builder: EasyLoading.init(),
+
             // const Scaffold(
             //   backgroundColor: Colors.white,
             //   body: Column(

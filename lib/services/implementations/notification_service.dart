@@ -31,26 +31,12 @@ class NotificationService extends ChangeNotifier {
   Future<void> fetchNotificationsFromFirestore() async {
     print('fetching');
     try {
-      // Simulate fetching notifications from Firestore
-      // Replace this with your Firestore logic
-      // For example:
-      // var collection = FirebaseFirestore.instance.collection('notifications');
-      // print(collection);
-      // var docSnapshot = await collection.doc(userId).get();
+
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('notifications').get();
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
 
-      // Simulate data
-      List<Map<String, dynamic>> dataFromFirestore = [
-        {'title': 'Order Shipped',
-    'description':
-        'Tracking number BLQ65807654 has been generated for your order',
-    'timestamp': DateTime.now().subtract(const Duration(hours: 2)),
-    'isRead': true,},
-        // Add more notifications as needed
-      ];
-      print(dataFromFirestore);
+
 
       // Convert Firestore data to NotificationModel
       List<NotificationModel> fetchedNotifications = documents

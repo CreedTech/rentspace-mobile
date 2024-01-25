@@ -41,6 +41,9 @@ dependencies:
   introduction_screen: 
   image_picker: ^0.8.5+3
   getwidget:
+  flutter_hooks:
+  hooks_riverpod:
+  flutter_riverpod:
   firebase_auth: ^4.14.1
   cloud_firestore: ^4.13.2
   firebase_core: ^2.23.0
@@ -63,6 +66,7 @@ dependencies:
   rounded_loading_button:
   circular_countdown_timer:
   dio:
+  pretty_dio_logger:
   font_awesome_flutter:
   connectivity_plus: ^2.3.5
   signature:

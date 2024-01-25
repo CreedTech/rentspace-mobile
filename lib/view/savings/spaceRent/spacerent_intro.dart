@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,7 +83,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
             Text(
               "Save 70% of rent for a minimum of 90 days at an interest up to 14% and get 100% (Terms and conditions apply)",
               style: GoogleFonts.nunito(
-                fontSize: 14.0,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).primaryColor,
               ),
@@ -107,7 +108,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(300, 50),
-                  backgroundColor: brandTwo,
+                  backgroundColor: brandOne,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -126,8 +127,8 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.nunito(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(
@@ -143,7 +144,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                       ),
                       child: const Icon(
                         Icons.add,
-                        color: brandTwo,
+                        color: brandOne,
                         // size: 15,
                       ),
                     ),
@@ -165,6 +166,8 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                   style: GoogleFonts.nunito(
                     decoration: TextDecoration.underline,
                     color: Colors.red,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.center,
                 ),
