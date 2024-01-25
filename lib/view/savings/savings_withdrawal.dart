@@ -624,7 +624,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     final bankOption2 = DropdownButtonFormField(
       style: GoogleFonts.nunito(
         color: brandOne,
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w600,
       ),
       items: const [

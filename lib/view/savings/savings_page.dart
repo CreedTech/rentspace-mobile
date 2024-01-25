@@ -32,6 +32,7 @@ int tankBalance = 0;
 int boxBalance = 0;
 int depositBalance = 0;
 int rentBalance = 0;
+int targetBalance = 0;
 int totalSavings = 0;
 bool hideBalance = false;
 
@@ -80,10 +81,12 @@ class _SavingsPageState extends State<SavingsPage> {
     if (rentController.rent.isNotEmpty) {
       for (int j = 0; j < rentController.rent.length; j++) {
         rentBalance += rentController.rent[j].savedAmount.toInt();
+        targetBalance += rentController.rent[j].targetAmount.toInt();
       }
     } else {
       setState(() {
         rentBalance = 0;
+        targetBalance = 0;
       });
     }
     if (boxController.box.isNotEmpty) {
@@ -115,6 +118,7 @@ class _SavingsPageState extends State<SavingsPage> {
   initState() {
     super.initState();
     rentBalance = 0;
+    targetBalance = 0;
     tankBalance = 0;
     boxBalance = 0;
     depositBalance = 0;
@@ -355,8 +359,8 @@ class _SavingsPageState extends State<SavingsPage> {
                 ),
               ],
             ),
-            ((rentController.rent[0].savedAmount) !=
-                    (rentController.rent[0].targetAmount * 0.7))
+            (rentBalance !=
+                    (targetBalance * 0.7))
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

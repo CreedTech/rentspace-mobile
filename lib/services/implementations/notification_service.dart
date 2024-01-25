@@ -42,15 +42,15 @@ class NotificationService extends ChangeNotifier {
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
 
       // Simulate data
-      List<Map<String, dynamic>> dataFromFirestore = [
-        {'title': 'Order Shipped',
-    'description':
-        'Tracking number BLQ65807654 has been generated for your order',
-    'timestamp': DateTime.now().subtract(const Duration(hours: 2)),
-    'isRead': true,},
-        // Add more notifications as needed
-      ];
-      print(dataFromFirestore);
+    //   List<Map<String, dynamic>> dataFromFirestore = [
+    //     {'title': 'Order Shipped',
+    // 'description':
+    //     'Tracking number BLQ65807654 has been generated for your order',
+    // 'timestamp': DateTime.now().subtract(const Duration(hours: 2)),
+    // 'isRead': true,},
+    //     // Add more notifications as needed
+    //   ];
+    //   print(dataFromFirestore);
 
       // Convert Firestore data to NotificationModel
       List<NotificationModel> fetchedNotifications = documents

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'package:convert/convert.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:crypto/crypto.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:intl/intl.dart';
-import 'package:rentspace/constants/widgets/custom_transaction_details_card.dart';
 import 'package:rentspace/controller/rent_controller.dart';
 
 class SpaceRentHistory extends StatefulWidget {
@@ -25,7 +15,7 @@ class SpaceRentHistory extends StatefulWidget {
 }
 
 doSomeThing() {
-//   String paymentInfo = "2023-09-26T18:19:21.676 New Payment Recorded ₦104";
+  String paymentInfo = "2023-09-26T18:19:21.676 New Payment Recorded ₦104";
 
 // // Split the string by space
 //   List<String> parts = paymentInfo.split(" ");
@@ -44,6 +34,17 @@ doSomeThing() {
 //   print("Date and Time: $formattedDateTime");
 //   print("Payment Description: $paymentDescription");
 //   print("Amount: $amount");
+
+  String dateString = (paymentInfo
+      .split(" ")[0]
+      .substring(0, paymentInfo.split(" ")[0].length - 3));
+
+  try {
+    DateTime dateTime = DateTime.parse(dateString);
+    print("Parsed DateTime: $dateTime");
+  } catch (e) {
+    print("Error parsing date: $e");
+  }
 }
 
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
@@ -55,7 +56,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   initState() {
     super.initState();
     print(_payments.length);
-    // doSomeThing();
+    doSomeThing();
     setState(() {
       _payments = rentController.rent[0].history.reversed.toList();
     });
@@ -141,10 +142,36 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             ),
                           ),
                           subtitle: Text(
-                            DateFormat.yMMMMd().add_jm().format(
-                                  DateTime.parse(
-                                      _payments[index].split(" ")[0]),
-                                ),
+                            // _payments[index]
+                            //     .split(" ")[0]
+                            //     .substring(0,
+                            //         _payments[index].split(" ")[0].length - 3)
+                            // _formatTime(_formatedTime(_payments[index]
+                            //     .split(" ")[0]
+                            //     .substring(0,
+                            //         _payments[index].split(" ")[0].length - 3))
+                            // DateTime.parse(_payments[index]
+                            //   .split(" ")[0]
+                            //   .substring(0,
+                            //       _payments[index].split(" ")[0].length - 3)))
+                            // DateFormat.yMMMMd().add_jm().format(
+                            //       DateTime.parse((_payments[index]
+                            //           .split(" ")[0]
+                            //           .substring(
+                            //               0,
+                            //               _payments[index]
+                            //                       .split(" ")[0]
+                            //                       .length -
+                            //                   3)).toString()),
+                            //     )
+                            // _payments[index]
+                            _formatTime(DateTime.parse((_payments[index]
+                                    .split(" ")[0]
+                                    .substring(
+                                        0,
+                                        _payments[index].split(" ")[0].length -
+                                            4))))
+                                .toString(),
                             style: GoogleFonts.nunito(
                               color: brandTwo,
                               fontSize: 12,
@@ -157,7 +184,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           //   // Navigator.pushNamed(context, RouteList.profile);
                           // },
                           trailing: Text(
-                            '+ ${_payments[index].split(" ").last}',
+                            '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}',
+                            // '+ ${_payments[index].split(" ").last}',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16,
@@ -173,5 +201,27 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
       ),
       backgroundColor: Theme.of(context).canvasColor,
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final difference = now.difference(time);
+
+    if (difference.inDays > 0) {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
+    } else {
+      return 'just now';
+    }
+  }
+   String extractAmount(String input) {
+    final nairaIndex = input.indexOf('₦');
+    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
+      return input.substring(nairaIndex + 1).trim();
+    }
+    return '';
   }
 }

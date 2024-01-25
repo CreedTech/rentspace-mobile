@@ -206,6 +206,7 @@ class _MyAppState extends State<MyApp> {
             title: 'RentSpace',
             home: const SplashScreen(),
             builder: EasyLoading.init(),
+            
             // const Scaffold(
             //   backgroundColor: Colors.white,
             //   body: Column(
