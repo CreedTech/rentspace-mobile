@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -226,7 +227,7 @@ void customErrorDialog(
                   message,
                   style: GoogleFonts.nunito(
                     color: Colors.red,
-                    fontSize: 28,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -236,7 +237,10 @@ void customErrorDialog(
                 Text(
                   subText,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(color: Colors.red, fontSize: 18),
+                  style: GoogleFonts.nunito(
+                    color: Colors.red,
+                    fontSize: 14.sp,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,

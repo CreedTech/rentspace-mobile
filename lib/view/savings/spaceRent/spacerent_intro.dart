@@ -81,7 +81,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
               height: 5,
             ),
             Text(
-              "Save 70% of rent for a minimum of 90 days at an interest up to 14% and get 100% (Terms and conditions apply)",
+              "Save 70% of rent for a minimum of 6 months (maximum of 8 months) and get 30% loan. (Terms and conditions apply)",
               style: GoogleFonts.nunito(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,

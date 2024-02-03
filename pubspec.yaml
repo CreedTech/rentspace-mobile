@@ -70,6 +70,8 @@ dependencies:
   font_awesome_flutter:
   connectivity_plus: ^2.3.5
   signature:
+  # animated_custom_dropdown:
+  animated_custom_dropdown: ^1.5.0
   syncfusion_flutter_charts:
   share_plus:
   text_scroll:

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
@@ -34,6 +36,7 @@ int depositBalance = 0;
 int rentBalance = 0;
 int targetBalance = 0;
 int totalSavings = 0;
+int totalAssets = 0;
 bool hideBalance = false;
 
 class _SavingsPageState extends State<SavingsPage> {
@@ -110,8 +113,13 @@ class _SavingsPageState extends State<SavingsPage> {
 
     setState(() {
       totalSavings = (tankBalance + rentBalance + boxBalance + depositBalance);
+      totalAssets = (int.parse(userController.user[0].userWalletBalance) +
+          rentBalance +
+          boxBalance +
+          depositBalance);
     });
     print(totalSavings);
+    print(totalAssets);
   }
 
   @override
@@ -123,6 +131,7 @@ class _SavingsPageState extends State<SavingsPage> {
     boxBalance = 0;
     depositBalance = 0;
     totalSavings = 0;
+    totalAssets = 0;
 
     getUser();
     //deleteSpecifiedDocs();
@@ -131,256 +140,526 @@ class _SavingsPageState extends State<SavingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
+      appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Theme.of(context).canvasColor,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            'Finance',
-            style: GoogleFonts.nunito(
-              color: Theme.of(context).primaryColor,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          bottom: TabBar(
-            // isScrollable: true,
-            // indicator: BoxDecoration(
-
-            // ),
-            indicatorPadding: const EdgeInsets.symmetric(horizontal: 80),
-            indicatorColor: Theme.of(context).primaryColor,
-            tabs: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Savings',
-                  style: GoogleFonts.nunito(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Loans',
-                  style: GoogleFonts.nunito(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          'Save',
+          style: GoogleFonts.nunito(
+            color: Theme.of(context).primaryColor,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
           ),
         ),
-        body: TabBarView(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    top: 45,
-                    bottom: 25,
-                    right: 20,
-                  ),
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: brandOne,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.all(20.0),
-                        //   child: Container(
-                        //     padding: const EdgeInsets.symmetric(
-                        //         horizontal: 15, vertical: 5),
-                        //     decoration: BoxDecoration(
-                        //       color: brandTwo,
-                        //       borderRadius: BorderRadius.circular(20),
-                        //     ),
-                        //     child: Text(
-                        //       "Earn up to 14% returns",
-                        //       textAlign: TextAlign.center,
-                        //       style: GoogleFonts.nunito(
-                        //         fontSize: 15.0,
-                        //         // fontFamily: "DefaultFontFamily",
-                        //         // letterSpacing: 0.5,
-                        //         fontWeight: FontWeight.w700,
-                        //         color: Colors.white,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        //  const SizedBox(
-                        //    width: 15,
-                        //  ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Total Savings',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w400,
-                                      // fontFamily: "DefaultFontFamily",
-                                      // letterSpacing: 0.5,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        hideBalance = !hideBalance;
-                                      });
-                                    },
-                                    child: Icon(
-                                      hideBalance
-                                          ? Icons.visibility_off_outlined
-                                          : Icons.visibility_outlined,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "********"}",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 35.0,
-                                      // fontFamily: "DefaultFontFamily",
-                                      // letterSpacing: 0.5,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    // top: 45,
-                    bottom: 25,
-                    right: 20,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      top: 10,
-                      bottom: 20,
-                      right: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: brandTwo.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+        // bottom: TabBar(
+        //   // isScrollable: true,
+        //   // indicator: BoxDecoration(
+
+        //   // ),
+        //   indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
+        //   indicatorColor: Theme.of(context).primaryColor,
+        //   tabs: [
+        //     Padding(
+        //       padding: const EdgeInsets.all(8),
+        //       child: Text(
+        //         'Savings',
+        //         style: GoogleFonts.nunito(
+        //           color: Theme.of(context).primaryColor,
+        //           fontSize: 22,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.all(8),
+        //       child: Text(
+        //         'Loans',
+        //         style: GoogleFonts.nunito(
+        //           color: Theme.of(context).primaryColor,
+        //           fontSize: 22,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              top: 15,
+              bottom: 25,
+              right: 20,
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              decoration: BoxDecoration(
+                color: brandOne,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            top: 15,
-                            bottom: 10,
-                            // right: 20,
-                          ),
-                          child: Text(
-                            'Savings Plan',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.verified_user,
+                              color: Colors.green,
+                              size: 17,
                             ),
-                          ),
-                        ),
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          // padding: const EdgeInsets.all(10),
-                          itemCount: 1,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                (rentController.rent.isEmpty)
-                                    ? Get.to(const SpaceRentIntro())
-                                    : Get.to(const RentSpaceList());
-                              },
-                              child: _savingsWidget(
-                                'assets/icons/space_rent.png',
-                                'SpaceRent',
-                                'Save 70% of your rent and get 30% loan.',
-                                '14% interest per annum.',
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Total Assets",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                fontSize: 15.0,
+                                // fontFamily: "DefaultFontFamily",
+                                // letterSpacing: 0.5,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
-                            );
-                          },
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hideBalance = !hideBalance;
+                                });
+                              },
+                              child: Icon(
+                                hideBalance
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: Colors.white,
+                                size: 15.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          " ${hideBalance ? nairaFormaet.format(totalAssets).toString() : "*****"}",
+                          //  textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            fontSize: 22.0.sp,
+                            // fontFamily: "DefaultFontFamily",
+                            // letterSpacing: 0.5,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  //  Container(
+                  //           width: 200,
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.white,
+                  //             borderRadius: BorderRadius.circular(15),
+                  //           ),
+                  //           child: Column(
+                  //             crossAxisAlignment:
+                  //                 CrossAxisAlignment.start,
+                  //             children: [
+                  //               Padding(
+                  //                 padding: const EdgeInsets.all(8.0),
+                  //                 child: Row(
+                  //                   mainAxisAlignment:
+                  //                       MainAxisAlignment.spaceBetween,
+                  //                   children: [
+                  //                     Row(
+                  //                       children: [
+                  //                         Container(
+                  //                           padding:
+                  //                               EdgeInsets.all(5.sp),
+                  //                           decoration: BoxDecoration(
+                  //                             color: brandTwo
+                  //                                 .withOpacity(0.2),
+                  //                             borderRadius:
+                  //                                 BorderRadius.circular(
+                  //                                     100.sp),
+                  //                           ),
+                  //                           child: Image.asset(
+                  //                             'assets/icons/space_rent.png',
+                  //                             color: brandOne,
+                  //                             scale: 4.sp,
+                  //                             // width: 20,
+                  //                           ),
+                  //                         ),
+                  //                         SizedBox(
+                  //                           width: 5,
+                  //                         ),
+                  //                         Text(
+                  //                           'SpaceRent',
+                  //                           textAlign: TextAlign.center,
+                  //                           style: GoogleFonts.nunito(
+                  //                             fontSize: 15.0,
+                  //                             fontWeight:
+                  //                                 FontWeight.w600,
+                  //                             // fontFamily: "DefaultFontFamily",
+                  //                             // letterSpacing: 0.5,
+                  //                             color: brandOne,
+                  //                           ),
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                     const Icon(
+                  //                       Icons.arrow_forward_ios,
+                  //                       size: 15,
+                  //                     )
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               Padding(
+                  //                 padding: const EdgeInsets.all(8.0),
+                  //                 child: Text(
+                  //                   " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "*****"}",
+                  //                   //  textAlign: TextAlign.center,
+                  //                   style: GoogleFonts.nunito(
+                  //                     fontSize: 17.0.sp,
+                  //                     // fontFamily: "DefaultFontFamily",
+                  //                     // letterSpacing: 0.5,
+                  //                     fontWeight: FontWeight.w700,
+                  //                     color: brandOne,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, bottom: 15),
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(5.sp),
+                                      decoration: BoxDecoration(
+                                        color: brandTwo.withOpacity(0.2),
+                                        borderRadius:
+                                            BorderRadius.circular(100.sp),
+                                      ),
+                                      child: Image.asset(
+                                        'assets/icons/space_rent.png',
+                                        color: brandOne,
+                                        scale: 4.sp,
+                                        // width: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      'SpaceRent',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w600,
+                                        // fontFamily: "DefaultFontFamily",
+                                        // letterSpacing: 0.5,
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    (rentController.rent.isEmpty)
+                                        ? Get.to(const SpaceRentIntro())
+                                        : Get.to(const RentSpaceList());
+                                  },
+                                  child: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "*****"}",
+                              //  textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                fontSize: 17.0.sp,
+                                // fontFamily: "DefaultFontFamily",
+                                // letterSpacing: 0.5,
+                                fontWeight: FontWeight.w700,
+                                color: brandOne,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // SizedBox(
+                  //   height: 100,
+                  //   child: Expanded(
+                  //     child: ListView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       children: [
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(left: 10, bottom: 15),
+                  //           child: Container(
+                  //             width: 200,
+                  //             decoration: BoxDecoration(
+                  //               color: Colors.white,
+                  //               borderRadius: BorderRadius.circular(15),
+                  //             ),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.all(8.0),
+                  //                   child: Row(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.spaceBetween,
+                  //                     children: [
+                  //                       Row(
+                  //                         children: [
+                  //                           Container(
+                  //                             padding: EdgeInsets.all(5.sp),
+                  //                             decoration: BoxDecoration(
+                  //                               color: brandTwo.withOpacity(0.2),
+                  //                               borderRadius:
+                  //                                   BorderRadius.circular(100.sp),
+                  //                             ),
+                  //                             child: Image.asset(
+                  //                               'assets/icons/space_rent.png',
+                  //                               color: brandOne,
+                  //                               scale: 4.sp,
+                  //                               // width: 20,
+                  //                             ),
+                  //                           ),
+                  //                           const SizedBox(
+                  //                             width: 5,
+                  //                           ),
+                  //                           Text(
+                  //                             'SpaceRent',
+                  //                             textAlign: TextAlign.center,
+                  //                             style: GoogleFonts.nunito(
+                  //                               fontSize: 15.0,
+                  //                               fontWeight: FontWeight.w600,
+                  //                               // fontFamily: "DefaultFontFamily",
+                  //                               // letterSpacing: 0.5,
+                  //                               color: brandOne,
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                       const Icon(
+                  //                         Icons.arrow_forward_ios,
+                  //                         size: 15,
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.all(8.0),
+                  //                   child: Text(
+                  //                     " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "*****"}",
+                  //                     //  textAlign: TextAlign.center,
+                  //                     style: GoogleFonts.nunito(
+                  //                       fontSize: 17.0.sp,
+                  //                       // fontFamily: "DefaultFontFamily",
+                  //                       // letterSpacing: 0.5,
+                  //                       fontWeight: FontWeight.w700,
+                  //                       color: brandOne,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(left: 10, bottom: 15,right: 10),
+                  //           child: Container(
+                  //             width: 200,
+                  //             decoration: BoxDecoration(
+                  //               color: Colors.white,
+                  //               borderRadius: BorderRadius.circular(15),
+                  //             ),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.all(8.0),
+                  //                   child: Row(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.spaceBetween,
+                  //                     children: [
+                  //                       Row(
+                  //                         children: [
+                  //                           Container(
+                  //                             padding: EdgeInsets.all(5.sp),
+                  //                             decoration: BoxDecoration(
+                  //                               color: brandTwo.withOpacity(0.2),
+                  //                               borderRadius:
+                  //                                   BorderRadius.circular(100.sp),
+                  //                             ),
+                  //                             child: Image.asset(
+                  //                               'assets/icons/space_rent.png',
+                  //                               color: brandOne,
+                  //                               scale: 4.sp,
+                  //                               // width: 20,
+                  //                             ),
+                  //                           ),
+                  //                           const SizedBox(
+                  //                             width: 5,
+                  //                           ),
+                  //                           Text(
+                  //                             'SpaceRent',
+                  //                             textAlign: TextAlign.center,
+                  //                             style: GoogleFonts.nunito(
+                  //                               fontSize: 15.0,
+                  //                               fontWeight: FontWeight.w600,
+                  //                               // fontFamily: "DefaultFontFamily",
+                  //                               // letterSpacing: 0.5,
+                  //                               color: brandOne,
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                       const Icon(
+                  //                         Icons.arrow_forward_ios,
+                  //                         size: 15,
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.all(8.0),
+                  //                   child: Text(
+                  //                     " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "*****"}",
+                  //                     //  textAlign: TextAlign.center,
+                  //                     style: GoogleFonts.nunito(
+                  //                       fontSize: 17.0.sp,
+                  //                       // fontFamily: "DefaultFontFamily",
+                  //                       // letterSpacing: 0.5,
+                  //                       fontWeight: FontWeight.w700,
+                  //                       color: brandOne,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         )
+
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-            (rentBalance !=
-                    (targetBalance * 0.7))
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/icons/cooming_soon.png',
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              // top: 45,
+              bottom: 25,
+              right: 20,
+            ),
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+                top: 10,
+                bottom: 20,
+                right: 10,
+              ),
+              decoration: BoxDecoration(
+                color: brandTwo.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      top: 15,
+                      bottom: 10,
+                      // right: 20,
+                    ),
+                    child: Text(
+                      'Savings Plan',
+                      style: GoogleFonts.nunito(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        'Coming Soon!!!',
-                        style: GoogleFonts.nunito(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    // padding: const EdgeInsets.all(10),
+                    itemCount: 1,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          (rentController.rent.isEmpty)
+                              ? Get.to(const SpaceRentIntro())
+                              : Get.to(const RentSpaceList());
+                        },
+                        child: _savingsWidget(
+                          'assets/icons/space_rent.png',
+                          'SpaceRent',
+                          'Save 70% of your rent and get 30% loan.',
+                          '14% interest per annum.',
                         ),
-                      ),
-                    ],
-                  )
-                : SizedBox(),
-          ],
-        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

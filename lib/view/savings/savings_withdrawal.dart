@@ -1411,7 +1411,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                         child: ListView(
                           children: [
                             const SizedBox(
-                              height: 50,
+                              height: 30,
                             ),
                             Text(
                               "Note that the withdrawal process will be according to our Terms of use",
@@ -1421,14 +1421,13 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
+                             SizedBox(
+                              height: 10.h,
                             ),
                             Text(
                               "Available balance: ${nairaFormaet.format(int.tryParse(walletBalance)! - 20)}",
                               style: GoogleFonts.nunito(
                                 fontSize: 16,
-                                //fontFamily: "DefaultFontFamily",
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w600,
                               ),

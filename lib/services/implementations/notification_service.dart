@@ -46,7 +46,7 @@ class NotificationService extends ChangeNotifier {
               timestamp: (data['timestamp'] as Timestamp).toDate(),
               isRead: data['isRead']))
           .toList();
-      print(fetchedNotifications);
+      // print(fetchedNotifications);
 
       // Update the _notifications list
       _notifications = fetchedNotifications;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
@@ -532,8 +534,12 @@ class _DashboardState extends State<Dashboard> {
                                           color: Colors.white,
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          padding:  EdgeInsets.fromLTRB(
-                                              5.0.w, 4.0.h, 5.0.w, 4.0.h,),
+                                          padding: EdgeInsets.fromLTRB(
+                                            5.0.w,
+                                            4.0.h,
+                                            5.0.w,
+                                            4.0.h,
+                                          ),
                                           child: Text(
                                             (userController.user[0].userId !=
                                                     "")
@@ -549,7 +555,7 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:  EdgeInsets.fromLTRB(
+                                        padding: EdgeInsets.fromLTRB(
                                           20.0.w,
                                           10.0.h,
                                           20.0.w,
@@ -586,7 +592,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   borderRadius: BorderRadius.circular(20.sp)),
                               child: Padding(
-                                padding:  EdgeInsets.only(top: 24.h),
+                                padding: EdgeInsets.only(top: 24.h),
                                 child: Column(
                                   children: [
                                     Row(
@@ -601,7 +607,7 @@ class _DashboardState extends State<Dashboard> {
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                         SizedBox(
+                                        SizedBox(
                                           width: 5.w,
                                         ),
                                         GestureDetector(
@@ -620,13 +626,13 @@ class _DashboardState extends State<Dashboard> {
                                         )
                                       ],
                                     ),
-                                     SizedBox(
+                                    SizedBox(
                                       height: 15.h,
                                     ),
                                     Center(
                                       child: Container(
                                         // width: 280,
-                                        padding:  EdgeInsets.symmetric(
+                                        padding: EdgeInsets.symmetric(
                                             horizontal: 20.w, vertical: 10.h),
                                         decoration: BoxDecoration(
                                           color: brandFour,
@@ -642,7 +648,7 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ),
                                     ),
-                                     SizedBox(
+                                    SizedBox(
                                       height: 25.h,
                                     ),
                                     GestureDetector(
@@ -683,10 +689,10 @@ class _DashboardState extends State<Dashboard> {
                                                   color: Colors.white,
                                                   fontSize: 20.sp),
                                             ),
-                                             SizedBox(
+                                            SizedBox(
                                               width: 10.w,
                                             ),
-                                             Icon(
+                                            Icon(
                                               Icons.add_circle,
                                               size: 30.sp,
                                               color: Colors.white,
@@ -758,11 +764,11 @@ class _DashboardState extends State<Dashboard> {
                 // const SizedBox(
                 //   height: 25,
                 // ),
-                 SizedBox(
+                SizedBox(
                   height: 20.h,
                 ),
                 Padding(
-                  padding:  EdgeInsets.all(8.0.sp),
+                  padding: EdgeInsets.all(8.0.sp),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -1010,7 +1016,8 @@ class _DashboardState extends State<Dashboard> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 24),
                     child: Column(
                       children: [
                         Row(
@@ -1128,9 +1135,8 @@ class _DashboardState extends State<Dashboard> {
                                                                           50),
                                                                   maximumSize:
                                                                       const Size(
-                                                                          300,
+                                                                          200,
                                                                           50),
-
                                                                   backgroundColor:
                                                                       brandOne,
                                                                   shape:
@@ -1139,26 +1145,20 @@ class _DashboardState extends State<Dashboard> {
                                                                         BorderRadius
                                                                             .circular(8),
                                                                   ),
-                                                                  // padding: const EdgeInsets
-                                                                  //     .symmetric(
-                                                                  //     horizontal:
-                                                                  //         50,
-                                                                  //     vertical:
-                                                                  //         10),
                                                                   textStyle: const TextStyle(
                                                                       color:
                                                                           brandFour,
                                                                       fontSize:
                                                                           13),
                                                                 ),
-                                                                child:
-                                                                     Row(
+                                                                child: Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    const Icon(Iconsax
-                                                                        .card),
+                                                                    const Icon(
+                                                                        Iconsax
+                                                                            .card),
                                                                     const SizedBox(
                                                                       width: 10,
                                                                     ),
@@ -1171,7 +1171,7 @@ class _DashboardState extends State<Dashboard> {
                                                                         fontWeight:
                                                                             FontWeight.w500,
                                                                         fontSize:
-                                                                            16.sp,
+                                                                            12.sp,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1361,26 +1361,11 @@ class _DashboardState extends State<Dashboard> {
                                                                           0)
                                                                       ? Get.to(
                                                                           const WalletWithdrawal())
-                                                                      :
-                                                                      // Get
-                                                                      //     .snackbar(
-                                                                      //     "Wallet Empty!",
-                                                                      //     'You need to fund your wallet first!',
-                                                                      //     animationDuration:
-                                                                      //         const Duration(seconds: 1),
-                                                                      //     backgroundColor:
-                                                                      //         Colors.red,
-                                                                      //     colorText:
-                                                                      //         Colors.white,
-                                                                      //     snackPosition:
-                                                                      //         SnackPosition.BOTTOM,
-                                                                      //   );
-                                                                      customErrorDialog(
+                                                                      : customErrorDialog(
                                                                           context,
                                                                           'Wallet Empty! :)',
                                                                           'You need to fund your wallet first!',
                                                                         );
-                                                          
                                                                 },
                                                                 style: ElevatedButton
                                                                     .styleFrom(
@@ -1390,7 +1375,7 @@ class _DashboardState extends State<Dashboard> {
                                                                           50),
                                                                   maximumSize:
                                                                       const Size(
-                                                                          300,
+                                                                          200,
                                                                           50),
                                                                   backgroundColor:
                                                                       brandOne,
@@ -1400,12 +1385,6 @@ class _DashboardState extends State<Dashboard> {
                                                                         BorderRadius
                                                                             .circular(8),
                                                                   ),
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          50,
-                                                                      vertical:
-                                                                          10),
                                                                   textStyle: const TextStyle(
                                                                       color:
                                                                           brandFour,
@@ -1417,12 +1396,9 @@ class _DashboardState extends State<Dashboard> {
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    Image.asset(
-                                                                      'assets/icons/iconset/uil_money-withdrawal.png',
-                                                                      width: 30,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
+                                                                    const Icon(
+                                                                        Iconsax
+                                                                            .card),
                                                                     const SizedBox(
                                                                       width: 10,
                                                                     ),
@@ -1434,8 +1410,7 @@ class _DashboardState extends State<Dashboard> {
                                                                             .white,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        fontSize:
-                                                                            14.sp,
+                                                                        fontSize:10.sp,
                                                                       ),
                                                                     ),
                                                                   ],

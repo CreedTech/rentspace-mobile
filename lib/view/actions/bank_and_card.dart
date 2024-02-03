@@ -18,9 +18,9 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../constants/widgets/custom_dialog.dart';
 
 class BankAndCard extends StatefulWidget {
-  BankAndCard({
-    Key? key,
-  }) : super(key: key);
+  const BankAndCard({
+    super.key,
+  });
 
   @override
   _BankAndCardState createState() => _BankAndCardState();

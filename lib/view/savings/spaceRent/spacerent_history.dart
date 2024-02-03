@@ -37,7 +37,7 @@ doSomeThing() {
 
   String dateString = (paymentInfo
       .split(" ")[0]
-      .substring(0, paymentInfo.split(" ")[0].length - 3));
+      .substring(0, paymentInfo.split(" ")[0].length - 4));
 
   try {
     DateTime dateTime = DateTime.parse(dateString);
@@ -55,7 +55,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   @override
   initState() {
     super.initState();
-    print(_payments.length);
     doSomeThing();
     setState(() {
       _payments = rentController.rent[0].history.reversed.toList();

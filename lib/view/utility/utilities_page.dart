@@ -173,7 +173,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   Text(
@@ -183,7 +183,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Text(
@@ -193,18 +193,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       fontSize: 12,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    " ${userBetName}",
+                    " $userBetName",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -215,18 +215,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     keyboardType: TextInputType.phone,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     maxLength: 11,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
                       prefix: Text(
                         "" + varValue.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.black,
                         ),
                       ),
-                      label: Text(
+                      label: const Text(
                         "Amount in naira",
                         style: TextStyle(
                           color: Colors.grey,
@@ -234,24 +234,24 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: brandOne, width: 2.0),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: brandOne, width: 2.0),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: brandOne, width: 2.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: brandOne, width: 2.0),
                       ),
                       filled: true,
                       fillColor: brandThree,
                       hintText: '',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.black,
                         fontSize: 13,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Pinput(
@@ -272,7 +272,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     closeKeyboardWhenCompleted: true,
                     keyboardType: TextInputType.number,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   GFButton(
@@ -287,7 +287,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                         Get.snackbar(
                           "Insufficient fund",
                           "You do not have sufficient fund to perform the transaction. Fund your Space Wallet and retry",
-                          animationDuration: Duration(seconds: 2),
+                          animationDuration: const Duration(seconds: 2),
                           backgroundColor: Colors.red,
                           colorText: Colors.white,
                           snackPosition: SnackPosition.BOTTOM,
@@ -370,7 +370,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Success!",
         "You just earned a Space point!",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -385,7 +385,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Error",
         "Try again later",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -445,7 +445,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Success!",
         "You just earned a Space point!",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -460,7 +460,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Error",
         "Try again later",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -539,7 +539,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                 padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
                     Text(
@@ -550,11 +550,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      "Here is your Token: ${electricToken}",
+                      "Here is your Token: $electricToken",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 22,
@@ -571,7 +571,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       color: brandOne,
                       shape: GFButtonShape.pills,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                   ],
@@ -594,7 +594,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Error",
         "Try again later",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -636,17 +636,17 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                 padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
                     Text(
-                      "Subscribe to ${tvPlanName} and earn 1 SpacePoint!",
+                      "Subscribe to $tvPlanName and earn 1 SpacePoint!",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
                     Text(
@@ -656,22 +656,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      " ${tvFirst} ${tvLast}",
+                      " $tvFirst $tvLast",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      " ${tvStatus}",
+                      " $tvStatus",
                       style: TextStyle(
                         color: (tvStatus == "Open")
                             ? Colors.greenAccent
@@ -679,7 +679,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Pinput(
@@ -700,7 +700,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       closeKeyboardWhenCompleted: true,
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     GFButton(
@@ -720,7 +720,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                           Get.snackbar(
                             "Insufficient fund",
                             "You do not have sufficient fund to perform the transaction. Fund your Space Wallet and retry",
-                            animationDuration: Duration(seconds: 2),
+                            animationDuration: const Duration(seconds: 2),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.BOTTOM,
@@ -751,7 +751,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       Get.snackbar(
         "Failed!",
         "The request failed. Check that the Smart Card Number is valid and retry.",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -770,7 +770,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   Text(
@@ -780,7 +780,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
@@ -791,18 +791,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     keyboardType: TextInputType.phone,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     maxLength: 11,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
                       prefix: Text(
                         "" + varValue.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.black,
                         ),
                       ),
-                      label: Text(
+                      label: const Text(
                         "Enter valid Meter number",
                         style: TextStyle(
                           color: Colors.grey,
@@ -810,24 +810,24 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: brandOne, width: 2.0),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: brandOne, width: 2.0),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: brandOne, width: 2.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: brandOne, width: 2.0),
                       ),
                       filled: true,
                       fillColor: brandThree,
                       hintText: '',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.black,
                         fontSize: 13,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   GFButton(
@@ -879,7 +879,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         20.0, 0, 20, 0),
                                     child: Column(
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 100,
                                         ),
                                         Text(
@@ -890,7 +890,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             fontSize: 18,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 4,
                                         ),
                                         Text(
@@ -901,11 +901,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Text(
-                                          " ${userElectricName}",
+                                          " $userElectricName",
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -913,18 +913,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Text(
-                                          " ${userElectricAddress}",
+                                          " $userElectricAddress",
                                           style: TextStyle(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontSize: 18,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 30,
                                         ),
                                         TextFormField(
@@ -937,18 +937,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           maxLengthEnforcement:
                                               MaxLengthEnforcement.enforced,
                                           maxLength: 11,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.black,
                                           ),
                                           decoration: InputDecoration(
                                             prefix: Text(
                                               "" + varValue.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            label: Text(
+                                            label: const Text(
                                               "Amount in naira",
                                               style: TextStyle(
                                                 color: Colors.grey,
@@ -957,27 +957,27 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
+                                              borderSide: const BorderSide(
+                                                  color: brandOne, width: 2.0),
+                                            ),
+                                            focusedBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: brandOne, width: 2.0),
                                             ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: brandOne, width: 2.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
+                                            enabledBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: brandOne, width: 2.0),
                                             ),
                                             filled: true,
                                             fillColor: brandThree,
                                             hintText: '',
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 13,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Pinput(
@@ -1001,7 +1001,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           closeKeyboardWhenCompleted: true,
                                           keyboardType: TextInputType.number,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 50,
                                         ),
                                         GFButton(
@@ -1020,7 +1020,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 "Insufficient fund",
                                                 "You do not have sufficient fund to perform the transaction. Fund your Space Wallet and retry",
                                                 animationDuration:
-                                                    Duration(seconds: 2),
+                                                    const Duration(seconds: 2),
                                                 backgroundColor: Colors.red,
                                                 colorText: Colors.white,
                                                 snackPosition:
@@ -1060,7 +1060,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                           Get.snackbar(
                             "Failed!",
                             "The request failed. Check that the meter Number is valid and retry.",
-                            animationDuration: Duration(seconds: 2),
+                            animationDuration: const Duration(seconds: 2),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.BOTTOM,
@@ -1128,17 +1128,17 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 100,
                                 ),
                                 Text(
-                                  "Subscribe to ${dataPlanName} and earn 1 SpacePoint!",
+                                  "Subscribe to $dataPlanName and earn 1 SpacePoint!",
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 18,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 4,
                                 ),
                                 Text(
@@ -1148,7 +1148,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     fontSize: 12,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                                 TextFormField(
@@ -1164,18 +1164,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
 
                                   // update the state variable when the text changes
 
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                   ),
                                   decoration: InputDecoration(
                                     prefix: Text(
                                       "" + varValue.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    label: Text(
+                                    label: const Text(
                                       "Enter valid number",
                                       style: TextStyle(
                                         color: Colors.grey,
@@ -1183,27 +1183,27 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: brandOne, width: 2.0),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: brandOne, width: 2.0),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: brandOne, width: 2.0),
                                     ),
                                     filled: true,
                                     fillColor: brandThree,
                                     hintText: '',
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 13,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Pinput(
@@ -1225,7 +1225,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                   closeKeyboardWhenCompleted: true,
                                   keyboardType: TextInputType.number,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 50,
                                 ),
                                 GFButton(
@@ -1314,7 +1314,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           "Success!",
                                           "You just earned a Space point!",
                                           animationDuration:
-                                              Duration(seconds: 2),
+                                              const Duration(seconds: 2),
                                           backgroundColor: brandOne,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.TOP,
@@ -1331,7 +1331,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           "Error",
                                           "Try again later",
                                           animationDuration:
-                                              Duration(seconds: 2),
+                                              const Duration(seconds: 2),
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.BOTTOM,
@@ -1344,7 +1344,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       Get.snackbar(
                                         "Error",
                                         "Fill the field correctly to proceed",
-                                        animationDuration: Duration(seconds: 2),
+                                        animationDuration: const Duration(seconds: 2),
                                         backgroundColor: Colors.red,
                                         colorText: Colors.white,
                                         snackPosition: SnackPosition.BOTTOM,
@@ -1440,17 +1440,17 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 100,
                                 ),
                                 Text(
-                                  "Subscribe to ${tvPlanName} and earn 1 SpacePoint!",
+                                  "Subscribe to $tvPlanName and earn 1 SpacePoint!",
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 18,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 4,
                                 ),
                                 Text(
@@ -1460,7 +1460,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     fontSize: 12,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                                 TextFormField(
@@ -1476,18 +1476,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
 
                                   // update the state variable when the text changes
 
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                   ),
                                   decoration: InputDecoration(
                                     prefix: Text(
                                       "" + varValue.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    label: Text(
+                                    label: const Text(
                                       "Enter valid Smart card number",
                                       style: TextStyle(
                                         color: Colors.grey,
@@ -1495,27 +1495,27 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: brandOne, width: 2.0),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: brandOne, width: 2.0),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: brandOne, width: 2.0),
                                     ),
                                     filled: true,
                                     fillColor: brandThree,
                                     hintText: '',
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 13,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 50,
                                 ),
                                 GFButton(
@@ -1702,7 +1702,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
 
       // update the state variable when the text changes
 
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
@@ -1710,12 +1710,12 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       decoration: InputDecoration(
         prefix: Text(
           "₦" + varValue.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15,
             color: Colors.grey,
           ),
         ),
-        label: Text(
+        label: const Text(
           "How much do you want to recharge?",
           style: TextStyle(
             color: Colors.grey,
@@ -1723,21 +1723,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -1755,18 +1755,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
 
       // update the state variable when the text changes
 
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       decoration: InputDecoration(
         prefix: Text(
           "" + varValue.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15,
             color: Colors.black,
           ),
         ),
-        label: Text(
+        label: const Text(
           "Enter valid number",
           style: TextStyle(
             color: Colors.grey,
@@ -1774,21 +1774,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: '',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -1814,7 +1814,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             ? Container(
                                 height: double.infinity,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/icons/RentSpace-icon.png"),
@@ -1826,9 +1826,9 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     const EdgeInsets.fromLTRB(2.0, 5, 2.0, 5),
                                 child: ListView(
                                   shrinkWrap: true,
-                                  physics: ClampingScrollPhysics(),
+                                  physics: const ClampingScrollPhysics(),
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
 
@@ -1865,7 +1865,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
 
                                     InkWell(
                                       onTap: () {
-                                        Get.to(UtilitiesHistory());
+                                        Get.to(const UtilitiesHistory());
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(10.0),
@@ -1885,7 +1885,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               ),
                                               textAlign: TextAlign.start,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 5,
                                             ),
                                             Icon(
@@ -1911,7 +1911,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Padding(
@@ -1947,7 +1947,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Padding(
@@ -1961,7 +1961,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     GFAccordion(
@@ -1971,8 +1971,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.remove,
                                           color: brandOne,
                                         ),
@@ -1983,14 +1983,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.add,
                                           color: brandOne,
                                         ),
                                       ),
                                       title: "Airtime Top-up",
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "DefaultFontFamily",
                                       ),
@@ -2012,7 +2012,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     height: 500,
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                         topLeft:
                                                             Radius.circular(
                                                                 30.0),
@@ -2024,21 +2024,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         color: Theme.of(context)
                                                             .canvasColor,
                                                         padding:
-                                                            EdgeInsets.fromLTRB(
+                                                            const EdgeInsets.fromLTRB(
                                                                 50, 5, 50, 5),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Image.asset(
                                                               "assets/utility/mtn.jpg",
                                                               height: 80,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -2052,7 +2052,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     .primaryColor,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 4,
                                                             ),
                                                             Text(
@@ -2064,7 +2064,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                 fontSize: 12,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 30,
                                                             ),
                                                             Text(
@@ -2079,11 +2079,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             airtimePhone,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             airtimeAmount,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Text(
@@ -2098,7 +2098,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             pinInput,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             RoundedLoadingButton(
@@ -2229,7 +2229,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Success!",
                                                                       "You just earned a Space point!",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           brandOne,
@@ -2257,7 +2257,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Error",
                                                                       "Try again later",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           Colors
@@ -2279,7 +2279,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     "Incomplete",
                                                                     "Fill the field correctly to proceed",
                                                                     animationDuration:
-                                                                        Duration(
+                                                                        const Duration(
                                                                             seconds:
                                                                                 2),
                                                                     backgroundColor:
@@ -2299,7 +2299,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       .size
                                                                       .width /
                                                                   2,
-                                                              child: Text(
+                                                              color: brandOne,
+                                                              child: const Text(
                                                                 'Proceed to payment',
                                                                 style:
                                                                     TextStyle(
@@ -2310,9 +2311,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "DefaultFontFamily",
                                                                 ),
                                                               ),
-                                                              color: brandOne,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                           ],
@@ -2339,7 +2339,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -2351,7 +2351,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     height: 500,
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                         topLeft:
                                                             Radius.circular(
                                                                 30.0),
@@ -2363,21 +2363,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         color: Theme.of(context)
                                                             .canvasColor,
                                                         padding:
-                                                            EdgeInsets.fromLTRB(
+                                                            const EdgeInsets.fromLTRB(
                                                                 50, 5, 50, 5),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Image.asset(
                                                               "assets/utility/glo.jpg",
                                                               height: 80,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -2391,7 +2391,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     .primaryColor,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 4,
                                                             ),
                                                             Text(
@@ -2403,7 +2403,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                 fontSize: 12,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 30,
                                                             ),
                                                             Text(
@@ -2418,11 +2418,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             airtimePhone,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             airtimeAmount,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Text(
@@ -2437,7 +2437,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             pinInput,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             RoundedLoadingButton(
@@ -2567,7 +2567,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Success!",
                                                                       "You just earned a Space point!",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           brandOne,
@@ -2595,7 +2595,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Error",
                                                                       "Try again later",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           Colors
@@ -2617,7 +2617,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     "Incomplete",
                                                                     "Fill the field correctly to proceed",
                                                                     animationDuration:
-                                                                        Duration(
+                                                                        const Duration(
                                                                             seconds:
                                                                                 2),
                                                                     backgroundColor:
@@ -2637,7 +2637,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       .size
                                                                       .width /
                                                                   2,
-                                                              child: Text(
+                                                              color: brandOne,
+                                                              child: const Text(
                                                                 'Proceed to payment',
                                                                 style:
                                                                     TextStyle(
@@ -2648,9 +2649,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                   fontSize: 13,
                                                                 ),
                                                               ),
-                                                              color: brandOne,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                           ],
@@ -2677,7 +2677,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -2689,7 +2689,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     height: 500,
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                         topLeft:
                                                             Radius.circular(
                                                                 30.0),
@@ -2701,21 +2701,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         color: Theme.of(context)
                                                             .canvasColor,
                                                         padding:
-                                                            EdgeInsets.fromLTRB(
+                                                            const EdgeInsets.fromLTRB(
                                                                 50, 5, 50, 5),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Image.asset(
                                                               "assets/utility/airtel.jpg",
                                                               height: 80,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -2729,7 +2729,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     .primaryColor,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 4,
                                                             ),
                                                             Text(
@@ -2741,7 +2741,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                 fontSize: 12,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 30,
                                                             ),
                                                             Text(
@@ -2756,11 +2756,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             airtimePhone,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             airtimeAmount,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Text(
@@ -2775,7 +2775,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             pinInput,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             RoundedLoadingButton(
@@ -2905,7 +2905,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Success!",
                                                                       "You just earned a Space point!",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           brandOne,
@@ -2933,7 +2933,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Error",
                                                                       "Try again later",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           Colors
@@ -2955,7 +2955,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     "Incomplete",
                                                                     "Fill the field correctly to proceed",
                                                                     animationDuration:
-                                                                        Duration(
+                                                                        const Duration(
                                                                             seconds:
                                                                                 2),
                                                                     backgroundColor:
@@ -2975,7 +2975,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       .size
                                                                       .width /
                                                                   2,
-                                                              child: Text(
+                                                              color: brandOne,
+                                                              child: const Text(
                                                                 'Proceed to payment',
                                                                 style:
                                                                     TextStyle(
@@ -2986,9 +2987,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "DefaultFontFamily",
                                                                 ),
                                                               ),
-                                                              color: brandOne,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                           ],
@@ -3015,7 +3015,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3027,7 +3027,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     height: 500,
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                         topLeft:
                                                             Radius.circular(
                                                                 30.0),
@@ -3039,21 +3039,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         color: Theme.of(context)
                                                             .canvasColor,
                                                         padding:
-                                                            EdgeInsets.fromLTRB(
+                                                            const EdgeInsets.fromLTRB(
                                                                 50, 5, 50, 5),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Image.asset(
                                                               "assets/utility/9mobile.jpg",
                                                               height: 80,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Text(
@@ -3067,7 +3067,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     .primaryColor,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 4,
                                                             ),
                                                             Text(
@@ -3079,7 +3079,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                 fontSize: 12,
                                                               ),
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 30,
                                                             ),
                                                             Text(
@@ -3094,11 +3094,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             airtimePhone,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             airtimeAmount,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             Text(
@@ -3113,7 +3113,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                               ),
                                                             ),
                                                             pinInput,
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                             RoundedLoadingButton(
@@ -3243,7 +3243,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Success!",
                                                                       "You just earned a Space point!",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           brandOne,
@@ -3271,7 +3271,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "Error",
                                                                       "Try again later",
                                                                       animationDuration:
-                                                                          Duration(
+                                                                          const Duration(
                                                                               seconds: 2),
                                                                       backgroundColor:
                                                                           Colors
@@ -3293,7 +3293,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     "Incomplete",
                                                                     "Fill the field correctly to proceed",
                                                                     animationDuration:
-                                                                        Duration(
+                                                                        const Duration(
                                                                             seconds:
                                                                                 2),
                                                                     backgroundColor:
@@ -3313,7 +3313,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       .size
                                                                       .width /
                                                                   2,
-                                                              child: Text(
+                                                              color: brandOne,
+                                                              child: const Text(
                                                                 'Proceed to payment',
                                                                 style:
                                                                     TextStyle(
@@ -3324,9 +3325,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                       "DefaultFontFamily",
                                                                 ),
                                                               ),
-                                                              color: brandOne,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 20,
                                                             ),
                                                           ],
@@ -3364,8 +3364,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.remove,
                                           color: brandOne,
                                         ),
@@ -3376,14 +3376,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.add,
                                           color: brandOne,
                                         ),
                                       ),
                                       title: "Data Subscription",
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "DefaultFontFamily",
                                       ),
@@ -3420,7 +3420,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3447,7 +3447,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3474,7 +3474,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3519,7 +3519,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               textAlign: TextAlign.center,
                                             ),
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
 
                                     GFAccordion(
                                       expandedIcon: Container(
@@ -3528,8 +3528,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.remove,
                                           color: brandOne,
                                         ),
@@ -3540,14 +3540,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.add,
                                           color: brandOne,
                                         ),
                                       ),
                                       title: "Cable Tv",
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "DefaultFontFamily",
                                       ),
@@ -3585,7 +3585,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3613,7 +3613,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3657,7 +3657,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               textAlign: TextAlign.center,
                                             ),
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
 
                                     GFAccordion(
                                       expandedIcon: Container(
@@ -3666,8 +3666,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.remove,
                                           color: brandOne,
                                         ),
@@ -3678,14 +3678,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.add,
                                           color: brandOne,
                                         ),
                                       ),
                                       title: "Electricity - Prepaid",
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "DefaultFontFamily",
                                       ),
@@ -3722,7 +3722,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3749,7 +3749,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3776,7 +3776,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3803,7 +3803,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3830,7 +3830,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3857,7 +3857,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3884,7 +3884,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               width: 40,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ListTile(
@@ -3925,8 +3925,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.remove,
                                           color: brandOne,
                                         ),
@@ -3937,14 +3937,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        padding: EdgeInsets.all(2),
-                                        child: Icon(
+                                        padding: const EdgeInsets.all(2),
+                                        child: const Icon(
                                           Icons.add,
                                           color: brandOne,
                                         ),
                                       ),
                                       title: "Betting",
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontFamily: "DefaultFontFamily",
                                       ),
@@ -3962,7 +3962,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               ? ListView.builder(
                                                   shrinkWrap: true,
                                                   physics:
-                                                      ClampingScrollPhysics(),
+                                                      const ClampingScrollPhysics(),
                                                   itemCount: betList.length,
                                                   itemBuilder:
                                                       (context, index) {
@@ -3992,7 +3992,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                     child:
                                                                         Column(
                                                                       children: [
-                                                                        SizedBox(
+                                                                        const SizedBox(
                                                                           height:
                                                                               100,
                                                                         ),
@@ -4004,7 +4004,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                           width:
                                                                               80,
                                                                         ),
-                                                                        SizedBox(
+                                                                        const SizedBox(
                                                                           height:
                                                                               5,
                                                                         ),
@@ -4018,7 +4018,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                                 18,
                                                                           ),
                                                                         ),
-                                                                        SizedBox(
+                                                                        const SizedBox(
                                                                           height:
                                                                               30,
                                                                         ),
@@ -4038,7 +4038,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                           maxLength:
                                                                               11,
                                                                           style:
-                                                                              TextStyle(
+                                                                              const TextStyle(
                                                                             color:
                                                                                 Colors.black,
                                                                           ),
@@ -4047,7 +4047,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                             prefix:
                                                                                 Text(
                                                                               "" + varValue.toString(),
-                                                                              style: TextStyle(
+                                                                              style: const TextStyle(
                                                                                 fontSize: 15,
                                                                                 color: Colors.black,
                                                                               ),
@@ -4055,21 +4055,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                             label:
                                                                                 Text(
                                                                               "Enter valid ${bill.name} account number",
-                                                                              style: TextStyle(
+                                                                              style: const TextStyle(
                                                                                 color: Colors.grey,
                                                                               ),
                                                                             ),
                                                                             border:
                                                                                 OutlineInputBorder(
                                                                               borderRadius: BorderRadius.circular(10.0),
-                                                                              borderSide: BorderSide(color: brandOne, width: 2.0),
+                                                                              borderSide: const BorderSide(color: brandOne, width: 2.0),
                                                                             ),
                                                                             focusedBorder:
-                                                                                OutlineInputBorder(
+                                                                                const OutlineInputBorder(
                                                                               borderSide: BorderSide(color: brandOne, width: 2.0),
                                                                             ),
                                                                             enabledBorder:
-                                                                                OutlineInputBorder(
+                                                                                const OutlineInputBorder(
                                                                               borderSide: BorderSide(color: brandOne, width: 2.0),
                                                                             ),
                                                                             filled:
@@ -4079,13 +4079,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                             hintText:
                                                                                 '',
                                                                             hintStyle:
-                                                                                TextStyle(
+                                                                                const TextStyle(
                                                                               color: Colors.black,
                                                                               fontSize: 13,
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                        SizedBox(
+                                                                        const SizedBox(
                                                                           height:
                                                                               50,
                                                                         ),
@@ -4134,7 +4134,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                                                 Get.snackbar(
                                                                                   "Failed!",
                                                                                   "The request failed. Check that the Account Number is valid and retry.",
-                                                                                  animationDuration: Duration(seconds: 2),
+                                                                                  animationDuration: const Duration(seconds: 2),
                                                                                   backgroundColor: Colors.red,
                                                                                   colorText: Colors.white,
                                                                                   snackPosition: SnackPosition.BOTTOM,
@@ -4207,7 +4207,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     ),
 
                                     //
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 80,
                                     ),
                                   ],
@@ -4216,7 +4216,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             : Container(
                                 height: double.infinity,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(
                                         "assets/icons/RentSpace-icon.png"),
@@ -4249,12 +4249,12 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     GFButton(
                                       onPressed: () async {
-                                        Get.to(nt.BvnPage());
+                                        Get.to(const nt.BvnPage());
                                       },
                                       text: "  Begin Verification  ",
                                       fullWidthButton: false,
@@ -4268,7 +4268,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     : Container(
                         height: double.infinity,
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                               image:
                                   AssetImage("assets/icons/RentSpace-icon.png"),
@@ -4279,29 +4279,29 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "${loadMssg}" + varValue.toString(),
+                                  "$loadMssg" + varValue.toString(),
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: "DefaultFontFamily",
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
-                            CircularProgressIndicator(
+                            const CircularProgressIndicator(
                               color: brandOne,
                             ),
                           ],
@@ -4313,7 +4313,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
             body: Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/icons/RentSpace-icon.png"),
                   fit: BoxFit.cover,
@@ -4334,12 +4334,12 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GFButton(
                       onPressed: () async {
-                        Get.to(FundWallet());
+                        Get.to(const FundWallet());
                       },
                       text: "  Fund SpaceWallet  ",
                       fullWidthButton: false,

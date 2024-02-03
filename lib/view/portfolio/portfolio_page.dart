@@ -3,19 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/rent_controller.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/portfolio/finance_health.dart';
-import 'package:rentspace/view/savings/savings_withdrawal.dart';
 //import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_liquidate.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -86,21 +82,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.07,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: ListView(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
@@ -126,7 +113,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           // letterSpacing: 0.5,
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
-                          // fontFamily: "DefaultFontFamily",
                         ),
                       ),
                       const SizedBox(
@@ -139,11 +125,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           // letterSpacing: 0.5,
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
-                          // fontFamily: "DefaultFontFamily",
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(15, 25, 15, 25),
@@ -162,7 +147,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   style: GoogleFonts.nunito(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
+
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
                                   ),
@@ -175,19 +160,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     fontWeight: FontWeight.w700,
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 6,
+                              height: 3,
                             ),
                             const MySeparator(
                               color: Color(0xffE0E0E0),
                             ),
                             const SizedBox(
-                              height: 6,
+                              height: 3,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,7 +181,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   style: GoogleFonts.nunito(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
+
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
                                   ),
@@ -209,19 +193,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     fontWeight: FontWeight.w700,
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 6,
+                              height: 3,
                             ),
                             const MySeparator(
                               color: Color(0xffE0E0E0),
                             ),
                             const SizedBox(
-                              height: 6,
+                              height: 3,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +214,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   style: GoogleFonts.nunito(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
+
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
                                   ),
@@ -243,7 +226,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     fontWeight: FontWeight.w700,
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                               ],
@@ -265,7 +247,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   style: GoogleFonts.nunito(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
+
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
                                   ),
@@ -277,7 +259,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     fontWeight: FontWeight.w700,
                                     // letterSpacing: 0.5,
                                     color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                               ],
@@ -292,56 +273,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   height: 20,
                 ),
 
-                const SizedBox(
-                  height: 30,
-                ),
-                // finance health
-                // Container(
-                //   padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                //   child: ListTile(
-                //     title: const Text(
-                //       "My finance health",
-                //       style: TextStyle(
-                //         fontFamily: "DefaultFontFamily",
-                //         fontSize: 30.0,
-                //         letterSpacing: 0.5,
-                //         fontWeight: FontWeight.bold,
-                //         color: customColorOne,
-                //       ),
-                //     ),
-                //     subtitle: const Text(
-                //       "Based on portfolio worth",
-                //       style: TextStyle(
-                //         fontSize: 16.0,
-                //         fontFamily: "DefaultFontFamily",
-                //         letterSpacing: 0.5,
-                //         fontWeight: FontWeight.bold,
-                //         color: brandOne,
-                //       ),
-                //     ),
-                //     trailing: SimpleCircularProgressBar(
-                //       progressColors: (valueNotifier.value < 70)
-                //           ? (valueNotifier.value < 30
-                //               ? ([Colors.red])
-                //               : ([Colors.cyan]))
-                //           : [Colors.greenAccent],
-                //       size: 50.0,
-                //       animationDuration: 3,
-                //       backColor: brandThree,
-                //       backStrokeWidth: 10.0,
-                //       fullProgressColor: Colors.greenAccent,
-                //       maxValue: 100,
-                //       valueNotifier: valueNotifier,
-                //       progressStrokeWidth: 10.0,
-                //       startAngle: 0,
-                //       mergeMode: true,
-                //       onGetText: (value) {
-                //         return Text(value.toInt().toString() + "%");
-                //       },
-                //     ),
-                //     tileColor: brandThree,
-                //   ),
+                // const SizedBox(
+                //   height: 30,
                 // ),
+                // finance health
 
                 // const SizedBox(
                 //   height: 30,
@@ -354,16 +289,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       style: GoogleFonts.nunito(
                         fontSize: 20.0,
                         // letterSpacing: 0.5,
-                        // fontFamily: "DefaultFontFamily",
+
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Container(
-                      // decoration: const BoxDecoration(
-                      //   color: customColorOne,
-                      //   //borderRadius: BorderRadius.circular(10),
-                      // ),
                       padding: const EdgeInsets.all(2),
                       child: Image.asset(
                         "assets/icons/carbon_portfolio.png",
@@ -377,6 +308,75 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 const SizedBox(
                   height: 20,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: brandThree,
+                      borderRadius:
+                          BorderRadius.circular(8.0), // Set border radius
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 3),
+                      child: ListTile(
+                        // shape: ShapeBorder,
+                        leading: Container(
+                          padding: const EdgeInsets.all(9),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: brandTwo.withOpacity(0.2),
+                          ),
+                          child: const Icon(
+                            Iconsax.money_recive5,
+                            color: brandOne,
+                          ),
+                        ),
+                        title: Text(
+                          'Loan',
+                          style: GoogleFonts.nunito(
+                            color: brandOne,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Access Your Loan",
+                          style: GoogleFonts.nunito(
+                            fontSize: 14.0,
+                            // letterSpacing: 0.5,
+
+                            color: const Color(0xff828282),
+                          ),
+                        ),
+                        onTap: () {
+                          ((rentController.rent[0].savedAmount) !=
+                                  (rentController.rent[0].targetAmount * 0.7))
+                              ? showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    backgroundColor: brandOne,
+                                    message: 'Coming soon !!',
+                                    textStyle: GoogleFonts.nunito(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Get.to(const LoanPage());
+                          // Get.to(const ProfilePage());
+                          // Navigator.pushNamed(context, RouteList.profile);
+                        },
+                        trailing: const Icon(
+                          Iconsax.arrow_right_3,
+                          color: brandOne,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Container(
@@ -414,7 +414,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           style: GoogleFonts.nunito(
                             fontSize: 14.0,
                             // letterSpacing: 0.5,
-                            // fontFamily: "DefaultFontFamily",
+
                             color: const Color(0xff828282),
                           ),
                         ),
@@ -479,7 +479,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           style: GoogleFonts.nunito(
                             fontSize: 14.0,
                             // letterSpacing: 0.5,
-                            // fontFamily: "DefaultFontFamily",
+
                             color: const Color(0xff828282),
                           ),
                         ),

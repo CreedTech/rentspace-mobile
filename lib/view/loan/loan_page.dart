@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/controller/user_controller.dart';
 
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -18,17 +21,16 @@ import 'dart:async';
 
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../controller/rent_controller.dart';
+import '../dashboard/dashboard.dart';
+import '../savings/spaceRent/spacerent_history.dart';
+
 String _hasBvn = "";
 String _hasKyc = "";
 int _interest = 1;
 String _userFirst = "";
 String _userLast = "";
 String _userId = "";
-var now = DateTime.now();
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
-
-var formatter = DateFormat('yyyy-MM-dd');
-String formattedDate = formatter.format(now);
 
 class LoanPage extends StatefulWidget {
   const LoanPage({Key? key}) : super(key: key);
@@ -37,7 +39,56 @@ class LoanPage extends StatefulWidget {
   _LoanPageState createState() => _LoanPageState();
 }
 
+var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var now = DateTime.now();
+var formatter = DateFormat('yyyy-MM-dd');
+String formattedDate = formatter.format(now);
+var changeOne = "".obs();
+String savedAmount = "0";
+String fundingId = "";
+String fundDate = "";
+
+int rentBalance = 0;
+int totalSavings = 0;
+bool hideBalance = false;
+
 class _LoanPageState extends State<LoanPage> {
+  final RentController rentController = Get.find();
+  final UserController userController = Get.find();
+
+  DateTime parseDate(String dateString) {
+    List<int> parts = dateString.split('-').map(int.parse).toList();
+    return DateTime(parts[0], parts[1], parts[2]);
+  }
+
+  String formatDate(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  DateTime calculateNextPaymentDate(
+      String chosenDateString, String interval, int numberOfIntervals) {
+    DateTime chosenDate = parseDate(chosenDateString);
+    DateTime nextPaymentDate;
+
+    switch (interval.toLowerCase()) {
+      case 'daily':
+        nextPaymentDate = chosenDate.add(const Duration(days: 1));
+        break;
+      case 'weekly':
+        nextPaymentDate = chosenDate.add(const Duration(days: 7));
+        break;
+      case 'monthly':
+        nextPaymentDate =
+            DateTime(chosenDate.year, chosenDate.month + 1, chosenDate.day);
+        break;
+      default:
+        throw Exception("Invalid interval: $interval");
+    }
+
+    return nextPaymentDate;
+  }
+
   Timer? timer;
 
   String duration = "Days";
@@ -72,6 +123,17 @@ class _LoanPageState extends State<LoanPage> {
 
   @override
   Widget build(BuildContext context) {
+    String chosenDateString = rentController.rent[0].date;
+    String interval = rentController.rent[0].interval;
+    int numberOfIntervals = int.parse(rentController.rent[0].numPayment);
+    DateTime nextPaymentDate =
+        calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
+    String formattedNextDate = formatDate(nextPaymentDate);
+    print(((rentController.rent[0].savedAmount.abs()) ==
+        (rentController.rent[0].targetAmount * 0.7).abs()));
+    print(((rentController.rent[0].savedAmount)));
+    print(((rentController.rent[0].targetAmount * 0.7)));
+
     validateReason(reasonValue) {
       if (reasonValue.isEmpty) {
         return 'Enter a value';
@@ -107,7 +169,7 @@ class _LoanPageState extends State<LoanPage> {
     final payDuration = Container(
       height: 60,
       width: MediaQuery.of(context).size.width / 3,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -188,11 +250,11 @@ class _LoanPageState extends State<LoanPage> {
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         label: Text(
           "How much loan do you want to take?",
           style: TextStyle(
@@ -220,11 +282,11 @@ class _LoanPageState extends State<LoanPage> {
       controller: _durationController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateDuration,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         label: Text(
           "Duration",
           style: TextStyle(
@@ -247,11 +309,11 @@ class _LoanPageState extends State<LoanPage> {
       controller: _reasonController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateReason,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.name,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         label: Text(
           "Description",
           style: TextStyle(
@@ -269,201 +331,423 @@ class _LoanPageState extends State<LoanPage> {
       ),
     );
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
+        // toolbarHeight: 105.0,
+        backgroundColor: Theme.of(context).primaryColorLight,
+        elevation: 1.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(
-            Icons.close,
+          child: const Icon(
+            Icons.arrow_back,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Colors.white,
+          ),
+        ),
+        // centerTitle: true,
+        title: Text(
+          'Loan',
+          style: GoogleFonts.nunito(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: (_hasBvn != "" && _hasKyc != "")
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Text(
-                    "Select duration first, then enter amount to see repayment amount in realtime",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "DefaultFontFamily",
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
+      //
+      body: Obx(() => SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 400,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 0, bottom: 26),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: durationValue,
+                        Text(
+                          'Loan Balance',
+                          style: GoogleFonts.nunito(
+                            color: Colors.white.withOpacity(0.75),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12.sp,
+                          ),
                         ),
-                        payDuration,
+                        Text(
+                          nairaFormaet
+                              .format(
+                                  int.parse(userController.user[0].loanAmount))
+                              .toString(),
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).colorScheme.background,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 31.sp,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'of your ',
+                              style: GoogleFonts.nunito(
+                                color: Colors.white.withOpacity(0.75),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                            Text(
+                              nairaFormaet
+                                  .format(rentController.rent[0].targetAmount)
+                                  .toString(),
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              ' Loan',
+                              style: GoogleFonts.nunito(
+                                color: Colors.white.withOpacity(0.75),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 48),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Center(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Interest Accrued:',
+                                        style: GoogleFonts.nunito(
+                                          color: (themeChange.isSavedDarkMode())
+                                              ? brandTwo
+                                              : Colors.white.withOpacity(0.75),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                        ),
+                                        child: Text(
+                                          nairaFormaet
+                                              .format(rentController
+                                                      .rent[0].targetAmount -
+                                                  (rentController.rent[0]
+                                                          .targetAmount *
+                                                      0.7))
+                                              .toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.nunito(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .background,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Center(
+                                  child: Text(
+                                    'Rent Loan',
+                                    style: GoogleFonts.nunito(
+                                      color: (themeChange.isSavedDarkMode())
+                                          ? brandTwo
+                                          : Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25.sp,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            backgroundColor: (themeChange.isSavedDarkMode())
+                                ? brandOne
+                                : brandTwo,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Get.to(const HomePage());
+                            // for (int i = 0; i < 2; i++) {
+                            //   Get.to(HomePage());
+                            // }
+                          },
+                          child: Text(
+                            'Pay Off Loan',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25.sp,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Next payement date: ',
+                              style: GoogleFonts.nunito(
+                                color: Colors.white.withOpacity(0.75),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              formattedNextDate.toString(),
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height - 400,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(26),
+                        topRight: Radius.circular(26)),
                   ),
-                  reasonValue,
-                  SizedBox(
-                    height: 20,
-                  ),
-                  amount,
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    "Repayment: ₦${form.format(_interest)}",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "DefaultFontFamily",
-                      color: Theme.of(context).primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      top: 20,
+                      bottom: 5,
+                      right: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  RoundedLoadingButton(
-                    child: Text(
-                      'Apply for loan account',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "DefaultFontFamily",
+                    child: Container(
+                      decoration: BoxDecoration(
+                        // color: brandThree,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, top: 0, bottom: 25, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Loan History',
+                                  textAlign: TextAlign.left,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     // print(int.parse(rentController.rent[0].id));
+                                //     // Get.to(SpaceRentHistory(
+                                //     //   current: 0,
+                                //     // ));
+                                //   },
+                                //   child: Text(
+                                //     "See All",
+                                //     style: GoogleFonts.nunito(
+                                //       fontSize: 12.0,
+                                //       fontWeight: FontWeight.w700,
+                                //       color: Theme.of(context).primaryColor,
+                                //       // decoration: TextDecoration.underline,
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
+                          rentController.rent[0].history.isEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Image.asset(
+                                      'assets/card_empty.png',
+                                      height: 200,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "Nothing to show",
+                                        style: GoogleFonts.nunito(
+                                          fontSize: 20,
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Expanded(
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: rentController
+                                        .rent[0].history.reversed
+                                        .toList()
+                                        .length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 7),
+                                        child: ListTile(
+                                          leading: Container(
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            child: Icon(
+                                              Icons.arrow_outward_sharp,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                          ),
+                                          title: Text(
+                                            'Space Rent Saving',
+                                            style: GoogleFonts.nunito(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            _formatTime(DateTime.parse(
+                                                    (rentController.rent[0]
+                                                        .history.reversed
+                                                        .toList()[index]
+                                                        .split(" ")[0]
+                                                        .substring(
+                                                            0,
+                                                            rentController
+                                                                    .rent[0]
+                                                                    .history
+                                                                    .reversed
+                                                                    .toList()[
+                                                                        index]
+                                                                    .split(
+                                                                        " ")[0]
+                                                                    .length -
+                                                                4))))
+                                                .toString(),
+                                            style: GoogleFonts.nunito(
+                                              color: brandTwo,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          // onTap: () {
+                                          //   Get.to(
+                                          //       CustomTransactionDetailsCard(current: index));
+                                          //   // Navigator.pushNamed(context, RouteList.profile);
+                                          // },
+                                          trailing: Text(
+                                            '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}'
+                                            // rentController
+                                            //     .rent[0].history.reversed
+                                            //     .toList()[index]
+                                            //     .split(" ")
+                                            //     .last
+                                            ,
+                                            style: GoogleFonts.nunito(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                        ],
                       ),
                     ),
-                    elevation: 0.0,
-                    successColor: brandOne,
-                    color: brandTwo,
-                    controller: _btnController,
-                    onPressed: () async {
-                      if (validateAmount(_amountController.text.trim()) == "" &&
-                          validateReason(_reasonController.text.trim()) == "" &&
-                          _interest != 1) {
-                        var userUpdate =
-                            FirebaseFirestore.instance.collection('accounts');
-
-                        var updateLoan =
-                            FirebaseFirestore.instance.collection('space_loan');
-                        await userUpdate.doc(userId).update({
-                          'has_rent': 'true',
-                          "activities": FieldValue.arrayUnion(
-                            [
-                              "$formattedDate\nLoan requested for ${_reasonController.text.trim()}\nAmount: ${ch8t.format(double.tryParse(_amountController.text.trim()))}",
-                            ],
-                          ),
-                        });
-                        await updateLoan.add({
-                          'user_id': _userId,
-                          'first_name': _userFirst,
-                          'last_name': _userLast,
-                          'date': formattedDate,
-                          'loan_amount': _amountController.text.trim(),
-                          'duration':
-                              _durationController.text.trim() + " " + duration,
-                          'reason': _reasonController.text.trim(),
-                          'status': 'pending',
-                          'repayment': _interest,
-                        }).then((value) {
-                          Timer(Duration(seconds: 1), () {
-                            _btnController.stop();
-                          });
-                          setState(() {
-                            _amountController.clear();
-                            _durationController.clear();
-                            _reasonController.clear();
-                            _interest = 0;
-                            duration = 'Days';
-                          });
-                          showTopSnackBar(
-                            Overlay.of(context),
-                            CustomSnackBar.success(
-                              backgroundColor: brandOne,
-                              message: 'Loan request received',
-                              textStyle: GoogleFonts.nunito(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          );
-                          // Get.snackbar(
-                          //   "Received",
-                          //   "Loan request received",
-                          //   animationDuration: Duration(seconds: 2),
-                          //   backgroundColor: brandOne,
-                          //   colorText: Colors.white,
-                          //   snackPosition: SnackPosition.TOP,
-                          // );
-                        }).catchError((error) {
-                          customErrorDialog(context, 'Oops',
-                              'Something went wrong, try again later');
-                          // Get.snackbar(
-                          //   "Oops",
-                          //   "Something went wrong, try again later",
-                          //   animationDuration: Duration(seconds: 2),
-                          //   backgroundColor: Colors.red,
-                          //   colorText: Colors.white,
-                          //   snackPosition: SnackPosition.BOTTOM,
-                          // );
-                        });
-                      } else {
-                        Timer(Duration(seconds: 1), () {
-                          _btnController.stop();
-                        });
-                        customErrorDialog(context, 'Invalid',
-                            'Please fill the form properly to proceed');
-                        // Get.snackbar(
-                        //   "Invalid",
-                        //   'Please fill the form properly to proceed',
-                        //   animationDuration: Duration(seconds: 1),
-                        //   backgroundColor: Colors.red,
-                        //   colorText: Colors.white,
-                        //   snackPosition: SnackPosition.BOTTOM,
-                        // );
-                      }
-                    },
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                ],
-              )
-            : Center(
-                child: GFButton(
-                  onPressed: () {
-                    Get.to(BvnPage());
-                  },
-                  size: 30.0,
-                  icon: Icon(
-                    Icons.add_outlined,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  text: "Complete your verification",
-                  textStyle: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontFamily: "DefaultFontFamily",
-                  ),
-                  padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                  shape: GFButtonShape.pills,
                 ),
-              ),
-      ),
+              ],
+            ),
+          )),
+
+      backgroundColor: Theme.of(context).primaryColorLight,
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final difference = now.difference(time);
+
+    if (difference.inDays > 0) {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
+    } else {
+      return 'just now';
+    }
+  }
+
+  String extractAmount(String input) {
+    final nairaIndex = input.indexOf('₦');
+    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
+      return input.substring(nairaIndex + 1).trim();
+    }
+    return '';
   }
 }

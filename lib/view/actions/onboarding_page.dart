@@ -1,8 +1,10 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -232,7 +234,8 @@ class _BvnPageState extends State<BvnPage> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(300, 50),
-                                backgroundColor: brandTwo,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
@@ -548,7 +551,6 @@ class _BvnPageState extends State<BvnPage> {
                             color: brandOne,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
-                            // fontFamily: "DefaultFontFamily",
                           ),
                         ),
                         const SizedBox(
@@ -578,7 +580,9 @@ class _BvnPageState extends State<BvnPage> {
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(400, 50),
-                                          backgroundColor: brandTwo,
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -620,7 +624,9 @@ class _BvnPageState extends State<BvnPage> {
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(400, 50),
-                                          backgroundColor: brandTwo,
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -732,7 +738,7 @@ class _BvnPageState extends State<BvnPage> {
                                                                                   Get.to(const FundWallet());
                                                                                 },
                                                                                 style: ElevatedButton.styleFrom(
-                                                                                  backgroundColor: brandTwo,
+                                                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
                                                                                   shape: RoundedRectangleBorder(
                                                                                     borderRadius: BorderRadius.circular(8),
                                                                                   ),
@@ -777,88 +783,6 @@ class _BvnPageState extends State<BvnPage> {
                                   ),
                                 ),
                               ),
-                        // GFButton(
-                        //     onPressed: () {
-                        //       if ((int.tryParse(userController
-                        //               .user[0].userWalletBalance)!) >
-                        //           100) {
-                        //         if (validateBvn(_bvnController.text.trim()) ==
-                        //             "") {
-                        //           verifyBVN();
-                        //         } else {
-                        //           Get.snackbar(
-                        //             "Invalid",
-                        //             'Please fill all the form properly to proceed',
-                        //             animationDuration:
-                        //                 const Duration(seconds: 1),
-                        //             backgroundColor: Colors.red,
-                        //             colorText: Colors.white,
-                        //             snackPosition: SnackPosition.BOTTOM,
-                        //           );
-                        //         }
-                        //       } else {
-                        //         Get.bottomSheet(
-                        //           SizedBox(
-                        //             height: 200,
-                        //             child: ClipRRect(
-                        //               borderRadius: const BorderRadius.only(
-                        //                 topLeft: Radius.circular(30.0),
-                        //                 topRight: Radius.circular(30.0),
-                        //               ),
-                        //               child: Column(
-                        //                 children: [
-                        //                   const SizedBox(
-                        //                     height: 50,
-                        //                   ),
-                        //                   Text(
-                        //                     'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                        //                     style: TextStyle(
-                        //                       fontSize: 14,
-                        //                       color: Theme.of(context)
-                        //                           .primaryColor,
-                        //                       fontFamily: "DefaultFontFamily",
-                        //                     ),
-                        //                   ),
-                        //                   const SizedBox(
-                        //                     height: 10,
-                        //                   ),
-                        //                   GFButton(
-                        //                     onPressed: () {
-                        //                       Get.back();
-                        //                       Get.to(const FundWallet());
-                        //                     },
-                        //                     shape: GFButtonShape.pills,
-                        //                     text: "Fund Wallet",
-                        //                     fullWidthButton: true,
-                        //                     color: brandOne,
-                        //                     textStyle: const TextStyle(
-                        //                       color: Colors.white,
-                        //                       fontSize: 12,
-                        //                       fontFamily: "DefaultFontFamily",
-                        //                     ),
-                        //                   )
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         );
-                        //       }
-                        //     },
-                        //     shape: GFButtonShape.pills,
-                        //     text: "Verify BVN",
-                        //     fullWidthButton: true,
-                        //     icon: const Icon(
-                        //       Icons.arrow_right_outlined,
-                        //       color: Colors.white,
-                        //       size: 14,
-                        //     ),
-                        //     color: brandOne,
-                        //     textStyle: const TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 12,
-                        //       fontFamily: "DefaultFontFamily",
-                        //     ),
-                        //   )
 
                         const SizedBox(
                           height: 30,
@@ -885,8 +809,17 @@ class KycPage extends StatefulWidget {
 }
 
 final TextEditingController _kycController = TextEditingController();
+final TextEditingController kycController = TextEditingController();
 final _kycformKey = GlobalKey<FormState>();
 bool _isUploading = false;
+
+List<String> item = const <String>[
+  'NIN',
+  'Driver\'s Liscense',
+  'Passport Photograph',
+  'Voters Card',
+  // 'Friends',
+];
 
 class _KycPageState extends State<KycPage> {
 //upload image
@@ -904,14 +837,6 @@ class _KycPageState extends State<KycPage> {
       uploadImg(context);
     }
   }
-  // Future getImage() async {
-  //   var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-  //   setState(() {
-  //     selectedImage = File(_image!.path);
-  //   });
-  //   uploadImg();
-  // }
 
   Future uploadImg(context) async {
     setState(() {
@@ -952,47 +877,11 @@ class _KycPageState extends State<KycPage> {
           ),
         ),
       );
-      // Get.snackbar(
-      //   "Image uploaded!",
-      //   'Your ID card image has been uploaded successfully',
-      //   animationDuration: const Duration(seconds: 1),
-      //   backgroundColor: brandOne,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.TOP,
-      // );
     }).catchError((error) {
       print(error.toString());
       customErrorDialog(context, 'Error', error.toString());
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     // backgroundColor: brandOne,
-      //     message: 'Error! :(.${error.toString()}',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
-      // Get.snackbar(
-      //   "Error",
-      //   error.toString(),
-      //   animationDuration: const Duration(seconds: 2),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
     });
   }
-
-  // validateAddress(address) {
-  //   if (address.isEmpty) {
-  //     return 'Address cannot be empty cannot be empty';
-  //   }
-
-  //   return null;
-  // }
 
   //Phone number
   @override
@@ -1060,6 +949,7 @@ class _KycPageState extends State<KycPage> {
       },
     );
 
+// final kyc_select_dropdown = DropdownButtonFormField(items: items, onChanged: onChanged)
     return ModalProgressHUD(
       inAsyncCall: _isUploading,
       progressIndicator: const Center(
@@ -1086,21 +976,11 @@ class _KycPageState extends State<KycPage> {
             style: GoogleFonts.nunito(
               color: Theme.of(context).primaryColor,
               fontSize: 16,
-              // fontFamily: "DefaultFontFamily",
             ),
           ),
         ),
         body: Stack(
           children: [
-            // Positioned.fill(
-            //   child: Opacity(
-            //     opacity: 0.3,
-            //     child: Image.asset(
-            //       'assets/icons/RentSpace-icon.png',
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
             ListView(
               children: [
                 const SizedBox(
@@ -1111,9 +991,6 @@ class _KycPageState extends State<KycPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
                       Form(
                         key: _kycformKey,
                         child: Column(
@@ -1126,7 +1003,7 @@ class _KycPageState extends State<KycPage> {
                               child: Container(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'KYC: Residential Address',
+                                  'Select Your ID verification Type',
                                   style: GoogleFonts.nunito(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -1135,7 +1012,23 @@ class _KycPageState extends State<KycPage> {
                                 ),
                               ),
                             ),
-                            kyc,
+                            CustomDropdown(
+                              selectedStyle:
+                                  GoogleFonts.nunito(color: brandOne),
+                              hintText: 'Select an option?',
+                              fillColor: brandThree,
+                              items: item,
+                              controller: kycController,
+                              fieldSuffixIcon: Icon(
+                                Iconsax.arrow_down5,
+                                size: 25.h,
+                                color: brandOne,
+                              ),
+                              onChanged: (String val) {
+                                print(val);
+                              },
+                            ),
+                            // kyc,
                             const SizedBox(
                               height: 20,
                             ),
@@ -1144,7 +1037,7 @@ class _KycPageState extends State<KycPage> {
                       ),
 
                       Text(
-                        "Upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
+                        "Provide your national identity information. Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.nunito(
                           fontSize: 14,
@@ -1152,201 +1045,368 @@ class _KycPageState extends State<KycPage> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Center(
-                      //   child: Text(
-                      //     'File should be jpg, png,jpeg',
-                      //     textAlign: TextAlign.center,
-                      //     style: TextStyle(
-                      //         fontSize: 15, color: Colors.grey.shade500),
-                      //   ),
-                      // ),
                       const SizedBox(
                         height: 20,
                       ),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
+
                       InkWell(
                         onTap: () {
-                          selectFile(context);
+                          showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    AlertDialog.adaptive(
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          30, 30, 30, 20),
+                                      elevation: 0,
+                                      alignment: Alignment.bottomCenter,
+                                      insetPadding: const EdgeInsets.all(0),
+                                      scrollable: true,
+                                      title: null,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                      ),
+                                      content: SizedBox(
+                                        child: SizedBox(
+                                          width: 400.w,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 40.h),
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 15.h),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.topCenter,
+                                                        child: Text(
+                                                          'Upload Valid Id Card',
+                                                          style: GoogleFonts
+                                                              .nunito(
+                                                            color: brandOne,
+                                                            fontSize: 16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 10),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(3),
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                selectFile(
+                                                                    context);
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                minimumSize:
+                                                                    const Size(
+                                                                        200,
+                                                                        50),
+                                                                maximumSize:
+                                                                    const Size(
+                                                                        200,
+                                                                        50),
+                                                                backgroundColor:
+                                                                    brandOne,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                ),
+                                                                textStyle:
+                                                                    const TextStyle(
+                                                                        color:
+                                                                            brandFour,
+                                                                        fontSize:
+                                                                            13),
+                                                              ),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  const Icon(
+                                                                    Iconsax
+                                                                        .folder_open,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  Text(
+                                                                    "Open File",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          12.sp,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              });
+
+                          // showDialog(context: context, builder: (_){
+
+                          // });
                         },
-                        child: DottedBorder(
-                          borderType: BorderType.RRect,
-                          radius: const Radius.circular(10),
-                          dashPattern: const [10, 4],
-                          strokeCap: StrokeCap.round,
-                          color: brandTwo,
-                          child: Container(
-                            // decoration: BoxDecoration(
-                            //   color: brandThree,
-                            //   border: Border.all(
-                            //     color: brandOne, // Color of the border
-                            //     width: 2.0, // Width of the border
-                            //   ),
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            width: double.infinity,
-                            height: 150,
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Iconsax.folder_open,
-                                  color: brandTwo,
-                                  size: 40,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Select You File [ jpg, png, jpeg ]",
-                                  style: GoogleFonts.nunito(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 12,
+                        child: selectedImage == null
+                            ? DottedBorder(
+                                borderType: BorderType.RRect,
+                                radius: const Radius.circular(10),
+                                dashPattern: const [10, 4],
+                                strokeCap: StrokeCap.round,
+                                color: Theme.of(context).colorScheme.secondary,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 150,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                       Icon(
+                                        Iconsax.folder_open,
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        size: 40,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Select You File [ jpg, png, jpeg ]",
+                                        style: GoogleFonts.nunito(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //     color: brandThree,
-                        //     border: Border.all(
-                        //       color: brandOne, // Color of the border
-                        //       width: 2.0, // Width of the border
-                        //     ),
-                        //     borderRadius: BorderRadius.circular(10),
-                        //   ),
-                        //   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        //   child: const Column(
-                        //     children: [
-                        //       Icon(
-                        //         Icons.add_a_photo_outlined,
-                        //         color: Colors.black,
-                        //         size: 30,
-                        //       ),
-                        //       SizedBox(
-                        //         height: 10,
-                        //       ),
-                        //       Text(
-                        //         "Click to upload a valid government ID (e.g National ID card, Drivers' lisence, Voters' card, International passport). Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
-                        //         style: TextStyle(
-                        //           color: Colors.black,
-                        //           fontSize: 12,
-                        //           fontFamily: "DefaultFontFamily",
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ),
-                      selectedImage != null
-                          ? Container(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Selected File',
-                                    style: TextStyle(
-                                      color: Colors.grey.shade400,
-                                      fontSize: 15,
+                              )
+                            : Container(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Selected File',
+                                      style: TextStyle(
+                                        color: Colors.grey.shade400,
+                                        fontSize: 15,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.shade200,
-                                              offset: const Offset(0, 1),
-                                              blurRadius: 3,
-                                              spreadRadius: 2,
-                                            )
-                                          ]),
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.file(
-                                                selectedImage!,
-                                                width: 70,
-                                              )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  _platformFile!.name,
-                                                  style: GoogleFonts.nunito(
-                                                    fontSize: 13,
-                                                    color: Colors.grey.shade800,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  '${(_platformFile!.size / 1024).ceil()} KB',
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.grey.shade800,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                              ],
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.shade200,
+                                                offset: const Offset(0, 1),
+                                                blurRadius: 3,
+                                                spreadRadius: 2,
+                                              )
+                                            ]),
+                                        child: Row(
+                                          children: [
+                                            ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.file(
+                                                  selectedImage!,
+                                                  width: 70,
+                                                )),
+                                            const SizedBox(
+                                              width: 10,
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                        ],
-                                      )),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  // MaterialButton(
-                                  //   minWidth: double.infinity,
-                                  //   height: 45,
-                                  //   onPressed: () {},
-                                  //   color: Colors.black,
-                                  //   child: Text('Upload', style: TextStyle(color: Colors.white),),
-                                  // )
-                                ],
-                              ))
-                          : Container(),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    _platformFile!.name,
+                                                    style: GoogleFonts.nunito(
+                                                      fontSize: 13,
+                                                      color:
+                                                          Colors.grey.shade800,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    '${(_platformFile!.size / 1024).ceil()} KB',
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color:
+                                                          Colors.grey.shade800,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                          ],
+                                        )),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                      ),
+                      // selectedImage != null
+                      //     ? Container(
+                      //         padding: const EdgeInsets.all(20),
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             Text(
+                      //               'Selected File',
+                      //               style: TextStyle(
+                      //                 color: Colors.grey.shade400,
+                      //                 fontSize: 15,
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 10,
+                      //             ),
+                      //             Container(
+                      //                 padding: const EdgeInsets.all(8),
+                      //                 decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(10),
+                      //                   color: Colors.white,
+                      //                   boxShadow: [
+                      //                     BoxShadow(
+                      //                       color: Colors.grey.shade200,
+                      //                       offset: const Offset(0, 1),
+                      //                       blurRadius: 3,
+                      //                       spreadRadius: 2,
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //                 child: Row(
+                      //                   children: [
+                      //                     ClipRRect(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(8),
+                      //                         child: Image.file(
+                      //                           selectedImage!,
+                      //                           width: 70,
+                      //                         )),
+                      //                     const SizedBox(
+                      //                       width: 10,
+                      //                     ),
+                      //                     Expanded(
+                      //                       child: Column(
+                      //                         crossAxisAlignment:
+                      //                             CrossAxisAlignment.start,
+                      //                         children: [
+                      //                           Text(
+                      //                             _platformFile!.name,
+                      //                             style: GoogleFonts.nunito(
+                      //                               fontSize: 13,
+                      //                               color: Colors.grey.shade800,
+                      //                             ),
+                      //                           ),
+                      //                           const SizedBox(
+                      //                             height: 5,
+                      //                           ),
+                      //                           Text(
+                      //                             '${(_platformFile!.size / 1024).ceil()} KB',
+                      //                             style: TextStyle(
+                      //                               fontSize: 13,
+                      //                               color: Colors.grey.shade800,
+                      //                             ),
+                      //                           ),
+                      //                           const SizedBox(
+                      //                             height: 5,
+                      //                           ),
+                      //                         ],
+                      //                       ),
+                      //                     ),
+                      //                     const SizedBox(
+                      //                       width: 10,
+                      //                     ),
+                      //                   ],
+                      //                 )),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //           ],
+                      //         ))
+                      //     : Container(),
                       // const SizedBox(
                       //   height: 40,
                       // ),
 
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
                     ],
                   ),
                 ),
               ],
             ),
             Positioned(
-              bottom: 30,
+              bottom: 50,
               left: 0,
               right: 0,
               child: Center(
@@ -1361,7 +1421,8 @@ class _KycPageState extends State<KycPage> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(400, 50),
-                            backgroundColor: brandTwo,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
@@ -1534,7 +1595,9 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                             Get.to(const AddCard());
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: brandTwo,
+                                            backgroundColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -1832,7 +1895,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                                     //         .currentState!
                                     //         .validate()
                                     //     ?
-                                    brandTwo
+                                    Theme.of(context).colorScheme.secondary
                                 // : brandThree
                                 ,
                                 elevation: 0,

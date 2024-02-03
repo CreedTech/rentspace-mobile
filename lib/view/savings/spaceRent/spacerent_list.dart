@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
 
 import '../../dashboard/dashboard.dart';
+import '../../loan/loan_page.dart';
 
 class RentSpaceList extends StatefulWidget {
   const RentSpaceList({Key? key}) : super(key: key);
@@ -413,127 +414,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                         ),
                       ),
                     ),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //       left: 20, top: 45, bottom: 5, right: 20),
-                    //   child: Container(
-                    //     // height: 100,
-                    //     padding:
-                    //         const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                    //     decoration: BoxDecoration(
-                    //       color: brandOne,
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     child: Center(
-                    //       child: Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [
-                    //           Column(
-                    //             children: [
-                    //               Text(
-                    //                 'Available Balance ',
-                    //                 textAlign: TextAlign.center,
-                    //                 style: GoogleFonts.nunito(
-                    //                   fontSize: 20.0,
-                    //                   fontWeight: FontWeight.w400,
-                    //                   // fontFamily: "DefaultFontFamily",
-                    //                   // letterSpacing: 0.5,
-                    //                   color: Colors.white,
-                    //                 ),
-                    //               ),
-                    //               Row(
-                    //                 crossAxisAlignment: CrossAxisAlignment.center,
-                    //                 mainAxisAlignment: MainAxisAlignment.center,
-                    //                 children: [
-                    //                   Text(
-                    //                     'Space Rent',
-                    //                     textAlign: TextAlign.center,
-                    //                     style: GoogleFonts.nunito(
-                    //                       fontSize: 16.0,
-                    //                       fontWeight: FontWeight.w400,
-                    //                       // fontFamily: "DefaultFontFamily",
-                    //                       // letterSpacing: 0.5,
-                    //                       color: Colors.white,
-                    //                     ),
-                    //                   ),
-                    //                   const SizedBox(
-                    //                     width: 5,
-                    //                   ),
-                    //                   GestureDetector(
-                    //                     onTap: () {
-                    //                       setState(() {
-                    //                         hideBalance = !hideBalance;
-                    //                       });
-                    //                     },
-                    //                     child: Icon(
-                    //                       hideBalance
-                    //                           ? Icons.visibility_off_outlined
-                    //                           : Icons.visibility_outlined,
-                    //                       color: Colors.white,
-                    //                       size: 20,
-                    //                     ),
-                    //                   )
-                    //                 ],
-                    //               ),
-                    //             ],
-                    //           ),
-                    //           Row(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             children: [
-                    //               Text(
-                    //                 " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "********"}",
-                    //                 textAlign: TextAlign.center,
-                    //                 style: GoogleFonts.nunito(
-                    //                   fontSize: 35.0,
-                    //                   // fontFamily: "DefaultFontFamily",
-                    //                   // letterSpacing: 0.5,
-                    //                   fontWeight: FontWeight.w700,
-                    //                   color: Colors.white,
-                    //                 ),
-                    //               ),
-                    //               const SizedBox(
-                    //                 width: 15,
-                    //               ),
-                    //             ],
-                    //           ),
-                    //           const SizedBox(
-                    //             height: 10,
-                    //           ),
-                    //           ElevatedButton(
-                    //             style: ElevatedButton.styleFrom(
-                    //               minimumSize: const Size(150, 50),
-                    //               backgroundColor: brandTwo,
-                    //               elevation: 0,
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(
-                    //                   10,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             onPressed: () async {
-                    //               Get.to(const RentSpaceSubscription());
-                    //             },
-                    //             child: Text(
-                    //               'Save',
-                    //               textAlign: TextAlign.center,
-                    //               style: GoogleFonts.nunito(
-                    //                 fontSize: 25.0,
-                    //                 // fontFamily: "DefaultFontFamily",
-                    //                 // letterSpacing: 0.5,
-                    //                 fontWeight: FontWeight.w700,
-                    //                 color: Colors.white,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    //  Stack()
                     Container(
                       height: MediaQuery.of(context).size.height - 400,
                       decoration: BoxDecoration(
@@ -734,35 +614,57 @@ class _RentSpaceListState extends State<RentSpaceList> {
                 ),
               )
             : Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.asset('assets/congratulation.json'),
+                  Image.asset(
+                    'assets/check.png',
+                    width: 120.w,
+                  ),
+                   SizedBox(
+                    height: 55.h,
+                  ),
                   Text(
-                    'Congratulations Spacer 🎉🎉🎊',
+                    'Congrats, you are eligile for a loan',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
-                      fontSize: 24.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+                   SizedBox(
+                    height: 25.h,
+                  ),
                   Text(
-                    'You Have Successfully Saved 30% of your rent. \n Now, Go ahead and receive your loan',
+                    'Total Loanable amount',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 70,
+                  Text(
+                    nairaFormaet
+                        .format(rentController.rent[0].targetAmount -
+                            (rentController.rent[0].targetAmount * 0.7))
+                        .toString(),
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.nunito(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 31.sp,
+                    ),
+                  ),
+                   SizedBox(
+                    height: 70.h,
                   ),
                   // Spacer(),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(300, 50),
-                        backgroundColor: brandTwo,
+                        backgroundColor: brandOne,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -771,10 +673,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                         ),
                       ),
                       onPressed: () {
-                        Get.back();
+                        Get.to(const LoanPage());
                       },
                       child: Text(
-                        'Get Loan',
+                        'Take Loan',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.nunito(
                           color: Colors.white,

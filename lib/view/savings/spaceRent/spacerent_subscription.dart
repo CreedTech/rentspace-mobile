@@ -138,7 +138,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
   bool isWithinRange() {
     int monthsDifference = _calculateMonthsDifference();
-    return monthsDifference >= 6 && monthsDifference <= 11;
+    return monthsDifference >= 6 && monthsDifference <= 8;
   }
 
   int _calculateDaysDifference() {
@@ -335,56 +335,56 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         ),
       ),
     );
-    final rentAmountOld = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
-      controller: _rentAmountOldController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: validateOldFunc,
-      // update the state variable when the text changes
-      onChanged: (text) => setState(() => _amountValue = text),
-      style: GoogleFonts.nunito(
-        color: Theme.of(context).primaryColor,
-      ),
-      inputFormatters: [ThousandsFormatter()],
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        label: Text(
-          "How much of your rent is left?",
-          style: GoogleFonts.nunito(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        hintText: 'Rent amount in Naira',
-        hintStyle: GoogleFonts.nunito(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
+    // final rentAmountOld = TextFormField(
+    //   enableSuggestions: true,
+    //   cursorColor: Theme.of(context).primaryColor,
+    //   controller: _rentAmountOldController,
+    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+    //   validator: validateOldFunc,
+    //   // update the state variable when the text changes
+    //   onChanged: (text) => setState(() => _amountValue = text),
+    //   style: GoogleFonts.nunito(
+    //     color: Theme.of(context).primaryColor,
+    //   ),
+    //   inputFormatters: [ThousandsFormatter()],
+    //   keyboardType: TextInputType.number,
+    //   decoration: InputDecoration(
+    //     label: Text(
+    //       "How much of your rent is left?",
+    //       style: GoogleFonts.nunito(
+    //         color: Colors.grey,
+    //         fontSize: 12,
+    //         fontWeight: FontWeight.w400,
+    //       ),
+    //     ),
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //           color: Colors.red, width: 2.0), // Change color to yellow
+    //     ),
+    //     filled: false,
+    //     contentPadding: const EdgeInsets.all(14),
+    //     hintText: 'Rent amount in Naira',
+    //     hintStyle: GoogleFonts.nunito(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //   ),
+    // );
 
     // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _selectEndDate(BuildContext context, rent) async {
@@ -628,7 +628,8 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                               //     'Date Must be within 6-11 months');
                               return Center(
                                 child: Text(
-                                  "Invalid date. Pick a different date.",
+                                  "Invalid date. Pick a different date (minimum of 6 months and maximum of 8 months).",
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.nunito(
                                     fontSize: 12.sp,
                                     color: Colors.red,
