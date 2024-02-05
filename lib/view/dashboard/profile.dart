@@ -7,7 +7,6 @@ import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 
 import '../../controller/user_controller.dart';
-import '../actions/view_bvn_and_kyc.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -108,22 +107,23 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onTap: () {
-                        if (userController.user[0].bvn == "") {
+                        if (userController.user[0].bvn != "") {
                           Get.to(const BvnPage());
                         } else {
-                          Get.to(ViewBvnAndKyc(
-                            bvn: userController.user[0].bvn,
-                            hasVerifiedBvn:
-                                userController.user[0].hasVerifiedBvn,
-                            hasVerifiedKyc:
-                                userController.user[0].hasVerifiedKyc,
-                            kyc: userController.user[0].kyc,
-                            idImage: userController.user[0].Idimage,
-                          ));
+                          Get.to(const PersonalDetails());
+                          // Get.to(ViewBvnAndKyc(
+                          //   bvn: userController.user[0].bvn,
+                          //   hasVerifiedBvn:
+                          //       userController.user[0].hasVerifiedBvn,
+                          //   hasVerifiedKyc:
+                          //       userController.user[0].hasVerifiedKyc,
+                          //   kyc: userController.user[0].kyc,
+                          //   idImage: userController.user[0].Idimage,
+                          // ));
                         }
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
-                      trailing:  Icon(
+                      trailing: Icon(
                         Iconsax.arrow_right_3,
                         color: Theme.of(context).primaryColor,
                       ),

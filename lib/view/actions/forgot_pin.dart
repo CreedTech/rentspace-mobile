@@ -147,26 +147,7 @@ class _ForgotPinState extends State<ForgotPin> {
       return null;
     }
 
-    // validatePinTwo(pinTwoValue) {
-    //   if (pinTwoValue.isEmpty) {
-    //     return 'pin cannot be empty';
-    //   }
-    //   if (pinTwoValue.length < 4) {
-    //     return 'pin is incomplete';
-    //   }
-    //   if (int.tryParse(pinTwoValue) == null) {
-    //     return 'enter valid number';
-    //   }
-    //   return null;
-    // }
 
-    // validatePass(passValue) {
-    //   if (passValue == null || passValue.isEmpty) {
-    //     return 'Input a valid password';
-    //   } else {
-    //     return null;
-    //   }
-    // }
 
     //Pin
     final pin = Pinput(
@@ -192,66 +173,7 @@ class _ForgotPinState extends State<ForgotPin> {
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
-    //Pin
-    // final pin_two = Pinput(
-    //   defaultPinTheme: defaultPinTheme,
-    //   controller: _pinTwoController,
-    //   length: 4,
-    //   validator: validatePinTwo,
-    //   onChanged: validatePinTwo,
-    //   // onCompleted: _doSomething,
-    //   closeKeyboardWhenCompleted: true,
-    //   keyboardType: TextInputType.number,
-    // );
-    //Textform field
-    // final password = TextFormField(
-    //   enableSuggestions: true,
-    //   cursorColor: Colors.black,
-    //   controller: _passwordController,
-    //   autovalidateMode: AutovalidateMode.onUserInteraction,
-    //   obscureText: obscurity,
-    //   style: GoogleFonts.nunito(
-    //     color: Colors.black,
-    //   ),
-    //   keyboardType: TextInputType.text,
-    //   decoration: InputDecoration(
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(10.0),
-    //       borderSide: const BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     focusedBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(color: brandOne, width: 2.0),
-    //     ),
-    //     enabledBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     errorBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(
-    //         color: Colors.red,
-    //         width: 2.0,
-    //       ),
-    //     ),
-    //     suffix: InkWell(
-    //       onTap: visibility,
-    //       child: lockIcon,
-    //     ),
-    //     filled: false,
-    //     contentPadding: const EdgeInsets.all(14),
-    //     hintText: 'Enter your password',
-    //     hintStyle: GoogleFonts.nunito(
-    //       color: Colors.grey,
-    //       fontSize: 12,
-    //       fontWeight: FontWeight.w400,
-    //     ),
-    //   ),
-    //   maxLines: 1,
-    //   validator: validatePass,
-    // );
-
+ 
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(

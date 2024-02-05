@@ -409,7 +409,6 @@ class _HomePageState extends State<HomePage> {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.sp),
                   ),
@@ -1063,7 +1062,7 @@ class _HomePageState extends State<HomePage> {
                         "assets/icons/carbon_portfolio.png",
                         // height: 28,
                         width: 29.w,
-                        color: brandOne,
+                        color: Theme.of(context).colorScheme.secondary,
                       )
                     : Image.asset(
                         "assets/icons/carbon_portfolio.png",
@@ -1144,9 +1143,11 @@ class _HomePageState extends State<HomePage> {
             unselectedItemColor: navigationcolorText,
             unselectedLabelStyle:
                 GoogleFonts.nunito(color: navigationcolorText),
-            selectedIconTheme: const IconThemeData(color: brandOne),
+            selectedIconTheme: IconThemeData(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             selectedLabelStyle: GoogleFonts.nunito(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.w700,
             ),
             onTap: _onItemTapped,

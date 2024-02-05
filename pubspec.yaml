@@ -125,6 +125,8 @@ dependencies:
   timeago: ^3.6.0
   sizer: ^2.0.15
   flutter_screenutil: ^5.9.0
+  flutter_stepindicator: ^0.1.7
+  linear_step_indicator: ^1.0.0+3
   #path_provider: ^2.0.15
   
 

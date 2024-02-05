@@ -79,3 +79,17 @@ const red = Color(0xFFFF0000);
 const designHeight = 928.0;
 const designWidth = 428.0;
 // const codeLength = 6;
+
+const IS_LOGGED_IN = 'isLoggedIn';
+const HAS_SEEN_ONBOARDING = 'hasSeenOnboarding';
+const TOKEN = 'token';
+const String USER_DETAILS = "user_details";
+const String USER_WALLET = "user_wallet";
+const String USER_TRANSACTION_PIN = "user_transaction_pin";
+const String USER_ID = "user_id";
+const String USER_EMAIL = "user_email";
+const String USER_NAME = "user_name";
+const String IS_VERIFIED = "is_verified";
+const String USER_PHONE_NUMBER = "user_phone_number";
+const String USER_HOW_DID_YOU_HEAR = "user_how_did_you_hear";
+const String UPDATE_PHOTO = "update_photo";

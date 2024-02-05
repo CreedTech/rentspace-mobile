@@ -57,7 +57,8 @@ void verification(BuildContext context, String message, String subText,
                   ElevatedButton(
                     onPressed: () {
                       Get.offUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                         (route) => false,
                       );
                     },
@@ -250,4 +251,79 @@ void customErrorDialog(
           ),
         );
       });
+}
+
+void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog.adaptive(
+        contentPadding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+        elevation: 0.h,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Theme.of(context).canvasColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.h),
+            topRight: Radius.circular(30.h),
+          ),
+        ),
+        insetPadding: const EdgeInsets.all(0),
+        title: null,
+        content: SizedBox(
+          height: 200.h,
+          width: 400.h,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 70,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: brandThree,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              GestureDetector(
+                onTap: () => _onTap,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1000),
+                      color: brandOne),
+                  child: Image.asset(
+                    'assets/icons/RentSpace-icon2.png',
+                    width: 80,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _onTap,
+                child: Center(
+                  child: Text(
+                    'Tap to Change',
+                    style: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              //  SizedBox(
+              //   height: 10.sp,
+              // ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
 }
