@@ -1,24 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
-import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/user_controller.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 
 class BankAndCard extends StatefulWidget {
-  BankAndCard({
-    Key? key,
-  }) : super(key: key);
+  const BankAndCard({
+    super.key,
+  });
 
   @override
   _BankAndCardState createState() => _BankAndCardState();
@@ -50,44 +49,35 @@ class _BankAndCardState extends State<BankAndCard> {
             onTap: () {
               Get.back();
             },
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back,
-              color: brandOne,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           title: Text(
             'Bank & Card Details',
             style: GoogleFonts.nunito(
-                color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+                color: Theme.of(context).primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w700),
           ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               (userController.user[0].cardHolder != "" ||
                       userController.user[0].accountNumber != "")
                   ? Column(
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.all(10.0),
-                        //   child: Text(
-                        //     'Card Details',
-                        //     style: GoogleFonts.nunito(
-                        //       fontSize: 17,
-                        //       fontWeight: FontWeight.w700,
-                        //     ),
-                        //   ),
-                        // ),
-
                         FlipCard(
                           front: Neumorphic(
                             style: NeumorphicStyle(
                                 shape: NeumorphicShape.concave,
                                 boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(20)),
+                                    BorderRadius.circular(15)),
                                 depth: 0,
                                 // lightSource: LightSource.topLeft,
                                 color: Colors.white),
@@ -254,8 +244,8 @@ class _BankAndCardState extends State<BankAndCard> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 80.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -264,6 +254,7 @@ class _BankAndCardState extends State<BankAndCard> {
                             style: GoogleFonts.nunito(
                               fontSize: 17,
                               fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -286,7 +277,7 @@ class _BankAndCardState extends State<BankAndCard> {
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
                                   fontWeight: FontWeight.w400,
-                                  color: const Color(0xff828282),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -299,7 +290,7 @@ class _BankAndCardState extends State<BankAndCard> {
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
                                   fontWeight: FontWeight.w700,
-                                  color: brandOne,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -308,9 +299,6 @@ class _BankAndCardState extends State<BankAndCard> {
                               Text(
                                 userController.user[0].accountNumber,
                                 style: GoogleFonts.nunito(
-                                  fontSize: 15.0,
-                                  // fontFamily: "DefaultFontFamily",
-                                  letterSpacing: 0.5,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -320,292 +308,229 @@ class _BankAndCardState extends State<BankAndCard> {
                         const SizedBox(
                           height: 50,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(350, 50),
-                            backgroundColor: brandTwo,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Get.to(const AddCard());
-                          },
-                          child: const Text(
-                            'Update',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(350, 50),
-                            backgroundColor: Colors.red,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            // _doSomething();
-                            Get.bottomSheet(
-                              SizedBox(
-                                height: 250,
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(30.0),
-                                    topRight: Radius.circular(30.0),
-                                  ),
-                                  child: Container(
-                                    color: Theme.of(context).canvasColor,
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 50,
-                                        ),
-                                        Text(
-                                          'Are you sure you want to delete this card?',
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            // fontFamily: "DefaultFontFamily",
-                                            color: brandOne,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        //card
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(3),
-                                              child: ElevatedButton(
-                                                onPressed: () async {
-                                                  var userHealthUpdate =
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'accounts');
-                                                  await userHealthUpdate
-                                                      .doc(userId)
-                                                      .update({
-                                                    'card_digit': '',
-                                                    'card_cvv': '',
-                                                    'card_expire': '',
-                                                    'card_holder': '',
-                                                  }).then((value) {
-                                                    Get.back();
-                                                    print(userId);
-                                                    Get.snackbar(
-                                                      "deleted!",
-                                                      'Your card has been deleted successfully',
-                                                      animationDuration:
-                                                          const Duration(
-                                                              seconds: 1),
-                                                      backgroundColor: brandOne,
-                                                      colorText: Colors.white,
-                                                      snackPosition:
-                                                          SnackPosition.TOP,
-                                                    );
-                                                    Get.back();
-                                                  }).catchError((error) {
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Error",
-                                                        error.toString());
-                                                    // Get.snackbar(
-                                                    //   "Error",
-                                                    //   error.toString(),
-                                                    //   animationDuration:
-                                                    //       const Duration(
-                                                    //           seconds: 2),
-                                                    //   backgroundColor:
-                                                    //       Colors.red,
-                                                    //   colorText: Colors.white,
-                                                    //   snackPosition:
-                                                    //       SnackPosition.BOTTOM,
-                                                    // );
-                                                  });
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.red,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 40,
-                                                      vertical: 15),
-                                                  textStyle: const TextStyle(
-                                                      color: brandFour,
-                                                      fontSize: 13),
-                                                ),
-                                                child: const Text(
-                                                  "Yes",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            // InkWell(
-                                            //   onTap: () async {
-                                            //     var userHealthUpdate =
-                                            //         FirebaseFirestore.instance
-                                            //             .collection('accounts');
-                                            //     await userHealthUpdate
-                                            //         .doc(userId)
-                                            //         .update({
-                                            //       'card_digit': '',
-                                            //       'card_cvv': '',
-                                            //       'card_expire': '',
-                                            //       'card_holder': '',
-                                            //     }).then((value) {
-                                            //       Get.back();
-                                            //       print(userId);
-                                            //       Get.snackbar(
-                                            //         "deleted!",
-                                            //         'Your card has been deleted successfully',
-                                            //         animationDuration:
-                                            //             const Duration(
-                                            //                 seconds: 1),
-                                            //         backgroundColor: brandOne,
-                                            //         colorText: Colors.white,
-                                            //         snackPosition:
-                                            //             SnackPosition.TOP,
-                                            //       );
-                                            //       Get.back();
-                                            //     }).catchError((error) {
-                                            //       Get.snackbar(
-                                            //         "Error",
-                                            //         error.toString(),
-                                            //         animationDuration:
-                                            //             const Duration(
-                                            //                 seconds: 2),
-                                            //         backgroundColor: Colors.red,
-                                            //         colorText: Colors.white,
-                                            //         snackPosition:
-                                            //             SnackPosition.BOTTOM,
-                                            //       );
-                                            //     });
-                                            //   },
-                                            //   child: Container(
-                                            //     width: MediaQuery.of(context)
-                                            //             .size
-                                            //             .width /
-                                            //         4,
-                                            //     decoration: BoxDecoration(
-                                            //       color: Colors.red,
-                                            //       borderRadius:
-                                            //           BorderRadius.circular(20),
-                                            //     ),
-                                            //     padding:
-                                            //         const EdgeInsets.fromLTRB(
-                                            //             20, 5, 20, 5),
-                                            //     child: const Text(
-                                            //       'Yes',
-                                            //       style: TextStyle(
-                                            //         fontSize: 12,
-                                            //         fontFamily:
-                                            //             "DefaultFontFamily",
-                                            //         color: Colors.white,
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // ),
-
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            // InkWell(
-                                            //   onTap: () {
-                                            //     Get.back();
-                                            //   },
-                                            //   child: Container(
-                                            //     width: MediaQuery.of(context)
-                                            //             .size
-                                            //             .width /
-                                            //         4,
-                                            //     decoration: BoxDecoration(
-                                            //       color: brandTwo,
-                                            //       borderRadius:
-                                            //           BorderRadius.circular(20),
-                                            //     ),
-                                            //     padding:
-                                            //         const EdgeInsets.fromLTRB(
-                                            //             20, 5, 20, 5),
-                                            //     child: const Text(
-                                            //       'No',
-                                            //       style: TextStyle(
-                                            //         fontSize: 12,
-                                            //         fontFamily:
-                                            //             "DefaultFontFamily",
-                                            //         color: Colors.white,
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(3),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: brandTwo,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 40,
-                                                      vertical: 15),
-                                                  textStyle: const TextStyle(
-                                                      color: brandFour,
-                                                      fontSize: 13),
-                                                ),
-                                                child: const Text(
-                                                  "No",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        //card
-                                      ],
-                                    ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(150, 50),
+                                backgroundColor: brandOne,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                          child: const Text(
-                            'Delete',
-                            textAlign: TextAlign.center,
-                          ),
+                              onPressed: () {
+                                Get.to(const AddCard());
+                              },
+                              child: Text(
+                                'Update',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(150, 50),
+                                backgroundColor: Colors.red,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                // _doSomething();
+                                Get.bottomSheet(
+                                  SizedBox(
+                                    height: 250,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0),
+                                      ),
+                                      child: Container(
+                                        color: Theme.of(context).canvasColor,
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 5, 10, 5),
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 50,
+                                            ),
+                                            Text(
+                                              'Are you sure you want to delete this card?',
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                // fontFamily: "DefaultFontFamily",
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 30,
+                                            ),
+                                            //card
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  child: ElevatedButton(
+                                                    onPressed: () async {
+                                                      var userHealthUpdate =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'accounts');
+                                                      await userHealthUpdate
+                                                          .doc(userId)
+                                                          .update({
+                                                        'card_digit': '',
+                                                        'card_cvv': '',
+                                                        'card_expire': '',
+                                                        'card_holder': '',
+                                                      }).then((value) {
+                                                        Get.back();
+                                                        print(userId);
+                                                        showTopSnackBar(
+                                                          Overlay.of(context),
+                                                          CustomSnackBar
+                                                              .success(
+                                                            backgroundColor:
+                                                                brandOne,
+                                                            message:
+                                                                'Your card has been deleted successfully',
+                                                            textStyle:
+                                                                GoogleFonts
+                                                                    .nunito(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                            ),
+                                                          ),
+                                                        );
+                                                        // Get.snackbar(
+                                                        //   "deleted!",
+                                                        //   'Your card has been deleted successfully',
+                                                        //   animationDuration:
+                                                        //       const Duration(
+                                                        //           seconds: 1),
+                                                        //   backgroundColor: brandOne,
+                                                        //   colorText: Colors.white,
+                                                        //   snackPosition:
+                                                        //       SnackPosition.TOP,
+                                                        // );
+                                                        Get.back();
+                                                      }).catchError((error) {
+                                                        customErrorDialog(
+                                                            context,
+                                                            "Error",
+                                                            error.toString());
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 40,
+                                                          vertical: 15),
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color: brandFour,
+                                                              fontSize: 13),
+                                                    ),
+                                                    child: const Text(
+                                                      "Yes",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor: brandTwo,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 40,
+                                                          vertical: 15),
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color: brandFour,
+                                                              fontSize: 13),
+                                                    ),
+                                                    child: const Text(
+                                                      "No",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+
+                                            //card
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text('Delete',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  )),
+                            ),
+                          ],
                         ),
                       ],
                     )
@@ -624,7 +549,7 @@ class _BankAndCardState extends State<BankAndCard> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(350, 50),
-                              backgroundColor: brandTwo,
+                              backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -635,9 +560,14 @@ class _BankAndCardState extends State<BankAndCard> {
                             onPressed: () {
                               Get.to(const AddCard());
                             },
-                            child: const Text(
+                            child: Text(
                               'Add Details',
                               textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ],

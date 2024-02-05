@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:get/get.dart';
@@ -51,7 +52,7 @@ class _IdlePageState extends State<IdlePage> {
     final defaultPinTheme = PinTheme(
       width: 30,
       height: 30,
-      textStyle: TextStyle(
+      textStyle: GoogleFonts.nunito(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),

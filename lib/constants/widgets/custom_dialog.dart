@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -32,7 +33,7 @@ void verification(BuildContext context, String message, String subText,
                   Text(
                     message,
                     style: GoogleFonts.nunito(
-                      color: const Color(0xff105182),
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -44,7 +45,7 @@ void verification(BuildContext context, String message, String subText,
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -56,7 +57,8 @@ void verification(BuildContext context, String message, String subText,
                   ElevatedButton(
                     onPressed: () {
                       Get.offUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                         (route) => false,
                       );
                     },
@@ -203,9 +205,9 @@ void customErrorDialog(
                         borderRadius: BorderRadius.circular(30),
                         // color: brandOne,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Iconsax.close_circle,
-                        color: brandOne,
+                        color: Theme.of(context).primaryColor,
                         size: 30,
                       ),
                     ),
@@ -223,10 +225,10 @@ void customErrorDialog(
                   height: 12,
                 ),
                 Text(
-                  'Invalid PIN',
+                  message,
                   style: GoogleFonts.nunito(
                     color: Colors.red,
-                    fontSize: 28,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -234,9 +236,12 @@ void customErrorDialog(
                   height: 5,
                 ),
                 Text(
-                  "Enter correct PIN",
+                  subText,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                  style: GoogleFonts.nunito(
+                    color: Colors.red,
+                    fontSize: 14.sp,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -246,4 +251,79 @@ void customErrorDialog(
           ),
         );
       });
+}
+
+void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog.adaptive(
+        contentPadding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+        elevation: 0.h,
+        alignment: Alignment.bottomCenter,
+        backgroundColor: Theme.of(context).canvasColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.h),
+            topRight: Radius.circular(30.h),
+          ),
+        ),
+        insetPadding: const EdgeInsets.all(0),
+        title: null,
+        content: SizedBox(
+          height: 200.h,
+          width: 400.h,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 70,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: brandThree,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              GestureDetector(
+                onTap: () => _onTap,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1000),
+                      color: brandOne),
+                  child: Image.asset(
+                    'assets/icons/RentSpace-icon2.png',
+                    width: 80,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _onTap,
+                child: Center(
+                  child: Text(
+                    'Tap to Change',
+                    style: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              //  SizedBox(
+              //   height: 10.sp,
+              // ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
 }

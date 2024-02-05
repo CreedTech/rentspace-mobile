@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
@@ -7,6 +8,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'dart:convert';
 import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
@@ -351,9 +353,8 @@ class _WalletFundingState extends State<WalletFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 20,
-                        fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
@@ -365,9 +366,7 @@ class _WalletFundingState extends State<WalletFunding> {
                 const SizedBox(
                   height: 50,
                 ),
-                const CircularProgressIndicator(
-                  color: brandOne,
-                ),
+                const CustomLoader(),
               ],
             )
           : WebView(

@@ -72,13 +72,17 @@ class _AllActivitiesState extends State<AllActivities> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          widget.activities[index],
-                          style: GoogleFonts.nunito(
-                            // fontFamily: "DefaultFontFamily",
-                            fontSize: MediaQuery.of(context).size.height / 60,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w700,
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Text(
+                            widget.activities[index],
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.nunito(
+                              // fontFamily: "DefaultFontFamily",
+                              fontSize: MediaQuery.of(context).size.height / 60,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],

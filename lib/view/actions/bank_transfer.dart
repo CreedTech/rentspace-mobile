@@ -87,7 +87,8 @@ class _BankTransferState extends State<BankTransfer> {
                       InkWell(
                         onTap: () {
                           Clipboard.setData(
-                            const ClipboardData(text: "RENTSPACE TECHNOLOGIES LTD"),
+                            const ClipboardData(
+                                text: "RENTSPACE TECHNOLOGIES LTD"),
                           );
                           Fluttertoast.showToast(
                               msg: "copied to clipboard!",

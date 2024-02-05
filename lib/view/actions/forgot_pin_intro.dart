@@ -40,7 +40,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
   void doSomething() {
     if (userController.user[0].userPassword !=
         _passwordController.text.trim()) {
-          customErrorDialog(context, "Invalid!", "Password is incorrect");
+      customErrorDialog(context, "Invalid!", "Password is incorrect");
       // showTopSnackBar(
       //   Overlay.of(context),
       //   CustomSnackBar.error(
@@ -75,12 +75,12 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
 
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
       style: GoogleFonts.nunito(
-        color: Colors.black,
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -140,7 +140,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
         title: Text(
           'Forgot PIN',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -160,7 +160,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                           child: Text(
                             'Enter your Password',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -195,7 +195,8 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                                         .validate()) {
                                       doSomething();
                                     } else {
-                                      customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                                      customErrorDialog(context, "Invalid!",
+                                          "Please fill the form properly to proceed");
                                       // showTopSnackBar(
                                       //   Overlay.of(context),
                                       //   CustomSnackBar.error(

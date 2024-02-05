@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 
 import 'dart:io';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -36,7 +38,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           },
           child: Icon(
             Icons.close,
-            size: 30,
+            size: 30.sp,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -44,7 +46,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
 
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: WebView(
               userAgent: "random",
@@ -61,10 +63,8 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             ),
           ),
           if (_isLoading)
-            Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-              ),
+            const Center(
+              child: CustomLoader(),
             ),
         ],
       ),

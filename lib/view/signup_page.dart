@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'dart:async';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -23,17 +27,20 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/db/firebase_db.dart';
+import '../controller/auth/auth_controller.dart';
 import '../controller/user_controller.dart';
 import 'package:http/http.dart' as http;
 
 String dropdownValue = 'User';
 bool isChecked = false;
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
 
+  // @override
+  // _SignupPageConsumerState createState() => _SignupPageConsumerState();
   @override
-  _SignupPageState createState() => _SignupPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignupPageState();
 }
 
 var now = DateTime.now();
@@ -47,7 +54,7 @@ String vName = "";
 String vNum = "";
 bool notLoading = true;
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends ConsumerState<SignupPage> {
   // final UserController userController = Get.find();
   final form = intl.NumberFormat.decimalPattern();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -64,12 +71,13 @@ class _SignupPageState extends State<SignupPage> {
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+  // final RoundedLoadingButtonController _btnController =
+  //     RoundedLoadingButtonController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _pinOneController = TextEditingController();
   final TextEditingController _pinTwoController = TextEditingController();
@@ -82,17 +90,17 @@ class _SignupPageState extends State<SignupPage> {
   String? selectedGender;
   late int genderValue;
 
-  var _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  Random _rnd = Random();
-  String _payUrl = "";
-  String getRandom(int length) => String.fromCharCodes(
-        Iterable.generate(
-          length,
-          (_) => _chars.codeUnitAt(
-            _rnd.nextInt(_chars.length),
-          ),
-        ),
-      );
+  // final _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  // final Random _rnd = Random();
+  // final String _payUrl = "";
+  // String getRandom(int length) => String.fromCharCodes(
+  //       Iterable.generate(
+  //         length,
+  //         (_) => _chars.codeUnitAt(
+  //           _rnd.nextInt(_chars.length),
+  //         ),
+  //       ),
+  //     );
 
   createNewDVA() async {
     setState(() {
@@ -285,9 +293,9 @@ class _SignupPageState extends State<SignupPage> {
                               borderRadius: BorderRadius.circular(30),
                               // color: brandOne,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Iconsax.close_circle,
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               size: 30,
                             ),
                           ),
@@ -319,7 +327,7 @@ class _SignupPageState extends State<SignupPage> {
                         "Something went wrong, try again later",
                         textAlign: TextAlign.center,
                         style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -473,6 +481,7 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider.notifier);
     //Validator
     validateMail(emailValue) {
       if (emailValue == null || emailValue.isEmpty) {
@@ -602,20 +611,20 @@ class _SignupPageState extends State<SignupPage> {
 
     final username = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _usernameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       validator: validateUsername,
-      onChanged: (e) {
-        if (_usernameController.text.trim().length >= 7) {
-          checkUserNameValidity();
-        }
-      },
-      maxLength: 10,
+      // onChanged: (e) {
+      //   if (_usernameController.text.trim().length >= 7) {
+      //     checkUserNameValidity();
+      //   }
+      // },
+      // maxLength: 10,
       decoration: InputDecoration(
         label: Text(
           "Choose new username",
@@ -625,28 +634,31 @@ class _SignupPageState extends State<SignupPage> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        prefixText: "SPACER/",
+        // prefixText: "SPACER/",
         prefixStyle: GoogleFonts.nunito(
-          color: Colors.grey,
+          color: Theme.of(context).primaryColor,
           fontSize: 13,
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Colors.red,
             width: 2.0,
           ), // Change color to yellow
@@ -665,12 +677,12 @@ class _SignupPageState extends State<SignupPage> {
     //Phone number
     final phoneNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _phoneController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -685,21 +697,24 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -716,9 +731,9 @@ class _SignupPageState extends State<SignupPage> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
         fontSize: 20,
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: brandTwo, width: 1.0),
@@ -749,10 +764,10 @@ class _SignupPageState extends State<SignupPage> {
 //Address
     final referal = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _referalController,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -765,21 +780,24 @@ class _SignupPageState extends State<SignupPage> {
         //   ),
         // ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -797,13 +815,13 @@ class _SignupPageState extends State<SignupPage> {
     //firstname
     final firstname = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _firstnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.name,
       decoration: InputDecoration(
         label: Text(
           "Enter your First name",
@@ -814,21 +832,24 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -845,13 +866,13 @@ class _SignupPageState extends State<SignupPage> {
     );
     final lastname = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.name,
       decoration: InputDecoration(
         label: Text(
           "Enter Last name",
@@ -862,21 +883,24 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -895,9 +919,9 @@ class _SignupPageState extends State<SignupPage> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -911,21 +935,24 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -943,31 +970,34 @@ class _SignupPageState extends State<SignupPage> {
     //password field
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Colors.red,
             width: 2.0,
           ),
@@ -1059,9 +1089,9 @@ class _SignupPageState extends State<SignupPage> {
                                 borderRadius: BorderRadius.circular(30),
                                 // color: brandOne,
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Iconsax.close_circle,
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 size: 30,
                               ),
                             ),
@@ -1092,8 +1122,8 @@ class _SignupPageState extends State<SignupPage> {
                         Text(
                           "Age must be at least $minimumAge years.",
                           textAlign: TextAlign.center,
-                          style:
-                              GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                          style: GoogleFonts.nunito(
+                              color: Colors.red, fontSize: 18),
                         ),
                         const SizedBox(
                           height: 10,
@@ -1127,9 +1157,9 @@ class _SignupPageState extends State<SignupPage> {
 
     final dob = TextFormField(
       controller: dateController,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       readOnly: true,
       onTap: () => _selectDate(context),
@@ -1145,21 +1175,24 @@ class _SignupPageState extends State<SignupPage> {
           color: brandOne,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -1169,12 +1202,12 @@ class _SignupPageState extends State<SignupPage> {
 
     final bvn = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -1189,21 +1222,24 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Colors.red,
             width: 2.0,
           ),
@@ -1223,15 +1259,15 @@ class _SignupPageState extends State<SignupPage> {
     final address = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-        color: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
       ),
 
-      minLines: 3,
-      keyboardType: TextInputType.multiline,
+      // minLines: 3,
+      keyboardType: TextInputType.streetAddress,
       controller: _addressController,
-      maxLines: null,
+      maxLines: 1,
       decoration: InputDecoration(
         label: Text(
           "Enter your address",
@@ -1248,21 +1284,24 @@ class _SignupPageState extends State<SignupPage> {
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -1272,481 +1311,421 @@ class _SignupPageState extends State<SignupPage> {
       // labelText: 'Email Address',
     );
 
-    final gender = DropdownButtonFormField(
-      style: GoogleFonts.nunito(
-        color: brandOne,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
+    final gender = CustomDropdown(
+      selectedStyle: GoogleFonts.nunito(
+          color: Theme.of(context).primaryColor, fontSize: 14),
+      hintText: 'Select your gender',
+      hintStyle: GoogleFonts.nunito(
+          // color: Theme.of(context).primaryColor,
+          fontSize: 14),
+      excludeSelected: true,
+      fillColor: Colors.transparent,
+      listItemStyle: GoogleFonts.nunito(
+          color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+      items: const ['Male', 'Female'],
+      controller: _genderController,
+      fieldSuffixIcon: Icon(
+        Iconsax.arrow_down5,
+        size: 25.h,
+        color: Theme.of(context).primaryColor,
       ),
-      items: ['Male', 'Female', 'Other']
-          .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(value),
-              ))
-          .toList(),
-      value: selectedGender,
       onChanged: (String? newValue) {
+        print(_genderController.text);
         setState(() {
           selectedGender = newValue!;
           genderValue = selectedGender == 'Male' ? 1 : 2;
         });
         print(genderValue);
       },
-      decoration: InputDecoration(
-        hintText: 'Choose Gender',
-        hintStyle: GoogleFonts.nunito(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        contentPadding: const EdgeInsets.all(14),
-      ),
     );
 
+    // DropdownButtonFormField(
+    //   style: GoogleFonts.nunito(
+    //     color: Theme.of(context).primaryColor,
+    //     fontSize: 16,
+    //     fontWeight: FontWeight.w600,
+    //   ),
+    //   items: ['Male', 'Female', 'Other']
+    //       .map((value) => DropdownMenuItem(
+    //             value: value,
+    //             child: Text(value),
+    //           ))
+    //       .toList(),
+    //   value: selectedGender,
+    //   onChanged: (String? newValue) {
+    //     setState(() {
+    //       selectedGender = newValue!;
+    //       genderValue = selectedGender == 'Male' ? 1 : 2;
+    //     });
+    //     print(genderValue);
+    //   },
+    //   decoration: InputDecoration(
+    //     hintText: 'Choose Gender',
+    //     hintStyle: GoogleFonts.nunito(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(15.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(15),
+    //       borderSide: const BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(15),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(15),
+    //       borderSide: const BorderSide(
+    //           color: Colors.red, width: 2.0), // Change color to yellow
+    //     ),
+    //     contentPadding: const EdgeInsets.all(14),
+    //   ),
+    // );
+
     void _doSomething() async {
-      Timer(const Duration(seconds: 1), () {
-        _btnController.stop();
-      });
       if (registerFormKey.currentState!.validate() && isChecked == true) {
-        // print(_firstnameController.text.trim());
-        // print(_lastnameController.text.trim());
-        // print(_usernameController.text.trim());
-        // print(_emailController.text.trim());
-        // print(_bvnController.text.trim());
-        // print(_addressController.text.trim());
-        // print(_phoneController.text.trim());
         print(genderValue.toString());
         print(dateController.text);
+        // authState.signUp(
+        //     context,
+        //     usernameController.text.trim(),
+        //     emailController.text.trim(),
+        //     passwordController.text.trim(),
+        //     mobilenumberController.text.trim(),
+        //     howDidyouHearCtl.text.trim(),);
 
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  AlertDialog.adaptive(
-                    contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
-                    elevation: 0,
-                    alignment: Alignment.bottomCenter,
-                    insetPadding: const EdgeInsets.all(0),
-                    scrollable: true,
-                    title: null,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
-                    content: SizedBox(
-                      child: SizedBox(
-                        width: 400,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 40),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Setup Your Transaction Pin',
-                                        style: GoogleFonts.nunito(
-                                          color: brandTwo,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  pin_one,
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(3),
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        AlertDialog.adaptive(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(30,
-                                                                  30, 30, 20),
-                                                          elevation: 0,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          insetPadding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          scrollable: true,
-                                                          title: null,
-                                                          shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(30),
-                                                              topRight: Radius
-                                                                  .circular(30),
-                                                            ),
-                                                          ),
-                                                          content: SizedBox(
-                                                            child: SizedBox(
-                                                              width: 400,
-                                                              child: Column(
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            40),
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                              vertical: 15),
-                                                                          child:
-                                                                              Align(
-                                                                            alignment:
-                                                                                Alignment.topCenter,
-                                                                            child:
-                                                                                Text(
-                                                                              'Confirm Your Transaction Pin',
-                                                                              style: GoogleFonts.nunito(
-                                                                                color: brandTwo,
-                                                                                fontSize: 20,
-                                                                                fontWeight: FontWeight.w800,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        const SizedBox(
-                                                                          height:
-                                                                              20,
-                                                                        ),
-                                                                        pin_two,
-                                                                        const SizedBox(
-                                                                          height:
-                                                                              30,
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                              vertical: 10),
-                                                                          child:
-                                                                              Column(
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(3),
-                                                                                child: ElevatedButton(
-                                                                                  onPressed: () {
-                                                                                    print(_pinOneController.text.trim());
-                                                                                    print(_pinTwoController.text.trim());
-                                                                                    if (_pinOneController.text.trim() != _pinTwoController.text.trim()) {
-                                                                                      showDialog(
-                                                                                          context: context,
-                                                                                          barrierDismissible: false,
-                                                                                          builder: (BuildContext context) {
-                                                                                            return AlertDialog(
-                                                                                              shape: RoundedRectangleBorder(
-                                                                                                borderRadius: BorderRadius.circular(10),
-                                                                                              ),
-                                                                                              title: null,
-                                                                                              elevation: 0,
-                                                                                              content: SizedBox(
-                                                                                                height: 250,
-                                                                                                child: Column(
-                                                                                                  children: [
-                                                                                                    GestureDetector(
-                                                                                                      onTap: () {
-                                                                                                        Navigator.of(context).pop();
-                                                                                                      },
-                                                                                                      child: Align(
-                                                                                                        alignment: Alignment.topRight,
-                                                                                                        child: Container(
-                                                                                                          decoration: BoxDecoration(
-                                                                                                            borderRadius: BorderRadius.circular(30),
-                                                                                                            // color: brandOne,
-                                                                                                          ),
-                                                                                                          child: const Icon(
-                                                                                                            Iconsax.close_circle,
-                                                                                                            color: brandOne,
-                                                                                                            size: 30,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                    const Align(
-                                                                                                      alignment: Alignment.center,
-                                                                                                      child: Icon(
-                                                                                                        Iconsax.warning_24,
-                                                                                                        color: Colors.red,
-                                                                                                        size: 75,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                    const SizedBox(
-                                                                                                      height: 12,
-                                                                                                    ),
-                                                                                                    Text(
-                                                                                                      'Error!',
-                                                                                                      style: GoogleFonts.nunito(
-                                                                                                        color: Colors.red,
-                                                                                                        fontSize: 28,
-                                                                                                        fontWeight: FontWeight.w800,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                    const SizedBox(
-                                                                                                      height: 5,
-                                                                                                    ),
-                                                                                                    Text(
-                                                                                                      "Pin does not match",
-                                                                                                      textAlign: TextAlign.center,
-                                                                                                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
-                                                                                                    ),
-                                                                                                    const SizedBox(
-                                                                                                      height: 10,
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                ),
-                                                                                              ),
-                                                                                            );
-                                                                                          });
+        // showDialog(
+        //     context: context,
+        //     barrierDismissible: false,
+        //     builder: (BuildContext context) {
+        //       return Column(
+        //         mainAxisAlignment: MainAxisAlignment.end,
+        //         children: [
+        //           AlertDialog.adaptive(
+        //             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
+        //             elevation: 0,
+        //             alignment: Alignment.bottomCenter,
+        //             insetPadding: const EdgeInsets.all(0),
+        //             scrollable: true,
+        //             title: null,
+        //             shape: const RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.only(
+        //                 topLeft: Radius.circular(30),
+        //                 topRight: Radius.circular(30),
+        //               ),
+        //             ),
+        //             content: SizedBox(
+        //               child: SizedBox(
+        //                 width: 400,
+        //                 child: Column(
+        //                   children: [
+        //                     Padding(
+        //                       padding: const EdgeInsets.symmetric(vertical: 40),
+        //                       child: Column(
+        //                         children: [
+        //                           Padding(
+        //                             padding: const EdgeInsets.symmetric(
+        //                                 vertical: 15),
+        //                             child: Align(
+        //                               alignment: Alignment.topCenter,
+        //                               child: Text(
+        //                                 'Setup Your Transaction Pin',
+        //                                 style: GoogleFonts.nunito(
+        //                                   color: brandTwo,
+        //                                   fontSize: 20,
+        //                                   fontWeight: FontWeight.w800,
+        //                                 ),
+        //                               ),
+        //                             ),
+        //                           ),
+        //                           const SizedBox(
+        //                             height: 20,
+        //                           ),
+        //                           pin_one,
+        //                           const SizedBox(
+        //                             height: 30,
+        //                           ),
+        //                           Padding(
+        //                             padding: const EdgeInsets.symmetric(
+        //                                 vertical: 10),
+        //                             child: Column(
+        //                               children: [
+        //                                 Padding(
+        //                                   padding: const EdgeInsets.all(3),
+        //                                   child: ElevatedButton(
+        //                                     onPressed: () {
+        //                                       Navigator.of(context).pop();
+        //                                       showDialog(
+        //                                           context: context,
+        //                                           barrierDismissible: false,
+        //                                           builder:
+        //                                               (BuildContext context) {
+        //                                             return Column(
+        //                                               mainAxisAlignment:
+        //                                                   MainAxisAlignment.end,
+        //                                               children: [
+        //                                                 AlertDialog.adaptive(
+        //                                                   contentPadding:
+        //                                                       const EdgeInsets
+        //                                                           .fromLTRB(30,
+        //                                                           30, 30, 20),
+        //                                                   elevation: 0,
+        //                                                   alignment: Alignment
+        //                                                       .bottomCenter,
+        //                                                   insetPadding:
+        //                                                       const EdgeInsets
+        //                                                           .all(0),
+        //                                                   scrollable: true,
+        //                                                   title: null,
+        //                                                   shape:
+        //                                                       const RoundedRectangleBorder(
+        //                                                     borderRadius:
+        //                                                         BorderRadius
+        //                                                             .only(
+        //                                                       topLeft: Radius
+        //                                                           .circular(30),
+        //                                                       topRight: Radius
+        //                                                           .circular(30),
+        //                                                     ),
+        //                                                   ),
+        //                                                   content: SizedBox(
+        //                                                     child: SizedBox(
+        //                                                       width: 400,
+        //                                                       child: Column(
+        //                                                         children: [
+        //                                                           Padding(
+        //                                                             padding: const EdgeInsets
+        //                                                                 .symmetric(
+        //                                                                 vertical:
+        //                                                                     40),
+        //                                                             child:
+        //                                                                 Column(
+        //                                                               children: [
+        //                                                                 Padding(
+        //                                                                   padding: const EdgeInsets
+        //                                                                       .symmetric(
+        //                                                                       vertical: 15),
+        //                                                                   child:
+        //                                                                       Align(
+        //                                                                     alignment:
+        //                                                                         Alignment.topCenter,
+        //                                                                     child:
+        //                                                                         Text(
+        //                                                                       'Confirm Your Transaction Pin',
+        //                                                                       style: GoogleFonts.nunito(
+        //                                                                         color: brandTwo,
+        //                                                                         fontSize: 20,
+        //                                                                         fontWeight: FontWeight.w800,
+        //                                                                       ),
+        //                                                                     ),
+        //                                                                   ),
+        //                                                                 ),
+        //                                                                 const SizedBox(
+        //                                                                   height:
+        //                                                                       20,
+        //                                                                 ),
+        //                                                                 pin_two,
+        //                                                                 const SizedBox(
+        //                                                                   height:
+        //                                                                       30,
+        //                                                                 ),
+        //                                                                 Padding(
+        //                                                                   padding: const EdgeInsets
+        //                                                                       .symmetric(
+        //                                                                       vertical: 10),
+        //                                                                   child:
+        //                                                                       Column(
+        //                                                                     children: [
+        //                                                                       Padding(
+        //                                                                         padding: const EdgeInsets.all(3),
+        //                                                                         child: ElevatedButton(
+        //                                                                           onPressed: () {
+        //                                                                             print(_pinOneController.text.trim());
+        //                                                                             print(_pinTwoController.text.trim());
+        //                                                                             if (_pinOneController.text.trim() != _pinTwoController.text.trim()) {
+        //                                                                               showDialog(
+        //                                                                                   context: context,
+        //                                                                                   barrierDismissible: false,
+        //                                                                                   builder: (BuildContext context) {
+        //                                                                                     return AlertDialog(
+        //                                                                                       shape: RoundedRectangleBorder(
+        //                                                                                         borderRadius: BorderRadius.circular(10),
+        //                                                                                       ),
+        //                                                                                       title: null,
+        //                                                                                       elevation: 0,
+        //                                                                                       content: SizedBox(
+        //                                                                                         height: 250,
+        //                                                                                         child: Column(
+        //                                                                                           children: [
+        //                                                                                             GestureDetector(
+        //                                                                                               onTap: () {
+        //                                                                                                 Navigator.of(context).pop();
+        //                                                                                               },
+        //                                                                                               child: Align(
+        //                                                                                                 alignment: Alignment.topRight,
+        //                                                                                                 child: Container(
+        //                                                                                                   decoration: BoxDecoration(
+        //                                                                                                     borderRadius: BorderRadius.circular(30),
+        //                                                                                                     // color: brandOne,
+        //                                                                                                   ),
+        //                                                                                                   child: const Icon(
+        //                                                                                                     Iconsax.close_circle,
+        //                                                                                                     color: brandOne,
+        //                                                                                                     size: 30,
+        //                                                                                                   ),
+        //                                                                                                 ),
+        //                                                                                               ),
+        //                                                                                             ),
+        //                                                                                             const Align(
+        //                                                                                               alignment: Alignment.center,
+        //                                                                                               child: Icon(
+        //                                                                                                 Iconsax.warning_24,
+        //                                                                                                 color: Colors.red,
+        //                                                                                                 size: 75,
+        //                                                                                               ),
+        //                                                                                             ),
+        //                                                                                             const SizedBox(
+        //                                                                                               height: 12,
+        //                                                                                             ),
+        //                                                                                             Text(
+        //                                                                                               'Error!',
+        //                                                                                               style: GoogleFonts.nunito(
+        //                                                                                                 color: Colors.red,
+        //                                                                                                 fontSize: 28,
+        //                                                                                                 fontWeight: FontWeight.w800,
+        //                                                                                               ),
+        //                                                                                             ),
+        //                                                                                             const SizedBox(
+        //                                                                                               height: 5,
+        //                                                                                             ),
+        //                                                                                             Text(
+        //                                                                                               "Pin does not match",
+        //                                                                                               textAlign: TextAlign.center,
+        //                                                                                               style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+        //                                                                                             ),
+        //                                                                                             const SizedBox(
+        //                                                                                               height: 10,
+        //                                                                                             ),
+        //                                                                                           ],
+        //                                                                                         ),
+        //                                                                                       ),
+        //                                                                                     );
+        //                                                                                   });
 
-                                                                                      // showTopSnackBar(
-                                                                                      //   Overlay.of(context),
-                                                                                      //   CustomSnackBar.error(
-                                                                                      //     // backgroundColor: brandOne,
-                                                                                      //     message: 'Pin does not match',
-                                                                                      //     textStyle: GoogleFonts.nunito(
-                                                                                      //       fontSize: 14,
-                                                                                      //       color: Colors.white,
-                                                                                      //       fontWeight: FontWeight.w700,
-                                                                                      //     ),
-                                                                                      //   ),
-                                                                                      // );
-                                                                                      // Get.snackbar(
-                                                                                      //   "Pin Mismatch",
-                                                                                      //   'Pin does not match',
-                                                                                      //   animationDuration: Duration(seconds: 1),
-                                                                                      //   backgroundColor: Colors.red,
-                                                                                      //   colorText: Colors.white,
-                                                                                      //   snackPosition: SnackPosition.TOP,
-                                                                                      // );
-                                                                                    } else {
-                                                                                      authController.register(_emailController.text.trim(), _passwordController.text.trim(), _firstnameController.text.trim(), _lastnameController.text.trim(), _phoneController.text.trim().substring(1), _pinTwoController.text.trim(), _referalController.text.trim(), _usernameController.text.trim(), _addressController.text.trim(), genderValue.toString(), dateController.text, context);
-                                                                                    }
-                                                                                  },
-                                                                                  style: ElevatedButton.styleFrom(
-                                                                                    backgroundColor: brandTwo,
-                                                                                    shape: RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(8),
-                                                                                    ),
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                    textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                  ),
-                                                                                  child: const Text(
-                                                                                    "Finish",
-                                                                                    style: TextStyle(
-                                                                                      color: Colors.white,
-                                                                                      fontWeight: FontWeight.w700,
-                                                                                      fontSize: 16,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: brandTwo,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 60,
-                                                      vertical: 15),
-                                              textStyle: const TextStyle(
-                                                  color: brandFour,
-                                                  fontSize: 13),
-                                            ),
-                                            child: const Text(
-                                              "Next",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            });
+        //                                                                               // showTopSnackBar(
+        //                                                                               //   Overlay.of(context),
+        //                                                                               //   CustomSnackBar.error(
+        //                                                                               //     // backgroundColor: brandOne,
+        //                                                                               //     message: 'Pin does not match',
+        //                                                                               //     textStyle: GoogleFonts.nunito(
+        //                                                                               //       fontSize: 14,
+        //                                                                               //       color: Colors.white,
+        //                                                                               //       fontWeight: FontWeight.w700,
+        //                                                                               //     ),
+        //                                                                               //   ),
+        //                                                                               // );
+        //                                                                               // Get.snackbar(
+        //                                                                               //   "Pin Mismatch",
+        //                                                                               //   'Pin does not match',
+        //                                                                               //   animationDuration: Duration(seconds: 1),
+        //                                                                               //   backgroundColor: Colors.red,
+        //                                                                               //   colorText: Colors.white,
+        //                                                                               //   snackPosition: SnackPosition.TOP,
+        //                                                                               // );
+        //                                                                             } else {
+        //                                                                               authController.register(_emailController.text.trim(), _passwordController.text.trim(), _firstnameController.text.trim(), _lastnameController.text.trim(), _phoneController.text.trim().substring(1), _pinTwoController.text.trim(), _referalController.text.trim(), _usernameController.text.trim(), _addressController.text.trim(), genderValue.toString(), dateController.text, context);
+        //                                                                             }
+        //                                                                           },
+        //                                                                           style: ElevatedButton.styleFrom(
+        //                                                                             backgroundColor: brandTwo,
+        //                                                                             shape: RoundedRectangleBorder(
+        //                                                                               borderRadius: BorderRadius.circular(8),
+        //                                                                             ),
+        //                                                                             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+        //                                                                             textStyle: const TextStyle(color: brandFour, fontSize: 13),
+        //                                                                           ),
+        //                                                                           child: const Text(
+        //                                                                             "Finish",
+        //                                                                             style: TextStyle(
+        //                                                                               color: Colors.white,
+        //                                                                               fontWeight: FontWeight.w700,
+        //                                                                               fontSize: 16,
+        //                                                                             ),
+        //                                                                           ),
+        //                                                                         ),
+        //                                                                       ),
+        //                                                                       const SizedBox(
+        //                                                                         height: 10,
+        //                                                                       ),
+        //                                                                     ],
+        //                                                                   ),
+        //                                                                 ),
+        //                                                               ],
+        //                                                             ),
+        //                                                           ),
+        //                                                         ],
+        //                                                       ),
+        //                                                     ),
+        //                                                   ),
+        //                                                 )
+        //                                               ],
+        //                                             );
+        //                                           });
+        //                                     },
+        //                                     style: ElevatedButton.styleFrom(
+        //                                       backgroundColor: brandTwo,
+        //                                       shape: RoundedRectangleBorder(
+        //                                         borderRadius:
+        //                                             BorderRadius.circular(8),
+        //                                       ),
+        //                                       padding:
+        //                                           const EdgeInsets.symmetric(
+        //                                               horizontal: 60,
+        //                                               vertical: 15),
+        //                                       textStyle: const TextStyle(
+        //                                           color: brandFour,
+        //                                           fontSize: 13),
+        //                                     ),
+        //                                     child: const Text(
+        //                                       "Next",
+        //                                       style: TextStyle(
+        //                                         color: Colors.white,
+        //                                         fontWeight: FontWeight.w700,
+        //                                         fontSize: 16,
+        //                                       ),
+        //                                     ),
+        //                                   ),
+        //                                 ),
+        //                                 const SizedBox(
+        //                                   height: 10,
+        //                                 ),
+        //                               ],
+        //                             ),
+        //                           ),
+        //                         ],
+        //                       ),
+        //                     ),
+        //                   ],
+        //                 ),
+        //               ),
+        //             ),
+        //           )
+        //         ],
+        //       );
+        //     });
       } else {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: null,
-                elevation: 0,
-                content: SizedBox(
-                  height: 250,
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              // color: brandOne,
-                            ),
-                            child: const Icon(
-                              Iconsax.close_circle,
-                              color: brandOne,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Iconsax.warning_24,
-                          color: Colors.red,
-                          size: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Error!',
-                        style: GoogleFonts.nunito(
-                          color: Colors.red,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Please fill the form properly to proceed",
-                        textAlign: TextAlign.center,
-                        style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
-
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     backgroundColor: Colors.red,
-        //     message: 'Please fill the form properly to proceed',
-        //     textStyle: GoogleFonts.nunito(
-        //       fontSize: 14,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.w700,
-        //     ),
-        //   ),
-        // );
-
-        // Get.snackbar(
-        //   "Invalid",
-        //   'Please fill the form properly to proceed',
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
+        customErrorDialog(
+            context, 'Error!', "Please fill the form properly to proceed");
       }
     }
 
@@ -1759,16 +1738,16 @@ class _SignupPageState extends State<SignupPage> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
             size: 25,
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'Sign up',
           style: TextStyle(
-            color: Color(0xff4E4B4B),
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
@@ -1784,18 +1763,16 @@ class _SignupPageState extends State<SignupPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'First Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1812,11 +1789,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Last Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1833,11 +1811,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'User Name',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1845,17 +1824,6 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         username,
-                        Text(
-                          _mssg,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontFamily: "DefaultFontFamily",
-                            // letterSpacing: 0.5,
-                            color: (_mssg == "username is available.")
-                                ? Theme.of(context).primaryColor
-                                : Colors.red,
-                          ),
-                        ),
                       ],
                     ),
                     const SizedBox(
@@ -1865,11 +1833,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Email Address',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1886,11 +1855,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Phone Number',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1900,18 +1870,16 @@ class _SignupPageState extends State<SignupPage> {
                         phoneNumber,
                       ],
                     ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Password',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1950,39 +1918,16 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ],
                     ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.symmetric(vertical: 3),
-                    //       child: Text(
-                    //         'BVN',
-                    //         style: GoogleFonts.nunito(
-                    //           color: Colors.black,
-                    //           fontWeight: FontWeight.w700,
-                    //           fontSize: 16,
-                    //           // fontFamily: "DefaultFontFamily",
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     bvn,
-                    //   ],
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Date Of Birth',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -1999,11 +1944,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Residential Address',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2020,11 +1966,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Gender',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2041,11 +1988,12 @@ class _SignupPageState extends State<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 3),
                           child: Text(
                             'Referral Code(Optional)',
                             style: GoogleFonts.nunito(
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -2058,49 +2006,13 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Container(
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       const Text(
-                    //         'Create transaction pin',
-                    //         style: TextStyle(
-                    //           color: Colors.black,
-                    //           fontFamily: "DefaultFontFamily",
-                    //         ),
-                    //       ),
-                    //       pin_one,
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Container(
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       const Text(
-                    //         'Confirm transaction pin',
-                    //         style: TextStyle(
-                    //           color: Colors.black,
-                    //           fontFamily: "DefaultFontFamily",
-                    //         ),
-                    //       ),
-                    //       pin_two,
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 30.0,
-                    // ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        MediaQuery.of(context).size.height / 80,
-                        MediaQuery.of(context).size.height / 600,
-                        MediaQuery.of(context).size.height / 80,
-                        MediaQuery.of(context).size.height / 500,
-                      ),
+                          MediaQuery.of(context).size.height / 80,
+                          MediaQuery.of(context).size.height / 600,
+                          MediaQuery.of(context).size.height / 80,
+                          // MediaQuery.of(context).size.height / 500,
+                          0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -2133,14 +2045,12 @@ class _SignupPageState extends State<SignupPage> {
                               color: Color(0xffBDBDBD),
                             ),
                           ),
-                          // const SizedBox(
-                          //   width: 10.0,
-                          // ),
                           Text(
                             'You agree to our ',
                             style: GoogleFonts.nunito(
-                              fontSize: 12,
-                              color: Colors.black,
+                              fontSize: 12.sp,
+                              color: Theme.of(context).primaryColor,
+
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -2151,24 +2061,21 @@ class _SignupPageState extends State<SignupPage> {
                             child: Text(
                               'Terms of service',
                               style: GoogleFonts.nunito(
-                                color: brandFive,
+                                color: brandTwo,
                                 // fontFamily: "DefaultFontFamily",
-                                fontSize: 12,
-                                decoration: TextDecoration.underline,
+                                fontSize: 12.sp,
+                                // decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(300, 50),
-                          backgroundColor: brandTwo,
+                          backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -2177,7 +2084,27 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         onPressed: () {
-                          _doSomething();
+                          if (registerFormKey.currentState!.validate() &&
+                              isChecked == true) {
+                            print(genderValue.toString());
+                            print(dateController.text);
+                            authState.signUp(
+                                context,
+                                _firstnameController.text.trim(),
+                                _lastnameController.text.trim(),
+                                _usernameController.text.trim(),
+                                _emailController.text.trim(),
+                                _passwordController.text.trim(),
+                                _phoneController.text.trim(),
+                                dateController.text.trim(),
+                                _addressController.text.trim(),
+                                _genderController.text.trim(),
+                                 referralCode: _referalController.text.trim() ?? ''
+                                );
+                          } else {
+                            customErrorDialog(context, 'Error!',
+                                "Please fill the form properly to proceed");
+                          }
                         },
                         child: Text(
                           'Create account',
@@ -2190,21 +2117,6 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
-                    // RoundedLoadingButton(
-                    //   elevation: 0.0,
-                    //   borderRadius: 5.0,
-                    //   successColor: brandTwo,
-                    //   color: brandTwo,
-                    //   controller: _btnController,
-                    //   onPressed: _doSomething,
-                    //   child: Text(
-                    //     'Create account',
-                    //     style: GoogleFonts.nunito(
-                    //       color: Colors.white,
-                    //     ),
-                    //   ),
-                    // ),
-
                     const SizedBox(
                       height: 30,
                     ),

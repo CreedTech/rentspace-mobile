@@ -1,15 +1,18 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 
-import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:convert';
@@ -19,7 +22,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../constants/widgets/custom_dialog.dart';
 
 class AddCard extends StatefulWidget {
-  const AddCard({Key? key}) : super(key: key);
+  const AddCard({super.key});
 
   @override
   _AddCardState createState() => _AddCardState();
@@ -44,6 +47,7 @@ class _AddCardState extends State<AddCard> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _accountNumberController =
       TextEditingController();
+  final TextEditingController bankNameController = TextEditingController();
   // final TextEditingController _bankListController = TextEditingController();
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
@@ -309,18 +313,22 @@ class _AddCardState extends State<AddCard> {
       }
     }
 
-    final bankOption = DropdownButtonFormField(
-      style: GoogleFonts.nunito(
-        color: brandOne,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
+    final banksList = CustomDropdown(
+      selectedStyle: GoogleFonts.nunito(
+          color: Theme.of(context).primaryColor, fontSize: 14),
+      hintText: 'Select an option?',
+      excludeSelected: true,
+      fillColor: Colors.transparent,
+      listItemStyle: GoogleFonts.nunito(
+          color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+      items: _bankName,
+      controller: bankNameController,
+      borderSide: BorderSide(color: Theme.of(context).primaryColor),
+      fieldSuffixIcon: Icon(
+        Iconsax.arrow_down5,
+        size: 25.h,
+        color: Theme.of(context).primaryColor,
       ),
-      items: _bankName
-          .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(value),
-              ))
-          .toList(),
       onChanged: (newValue) {
         setState(() {
           _currentBankName = newValue.toString();
@@ -329,34 +337,55 @@ class _AddCardState extends State<AddCard> {
           _currentBankCode = _bankCode[index - 1];
         });
       },
-      decoration: InputDecoration(
-        hintText: 'Choose Bank',
-        hintStyle: GoogleFonts.nunito(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        contentPadding: const EdgeInsets.all(14),
-      ),
     );
+    // final bankOption = DropdownButtonFormField(
+    //   style: GoogleFonts.nunito(
+    //     color: Theme.of(context).primaryColor,
+    //     fontSize: 16,
+    //     fontWeight: FontWeight.w600,
+    //   ),
+    //   items: _bankName
+    //       .map((value) => DropdownMenuItem(
+    //             value: value,
+    //             child: Text(value),
+    //           ))
+    //       .toList(),
+    //   onChanged: (newValue) {
+    //     setState(() {
+    //       _currentBankName = newValue.toString();
+    //       selectedItem = newValue as String?;
+    //       int index = _bankName.indexOf(selectedItem!);
+    //       _currentBankCode = _bankCode[index - 1];
+    //     });
+    //   },
+    //   decoration: InputDecoration(
+    //     hintText: 'Choose Bank',
+    //     hintStyle: GoogleFonts.nunito(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //           color: Colors.red, width: 2.0), // Change color to yellow
+    //     ),
+    //     contentPadding: const EdgeInsets.all(14),
+    //   ),
+    // );
 
 // final banks = Column(
 //       crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,54 +425,54 @@ class _AddCardState extends State<AddCard> {
 //         ),
 //       ],
 //     );
-    final bankOptions = DropdownMenu(
-      // width: 300,
-      // menuStyle: MenuStyle,
-      enableSearch: true,
-      enableFilter: true,
-      onSelected: (newValue) {
-        setState(() {
-          _currentBankName = newValue.toString();
-          selectedItem = newValue as String?;
-          int index = _bankName.indexOf(selectedItem!);
-          _currentBankCode = _bankCode[index - 1];
-        });
-      },
-      dropdownMenuEntries: _bankName
-          .map((value) => DropdownMenuEntry(
-                value: value,
-                label: value,
-              ))
-          .toList(),
-      hintText: 'Choose Bank',
-      inputDecorationTheme: InputDecorationTheme(
-        hintStyle: GoogleFonts.nunito(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        contentPadding: const EdgeInsets.all(14),
-        filled: false,
-      ),
-    );
+    // final bankOptions = DropdownMenu(
+    //   // width: 300,
+    //   // menuStyle: MenuStyle,
+    //   enableSearch: true,
+    //   enableFilter: true,
+    //   onSelected: (newValue) {
+    //     setState(() {
+    //       _currentBankName = newValue.toString();
+    //       selectedItem = newValue as String?;
+    //       int index = _bankName.indexOf(selectedItem!);
+    //       _currentBankCode = _bankCode[index - 1];
+    //     });
+    //   },
+    //   dropdownMenuEntries: _bankName
+    //       .map((value) => DropdownMenuEntry(
+    //             value: value,
+    //             label: value,
+    //           ))
+    //       .toList(),
+    //   hintText: 'Choose Bank',
+    //   inputDecorationTheme: InputDecorationTheme(
+    //     hintStyle: GoogleFonts.nunito(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: const OutlineInputBorder(
+    //       borderSide: BorderSide(
+    //           color: Colors.red, width: 2.0), // Change color to yellow
+    //     ),
+    //     contentPadding: const EdgeInsets.all(14),
+    //     filled: false,
+    //   ),
+    // );
 
     // void showSnackBar(String message) {
     //   ScaffoldMessenger.of(context)
@@ -518,9 +547,9 @@ class _AddCardState extends State<AddCard> {
 
     final accountNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       style: GoogleFonts.nunito(
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
@@ -537,21 +566,24 @@ class _AddCardState extends State<AddCard> {
       decoration: InputDecoration(
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(20.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -574,15 +606,17 @@ class _AddCardState extends State<AddCard> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         title: Text(
           'Add Bank & Card Details',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 20, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -650,21 +684,25 @@ class _AddCardState extends State<AddCard> {
                         textColor: Theme.of(context).primaryColor,
                         cardNumberDecoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide:
+                                const BorderSide(color: brandOne, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                                 color: Colors.red,
                                 width: 2.0), // Change color to yellow
                           ),
@@ -676,36 +714,41 @@ class _AddCardState extends State<AddCard> {
                           labelStyle: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                           ),
+                          contentPadding: const EdgeInsets.all(14),
                         ),
                         expiryDateDecoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Color(0xffE0E0E0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Color(0xffE0E0E0),
+                              ),
                             ),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: brandOne, width: 2.0),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xffE0E0E0),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide:
+                                  const BorderSide(color: brandOne, width: 2.0),
                             ),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.red,
-                                width: 2.0), // Change color to yellow
-                          ),
-                          hintStyle: GoogleFonts.nunito(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          labelStyle: GoogleFonts.nunito(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          labelText: 'Expiry Date',
-                          hintText: 'XX/XX',
-                        ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Color(0xffE0E0E0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                  color: Colors.red,
+                                  width: 2.0), // Change color to yellow
+                            ),
+                            hintStyle: GoogleFonts.nunito(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            labelStyle: GoogleFonts.nunito(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            labelText: 'Expiry Date',
+                            hintText: 'XX/XX',
+                            contentPadding: const EdgeInsets.all(14)),
                         cvvCodeDecoration: InputDecoration(
                           hintStyle: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
@@ -714,26 +757,31 @@ class _AddCardState extends State<AddCard> {
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide:
+                                const BorderSide(color: brandOne, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                                 color: Colors.red,
                                 width: 2.0), // Change color to yellow
                           ),
                           labelText: 'CVV',
                           hintText: 'XXX',
+                          contentPadding: const EdgeInsets.all(14),
                         ),
                         cardHolderDecoration: InputDecoration(
                           hintStyle: GoogleFonts.nunito(
@@ -743,28 +791,34 @@ class _AddCardState extends State<AddCard> {
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: brandOne, width: 2.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide:
+                                const BorderSide(color: brandOne, width: 2.0),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                               color: Color(0xffE0E0E0),
                             ),
                           ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                                 color: Colors.red,
                                 width: 2.0), // Change color to yellow
                           ),
                           labelText: 'Card Holder',
+                          contentPadding: const EdgeInsets.all(14),
                         ),
                         onCreditCardModelChange: onCreditCardModelChange,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
                         child: Text(
@@ -788,8 +842,6 @@ class _AddCardState extends State<AddCard> {
                           (cardExpiry == "Expired Card") ? "Expired Card" : "",
                           style: GoogleFonts.nunito(
                             fontSize: 18,
-                            // fontFamily: "DefaultFontFamily",
-                            // letterSpacing: 0.5,
                             color: (cardValidity == "Expired Card")
                                 ? Colors.greenAccent
                                 : Colors.red,
@@ -798,7 +850,7 @@ class _AddCardState extends State<AddCard> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 20),
+                        padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 10),
                         child: Text(
                           "Add your bank details",
                           style: GoogleFonts.nunito(
@@ -806,7 +858,7 @@ class _AddCardState extends State<AddCard> {
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
                             fontWeight: FontWeight.w500,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -820,7 +872,7 @@ class _AddCardState extends State<AddCard> {
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       15.0, 2, 15.0, 2),
-                                  child: bankOption,
+                                  child: banksList,
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -848,10 +900,7 @@ class _AddCardState extends State<AddCard> {
                       (isChecking)
                           ? const Padding(
                               padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10),
-                              child: LinearProgressIndicator(
-                                color: brandOne,
-                                minHeight: 4,
-                              ),
+                              child: CustomLoader(),
                             )
                           : const SizedBox(),
                       Padding(
@@ -863,7 +912,7 @@ class _AddCardState extends State<AddCard> {
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
                             fontWeight: FontWeight.bold,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
@@ -873,7 +922,7 @@ class _AddCardState extends State<AddCard> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(350, 50),
-                          backgroundColor: brandTwo,
+                          backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -884,9 +933,10 @@ class _AddCardState extends State<AddCard> {
                         onPressed: () {
                           _doSomething();
                         },
-                        child: const Text(
+                        child: Text(
                           'Submit',
                           textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(color: Colors.white),
                         ),
                       ),
 

@@ -171,7 +171,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                               ),
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 145,
+                                                      horizontal: 140,
                                                       vertical: 15),
                                               textStyle: const TextStyle(
                                                   color: brandFour,

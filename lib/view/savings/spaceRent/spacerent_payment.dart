@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/home_page.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -156,9 +159,8 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 20,
-                        fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
@@ -168,9 +170,8 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
                     _mssgBody,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 15,
-                      fontFamily: "DefaultFontFamily",
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
@@ -189,14 +190,26 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                     e.toString(),
                   );
                 }
-                Get.snackbar(
-                  "Error",
-                  e.toString(),
-                  animationDuration: const Duration(seconds: 2),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                  snackPosition: SnackPosition.BOTTOM,
+                showTopSnackBar(
+                  Overlay.of(context),
+                  CustomSnackBar.error(
+                    // backgroundColor: brandOne,
+                    message: e.toString(),
+                    textStyle: GoogleFonts.nunito(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 );
+                // Get.snackbar(
+                //   "Error",
+                //   e.toString(),
+                //   animationDuration: const Duration(seconds: 2),
+                //   backgroundColor: Colors.red,
+                //   colorText: Colors.white,
+                //   snackPosition: SnackPosition.BOTTOM,
+                // );
               },
               onPageFinished: (val) {
                 webViewController.runJavascript(

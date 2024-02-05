@@ -6,8 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:async';
 
 import '../../constants/widgets/custom_dialog.dart';
@@ -86,14 +89,26 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
           _otpSent = true;
           _isLoading = false;
         });
-        Get.snackbar(
-          "Waiting for OTP",
-          "An OTP has been sent to ${userController.user[0].userPhone}",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'An OTP has been sent to ${userController.user[0].userPhone}',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Waiting for OTP",
+        //   "An OTP has been sent to ${userController.user[0].userPhone}",
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: brandOne,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.TOP,
+        // );
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         setState(() {
@@ -131,20 +146,33 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
       });
 
       Navigator.of(context).pop();
-      Get.snackbar(
-        "Verified!",
-        "Your phone number has been verified",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
+       showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Your phone number has been verified',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+      // Get.snackbar(
+      //   "Verified!",
+      //   "Your phone number has been verified",
+      //   animationDuration: const Duration(seconds: 1),
+      //   backgroundColor: brandOne,
+      //   colorText: Colors.white,
+      //   snackPosition: SnackPosition.TOP,
+      // );
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isLoading = false;
       });
       if (context.mounted) {
-        customErrorDialog(context, 'Error', 'The OTP could not be verified, try again later');
+        customErrorDialog(
+            context, 'Error', 'The OTP could not be verified, try again later');
       }
       // Get.snackbar(
       //   "Error",
@@ -179,10 +207,8 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
         ),
       ),
       body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
+          ? const Center(
+              child: CustomLoader(),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),

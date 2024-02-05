@@ -4,15 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
+import 'package:rentspace/controller/announcement_controller.dart';
 import 'package:rentspace/controller/auth_controller.dart';
 import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/view/dashboard/notifications.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+import 'api/global_services.dart';
+import 'constants/component_constannt.dart';
 import 'services/implementations/notification_service.dart';
 import 'view/splash_screen.dart';
 
@@ -43,21 +50,21 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 
 //app entry point
 Future<void> main() async {
+    await GlobalService.init(); 
 //initialize GetStorage
   await GetStorage.init();
+
   //widgets initializing
-  WidgetsFlutterBinding.ensureInitialized();
-  await firebaseInitialization.then((value) {
+  // WidgetsFlutterBinding.ensureInitialized();
+  await firebaseInitialization.then((value) async {
     Get.put(AuthController());
     // Get.put(UserController());
   });
   await initNotifications();
   // _showAnnouncementNotification('yo', 'test');
 
-  configLoading();
-  runApp(
-    const MyApp(),
-  );
+  // configLoading();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 Future<void> initNotifications() async {
@@ -80,7 +87,7 @@ Future<void> initNotifications() async {
     switch (notificationResponse.notificationResponseType) {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
-        Get.to(SettingsPage());
+        Get.to(const NotificationsPage());
         break;
       case NotificationResponseType.selectedNotificationAction:
         if (notificationResponse.actionId == navigationActionId) {
@@ -183,36 +190,53 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   setUpScreenUtils(context);
+  //   setStatusBar();
+  //   // ToastContext().init(context);
+  //   return ChangeNotifierProvider(
+  //     create: (_) => NotificationService(),
+  //     child: ScreenUtilInit(
+  //       designSize: const Size(390, 844),
+  //       minTextAdapt: true,
+  //       splitScreenMode: false,
+  //       builder: (contex, child) {
+  //         return GetMaterialApp(
+  //           theme: Themes().lightTheme,
+  //           darkTheme: Themes().darkTheme,
+  //           themeMode: ThemeServices().getThemeMode(),
+  //           debugShowCheckedModeBanner: false,
+  //           title: 'RentSpace',
+  //           home: const SplashScreen(),
+  //           builder: EasyLoading.init(),
+
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
+    setUpScreenUtils(context);
+    setStatusBar();
     // ToastContext().init(context);
-    return ChangeNotifierProvider(
-      create: (_) => NotificationService(),
-      child: GetMaterialApp(
-        theme: Themes().lightTheme,
-        darkTheme: Themes().darkTheme,
-        themeMode: ThemeServices().getThemeMode(),
-        debugShowCheckedModeBanner: false,
-        title: 'RentSpace',
-        home: const SplashScreen(),
-        builder: EasyLoading.init(),
-        // const Scaffold(
-        //   backgroundColor: Colors.white,
-        //   body: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     // ignore: prefer_const_literals_to_create_immutables
-        //     children: [
-        //       Center(
-        //         child: CircularProgressIndicator(
-        //           backgroundColor: Colors.white,
-        //           color: Colors.black,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: false,
+      builder: (contex, child) {
+        return GetMaterialApp(
+          theme: Themes().lightTheme,
+          darkTheme: Themes().darkTheme,
+          themeMode: ThemeServices().getThemeMode(),
+          debugShowCheckedModeBanner: false,
+          title: 'RentSpace',
+          home: const SplashScreen(),
+          builder: EasyLoading.init(),
+        );
+      },
     );
   }
 }

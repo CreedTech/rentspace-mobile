@@ -10,6 +10,7 @@ import 'package:rentspace/controller/user_controller.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
+import '../../constants/widgets/custom_loader.dart';
 
 class ChatMain extends StatefulWidget {
   const ChatMain({Key? key}) : super(key: key);
@@ -128,7 +129,11 @@ class _ChatMainState extends State<ChatMain> {
                   messages.orderBy('timestamp', descending: false).snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return const CircularProgressIndicator();
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CustomLoader(),
+                  );
+                }
                 return ListView.separated(
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
@@ -358,7 +363,7 @@ class _ChatMainState extends State<ChatMain> {
         children: [
           Expanded(
             child: TextField(
-              cursorColor: Colors.black,
+              cursorColor: Theme.of(context).primaryColor,
               textInputAction: TextInputAction.send,
               controller: _textController,
               decoration: InputDecoration(

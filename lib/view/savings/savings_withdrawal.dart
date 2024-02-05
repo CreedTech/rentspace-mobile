@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +23,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../constants/widgets/custom_loader.dart';
 
 class WalletWithdrawal extends StatefulWidget {
   const WalletWithdrawal({Key? key}) : super(key: key);
@@ -345,14 +352,26 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           notLoading = true;
         });
         Get.back();
-        Get.snackbar(
-          "Success!",
-          'Wallet withdrawal successful.',
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Wallet withdrawal successful.',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
+        // Get.snackbar(
+        //   "Success!",
+        //   'Wallet withdrawal successful.',
+        //   animationDuration: const Duration(seconds: 1),
+        //   backgroundColor: brandOne,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.TOP,
+        // );
       }).catchError((error) {
         setState(() {
           notLoading = true;
@@ -562,7 +581,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     }
 
     final bankOption = Container(
-      height: 450,
+      height: 450.h,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
@@ -574,13 +593,13 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           hint: Text(
             'Choose bank',
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.height / 60,
+              fontSize: MediaQuery.of(context).size.height / 60.sp,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.height / 60,
+            fontSize: MediaQuery.of(context).size.height / 60.sp,
             color: Theme.of(context).primaryColor,
           ),
           focusColor: brandOne,
@@ -602,10 +621,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       ),
     );
 
-    final bankOption2 = DropdownButtonFormField<String>(
+    final bankOption2 = DropdownButtonFormField(
       style: GoogleFonts.nunito(
         color: brandOne,
-        fontSize: 16,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w600,
       ),
       items: const [
@@ -827,6 +846,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         DropdownMenuItem(
             value: '090171', child: Text('Mainstreet Microfinance Bank')),
       ],
+     
       onChanged: (newValue) {
         setState(() {
           _currentBankName = newValue.toString();
@@ -837,7 +857,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         hintText: 'Choose Bank',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
@@ -1391,7 +1411,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                         child: ListView(
                           children: [
                             const SizedBox(
-                              height: 50,
+                              height: 30,
                             ),
                             Text(
                               "Note that the withdrawal process will be according to our Terms of use",
@@ -1401,14 +1421,13 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
+                             SizedBox(
+                              height: 10.h,
                             ),
                             Text(
                               "Available balance: ${nairaFormaet.format(int.tryParse(walletBalance)! - 20)}",
                               style: GoogleFonts.nunito(
                                 fontSize: 16,
-                                //fontFamily: "DefaultFontFamily",
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -1484,10 +1503,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               const SizedBox(
                                                 width: 20,
                                                 height: 20,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: brandOne,
-                                                ),
+                                                child: CustomLoader(),
                                               ),
                                             ],
                                           ),
@@ -2147,9 +2163,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             const SizedBox(
                               height: 50,
                             ),
-                            const CircularProgressIndicator(
-                              color: brandOne,
-                            ),
+                            const CustomLoader(),
                           ],
                         ),
                       ),

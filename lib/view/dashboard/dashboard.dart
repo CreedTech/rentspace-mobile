@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
@@ -81,15 +84,15 @@ class _DashboardState extends State<Dashboard> {
     var hour = DateTime.now().hour;
     if (hour < 12) {
       setState(() {
-        _greeting = 'Good morning 🌅, ';
+        _greeting = 'Good morning 🌅 ';
       });
     } else if (hour < 17) {
       setState(() {
-        _greeting = 'Good afternoon ☀️, ';
+        _greeting = 'Good Afternoon 🕑';
       });
     } else {
       setState(() {
-        _greeting = 'Good evening 🌙, ';
+        _greeting = 'Good evening 🌙 ';
       });
     }
   }
@@ -180,13 +183,18 @@ class _DashboardState extends State<Dashboard> {
         body: SafeArea(
           child: Padding(
             //padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: EdgeInsets.fromLTRB(
+              20.0.w,
+              0.0.h,
+              20.0.w,
+              0.0.h,
+            ),
             child: ListView(
               children: [
                 Column(
                   children: [
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,25 +209,25 @@ class _DashboardState extends State<Dashboard> {
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(50.sp),
                                   child: CachedNetworkImage(
                                     imageUrl: userController.user[0].image,
-                                    height: 40,
-                                    width: 40,
+                                    height: 40.h,
+                                    width: 40.w,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) {
                                       return Image.asset(
                                         'assets/icons/RentSpace-icon.png',
-                                        height: 40,
-                                        width: 40,
+                                        height: 40.h,
+                                        width: 40.w,
                                         fit: BoxFit.cover,
                                       );
                                     },
                                     errorWidget: (context, url, error) {
                                       return Image.asset(
                                         'assets/icons/RentSpace-icon.png',
-                                        height: 40,
-                                        width: 40,
+                                        height: 40.h,
+                                        width: 40.w,
                                         fit: BoxFit.cover,
                                       );
                                     },
@@ -237,8 +245,8 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: 10.w,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,18 +254,18 @@ class _DashboardState extends State<Dashboard> {
                                 Text(
                                   "Hi, ${userController.user[0].userFirst}👋$dum1",
                                   style: GoogleFonts.nunito(
-                                    fontSize: 20.0,
+                                    fontSize: 20.0.sp,
                                     fontWeight: FontWeight.w700,
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 Text(
-                                  "Let's help you save money",
+                                  _greeting,
                                   style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
+                                    fontSize: 16.0.sp,
                                     // letterSpacing: 1.0,
                                     fontWeight: FontWeight.w700,
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ],
@@ -267,7 +275,7 @@ class _DashboardState extends State<Dashboard> {
                         Consumer<NotificationService>(
                             builder: (context, notificationService, _) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0.sp),
                             child: GestureDetector(
                               onTap: () async {
                                 await notificationService
@@ -276,24 +284,20 @@ class _DashboardState extends State<Dashboard> {
                               },
                               child: Stack(
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.notifications_outlined,
-                                    color: brandOne,
-                                    size: 22,
+                                    color: Theme.of(context).primaryColor,
+                                    size: 22.sp,
                                   ),
                                   if (notificationService.hasUnreadNotification)
                                     Positioned(
-                                      top: -3.0,
-                                      right: 0.0,
+                                      top: 0.sp,
+                                      right: 0.0.sp,
                                       child: Container(
-                                        padding: const EdgeInsets.all(2.0),
+                                        padding: EdgeInsets.all(4.0.sp),
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: Colors.red,
-                                        ),
-                                        child: const Text(
-                                          '•',
-                                          style: TextStyle(color: Colors.white),
                                         ),
                                       ),
                                     ),
@@ -304,8 +308,8 @@ class _DashboardState extends State<Dashboard> {
                         }),
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 30.h,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 0),
@@ -351,11 +355,8 @@ class _DashboardState extends State<Dashboard> {
                                               ),
                                               Text(
                                                 "Space Wallet$dum1${(userController.user[0].hasDva == 'true') ? " - DVA" : ""}",
-                                                style: const TextStyle(
+                                                style: GoogleFonts.nunito(
                                                   fontSize: 20.0,
-                                                  letterSpacing: 1.0,
-                                                  fontFamily:
-                                                      "DefaultFontFamily",
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -372,12 +373,9 @@ class _DashboardState extends State<Dashboard> {
                                                         'true')
                                                     ? '${userController.user[0].dvaNumber.substring(0, 3)}-${userController.user[0].dvaNumber.substring(3, 6)}-${userController.user[0].dvaNumber.substring(6, 10)}'
                                                     : '${userController.user[0].userWalletNumber.substring(0, 3)}-${userController.user[0].userWalletNumber.substring(3, 6)}-${userController.user[0].userWalletNumber.substring(6, 10)}',
-                                                style: const TextStyle(
+                                                style: GoogleFonts.nunito(
                                                   fontSize: 20.0,
-                                                  letterSpacing: 0.8,
                                                   fontWeight: FontWeight.bold,
-                                                  fontFamily:
-                                                      "DefaultFontFamily",
                                                   color: Colors.greenAccent,
                                                 ),
                                                 textAlign: TextAlign.center,
@@ -438,11 +436,9 @@ class _DashboardState extends State<Dashboard> {
                                                       userController.user[0]
                                                           .userWalletBalance))
                                                   .toString(),
-                                              style: const TextStyle(
+                                              style: GoogleFonts.nunito(
                                                 fontSize: 30.0,
                                                 fontWeight: FontWeight.bold,
-                                                letterSpacing: 0.9,
-                                                fontFamily: "DefaultFontFamily",
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -460,12 +456,9 @@ class _DashboardState extends State<Dashboard> {
                                                     : userController
                                                         .user[0].dvaName
                                                         .toUpperCase(),
-                                                style: const TextStyle(
+                                                style: GoogleFonts.nunito(
                                                   fontSize: 15.0,
-                                                  letterSpacing: 0.5,
                                                   color: Colors.white,
-                                                  fontFamily:
-                                                      "DefaultFontFamily",
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
@@ -481,14 +474,18 @@ class _DashboardState extends State<Dashboard> {
                                 style: NeumorphicStyle(
                                     shape: NeumorphicShape.concave,
                                     boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(12)),
+                                        BorderRadius.circular(12.sp)),
                                     depth: 0,
                                     lightSource: LightSource.topLeft,
                                     color: Theme.of(context).canvasColor),
                                 child: Container(
-                                  height: 220,
-                                  padding: const EdgeInsets.fromLTRB(
-                                      0.0, 10.0, 0.0, 10.0),
+                                  height: 220.h,
+                                  padding: EdgeInsets.fromLTRB(
+                                    0.0.w,
+                                    10.0.h,
+                                    0.0.w,
+                                    10.0.h,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).canvasColor,
                                     image: const DecorationImage(
@@ -498,66 +495,76 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   child: Column(
                                     children: [
-                                      const Row(
+                                      Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.fromLTRB(
-                                                20.0, 10.0, 20.0, 5.0),
+                                              20.0.w,
+                                              10.0.h,
+                                              20.0.w,
+                                              5.0.h,
+                                            ),
                                             child: Text(
                                               "Property of RentSpace",
-                                              style: TextStyle(
-                                                fontSize: 14.0,
-                                                //letterSpacing: 1.0,
-                                                fontFamily: "DefaultFontFamily",
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 14.0.sp,
                                                 color: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(
-                                        height: 5,
+                                      SizedBox(
+                                        height: 5.h,
                                       ),
                                       Container(
                                         color: Colors.black,
-                                        height: 40,
+                                        height: 40.h,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            40.0, 20.0, 40.0, 5.0),
+                                        padding: EdgeInsets.fromLTRB(
+                                          40.0.w,
+                                          20.0.h,
+                                          40.0.w,
+                                          5.0.h,
+                                        ),
                                         child: Container(
                                           color: Colors.white,
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              5.0, 4.0, 5.0, 4.0),
+                                          padding: EdgeInsets.fromLTRB(
+                                            5.0.w,
+                                            4.0.h,
+                                            5.0.w,
+                                            4.0.h,
+                                          ),
                                           child: Text(
                                             (userController.user[0].userId !=
                                                     "")
                                                 ? userController.user[0].userId
                                                     .substring(0, 3)
                                                 : "000",
-                                            style: const TextStyle(
-                                              fontSize: 14.0,
-                                              fontFamily: "DefaultFontFamily",
-                                              //letterSpacing: 1.0,
-
+                                            style: GoogleFonts.nunito(
+                                              fontSize: 14.0.sp,
                                               color: Colors.black,
                                             ),
                                             textAlign: TextAlign.end,
                                           ),
                                         ),
                                       ),
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.fromLTRB(
-                                            20.0, 10.0, 20.0, 5.0),
+                                          20.0.w,
+                                          10.0.h,
+                                          20.0.w,
+                                          5.0.h,
+                                        ),
                                         child: Text(
                                           "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
-                                          style: TextStyle(
-                                            fontSize: 8.0,
-                                            fontFamily: "DefaultFontFamily",
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 8.0.sp,
                                             color: Colors.white,
                                           ),
                                         ),
@@ -568,8 +575,8 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             )
                           : Container(
-                              width: 420,
-                              height: 230,
+                              width: 420.w,
+                              height: 230.h,
                               decoration: BoxDecoration(
                                   color: brandTwo,
                                   image: DecorationImage(
@@ -583,9 +590,9 @@ class _DashboardState extends State<Dashboard> {
                                       BlendMode.darken,
                                     ),
                                   ),
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(20.sp)),
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 24),
+                                padding: EdgeInsets.only(top: 24.h),
                                 child: Column(
                                   children: [
                                     Row(
@@ -596,12 +603,12 @@ class _DashboardState extends State<Dashboard> {
                                           'Space Wallet',
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
-                                            fontSize: 20,
+                                            fontSize: 20.sp,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 5,
+                                        SizedBox(
+                                          width: 5.w,
                                         ),
                                         GestureDetector(
                                           onTap: () {
@@ -614,35 +621,35 @@ class _DashboardState extends State<Dashboard> {
                                                 ? Icons.visibility_off_outlined
                                                 : Icons.visibility_outlined,
                                             color: Colors.white,
-                                            size: 27,
+                                            size: 27.sp,
                                           ),
                                         )
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 15,
+                                    SizedBox(
+                                      height: 15.h,
                                     ),
                                     Center(
                                       child: Container(
                                         // width: 280,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.w, vertical: 10.h),
                                         decoration: BoxDecoration(
                                           color: brandFour,
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(10.sp),
                                         ),
                                         child: Text(
                                           " ${hideBalance ? nairaFormaet.format(int.tryParse(userController.user[0].userWalletBalance)).toString() : "********"}",
                                           style: GoogleFonts.nunito(
                                               fontWeight: FontWeight.w800,
-                                              fontSize: 25,
+                                              fontSize: 25.sp,
                                               color: Colors.white),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 25,
+                                    SizedBox(
+                                      height: 25.h,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -662,11 +669,11 @@ class _DashboardState extends State<Dashboard> {
                                         }
                                       },
                                       child: Container(
-                                        height: 61,
-                                        width: 210,
+                                        height: 61.h,
+                                        width: 210.w,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(35),
+                                              BorderRadius.circular(35.sp),
                                           color: brandTwo.withOpacity(0.3),
                                         ),
                                         child: Row(
@@ -680,14 +687,14 @@ class _DashboardState extends State<Dashboard> {
                                               style: GoogleFonts.nunito(
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.white,
-                                                  fontSize: 20),
+                                                  fontSize: 20.sp),
                                             ),
-                                            const SizedBox(
-                                              width: 10,
+                                            SizedBox(
+                                              width: 10.w,
                                             ),
-                                            const Icon(
+                                            Icon(
                                               Icons.add_circle,
-                                              size: 30,
+                                              size: 30.sp,
                                               color: Colors.white,
                                             )
                                           ],
@@ -757,20 +764,20 @@ class _DashboardState extends State<Dashboard> {
                 // const SizedBox(
                 //   height: 25,
                 // ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.sp),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Account Activities",
                         style: GoogleFonts.nunito(
-                          fontSize: 16.0,
+                          fontSize: 16.0.sp,
                           fontWeight: FontWeight.w700,
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       InkWell(
@@ -784,11 +791,11 @@ class _DashboardState extends State<Dashboard> {
                         child: Text(
                           "See all",
                           style: GoogleFonts.nunito(
-                            fontSize: 14.0,
+                            fontSize: 14.0.sp,
                             // letterSpacing: 1.0,
                             // fontFamily: "DefaultFontFamily",
                             fontWeight: FontWeight.w700,
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             decoration: TextDecoration.underline,
                           ),
                         ),
@@ -825,9 +832,9 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 Text(
                                   userController.user[0].activities[index],
-                                  style: const TextStyle(
+                                  style: GoogleFonts.nunito(
                                     fontSize: 14,
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -844,7 +851,7 @@ class _DashboardState extends State<Dashboard> {
                             style: GoogleFonts.nunito(
                               fontSize: 20,
                               // fontFamily: "DefaultFontFamily",
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -857,7 +864,7 @@ class _DashboardState extends State<Dashboard> {
                   visible: isContainerVisible,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: brandTwo.withOpacity(0.2),
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
@@ -874,7 +881,7 @@ class _DashboardState extends State<Dashboard> {
                                 Text(
                                   'Account Setup',
                                   style: GoogleFonts.nunito(
-                                    color: Colors.black,
+                                    color: brandOne,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -887,6 +894,7 @@ class _DashboardState extends State<Dashboard> {
                                   },
                                   child: const Icon(
                                     Iconsax.close_circle,
+                                    color: brandOne,
                                   ),
                                 ),
                               ],
@@ -907,9 +915,14 @@ class _DashboardState extends State<Dashboard> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const Text(
+                                Text(
                                   'BVN Setup',
                                   textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    color: brandOne,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
@@ -928,9 +941,14 @@ class _DashboardState extends State<Dashboard> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              const Text(
+                              Text(
                                 'KYC Setup',
                                 textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: brandOne,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
@@ -948,7 +966,7 @@ class _DashboardState extends State<Dashboard> {
                           padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                             color: brandThree,
                           ),
                           child: ListTile(
@@ -979,7 +997,7 @@ class _DashboardState extends State<Dashboard> {
                               Icons.arrow_right_outlined,
                               color: Colors.black,
                             ),
-                            tileColor: Colors.red,
+                            tileColor: Colors.white,
                           ),
                         ),
                       )
@@ -1032,7 +1050,7 @@ class _DashboardState extends State<Dashboard> {
                           style: GoogleFonts.nunito(
                             color: brandOne,
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: 14.sp,
                           ),
                         ),
                         const SizedBox(
@@ -1064,19 +1082,18 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                         content: SizedBox(
                                           child: SizedBox(
-                                            width: 400,
+                                            width: 400.w,
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 40),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 40.h),
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                vertical: 15),
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 15.h),
                                                         child: Align(
                                                           alignment: Alignment
                                                               .topCenter,
@@ -1084,11 +1101,11 @@ class _DashboardState extends State<Dashboard> {
                                                             'Securely top up your wallet',
                                                             style: GoogleFonts
                                                                 .nunito(
-                                                              color: brandTwo,
-                                                              fontSize: 20,
+                                                              color: brandOne,
+                                                              fontSize: 16.sp,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w800,
+                                                                      .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -1118,38 +1135,31 @@ class _DashboardState extends State<Dashboard> {
                                                                           50),
                                                                   maximumSize:
                                                                       const Size(
-                                                                          300,
+                                                                          200,
                                                                           50),
-
                                                                   backgroundColor:
-                                                                      brandTwo,
+                                                                      brandOne,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(8),
                                                                   ),
-                                                                  // padding: const EdgeInsets
-                                                                  //     .symmetric(
-                                                                  //     horizontal:
-                                                                  //         50,
-                                                                  //     vertical:
-                                                                  //         10),
                                                                   textStyle: const TextStyle(
                                                                       color:
                                                                           brandFour,
                                                                       fontSize:
                                                                           13),
                                                                 ),
-                                                                child:
-                                                                    const Row(
+                                                                child: Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    Icon(Iconsax
-                                                                        .card),
-                                                                    SizedBox(
+                                                                    const Icon(
+                                                                        Iconsax
+                                                                            .card),
+                                                                    const SizedBox(
                                                                       width: 10,
                                                                     ),
                                                                     Text(
@@ -1159,9 +1169,9 @@ class _DashboardState extends State<Dashboard> {
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight.w700,
+                                                                            FontWeight.w500,
                                                                         fontSize:
-                                                                            16,
+                                                                            12.sp,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1226,15 +1236,15 @@ class _DashboardState extends State<Dashboard> {
                   height: 20,
                 ),
                 Container(
-                  width: 400,
-                  height: 225,
+                  width: 400.w,
+                  height: 225.sp,
                   decoration: BoxDecoration(
                     color: brandOne,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 24, horizontal: 24),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 24.h, horizontal: 24.w),
                     child: Column(
                       children: [
                         Row(
@@ -1242,36 +1252,36 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Image.asset(
                               'assets/icons/iconset/uil_money-withdrawal.png',
-                              width: 30,
+                              width: 30.w,
                               color: Colors.white,
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: 10.w,
                             ),
                             Text(
                               'Withdraw Your Funds',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 14,
+                        SizedBox(
+                          height: 14.h,
                         ),
                         Text(
                           'Your security matters. Withdraw with confidence knowing your transactions are encrypted and secure.',
                           style: GoogleFonts.nunito(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: 14.sp,
                           ),
                         ),
-                        const SizedBox(
-                          height: 14,
+                        SizedBox(
+                          height: 14.h,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -1305,8 +1315,8 @@ class _DashboardState extends State<Dashboard> {
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 40),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 40.h),
                                                   child: Column(
                                                     children: [
                                                       Padding(
@@ -1321,11 +1331,11 @@ class _DashboardState extends State<Dashboard> {
                                                             'Withdraw your Secured Funds',
                                                             style: GoogleFonts
                                                                 .nunito(
-                                                              color: brandTwo,
-                                                              fontSize: 20,
+                                                              color: brandOne,
+                                                              fontSize: 16.sp,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w800,
+                                                                      .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -1351,47 +1361,11 @@ class _DashboardState extends State<Dashboard> {
                                                                           0)
                                                                       ? Get.to(
                                                                           const WalletWithdrawal())
-                                                                      :
-                                                                      // Get
-                                                                      //     .snackbar(
-                                                                      //     "Wallet Empty!",
-                                                                      //     'You need to fund your wallet first!',
-                                                                      //     animationDuration:
-                                                                      //         const Duration(seconds: 1),
-                                                                      //     backgroundColor:
-                                                                      //         Colors.red,
-                                                                      //     colorText:
-                                                                      //         Colors.white,
-                                                                      //     snackPosition:
-                                                                      //         SnackPosition.BOTTOM,
-                                                                      //   );
-                                                                      customErrorDialog(
+                                                                      : customErrorDialog(
                                                                           context,
                                                                           'Wallet Empty! :)',
                                                                           'You need to fund your wallet first!',
                                                                         );
-                                                                  // showTopSnackBar(
-                                                                  //   Overlay.of(
-                                                                  //       context),
-                                                                  //   CustomSnackBar
-                                                                  //       .error(
-                                                                  //     backgroundColor:
-                                                                  //         Colors
-                                                                  //             .red,
-                                                                  //     message:
-                                                                  //         'Wallet Empty! :). You need to fund your wallet first!',
-                                                                  //     textStyle:
-                                                                  //         GoogleFonts
-                                                                  //             .nunito(
-                                                                  //       fontSize:
-                                                                  //           14,
-                                                                  //       color: Colors
-                                                                  //           .white,
-                                                                  //       fontWeight:
-                                                                  //           FontWeight.w700,
-                                                                  //     ),
-                                                                  //   ),
-                                                                  // );
                                                                 },
                                                                 style: ElevatedButton
                                                                     .styleFrom(
@@ -1401,22 +1375,16 @@ class _DashboardState extends State<Dashboard> {
                                                                           50),
                                                                   maximumSize:
                                                                       const Size(
-                                                                          300,
+                                                                          200,
                                                                           50),
                                                                   backgroundColor:
-                                                                      brandTwo,
+                                                                      brandOne,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(8),
                                                                   ),
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          50,
-                                                                      vertical:
-                                                                          10),
                                                                   textStyle: const TextStyle(
                                                                       color:
                                                                           brandFour,
@@ -1428,25 +1396,21 @@ class _DashboardState extends State<Dashboard> {
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    Image.asset(
-                                                                      'assets/icons/iconset/uil_money-withdrawal.png',
-                                                                      width: 30,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
+                                                                    const Icon(
+                                                                        Iconsax
+                                                                            .card),
                                                                     const SizedBox(
                                                                       width: 10,
                                                                     ),
-                                                                    const Text(
+                                                                    Text(
                                                                       "Proceed To Withdrawal",
                                                                       style:
                                                                           TextStyle(
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight.w700,
-                                                                        fontSize:
-                                                                            16,
+                                                                            FontWeight.w500,
+                                                                        fontSize:10.sp,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1474,28 +1438,28 @@ class _DashboardState extends State<Dashboard> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Container(
-                              height: 49,
-                              width: 170,
+                              height: 49.h,
+                              width: 180.w,
                               decoration: BoxDecoration(
                                 color: brandTwo,
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.sp),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
                                     'assets/icons/iconset/uil_money-withdrawal.png',
-                                    width: 24,
+                                    width: 24.w,
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                  SizedBox(
+                                    width: 10.w,
                                   ),
                                   Text(
                                     'Withdraw Now',
                                     style: GoogleFonts.nunito(
                                       color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   )
                                 ],
@@ -1939,9 +1903,9 @@ class _DashboardState extends State<Dashboard> {
                                 previousAnnouncementText = announcementText;
                               }
                               //  _showAnnouncementNotification('New Announcement', announcementText);
-                              return Text(
-                                snapshot.data!.docs[0]['body'],
-                                style: const TextStyle(
+                              return const Text(
+                                '',
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontFamily: "DefaultFontFamily",
@@ -1953,6 +1917,7 @@ class _DashboardState extends State<Dashboard> {
                           // }
 
                           ),
+
                       //       ],
                       //     ),
                       //   ),
