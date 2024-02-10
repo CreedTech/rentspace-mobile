@@ -1,19 +1,25 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-import 'package:rentspace/controller/user_controller.dart';
+import 'package:rentspace/controller/activities_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
 
 import 'package:rentspace/view/dashboard/all_activities.dart';
@@ -32,21 +38,27 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 
+import '../../api/global_services.dart';
+import '../../constants/app_constants.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/separator.dart';
+import '../../controller/settings_controller.dart';
+import '../../model/response/user_details_response.dart';
+import '../../model/wallet_model.dart';
 import '../../services/implementations/notification_service.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/view_bvn_and_kyc.dart';
 import '../chat/chat_main.dart';
 import 'notifications.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class Dashboard extends StatefulWidget {
+class Dashboard extends ConsumerStatefulWidget {
   Dashboard({
     Key? key,
   }) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _DashboardConsumerState createState() => _DashboardConsumerState();
 }
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
@@ -75,8 +87,20 @@ final CollectionReference announcements =
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardConsumerState extends ConsumerState<Dashboard> {
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  String? fullName = '';
+  List<UserDetailsModel> userInfo = [];
+// String? fullName = '';
+  List<WalletModel> wallet_info = [];
+  bool isAlertSet = false;
+  bool isRefresh = false;
   final UserController userController = Get.find();
+  final ActivitiesController activitiesController = Get.find();
+
   final form = intl.NumberFormat.decimalPattern();
   bool isContainerVisible = true;
   List<dynamic> _articles = [];
@@ -117,39 +141,33 @@ class _DashboardState extends State<Dashboard> {
       payload: 'item x',
     );
   }
-  // Future<void> _fetchNews() async {
-  //   final response = await http.get(
-  //     Uri.parse(
-  //         'https://newsapi.org/v2/top-headlines?country=us&category=business&q=finance&apiKey=64963c2e074348b5946d8307df0b5bea'),
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       _articles = json.decode(response.body)['articles'];
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _articles = [];
-  //     });
-  //     print(response.reasonPhrase);
-  //   }
-  // }
 
   final CollectionReference notifications =
       FirebaseFirestore.instance.collection('notifications');
-  late ValueNotifier<double> valueNotifier;
+  // late ValueNotifier<double> valueNotifier;
   @override
   initState() {
     super.initState();
-    Provider.of<NotificationService>(context, listen: false)
-        .fetchNotificationsFromFirestore();
+    print('user here');
+    // print(userController.users[0]);
+    print('activities');
+    print(activitiesController.activities);
+    // ref.read(userSettingsProvider.notifier).getUserProfileDetails();
+    getConnectivity();
+    // Fetch user details when the widget is initialized
+    // _getUserDetailsFromPrefs();
+
+    getWalletData(refresh: true);
+
+    // Provider.of<NotificationService>(context, listen: false)
+    //     .fetchNotificationsFromFirestore();
 
     // addNotification('test', 'Testing notifications');
 
-    userController.user.isEmpty
-        ? valueNotifier = ValueNotifier(0.0)
-        : valueNotifier = ValueNotifier(
-            double.tryParse(userController.user[0].finance_health)!);
+    // userInfo.isEmpty
+    //     ? valueNotifier = ValueNotifier(0.0)
+    //     : valueNotifier = ValueNotifier(
+    //         double.tryParse(userInfo[0].finance_health)!);
     greeting();
     // _fetchNews();
   }
@@ -169,18 +187,145 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            // showDialogBox();
+            // noInternetConnectionScreen(context);
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+  Future<void> _getUserDetailsFromPrefs() async {
+    try {
+      // final prefs = SharedPreferencesManager();
+      final userDetails =
+          await GlobalService.sharedPreferencesManager.getUserDetails();
+      print('====================');
+      print('userDetails');
+      print(userDetails);
+
+      if (userDetails.userDetails.isNotEmpty) {
+        // List? userInfo = userDetails.userDetails;
+        String? firstName = userDetails.userDetails[0].firstName;
+        String? lastName = userDetails.userDetails[0].lastName;
+        // final userName = userDetails['userName'] ?? '';
+        print('fullname:');
+        print('fullname: $firstName $lastName');
+        // print('userInfo: $userInfo');
+
+        setState(() {
+          fullName = fullName; // Update the user name
+        });
+      } else {
+        print('Invalid user details format');
+      }
+    } catch (e) {
+      print('Error fetching user details from SharedPreferences: $e');
+    }
+  }
+
+  Future<bool> getWalletData({bool refresh = true}) async {
+    String token = await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('token');
+    print(token);
+    if (refresh) {
+      if (mounted) {
+        setState(() {});
+        // currentPage = widget.id == 30762 ? 2 : 1;
+      }
+    }
+
+    final response = await http.get(
+        Uri.parse(AppConstants.BASE_URL + AppConstants.GET_WALLET),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
+    // final response = await dio.get(categoryWiseUrls.toString());
+    // print("response");
+    // print(response);
+
+    if (response.statusCode == 200) {
+      final jsonStr = json.encode(response.body);
+      print('jsonStr');
+      print(jsonStr);
+      final result = walletModelFromJson(response.body);
+      print('result');
+      print(result);
+
+      if (refresh) {
+        wallet_info = result;
+      } else {
+        wallet_info.addAll(result);
+        // textCopy = wallet_info[0].wallet.virtualAccountNumber;
+      }
+      if (mounted) {
+        setState(() {});
+        // currentPage++;
+      }
+
+      return true;
+    } else {
+      print("error");
+      print(response);
+      return false;
+    }
+  }
+
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
+    if (mounted) {
+      setState(() {
+        isRefresh = true;
+      });
+    }
+
+    final result = await getWalletData(refresh: true);
+    if (result == true) {
+      if (mounted) {
+        setState(() {
+          isRefresh = false;
+        });
+      }
+    } else {
+      refreshController.refreshFailed();
+    }
+    // }
+  }
+
+  void onLoading() async {
+    final result = await getWalletData(refresh: true);
+    if (result == true) {
+      refreshController.loadComplete();
+    } else {
+      refreshController.loadNoData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Get.to(const ChatMain());
-          },
-          child: const Icon(Icons.support_agent_sharp),
-        ),
-        body: SafeArea(
+    // final data = ref.watch(userProfileDetailsProvider);
+    return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(const ChatMain());
+        },
+        child: const Icon(Icons.support_agent_sharp),
+      ),
+      body: LiquidPullToRefresh(
+        height: 100,
+        animSpeedFactor: 2,
+        color: brandOne,
+        backgroundColor: Colors.white,
+        showChildOpacityTransition: false,
+        onRefresh: onRefresh,
+        child: SafeArea(
           child: Padding(
             //padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
             padding: EdgeInsets.fromLTRB(
@@ -193,9 +338,9 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 Column(
                   children: [
-                    SizedBox(
-                      height: 30.h,
-                    ),
+                    // SizedBox(
+                    //   height: 30.h,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -211,7 +356,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50.sp),
                                   child: CachedNetworkImage(
-                                    imageUrl: userController.user[0].image,
+                                    imageUrl: userController.users[0].avatar,
                                     height: 40.h,
                                     width: 40.w,
                                     fit: BoxFit.cover,
@@ -237,7 +382,7 @@ class _DashboardState extends State<Dashboard> {
                                     // },
                                   ),
                                   // Image.network(
-                                  //   userController.user[0].image,
+                                  //   userInfo[0].image,
                                   //   height: 40,
                                   //   width: 40,
                                   //   fit: BoxFit.fill,
@@ -252,13 +397,21 @@ class _DashboardState extends State<Dashboard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Hi, ${userController.user[0].userFirst}👋$dum1",
+                                  "Hi, ${userController.users[0].firstName ?? 'Spacer'}👋 $dum1",
                                   style: GoogleFonts.nunito(
                                     fontSize: 20.0.sp,
                                     fontWeight: FontWeight.w700,
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
+                                // Text(
+                                //   "Hi, ${userInfo[0].userFirst}👋$dum1",
+                                //   style: GoogleFonts.nunito(
+                                //     fontSize: 20.0.sp,
+                                //     fontWeight: FontWeight.w700,
+                                //     color: Theme.of(context).primaryColor,
+                                //   ),
+                                // ),
                                 Text(
                                   _greeting,
                                   style: GoogleFonts.nunito(
@@ -272,40 +425,40 @@ class _DashboardState extends State<Dashboard> {
                             )
                           ],
                         ),
-                        Consumer<NotificationService>(
-                            builder: (context, notificationService, _) {
-                          return Padding(
-                            padding: EdgeInsets.all(8.0.sp),
-                            child: GestureDetector(
-                              onTap: () async {
-                                await notificationService
-                                    .fetchNotificationsFromFirestore();
-                                Get.to(const NotificationsPage());
-                              },
-                              child: Stack(
-                                children: [
-                                  Icon(
-                                    Icons.notifications_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 22.sp,
-                                  ),
-                                  if (notificationService.hasUnreadNotification)
-                                    Positioned(
-                                      top: 0.sp,
-                                      right: 0.0.sp,
-                                      child: Container(
-                                        padding: EdgeInsets.all(4.0.sp),
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                        // Consumer<NotificationService>(
+                        //     builder: (context, notificationService, _) {
+                        //   return Padding(
+                        //     padding: EdgeInsets.all(8.0.sp),
+                        //     child: GestureDetector(
+                        //       onTap: () async {
+                        //         await notificationService
+                        //             .fetchNotificationsFromFirestore();
+                        //         Get.to(const NotificationsPage());
+                        //       },
+                        //       child: Stack(
+                        //         children: [
+                        //           Icon(
+                        //             Icons.notifications_outlined,
+                        //             color: Theme.of(context).primaryColor,
+                        //             size: 22.sp,
+                        //           ),
+                        //           if (notificationService.hasUnreadNotification)
+                        //             Positioned(
+                        //               top: 0.sp,
+                        //               right: 0.0.sp,
+                        //               child: Container(
+                        //                 padding: EdgeInsets.all(4.0.sp),
+                        //                 decoration: const BoxDecoration(
+                        //                   shape: BoxShape.circle,
+                        //                   color: Colors.red,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   );
+                        // }),
                       ],
                     ),
                     SizedBox(
@@ -313,7 +466,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 0),
-                      child: (userController.user[0].hasDva == 'true')
+                      child: (userController.users[0].hasDva == true)
                           ? FlipCard(
                               front: Neumorphic(
                                 style: NeumorphicStyle(
@@ -354,7 +507,7 @@ class _DashboardState extends State<Dashboard> {
                                                 width: 10,
                                               ),
                                               Text(
-                                                "Space Wallet$dum1${(userController.user[0].hasDva == 'true') ? " - DVA" : ""}",
+                                                "Space Wallet$dum1${(userController.users[0].hasDva == true) ? " - DVA" : ""}",
                                                 style: GoogleFonts.nunito(
                                                   fontSize: 20.0,
                                                   color: Colors.white,
@@ -369,10 +522,10 @@ class _DashboardState extends State<Dashboard> {
                                             children: [
                                               Text(
                                                 (userController
-                                                            .user[0].hasDva ==
-                                                        'true')
-                                                    ? '${userController.user[0].dvaNumber.substring(0, 3)}-${userController.user[0].dvaNumber.substring(3, 6)}-${userController.user[0].dvaNumber.substring(6, 10)}'
-                                                    : '${userController.user[0].userWalletNumber.substring(0, 3)}-${userController.user[0].userWalletNumber.substring(3, 6)}-${userController.user[0].userWalletNumber.substring(6, 10)}',
+                                                            .users[0].hasDva ==
+                                                        true)
+                                                    ? '${userController.users[0].dvaNumber.toString().substring(0, 3)}-${userController.users[0].dvaNumber.toString().substring(3, 6)}-${userController.users[0].dvaNumber.toString().substring(6, 10)}'
+                                                    : '${wallet_info[0].wallet.walletId.substring(0, 3)}-${wallet_info[0].wallet.walletId.substring(3, 6)}-${wallet_info[0].wallet.walletId.substring(6, 10)}',
                                                 style: GoogleFonts.nunito(
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.bold,
@@ -383,15 +536,16 @@ class _DashboardState extends State<Dashboard> {
                                               const SizedBox(
                                                 width: 10,
                                               ),
-                                              (userController.user[0].hasDva ==
-                                                      'true')
+                                              (userController.users[0].hasDva ==
+                                                      true)
                                                   ? InkWell(
                                                       onTap: () {
                                                         Clipboard.setData(
                                                           ClipboardData(
                                                             text: userController
-                                                                .user[0]
-                                                                .dvaNumber,
+                                                                .users[0]
+                                                                .dvaNumber
+                                                                .toString(),
                                                           ),
                                                         );
                                                         Fluttertoast.showToast(
@@ -432,9 +586,9 @@ class _DashboardState extends State<Dashboard> {
                                             ),
                                             child: Text(
                                               nairaFormaet
-                                                  .format(int.tryParse(
-                                                      userController.user[0]
-                                                          .userWalletBalance))
+                                                  .format(wallet_info[0]
+                                                      .wallet
+                                                      .mainBalance)
                                                   .toString(),
                                               style: GoogleFonts.nunito(
                                                 fontSize: 30.0,
@@ -450,11 +604,12 @@ class _DashboardState extends State<Dashboard> {
                                             children: [
                                               Text(
                                                 (userController
-                                                            .user[0].hasDva ==
-                                                        'false')
-                                                    ? "${userController.user[0].userFirst.toUpperCase()} ${userController.user[0].userLast.toUpperCase()}"
+                                                            .users[0].hasDva ==
+                                                        false)
+                                                    ? "${userController.users[0].firstName.toUpperCase()} ${userController.users[0].lastName.toUpperCase()}"
                                                     : userController
-                                                        .user[0].dvaName
+                                                        .users[0].dvaName
+                                                        .toString()
                                                         .toUpperCase(),
                                                 style: GoogleFonts.nunito(
                                                   fontSize: 15.0,
@@ -541,9 +696,8 @@ class _DashboardState extends State<Dashboard> {
                                             4.0.h,
                                           ),
                                           child: Text(
-                                            (userController.user[0].userId !=
-                                                    "")
-                                                ? userController.user[0].userId
+                                            (userController.users[0].id != "")
+                                                ? userController.users[0].id
                                                     .substring(0, 3)
                                                 : "000",
                                             style: GoogleFonts.nunito(
@@ -640,7 +794,7 @@ class _DashboardState extends State<Dashboard> {
                                               BorderRadius.circular(10.sp),
                                         ),
                                         child: Text(
-                                          " ${hideBalance ? nairaFormaet.format(int.tryParse(userController.user[0].userWalletBalance)).toString() : "********"}",
+                                          " ${hideBalance ? nairaFormaet.format(wallet_info[0].wallet.mainBalance).toString() : "********"}",
                                           style: GoogleFonts.nunito(
                                               fontWeight: FontWeight.w800,
                                               fontSize: 25.sp,
@@ -653,19 +807,22 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        if (userController.user[0].bvn == "") {
+                                        if (userController.users[0].bvn == "") {
                                           Get.to(const BvnPage());
                                         } else {
-                                          Get.to(ViewBvnAndKyc(
-                                            bvn: userController.user[0].bvn,
-                                            hasVerifiedBvn: userController
-                                                .user[0].hasVerifiedBvn,
-                                            hasVerifiedKyc: userController
-                                                .user[0].hasVerifiedKyc,
-                                            kyc: userController.user[0].kyc,
-                                            idImage:
-                                                userController.user[0].Idimage,
-                                          ));
+                                          // Get.to(ViewBvnAndKyc(
+                                          //   bvn: userController.users[0].bvn,
+                                          //   hasVerifiedBvn: userController
+                                          //       .users[0].hasVerifiedBvn
+                                          //       .toString(),
+                                          //   hasVerifiedKyc: userController
+                                          //       .users[0].hasVerifiedKyc
+                                          //       .toString(),
+                                          //   kyc: userController.users[0].kyc,
+                                          //   idImage: userController
+                                          //       .users[0].Idimage
+                                          //       .toString(),
+                                          // ));
                                         }
                                       },
                                       child: Container(
@@ -782,11 +939,11 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(AllActivities(
-                            activities: userController.user[0].activities,
-                            activitiesLength:
-                                userController.user[0].activities.length,
-                          ));
+                          // Get.to(AllActivities(
+                          //   activities: userInfo[0].activities.id,
+                          //   activitiesLength:
+                          //       userInfo[0].activities.length,
+                          // ));
                         },
                         child: Text(
                           "See all",
@@ -806,15 +963,14 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(
                   height: 10,
                 ),
-                userController.user[0].activities.isNotEmpty
+                activitiesController.activities.isNotEmpty
                     ? ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                        itemCount:
-                            (userController.user[0].activities.length < 3)
-                                ? userController.user[0].activities.length
-                                : 1,
+                        itemCount: (activitiesController.activities.length < 2)
+                            ? activitiesController.activities.length
+                            : 1,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             color: Theme.of(context).canvasColor,
@@ -831,7 +987,8 @@ class _DashboardState extends State<Dashboard> {
                                   width: 10,
                                 ),
                                 Text(
-                                  userController.user[0].activities[index],
+                                  activitiesController
+                                      .activities[index].description,
                                   style: GoogleFonts.nunito(
                                     fontSize: 14,
                                     color: Theme.of(context).primaryColor,
@@ -857,6 +1014,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -906,8 +1064,8 @@ class _DashboardState extends State<Dashboard> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  (userController.user[0].hasVerifiedBvn ==
-                                          'false')
+                                  (userController.users[0].hasVerifiedBvn ==
+                                          false)
                                       ? Iconsax.verify
                                       : Iconsax.verify5,
                                   color: brandOne,
@@ -932,8 +1090,8 @@ class _DashboardState extends State<Dashboard> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(
-                                (userController.user[0].hasVerifiedKyc ==
-                                        'false')
+                                (userController.users[0].hasVerifiedKyc ==
+                                        false)
                                     ? Iconsax.verify
                                     : Iconsax.verify5,
                                 color: brandOne,
@@ -958,8 +1116,8 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
 
-                (userController.user[0].bvn != "" &&
-                        userController.user[0].hasDva == 'false')
+                (userController.users[0].bvn != "" &&
+                        userController.users[0].hasDva == false)
                     ? Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Container(
@@ -1354,10 +1512,9 @@ class _DashboardState extends State<Dashboard> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  (int.tryParse(userController
-                                                                              .user[
-                                                                                  0]
-                                                                              .userWalletBalance)! >
+                                                                  (wallet_info[0]
+                                                                              .wallet
+                                                                              .mainBalance >
                                                                           0)
                                                                       ? Get.to(
                                                                           const WalletWithdrawal())
@@ -1410,7 +1567,8 @@ class _DashboardState extends State<Dashboard> {
                                                                             .white,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        fontSize:10.sp,
+                                                                        fontSize:
+                                                                            10.sp,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1714,8 +1872,8 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(
                         height: 20,
                       ),
-                      // (userController.user[0].bvn != "" &&
-                      //         userController.user[0].hasDva == 'false')
+                      // (userInfo[0].bvn != "" &&
+                      //         userInfo[0].hasDva == 'false')
                       //     ? Container(
                       //         padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                       //         width: MediaQuery.of(context).size.width,
@@ -1942,9 +2100,9 @@ class _DashboardState extends State<Dashboard> {
                       //       InkWell(
                       //         onTap: () {
                       //           Get.to(AllActivities(
-                      //             activities: userController.user[0].activities,
+                      //             activities: userInfo[0].activities,
                       //             activitiesLength:
-                      //                 userController.user[0].activities.length,
+                      //                 userInfo[0].activities.length,
                       //           ));
                       //         },
                       //         child: Text(
@@ -1970,8 +2128,8 @@ class _DashboardState extends State<Dashboard> {
                       //   shrinkWrap: true,
                       //   physics: const ClampingScrollPhysics(),
                       //   itemCount:
-                      //       (userController.user[0].activities.length < 3)
-                      //           ? userController.user[0].activities.length
+                      //       (userInfo[0].activities.length < 3)
+                      //           ? userInfo[0].activities.length
                       //           : 3,
                       //   itemBuilder: (BuildContext context, int index) {
                       //     return (userController
@@ -2096,7 +2254,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void dispose() {
-    valueNotifier.dispose();
+    subscription.cancel();
+    // valueNotifier.dispose();
     super.dispose();
   }
 }

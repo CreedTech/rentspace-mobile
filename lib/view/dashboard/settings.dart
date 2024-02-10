@@ -17,6 +17,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
@@ -30,7 +31,7 @@ import '../../constants/firebase_auth_constants.dart';
 import '../../constants/theme_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
 import '../actions/bank_and_card.dart';
 import '../actions/share_and_earn.dart';
 import '../faqs.dart';
@@ -139,10 +140,10 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   initState() {
     super.initState();
-    userController.user.isEmpty
+    userController.users.isEmpty
         ? valueNotifier = 0.0
         : valueNotifier =
-            double.tryParse(userController.user[0].finance_health)!;
+            double.tryParse(userController.users[0].financeHealth.toString())!;
 
     controller = AnimationController(
       vsync: this,
@@ -395,7 +396,7 @@ class _SettingsPageState extends State<SettingsPage>
                                 ),
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                  userController.user[0].image,
+                                  'userController.users[0].avatar',
                                 ),
                                 // NetworkImage(
                                 //   userController.user[0].image,
@@ -525,14 +526,14 @@ class _SettingsPageState extends State<SettingsPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${userController.user[0].userFirst} ${userController.user[0].userLast}",
+                            "${userController.users[0].firstName} ${userController.users[0].lastName}",
                             style: GoogleFonts.nunito(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w700,
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          (userController.user[0].status == 'verified')
+                          (userController.users[0].status == 'verified')
                               ? Icon(
                                   Iconsax.verify5,
                                   color:
@@ -552,14 +553,14 @@ class _SettingsPageState extends State<SettingsPage>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Wallet ID: ${userController.user[0].userWalletNumber}",
-                            style: GoogleFonts.nunito(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
+                          // Text(
+                          //   "Wallet ID: ${userController.users[0].userWalletNumber}",
+                          //   style: GoogleFonts.nunito(
+                          //     fontSize: 17.0,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: Theme.of(context).primaryColor,
+                          //   ),
+                          // ),
                           const SizedBox(
                             width: 4,
                           ),
@@ -821,7 +822,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                 ),
                 onTap: () {
-                  if (userController.user[0].cardCVV == '') {
+                  if (userController.users[0].cardCVV == '') {
                     Get.to(const AddCard());
                   } else {
                     Get.to(BankAndCard());

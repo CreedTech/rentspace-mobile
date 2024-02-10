@@ -1,23 +1,25 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rentspace/view/signup_page.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../controller/auth/auth_controller.dart';
+
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageConsumerState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   //Multiple attempts prevention section
   final loginAttempts = GetStorage();
   final lockAttempts = GetStorage();
@@ -32,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
   Icon lockIcon = LockIcon().open;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+  // final RoundedLoadingButtonController _btnController =
+  //     RoundedLoadingButtonController();
   final loginFormKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {
@@ -49,30 +51,41 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _doSomething() async {
-    Timer(const Duration(seconds: 1), () {
-      _btnController.stop();
-    });
-
-    if (loginFormKey.currentState!.validate()) {
-      authController.login(_emailController.text.trim(),
-          _passwordController.text.trim(), context);
-    }
+  Future<void> setHasSeenOnboardingPreference(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasSeenOnboarding', value);
+    print("====================");
+    print("Checking for new users.....");
+    print(prefs.get('hasSeenOnboarding'));
+    print("====================");
   }
+
+  // void _doSomething() async {
+  //   Timer(const Duration(seconds: 1), () {
+  //     _btnController.stop();
+  //   });
+
+  //   if (loginFormKey.currentState!.validate()) {
+  //     authController.login(_emailController.text.trim(),
+  //         _passwordController.text.trim(), context);
+  //   }
+  // }
 
   @override
   initState() {
+    setHasSeenOnboardingPreference(true);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+        final authState = ref.watch(authControllerProvider.notifier);
     //email field
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style:  TextStyle(
+      style: TextStyle(
         color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
@@ -194,6 +207,7 @@ class _LoginPageState extends State<LoginPage> {
     //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
     return Scaffold(
+      
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         // backgroundColor: const Color(0xffE0E0E0),
@@ -203,13 +217,13 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () {
             Get.back();
           },
-          child:  Icon(
+          child: Icon(
             Icons.arrow_back,
             size: 25,
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title:  Text(
+        title: Text(
           'Back',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
@@ -411,7 +425,16 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             onPressed: () {
-                              _doSomething();
+                              if (loginFormKey.currentState!.validate()) {
+                                authState.signIn(
+                                  context,
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  // usernameController.text.trim(),
+                                );
+                                // emailController.clear();
+                                // passwordController.clear();
+                              }
                             },
                             child: Text(
                               'Proceed',

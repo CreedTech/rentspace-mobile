@@ -313,31 +313,31 @@ class _AddCardState extends State<AddCard> {
       }
     }
 
-    final banksList = CustomDropdown(
-      selectedStyle: GoogleFonts.nunito(
-          color: Theme.of(context).primaryColor, fontSize: 14),
-      hintText: 'Select an option?',
-      excludeSelected: true,
-      fillColor: Colors.transparent,
-      listItemStyle: GoogleFonts.nunito(
-          color: Theme.of(context).colorScheme.secondary, fontSize: 14),
-      items: _bankName,
-      controller: bankNameController,
-      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-      fieldSuffixIcon: Icon(
-        Iconsax.arrow_down5,
-        size: 25.h,
-        color: Theme.of(context).primaryColor,
-      ),
-      onChanged: (newValue) {
-        setState(() {
-          _currentBankName = newValue.toString();
-          selectedItem = newValue as String?;
-          int index = _bankName.indexOf(selectedItem!);
-          _currentBankCode = _bankCode[index - 1];
-        });
-      },
-    );
+    // final banksList = CustomDropdown(
+    //   selectedStyle: GoogleFonts.nunito(
+    //       color: Theme.of(context).primaryColor, fontSize: 14),
+    //   hintText: 'Select an option?',
+    //   excludeSelected: true,
+    //   fillColor: Colors.transparent,
+    //   listItemStyle: GoogleFonts.nunito(
+    //       color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+    //   items: _bankName,
+    //   controller: bankNameController,
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor),
+    //   fieldSuffixIcon: Icon(
+    //     Iconsax.arrow_down5,
+    //     size: 25.h,
+    //     color: Theme.of(context).primaryColor,
+    //   ),
+    //   onChanged: (newValue) {
+    //     setState(() {
+    //       _currentBankName = newValue.toString();
+    //       selectedItem = newValue as String?;
+    //       int index = _bankName.indexOf(selectedItem!);
+    //       _currentBankCode = _bankCode[index - 1];
+    //     });
+    //   },
+    // );
     // final bankOption = DropdownButtonFormField(
     //   style: GoogleFonts.nunito(
     //     color: Theme.of(context).primaryColor,
@@ -872,7 +872,37 @@ class _AddCardState extends State<AddCard> {
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       15.0, 2, 15.0, 2),
-                                  child: banksList,
+                                  child: CustomDropdown(
+                                    selectedStyle: GoogleFonts.nunito(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 14),
+                                    hintText: 'Select an option?',
+                                    excludeSelected: true,
+                                    fillColor: Colors.transparent,
+                                    listItemStyle: GoogleFonts.nunito(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontSize: 14),
+                                    items: _bankName,
+                                    controller: bankNameController,
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                    fieldSuffixIcon: Icon(
+                                      Iconsax.arrow_down5,
+                                      size: 25.h,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _currentBankName = newValue.toString();
+                                        selectedItem = newValue as String?;
+                                        int index =
+                                            _bankName.indexOf(selectedItem!);
+                                        _currentBankCode = _bankCode[index - 1];
+                                      });
+                                    },
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 10,

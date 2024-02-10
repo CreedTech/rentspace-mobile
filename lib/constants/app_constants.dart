@@ -3,11 +3,13 @@
 class AppConstants {
   static const BASE_URL = 'https://dark-lime-bass-slip.cyclic.app';
   static const SIGN_UP = '/api/user/create';
+    static const GET_WALLET = '/api/wallet/get-wallet';
   static const CREATE_PIN = '/api/wallet/create-pin';
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
 
   static const GET_USER = '/api/user/get-user';
+  static const GET_ACTIVITIES = '/api/user/userActivities';
   static const OTP = '/api/auth/password/verify';
   static const RESENDOTP = '/api/user/resend-verification-otp';
   static const FORGOTPASSWORD = '/api/auth/password/forgot-password';

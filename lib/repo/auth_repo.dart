@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import '../api/api_client.dart';
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
+import '../model/response/user_details_response.dart';
 import '../model/response_model.dart';
 
 final authRepositoryProvider = Provider((ref) {
@@ -79,5 +80,166 @@ class AuthRepository {
       responseModel = ResponseModel(error, false);
       return responseModel;
     }
+  }
+
+  Future<ResponseModel> signIn(body) async {
+    print('Got here in auth repo');
+    ResponseModel responseModel;
+    Response response =
+        await _apiClient.postData(AppConstants.LOGIN, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      String token = jsonDecode(response.body)['token'];
+      await GlobalService.sharedPreferencesManager.setAuthToken(value: token);
+
+      responseModel = ResponseModel('logged in', true);
+      _apiClient.updateHeaders(token);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+    if (jsonDecode(response.body)['error'] ==
+        'User not verified, please verify your account') {
+      error = 'User not verified, please verify your account';
+    }
+
+//  Here in repo{error: User not verified, please verify your account}
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> forgotPassword(email) async {
+    print('Got here in auth repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.FORGOTPASSWORD, jsonEncode(email));
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Code sent to your email", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> resetPassword(body) async {
+    print('Got here in auth repo');
+    print(body);
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.RESET_PASSWORD, jsonEncode(body));
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Password Reset Successful", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> resendPasswordOtp(email) async {
+    print('Got here in auth repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.RESEND_PASSWORD_OTP, jsonEncode(email));
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Code sent to your email", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> verifyForgotPasswordOtp(body) async {
+    print('Got here in otp repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.OTP, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified', true);
+      return responseModel;
+    }
+    print("Here in verify otp repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> getUserData() async {
+    print('Got here in user repo');
+    ResponseModel responseModel;
+
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    // print('authToken');
+    // print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.getData(AppConstants.GET_USER);
+
+    if (response.statusCode == 200) {
+      UserProfileDetailsResponse responseBody =
+          UserProfileDetailsResponse.fromJson(jsonDecode(response.body));
+
+      await GlobalService.sharedPreferencesManager
+          .saveUserDetails(responseBody);
+      responseModel = ResponseModel('User info retrieved successfully', true);
+      return responseModel;
+    }
+    print("Here in verify get user repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
   }
 }

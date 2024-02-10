@@ -1,6 +1,11 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_payment.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
@@ -12,9 +17,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:typewritertext/typewritertext.dart';
 
 class SpaceDepositSubscription extends StatefulWidget {
-  const SpaceDepositSubscription({Key? key}) : super(key: key);
+  const SpaceDepositSubscription({super.key});
 
   @override
   _SpaceDepositSubscriptionState createState() =>
@@ -50,13 +56,15 @@ var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 String durationType = "Days";
 
-final TextEditingController _depositAmountController = TextEditingController();
-final TextEditingController _planNameController = TextEditingController();
-final TextEditingController _planDurationController = TextEditingController();
-final RoundedLoadingButtonController _depositController =
-    RoundedLoadingButtonController();
-
 class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
+  final TextEditingController _depositAmountController =
+      TextEditingController();
+  final TextEditingController _planNameController = TextEditingController();
+  final TextEditingController _planDurationController = TextEditingController();
+  final TextEditingController _durationController = TextEditingController();
+  final RoundedLoadingButtonController _depositController =
+      RoundedLoadingButtonController();
+  List<String> durationSelect = ['Days', 'Weeks', 'Months'];
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
           length,
@@ -103,6 +111,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
   Widget build(BuildContext context) {
 //change duration value
     changeDuration() {
+      print('duration');
       if (durationType == "Days") {
         setState(() {
           durationVal = 365;
@@ -337,10 +346,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           interestText = "";
         });
       }
-      print("Duration: " +
-          _planDurationController.text.trim() +
-          " " +
-          durationType);
+      print("Duration: ${_planDurationController.text.trim()} $durationType");
     }
 
 //validation function
@@ -361,7 +367,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       if (int.tryParse(text.replaceAll(',', ''))!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
     validateDuration(text) {
@@ -378,7 +384,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       if (int.tryParse(text)!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
     //validation function
@@ -390,7 +396,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         return 'Too short';
       }
 
-      return '';
+      return null;
     }
 
 /////get savingsID
@@ -405,7 +411,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
 
     final autoAmount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _depositAmountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
@@ -413,8 +419,8 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       onChanged: (text) {
         setState(() => _amountValue = text);
         changeDuration();
-        if ((validateAmount(_depositAmountController.text.trim()) == "") &&
-            (validateDuration(_planDurationController.text.trim()) == "")) {
+        if ((validateAmount(_depositAmountController.text.trim()) == null) &&
+            (validateDuration(_planDurationController.text.trim()) == null)) {
           checkDuration();
         } else {
           setState(() {
@@ -423,51 +429,61 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           });
         }
       },
-      style: TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
         label: Text(
           "How much do you want to fix?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
         prefix: Text(
-          "₦" + varValue.toString(),
-          style: TextStyle(
+          "₦$varValue",
+          style: GoogleFonts.nunito(
             fontSize: 15,
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),
     );
     final planDuration = TextFormField(
       enableSuggestions: true,
-
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _planDurationController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateDuration,
@@ -476,8 +492,8 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         setState(() => _durationValue = text);
         changeDuration();
 
-        if ((validateAmount(_depositAmountController.text.trim()) == "") &&
-            (validateDuration(_planDurationController.text.trim()) == "")) {
+        if ((validateAmount(_depositAmountController.text.trim()) == null) &&
+            (validateDuration(_planDurationController.text.trim()) == null)) {
           checkDuration();
         } else {
           setState(() {
@@ -486,122 +502,186 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           });
         }
       },
-      style: TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [],
       decoration: InputDecoration(
         label: Text(
           "How long do you want to fix this savings for?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        filled: true,
-        fillColor: brandThree,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter a value',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
     final planName = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _planNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateName,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _nameValue = text),
-      style: TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       inputFormatters: [],
       decoration: InputDecoration(
         label: Text(
           " What name would you give this savings?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
-        hintText: 'E.g First deposit',
-        hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 13,
-        ),
-      ),
-    );
-
-    final durationOption = Container(
-      height: 50,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
-      child: DropdownButtonHideUnderline(
-        child: GFDropdown(
           borderRadius: BorderRadius.circular(10),
-          border: const BorderSide(color: Colors.black12, width: 1),
-          dropdownButtonColor: Theme.of(context).canvasColor,
-          dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-          value: durationType,
-          onChanged: (newValue) {
-            setState(() {
-              durationType = newValue.toString();
-            });
-            changeDuration();
-
-            if ((validateAmount(_depositAmountController.text.trim()) == "") &&
-                (validateDuration(_planDurationController.text.trim()) == "")) {
-              checkDuration();
-            } else {
-              setState(() {
-                showInterest = false;
-                interestValue = "0";
-              });
-            }
-          },
-          items: ['Days', 'Weeks', 'Months']
-              .map((value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  ))
-              .toList(),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
+        ),
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
+        hintText: 'E.g First deposit',
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
+
+    final durationOption = CustomDropdown(
+      borderRadius: BorderRadius.circular(10),
+      selectedStyle: GoogleFonts.nunito(
+          color: Theme.of(context).primaryColor, fontSize: 14),
+      hintText: 'Select your Duration',
+      hintStyle: GoogleFonts.nunito(
+          // color: Theme.of(context).primaryColor,
+          fontSize: 14),
+      excludeSelected: true,
+      fillColor: Colors.transparent,
+      listItemStyle: GoogleFonts.nunito(
+          color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+      items: durationSelect,
+      controller: _durationController,
+      fieldSuffixIcon: Icon(
+        Iconsax.arrow_down5,
+        size: 25.h,
+        color: Theme.of(context).primaryColor,
+      ),
+      onChanged: (String? newValue) {
+        // print(_durationController.text);
+        setState(() {
+          durationType = newValue!;
+          // genderValue = selectedGender == 'Male' ? 1 : 2;
+        });
+        print(durationType);
+        changeDuration();
+
+        if ((validateAmount(_depositAmountController.text.trim()) == null) &&
+            (validateDuration(_planDurationController.text.trim()) == null)) {
+          checkDuration();
+        } else {
+          setState(() {
+            showInterest = false;
+            interestValue = "0";
+          });
+        }
+        // print(genderValue);
+      },
+    );
+
+    // Container(
+    //   height: 50,
+    //   width: MediaQuery.of(context).size.width,
+    //   margin: EdgeInsets.all(20),
+    //   child: DropdownButtonHideUnderline(
+    //     child: GFDropdown(
+    //       borderRadius: BorderRadius.circular(10),
+    //       border: const BorderSide(color: Colors.black12, width: 1),
+    //       dropdownButtonColor: Theme.of(context).canvasColor,
+    //       dropdownColor: Theme.of(context).canvasColor,
+    //       style: TextStyle(
+    //         color: Theme.of(context).primaryColor,
+    //       ),
+    //       value: durationType,
+    //       onChanged: (newValue) {
+    //         setState(() {
+    //           durationType = newValue.toString();
+    //         });
+    //         changeDuration();
+
+    //         if ((validateAmount(_depositAmountController.text.trim()) == "") &&
+    //             (validateDuration(_planDurationController.text.trim()) == "")) {
+    //           checkDuration();
+    //         } else {
+    //           setState(() {
+    //             showInterest = false;
+    //             interestValue = "0";
+    //           });
+    //         }
+    //       },
+    //       items: ['Days', 'Weeks', 'Months']
+    //           .map((value) => DropdownMenuItem(
+    //                 value: value,
+    //                 child: Text(value),
+    //               ))
+    //           .toList(),
+    //     ),
+    //   ),
+    // );
 
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
@@ -610,11 +690,11 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         backgroundColor: Theme.of(context).canvasColor,
         leading: GestureDetector(
           onTap: () {
-            //resetCalculator();
+            // resetCalculator();
             Get.back();
           },
           child: Icon(
-            Icons.close,
+            Icons.arrow_back,
             size: 30,
             color: Theme.of(context).primaryColor,
           ),
@@ -622,37 +702,25 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
             child: ListView(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               children: [
-                SizedBox(
-                  height: 50,
+                const SizedBox(
+                  height: 10,
                 ),
                 Text(
-                  "Let's get you started" + varValue.toString(),
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "DefaultFontFamily",
-                    letterSpacing: 0.5,
+                  "Let's get you started$varValue",
+                  style: GoogleFonts.nunito(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                    // letterSpacing: 0.5,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
@@ -660,37 +728,109 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                   children: <Widget>[
                     Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        planName,
-                        SizedBox(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
+                              child: Text(
+                                'Name of Saving',
+                                style: GoogleFonts.nunito(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  // fontFamily: "DefaultFontFamily",
+                                ),
+                              ),
+                            ),
+                            planName,
+                          ],
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
-                        autoAmount,
-                        SizedBox(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
+                              child: Text(
+                                'Target Amount',
+                                style: GoogleFonts.nunito(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  // fontFamily: "DefaultFontFamily",
+                                ),
+                              ),
+                            ),
+                            autoAmount,
+                          ],
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
-                        planDuration,
-                        durationOption,
-                        SizedBox(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
+                              child: Text(
+                                'Saving Frequency',
+                                style: GoogleFonts.nunito(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  // fontFamily: "DefaultFontFamily",
+                                ),
+                              ),
+                            ),
+                            durationOption,
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
+                              child: Text(
+                                'Saving Frequency',
+                                style: GoogleFonts.nunito(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  // fontFamily: "DefaultFontFamily",
+                                ),
+                              ),
+                            ),
+                            planDuration,
+                          ],
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
                         Text(
-                          "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum" +
-                              varValue.toString(),
-                          style: TextStyle(
+                          "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum$varValue",
+                          style: GoogleFonts.nunito(
                             fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
                             //height: 1.5,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
                         Text(
                           interestText,
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
                             //height: 1.5,
                             color: Colors.red,
                           ),
@@ -698,20 +838,29 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                         (showNotice)
                             ? Text(
                                 amountNotice,
-                                style: TextStyle(
+                                style: GoogleFonts.nunito(
                                   fontSize: 14,
-                                  fontFamily: "DefaultFontFamily",
                                   //height: 1.5,
                                   color: Colors.red,
                                 ),
                               )
-                            : SizedBox(),
-                        SizedBox(
+                            : const SizedBox(),
+                        const SizedBox(
                           height: 20,
                         ),
                         (showSaveButton)
-                            ? GFButton(
-                                shape: GFButtonShape.pills,
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 50),
+                                  maximumSize: const Size(400, 50),
+                                  backgroundColor: brandOne,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
                                 onPressed: (_planNameController.text.trim() !=
                                             "" &&
                                         ((validateAmount(
@@ -780,7 +929,8 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                             SizedBox(
                                               height: 300,
                                               child: ClipRRect(
-                                                borderRadius: BorderRadius.only(
+                                                borderRadius:
+                                                    const BorderRadius.only(
                                                   topLeft:
                                                       Radius.circular(30.0),
                                                   topRight:
@@ -789,23 +939,24 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                                 child: Container(
                                                   color: Theme.of(context)
                                                       .canvasColor,
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      10, 5, 10, 5),
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 10, 5),
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .center,
                                                     children: [
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 50,
                                                       ),
-                                                      Icon(
+                                                      const Icon(
                                                         Icons
                                                             .check_circle_outline,
                                                         color: brandOne,
                                                         size: 80,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 20,
                                                       ),
                                                       Text(
@@ -819,7 +970,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                                                   .primaryColor,
                                                         ),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 30,
                                                       ),
                                                       RoundedLoadingButton(
@@ -855,7 +1006,8 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                                                 .size
                                                                 .width /
                                                             2,
-                                                        child: Text(
+                                                        color: brandOne,
+                                                        child: const Text(
                                                           'Proceed to payment',
                                                           style: TextStyle(
                                                             fontFamily:
@@ -864,9 +1016,8 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                                             fontSize: 13,
                                                           ),
                                                         ),
-                                                        color: brandOne,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 20,
                                                       ),
                                                     ],
@@ -880,7 +1031,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                             "Oops",
                                             "Something went wrong, try again later",
                                             animationDuration:
-                                                Duration(seconds: 2),
+                                                const Duration(seconds: 2),
                                             backgroundColor: Colors.red,
                                             colorText: Colors.white,
                                             snackPosition: SnackPosition.BOTTOM,
@@ -895,7 +1046,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                           "Incompleted!",
                                           "fill all the fields to continue",
                                           animationDuration:
-                                              Duration(seconds: 1),
+                                              const Duration(seconds: 1),
                                           backgroundColor: Colors.red,
                                           colorText: Colors.white,
                                           snackPosition: SnackPosition.BOTTOM,
@@ -903,42 +1054,45 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
                                       },
                                 child: Text(
                                   "Save ${ch8t.format(((((double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_depositAmountController.text.trim().replaceAll(',', '')))!) : 1) / ((((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))))} for ${_planDurationController.text.trim()} ${durationType}",
-                                  style: TextStyle(
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
                                     color: Colors.white,
-                                    fontSize: 13,
-                                    fontFamily: "DefaultFontFamily",
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                color: brandOne,
                               )
-                            : SizedBox(),
-                        SizedBox(
+                            :
+
+                            const SizedBox(),
+                        const SizedBox(
                           height: 20,
                         ),
                         (showSaveButton)
                             ? InkWell(
                                 onTap: () {
-                                  Get.to(TermsAndConditions());
+                                  Get.to(const TermsAndConditions());
                                 },
                                 child: Text(
                                   "By proceeding, you agree with our terms and conditions",
-                                  style: TextStyle(
+                                  style: GoogleFonts.nunito(
                                     decoration: TextDecoration.underline,
                                     color: Colors.red,
-                                    fontFamily: "DefaultFontFamily",
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
                               )
-                            : Text(""),
-                        SizedBox(
+                            : const Text(""),
+                        const SizedBox(
                           height: 50,
                         ),
                       ],
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ],

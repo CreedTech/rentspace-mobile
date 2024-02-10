@@ -59,7 +59,7 @@ class _KYCPaymentState extends State<KYCPayment> {
       },
       body: jsonEncode(<String, String>{
         "amount": (10000 * 100).toString(),
-        "email": userController.user[0].email.toString(),
+        // "email": userController.user[0].email.toString(),
         "currency": "NGN",
         "initiate_type": "inline",
         "transaction_ref": "WAL${getRandom(20)}",

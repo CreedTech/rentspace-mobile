@@ -14,12 +14,12 @@ import 'package:rentspace/view/portfolio/finance_health.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+// import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/separator.dart';
-import '../kyc/kyc_form_page.dart';
+// import '../kyc/kyc_form_page.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({Key? key}) : super(key: key);
@@ -350,7 +350,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       ),
                     ),
                     onTap: () {
-                      ((rentController.rent[0].savedAmount) ==
+                      ((rentController.rent[0].savedAmount) !=
                               (rentController.rent[0].targetAmount * 0.7))
                           ? showDialog(
                               context: context,

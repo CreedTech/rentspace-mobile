@@ -320,7 +320,7 @@ class _SecurityState extends State<Security> {
                             shape: BoxShape.circle,
                             color: Theme.of(context).cardColor,
                           ),
-                          child:  const Icon(
+                          child: const Icon(
                             Iconsax.finger_scan,
                             color: brandOne,
                           ),
@@ -351,6 +351,8 @@ class _SecurityState extends State<Security> {
                               fontWeight: FontWeight.w400,
                             )),
                         trailing: Switch(
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveTrackColor: brandTwo,
                           value:
                               hasBiometricStorage.read('hasBiometric') ?? false,
                           onChanged: (_hasBiometric) {

@@ -4,9 +4,32 @@
 
 import 'dart:convert';
 
-UserDetailsModel userModelFromJson(String str) => UserDetailsModel.fromJson(json.decode(str));
+// UserDetailsModel userModelFromJson(String str) =>
+//     UserDetailsModel.fromJson(json.decode(str));
 
-String userModelToJson(UserDetailsModel data) => json.encode(data.toJson());
+// String userModelToJson(UserDetailsModel data) => json.encode(data.toJson());
+
+List<UserDetailsModel> userDetailModelFromJson(String? str) {
+  if (str == null) {
+    throw const FormatException('Input string is null');
+  }
+
+  final decoded = json.decode(str);
+
+  if (decoded is List) {
+    return List<UserDetailsModel>.from(
+        decoded.map((x) => UserDetailsModel.fromJson(x)));
+  } else if (decoded is Map<String, dynamic>) {
+    // Adjust this part based on your actual JSON structure
+    // If it's a map, you might want to handle it differently
+    return [UserDetailsModel.fromJson(decoded)];
+  } else {
+    throw const FormatException('Invalid JSON format');
+  }
+}
+
+String userDetailModelToJson(List<UserDetailsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserDetailsModel {
   final String id;
@@ -20,11 +43,12 @@ class UserDetailsModel {
   final String gender;
   final String referralCode;
   final String dateOfBirth;
-  final String otp;
-  final int otpExpireIn;
   final bool verified;
   final String role;
   final bool active;
+  final bool hasDva;
+  final String bvn;
+  final String kyc;
   final bool hasBvn;
   final bool hasRent;
   final bool hasVerifiedBvn;
@@ -32,6 +56,14 @@ class UserDetailsModel {
   final bool hasVerifiedKyc;
   final bool hasVerifiedPhone;
   final int loanAmount;
+  // TODO  change to string
+  final String dvaName;
+  final String dvaNumber;
+  final String dvaUsername;
+  // final String Idimage;
+  final int referals;
+  // TODO  change to number
+  final int utilityPoints;
   final int financeHealth;
   final String status;
   final int totalAssets;
@@ -39,11 +71,42 @@ class UserDetailsModel {
   final int totalDebts;
   final int totalProfits;
   final int totalSavings;
+  // TODO  change to string
+  final String cardCVV;
+  final String cardDigit;
+  final String cardExpire;
+  // TODO ADD TO BACKEND
+  // final bool cardHolder;
   final String date;
   final String createdAt;
   final String updatedAt;
+  // final String? userWalletBalance;
+  // final String userWalletNumber;
+  // final String referrar_id;
+  // final String otp;
+  // final int otpExpireIn;
+  // final String? accountDate;
+  // final String? accountName;
+  // final String? accountNumber;
+  // final String referalId;
+  // TODO  change to string
+  final String rentspaceID;
+  final String avatar;
+  // Activities activities;
 
   UserDetailsModel({
+    required this.kyc,
+    // required this.Idimage,
+    required this.dvaName,
+    required this.dvaNumber,
+    required this.dvaUsername,
+    required this.referals,
+    required this.utilityPoints,
+    required this.cardCVV,
+    required this.cardDigit,
+    required this.cardExpire,
+    // TODO ADD TO BACKEND
+    // required this.cardHolder,
     required this.id,
     required this.email,
     required this.userName,
@@ -55,11 +118,11 @@ class UserDetailsModel {
     required this.gender,
     required this.referralCode,
     required this.dateOfBirth,
-    required this.otp,
-    required this.otpExpireIn,
     required this.verified,
     required this.role,
     required this.active,
+    required this.hasDva,
+    required this.bvn,
     required this.hasBvn,
     required this.hasRent,
     required this.hasVerifiedBvn,
@@ -77,9 +140,23 @@ class UserDetailsModel {
     required this.date,
     required this.createdAt,
     required this.updatedAt,
+    // required this.referrar_id,
+    // required this.otp,
+    // required this.otpExpireIn,
+    required this.rentspaceID,
+    required this.avatar,
+    // required this.userWalletBalance,
+    // required this.userWalletNumber,
+    // required this.accountDate,
+    // required this.accountName,
+    // required this.accountNumber,
+    // required this.referalId,
+    // required this.activities,
   });
 
-  factory UserDetailsModel.fromJson(Map<String, dynamic> json) => UserDetailsModel(
+  factory UserDetailsModel.fromJson(Map<String, dynamic> json) =>
+      UserDetailsModel(
+        avatar: json['avatar']['url'],
         id: json["_id"],
         email: json["email"],
         userName: json["userName"],
@@ -91,12 +168,12 @@ class UserDetailsModel {
         gender: json["gender"],
         referralCode: json["referral_code"],
         dateOfBirth: json["date_of_birth"],
-        otp: json["otp"],
-        otpExpireIn: json["otpExpireIn"],
         verified: json["verified"],
         role: json["role"],
         active: json["active"],
+        bvn: json["bvn"],
         hasBvn: json["has_bvn"],
+        hasDva: json["has_dva"],
         hasRent: json["has_rent"],
         hasVerifiedBvn: json["has_verified_bvn"],
         hasVerifiedEmail: json["has_verified_email"],
@@ -113,9 +190,33 @@ class UserDetailsModel {
         date: json["date"],
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
+        // TODO ADD TO BACKEND
+        // cardHolder: json["card_holder"],
+        dvaName: json["dva_name"],
+        dvaNumber: json["dva_number"],
+        dvaUsername: json["dva_username"],
+        kyc: json["kyc"],
+        referals: json["referals"],
+        utilityPoints: json["utility_points"],
+        cardCVV: json["card_cvv"],
+        cardDigit: json["card_digit"],
+        // Idimage: json["id_card"],
+        cardExpire: json["card_expire"],
+        // referrar_id: json["referrar_id"],
+        // otp: json["otp"],
+        // otpExpireIn: json["otpExpireIn"],
+        // userWalletNumber: json['wallet_id'],
+        // referalId: json["referal_id"],
+        rentspaceID: json["rentspace_id"],
+        // userWalletBalance: json['wallet_balance'] ?? '',
+        // accountNumber: json["account_number"] ?? '',
+        // accountName: json["account_name"] ?? '',
+        // accountDate: json["account_date"] ?? '',
+        // activities: Activities.fromJson(json["activities"]),
       );
 
   Map<String, dynamic> toJson() => {
+    
         "_id": id,
         "email": email,
         "userName": userName,
@@ -127,12 +228,14 @@ class UserDetailsModel {
         "gender": gender,
         "referral_code": referralCode,
         "date_of_birth": dateOfBirth,
-        "otp": otp,
-        "otpExpireIn": otpExpireIn,
         "verified": verified,
         "role": role,
         "active": active,
+        // "id_card": Idimage,
+        "kyc": kyc,
+        "bvn": bvn,
         "has_bvn": hasBvn,
+        "has_dva": hasDva,
         "has_rent": hasRent,
         "has_verified_bvn": hasVerifiedBvn,
         "has_verified_email": hasVerifiedEmail,
@@ -149,5 +252,43 @@ class UserDetailsModel {
         "date": date,
         "createdAt": createdAt,
         "updatedAt": updatedAt,
+        "dva_name": dvaName,
+        "dva_number": dvaNumber,
+        "dva_username": dvaUsername,
+        "referals": referals,
+        "utility_points": utilityPoints,
+        // "card_cvv": cardCVV,
+        // "card_digit": cardDigit,
+        // "card_expire": cardExpire,
+        // "referal_id": referalId,
+        // "otp": otp,
+        "rentspace_id": rentspaceID,
+        "avatar": avatar,
+        // "wallet_balance": userWalletBalance,
+        // "wallet_id": userWalletNumber,
+        // "referrar_id": referrar_id,
+        // "otpExpireIn": otpExpireIn,
+        // "account_date": accountDate,
+        // "account_name": accountName,
+        // "card_holder": cardHolder,
+        // "account_number": accountNumber,
+        // "activities": activities.toJson(),
       };
 }
+
+// class Avatar {
+//   final String publicId;
+//   final String url;
+
+//   Avatar({
+//     required this.publicId,
+//     required this.url,
+//   });
+
+//   factory Avatar.fromJson(Map<String, dynamic> json) {
+//     return Avatar(
+//       publicId: json['public_id'],
+//       url: json['url'],
+//     );
+//   }
+// }
