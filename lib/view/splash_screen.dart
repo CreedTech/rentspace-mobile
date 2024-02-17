@@ -10,6 +10,7 @@ import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/onboarding_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/global_services.dart';
 import '../constants/widgets/common/annnotated_scaffold.dart';
 import 'offline/no_internet_screen.dart';
 
@@ -38,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void dispose() {
     _connectivitySubscription.cancel();
+
     super.dispose();
   }
 
@@ -77,16 +79,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> redirectToAppropriateScreen() async {
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
     await Future.delayed(const Duration(seconds: 2));
     // bool isNewUser = true;
 
     if (hasSeenOnboarding) {
       if (mounted) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => BiometricsPage()),
-          (route) => false,
-        );
+        if (authToken == '') {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+            (route) => false,
+          );
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => BiometricsPage()),
+            (route) => false,
+          );
+        }
       }
     } else {
       if (mounted) {

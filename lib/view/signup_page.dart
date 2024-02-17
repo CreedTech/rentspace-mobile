@@ -1744,6 +1744,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: false,
         title: Text(
           'Sign up',
           style: TextStyle(

@@ -133,6 +133,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: false,
         title: Text(
           'Back',
           style: TextStyle(
@@ -226,7 +227,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(300, 50),
                           maximumSize: const Size(300, 50),
-                          backgroundColor: brandTwo,
+                          backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(

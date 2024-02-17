@@ -52,13 +52,14 @@ class _KYCFormPageState extends State<KYCFormPage> {
       TextEditingController();
   final TextEditingController _identificatonNumberController =
       TextEditingController();
+  final TextEditingController ninController =
+      TextEditingController();
   final TextEditingController _salaryRangeController = TextEditingController();
   final kycFormKey1 = GlobalKey<FormState>();
   final kycFormKey2 = GlobalKey<FormState>();
   final kycFormKey3 = GlobalKey<FormState>();
   final kycFormKey4 = GlobalKey<FormState>();
   List<String> item = const <String>[
-    'NIN',
     'Driver\'s Liscense',
     'Passport Photograph',
     'Voters Card',
@@ -176,6 +177,18 @@ class _KYCFormPageState extends State<KYCFormPage> {
       }
       if (int.tryParse(IdValue) == null) {
         return 'enter valid Identification Number';
+      }
+      return null;
+    }
+    validateNIN(IdValue) {
+      if (IdValue.isEmpty) {
+        return 'NIN cannot be empty';
+      }
+      if (IdValue.length < 11) {
+        return 'NIN is invalid';
+      }
+      if (int.tryParse(IdValue) == null) {
+        return 'enter valid NIN';
       }
       return null;
     }
@@ -606,6 +619,62 @@ class _KYCFormPageState extends State<KYCFormPage> {
         ),
       ),
     );
+     final ninNumber = TextFormField(
+      enableSuggestions: true,
+      cursorColor: Theme.of(context).primaryColor,
+      controller: ninController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validateNIN,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
+      ),
+      keyboardType: TextInputType.number,
+      // maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      // maxLength: 11,
+      decoration: InputDecoration(
+        label: Text(
+          "Your Valid NIN",
+          style: GoogleFonts.nunito(
+            color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 2.0,
+          ),
+        ),
+        filled: false,
+        // fillColor: brandThree,
+        hintText: 'e.g 12345678900',
+        contentPadding: const EdgeInsets.all(14),
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+    
     final landlordName = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
@@ -942,6 +1011,33 @@ class _KYCFormPageState extends State<KYCFormPage> {
                             key: kycFormKey2,
                             child: Column(
                               children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 3, horizontal: 3),
+                                            child: Text(
+                                              'Enter your NIN Number',
+                                              style: GoogleFonts.nunito(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                // fontFamily: "DefaultFontFamily",
+                                              ),
+                                            ),
+                                          ),
+                                          ninNumber,
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                  height: 20,
+                                ),
                                 CustomDropdown(
                                   selectedStyle: GoogleFonts.nunito(
                                       color: Theme.of(context).primaryColor,

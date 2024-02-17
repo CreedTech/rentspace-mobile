@@ -289,8 +289,8 @@ import 'constants/component_constannt.dart';
 import 'services/implementations/notification_service.dart';
 import 'view/splash_screen.dart';
 
-const String logoUrl =
-    "https://firebasestorage.googleapis.com/v0/b/rentspace-351c8.appspot.com/o/assets%2Flogo.png?alt=media&token=333339fd-1183-4855-ad79-b8da6fad818b";
+// const String logoUrl =
+//     "https://firebasestorage.googleapis.com/v0/b/rentspace-351c8.appspot.com/o/assets%2Flogo.png?alt=media&token=333339fd-1183-4855-ad79-b8da6fad818b";
 int id = 0;
 final StreamController<String?> selectNotificationStream =
     StreamController<String?>.broadcast();

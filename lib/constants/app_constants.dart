@@ -1,12 +1,13 @@
 // ignore_for_file: constant_identifier_names
 
 class AppConstants {
-  static const BASE_URL = 'https://dark-lime-bass-slip.cyclic.app';
+  static const BASE_URL = 'https://rentspace-test.onrender.com';
   static const SIGN_UP = '/api/user/create';
     static const GET_WALLET = '/api/wallet/get-wallet';
   static const CREATE_PIN = '/api/wallet/create-pin';
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
+  static const LOGOUT = '/api/user/logout';
 
   static const GET_USER = '/api/user/get-user';
   static const GET_ACTIVITIES = '/api/user/userActivities';

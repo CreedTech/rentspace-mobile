@@ -6,6 +6,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -44,10 +45,11 @@ class _BiometricsPageState extends State<BiometricsPage> {
     return canCheckBiometrics;
   }
 
-  registerControllers() async {
-    Get.put(UserController());
-    Get.put(ActivitiesController());
-  }
+  // registerControllers() async {
+  //   Get.put(UserController());
+  //   Get.put(WalletController());
+  //   Get.put(ActivitiesController());
+  // }
 
   void _cancelTimer() {
     _inactivityTimer?.cancel();

@@ -7,6 +7,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
@@ -30,7 +32,8 @@ import 'package:upgrader/upgrader.dart';
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 final UserController userController = Get.find();
-final ActivitiesController activitiesController = Get.find();
+// final ActivitiesController activitiesController = Get.find();
+final WalletController walletController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
@@ -89,135 +92,147 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  // final UserController userController = Get.find();
-  bool _hasPutController = false;
+  final UserController userController = Get.put(UserController());
+  final WalletController walletController = Get.put(WalletController());
+  // final ActivitiesController activitiesController = Get.put(ActivitiesController());
+  // bool _hasPutController = false;
 
   @override
   initState() {
     super.initState();
-    Get.put(UserController());
-    Get.put(ActivitiesController());
+    // Get.put(UserController());
+    // Get.put(WalletController());
+    // Get.put(ActivitiesController());
+    // Get.put(RentController());
 
-    fetchUserAndSetState();
+    // fetchUserAndSetState();
   }
 
-  Future<void> fetchUserAndSetState() async {
-    try {
-      print('==============================================');
-      print('fetching users');
-      await userController.fetchUsers().then(
-            (value) => setState(
-              () {
-                _hasPutController =
-                    true; // Set _hasPutController to true after users are fetched
-              },
-            ),
-          ); // Fetch users
-    } catch (error) {
-      print('Error fetching users: $error');
-      // Handle error (e.g., show error message)
-    }
-  }
+  // Future<void> fetchUserAndSetState() async {
+  //   try {
+  //     print('==============================================');
+  //     print('fetching users');
+  //     await userController
+  //         .fetchUsers()
+  //         .then((value) => (walletController.fetchWallet()))
+  //         .then((value) => (activitiesController.fetchActivities()))
+  //         .then(
+  //           (value) => setState(
+  //             () {
+  //               _hasPutController =
+  //                   true; // Set _hasPutController to true after users are fetched
+  //             },
+  //           ),
+  //         ); // Fetch users
+  //   } catch (error) {
+  //     print('Error fetching users: $error');
+  //     // Handle error (e.g., show error message)
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserController());
-    Get.put(ActivitiesController());
-    return (!_hasPutController)
-        ? Scaffold(
-            backgroundColor: Theme.of(context).canvasColor,
-            body: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage(
-                    'assets/slider3.png',
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.5), // Adjust the opacity here
-                    BlendMode.darken,
+    // Get.put(UserController());
+    // Get.put(ActivitiesController());
+    // Get.put(WalletController());
+    // Get.put(RentController());
+    return Obx(
+      () => userController.isLoading.value
+          ? Scaffold(
+              backgroundColor: Theme.of(context).canvasColor,
+              body: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage(
+                      'assets/slider3.png',
+                    ),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5), // Adjust the opacity here
+                      BlendMode.darken,
+                    ),
                   ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 150),
-                    child: Image.asset(
-                      'assets/icons/RentSpaceWhite.png',
-                      // width: 140,
-                      height: 60,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 150),
+                      child: Image.asset(
+                        'assets/icons/RentSpaceWhite.png',
+                        // width: 140,
+                        height: 60,
+                      ),
                     ),
-                  ),
-                  const Center(
-                    child: Column(
-                      children: [
-                        CustomLoader(),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
+                    const Center(
+                      child: Column(
+                        children: [
+                          CustomLoader(),
+                          SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: SizedBox(),
-                  ),
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
-                  //     // const SizedBox(
-                  //     //   height: 50,
-                  //     // ),
-                  //     Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Text(
-                  //           screenInfo,
-                  //           style: TextStyle(
-                  //             fontSize: 20,
-                  //             fontWeight: FontWeight.bold,
-                  //             fontFamily: "DefaultFontFamily",
-                  //             color: Theme.of(context).primaryColor,
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 30,
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     // const SizedBox(
-                  //     //   height: 50,
-                  //     // ),
-                  //     const CircularProgressIndicator(
-                  //       color: brandOne,
-                  //     ),
-                  //     const SizedBox(
-                  //       height: 50,
-                  //     ),
-                  //     (_canShowAuth)
-                  //         ? GFButton(
-                  //             onPressed: () {
-                  //               checkingForBioMetrics();
-                  //             },
-                  //             text: "   Authenticate    ",
-                  //             shape: GFButtonShape.pills,
-                  //           )
-                  //         : const SizedBox(),
-                  //   ],
-                  // ),
-                ],
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: SizedBox(),
+                    ),
+                    // Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     // const SizedBox(
+                    //     //   height: 50,
+                    //     // ),
+                    //     Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           screenInfo,
+                    //           style: TextStyle(
+                    //             fontSize: 20,
+                    //             fontWeight: FontWeight.bold,
+                    //             fontFamily: "DefaultFontFamily",
+                    //             color: Theme.of(context).primaryColor,
+                    //           ),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 30,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     // const SizedBox(
+                    //     //   height: 50,
+                    //     // ),
+                    //     const CircularProgressIndicator(
+                    //       color: brandOne,
+                    //     ),
+                    //     const SizedBox(
+                    //       height: 50,
+                    //     ),
+                    //     (_canShowAuth)
+                    //         ? GFButton(
+                    //             onPressed: () {
+                    //               checkingForBioMetrics();
+                    //             },
+                    //             text: "   Authenticate    ",
+                    //             shape: GFButtonShape.pills,
+                    //           )
+                    //         : const SizedBox(),
+                    //   ],
+                    // ),
+                  ],
+                ),
               ),
-            ),
-          )
-        : const HomePage();
+            )
+          : const HomePage(),
+    );
   }
 }
 
@@ -363,7 +378,6 @@ class _HomePageState extends State<HomePage> {
   //     print("No referal");
   //   }
   // }
-
 
   checkIsOpenedApp() {
     if (openedAppStorage.read('hasOpenedApp') == null) {
@@ -544,15 +558,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             });
-
-        // Get.snackbar(
-        //   "Error",
-        //   "Biometrics failed",
-        //   animationDuration: const Duration(seconds: 2),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
       }
     } catch (e) {
       showDialog(

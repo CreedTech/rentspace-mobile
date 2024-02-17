@@ -10,9 +10,10 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'dart:convert';
-import 'package:rentspace/controller/user_controller.dart';
+// import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:io';
 import 'package:rentspace/constants/theme_services.dart';
@@ -21,6 +22,7 @@ import 'dart:io';
 import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
+import '../../controller/wallet_controller.dart';
 
 class WalletFunding extends StatefulWidget {
   int amount, numPayment;
@@ -41,6 +43,7 @@ class WalletFunding extends StatefulWidget {
 class _WalletFundingState extends State<WalletFunding> {
   late WebViewController webViewController;
   final UserController userController = Get.find();
+  final WalletController walletController = Get.find();
   String userFirst = '';
   String userLast = '';
   String userMail = '';
@@ -101,11 +104,11 @@ class _WalletFundingState extends State<WalletFunding> {
       },
       body: jsonEncode(<String, String>{
         "amount": (widget.amount * 100).toString(),
-        "email": userController.user[0].email.toString(),
+        "email": userController.users[0].email.toString(),
         "currency": "NGN",
         "initiate_type": "inline",
         "transaction_ref":
-            "WAL" + getRandom(4) + userController.user[0].userWalletNumber,
+            "WAL" + getRandom(4) + walletController.wallet[0].walletId,
         "callback_url": "https://rentspace.tech/payment-notice/",
         "is_recurring": "false"
       }),
@@ -173,14 +176,6 @@ class _WalletFundingState extends State<WalletFunding> {
                   ? customErrorDialog(context, 'Card not found!',
                       "You need to add a card to suggest details during in-app payment.")
 
-                  // Get.snackbar(
-                  //     "Card not found!",
-                  //     'You need to add a card to suggest details during in-app payment.',
-                  //     animationDuration: const Duration(seconds: 1),
-                  //     backgroundColor: Colors.red,
-                  //     colorText: Colors.white,
-                  //     snackPosition: SnackPosition.BOTTOM,
-                  //   )
                   : Get.bottomSheet(
                       SizedBox(
                         height: 180,

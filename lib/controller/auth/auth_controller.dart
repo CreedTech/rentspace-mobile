@@ -6,10 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/activities_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 
+import '../../api/global_services.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
@@ -377,8 +379,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         //       ),
         //       (route) => false);
         // });
-        Get.put(UserController());
-        Get.put(ActivitiesController());
+        // Get.put(UserController());
+        // Get.put(WalletController());
+        // Get.put(ActivitiesController());
         Get.offAll(FirstPage());
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(
@@ -735,6 +738,60 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         // notifyListeners();
         state = const AsyncValue.data(true);
+        return;
+      } else {
+        print(response.message.toString());
+      }
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("invalid signature")) {
+        message = "User info could not be retrieved , Try again later.";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+      EasyLoading.dismiss();
+      return;
+    }
+  }
+
+  Future logout(BuildContext context) async {
+    isLoading = true;
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.clear,
+        dismissOnTap: true,
+      );
+      var response = await authRepository.logout();
+      print('response message here');
+      print(response.message);
+      if (response.message.contains("User logged out successfully")) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        // notifyListeners();
+        state = const AsyncValue.data(true);
+        await GlobalService.sharedPreferencesManager.setAuthToken(value: '');
+        Get.offAll(LoginPage());
         return;
       } else {
         print(response.message.toString());

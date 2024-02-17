@@ -12,7 +12,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
 import '../actions/forgot_password.dart';
 import '../actions/forgot_pin.dart';
 

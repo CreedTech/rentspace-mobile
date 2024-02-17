@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
@@ -102,14 +102,6 @@ class _AddCardState extends State<AddCard> {
         });
         if (!context.mounted) return;
         customErrorDialog(context, "Error", 'Invalid account number');
-        // Get.snackbar(
-        //   "Error!",
-        //   "Invalid account number",
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
       }
 
       //print(response.body);
@@ -216,101 +208,54 @@ class _AddCardState extends State<AddCard> {
     }
 
     void _doSomething() async {
-      Timer(const Duration(seconds: 1), () {
-        _btnController.stop();
-      });
-      if ((cardNumber != "" &&
-              expiryDate != "" &&
-              cardHolderName != "" &&
-              cvvCode != "" &&
-              cardValidity != "Invalid Card" &&
-              cardExpiry != "Expired Card") ||
-          (_bankAccountName != "" &&
-              _accountNumberController.text.trim() != "" &&
-              (validateNumber(_accountNumberController.text.trim()) == "" &&
-                  validateName(_bankAccountName) == ""))) {
-        var userUpdate = FirebaseFirestore.instance.collection('accounts');
+      // if ((cardNumber != "" &&
+      //         expiryDate != "" &&
+      //         cardHolderName != "" &&
+      //         cvvCode != "" &&
+      //         cardValidity != "Invalid Card" &&
+      //         cardExpiry != "Expired Card") ||
+      //     (_bankAccountName != "" &&
+      //         _accountNumberController.text.trim() != "" &&
+      //         (validateNumber(_accountNumberController.text.trim()) == "" &&
+      //             validateName(_bankAccountName) == ""))) {
+      //   var userUpdate = FirebaseFirestore.instance.collection('accounts');
 
-        await userUpdate.doc(userId).update({
-          'card_cvv': cvvCode,
-          'card_expire': expiryDate,
-          'card_digit': cardNumber,
-          'card_holder': cardHolderName,
-          'bank_name': _currentBankName,
-          'account_name': _bankAccountName,
-          'account_number': _accountNumberController.text.trim()
-        }).then((value) {
-          Get.back();
-          print(_bankName);
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.success(
-              backgroundColor: brandOne,
-              message: 'Your details have been updated successfully. !!',
-              textStyle: GoogleFonts.nunito(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
-          // Get.snackbar(
-          //   "Success!",
-          //   'Your details have been updated successfully',
-          //   animationDuration: const Duration(seconds: 1),
-          //   backgroundColor: brandOne,
-          //   colorText: Colors.white,
-          //   snackPosition: SnackPosition.TOP,
-          // );
-        }).catchError((error) {
-          if (!context.mounted) return;
-          customErrorDialog(context, "Error", error.toString());
-          // showTopSnackBar(
-          //   Overlay.of(context),
-          //   CustomSnackBar.error(
-          //     backgroundColor: Colors.red,
-          //     message: error.toString(),
-          //     textStyle: GoogleFonts.nunito(
-          //       fontSize: 14,
-          //       color: Colors.white,
-          //       fontWeight: FontWeight.w700,
-          //     ),
-          //   ),
-          // );
-          // Get.snackbar(
-          //   "Error",
-          //   error.toString(),
-          //   animationDuration: const Duration(seconds: 2),
-          //   backgroundColor: Colors.red,
-          //   colorText: Colors.white,
-          //   snackPosition: SnackPosition.BOTTOM,
-          // );
-        });
-      } else {
-        if (!context.mounted) return;
-        customErrorDialog(
-            context, "Invalid", 'Fill the form properly to proceed.');
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     backgroundColor: Colors.red,
-        //     message: 'Fill the form properly to proceed.',
-        //     textStyle: GoogleFonts.nunito(
-        //       fontSize: 14,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.w700,
-        //     ),
-        //   ),
-        // );
-        // Get.snackbar(
-        //   "Invalid",
-        //   "Fill the form properly to proceed.",
-        //   animationDuration: const Duration(seconds: 2),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
-      }
+      //   await userUpdate.doc(userId).update({
+      //     'card_cvv': cvvCode,
+      //     'card_expire': expiryDate,
+      //     'card_digit': cardNumber,
+      //     'card_holder': cardHolderName,
+      //     'bank_name': _currentBankName,
+      //     'account_name': _bankAccountName,
+      //     'account_number': _accountNumberController.text.trim()
+      //   }).then((value) {
+      //     Get.back();
+      //     print(_bankName);
+      //     showTopSnackBar(
+      //       Overlay.of(context),
+      //       CustomSnackBar.success(
+      //         backgroundColor: brandOne,
+      //         message: 'Your details have been updated successfully. !!',
+      //         textStyle: GoogleFonts.nunito(
+      //           fontSize: 14,
+      //           color: Colors.white,
+      //           fontWeight: FontWeight.w700,
+      //         ),
+      //       ),
+      //     );
+
+      //   }).catchError((error) {
+      //     if (!context.mounted) return;
+      //     customErrorDialog(context, "Error", error.toString());
+
+      //   });
+
+      // } else {
+      //   if (!context.mounted) return;
+      //   customErrorDialog(
+      //       context, "Invalid", 'Fill the form properly to proceed.');
+
+      // }
     }
 
     // final banksList = CustomDropdown(
@@ -566,7 +511,7 @@ class _AddCardState extends State<AddCard> {
       decoration: InputDecoration(
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
@@ -621,17 +566,8 @@ class _AddCardState extends State<AddCard> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.3,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ListView(
               children: [
                 CreditCardWidget(
@@ -850,7 +786,7 @@ class _AddCardState extends State<AddCard> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 10),
+                        padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 10),
                         child: Text(
                           "Add your bank details",
                           style: GoogleFonts.nunito(
@@ -863,9 +799,9 @@ class _AddCardState extends State<AddCard> {
                           textAlign: TextAlign.start,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
                       (canShowOption)
                           ? Column(
                               children: [
@@ -946,9 +882,9 @@ class _AddCardState extends State<AddCard> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(350, 50),
@@ -970,23 +906,7 @@ class _AddCardState extends State<AddCard> {
                         ),
                       ),
 
-                      // RoundedLoadingButton(
-                      //   child: const Text(
-                      //     'Submit',
-                      //     style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontFamily: "DefaultFontFamily",
-                      //     ),
-                      //   ),
-                      //   elevation: 0.0,
-                      //   borderRadius: 5.0,
-                      //   successColor: brandOne,
-                      //   color: brandOne,
-                      //   controller: _btnController,
-                      //   onPressed: () {
-                      //     _doSomething();
-                      //   },
-                      // ),
+                    
                       const SizedBox(
                         height: 50,
                       ),

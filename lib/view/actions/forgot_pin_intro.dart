@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/icons.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/forgot_pin.dart';
-import 'package:rentspace/view/dashboard/confirm_forgot_pin.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
-import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
+// import '../../controller/user_controller.dart';
 
 class ForgotPinIntro extends StatefulWidget {
   const ForgotPinIntro({super.key});
@@ -20,6 +19,7 @@ class ForgotPinIntro extends StatefulWidget {
 
 class _ForgotPinIntroState extends State<ForgotPinIntro> {
   final UserController userController = Get.find();
+  final WalletController walletController = Get.find();
   final TextEditingController _passwordController = TextEditingController();
   final passwordformKey = GlobalKey<FormState>();
 
@@ -38,8 +38,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
   }
 
   void doSomething() {
-    if (userController.user[0].userPassword !=
-        _passwordController.text.trim()) {
+    if (userController.users[0].password != _passwordController.text.trim()) {
       customErrorDialog(context, "Invalid!", "Password is incorrect");
       // showTopSnackBar(
       //   Overlay.of(context),
@@ -56,7 +55,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
     } else {
       Get.to(ForgotPin(
           // password: _passwordController.text.trim(),
-          pin: userController.user[0].transactionPIN));
+          pin: walletController.wallet[0].pin));
     }
   }
 
@@ -140,7 +139,9 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
         title: Text(
           'Forgot PIN',
           style: GoogleFonts.nunito(
-              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -182,7 +183,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(400, 50),
-                                    backgroundColor: brandTwo,
+                                    backgroundColor: brandOne,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(

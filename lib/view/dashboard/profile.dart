@@ -6,7 +6,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 
-import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onTap: () {
-                        if (userController.user[0].bvn != "") {
+                        if (userController.users[0].bvn != "") {
                           Get.to(const BvnPage());
                         } else {
                           Get.to(const PersonalDetails());

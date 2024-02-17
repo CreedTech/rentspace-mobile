@@ -28,6 +28,9 @@ class SharedPreferencesManager {
   //   // final _prefs = await SharedPreferences.getInstance();
   //   return _prefs.getString(USER_TRANSACTION_PIN) ?? '';
   // }
+  Future removeToken() async {
+    
+  }
 
   // Future<bool> setPin({required String value}) async {
   //   // final _prefs = await SharedPreferences.getInstance();

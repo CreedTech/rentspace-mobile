@@ -2,34 +2,70 @@
 //
 //     final userModel = userModelFromJson(jsonString);
 
-import 'dart:convert';
+//   final dynamic userDetailsData = json['userDetails'];
+//   if (userDetailsData is List) {
+//     // If userDetailsData is a List, map over it to create UserDetailsModel objects.
+//     userDetails = userDetailsData.map((e) => UserDetailsModel.fromJson(e)).toList();
+//   } else {
+//     // Handle the case where userDetailsData is not a List (e.g., it's a Map).
+//     // You might want to log an error or handle this case differently based on your requirements.
+//     print('userDetailsData is not a List: $userDetailsData');
+//     // Set userDetails to an empty list or null, depending on your needs.
+//     userDetails = [UserDetailsModel.fromJson(userDetailsData)];
+//   }
+// }
 
-// UserDetailsModel userModelFromJson(String str) =>
-//     UserDetailsModel.fromJson(json.decode(str));
+class UserModel {
+  UserModel({
+    required this.userDetails,
+  });
+  List<UserDetailsModel>? userDetails;
 
-// String userModelToJson(UserDetailsModel data) => json.encode(data.toJson());
 
-List<UserDetailsModel> userDetailModelFromJson(String? str) {
-  if (str == null) {
-    throw const FormatException('Input string is null');
+// UserModel.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json) {
+    final dynamic userDetailsData = json['userDetails'];
+    if (userDetailsData is Map<String, dynamic>) {
+      // If userDetailsData is a Map, create a single UserDetailsModel object.
+      userDetails = [UserDetailsModel.fromJson(userDetailsData)];
+      print(userDetails);
+    } else {
+      // Handle the case where userDetailsData is not a Map (e.g., it's a List).
+      // You might want to log an error or handle this case differently based on your requirements.
+      print('userDetailsData is not a Map: $userDetailsData');
+      // Set userDetails to an empty list or null, depending on your needs.
+      userDetails = [];
+    }
   }
 
-  final decoded = json.decode(str);
-
-  if (decoded is List) {
-    return List<UserDetailsModel>.from(
-        decoded.map((x) => UserDetailsModel.fromJson(x)));
-  } else if (decoded is Map<String, dynamic>) {
-    // Adjust this part based on your actual JSON structure
-    // If it's a map, you might want to handle it differently
-    return [UserDetailsModel.fromJson(decoded)];
-  } else {
-    throw const FormatException('Invalid JSON format');
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['userDetails'] = userDetails!.map((e) => e.toJson()).toList();
+    return _data;
   }
 }
 
-String userDetailModelToJson(List<UserDetailsModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// List<UserDetailsModel> userDetailModelFromJson(String? str) {
+//   if (str == null) {
+//     throw const FormatException('Input string is null');
+//   }
+
+//   final decoded = json.decode(str);
+
+//   if (decoded is List) {
+//     return List<UserDetailsModel>.from(
+//         decoded.map((x) => UserDetailsModel.fromJson(x)));
+//   } else if (decoded is Map<String, dynamic>) {
+//     // Adjust this part based on your actual JSON structure
+//     // If it's a map, you might want to handle it differently
+//     return [UserDetailsModel.fromJson(decoded)];
+//   } else {
+//     throw const FormatException('Invalid JSON format');
+//   }
+// }
+
+// String userDetailModelToJson(List<UserDetailsModel> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserDetailsModel {
   final String id;
@@ -39,8 +75,8 @@ class UserDetailsModel {
   final String residentialAddress;
   final String lastName;
   final String phoneNumber;
-  final String password;
   final String gender;
+  final String password;
   final String referralCode;
   final String dateOfBirth;
   final bool verified;
@@ -56,11 +92,11 @@ class UserDetailsModel {
   final bool hasVerifiedKyc;
   final bool hasVerifiedPhone;
   final int loanAmount;
-  // TODO  change to string
+  // TODO  change to final string
   final String dvaName;
   final String dvaNumber;
   final String dvaUsername;
-  // final String Idimage;
+  //  final String Idimage;
   final int referals;
   // TODO  change to number
   final int utilityPoints;
@@ -71,25 +107,25 @@ class UserDetailsModel {
   final int totalDebts;
   final int totalProfits;
   final int totalSavings;
-  // TODO  change to string
+  // TODO  change to final string
   final String cardCVV;
   final String cardDigit;
   final String cardExpire;
   // TODO ADD TO BACKEND
-  // final bool cardHolder;
+  //  final bool cardHolder;
   final String date;
   final String createdAt;
   final String updatedAt;
-  // final String? userWalletBalance;
-  // final String userWalletNumber;
-  // final String referrar_id;
-  // final String otp;
-  // final int otpExpireIn;
-  // final String? accountDate;
-  // final String? accountName;
-  // final String? accountNumber;
-  // final String referalId;
-  // TODO  change to string
+  //  final String userWalletBalance;
+  //  final String userWalletNumber;
+  //  final String referrar_id;
+  //  final String otp;
+  //  final int otpExpireIn;
+  //  final String accountDate;
+  //  final String accountName;
+  //  final String accountNumber;
+  //  final String referalId;
+  // TODO  change to final string
   final String rentspaceID;
   final String avatar;
   // Activities activities;
@@ -216,7 +252,6 @@ class UserDetailsModel {
       );
 
   Map<String, dynamic> toJson() => {
-    
         "_id": id,
         "email": email,
         "userName": userName,

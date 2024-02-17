@@ -79,7 +79,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-        final authState = ref.watch(authControllerProvider.notifier);
+    final authState = ref.watch(authControllerProvider.notifier);
     //email field
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -92,21 +92,24 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -207,7 +210,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
     return Scaffold(
-      
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         // backgroundColor: const Color(0xffE0E0E0),
@@ -223,6 +225,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: false,
         title: Text(
           'Back',
           style: TextStyle(
@@ -283,14 +286,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
+                              padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 3),
                               child: Text(
                                 'Enter Email',
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
                                 ),
                               ),
                             ),
@@ -304,7 +306,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
+                              padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 3),
                               child: Text(
                                 'Enter Password',
                                 style: GoogleFonts.nunito(
@@ -416,7 +418,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 50),
-                              backgroundColor: brandTwo,
+                              backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(

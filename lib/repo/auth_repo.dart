@@ -242,4 +242,32 @@ class AuthRepository {
     //  print("Here in repo" + response.reasonPhrase.toString());
     return responseModel = ResponseModel(error, false);
   }
+
+  Future<ResponseModel> logout() async {
+    print('Got here in user repo');
+    ResponseModel responseModel;
+
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    // print('authToken');
+    // print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(AppConstants.LOGOUT, '');
+
+    if (response.statusCode == 200) {
+      // responseModel = ResponseModel("Code sent to your email", true);
+      // return responseModel;
+      print('response on logout');
+      print(response.body);
+      responseModel = ResponseModel('User logged out successfully', true);
+      return responseModel;
+    }
+    print("Here in verify logout repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
 }

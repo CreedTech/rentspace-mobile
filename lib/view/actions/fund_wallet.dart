@@ -3,20 +3,19 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/constants/theme_services.dart';
-import 'package:get_storage/get_storage.dart';
-import 'dart:io';
-import 'package:getwidget/getwidget.dart';
+// import 'package:rentspace/controller/user_controller.dart';
+// import 'package:rentspace/constants/theme_services.dart';
+// import 'package:get_storage/get_storage.dart';
+// import 'dart:io';
+// import 'package:getwidget/getwidget.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/actions/wallet_funding.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -34,9 +33,9 @@ String formattedDate = formatter.format(now);
 String _isSet = "false";
 var dum1 = "".obs;
 
-CollectionReference users = FirebaseFirestore.instance.collection('accounts');
-CollectionReference allUsers =
-    FirebaseFirestore.instance.collection('accounts');
+// CollectionReference users = FirebaseFirestore.instance.collection('accounts');
+// CollectionReference allUsers =
+//     FirebaseFirestore.instance.collection('accounts');
 
 class _FundWalletState extends State<FundWallet> {
   final UserController userController = Get.find();
@@ -146,7 +145,9 @@ class _FundWalletState extends State<FundWallet> {
         title: Text(
           'Fund Wallet',
           style: GoogleFonts.nunito(
-              color: Theme.of(context).primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -163,7 +164,7 @@ class _FundWalletState extends State<FundWallet> {
                       //   height: 100,
                       // ),
                       Text(
-                        "Fund your SpaceWallet",
+                        "Fund your Space wallet",
                         style: GoogleFonts.nunito(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w700,
@@ -180,7 +181,7 @@ class _FundWalletState extends State<FundWallet> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 50),
-                          backgroundColor: brandTwo,
+                          backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -197,24 +198,11 @@ class _FundWalletState extends State<FundWallet> {
                               date: formattedDate,
                               interval: "",
                               numPayment: 1,
-                              savingsID: userController.user[0].userId,
+                              savingsID: userController.users[0].id!,
                             ));
                           } else {
                             customErrorDialog(context, "Invalid!",
                                 "Please fill the form properly to proceed");
-                            // showTopSnackBar(
-                            //   Overlay.of(context),
-                            //   CustomSnackBar.error(
-                            //     // backgroundColor: Colors.red,
-                            //     message:
-                            //         'Invalid! :). Please fill the form properly to proceed',
-                            //     textStyle: GoogleFonts.nunito(
-                            //       fontSize: 14,
-                            //       color: Colors.white,
-                            //       fontWeight: FontWeight.w700,
-                            //     ),
-                            //   ),
-                            // );
                           }
                         },
                         child: const Text(
@@ -222,52 +210,13 @@ class _FundWalletState extends State<FundWallet> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-
-                      // GFButton(
-                      //   onPressed: () async {
-                      //     if (validateAmount(_amountController.text
-                      //             .trim()
-                      //             .replaceAll(',', '')) ==
-                      //         "") {
-                      //       Get.to(WalletFunding(
-                      //         amount: int.tryParse(_amountController.text
-                      //             .trim()
-                      //             .replaceAll(',', ''))!,
-                      //         date: formattedDate,
-                      //         interval: "",
-                      //         numPayment: 1,
-                      //         savingsID: userController.user[0].userId,
-                      //       ));
-                      //     } else {
-                      //       Get.snackbar(
-                      //         "Invalid",
-                      //         "Fill the form properly to proceed",
-                      //         animationDuration: const Duration(seconds: 1),
-                      //         backgroundColor: Colors.red,
-                      //         colorText: Colors.white,
-                      //         snackPosition: SnackPosition.BOTTOM,
-                      //       );
-                      //     }
-                      //   },
-                      //   shape: GFButtonShape.pills,
-                      //   fullWidthButton: true,
-                      //   color: brandOne,
-                      //   child: const Text(
-                      //     'Fund now',
-                      //     style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontSize: 13,
-                      //       fontFamily: "DefaultFontFamily",
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
                 const SizedBox(
                   height: 100,
                 ),
-                (userController.user[0].hasDva == 'true')
+                (userController.users[0].hasDva == true)
                     ? Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 40, horizontal: 40),
@@ -302,7 +251,7 @@ class _FundWalletState extends State<FundWallet> {
                                   ),
                                 ),
                                 Text(
-                                  userController.user[0].dvaName,
+                                  userController.users[0].dvaName!,
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 16,
@@ -325,7 +274,7 @@ class _FundWalletState extends State<FundWallet> {
                                 ),
                                 // userController.user[0].dvaNumber
                                 Text(
-                                  userController.user[0].dvaNumber,
+                                  userController.users[0].dvaNumber!,
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 16,
@@ -338,7 +287,7 @@ class _FundWalletState extends State<FundWallet> {
                                   onTap: () {
                                     Clipboard.setData(
                                       ClipboardData(
-                                        text: userController.user[0].dvaNumber,
+                                        text: userController.users[0].dvaNumber!,
                                       ),
                                     );
                                     Fluttertoast.showToast(
@@ -394,38 +343,6 @@ class _FundWalletState extends State<FundWallet> {
                                 ),
                               ),
                             ),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // GFButton(
-                            //   onPressed: () {
-                            //     Clipboard.setData(
-                            //       ClipboardData(
-                            //         text: userController.user[0].dvaNumber,
-                            //       ),
-                            //     );
-                            //     Fluttertoast.showToast(
-                            //       msg: "Account Number copied to clipboard!",
-                            //       toastLength: Toast.LENGTH_SHORT,
-                            //       gravity: ToastGravity.CENTER,
-                            //       timeInSecForIosWeb: 1,
-                            //       backgroundColor: brandOne,
-                            //       textColor: Colors.white,
-                            //       fontSize: 16.0,
-                            //     );
-                            //   },
-                            //   shape: GFButtonShape.pills,
-                            //   fullWidthButton: true,
-                            //   color: brandOne,
-                            //   child: const Text(
-                            //     'Copy Account Number',
-                            //     style: TextStyle(
-                            //       color: Colors.white,
-                            //       fontSize: 13,
-                            //       fontFamily: "DefaultFontFamily",
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       )
