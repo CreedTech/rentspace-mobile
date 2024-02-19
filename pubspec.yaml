@@ -75,7 +75,7 @@ dependencies:
   syncfusion_flutter_charts:
   share_plus:
   text_scroll:
-  flutter_native_splash:
+  # flutter_native_splash:
   pinput:
   settings_ui:
   go_router: 
@@ -127,6 +127,12 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_stepindicator: ^0.1.7
   linear_step_indicator: ^1.0.0+3
+  typewritertext: ^2.3.1
+  auto_size_text: ^3.0.0
+  internet_connection_checker: ^1.0.0+1
+  pull_to_refresh: ^2.0.0
+  liquid_pull_to_refresh: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
   #path_provider: ^2.0.15
   
 
@@ -140,10 +146,19 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-flutter_native_splash:
-  image: "assets/icons/RentSpace-icon2.png"
-  fullscreen: true
-  color: "#155280"
+
+flutter_launcher_icons:
+ image_path: "assets/icons/ic_launcher.png"
+#  adaptive_icon_foreground: "assets/images/app_icon.png"
+ android: true
+ ios: true
+ remove_alpha_ios: true
+ adaptive_icon_background: #ffff
+ background_color: #FFFFFF
+# flutter_native_splash:
+#   image: "assets/icons/RentSpace-icon2.png"
+#   fullscreen: true
+#   color: "#155280"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

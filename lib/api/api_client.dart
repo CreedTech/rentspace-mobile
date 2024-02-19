@@ -64,6 +64,7 @@ class ApiClient {
         return response;
       }
     } on TimeoutException {
+      print(500);
       return http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
       return http.Response('HTTP Client Exception: $e', 500);

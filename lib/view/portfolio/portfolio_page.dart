@@ -4,22 +4,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:rentspace/controller/rent_controller.dart';
-import 'package:rentspace/controller/user_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
+// import 'package:rentspace/constants/db/firebase_db.dart';
+// import 'package:rentspace/controller/rent_controller.dart';
+// import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/kyc/kyc_intro.dart';
 import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/portfolio/finance_health.dart';
 //import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+// import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/separator.dart';
-import '../kyc/kyc_form_page.dart';
+// import '../kyc/kyc_form_page.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({Key? key}) : super(key: key);
@@ -40,29 +42,44 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final RentController rentController = Get.find();
   final UserController userController = Get.find();
   getUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _totalInterest = data?['total_interest'];
-        _loanAmount = data?['loan_amount'];
-        _totalSavings = data?['total_savings'];
-        _totalDebts = data?['total_debts'];
-        _totalInvestments = data?['total_investments'];
-      });
-    }
+    // var collection = FirebaseFirestore.instance.collection('accounts');
+    // var docSnapshot = await collection.doc(userId).get();
+    // if (docSnapshot.exists) {
+    //   Map<String, dynamic>? data = docSnapshot.data();
+    //   setState(() {
+    //     _totalInterest = data?['total_interest'];
+    //     _loanAmount = data?['loan_amount'];
+    //     _totalSavings = data?['total_savings'];
+    //     _totalDebts = data?['total_debts'];
+    //     _totalInvestments = data?['total_investments'];
+    //   });
+    // }
+
+    setState(() {
+      _totalInterest =
+          userController.userModel!.userDetails![0].totalInterests.toString();
+      _loanAmount =
+          userController.userModel!.userDetails![0].loanAmount.toString();
+      _totalSavings =
+          userController.userModel!.userDetails![0].totalSavings.toString();
+      _totalDebts =
+          userController.userModel!.userDetails![0].totalDebts.toString();
+      // _totalInvestments = userController.userModel!.userDetails![0].tot.toString();
+    });
   }
 
   late ValueNotifier<double> valueNotifier;
   @override
   initState() {
     super.initState();
-    userController.user.isEmpty
+        userController.fetchData();
+    userController.userModel!.userDetails!.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
-        : valueNotifier = ValueNotifier(
-            double.tryParse(userController.user[0].finance_health)!);
+        : valueNotifier = ValueNotifier(double.tryParse(userController
+            .userModel!.userDetails![0].financeHealth
+            .toString())!);
     getUser();
+
   }
 
   @override
@@ -350,8 +367,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       ),
                     ),
                     onTap: () {
-                      ((rentController.rent[0].savedAmount) ==
-                              (rentController.rent[0].targetAmount * 0.7))
+                      ((rentController.rent[0].paidAmount) !=
+                              (rentController.rent[0].amount * 0.7))
                           ? showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -463,7 +480,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   ),
                                 );
                               })
-                          : (userController.user[0].hasVerifiedKyc == "false")
+                          : (userController.userModel!.userDetails![0]
+                                      .hasVerifiedKyc ==
+                                  false)
                               ? Get.to(const KYCIntroPage())
                               : Get.to(const LoanPage());
                       // Get.to(const ProfilePage());

@@ -81,7 +81,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
       },
       body: jsonEncode(<String, String>{
         "amount": (widget.amount * 100).toString(),
-        "email": userController.user[0].email.toString(),
+        // "email": userController.user[0].email.toString(),
         "currency": "NGN",
         "initiate_type": "inline",
         "transaction_ref": "REN${widget.refId}",

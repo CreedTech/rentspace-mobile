@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:flutter/material.dart';
@@ -9,24 +10,29 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../../controller/auth/auth_controller.dart';
+
 //String status = "Reset Password";
 
-class ForgotPassword extends StatefulWidget {
+class ForgotPassword extends ConsumerStatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  // _ForgotPasswordState createState() => _ForgotPasswordState();
+  ConsumerState<ForgotPassword> createState() => _ForgotPasswordConsumerState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+
+  final newpasswordforformkey = GlobalKey<FormState>();
+  // final RoundedLoadingButtonController _btnController =
+  //     RoundedLoadingButtonController();
   final forgotPassFormKey = GlobalKey<FormState>();
   void _doSomething() async {
-    Timer(const Duration(seconds: 1), () {
-      _btnController.stop();
-    });
+    // Timer(const Duration(seconds: 1), () {
+    //   _btnController.stop();
+    // });
 
     if (forgotPassFormKey.currentState!.validate()) {
       authController.reset(context, _emailController.text.trim());
@@ -48,6 +54,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider.notifier);
     //Validator
     validateMail(emailValue) {
       if (emailValue.isEmpty) {
@@ -73,21 +80,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffE0E0E0),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: const Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -133,6 +143,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: false,
         title: Text(
           'Back',
           style: TextStyle(
@@ -219,14 +230,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                     ),
                     const SizedBox(
-                      height: 34,
+                      height: 100,
                     ),
                     Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(300, 50),
                           maximumSize: const Size(300, 50),
-                          backgroundColor: brandTwo,
+                          backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -234,12 +245,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             ),
                           ),
                         ),
-                        onPressed: _doSomething,
+                        onPressed: () {
+                          if (forgotPassFormKey.currentState!.validate()) {
+                            authState.forgotPassword(
+                              context,
+                              _emailController.text.trim(),
+                            );
+                            // _emailController.clear();
+                          }
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Send link',
+                              'Send OTP',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
                                 color: Colors.white,
@@ -247,7 +266,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                           
                           ],
                         ),
                       ),

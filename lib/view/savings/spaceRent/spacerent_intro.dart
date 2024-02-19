@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
@@ -29,16 +28,8 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
+        centerTitle: false,
+        automaticallyImplyLeading: false,
         title: Text(
           'Create Savings Plans',
           style: GoogleFonts.nunito(
@@ -47,9 +38,24 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
             fontSize: 20,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.close,
+                size: 30,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +76,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
               height: 20,
             ),
             Text(
-              "SpaceRent",
+              "Space Rent",
               style: GoogleFonts.nunito(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w700,
@@ -88,8 +94,8 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            const SizedBox(
-              height: 70,
+            SizedBox(
+              height: 70.h,
             ),
             // (Theme.of)
             (themeChange.isSavedDarkMode())

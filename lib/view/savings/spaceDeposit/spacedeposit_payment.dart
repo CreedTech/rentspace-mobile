@@ -125,7 +125,7 @@ class _SpaceDepositPaymentState extends State<SpaceDepositPayment> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -162,7 +162,7 @@ class _SpaceDepositPaymentState extends State<SpaceDepositPayment> {
                 Get.snackbar(
                   "Error",
                   e.toString(),
-                  animationDuration: Duration(seconds: 2),
+                  animationDuration: const Duration(seconds: 2),
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
                   snackPosition: SnackPosition.BOTTOM,

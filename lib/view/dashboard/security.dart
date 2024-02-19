@@ -12,7 +12,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
 import '../actions/forgot_password.dart';
 import '../actions/forgot_pin.dart';
 
@@ -298,7 +299,7 @@ class _SecurityState extends State<Security> {
                           // ));
                         },
                         title: Text(
-                          'Change PIN',
+                          'Change Payment PIN',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                             fontSize: 17,
@@ -311,6 +312,7 @@ class _SecurityState extends State<Security> {
                         ),
                       ),
                     ),
+                   
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: ListTile(
@@ -320,7 +322,43 @@ class _SecurityState extends State<Security> {
                             shape: BoxShape.circle,
                             color: Theme.of(context).cardColor,
                           ),
-                          child:  const Icon(
+                          child: const Icon(
+                            Iconsax.password_check,
+                            color: brandOne,
+                          ),
+                        ),
+                        onTap: () {
+                          Get.to(const ForgotPinIntro());
+                          // Get.to(ForgotPin(
+                          //   password: userController.user[0].userPassword,
+                          //   pin: userController.user[0].transactionPIN,
+                          // ));
+                        },
+                        title: Text(
+                          'Forgot Payment PIN',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Iconsax.arrow_right_3,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                   
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(9),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
                             Iconsax.finger_scan,
                             color: brandOne,
                           ),
@@ -351,6 +389,8 @@ class _SecurityState extends State<Security> {
                               fontWeight: FontWeight.w400,
                             )),
                         trailing: Switch(
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveTrackColor: brandTwo,
                           value:
                               hasBiometricStorage.read('hasBiometric') ?? false,
                           onChanged: (_hasBiometric) {

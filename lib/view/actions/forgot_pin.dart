@@ -6,10 +6,6 @@ import 'dart:async';
 import 'package:rentspace/constants/icons.dart';
 import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../dashboard/confirm_forgot_pin.dart';
@@ -26,8 +22,6 @@ class _ForgotPinState extends State<ForgotPin> {
   final TextEditingController _pinController = TextEditingController();
   // final TextEditingController _pinTwoController = TextEditingController();
   // final TextEditingController _passwordController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
   final changePinformKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {

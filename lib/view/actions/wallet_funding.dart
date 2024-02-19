@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
@@ -10,17 +11,20 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'dart:convert';
-import 'package:rentspace/controller/user_controller.dart';
+// import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:io';
-import 'package:rentspace/constants/theme_services.dart';
-import 'package:get_storage/get_storage.dart';
-import 'dart:io';
-import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
+// import 'package:rentspace/constants/theme_services.dart';
+// import 'package:get_storage/get_storage.dart';
+// import 'dart:io';
+// import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
 
+import '../../api/global_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
+import '../../controller/wallet_controller.dart';
 
 class WalletFunding extends StatefulWidget {
   int amount, numPayment;
@@ -41,6 +45,7 @@ class WalletFunding extends StatefulWidget {
 class _WalletFundingState extends State<WalletFunding> {
   late WebViewController webViewController;
   final UserController userController = Get.find();
+  final WalletController walletController = Get.find();
   String userFirst = '';
   String userLast = '';
   String userMail = '';
@@ -91,29 +96,29 @@ class _WalletFundingState extends State<WalletFunding> {
       );
 
   createPayment() async {
-    const String apiUrl = 'https://api-d.squadco.com/transaction/initiate';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    const String apiUrl = AppConstants.CREATE_PAYMENT;
+    // const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
     final response = await http.post(
-      Uri.parse(apiUrl),
+      Uri.parse(AppConstants.BASE_URL + AppConstants.CREATE_PAYMENT),
       headers: {
-        'Authorization': 'Bearer $bearerToken',
+        'Authorization': 'Bearer $authToken',
         "Content-Type": "application/json"
       },
-      body: jsonEncode(<String, String>{
-        "amount": (widget.amount * 100).toString(),
-        "email": userController.user[0].email.toString(),
+      body: jsonEncode({
+        "amount": widget.amount,
+        "email": userController.userModel!.userDetails![0].email.toString(),
+        "country": "NG",
         "currency": "NGN",
-        "initiate_type": "inline",
-        "transaction_ref":
-            "WAL" + getRandom(4) + userController.user[0].userWalletNumber,
-        "callback_url": "https://rentspace.tech/payment-notice/",
-        "is_recurring": "false"
+        // "initiate_type": "inline",
+        "payment_methods": "card",
       }),
     );
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      final checkoutUrl = jsonResponse['data']["checkout_url"];
+      final checkoutUrl = jsonResponse['message']['data']["url"];
       print(checkoutUrl);
       setState(() {
         _payUrl = checkoutUrl;
@@ -172,15 +177,6 @@ class _WalletFundingState extends State<WalletFunding> {
               (cardCvv == '' || cardDigit == '' || cardExpire == '')
                   ? customErrorDialog(context, 'Card not found!',
                       "You need to add a card to suggest details during in-app payment.")
-
-                  // Get.snackbar(
-                  //     "Card not found!",
-                  //     'You need to add a card to suggest details during in-app payment.',
-                  //     animationDuration: const Duration(seconds: 1),
-                  //     backgroundColor: Colors.red,
-                  //     colorText: Colors.white,
-                  //     snackPosition: SnackPosition.BOTTOM,
-                  //   )
                   : Get.bottomSheet(
                       SizedBox(
                         height: 180,
@@ -223,7 +219,7 @@ class _WalletFundingState extends State<WalletFunding> {
                                           msg:
                                               "Card digits copied to clipboard!",
                                           toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
+                                          gravity: ToastGravity.BOTTOM,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: brandOne,
                                           textColor: Colors.white,

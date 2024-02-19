@@ -5,15 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rentspace/controller/auto_controller.dart';
-import 'package:rentspace/controller/box_controller.dart';
-import 'package:rentspace/controller/deposit_controller.dart';
-import 'package:rentspace/controller/notification_controller.dart';
-import 'package:rentspace/controller/rent_controller.dart';
-import 'package:rentspace/controller/tank_controller.dart';
-import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/controller/utility_controller.dart';
-import 'package:rentspace/controller/withdrawal_controller.dart';
+import 'package:rentspace/controller/activities_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
@@ -26,7 +21,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:intl/intl.dart';
@@ -35,26 +30,29 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:upgrader/upgrader.dart';
 
+import 'actions/transaction_pin.dart';
+
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 final UserController userController = Get.find();
+final ActivitiesController activitiesController = Get.find();
+final WalletController walletController = Get.find();
+final RentController rentController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
-String _userWalletBalance = "";
-String _email = "";
+// String _userWalletBalance = "";
+// String _email = "";
 String fundedAmount = "0";
 String randomRef = "";
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-String _newWalletBalance = "0";
+// String _newWalletBalance = "0";
 bool hasLoaded = false;
 bool _hasOpened = false;
 final openedAppStorage = GetStorage();
 final hasReferredStorage = GetStorage();
 String _isSet = "false";
-String imgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/rentspace-1aebe.appspot.com/o/assets%2Fblack%20man%20(1).png?alt=media&token=ae5ac473-406e-4e70-ad92-8a8b1b7db9d9";
 List<String> transIds = [];
 List<Widget> listWidgets = [
   Dashboard(),
@@ -90,50 +88,59 @@ class CounterNew extends GetxController {
 final counter = Get.put(CounterNew());
 
 class FirstPage extends StatefulWidget {
-  const FirstPage({Key? key}) : super(key: key);
+  const FirstPage({super.key});
 
   @override
   _FirstPageState createState() => _FirstPageState();
 }
 
 class _FirstPageState extends State<FirstPage> {
-  bool _hasPutController = false;
   // final UserController userController = Get.find();
+  bool _hasPutController = false;
 
   @override
   initState() {
     super.initState();
     Get.put(UserController());
-    Get.put(NotificationController());
-    Get.put(WithdrawalController());
-    Get.put(UtilityController());
+    Get.put(WalletController());
+    Get.put(ActivitiesController());
     Get.put(RentController());
-    Get.put(AutoController());
-    Get.put(BoxController());
-    Get.put(TankController());
-    Get.put(DepositController());
 
-    // setState(() {
-    //   _hasPutController = true;
-    // });
     Future.delayed(const Duration(seconds: 2), () {
+      // fetchUserAndSetState();
       setState(() {
         _hasPutController = true;
       });
     });
   }
+  // Future<void> fetchUserAndSetState() async {
+  //   try {
+  //     print('==============================================');
+  //     print('fetching users');
+  //     await userController
+  //         .fetchUsers()
+  //         .then((value) => (walletController.fetchWallet()))
+  //         .then((value) => (activitiesController.fetchActivities()))
+  //         .then(
+  //           (value) => setState(
+  //             () {
+  //               _hasPutController =
+  //                   true; // Set _hasPutController to true after users are fetched
+  //             },
+  //           ),
+  //         ); // Fetch users
+  //   } catch (error) {
+  //     print('Error fetching users: $error');
+  //     // Handle error (e.g., show error message)
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     Get.put(UserController());
-    Get.put(NotificationController());
-    Get.put(UtilityController());
-    Get.put(WithdrawalController());
+    Get.put(ActivitiesController());
+    Get.put(WalletController());
     Get.put(RentController());
-    Get.put(AutoController());
-    Get.put(BoxController());
-    Get.put(TankController());
-    Get.put(DepositController());
     return (!_hasPutController)
         ? Scaffold(
             backgroundColor: Theme.of(context).canvasColor,
@@ -151,343 +158,248 @@ class _FirstPageState extends State<FirstPage> {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                    width: 90.w,
-                    child: Container(
-                      height: 40.h,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/icons/RentSpace-1011.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.transparent,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 150),
+                    child: Image.asset(
+                      'assets/icons/RentSpaceWhite.png',
+                      // width: 140,
+                      height: 60,
                     ),
                   ),
-                  SizedBox(
-                    height: 50.h,
+                  const Center(
+                    child: Column(
+                      children: [
+                        CustomLoader(),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Text(
-                      //   "Welcome Spacer",
-                      //   style: GoogleFonts.nunito(
-                      //     fontSize: 30,
-                      //     fontWeight: FontWeight.bold,
-                      //     color: Theme.of(context).canvasColor,
-                      //   ),
-                      // ),
-                    ],
+                  const SizedBox(
+                    height: 30,
                   ),
-                  SizedBox(
-                    height: 30.h,
+
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(),
                   ),
-                  const CustomLoader(),
-                  // Lottie.asset(
-                  //   'assets/loader.json',
-                  //   width: 100,
-                  //   height: 100,
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     // const SizedBox(
+                  //     //   height: 50,
+                  //     // ),
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Text(
+                  //           screenInfo,
+                  //           style: TextStyle(
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.bold,
+                  //             fontFamily: "DefaultFontFamily",
+                  //             color: Theme.of(context).primaryColor,
+                  //           ),
+                  //         ),
+                  //         const SizedBox(
+                  //           height: 30,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     // const SizedBox(
+                  //     //   height: 50,
+                  //     // ),
+                  //     const CircularProgressIndicator(
+                  //       color: brandOne,
+                  //     ),
+                  //     const SizedBox(
+                  //       height: 50,
+                  //     ),
+                  //     (_canShowAuth)
+                  //         ? GFButton(
+                  //             onPressed: () {
+                  //               checkingForBioMetrics();
+                  //             },
+                  //             text: "   Authenticate    ",
+                  //             shape: GFButtonShape.pills,
+                  //           )
+                  //         : const SizedBox(),
+                  //   ],
                   // ),
                 ],
               ),
             ),
           )
-        : Scaffold(
-            body: Builder(
-              builder: (context) => const HomePage(),
-              //  (context) => (userController.user[0].bvn != "")
-              //     ? const HomePage()
-              //     : (userController.user[0].dvaUsername == '' ||
-              //             userController.user[0].gender == '' ||
-              //             userController.user[0].date_of_birth == '' ||
-              //             userController.user[0].address == '')
-              //         ? UpdateUserInfo()
-              //         : CreateDVA(),
-              // : const HomePage(),
-            ),
-            // ShowCaseWidget(
-            //   autoPlay: true,
-            //   onFinish: () {
-            //     Get.defaultDialog(
-            //       titlePadding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-            //       title: "Discover",
-            //       content: Container(
-            //         height: MediaQuery.of(context).size.height / 2,
-            //         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            //         child: ListView(
-            //           shrinkWrap: true,
-            //           physics: const ClampingScrollPhysics(),
-            //           children: [
-            //             Image.asset(
-            //               "assets/discover.png",
-            //               fit: BoxFit.cover,
-            //               height: 200,
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //             const Text(
-            //               "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-            //               style: TextStyle(
-            //                 fontSize: 13.0,
-            //                 letterSpacing: 0.5,
-            //                 fontFamily: "DefaultFontFamily",
-            //                 color: Colors.black,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //             const Text(
-            //               "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
-            //               style: TextStyle(
-            //                 fontSize: 13.0,
-            //                 letterSpacing: 0.5,
-            //                 fontFamily: "DefaultFontFamily",
-            //                 color: Colors.black,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //             const Text(
-            //               "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
-            //               style: TextStyle(
-            //                 fontSize: 13.0,
-            //                 letterSpacing: 0.5,
-            //                 fontFamily: "DefaultFontFamily",
-            //                 color: Colors.black,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       actions: <Widget>[
-            //         Padding(
-            //           padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-            //           child: GFButton(
-            //             onPressed: () {
-            //               Get.back();
-            //             },
-            //             fullWidthButton: true,
-            //             shape: GFButtonShape.pills,
-            //             text: "That's Nice",
-            //             icon: const Icon(
-            //               Icons.arrow_right_outlined,
-            //               color: Colors.white,
-            //               size: 18,
-            //             ),
-            //             color: brandOne,
-            //             textStyle: const TextStyle(
-            //               color: Colors.white,
-            //               fontSize: 16,
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //       barrierDismissible: true,
-            //     );
-            //   },
-            //   builder: Builder(
-            //     builder: (context) => const HomePage(),
-            //     //  (context) => (userController.user[0].bvn != "")
-            //     //     ? const HomePage()
-            //     //     : (userController.user[0].dvaUsername == '' ||
-            //     //             userController.user[0].gender == '' ||
-            //     //             userController.user[0].date_of_birth == '' ||
-            //     //             userController.user[0].address == '')
-            //     //         ? UpdateUserInfo()
-            //     //         : CreateDVA(),
-            //     // : const HomePage(),
-            //   ),
-            // ),
-          );
+        : (walletController.walletModel!.wallet![0].isPinSet == false)
+            ? const TransactionPin()
+            : const HomePage();
   }
 }
 
 //Second page
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final WalletController walletController = Get.put(WalletController());
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
-  // IconData _homeIcon = Iconsax.home_21;
-  // IconData _transactionIcon = Iconsax.transaction_minus;
-  // IconData _supportIcon = Iconsax.message_notif;
-  // IconData _settingsIcon = Iconsax.setting_2;
+  // checkStatus() {
+  //   final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
+  //   DocumentReference docReference =
+  //       firestoreFile.collection('maintenance').doc('27-09-2023-maintenance');
 
-  // final IconData _defaultHomeIcon = Iconsax.home;
-  // final IconData _defaultTransactionIcon = Iconsax.transaction_minus;
-  // final IconData _defaultSupportIcon = Iconsax.message_notif;
-  // final IconData _defaultSettingsIcon = Iconsax.profile;
+  //   docReference.snapshots().listen((snapshot) {
+  //     var data = snapshot.data() as Map<String, dynamic>?;
+  //     var newStatus = data?['status'];
 
-  checkStatus() {
-    final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
-    DocumentReference docReference =
-        firestoreFile.collection('maintenance').doc('27-09-2023-maintenance');
+  //     if (newStatus != "active") {
+  //       Get.to(const InActivePage());
+  //     } else {
+  //       print("All good!!!");
+  //     }
+  //   });
+  // }
 
-    docReference.snapshots().listen((snapshot) {
-      var data = snapshot.data() as Map<String, dynamic>?;
-      var newStatus = data?['status'];
+  // mustRefer() async {
+  //   //get the referal code in the users collection
+  //   if (userController.user[0].referalId != "") {
+  //     CollectionReference allUsersR =
+  //         FirebaseFirestore.instance.collection('accounts');
 
-      if (newStatus != "active") {
-        Get.to(const InActivePage());
-      } else {
-        print("All good!!!");
-      }
-    });
-  }
+  //     var snapshot = await allUsersR
+  //         .where('referal_code',
+  //             isEqualTo: userController.user[0].referalId.toUpperCase())
+  //         .get();
+  //     var collection = FirebaseFirestore.instance.collection('accounts');
 
-  mustRefer() async {
-    //get the referal code in the users collection
-    if (userController.user[0].referalId != "") {
-      CollectionReference allUsersR =
-          FirebaseFirestore.instance.collection('accounts');
+  //     var docSnapshot = await collection.doc(userId).get();
+  //     for (var doc in snapshot.docs) {
+  //       var data = snapshot.docs.first.data() as Map;
+  //       var value = data["referals"];
+  //       var newValue = value! + 1;
 
-      var snapshot = await allUsersR
-          .where('referal_code',
-              isEqualTo: userController.user[0].referalId.toUpperCase())
-          .get();
-      var collection = FirebaseFirestore.instance.collection('accounts');
+  //       await doc.reference.update({
+  //         'referals': newValue,
+  //       }).then((value) {
+  //         docSnapshot.reference.update({
+  //           'referals': 1,
+  //           'referar_id': "@${userController.user[0].referalId}@"
+  //         });
+  //         //R09K673ELR
+  //         showTopSnackBar(
+  //           Overlay.of(context),
+  //           CustomSnackBar.success(
+  //             backgroundColor: brandOne,
+  //             message: 'Your account has been setup successfully!',
+  //             textStyle: GoogleFonts.nunito(
+  //               fontSize: 14.sp,
+  //               color: Colors.white,
+  //               fontWeight: FontWeight.w700,
+  //             ),
+  //           ),
+  //         );
+  //       }).catchError((error) {
+  //         showDialog(
+  //             context: context,
+  //             barrierDismissible: false,
+  //             builder: (BuildContext context) {
+  //               return AlertDialog(
+  //                 shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.circular(10.sp),
+  //                 ),
+  //                 title: null,
+  //                 elevation: 0,
+  //                 content: SizedBox(
+  //                   height: 250.h,
+  //                   child: Column(
+  //                     children: [
+  //                       GestureDetector(
+  //                         onTap: () {
+  //                           Navigator.of(context).pop();
+  //                         },
+  //                         child: Align(
+  //                           alignment: Alignment.topRight,
+  //                           child: Container(
+  //                             decoration: BoxDecoration(
+  //                               borderRadius: BorderRadius.circular(30.sp),
+  //                               // color: brandOne,
+  //                             ),
+  //                             child: Icon(
+  //                               Iconsax.close_circle,
+  //                               color: Theme.of(context).primaryColor,
+  //                               size: 30.sp,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       Align(
+  //                         alignment: Alignment.center,
+  //                         child: Icon(
+  //                           Iconsax.warning_24,
+  //                           color: Colors.red,
+  //                           size: 75.sp,
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         height: 12.h,
+  //                       ),
+  //                       Text(
+  //                         "Oops...",
+  //                         style: GoogleFonts.nunito(
+  //                           color: Colors.red,
+  //                           fontSize: 28.sp,
+  //                           fontWeight: FontWeight.w800,
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         height: 5.h,
+  //                       ),
+  //                       Text(
+  //                         "Something went wrong",
+  //                         textAlign: TextAlign.center,
+  //                         style: GoogleFonts.nunito(
+  //                             color: Colors.red, fontSize: 18.sp),
+  //                       ),
+  //                       SizedBox(
+  //                         height: 10.h,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               );
+  //             });
+  //       });
+  //     }
+  //   } else {
+  //     print("No referal");
+  //   }
+  // }
 
-      var docSnapshot = await collection.doc(userId).get();
-      for (var doc in snapshot.docs) {
-        var data = snapshot.docs.first.data() as Map;
-        var value = data["referals"];
-        var newValue = value! + 1;
-
-        await doc.reference.update({
-          'referals': newValue,
-        }).then((value) {
-          docSnapshot.reference.update({
-            'referals': 1,
-            'referar_id': "@${userController.user[0].referalId}@"
-          });
-          //R09K673ELR
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.success(
-              backgroundColor: brandOne,
-              message: 'Your account has been setup successfully!',
-              textStyle: GoogleFonts.nunito(
-                fontSize: 14.sp,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
-          // Get.snackbar(
-          //   "All set!",
-          //   'Your account has been setup successfully!',
-          //   animationDuration: const Duration(seconds: 1),
-          //   backgroundColor: brandOne,
-          //   colorText: Colors.white,
-          //   snackPosition: SnackPosition.TOP,
-          // );
-        }).catchError((error) {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.sp),
-                  ),
-                  title: null,
-                  elevation: 0,
-                  content: SizedBox(
-                    height: 250.h,
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.sp),
-                                // color: brandOne,
-                              ),
-                              child: Icon(
-                                Iconsax.close_circle,
-                                color: Theme.of(context).primaryColor,
-                                size: 30.sp,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Iconsax.warning_24,
-                            color: Colors.red,
-                            size: 75.sp,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Text(
-                          "Oops...",
-                          style: GoogleFonts.nunito(
-                            color: Colors.red,
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Text(
-                          "Something went wrong",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
-                              color: Colors.red, fontSize: 18.sp),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-
-          // Get.snackbar(
-          //   "Oops...",
-          //   "Something went wrong",
-          //   animationDuration: const Duration(seconds: 2),
-          //   backgroundColor: Colors.red,
-          //   colorText: Colors.white,
-          //   snackPosition: SnackPosition.BOTTOM,
-          // );
-        });
-      }
-    } else {
-      print("No referal");
-    }
-  }
+  // Future<void> checkInitialPinStatus(BuildContext context) async {
+  //   if (walletController.walletModel!.wallet![0].isPinSet == false) {
+  //     // If PIN is not set, navigate to PIN screen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => TransactionPin()),
+  //     );
+  //   } else {
+  //     // If PIN is set, navigate to the home screen or any other screen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => HomeScreen()),
+  //     );
+  //   }
+  // }
 
   checkIsOpenedApp() {
     if (openedAppStorage.read('hasOpenedApp') == null) {
@@ -499,7 +411,7 @@ class _HomePageState extends State<HomePage> {
             openedAppStorage.write('hasOpenedApp', _hasOpened);
           },
         );
-        mustRefer();
+        // mustRefer();
         Get.defaultDialog(
           titlePadding: EdgeInsets.fromLTRB(0.w, 50.h, 0.w, 0.h),
           title: "Welcome Spacer!",
@@ -538,7 +450,7 @@ class _HomePageState extends State<HomePage> {
               child: GFButton(
                 onPressed: () {
                   Get.back();
-                  startShowCase();
+                  // startShowCase();
                 },
                 fullWidthButton: true,
                 shape: GFButtonShape.pills,
@@ -567,26 +479,11 @@ class _HomePageState extends State<HomePage> {
     //print()
   }
 
-  startShowCase() {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ShowCaseWidget.of(context).startShowCase([
-        counter._one,
-        counter._two,
-        counter._three,
-        counter._four,
-        counter._five,
-        /* counter._six,
-        counter._seven,
-        counter._eight, */
-      ]),
-    );
-  }
-
   @override
   initState() {
     super.initState();
     transIds.clear();
-    checkStatus();
+    // checkStatus();
     setState(() {
       fundedAmount = "0";
     });
@@ -683,15 +580,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             });
-
-        // Get.snackbar(
-        //   "Error",
-        //   "Biometrics failed",
-        //   animationDuration: const Duration(seconds: 2),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
       }
     } catch (e) {
       showDialog(
@@ -780,28 +668,6 @@ class _HomePageState extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      // if (index == 0) {
-      //   _homeIcon = Iconsax.home_21;
-      //   _transactionIcon = _defaultTransactionIcon;
-      //   _supportIcon = _defaultSupportIcon;
-      //   _settingsIcon = _defaultSettingsIcon;
-      // } else if (index == 1) {
-      //   _transactionIcon = Iconsax.transaction_minus5;
-      //   _supportIcon = _defaultSupportIcon;
-      //   _settingsIcon = _defaultSettingsIcon;
-      //   _homeIcon = _defaultHomeIcon;
-      // } else if (index == 2) {
-      //   _supportIcon = Iconsax.message_notif5;
-      //   _settingsIcon = _defaultSettingsIcon;
-      //   _transactionIcon = _defaultTransactionIcon;
-      //   _homeIcon = _defaultHomeIcon;
-      // } else if (index == 3) {
-      //   _settingsIcon = Icons.settings;
-      //   _supportIcon = _defaultSupportIcon;
-      //   _transactionIcon = _defaultTransactionIcon;
-      //   _homeIcon = _defaultHomeIcon;
-      // }
-
       _selectedIndex = index;
     });
   }
@@ -918,78 +784,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         );
-
-        // Get.bottomSheet(
-        //   SizedBox(
-        //     height: 100,
-        //     child: ClipRRect(
-        //       borderRadius: const BorderRadius.only(
-        //         topLeft: Radius.circular(30.0),
-        //         topRight: Radius.circular(30.0),
-        //       ),
-        //       child: Container(
-        //         color: Theme.of(context).canvasColor,
-        //         child: Column(
-        //           children: [
-        //             const SizedBox(
-        //               height: 10,
-        //             ),
-        //             Padding(
-        //               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-        //               child: Text(
-        //                 'Are you sure you want to exit?',
-        //                 style: TextStyle(
-        //                   fontSize: 16,
-        //                   color: Theme.of(context).primaryColor,
-        //                   fontFamily: "DefaultFontFamily",
-        //                 ),
-        //               ),
-        //             ),
-        //             Padding(
-        //               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-        //               child: Row(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 children: [
-        //                   GFButton(
-        //                     onPressed: () {
-        //                       Get.back();
-        //                     },
-        //                     shape: GFButtonShape.pills,
-        //                     text: "Cancel",
-        //                     fullWidthButton: false,
-        //                     color: Colors.greenAccent,
-        //                     textStyle: const TextStyle(
-        //                       color: Colors.white,
-        //                       fontSize: 12,
-        //                       fontFamily: "DefaultFontFamily",
-        //                     ),
-        //                   ),
-        //                   const SizedBox(
-        //                     width: 20,
-        //                   ),
-        //                   GFButton(
-        //                     onPressed: () {
-        //                       exit(0);
-        //                     },
-        //                     shape: GFButtonShape.pills,
-        //                     text: "Exit",
-        //                     fullWidthButton: false,
-        //                     color: Colors.red,
-        //                     textStyle: const TextStyle(
-        //                       color: Colors.white,
-        //                       fontSize: 12,
-        //                       fontFamily: "DefaultFontFamily",
-        //                     ),
-        //                   )
-        //                 ],
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // );
 
         return false;
       },

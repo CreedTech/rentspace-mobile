@@ -4,6 +4,9 @@ import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/controller/activities_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -42,6 +45,12 @@ class _BiometricsPageState extends State<BiometricsPage> {
     return canCheckBiometrics;
   }
 
+  // registerControllers() async {
+  //   Get.put(UserController());
+  //   Get.put(WalletController());
+  //   Get.put(ActivitiesController());
+  // }
+
   void _cancelTimer() {
     _inactivityTimer?.cancel();
     _inactivityTimer = null;
@@ -60,7 +69,11 @@ class _BiometricsPageState extends State<BiometricsPage> {
         setState(() {
           screenInfo = "App unlocked";
         });
+           Get.put(UserController());
         Get.to(const FirstPage());
+        // await registerControllers().then(Get.to(const FirstPage()));
+        //  Get.put(UserController());
+        // Get.to(const FirstPage());
       } else {
         _canShowAuth = true;
         if (context.mounted) {
@@ -155,11 +168,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                       ),
                     ),
                     const CustomLoader(),
-                    // Lottie.asset(
-                    //   'assets/loader.json',
-                    //   width: 100,
-                    //   height: 100,
-                    // ),
+                 
                     const SizedBox(
                       height: 30,
                     ),

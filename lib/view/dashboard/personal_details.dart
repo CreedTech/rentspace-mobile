@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +10,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../constants/colors.dart';
 import '../../constants/db/firebase_db.dart';
 import '../../constants/utils/obscureEmail.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/phone_verification_screen.dart';
 
@@ -21,9 +22,9 @@ class PersonalDetails extends StatefulWidget {
   State<PersonalDetails> createState() => _PersonalDetailsState();
 }
 
-final _auth = FirebaseAuth.instance;
+// final _auth = FirebaseAuth.instance;
 bool _isEmailVerified = false;
-User? _user;
+// User? _user;
 
 class _PersonalDetailsState extends State<PersonalDetails> {
   final UserController userController = Get.find();
@@ -32,21 +33,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   initState() {
     super.initState();
 
-    _user = _auth.currentUser;
-    _isEmailVerified = _user!.emailVerified;
+    // _user = _auth.currentUser;
+    _isEmailVerified = userController.userModel!.userDetails![0].hasVerifiedEmail!;
 
     // checkingForBioMetrics();
     print(_isEmailVerified);
   }
 
   Future updateVerification() async {
-    var userUpdate = FirebaseFirestore.instance.collection('accounts');
+    // var userUpdate = FirebaseFirestore.instance.collection('accounts');
 
-    await userUpdate.doc(userId).update({
-      'has_verified_email': 'true',
-    }).catchError((error) {
-      print(error);
-    });
+    // await userUpdate.doc(userId).update({
+    //   'has_verified_email': 'true',
+    // }).catchError((error) {
+    //   print(error);
+    // });
   }
 
   @override
@@ -110,7 +111,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle: Text(
-                          "${userController.user[0].userLast} ${userController.user[0].userFirst}"
+                          "${userController.userModel!.userDetails![0].lastName!.capitalize} ${userController.userModel!.userDetails![0].firstName!.capitalize}"
                               .toUpperCase(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
@@ -144,7 +145,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle: Text(
-                          userController.user[0].dvaUsername.toUpperCase(),
+                          userController.userModel!.userDetails![0].userName!.toUpperCase(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                             fontSize: 15,
@@ -176,59 +177,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle:
-                            Text(obscureEmail(userController.user[0].email),
+                            Text(obscureEmail(userController.userModel!.userDetails![0].email!),
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
                                 )),
-                        onTap: () async {
-                          if (userController.user[0].hasVerifiedPhone ==
-                                  'false' ||
-                              userController.user[0].hasVerifiedPhone == '') {
-                            await _user!.sendEmailVerification();
-                            if (!context.mounted) return;
-                            showTopSnackBar(
-                              Overlay.of(context),
-                              CustomSnackBar.success(
-                                backgroundColor: brandOne,
-                                message:
-                                    'Verification E-mail has been sent to ${obscureEmail(userController.user[0].email)}',
-                                textStyle: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            );
-                            setState(() {
-                              _isEmailVerified = _user!.emailVerified;
-                            });
-                            updateVerification();
-
-                            _user!.reload();
-                          }
-                        },
-                        trailing: (userController.user[0].hasVerifiedPhone ==
-                                    'false' ||
-                                userController.user[0].hasVerifiedPhone == '')
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: Text(
-                                  'verify',
-                                  style:
-                                      GoogleFonts.nunito(color: Colors.white),
-                                ),
-                              )
-                            : Icon(
-                                Iconsax.verify5,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                        onTap: () async {},
+                        trailing: Icon(
+                          Iconsax.verify5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                         //  const Icon(
                         //   Iconsax.edit,
                         //   color: brandOne,
@@ -257,21 +216,19 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        subtitle: Text(userController.user[0].userPhone,
+                        subtitle: Text(userController.userModel!.userDetails![0].phoneNumber!,
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
-                          (userController.user[0].hasVerifiedPhone == 'false' ||
-                                  userController.user[0].hasVerifiedPhone == '')
+                          (userController.userModel!.userDetails![0].hasVerifiedPhone == false)
                               ? Get.to(PhoneVerificationScreen())
                               : null;
                         },
-                        trailing: (userController.user[0].hasVerifiedPhone ==
-                                    'false' ||
-                                userController.user[0].hasVerifiedPhone == '')
+                        trailing: (userController.userModel!.userDetails![0].hasVerifiedPhone ==
+                                false)
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -318,8 +275,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle: Text(
-                            (userController.user[0].bvn != "")
-                                ? obscureBVN(userController.user[0].bvn)
+                            (userController.userModel!.userDetails![0].bvn != "")
+                                ? obscureBVN(userController.userModel!.userDetails![0].bvn!)
                                 : '',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
@@ -327,13 +284,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
-                          if (userController.user[0].bvn == "") {
+                          if (userController.userModel!.userDetails![0].bvn == "") {
                             Get.to(const BvnPage());
                           }
                         },
-                        trailing: (userController.user[0].hasVerifiedBvn ==
-                                    'false' ||
-                                userController.user[0].hasVerifiedBvn == '')
+                        trailing: (userController.userModel!.userDetails![0].hasVerifiedBvn ==
+                                false)
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -380,9 +336,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle: Text(
-                          (userController.user[0].address != "")
-                              ? userController.user[0].address.capitalize!
-                              : 'Add Your Address for KYC Verification',
+                          // (userController.userModel!.userDetails![0].residentialAddress != "")
+                          //     ?
+                          userController.userModel!.userDetails![0].residentialAddress.capitalize!
+                          // : 'Add Your Address for KYC Verification'
+                          ,
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                             fontSize: 15,
@@ -395,24 +353,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         //     Get.to(const BvnPage());
                         //   }
                         // },
-                        trailing: (userController.user[0].address == '')
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5),
-                                decoration: BoxDecoration(
-                                  color: brandOne,
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: Text(
-                                  'Add Address',
-                                  style:
-                                      GoogleFonts.nunito(color: Colors.white),
-                                ),
-                              )
-                            : Icon(
-                                Iconsax.verify5,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                        trailing: Icon(
+                          Iconsax.verify5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                         //  const Icon(
                         //   Iconsax.edit,
                         //   color: brandOne,
@@ -442,7 +386,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ),
                         ),
                         subtitle: Text(
-                          userController.user[0].date_of_birth.toString(),
+                          userController.userModel!.userDetails![0].dateOfBirth.toString(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                             fontSize: 15,

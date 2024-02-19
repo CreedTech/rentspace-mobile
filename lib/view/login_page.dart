@@ -1,23 +1,25 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rentspace/view/signup_page.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../controller/auth/auth_controller.dart';
+
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageConsumerState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   //Multiple attempts prevention section
   final loginAttempts = GetStorage();
   final lockAttempts = GetStorage();
@@ -32,8 +34,9 @@ class _LoginPageState extends State<LoginPage> {
   Icon lockIcon = LockIcon().open;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+  bool _rememberMe = false;
+  // final RoundedLoadingButtonController _btnController =
+  //     RoundedLoadingButtonController();
   final loginFormKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {
@@ -49,51 +52,81 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _doSomething() async {
-    Timer(const Duration(seconds: 1), () {
-      _btnController.stop();
-    });
+  Future<void> setHasSeenOnboardingPreference(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasSeenOnboarding', value);
+    print("====================");
+    print("Checking for new users.....");
+    print(prefs.get('hasSeenOnboarding'));
+    print("====================");
+  }
 
-    if (loginFormKey.currentState!.validate()) {
-      authController.login(_emailController.text.trim(),
-          _passwordController.text.trim(), context);
+  // void _doSomething() async {
+  //   Timer(const Duration(seconds: 1), () {
+  //     _btnController.stop();
+  //   });
+
+  //   if (loginFormKey.currentState!.validate()) {
+  //     authController.login(_emailController.text.trim(),
+  //         _passwordController.text.trim(), context);
+  //   }
+  // }
+
+  @override
+  initState() {
+    setHasSeenOnboardingPreference(true);
+    super.initState();
+    _getSavedLoginInfo();
+  }
+
+  // Function to retrieve saved login credentials and remember me status
+  Future<void> _getSavedLoginInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEmail = prefs.getString('email');
+    final savedPassword = prefs.getString('password');
+    final rememberMe = prefs.getBool('rememberMe') ?? false;
+    if (savedEmail != null && savedPassword != null) {
+      setState(() {
+        _emailController.text = savedEmail;
+        _passwordController.text = savedPassword;
+        _rememberMe = rememberMe;
+      });
     }
   }
 
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider.notifier);
     //email field
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style:  TextStyle(
+      style: TextStyle(
         color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -203,13 +236,14 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () {
             Get.back();
           },
-          child:  Icon(
+          child: Icon(
             Icons.arrow_back,
             size: 25,
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title:  Text(
+        centerTitle: false,
+        title: Text(
           'Back',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
@@ -269,14 +303,14 @@ class _LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
                               child: Text(
                                 'Enter Email',
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
                                 ),
                               ),
                             ),
@@ -290,7 +324,8 @@ class _LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 3),
                               child: Text(
                                 'Enter Password',
                                 style: GoogleFonts.nunito(
@@ -310,60 +345,65 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.zero,
-                                  // alignment: Alignment.centerLeft,
-                                  child: Checkbox.adaptive(
-                                      visualDensity:
-                                          VisualDensity.adaptivePlatformDensity,
-                                      value: isChecked,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          isChecked = value!;
-                                        });
-                                      },
-                                      overlayColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
+                            (_rememberMe == true)
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.zero,
+                                        // alignment: Alignment.centerLeft,
+                                        child: Checkbox.adaptive(
+                                            visualDensity: VisualDensity
+                                                .adaptivePlatformDensity,
+                                            value: _rememberMe,
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                _rememberMe = value!;
+                                              });
+                                            },
+                                            overlayColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandFour,
+                                            ),
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return brandFour;
+                                              }
+                                              return const Color(0xffF2F2F2);
+                                            }),
+                                            focusColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandFour,
+                                            ),
+                                            activeColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandFour,
+                                            ),
+                                            side: const BorderSide(
+                                              color: Color(0xffBDBDBD),
+                                            )),
                                       ),
-                                      fillColor: MaterialStateProperty
-                                          .resolveWith<Color>(
-                                              (Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return brandFour;
-                                        }
-                                        return const Color(0xffF2F2F2);
-                                      }),
-                                      focusColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Remember me',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xff828282),
+                                          ),
+                                        ),
                                       ),
-                                      activeColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
-                                      ),
-                                      side: const BorderSide(
-                                        color: Color(0xffBDBDBD),
-                                      )),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Remember me',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xff828282),
-                                    ),
+                                    ],
+                                  )
+                                : const Row(
+                                    children: [],
                                   ),
-                                ),
-                              ],
-                            ),
                             GestureDetector(
                               onTap: () {
                                 Get.to(const ForgotPassword());
@@ -402,7 +442,7 @@ class _LoginPageState extends State<LoginPage> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 50),
-                              backgroundColor: brandTwo,
+                              backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -411,7 +451,17 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             onPressed: () {
-                              _doSomething();
+                              if (loginFormKey.currentState!.validate()) {
+                                authState.signIn(
+                                  context,
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  rememberMe: _rememberMe,
+                                  // usernameController.text.trim(),
+                                );
+                                // emailController.clear();
+                                // passwordController.clear();
+                              }
                             },
                             child: Text(
                               'Proceed',
