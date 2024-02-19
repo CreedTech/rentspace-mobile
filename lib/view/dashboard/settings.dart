@@ -130,8 +130,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     super.initState();
     userController.users.isEmpty
         ? valueNotifier = 0.0
-        : valueNotifier =
-            double.tryParse(userController.userModel!.userDetails![0].financeHealth.toString())!;
+        : valueNotifier = double.tryParse(userController
+            .userModel!.userDetails![0].financeHealth
+            .toString())!;
 
     controller = AnimationController(
       vsync: this,
@@ -140,7 +141,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     // controller.repeat(reverse: false);
 
     // _user = _auth.currentUser;
-    _isEmailVerified = userController.userModel!.userDetails![0].hasVerifiedEmail;
+    _isEmailVerified =
+        userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     checkingForBioMetrics();
     print(_isEmailVerified);
@@ -339,7 +341,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                 ),
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                  userController.userModel!.userDetails![0].avatar,
+                                  userController
+                                      .userModel!.userDetails![0].avatar,
                                 ),
                                 // NetworkImage(
                                 //   userController.user[0].image,
@@ -476,7 +479,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          (userController.userModel!.userDetails![0].status == 'verified')
+                          (userController.userModel!.userDetails![0].status ==
+                                  'verified')
                               ? Icon(
                                   Iconsax.verify5,
                                   color:
@@ -497,7 +501,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Wallet ID: ${walletController.walletModel!.wallet![0].walletId}",
+                            (userController.userModel!.userDetails![0].hasDva ==
+                                    true)
+                                ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
+                                : "Wallet ID: ${walletController.walletModel!.wallet![0].walletId}",
                             style: GoogleFonts.nunito(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w400,

@@ -270,4 +270,43 @@ class AuthRepository {
     //  print("Here in repo" + response.reasonPhrase.toString());
     return responseModel = ResponseModel(error, false);
   }
+
+
+Future<ResponseModel> createPin(body) async {
+    print('Got here in auth repo');
+    print(body);
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.CREATE_PIN, jsonEncode(body));
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Password Reset Successful", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    // var error = jsonDecode(response.body)['errors'].toString();
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    // return responseModel = ResponseModel(error, false);
+  }
+
 }

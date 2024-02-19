@@ -69,6 +69,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
         setState(() {
           screenInfo = "App unlocked";
         });
+           Get.put(UserController());
         Get.to(const FirstPage());
         // await registerControllers().then(Get.to(const FirstPage()));
         //  Get.put(UserController());

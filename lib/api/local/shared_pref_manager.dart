@@ -28,9 +28,7 @@ class SharedPreferencesManager {
   //   // final _prefs = await SharedPreferences.getInstance();
   //   return _prefs.getString(USER_TRANSACTION_PIN) ?? '';
   // }
-  Future removeToken() async {
-    
-  }
+  Future removeToken() async {}
 
   // Future<bool> setPin({required String value}) async {
   //   // final _prefs = await SharedPreferences.getInstance();
@@ -52,9 +50,36 @@ class SharedPreferencesManager {
     return _prefs.setString(TOKEN, value);
   }
 
+  // Function to save login credentials and remember me status to shared preferences
+  Future<void> saveLoginInfo(
+      String email, String password, bool rememberMe) async {
+    // final prefs = await SharedPreferences.getInstance();
+    _prefs.setString('email', email);
+    _prefs.setString('password', password);
+    _prefs.setBool('rememberMe', rememberMe);
+  }
+
   Future<String> getAuthToken() async {
     // final prefs = await SharedPreferences.getInstance();
     return _prefs.getString(TOKEN) ?? '';
+  }
+
+  Future<void> savePin(String newPin) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pin', newPin);
+    // pin = newPin;
+  }
+
+  // Function to retrieve the user's PIN
+  Future getPin() async {
+    // final prefs = await SharedPreferences.getInstance();
+    return _prefs.getString('pin');
+  }
+
+  // Function to update the user's PIN
+  Future<void> updatePin(String newPin) async {
+    await savePin(newPin);
+    // Call your update PIN endpoint here
   }
 
   Future<bool> saveUserDetails(UserProfileDetailsResponse userDetails) async {

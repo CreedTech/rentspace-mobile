@@ -30,21 +30,24 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:upgrader/upgrader.dart';
 
+import 'actions/transaction_pin.dart';
+
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 final UserController userController = Get.find();
-// final ActivitiesController activitiesController = Get.find();
+final ActivitiesController activitiesController = Get.find();
 final WalletController walletController = Get.find();
+final RentController rentController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
-String _userWalletBalance = "";
-String _email = "";
+// String _userWalletBalance = "";
+// String _email = "";
 String fundedAmount = "0";
 String randomRef = "";
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-String _newWalletBalance = "0";
+// String _newWalletBalance = "0";
 bool hasLoaded = false;
 bool _hasOpened = false;
 final openedAppStorage = GetStorage();
@@ -92,22 +95,24 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  final UserController userController = Get.put(UserController());
-  final WalletController walletController = Get.put(WalletController());
-  // final ActivitiesController activitiesController = Get.put(ActivitiesController());
-  // bool _hasPutController = false;
+  // final UserController userController = Get.find();
+  bool _hasPutController = false;
 
   @override
   initState() {
     super.initState();
-    // Get.put(UserController());
-    // Get.put(WalletController());
-    // Get.put(ActivitiesController());
-    // Get.put(RentController());
+    Get.put(UserController());
+    Get.put(WalletController());
+    Get.put(ActivitiesController());
+    Get.put(RentController());
 
-    // fetchUserAndSetState();
+    Future.delayed(const Duration(seconds: 2), () {
+      // fetchUserAndSetState();
+      setState(() {
+        _hasPutController = true;
+      });
+    });
   }
-
   // Future<void> fetchUserAndSetState() async {
   //   try {
   //     print('==============================================');
@@ -132,107 +137,107 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get.put(UserController());
-    // Get.put(ActivitiesController());
-    // Get.put(WalletController());
-    // Get.put(RentController());
-    return Obx(
-      () => userController.isLoading.value
-          ? Scaffold(
-              backgroundColor: Theme.of(context).canvasColor,
-              body: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                      'assets/slider3.png',
-                    ),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), // Adjust the opacity here
-                      BlendMode.darken,
-                    ),
+    Get.put(UserController());
+    Get.put(ActivitiesController());
+    Get.put(WalletController());
+    Get.put(RentController());
+    return (!_hasPutController)
+        ? Scaffold(
+            backgroundColor: Theme.of(context).canvasColor,
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage(
+                    'assets/slider3.png',
+                  ),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.5), // Adjust the opacity here
+                    BlendMode.darken,
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 150),
-                      child: Image.asset(
-                        'assets/icons/RentSpaceWhite.png',
-                        // width: 140,
-                        height: 60,
-                      ),
-                    ),
-                    const Center(
-                      child: Column(
-                        children: [
-                          CustomLoader(),
-                          SizedBox(
-                            height: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: SizedBox(),
-                    ),
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           screenInfo,
-                    //           style: TextStyle(
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold,
-                    //             fontFamily: "DefaultFontFamily",
-                    //             color: Theme.of(context).primaryColor,
-                    //           ),
-                    //         ),
-                    //         const SizedBox(
-                    //           height: 30,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     const CircularProgressIndicator(
-                    //       color: brandOne,
-                    //     ),
-                    //     const SizedBox(
-                    //       height: 50,
-                    //     ),
-                    //     (_canShowAuth)
-                    //         ? GFButton(
-                    //             onPressed: () {
-                    //               checkingForBioMetrics();
-                    //             },
-                    //             text: "   Authenticate    ",
-                    //             shape: GFButtonShape.pills,
-                    //           )
-                    //         : const SizedBox(),
-                    //   ],
-                    // ),
-                  ],
-                ),
               ),
-            )
-          : const HomePage(),
-    );
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 150),
+                    child: Image.asset(
+                      'assets/icons/RentSpaceWhite.png',
+                      // width: 140,
+                      height: 60,
+                    ),
+                  ),
+                  const Center(
+                    child: Column(
+                      children: [
+                        CustomLoader(),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(),
+                  ),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     // const SizedBox(
+                  //     //   height: 50,
+                  //     // ),
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Text(
+                  //           screenInfo,
+                  //           style: TextStyle(
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.bold,
+                  //             fontFamily: "DefaultFontFamily",
+                  //             color: Theme.of(context).primaryColor,
+                  //           ),
+                  //         ),
+                  //         const SizedBox(
+                  //           height: 30,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     // const SizedBox(
+                  //     //   height: 50,
+                  //     // ),
+                  //     const CircularProgressIndicator(
+                  //       color: brandOne,
+                  //     ),
+                  //     const SizedBox(
+                  //       height: 50,
+                  //     ),
+                  //     (_canShowAuth)
+                  //         ? GFButton(
+                  //             onPressed: () {
+                  //               checkingForBioMetrics();
+                  //             },
+                  //             text: "   Authenticate    ",
+                  //             shape: GFButtonShape.pills,
+                  //           )
+                  //         : const SizedBox(),
+                  //   ],
+                  // ),
+                ],
+              ),
+            ),
+          )
+        : (walletController.walletModel!.wallet![0].isPinSet == false)
+            ? const TransactionPin()
+            : const HomePage();
   }
 }
 
@@ -245,6 +250,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final WalletController walletController = Get.put(WalletController());
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   // checkStatus() {
@@ -376,6 +382,22 @@ class _HomePageState extends State<HomePage> {
   //     }
   //   } else {
   //     print("No referal");
+  //   }
+  // }
+
+  // Future<void> checkInitialPinStatus(BuildContext context) async {
+  //   if (walletController.walletModel!.wallet![0].isPinSet == false) {
+  //     // If PIN is not set, navigate to PIN screen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => TransactionPin()),
+  //     );
+  //   } else {
+  //     // If PIN is set, navigate to the home screen or any other screen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => HomeScreen()),
+  //     );
   //   }
   // }
 

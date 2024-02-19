@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'package:rentspace/controller/auth/user_controller.dart';
+// import 'package:rentspace/controller/auth/user_controller.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:rentspace/controller/box_controller.dart';
 // import 'package:rentspace/controller/deposit_controller.dart';
@@ -19,6 +19,7 @@ import 'package:rentspace/view/savings/spaceRent/spacerent_intro.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 
 import '../../controller/wallet_controller.dart';
+import '../../model/spacerent_model.dart';
 
 class SavingsPage extends StatefulWidget {
   SavingsPage({
@@ -29,6 +30,7 @@ class SavingsPage extends StatefulWidget {
   _SavingsPageState createState() => _SavingsPageState();
 }
 
+// final RentController rentController = Get.put(RentController());
 List savingOptions = [
   {
     'imageIcon': 'assets/icons/space_rent.png',
@@ -48,7 +50,7 @@ List savingOptions = [
 ];
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
-final FirebaseFirestore firestore = FirebaseFirestore.instance;
+// final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 String _hasRent = "";
 int tankBalance = 0;
@@ -60,14 +62,16 @@ int targetBalance = 0;
 int totalSavings = 0;
 int totalAssets = 0;
 bool hideBalance = false;
+List<SpaceRent> _cachedRentData = [];
+bool _isLoading = false;
 
 class _SavingsPageState extends State<SavingsPage> {
   final RentController rentController = Get.find();
   // final BoxController boxController = Get.find();
   // final DepositController depositController = Get.find();
   // final TankController tankController = Get.find();
+  // final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  final UserController userController = Get.find();
 
   // deleteSpecifiedDocs() async {
   //   // Query the collection for documents where "amount" is 0 and "id" is "me"
@@ -138,7 +142,8 @@ class _SavingsPageState extends State<SavingsPage> {
 
     setState(() {
       totalSavings = (tankBalance + rentBalance + boxBalance + depositBalance);
-      totalAssets = (walletController.wallet[0].mainBalance + rentBalance
+      totalAssets =
+          (walletController.walletModel!.wallet![0].mainBalance + rentBalance
           // +
           // boxBalance +
           // depositBalance
@@ -158,11 +163,40 @@ class _SavingsPageState extends State<SavingsPage> {
     depositBalance = 0;
     totalSavings = 0;
     totalAssets = 0;
-    print(rentController.rent[0].completed);
-
+    fetchCachedRentData();
+    // Then start fetching the updated data
+    fetchRentData();
+    // rentController.startFetchingRent();
     // getUser();
     //deleteSpecifiedDocs();
     getSavings();
+  }
+
+  Future<void> fetchCachedRentData() async {
+    // Your code to fetch cached rent data
+    // Assuming you have a RentController instance called rentController
+    _cachedRentData = await rentController.getCachedRentData();
+    setState(() {}); // Update the UI to display cached data
+    print("_cachedRentData");
+    print(_cachedRentData[0].amount);
+  }
+
+  Future<void> fetchRentData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // Your code to fetch rent data
+      // Assuming you have a RentController instance called rentController
+      await rentController.startFetchingRent();
+    } catch (e) {
+      print('Error fetching rent: $e');
+      // Handle error
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -436,17 +470,17 @@ class _SavingsPageState extends State<SavingsPage> {
                                           ),
                                         ],
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          (rentController.rent.isEmpty)
-                                              ? Get.to(const SpaceRentIntro())
-                                              : Get.to(const RentSpaceList());
-                                        },
-                                        child: const Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: 15,
-                                        ),
-                                      ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     (rentController.rent.isEmpty)
+                                      //         ? Get.to(const SpaceRentIntro())
+                                      //         : Get.to(const RentSpaceList());
+                                      //   },
+                                      //   child: const Icon(
+                                      //     Icons.arrow_forward_ios,
+                                      //     size: 15,
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -675,6 +709,7 @@ class _SavingsPageState extends State<SavingsPage> {
                       ),
                     ),
                   ),
+
                   // GestureDetector(
                   //   onTap: () {
                   //     (depositController.deposit.isEmpty)

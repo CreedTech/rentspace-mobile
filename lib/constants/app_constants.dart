@@ -10,6 +10,7 @@ class AppConstants {
   static const LOGOUT = '/api/user/logout';
 
   static const GET_USER = '/api/user/get-user';
+  static const GET_RENT = '/api/rent/get-rent';
   static const GET_ACTIVITIES = '/api/user/userActivities';
   static const OTP = '/api/auth/password/verify';
   static const RESENDOTP = '/api/user/resend-verification-otp';
@@ -21,6 +22,7 @@ class AppConstants {
 
   static const VERIFY_CODE = '/api/auth/verify';
   static const GET_ANNOUNCEMENT = '/api/auth/announcements';
+  static const CREATE_PAYMENT = '/api/watu/create-payment';
 
   static const TOKEN = '';
   static const PROFILE_PICTURE = '';

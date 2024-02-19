@@ -125,6 +125,7 @@ class ActivitiesController extends GetxController {
   }
 
   fetchActivities() async {
+     isLoading(true);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 

@@ -92,6 +92,7 @@ class WalletController extends GetxController {
   // }
 
   fetchWallet() async {
+     isLoading(true);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 

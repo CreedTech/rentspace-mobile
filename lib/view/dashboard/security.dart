@@ -299,7 +299,7 @@ class _SecurityState extends State<Security> {
                           // ));
                         },
                         title: Text(
-                          'Change PIN',
+                          'Change Payment PIN',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
                             fontSize: 17,
@@ -312,6 +312,43 @@ class _SecurityState extends State<Security> {
                         ),
                       ),
                     ),
+                   
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(9),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
+                            Iconsax.password_check,
+                            color: brandOne,
+                          ),
+                        ),
+                        onTap: () {
+                          Get.to(const ForgotPinIntro());
+                          // Get.to(ForgotPin(
+                          //   password: userController.user[0].userPassword,
+                          //   pin: userController.user[0].transactionPIN,
+                          // ));
+                        },
+                        title: Text(
+                          'Forgot Payment PIN',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Iconsax.arrow_right_3,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                   
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: ListTile(

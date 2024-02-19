@@ -5,8 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/controller/activities_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
+import 'package:rentspace/view/actions/transaction_pin.dart';
+// import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
@@ -15,7 +16,8 @@ import '../../api/global_services.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
-import 'user_controller.dart';
+import '../../view/actions/reset_password.dart';
+// import 'user_controller.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, AsyncValue<bool>>((ref) {
@@ -333,7 +335,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future signIn(BuildContext context, email, password) async {
+  Future signIn(BuildContext context, email, password,
+      {rememberMe = false}) async {
     isLoading = true;
     if (email.isEmpty || email == '' || password.isEmpty || password == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -357,44 +360,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       print(response.message);
       if (response.success == true) {
         isLoading = false;
-        // userController.login();
-        // authStatus = AuthStatus.LOGGED_IN;
-
-        // String pin = await GlobalService.sharedPreferencesManager.getPin();
-        // print('pin');
-        // print(pin);
-        // if (pin.isEmpty) {
-        //   Navigator.of(context).pushNamedAndRemoveUntil(
-        //     RouteList.newPinfor_NewUser_Transaction,
-        //     (route) => false,
-        //   );
-        // } else {
-        // }
-        // getUserData()
-        // Get.put(UserController());
-        // Future.delayed(const Duration(seconds: 2), () {
-        //   Navigator.of(context).pushAndRemoveUntil(
-        //       MaterialPageRoute(
-        //         builder: (context) => const HomePage(),
-        //       ),
-        //       (route) => false);
-        // });
-        // Get.put(UserController());
-        // Get.put(WalletController());
-        // Get.put(ActivitiesController());
-        Get.offAll(FirstPage());
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(
-        //       builder: (context) => const FirstPage(),
-        //     ),
-        //     (route) => false);
-        // getUserData(context).then(
-        //   (value) => Navigator.of(context).pushAndRemoveUntil(
-        //       MaterialPageRoute(
-        //         builder: (context) => const HomePage(),
-        //       ),
-        //       (route) => false),
-        // );
+        await GlobalService.sharedPreferencesManager.saveLoginInfo(
+          email,
+          password,
+          rememberMe,
+        );
+        Get.offAll(const FirstPage());
 
         return;
       } else {
@@ -506,10 +477,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       final response = await authRepository.verifyForgotPasswordOtp(body);
       EasyLoading.dismiss();
       if (response.success) {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ResetPassword(email: email)));
+        EasyLoading.dismiss();
+        isLoading = false;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ResetPassword(email: email)));
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
@@ -554,11 +527,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.forgotPassword(mail);
       if (response.success) {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) =>
-        //             ForgetPasswordOtpVerification(email: email)));
+        EasyLoading.dismiss();
+        isLoading = false;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ForgotPasswordOTPVerificationPage(email: email)));
         return;
       } else {
         print(response.message.toString());
@@ -586,6 +561,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
       return;
     } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
       isLoading = false;
     }
   }
@@ -627,8 +604,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.resetPassword(params);
       if (response.success) {
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your password has been successfully set, and your account is now secure.');
+        EasyLoading.dismiss();
+        isLoading = false;
+        redirectingAlert(
+            context,
+            '🎉 Congratulations! 🎉',
+            'Your password has been successfully set, and your account is now secure.',
+            "Login");
         return;
       } else {
         print(response.message.toString());
@@ -644,6 +626,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       } else if (response.success == false &&
           response.message.contains("Passwords do not match")) {
         message = "Oops! The Passwords you entered does not match!";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "New Password cannot be the same as the previous one")) {
+        message = "New Password cannot be the same as the previous one!";
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -663,6 +652,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
       return;
     } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
       isLoading = false;
     }
   }
@@ -687,9 +678,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.resendPasswordOtp(mail);
       if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
         // resendVerification(context);
-        // resendVerification(context, 'Successfully Sent 🎉',
-        //     'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
+        resendVerification(context, 'Successfully Sent 🎉',
+            'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
         return;
       } else {
         print(response.message.toString());
@@ -791,7 +784,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // notifyListeners();
         state = const AsyncValue.data(true);
         await GlobalService.sharedPreferencesManager.setAuthToken(value: '');
-        Get.offAll(LoginPage());
+        Get.offAll(const LoginPage());
         return;
       } else {
         print(response.message.toString());
@@ -822,6 +815,89 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       isLoading = false;
       EasyLoading.dismiss();
       return;
+    }
+  }
+
+  Future createPin(BuildContext context, pin) async {
+    print("pin");
+    print(pin);
+    isLoading = true;
+    if (pin.isEmpty || pin == '') {
+      customErrorDialog(context, 'Error', 'Pin is required');
+      return;
+    }
+
+    Map<String, dynamic> params = {
+      'pin': pin,
+    };
+    print('params');
+    print(params);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.clear,
+        dismissOnTap: true,
+      );
+      var response = await authRepository.createPin(params);
+      if (response.success) {
+        EasyLoading.dismiss();
+        await GlobalService.sharedPreferencesManager.savePin(pin);
+        Get.offAll(const FirstPage());
+        // redirectingAlert(context, '🎉 Congratulations! 🎉',
+        //     'Your pin has been successfully set.');
+        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   RouteList.enable_user_notification,
+        //   (route) => false,
+        // );
+        return;
+      } else {
+        print('response.message.toString()');
+      }
+      print(response.message.toString());
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("Wallet not found")) {
+        EasyLoading.dismiss();
+        message = "You don't have a wallet connected to your account";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Pin was already set")) {
+        EasyLoading.dismiss();
+        print('response here');
+        print(response.success);
+        print(response);
+        message = "Oops! Pin has already been set for this account";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        EasyLoading.dismiss();
+        // to capture other errors later
+        print('response again');
+        print(response.success);
+        print(response.message);
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
     }
   }
 }

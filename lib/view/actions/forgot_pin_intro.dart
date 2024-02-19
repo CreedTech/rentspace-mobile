@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/forgot_pin.dart';
@@ -37,25 +38,23 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
     }
   }
 
-  void doSomething() {
-    if (userController.users[0].password != _passwordController.text.trim()) {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void doSomething() async {
+    String userPin = await GlobalService.sharedPreferencesManager.getPin();
+    if (userController.userModel!.userDetails![0].password !=
+        _passwordController.text.trim()) {
+      // ignore: use_build_context_synchronously
       customErrorDialog(context, "Invalid!", "Password is incorrect");
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     backgroundColor: Colors.red,
-      //     message: 'Password is incorrect',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
     } else {
-      Get.to(ForgotPin(
-          // password: _passwordController.text.trim(),
-          pin: walletController.wallet[0].pin));
+      Get.to(
+        ForgotPin(
+            // password: _passwordController.text.trim(),
+            pin: walletController.wallet[0].pin),
+      );
     }
   }
 

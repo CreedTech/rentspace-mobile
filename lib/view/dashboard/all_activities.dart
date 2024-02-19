@@ -10,8 +10,8 @@ class AllActivities extends StatefulWidget {
   // int activitiesLength;
   AllActivities({
     super.key,
-    // required this.activities,
-    // required this.activitiesLength,
+    // required this.activitiesModel!.activities!,
+    // required this.activitiesModel!.activities!Length,
   });
 
   @override
@@ -58,9 +58,9 @@ class _AllActivitiesState extends State<AllActivities> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),
-          itemCount: activitiesController.activities.length,
+          itemCount: activitiesController.activitiesModel!.activities!.length,
           itemBuilder: (BuildContext context, int index) {
-            return (activitiesController.activities.isNotEmpty)
+            return (activitiesController.activitiesModel!.activities!.isNotEmpty)
                 ? Container(
                     color: Theme.of(context).canvasColor,
                     padding: const EdgeInsets.symmetric(
@@ -78,7 +78,7 @@ class _AllActivitiesState extends State<AllActivities> {
                         Container(
                           width: MediaQuery.of(context).size.width / 1.5,
                           child: Text(
-                            activitiesController.activities[index].description,
+                            activitiesController.activitiesModel!.activities![index].description,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.nunito(
                               // fontFamily: "DefaultFontFamily",

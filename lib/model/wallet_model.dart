@@ -2,7 +2,6 @@
 //
 //     final walletModel = walletModelFromJson(jsonString);
 
-import 'dart:convert';
 class WalletModel {
     WalletModel({
     required this.wallet,

@@ -45,8 +45,8 @@ bool notLoading = true;
 class _WalletWithdrawalState extends State<WalletWithdrawal> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  TextEditingController _amountController = TextEditingController();
-  TextEditingController _aPinController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _aPinController = TextEditingController();
   final withdrawFormKey = GlobalKey<FormState>();
 
   String liquidateReason = "I have an emergency";
@@ -236,9 +236,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     }
   }
 
-  var _chars = '1234567890';
-  Random _rnd = Random();
-  String _payUrl = "";
+  final _chars = '1234567890';
+  final Random _rnd = Random();
+  final String _payUrl = "";
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
           length,

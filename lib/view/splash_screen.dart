@@ -95,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => BiometricsPage()),
+            MaterialPageRoute(builder: (context) => LoginPage()),
             (route) => false,
           );
         }

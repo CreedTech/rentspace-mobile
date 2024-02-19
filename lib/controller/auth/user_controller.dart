@@ -78,7 +78,7 @@ class UserController extends GetxController {
   // final userDB = UserDB();
   var isLoading = false.obs;
   final users = <UserDetailsModel>[].obs;
-  var isLoggedIn = false.obs;
+  // var isLoggedIn = false.obs;
   UserModel? userModel;
 
   @override
@@ -91,15 +91,15 @@ class UserController extends GetxController {
     fetchData();
   }
 
-  void login() {
-    // Logic to perform login
-    isLoggedIn.value = true;
-  }
+  // void login() {
+  //   // Logic to perform login
+  //   isLoggedIn.value = true;
+  // }
 
-  void logout() {
-    // Logic to perform logout
-    isLoggedIn.value = false;
-  }
+  // void logout() {
+  //   // Logic to perform logout
+  //   isLoggedIn.value = false;
+  // }
 
   // Future<void> fetchUsers() async {
   //   try {
@@ -113,9 +113,9 @@ class UserController extends GetxController {
   //   }
   // }
 
-  String? appBaseUrl = AppConstants.BASE_URL;
-  // late Map<String, String> _mainHeaders;
-  String token = "";
+  // String? appBaseUrl = AppConstants.BASE_URL;
+  // // late Map<String, String> _mainHeaders;
+  // String token = "";
 
   // UserDB() {
   //   // Initialize headers without the token
@@ -126,6 +126,7 @@ class UserController extends GetxController {
   // }
 
   fetchData() async {
+     isLoading(true);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
@@ -158,6 +159,7 @@ class UserController extends GetxController {
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);
+      print('done');
     }
   }
 

@@ -132,6 +132,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   pull_to_refresh: ^2.0.0
   liquid_pull_to_refresh: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
   #path_provider: ^2.0.15
   
 
@@ -145,6 +146,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
+flutter_launcher_icons:
+ image_path: "assets/icons/ic_launcher.png"
+#  adaptive_icon_foreground: "assets/images/app_icon.png"
+ android: true
+ ios: true
+ remove_alpha_ios: true
+ adaptive_icon_background: #ffff
+ background_color: #FFFFFF
 # flutter_native_splash:
 #   image: "assets/icons/RentSpace-icon2.png"
 #   fullscreen: true
