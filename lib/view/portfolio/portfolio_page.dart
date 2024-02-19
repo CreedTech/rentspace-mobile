@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:rentspace/controller/rent_controller.dart';
-import 'package:rentspace/controller/user_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
+// import 'package:rentspace/constants/db/firebase_db.dart';
+// import 'package:rentspace/controller/rent_controller.dart';
+// import 'package:rentspace/controller/user_controller.dart';
+import 'package:rentspace/view/kyc/kyc_intro.dart';
 import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/portfolio/finance_health.dart';
-import 'package:rentspace/view/savings/savings_withdrawal.dart';
 //import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_liquidate.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
+// import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/separator.dart';
+// import '../kyc/kyc_form_page.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({Key? key}) : super(key: key);
@@ -41,29 +42,44 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final RentController rentController = Get.find();
   final UserController userController = Get.find();
   getUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _totalInterest = data?['total_interest'];
-        _loanAmount = data?['loan_amount'];
-        _totalSavings = data?['total_savings'];
-        _totalDebts = data?['total_debts'];
-        _totalInvestments = data?['total_investments'];
-      });
-    }
+    // var collection = FirebaseFirestore.instance.collection('accounts');
+    // var docSnapshot = await collection.doc(userId).get();
+    // if (docSnapshot.exists) {
+    //   Map<String, dynamic>? data = docSnapshot.data();
+    //   setState(() {
+    //     _totalInterest = data?['total_interest'];
+    //     _loanAmount = data?['loan_amount'];
+    //     _totalSavings = data?['total_savings'];
+    //     _totalDebts = data?['total_debts'];
+    //     _totalInvestments = data?['total_investments'];
+    //   });
+    // }
+
+    setState(() {
+      _totalInterest =
+          userController.userModel!.userDetails![0].totalInterests.toString();
+      _loanAmount =
+          userController.userModel!.userDetails![0].loanAmount.toString();
+      _totalSavings =
+          userController.userModel!.userDetails![0].totalSavings.toString();
+      _totalDebts =
+          userController.userModel!.userDetails![0].totalDebts.toString();
+      // _totalInvestments = userController.userModel!.userDetails![0].tot.toString();
+    });
   }
 
   late ValueNotifier<double> valueNotifier;
   @override
   initState() {
     super.initState();
-    userController.user.isEmpty
+        userController.fetchData();
+    userController.userModel!.userDetails!.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
-        : valueNotifier = ValueNotifier(
-            double.tryParse(userController.user[0].finance_health)!);
+        : valueNotifier = ValueNotifier(double.tryParse(userController
+            .userModel!.userDetails![0].financeHealth
+            .toString())!);
     getUser();
+
   }
 
   @override
@@ -78,7 +94,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         title: Text(
           'Portfolio',
           style: GoogleFonts.nunito(
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
             fontSize: 22,
             fontWeight: FontWeight.w700,
           ),
@@ -86,203 +102,229 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.07,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: const EdgeInsets.symmetric(
+              vertical: 5,
+            ),
             child: ListView(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    // color: brandOne,
-                    gradient: const LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        gradientOne,
-                        gradientTwo,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      // color: brandOne,
+                      gradient: const LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          gradientOne,
+                          gradientTwo,
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Portfolio Overview",
+                          style: GoogleFonts.nunito(
+                            fontSize: 20.0,
+                            // letterSpacing: 0.5,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Manage your account portfolio",
+                          style: GoogleFonts.nunito(
+                            fontSize: 16.0,
+                            // letterSpacing: 0.5,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(15, 25, 15, 25),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total interests:",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    nairaFormaet
+                                        .format(int.parse(_totalInterest)),
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              const MySeparator(
+                                color: Color(0xffE0E0E0),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total savings:",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    nairaFormaet
+                                        .format(int.parse(_totalSavings)),
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              const MySeparator(
+                                color: Color(0xffE0E0E0),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total loans:",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    nairaFormaet.format(int.parse(_loanAmount)),
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              const MySeparator(
+                                color: Color(0xffE0E0E0),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Total debts:",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    nairaFormaet.format(int.parse(_totalDebts)),
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                      // letterSpacing: 0.5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  child: Column(
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Portfolio Overview",
+                        "Portfolio Actions",
                         style: GoogleFonts.nunito(
                           fontSize: 20.0,
                           // letterSpacing: 0.5,
-                          color: Colors.white,
+
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
-                          // fontFamily: "DefaultFontFamily",
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Manage your account portfolio",
-                        style: GoogleFonts.nunito(
-                          fontSize: 16.0,
-                          // letterSpacing: 0.5,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                          // fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(15, 25, 15, 25),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total interests:",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  nairaFormaet
-                                      .format(int.parse(_totalInterest)),
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            const MySeparator(
-                              color: Color(0xffE0E0E0),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total savings:",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  nairaFormaet.format(int.parse(_totalSavings)),
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            const MySeparator(
-                              color: Color(0xffE0E0E0),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total loans:",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  nairaFormaet.format(int.parse(_loanAmount)),
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            const MySeparator(
-                              color: Color(0xffE0E0E0),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Total debts:",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    // fontFamily: "DefaultFontFamily",
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  nairaFormaet.format(int.parse(_totalDebts)),
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    // letterSpacing: 0.5,
-                                    color: Colors.black,
-                                    // fontFamily: "DefaultFontFamily",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        padding: const EdgeInsets.all(2),
+                        child: Image.asset(
+                          "assets/icons/carbon_portfolio.png",
+                          height: 28,
+                          width: 29,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ],
@@ -291,153 +333,225 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 const SizedBox(
                   height: 20,
                 ),
-
-                const SizedBox(
-                  height: 30,
-                ),
-                // finance health
-                // Container(
-                //   padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                //   child: ListTile(
-                //     title: const Text(
-                //       "My finance health",
-                //       style: TextStyle(
-                //         fontFamily: "DefaultFontFamily",
-                //         fontSize: 30.0,
-                //         letterSpacing: 0.5,
-                //         fontWeight: FontWeight.bold,
-                //         color: customColorOne,
-                //       ),
-                //     ),
-                //     subtitle: const Text(
-                //       "Based on portfolio worth",
-                //       style: TextStyle(
-                //         fontSize: 16.0,
-                //         fontFamily: "DefaultFontFamily",
-                //         letterSpacing: 0.5,
-                //         fontWeight: FontWeight.bold,
-                //         color: brandOne,
-                //       ),
-                //     ),
-                //     trailing: SimpleCircularProgressBar(
-                //       progressColors: (valueNotifier.value < 70)
-                //           ? (valueNotifier.value < 30
-                //               ? ([Colors.red])
-                //               : ([Colors.cyan]))
-                //           : [Colors.greenAccent],
-                //       size: 50.0,
-                //       animationDuration: 3,
-                //       backColor: brandThree,
-                //       backStrokeWidth: 10.0,
-                //       fullProgressColor: Colors.greenAccent,
-                //       maxValue: 100,
-                //       valueNotifier: valueNotifier,
-                //       progressStrokeWidth: 10.0,
-                //       startAngle: 0,
-                //       mergeMode: true,
-                //       onGetText: (value) {
-                //         return Text(value.toInt().toString() + "%");
-                //       },
-                //     ),
-                //     tileColor: brandThree,
-                //   ),
-                // ),
-
-                // const SizedBox(
-                //   height: 30,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Portfolio Actions",
-                      style: GoogleFonts.nunito(
-                        fontSize: 20.0,
-                        // letterSpacing: 0.5,
-                        // fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: ListTile(
+                    minLeadingWidth: 0,
+                    // shape: ShapeBorder,
+                    leading: Container(
+                      padding: const EdgeInsets.all(9),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).cardColor,
                       ),
-                    ),
-                    Container(
-                      // decoration: const BoxDecoration(
-                      //   color: customColorOne,
-                      //   //borderRadius: BorderRadius.circular(10),
-                      // ),
-                      padding: const EdgeInsets.all(2),
-                      child: Image.asset(
-                        "assets/icons/carbon_portfolio.png",
-                        height: 28,
-                        width: 29,
+                      child: const Icon(
+                        Iconsax.money_recive5,
                         color: brandOne,
                       ),
                     ),
-                  ],
+                    title: Text(
+                      'Loan',
+                      style: GoogleFonts.nunito(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "Access Your Loan",
+                      style: GoogleFonts.nunito(
+                        fontSize: 14.0,
+                        // letterSpacing: 0.5,
+
+                        color: const Color(0xff828282),
+                      ),
+                    ),
+                    onTap: () {
+                      ((rentController.rent[0].paidAmount) !=
+                              (rentController.rent[0].amount * 0.7))
+                          ? showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  title: null,
+                                  scrollable: true,
+                                  elevation: 0,
+                                  content: SizedBox(
+                                    height: 500.h,
+                                    child: Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Align(
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                // color: brandOne,
+                                              ),
+                                              child: Icon(
+                                                Iconsax.close_circle,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 45.h,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Image.asset(
+                                            'assets/cancel_round.png',
+                                            width: 104,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 70.h,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              'Loan not Available',
+                                              style: GoogleFonts.nunito(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontSize: 22.sp,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          'You currently do not qualify for a rent loan. You would be able to need to save up to 70% of Your total rent CONSISTENTLY!!! to qualify',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        SizedBox(
+                                          height: 40.h,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: const Size(300, 50),
+                                            maximumSize: const Size(400, 50),
+                                            backgroundColor: brandOne,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                10,
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'Go Back',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.white,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              })
+                          : (userController.userModel!.userDetails![0]
+                                      .hasVerifiedKyc ==
+                                  false)
+                              ? Get.to(const KYCIntroPage())
+                              : Get.to(const LoanPage());
+                      // Get.to(const ProfilePage());
+                      // Navigator.pushNamed(context, RouteList.profile);
+                    },
+                    trailing: Icon(
+                      Iconsax.arrow_right_3,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: brandThree,
+                      // color: brandThree,
                       borderRadius:
                           BorderRadius.circular(8.0), // Set border radius
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 3),
-                      child: ListTile(
-                        // shape: ShapeBorder,
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
-                          ),
-                          child: const Icon(
-                            Icons.credit_score,
-                            color: brandOne,
-                          ),
+                    child: ListTile(
+                      // shape: ShapeBorder,
+                      leading: Container(
+                        padding: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).cardColor,
                         ),
-                        title: Text(
-                          'Credit Score',
-                          style: GoogleFonts.nunito(
-                            color: brandOne,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Build your credit score",
-                          style: GoogleFonts.nunito(
-                            fontSize: 14.0,
-                            // letterSpacing: 0.5,
-                            // fontFamily: "DefaultFontFamily",
-                            color: const Color(0xff828282),
-                          ),
-                        ),
-                        onTap: () {
-                          showTopSnackBar(
-                            Overlay.of(context),
-                            CustomSnackBar.success(
-                              backgroundColor: brandOne,
-                              message: 'Coming soon !!',
-                              textStyle: GoogleFonts.nunito(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          );
-                          // Get.to(const ProfilePage());
-                          // Navigator.pushNamed(context, RouteList.profile);
-                        },
-                        trailing: const Icon(
-                          Iconsax.arrow_right_3,
+                        child: const Icon(
+                          Icons.credit_score,
                           color: brandOne,
                         ),
+                      ),
+                      title: Text(
+                        'Credit Score',
+                        style: GoogleFonts.nunito(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "Build your credit score",
+                        style: GoogleFonts.nunito(
+                          fontSize: 14.0,
+                          // letterSpacing: 0.5,
+
+                          color: const Color(0xff828282),
+                        ),
+                      ),
+                      onTap: () {
+                        showTopSnackBar(
+                          Overlay.of(context),
+                          CustomSnackBar.success(
+                            backgroundColor: brandOne,
+                            message: 'Coming soon !!',
+                            textStyle: GoogleFonts.nunito(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        );
+                        // Get.to(const ProfilePage());
+                        // Navigator.pushNamed(context, RouteList.profile);
+                      },
+                      trailing: Icon(
+                        Iconsax.arrow_right_3,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),
@@ -446,50 +560,46 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: brandThree,
+                      // color: brandThree,
                       borderRadius:
                           BorderRadius.circular(8.0), // Set border radius
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 3),
-                      child: ListTile(
-                        // shape: ShapeBorder,
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
-                          ),
-                          child: const Icon(
-                            Icons.heart_broken_outlined,
-                            color: brandOne,
-                          ),
+                    child: ListTile(
+                      // shape: ShapeBorder,
+                      leading: Container(
+                        padding: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).cardColor,
                         ),
-                        title: Text(
-                          'Finance Health',
-                          style: GoogleFonts.nunito(
-                            color: brandOne,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Free finance health checker",
-                          style: GoogleFonts.nunito(
-                            fontSize: 14.0,
-                            // letterSpacing: 0.5,
-                            // fontFamily: "DefaultFontFamily",
-                            color: const Color(0xff828282),
-                          ),
-                        ),
-                        onTap: () {
-                          Get.to(const FinanceHealth());
-                        },
-                        trailing: const Icon(
-                          Iconsax.arrow_right_3,
+                        child: const Icon(
+                          Icons.heart_broken_outlined,
                           color: brandOne,
                         ),
+                      ),
+                      title: Text(
+                        'Finance Health',
+                        style: GoogleFonts.nunito(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "Free finance health checker",
+                        style: GoogleFonts.nunito(
+                          fontSize: 14.0,
+                          // letterSpacing: 0.5,
+
+                          color: const Color(0xff828282),
+                        ),
+                      ),
+                      onTap: () {
+                        Get.to(const FinanceHealth());
+                      },
+                      trailing: Icon(
+                        Iconsax.arrow_right_3,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),

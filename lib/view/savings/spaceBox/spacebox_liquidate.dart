@@ -137,7 +137,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         Get.snackbar(
           "Error!",
           "Invalid account number",
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -154,7 +154,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -244,7 +244,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     setState(() {
       notLoading = false;
     });
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
     var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
@@ -315,7 +315,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         Get.snackbar(
           "Success!",
           'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -327,7 +327,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         Get.snackbar(
           "Oops",
           "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -337,7 +337,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -348,7 +348,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
   }
 
   void _doLiquidateWallet() async {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
 
@@ -380,7 +380,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       Get.snackbar(
         "Success!",
         'Savings liquidation process has begun, you will be notified shortly.',
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: brandOne,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
@@ -389,7 +389,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       Get.snackbar(
         "Oops",
         "Something went wrong, try again later",
-        animationDuration: Duration(seconds: 2),
+        animationDuration: const Duration(seconds: 2),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -401,7 +401,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     setState(() {
       notLoading = false;
     });
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       _btnController.stop();
     });
     var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
@@ -470,7 +470,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         Get.snackbar(
           "Success!",
           'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
+          animationDuration: const Duration(seconds: 1),
           backgroundColor: brandOne,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
@@ -482,7 +482,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         Get.snackbar(
           "Oops",
           "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 2),
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -492,7 +492,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       Get.snackbar(
         "Error!",
         "something went wrong",
-        animationDuration: Duration(seconds: 1),
+        animationDuration: const Duration(seconds: 1),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -545,7 +545,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     final bankOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -586,7 +586,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     final fewBankOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -607,11 +607,11 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
           ),
           focusColor: brandOne,
           items: [
-            DropdownMenuItem(child: Text('Select bank'), value: 'Select bank'),
-            DropdownMenuItem(child: Text('GTB'), value: '000013'),
-            DropdownMenuItem(child: Text('Access Bank'), value: '000014'),
-            DropdownMenuItem(child: Text('Providus Bank'), value: '000023'),
-            DropdownMenuItem(child: Text('OPay'), value: '100004'),
+            const DropdownMenuItem(child: Text('Select bank'), value: 'Select bank'),
+            const DropdownMenuItem(child: Text('GTB'), value: '000013'),
+            const DropdownMenuItem(child: Text('Access Bank'), value: '000014'),
+            const DropdownMenuItem(child: Text('Providus Bank'), value: '000023'),
+            const DropdownMenuItem(child: Text('OPay'), value: '100004'),
           ],
           onChanged: (newValue) {
             setState(() {
@@ -627,7 +627,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -644,21 +644,21 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -666,7 +666,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     final reasonOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -709,7 +709,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
     final locationOption = Container(
       height: 50,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: DropdownButtonHideUnderline(
         child: GFDropdown(
           borderRadius: BorderRadius.circular(5),
@@ -753,39 +753,39 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: Text(
+        label: const Text(
           "Enter amount",
           style: TextStyle(
             color: Colors.grey,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: brandOne, width: 2.0),
         ),
         filled: true,
         fillColor: brandThree,
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -812,7 +812,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
           ? Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/icons/RentSpace-icon.png"),
                   fit: BoxFit.cover,
@@ -825,7 +825,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListView(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           (widget.isWallet)
@@ -847,7 +847,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
@@ -862,7 +862,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
@@ -889,7 +889,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                   ),
                           ),
                           reasonOption,
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           (!widget.isWallet)
@@ -906,8 +906,8 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
-                          (!widget.isWallet) ? locationOption : SizedBox(),
+                              : const SizedBox(),
+                          (!widget.isWallet) ? locationOption : const SizedBox(),
                           (liquidateLocation == "Bank Account" ||
                                   widget.isWallet)
                               ? Column(
@@ -916,7 +916,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                         ? Column(
                                             children: [
                                               fewBankOption,
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Padding(
@@ -942,15 +942,15 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                             ),
                                           ),
                                     (isChecking)
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
+                                        ? const Padding(
+                                            padding: EdgeInsets.fromLTRB(
                                                 20.0, 0, 20.0, 10),
                                             child: LinearProgressIndicator(
                                               color: brandOne,
                                               minHeight: 4,
                                             ),
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           20.0, 10, 20.0, 10),
@@ -967,8 +967,8 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                     ),
                                   ],
                                 )
-                              : Text(""),
-                          SizedBox(
+                              : const Text(""),
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -999,19 +999,19 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                 const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
                             child: amount,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           RoundedLoadingButton(
                             child: (widget.isWallet)
-                                ? Text(
+                                ? const Text(
                                     'Withdraw',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "DefaultFontFamily",
                                     ),
                                   )
-                                : Text(
+                                : const Text(
                                     'Liquidate',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -1031,7 +1031,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                     validateNumber(_accountNumberController.text
                                             .trim()) ==
                                         "") {
-                                  Timer(Duration(seconds: 1), () {
+                                  Timer(const Duration(seconds: 1), () {
                                     _btnController.stop();
                                   });
                                   Get.bottomSheet(
@@ -1039,19 +1039,19 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                     SizedBox(
                                       height: 300,
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
+                                        borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(30.0),
                                           topRight: Radius.circular(30.0),
                                         ),
                                         child: Container(
                                           color: Theme.of(context).canvasColor,
                                           padding:
-                                              EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                              const EdgeInsets.fromLTRB(10, 5, 10, 5),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 50,
                                               ),
                                               Text(
@@ -1090,7 +1090,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                 keyboardType:
                                                     TextInputType.number,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                               Text(
@@ -1104,7 +1104,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 30,
                                               ),
                                               GFButton(
@@ -1121,7 +1121,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                       "Invalid PIN",
                                                       "Enter correct PIN",
                                                       animationDuration:
-                                                          Duration(seconds: 2),
+                                                          const Duration(seconds: 2),
                                                       backgroundColor:
                                                           Colors.red,
                                                       colorText: Colors.white,
@@ -1130,7 +1130,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                     );
                                                   }
                                                 },
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.arrow_right_outlined,
                                                   size: 30,
                                                   color: Colors.white,
@@ -1140,7 +1140,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                 shape: GFButtonShape.pills,
                                                 fullWidthButton: false,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                             ],
@@ -1157,7 +1157,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                               .trim()) ==
                                           "" &&
                                       widget.isWallet == true) {
-                                    Timer(Duration(seconds: 1), () {
+                                    Timer(const Duration(seconds: 1), () {
                                       _btnController.stop();
                                     });
                                     Get.bottomSheet(
@@ -1165,20 +1165,20 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                       SizedBox(
                                         height: 300,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           ),
                                           child: Container(
                                             color:
                                                 Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 10, 5, 10, 5),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Text(
@@ -1217,7 +1217,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   keyboardType:
                                                       TextInputType.number,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                                 Text(
@@ -1231,7 +1231,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 30,
                                                 ),
                                                 GFButton(
@@ -1248,7 +1248,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                         "Invalid PIN",
                                                         "Enter correct PIN",
                                                         animationDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 seconds: 2),
                                                         backgroundColor:
                                                             Colors.red,
@@ -1259,7 +1259,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                       );
                                                     }
                                                   },
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.arrow_right_outlined,
                                                     size: 30,
                                                     color: Colors.white,
@@ -1269,7 +1269,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   shape: GFButtonShape.pills,
                                                   fullWidthButton: false,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                               ],
@@ -1279,7 +1279,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                       ),
                                     );
                                   } else {
-                                    Timer(Duration(seconds: 1), () {
+                                    Timer(const Duration(seconds: 1), () {
                                       _btnController.stop();
                                     });
                                     Get.bottomSheet(
@@ -1287,20 +1287,20 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                       SizedBox(
                                         height: 300,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           ),
                                           child: Container(
                                             color:
                                                 Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 10, 5, 10, 5),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Text(
@@ -1339,7 +1339,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   keyboardType:
                                                       TextInputType.number,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                                 Text(
@@ -1353,7 +1353,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 30,
                                                 ),
                                                 GFButton(
@@ -1370,7 +1370,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                         "Invalid PIN",
                                                         "Enter correct PIN",
                                                         animationDuration:
-                                                            Duration(
+                                                            const Duration(
                                                                 seconds: 2),
                                                         backgroundColor:
                                                             Colors.red,
@@ -1381,7 +1381,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                       );
                                                     }
                                                   },
-                                                  icon: Icon(
+                                                  icon: const Icon(
                                                     Icons.arrow_right_outlined,
                                                     size: 30,
                                                     color: Colors.white,
@@ -1391,7 +1391,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                                   shape: GFButtonShape.pills,
                                                   fullWidthButton: false,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                               ],
@@ -1405,20 +1405,20 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                   Get.snackbar(
                                     "Invalid",
                                     'Please fill the form properly to proceed',
-                                    animationDuration: Duration(seconds: 1),
+                                    animationDuration: const Duration(seconds: 1),
                                     backgroundColor: Colors.red,
                                     colorText: Colors.white,
                                     snackPosition: SnackPosition.BOTTOM,
                                   );
                                 }
                               } else {
-                                Timer(Duration(seconds: 1), () {
+                                Timer(const Duration(seconds: 1), () {
                                   _btnController.stop();
                                 });
                                 Get.snackbar(
                                   "Invalid",
                                   'Please fill the form properly to proceed',
-                                  animationDuration: Duration(seconds: 1),
+                                  animationDuration: const Duration(seconds: 1),
                                   backgroundColor: Colors.red,
                                   colorText: Colors.white,
                                   snackPosition: SnackPosition.BOTTOM,
@@ -1426,7 +1426,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                               }
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                         ],
@@ -1435,7 +1435,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                   : Container(
                       height: double.infinity,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                             image:
                                 AssetImage("assets/icons/RentSpace-icon.png"),
@@ -1446,7 +1446,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                           Row(
@@ -1460,15 +1460,15 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
-                          CircularProgressIndicator(
+                          const CircularProgressIndicator(
                             color: brandOne,
                           ),
                         ],
@@ -1478,7 +1478,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
           : Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/icons/RentSpace-icon.png"),
                   fit: BoxFit.cover,
@@ -1508,12 +1508,12 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   GFButton(
                     onPressed: () async {
-                      Get.to(BvnPage());
+                      Get.to(const BvnPage());
                     },
                     text: "  Begin Verification  ",
                     fullWidthButton: false,

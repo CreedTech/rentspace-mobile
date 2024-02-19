@@ -6,10 +6,6 @@ import 'dart:async';
 import 'package:rentspace/constants/icons.dart';
 import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../dashboard/confirm_forgot_pin.dart';
@@ -26,8 +22,6 @@ class _ForgotPinState extends State<ForgotPin> {
   final TextEditingController _pinController = TextEditingController();
   // final TextEditingController _pinTwoController = TextEditingController();
   // final TextEditingController _passwordController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
   final changePinformKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {
@@ -70,21 +64,7 @@ class _ForgotPinState extends State<ForgotPin> {
   // }
 
   void _doSomething() async {
-    // Timer(Duration(seconds: 1), () {
-    //   _btnController.stop();
-    // });
-    // if (_pinOneController.text.trim() == "" ||
-    //     _pinTwoController.text.trim() == "" ||
-    //     (widget.pin != _pinController.text.trim())) {
-    //   Get.snackbar(
-    //     "Invalid",
-    //     'PIN is unacceptable.',
-    //     animationDuration: Duration(seconds: 1),
-    //     backgroundColor: Colors.red,
-    //     colorText: Colors.white,
-    //     snackPosition: SnackPosition.BOTTOM,
-    //   );
-    // }
+
     if (_pinController.text.trim() == widget.pin) {
       customErrorDialog(context, "Invalid!", "PIN cannot be the same as existing one.");
       // showTopSnackBar(
@@ -139,9 +119,9 @@ class _ForgotPinState extends State<ForgotPin> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: const TextStyle(
+      textStyle:  GoogleFonts.nunito(
         fontSize: 20,
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1.0),
@@ -161,26 +141,7 @@ class _ForgotPinState extends State<ForgotPin> {
       return null;
     }
 
-    // validatePinTwo(pinTwoValue) {
-    //   if (pinTwoValue.isEmpty) {
-    //     return 'pin cannot be empty';
-    //   }
-    //   if (pinTwoValue.length < 4) {
-    //     return 'pin is incomplete';
-    //   }
-    //   if (int.tryParse(pinTwoValue) == null) {
-    //     return 'enter valid number';
-    //   }
-    //   return null;
-    // }
 
-    // validatePass(passValue) {
-    //   if (passValue == null || passValue.isEmpty) {
-    //     return 'Input a valid password';
-    //   } else {
-    //     return null;
-    //   }
-    // }
 
     //Pin
     final pin = Pinput(
@@ -190,9 +151,9 @@ class _ForgotPinState extends State<ForgotPin> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: const TextStyle(
+        textStyle:  GoogleFonts.nunito(
           fontSize: 20,
-          color: brandOne,
+          color: Theme.of(context).primaryColor,
         ),
         decoration: BoxDecoration(
           border: Border.all(color: brandTwo, width: 1.0),
@@ -206,66 +167,7 @@ class _ForgotPinState extends State<ForgotPin> {
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
-    //Pin
-    // final pin_two = Pinput(
-    //   defaultPinTheme: defaultPinTheme,
-    //   controller: _pinTwoController,
-    //   length: 4,
-    //   validator: validatePinTwo,
-    //   onChanged: validatePinTwo,
-    //   // onCompleted: _doSomething,
-    //   closeKeyboardWhenCompleted: true,
-    //   keyboardType: TextInputType.number,
-    // );
-    //Textform field
-    // final password = TextFormField(
-    //   enableSuggestions: true,
-    //   cursorColor: Colors.black,
-    //   controller: _passwordController,
-    //   autovalidateMode: AutovalidateMode.onUserInteraction,
-    //   obscureText: obscurity,
-    //   style: GoogleFonts.nunito(
-    //     color: Colors.black,
-    //   ),
-    //   keyboardType: TextInputType.text,
-    //   decoration: InputDecoration(
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(10.0),
-    //       borderSide: const BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     focusedBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(color: brandOne, width: 2.0),
-    //     ),
-    //     enabledBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     errorBorder: const OutlineInputBorder(
-    //       borderSide: BorderSide(
-    //         color: Colors.red,
-    //         width: 2.0,
-    //       ),
-    //     ),
-    //     suffix: InkWell(
-    //       onTap: visibility,
-    //       child: lockIcon,
-    //     ),
-    //     filled: false,
-    //     contentPadding: const EdgeInsets.all(14),
-    //     hintText: 'Enter your password',
-    //     hintStyle: GoogleFonts.nunito(
-    //       color: Colors.grey,
-    //       fontSize: 12,
-    //       fontWeight: FontWeight.w400,
-    //     ),
-    //   ),
-    //   maxLines: 1,
-    //   validator: validatePass,
-    // );
-
+ 
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -285,7 +187,7 @@ class _ForgotPinState extends State<ForgotPin> {
         title: Text(
           'Change PIN',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -307,7 +209,7 @@ class _ForgotPinState extends State<ForgotPin> {
                             child: Text(
                               'Change Transaction PIN',
                               style: GoogleFonts.nunito(
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
                                 // fontFamily: "DefaultFontFamily",
@@ -342,7 +244,7 @@ class _ForgotPinState extends State<ForgotPin> {
                                           .validate()) {
                                         _doSomething();
                                       } else {
-                                        customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                                        customErrorDialog(context, "Invalid!", "Please Input your pin to proceed");
                                         // showTopSnackBar(
                                         //   Overlay.of(context),
                                         //   CustomSnackBar.error(

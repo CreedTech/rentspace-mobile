@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'package:convert/convert.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:crypto/crypto.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:intl/intl.dart';
-import 'package:rentspace/constants/widgets/custom_transaction_details_card.dart';
 import 'package:rentspace/controller/rent_controller.dart';
 
 class SpaceRentHistory extends StatefulWidget {
@@ -25,7 +15,7 @@ class SpaceRentHistory extends StatefulWidget {
 }
 
 doSomeThing() {
-//   String paymentInfo = "2023-09-26T18:19:21.676 New Payment Recorded ₦104";
+  String paymentInfo = "2023-09-26T18:19:21.676 New Payment Recorded ₦104";
 
 // // Split the string by space
 //   List<String> parts = paymentInfo.split(" ");
@@ -44,38 +34,30 @@ doSomeThing() {
 //   print("Date and Time: $formattedDateTime");
 //   print("Payment Description: $paymentDescription");
 //   print("Amount: $amount");
+
+  String dateString = (paymentInfo
+      .split(" ")[0]
+      .substring(0, paymentInfo.split(" ")[0].length - 4));
+
+  try {
+    DateTime dateTime = DateTime.parse(dateString);
+    print("Parsed DateTime: $dateTime");
+  } catch (e) {
+    print("Error parsing date: $e");
+  }
 }
 
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   final RentController rentController = Get.find();
-  // List _payments = [
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  //   "2023-09-26T18:19:21.676 New Payment Recorded ₦104",
-  // ];
+
   List _payments = [];
 
   @override
   initState() {
     super.initState();
-    print(_payments.length);
-    // doSomeThing();
+    doSomeThing();
     setState(() {
-      _payments = rentController.rent[widget.current].history.reversed.toList();
+      _payments = rentController.rent[0].history.reversed.toList();
     });
   }
 
@@ -95,10 +77,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'Transaction History',
-          style: TextStyle(
-            color: brandOne,
+          style: GoogleFonts.nunito(
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 20,
           ),
@@ -113,16 +95,15 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        'assets/empty_state.png',
+                        'assets/card_empty.png',
                         height: 500,
                       ),
-                      const Center(
+                      Center(
                         child: Text(
                           "Nothing to show",
                           style: TextStyle(
                             fontSize: 20,
-                            fontFamily: "DefaultFontFamily",
-                            color: brandOne,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -142,7 +123,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: brandTwo.withOpacity(0.2),
+                              color: Theme.of(context).cardColor,
                             ),
                             child: Image.asset(
                               "assets/icons/savings/spacerent.png",
@@ -154,16 +135,42 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           title: Text(
                             'Space Rent Saving',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           subtitle: Text(
-                            DateFormat.yMMMMd().add_jm().format(
-                                  DateTime.parse(
-                                      _payments[index].split(" ")[0]),
-                                ),
+                            // _payments[index]
+                            //     .split(" ")[0]
+                            //     .substring(0,
+                            //         _payments[index].split(" ")[0].length - 3)
+                            // _formatTime(_formatedTime(_payments[index]
+                            //     .split(" ")[0]
+                            //     .substring(0,
+                            //         _payments[index].split(" ")[0].length - 3))
+                            // DateTime.parse(_payments[index]
+                            //   .split(" ")[0]
+                            //   .substring(0,
+                            //       _payments[index].split(" ")[0].length - 3)))
+                            // DateFormat.yMMMMd().add_jm().format(
+                            //       DateTime.parse((_payments[index]
+                            //           .split(" ")[0]
+                            //           .substring(
+                            //               0,
+                            //               _payments[index]
+                            //                       .split(" ")[0]
+                            //                       .length -
+                            //                   3)).toString()),
+                            //     )
+                            // _payments[index]
+                            _formatTime(DateTime.parse((_payments[index]
+                                    .split(" ")[0]
+                                    .substring(
+                                        0,
+                                        _payments[index].split(" ")[0].length -
+                                            4))))
+                                .toString(),
                             style: GoogleFonts.nunito(
                               color: brandTwo,
                               fontSize: 12,
@@ -176,136 +183,44 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           //   // Navigator.pushNamed(context, RouteList.profile);
                           // },
                           trailing: Text(
-                            '+ ${_payments[index].split(" ").last}',
+                            '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}',
+                            // '+ ${_payments[index].split(" ").last}',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       );
-                      // return Padding(
-                      //   padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
-                      //   child: Container(
-                      //     color: Colors.transparent,
-                      //     padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         Icon(
-                      //           Icons.radio_button_checked_outlined,
-                      //           color: Theme.of(context).primaryColor,
-                      //           size: 20,
-                      //         ),
-                      //         const SizedBox(
-                      //           width: 10,
-                      //         ),
-                      //         Text(
-                      //           _payments[index],
-                      //           style: TextStyle(
-                      //             fontSize: 20,
-                      //             color: Theme.of(context).primaryColor,
-                      //             fontFamily: "DefaultFontFamily",
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // );
                     },
                   ),
           ],
         ),
       ),
-      //  Container(
-      //   height: double.infinity,
-      //   width: double.infinity,
-      //   // decoration: const BoxDecoration(
-      //   //   image: DecorationImage(
-      //   //     image: AssetImage("assets/icons/RentSpace-icon.png"),
-      //   //     fit: BoxFit.cover,
-      //   //     opacity: 0.1,
-      //   //   ),
-      //   // ),
-      //   child: ListView(
-      //     scrollDirection: Axis.vertical,
-      //     shrinkWrap: true,
-      //     physics: const ClampingScrollPhysics(),
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: [
-      //             Text(
-      //               'Transaction history',
-      //               style: TextStyle(
-      //                 fontFamily: "DefaultFontFamily",
-      //                 color: Theme.of(context).primaryColor,
-      //                 fontWeight: FontWeight.bold,
-      //                 fontSize: 16,
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       rentController.rent[widget.current].history.isEmpty
-      //           ? const Center(
-      //               child: Text(
-      //                 "Nothing to show",
-      //                 style: TextStyle(
-      //                   fontSize: 20,
-      //                   fontFamily: "DefaultFontFamily",
-      //                   color: brandOne,
-      //                   fontWeight: FontWeight.bold,
-      //                 ),
-      //               ),
-      //             )
-      //           : ListView.builder(
-      //               scrollDirection: Axis.vertical,
-      //               shrinkWrap: true,
-      //               physics: const ClampingScrollPhysics(),
-      //               itemCount: 20,
-      //               itemBuilder: (BuildContext context, int index) {
-      //                 return Padding(
-      //                   padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
-      //                   child: Container(
-      //                     color: Colors.transparent,
-      //                     padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-      //                     child: Row(
-      //                       mainAxisAlignment: MainAxisAlignment.start,
-      //                       children: [
-      //                         Icon(
-      //                           Icons.radio_button_checked_outlined,
-      //                           color: Theme.of(context).primaryColor,
-      //                           size: 20,
-      //                         ),
-      //                         const SizedBox(
-      //                           width: 10,
-      //                         ),
-      //                         Text(
-      //                           'yo',
-      //                           style: TextStyle(
-      //                             fontSize: 20,
-      //                             color: Theme.of(context).primaryColor,
-      //                             fontFamily: "DefaultFontFamily",
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 );
-      //               },
-      //             ),
-      //     ],
-      //   ),
-      // ),
-
       backgroundColor: Theme.of(context).canvasColor,
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final difference = now.difference(time);
+
+    if (difference.inDays > 0) {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
+    } else {
+      return 'just now';
+    }
+  }
+   String extractAmount(String input) {
+    final nairaIndex = input.indexOf('₦');
+    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
+      return input.substring(nairaIndex + 1).trim();
+    }
+    return '';
   }
 }

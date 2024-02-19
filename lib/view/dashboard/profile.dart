@@ -6,8 +6,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 
-import '../../controller/user_controller.dart';
-import '../actions/view_bvn_and_kyc.dart';
+import '../../controller/auth/user_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -29,15 +28,17 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         title: Text(
           'Profile Settings',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -58,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: brandTwo.withOpacity(0.2),
+                          color: Theme.of(context).cardColor,
                         ),
                         child: const Icon(
                           Iconsax.user,
@@ -68,18 +69,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: Text(
                         'Personal Details',
                         style: GoogleFonts.nunito(
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
-                        Get.to(PersonalDetails());
+                        Get.to(const PersonalDetails());
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
-                      trailing: const Icon(
+                      trailing: Icon(
                         Iconsax.arrow_right_3,
-                        color: brandOne,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),
@@ -90,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: brandTwo.withOpacity(0.2),
+                          color: Theme.of(context).cardColor,
                         ),
                         child: const Icon(
                           Iconsax.security,
@@ -100,30 +101,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: Text(
                         'BVN & KYC Details',
                         style: GoogleFonts.nunito(
-                          color: brandOne,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
-                        if (userController.user[0].bvn == "") {
+                        if (userController.users[0].bvn != "") {
                           Get.to(const BvnPage());
                         } else {
-                          Get.to(ViewBvnAndKyc(
-                            bvn: userController.user[0].bvn,
-                            hasVerifiedBvn:
-                                userController.user[0].hasVerifiedBvn,
-                            hasVerifiedKyc:
-                                userController.user[0].hasVerifiedKyc,
-                            kyc: userController.user[0].kyc,
-                            idImage: userController.user[0].Idimage,
-                          ));
+                          Get.to(const PersonalDetails());
+                          // Get.to(ViewBvnAndKyc(
+                          //   bvn: userController.user[0].bvn,
+                          //   hasVerifiedBvn:
+                          //       userController.user[0].hasVerifiedBvn,
+                          //   hasVerifiedKyc:
+                          //       userController.user[0].hasVerifiedKyc,
+                          //   kyc: userController.user[0].kyc,
+                          //   idImage: userController.user[0].Idimage,
+                          // ));
                         }
                         // Navigator.pushNamed(context, RouteList.profile);
                       },
-                      trailing: const Icon(
+                      trailing: Icon(
                         Iconsax.arrow_right_3,
-                        color: brandOne,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),

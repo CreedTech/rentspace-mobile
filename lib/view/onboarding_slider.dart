@@ -171,7 +171,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                               ),
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 145,
+                                                      horizontal: 140,
                                                       vertical: 15),
                                               textStyle: const TextStyle(
                                                   color: brandFour,
@@ -243,97 +243,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
               },
             ),
           ),
-          // Expanded(
-          //   flex: 1,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: List.generate(
-          //           contents.length,
-          //           (int index) => _buildDots(
-          //             index: index,
-          //           ),
-          //         ),
-          //       ),
-          //       _currentPage + 1 == contents.length
-          //           ? Padding(
-          //               padding: EdgeInsets.all(30),
-          //               child: ElevatedButton(
-          //                 onPressed: () {
-          //                   // Navigator.of(context).pushNamed(getStarted);
-          //                 },
-          //                 child: const Text("START",
-          //                     style: TextStyle(
-          //                       color: Colors.white,
-          //                     )),
-          //                 style: ElevatedButton.styleFrom(
-          //                   backgroundColor: brandFour,
-          //                   shape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(50),
-          //                   ),
-          //                   padding: EdgeInsets.symmetric(
-          //                       horizontal: 50, vertical: 25),
-          //                   textStyle:
-          //                       TextStyle(color: Colors.white, fontSize: 13),
-          //                 ),
-          //               ),
-          //             )
-          //           : Padding(
-          //               padding: const EdgeInsets.all(30),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                 children: [
-          //                   TextButton(
-          //                     onPressed: () {
-          //                       _controller.jumpToPage(2);
-          //                     },
-          //                     child: const Text(
-          //                       "SKIP",
-          //                       style: TextStyle(color: brandFour),
-          //                     ),
-          //                     style: TextButton.styleFrom(
-          //                       elevation: 0,
-          //                       textStyle: TextStyle(
-          //                         color: brandFour,
-          //                         fontWeight: FontWeight.w600,
-          //                         fontSize: 17,
-          //                       ),
-          //                     ),
-          //                   ),
-          //                   ElevatedButton(
-          //                     onPressed: () {
-          //                       _controller.nextPage(
-          //                         duration: const Duration(milliseconds: 200),
-          //                         curve: Curves.easeIn,
-          //                       );
-          //                     },
-          //                     child: const Text(
-          //                       "NEXT",
-          //                       style: TextStyle(
-          //                         color: Colors.white,
-          //                       ),
-          //                     ),
-          //                     style: ElevatedButton.styleFrom(
-          //                       backgroundColor: brandFour,
-          //                       shape: RoundedRectangleBorder(
-          //                         borderRadius: BorderRadius.circular(50),
-          //                       ),
-          //                       elevation: 0,
-          //                       padding: const EdgeInsets.symmetric(
-          //                           horizontal: 20, vertical: 15),
-          //                       textStyle: TextStyle(
-          //                           color: Colors.white, fontSize: 17),
-          //                     ),
-          //                   ),
-          //                 ],
-          //               ),
-          //             )
-          //     ],
-          //   ),
-          // ),
-        ],
+          ],
       ),
     );
   }

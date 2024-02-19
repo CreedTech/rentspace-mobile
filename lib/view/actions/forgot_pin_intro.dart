@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/icons.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/forgot_pin.dart';
-import 'package:rentspace/view/dashboard/confirm_forgot_pin.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
-import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
+// import '../../controller/user_controller.dart';
 
 class ForgotPinIntro extends StatefulWidget {
   const ForgotPinIntro({super.key});
@@ -20,6 +20,7 @@ class ForgotPinIntro extends StatefulWidget {
 
 class _ForgotPinIntroState extends State<ForgotPinIntro> {
   final UserController userController = Get.find();
+  final WalletController walletController = Get.find();
   final TextEditingController _passwordController = TextEditingController();
   final passwordformKey = GlobalKey<FormState>();
 
@@ -37,26 +38,23 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
     }
   }
 
-  void doSomething() {
-    if (userController.user[0].userPassword !=
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void doSomething() async {
+    String userPin = await GlobalService.sharedPreferencesManager.getPin();
+    if (userController.userModel!.userDetails![0].password !=
         _passwordController.text.trim()) {
-          customErrorDialog(context, "Invalid!", "Password is incorrect");
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     backgroundColor: Colors.red,
-      //     message: 'Password is incorrect',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
+      // ignore: use_build_context_synchronously
+      customErrorDialog(context, "Invalid!", "Password is incorrect");
     } else {
-      Get.to(ForgotPin(
-          // password: _passwordController.text.trim(),
-          pin: userController.user[0].transactionPIN));
+      Get.to(
+        ForgotPin(
+            // password: _passwordController.text.trim(),
+            pin: walletController.wallet[0].pin),
+      );
     }
   }
 
@@ -75,12 +73,12 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
 
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
       style: GoogleFonts.nunito(
-        color: Colors.black,
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -140,7 +138,9 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
         title: Text(
           'Forgot PIN',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -160,7 +160,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                           child: Text(
                             'Enter your Password',
                             style: GoogleFonts.nunito(
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               // fontFamily: "DefaultFontFamily",
@@ -182,7 +182,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(400, 50),
-                                    backgroundColor: brandTwo,
+                                    backgroundColor: brandOne,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
@@ -195,7 +195,8 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                                         .validate()) {
                                       doSomething();
                                     } else {
-                                      customErrorDialog(context, "Invalid!", "Please fill the form properly to proceed");
+                                      customErrorDialog(context, "Invalid!",
+                                          "Please fill the form properly to proceed");
                                       // showTopSnackBar(
                                       //   Overlay.of(context),
                                       //   CustomSnackBar.error(

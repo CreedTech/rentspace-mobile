@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rentspace/controller/notification_controller.dart';
 
 import '../../constants/colors.dart';
-import '../../model/notification_model.dart';
 import '../../services/implementations/notification_service.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final NotificationController notificationController = Get.find();
   @override
   Widget build(BuildContext context) {
-    print(notificationController.notification);
+    // print(notificationController.notification);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -39,29 +39,30 @@ class _NotificationsPageState extends State<NotificationsPage> {
           'Notifications',
           style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
-            fontSize: 16,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 32,
+        padding:  EdgeInsets.symmetric(
+          horizontal: 20.w,
+          vertical: 2.h,
         ),
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 2),
               child: Consumer<NotificationService>(
                   builder: (context, notificationService, _) {
-                print('notification');
+                // print('notification');
                 // NotificationService().fetchNotificationsFromFirestore();
                 return ListView.builder(
                     itemCount: notificationService.notifications.length,
                     itemBuilder: (context, index) {
                       final notifications =
                           notificationService.notifications[index];
-                      print(notifications);
+                      // print(notifications);
                       final formattedTime =
                           _formatTime(notifications.timestamp);
                       return Padding(
@@ -72,21 +73,20 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           leading: Stack(
                             children: [
                               Container(
-                                width: 48,
-                                height: 48,
+                                // width: 48,
+                                // height: 48,
+                                padding: EdgeInsets.all(15.sp),
                                 decoration: const BoxDecoration(
-                                  color: brandTwo,
+                                  color: brandThree,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(50),
                                   ),
                                 ),
                                 child: Image.asset(
-                                  'assets/icons/RentSpace-icon2.png',
-                                  color: notifications.isRead
-                                      ? Colors.black
-                                      : Colors.white,
+                                  'assets/icons/notification-box.png',
+                                  color: brandOne,
                                   // width: 24.w,
-                                  scale: 4,
+                                  // scale: 4,
                                 ),
                               ),
                               !notifications.isRead
@@ -136,7 +136,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final now = DateTime.now();
     final difference = now.difference(time);
 
-    if (difference.inHours > 0) {
+    if (difference.inDays > 0) {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inHours > 0) {
       return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
     } else if (difference.inMinutes > 0) {
       return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
@@ -146,37 +148,3 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 }
 
-// List<NotificationModel> deliveryNotifications = [
-//   NotificationModel(
-//     title: 'Order Shipped',
-//     message:
-//         'Tracking number BLQ65807654 has been generated for your order',
-//     timestamp: DateTime.now().subtract(const Duration(hours: 2)).toString(),
-//     isRead: true,
-//   ),
-//   NotificationModel(
-//     title: 'Delivery Update',
-//     message: 'Your package is out for delivery.',
-//     timestamp: DateTime.now().subtract(const Duration(minutes: 45)).toString(),
-//     isRead: false,
-//   ),
-//   NotificationModel(
-//     title: 'Delivery Successful',
-//     message: 'Your order has been successfully delivered.',
-//     timestamp: DateTime.now().subtract(const Duration(minutes: 20)).toString(),
-//     isRead: false,
-//   ),
-//   NotificationModel(
-//     title: 'Delivery Successful',
-//     message: 'Your order has been successfully delivered.',
-//     timestamp: DateTime.now().subtract(const Duration(minutes: 20)).toDate(),
-//     isRead: false,
-//   ),
-//   NotificationModel(
-//     title: 'Delivery Successful',
-//     message: 'Your order has been successfully delivered.',
-//     timestamp: DateTime.now().subtract(const Duration(minutes: 20)).toString(),
-//     isRead: false,
-//   ),
-//   // Add more notifications as needed
-// ];

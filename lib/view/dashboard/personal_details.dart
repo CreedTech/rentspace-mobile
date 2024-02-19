@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,10 +10,10 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../constants/colors.dart';
 import '../../constants/db/firebase_db.dart';
 import '../../constants/utils/obscureEmail.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
+import '../../controller/auth/user_controller.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/phone_verification_screen.dart';
-import '../actions/view_bvn_and_kyc.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -22,9 +22,9 @@ class PersonalDetails extends StatefulWidget {
   State<PersonalDetails> createState() => _PersonalDetailsState();
 }
 
-final _auth = FirebaseAuth.instance;
+// final _auth = FirebaseAuth.instance;
 bool _isEmailVerified = false;
-User? _user;
+// User? _user;
 
 class _PersonalDetailsState extends State<PersonalDetails> {
   final UserController userController = Get.find();
@@ -33,21 +33,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   initState() {
     super.initState();
 
-    _user = _auth.currentUser;
-    _isEmailVerified = _user!.emailVerified;
+    // _user = _auth.currentUser;
+    _isEmailVerified = userController.userModel!.userDetails![0].hasVerifiedEmail!;
 
     // checkingForBioMetrics();
     print(_isEmailVerified);
   }
 
   Future updateVerification() async {
-    var userUpdate = FirebaseFirestore.instance.collection('accounts');
+    // var userUpdate = FirebaseFirestore.instance.collection('accounts');
 
-    await userUpdate.doc(userId).update({
-      'has_verified_email': 'true',
-    }).catchError((error) {
-      print(error);
-    });
+    // await userUpdate.doc(userId).update({
+    //   'has_verified_email': 'true',
+    // }).catchError((error) {
+    //   print(error);
+    // });
   }
 
   @override
@@ -71,7 +71,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         title: Text(
           'Personal Info',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -86,45 +88,80 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      padding: const EdgeInsets.symmetric(vertical: 2),
                       child: ListTile(
                         leading: Container(
-                          padding: const EdgeInsets.all(9),
+                          padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.user,
                             color: brandOne,
+                            // size: 20,
                           ),
                         ),
                         title: Text(
                           'Full Name',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
-                            fontSize: 14,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
-                          "${userController.user[0].userFirst} ${userController.user[0].userLast}",
+                          "${userController.userModel!.userDetails![0].lastName!.capitalize} ${userController.userModel!.userDetails![0].firstName!.capitalize}"
+                              .toUpperCase(),
                           style: GoogleFonts.nunito(
-                            color: brandOne,
-                            fontSize: 16,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      padding: const EdgeInsets.symmetric(vertical: 2),
                       child: ListTile(
                         leading: Container(
-                          padding: const EdgeInsets.all(9),
+                          padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
+                            Iconsax.smileys,
+                            color: brandOne,
+                            // size: 20,
+                          ),
+                        ),
+                        title: Text(
+                          'User Name',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        subtitle: Text(
+                          userController.userModel!.userDetails![0].userName!.toUpperCase(),
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Icons.mail_outline,
@@ -134,65 +171,23 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         title: Text(
                           'Email',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
-                            fontSize: 14,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle:
-                            Text(obscureEmail(userController.user[0].email),
+                            Text(obscureEmail(userController.userModel!.userDetails![0].email!),
                                 style: GoogleFonts.nunito(
-                                  color: brandOne,
-                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w600,
                                 )),
-                        onTap: () async {
-                          if (userController.user[0].hasVerifiedPhone ==
-                                  'false' ||
-                              userController.user[0].hasVerifiedPhone == '') {
-                            await _user!.sendEmailVerification();
-                            if (!context.mounted) return;
-                            showTopSnackBar(
-                              Overlay.of(context),
-                              CustomSnackBar.success(
-                                backgroundColor: brandOne,
-                                message:
-                                    'Verification E-mail has been sent to ${obscureEmail(userController.user[0].email)}',
-                                textStyle: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            );
-                            setState(() {
-                              _isEmailVerified = _user!.emailVerified;
-                            });
-                            updateVerification();
-
-                            _user!.reload();
-                          }
-                        },
-                        trailing: (userController.user[0].hasVerifiedPhone ==
-                                    'false' ||
-                                userController.user[0].hasVerifiedPhone == '')
-                            ? Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: Text(
-                                  'verify',
-                                  style:
-                                      GoogleFonts.nunito(color: Colors.white),
-                                ),
-                              )
-                            : const Icon(
-                                Iconsax.verify5,
-                                color: brandOne,
-                              ),
+                        onTap: () async {},
+                        trailing: Icon(
+                          Iconsax.verify5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                         //  const Icon(
                         //   Iconsax.edit,
                         //   color: brandOne,
@@ -200,13 +195,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      padding: const EdgeInsets.symmetric(vertical: 2),
                       child: ListTile(
                         leading: Container(
-                          padding: const EdgeInsets.all(9),
+                          padding: const EdgeInsets.all(7),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: brandTwo.withOpacity(0.2),
+                            color: Theme.of(context).cardColor,
                           ),
                           child: const Icon(
                             Iconsax.call,
@@ -216,26 +211,24 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         title: Text(
                           'Phone',
                           style: GoogleFonts.nunito(
-                            color: brandTwo,
-                            fontSize: 14,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        subtitle: Text(userController.user[0].userPhone,
+                        subtitle: Text(userController.userModel!.userDetails![0].phoneNumber!,
                             style: GoogleFonts.nunito(
-                              color: brandOne,
-                              fontSize: 16,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
-                          (userController.user[0].hasVerifiedPhone == 'false' ||
-                                  userController.user[0].hasVerifiedPhone == '')
+                          (userController.userModel!.userDetails![0].hasVerifiedPhone == false)
                               ? Get.to(PhoneVerificationScreen())
                               : null;
                         },
-                        trailing: (userController.user[0].hasVerifiedPhone ==
-                                    'false' ||
-                                userController.user[0].hasVerifiedPhone == '')
+                        trailing: (userController.userModel!.userDetails![0].hasVerifiedPhone ==
+                                false)
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -249,9 +242,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                       GoogleFonts.nunito(color: Colors.white),
                                 ),
                               )
-                            : const Icon(
+                            : Icon(
                                 Iconsax.verify5,
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                         //  const Icon(
                         //   Iconsax.edit,
@@ -259,75 +252,163 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         // ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 0),
-                    //   child: ListTile(
-                    //     leading: Container(
-                    //       padding: const EdgeInsets.all(9),
-                    //       decoration: BoxDecoration(
-                    //         shape: BoxShape.circle,
-                    //         color: brandTwo.withOpacity(0.2),
-                    //       ),
-                    //       child: const Icon(
-                    //         Iconsax.security,
-                    //         color: brandOne,
-                    //       ),
-                    //     ),
-                    //     title: Text(
-                    //       'BVN',
-                    //       style: GoogleFonts.nunito(
-                    //         color: brandTwo,
-                    //         fontSize: 14,
-                    //         fontWeight: FontWeight.w400,
-                    //       ),
-                    //     ),
-                    //     subtitle: Text(userController.user[0].bvn,
-                    //         style: GoogleFonts.nunito(
-                    //           color: brandOne,
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w600,
-                    //         )),
-                    //     onTap: () {
-                    //       if (userController.user[0].bvn == "") {
-                    //         Get.to(const BvnPage());
-                    //       } else {
-                    //         Get.to(ViewBvnAndKyc(
-                    //           bvn: userController.user[0].bvn,
-                    //           hasVerifiedBvn:
-                    //               userController.user[0].hasVerifiedBvn,
-                    //           hasVerifiedKyc:
-                    //               userController.user[0].hasVerifiedKyc,
-                    //           kyc: userController.user[0].kyc,
-                    //           idImage: userController.user[0].Idimage,
-                    //         ));
-                    //       }
-                    //     },
-                    //     trailing: (userController.user[0].hasVerifiedBvn !=
-                    //                 'false' ||
-                    //             userController.user[0].hasVerifiedBvn == '')
-                    //         ? Container(
-                    //             padding: const EdgeInsets.symmetric(
-                    //                 horizontal: 20, vertical: 5),
-                    //             decoration: BoxDecoration(
-                    //               color: brandOne,
-                    //               borderRadius: BorderRadius.circular(100),
-                    //             ),
-                    //             child: Text(
-                    //               'Add BVN',
-                    //               style:
-                    //                   GoogleFonts.nunito(color: Colors.white),
-                    //             ),
-                    //           )
-                    //         : const Icon(
-                    //             Iconsax.verify5,
-                    //             color: brandOne,
-                    //           ),
-                    //     //  const Icon(
-                    //     //   Iconsax.edit,
-                    //     //   color: brandOne,
-                    //     // ),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
+                            Iconsax.security,
+                            color: brandOne,
+                          ),
+                        ),
+                        title: Text(
+                          'BVN',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        subtitle: Text(
+                            (userController.userModel!.userDetails![0].bvn != "")
+                                ? obscureBVN(userController.userModel!.userDetails![0].bvn!)
+                                : '',
+                            style: GoogleFonts.nunito(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        onTap: () {
+                          if (userController.userModel!.userDetails![0].bvn == "") {
+                            Get.to(const BvnPage());
+                          }
+                        },
+                        trailing: (userController.userModel!.userDetails![0].hasVerifiedBvn ==
+                                false)
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: brandOne,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Text(
+                                  'Add BVN',
+                                  style:
+                                      GoogleFonts.nunito(color: Colors.white),
+                                ),
+                              )
+                            : Icon(
+                                Iconsax.verify5,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                        //  const Icon(
+                        //   Iconsax.edit,
+                        //   color: brandOne,
+                        // ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
+                            Icons.location_on_outlined,
+                            color: brandOne,
+                          ),
+                        ),
+                        title: Text(
+                          'Address',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        subtitle: Text(
+                          // (userController.userModel!.userDetails![0].residentialAddress != "")
+                          //     ?
+                          userController.userModel!.userDetails![0].residentialAddress.capitalize!
+                          // : 'Add Your Address for KYC Verification'
+                          ,
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            // decoration: TextDecoration.
+                          ),
+                        ),
+                        // onTap: () {
+                        //   if (userController.user[0].bvn == "") {
+                        //     Get.to(const BvnPage());
+                        //   }
+                        // },
+                        trailing: Icon(
+                          Iconsax.verify5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        //  const Icon(
+                        //   Iconsax.edit,
+                        //   color: brandOne,
+                        // ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTile(
+                        leading: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: const Icon(
+                            Icons.date_range_outlined,
+                            color: brandOne,
+                          ),
+                        ),
+                        title: Text(
+                          'Date Of Birth',
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        subtitle: Text(
+                          userController.userModel!.userDetails![0].dateOfBirth.toString(),
+                          style: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            // decoration: TextDecoration.
+                          ),
+                        ),
+                        // onTap: () {
+                        //   if (userController.user[0].bvn == "") {
+                        //     Get.to(const BvnPage());
+                        //   }
+                        // },
+                        trailing: Icon(
+                          Iconsax.verify5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        //  const Icon(
+                        //   Iconsax.edit,
+                        //   color: brandOne,
+                        // ),
+                      ),
+                    ),
                   ],
                 ),
               ),

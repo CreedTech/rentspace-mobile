@@ -5,23 +5,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'package:convert/convert.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:crypto/crypto.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/controller/box_controller.dart';
-import 'package:rentspace/controller/deposit_controller.dart';
-import 'package:rentspace/controller/rent_controller.dart';
-import 'package:rentspace/controller/tank_controller.dart';
-import 'package:rentspace/controller/user_controller.dart';
+// import 'package:rentspace/controller/box_controller.dart';
+// import 'package:rentspace/controller/deposit_controller.dart';
+// import 'package:rentspace/controller/rent_controller.dart';
+// import 'package:rentspace/controller/tank_controller.dart';
+// import 'package:rentspace/controller/user_controller.dart';
 
 import 'package:pattern_formatter/pattern_formatter.dart';
-import 'package:rentspace/controller/utility_controller.dart';
-import 'package:rentspace/controller/withdrawal_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
+// import 'package:rentspace/controller/utility_controller.dart';
+// import 'package:rentspace/controller/withdrawal_controller.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -54,73 +54,73 @@ int totalWithdraw = 0;
 class _FinanceHealthState extends State<FinanceHealth> {
   TextEditingController _incomeController = TextEditingController();
   final UserController userController = Get.find();
-  final BoxController boxController = Get.find();
-  final DepositController depositController = Get.find();
+  final WalletController walletController = Get.find();
+  // final DepositController depositController = Get.find();
   final RentController rentController = Get.find();
-  final TankController tankController = Get.find();
-  final UtilityController utilityController = Get.find();
-  final WithdrawalController withdrawalController = Get.find();
+  // final TankController tankController = Get.find();
+  // final UtilityController utilityController = Get.find();
+  // final WithdrawalController withdrawalController = Get.find();
   final financeformKey = GlobalKey<FormState>();
 
   getSavingsAndInterest() {
-    if (utilityController.utility.isNotEmpty) {
-      for (int h = 0; h < utilityController.utility.length; h++) {
-        totalUtility += int.tryParse(utilityController.utility[h].amount)!;
-      }
-    } else {
-      setState(() {
-        totalUtility = 0;
-      });
-    }
-    if (withdrawalController.withdrawal.isNotEmpty) {
-      for (int g = 0; g < withdrawalController.withdrawal.length; g++) {
-        totalWithdraw +=
-            int.tryParse(withdrawalController.withdrawal[g].amount)!;
-      }
-    } else {
-      setState(() {
-        totalUtility = 0;
-      });
-    }
-    if (tankController.tank.isNotEmpty) {
-      for (int i = 0; i < tankController.tank.length; i++) {
-        tankBalance += tankController.tank[i].targetAmount.toInt();
-        tankInterest += tankController.tank[i].upfront.toInt();
-      }
-    } else {
-      setState(() {
-        tankBalance = 0;
-      });
-    }
+    // if (utilityController.utility.isNotEmpty) {
+    //   for (int h = 0; h < utilityController.utility.length; h++) {
+    //     totalUtility += int.tryParse(utilityController.utility[h].amount)!;
+    //   }
+    // } else {
+    //   setState(() {
+    //     totalUtility = 0;
+    //   });
+    // }
+    // if (withdrawalController.withdrawal.isNotEmpty) {
+    //   for (int g = 0; g < withdrawalController.withdrawal.length; g++) {
+    //     totalWithdraw +=
+    //         int.tryParse(withdrawalController.withdrawal[g].amount)!;
+    //   }
+    // } else {
+    //   setState(() {
+    //     totalUtility = 0;
+    //   });
+    // }
+    // if (tankController.tank.isNotEmpty) {
+    //   for (int i = 0; i < tankController.tank.length; i++) {
+    //     tankBalance += tankController.tank[i].targetAmount.toInt();
+    //     tankInterest += tankController.tank[i].upfront.toInt();
+    //   }
+    // } else {
+    //   setState(() {
+    //     tankBalance = 0;
+    //   });
+    // }
     if (rentController.rent.isNotEmpty) {
-      for (int j = 0; j < rentController.rent.length; j++) {
-        rentBalance += rentController.rent[j].savedAmount.toInt();
-      }
+      rentBalance += rentController.rent[0].paidAmount.toInt();
+      // for (int j = 0; j < rentController.rent.length; j++) {
+      // }
     } else {
       setState(() {
         rentBalance = 0;
       });
     }
-    if (boxController.box.isNotEmpty) {
-      for (int i = 0; i < boxController.box.length; i++) {
-        boxBalance += boxController.box[i].savedAmount.toInt();
-        boxInterest += boxController.box[i].upfront.toInt();
-      }
-    } else {
-      setState(() {
-        boxBalance = 0;
-      });
-    }
-    if (depositController.deposit.isNotEmpty) {
-      for (int i = 0; i < depositController.deposit.length; i++) {
-        depositBalance += depositController.deposit[i].savedAmount.toInt();
-        depositInterest += depositController.deposit[i].upfront.toInt();
-      }
-    } else {
-      setState(() {
-        depositBalance = 0;
-      });
-    }
+    // if (boxController.box.isNotEmpty) {
+    //   for (int i = 0; i < boxController.box.length; i++) {
+    //     boxBalance += boxController.box[i].savedAmount.toInt();
+    //     boxInterest += boxController.box[i].upfront.toInt();
+    //   }
+    // } else {
+    //   setState(() {
+    //     boxBalance = 0;
+    //   });
+    // }
+    // if (depositController.deposit.isNotEmpty) {
+    //   for (int i = 0; i < depositController.deposit.length; i++) {
+    //     depositBalance += depositController.deposit[i].savedAmount.toInt();
+    //     depositInterest += depositController.deposit[i].upfront.toInt();
+    //   }
+    // } else {
+    //   setState(() {
+    //     depositBalance = 0;
+    //   });
+    // }
 
     setState(() {
       totalSavings = (tankBalance + rentBalance + boxBalance + depositBalance);
@@ -191,21 +191,24 @@ class _FinanceHealthState extends State<FinanceHealth> {
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder:  OutlineInputBorder(
+           borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder:  OutlineInputBorder(
+           borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder:  OutlineInputBorder(
+           borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -303,7 +306,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(400, 50),
-                              backgroundColor: brandTwo,
+                              backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -312,93 +315,73 @@ class _FinanceHealthState extends State<FinanceHealth> {
                               ),
                             ),
                             onPressed: () async {
-                              EasyLoading.show(
-                                indicator: const CustomLoader(),
-                                maskType: EasyLoadingMaskType.black,
-                                dismissOnTap: true,
-                              );
-                              if (financeformKey.currentState!.validate()) {
-                                int inflow = (totalSavings +
-                                    totalInterest +
-                                    (int.tryParse(userController
-                                        .user[0].userWalletBalance)!) +
-                                    int.tryParse(_incomeController.text
-                                        .trim()
-                                        .replaceAll(',', ''))!);
-                                int outflow = ((int.tryParse(
-                                        totalUtility.toString())!) +
-                                    (int.tryParse(totalWithdraw.toString())!));
-                                var outcome =
-                                    ((((inflow - outflow) / inflow) * 100)
-                                        .toInt());
+                              // EasyLoading.show(
+                              //   indicator: const CustomLoader(),
+                              //   maskType: EasyLoadingMaskType.black,
+                              //   dismissOnTap: true,
+                              // );
+                              // if (financeformKey.currentState!.validate()) {
+                              //   int inflow = (totalSavings +
+                              //       totalInterest +
+                              //       (walletController
+                              //           .walletModel!.wallet![0].mainBalance) +
+                              //       int.tryParse(_incomeController.text
+                              //           .trim()
+                              //           .replaceAll(',', ''))!);
+                              //   int outflow = ((int.tryParse(
+                              //           totalUtility.toString())!) +
+                              //       (int.tryParse(totalWithdraw.toString())!));
+                              //   var outcome =
+                              //       ((((inflow - outflow) / inflow) * 100)
+                              //           .toInt());
 
-                                var userHealthUpdate = FirebaseFirestore
-                                    .instance
-                                    .collection('accounts');
-                                await userHealthUpdate.doc(userId).update({
-                                  'loan_amount': 0.toString(),
-                                  'total_savings': totalSavings.toString(),
-                                  'total_interest': totalInterest.toString(),
-                                  'total_debts': 0.toString(),
-                                  'finance_health': outcome.toString(),
-                                }).then((value) {
-                                  EasyLoading.dismiss();
-                                  Get.back();
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      backgroundColor: brandOne,
-                                      message:
-                                          'You scored ${outcome.toString()}%',
-                                      textStyle: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  );
-                                }).catchError((error) {
-                                  EasyLoading.dismiss();
-                                  if (context.mounted) {
-                                    customErrorDialog(
-                                      context,
-                                      'Error',
-                                      error.toString(),
-                                    );
-                                  }
-                                  // Get.snackbar(
-                                  //   "Error",
-                                  //   error.toString(),
-                                  //   animationDuration:
-                                  //       const Duration(seconds: 2),
-                                  //   backgroundColor: Colors.red,
-                                  //   colorText: Colors.white,
-                                  //   snackPosition: SnackPosition.BOTTOM,
-                                  // );
-                                });
-                              } else {
-                                EasyLoading.dismiss();
-                                 if (context.mounted) {
-                                    customErrorDialog(
-                                      context,
-                                      'Invalid! :)',
-                                      'Please fill the form properly to proceed',
-                                    );
-                                  }
-                                // showTopSnackBar(
-                                //   Overlay.of(context),
-                                //   CustomSnackBar.error(
-                                //     // backgroundColor: Colors.red,
-                                //     message:
-                                //         'Invalid! :). Please fill the form properly to proceed',
-                                //     textStyle: GoogleFonts.nunito(
-                                //       fontSize: 14,
-                                //       color: Colors.white,
-                                //       fontWeight: FontWeight.w700,
-                                //     ),
-                                //   ),
-                                // );
-                              }
+                              //   var userHealthUpdate = FirebaseFirestore
+                              //       .instance
+                              //       .collection('accounts');
+                              //   await userHealthUpdate.doc(userId).update({
+                              //     'loan_amount': 0.toString(),
+                              //     'total_savings': totalSavings.toString(),
+                              //     'total_interest': totalInterest.toString(),
+                              //     'total_debts': 0.toString(),
+                              //     'finance_health': outcome.toString(),
+                              //   }).then((value) {
+                              //     EasyLoading.dismiss();
+                              //     Get.back();
+                              //     showTopSnackBar(
+                              //       Overlay.of(context),
+                              //       CustomSnackBar.success(
+                              //         backgroundColor: brandOne,
+                              //         message:
+                              //             'You scored ${outcome.toString()}%',
+                              //         textStyle: GoogleFonts.nunito(
+                              //           fontSize: 14,
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w700,
+                              //         ),
+                              //       ),
+                              //     );
+                              //   }).catchError((error) {
+                              //     EasyLoading.dismiss();
+                              //     if (context.mounted) {
+                              //       customErrorDialog(
+                              //         context,
+                              //         'Error',
+                              //         error.toString(),
+                              //       );
+                              //     }
+
+                              //   });
+                              // } else {
+                              //   EasyLoading.dismiss();
+                              //   if (context.mounted) {
+                              //     customErrorDialog(
+                              //       context,
+                              //       'Invalid! :)',
+                              //       'Please fill the form properly to proceed',
+                              //     );
+                              //   }
+
+                              // }
                             },
                             child: const Text(
                               'Calculate',
@@ -409,65 +392,6 @@ class _FinanceHealthState extends State<FinanceHealth> {
                       ),
                     ),
                   ),
-                  // GFButton(
-                  //   onPressed: () async {
-                  //     int inflow = (totalSavings +
-                  //         totalInterest +
-                  //         (int.tryParse(
-                  //             userController.user[0].userWalletBalance)!) +
-                  //         int.tryParse(_incomeController.text
-                  //             .trim()
-                  //             .replaceAll(',', ''))!);
-                  //     int outflow = ((int.tryParse(totalUtility.toString())!) +
-                  //         (int.tryParse(totalWithdraw.toString())!));
-                  //     var outcome =
-                  //         ((((inflow - outflow) / inflow) * 100).toInt());
-
-                  //     var userHealthUpdate =
-                  //         FirebaseFirestore.instance.collection('accounts');
-                  //     await userHealthUpdate.doc(userId).update({
-                  //       'loan_amount': 0.toString(),
-                  //       'total_savings': totalSavings.toString(),
-                  //       'total_interest': totalInterest.toString(),
-                  //       'total_debts': 0.toString(),
-                  //       'finance_health': outcome.toString(),
-                  //     }).then((value) {
-                  //       Get.back();
-                  //       Get.snackbar(
-                  //         "You scored ${outcome.toString()}%",
-                  //         'Your portfolio has been updated successfully',
-                  //         animationDuration: const Duration(seconds: 1),
-                  //         backgroundColor: brandOne,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.TOP,
-                  //       );
-                  //     }).catchError((error) {
-                  //       Get.snackbar(
-                  //         "Error",
-                  //         error.toString(),
-                  //         animationDuration: const Duration(seconds: 2),
-                  //         backgroundColor: Colors.red,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //       );
-                  //     });
-                  //   },
-                  //   shape: GFButtonShape.square,
-                  //   fullWidthButton: false,
-                  //   child: const Text(
-                  //     'Calculate',
-                  //     style: TextStyle(
-                  //       color: Colors.white,
-                  //       fontSize: 13,
-                  //       fontFamily: "DefaultFontFamily",
-                  //     ),
-                  //   ),
-                  //   color: brandOne,
-                  // ),
-
-                  // const SizedBox(
-                  //   height: 50,
-                  // ),
                 ],
               ),
             ),

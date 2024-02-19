@@ -43,6 +43,7 @@ class User {
   final String Idimage;
   final String finance_health;
   final String userPassword;
+  final String loanAmount;
   final List activities;
 
   User({
@@ -88,6 +89,7 @@ class User {
     required this.Idimage,
     required this.finance_health,
     required this.userPassword,
+    required this.loanAmount,
     required this.activities,
   });
 
@@ -135,6 +137,7 @@ class User {
       Idimage: data['id_card'],
       finance_health: data['finance_health'],
       userPassword: data['password'],
+      loanAmount: data['loan_amount'],
       activities: List.from(data['activities']).reversed.toList(),
     );
     return user;

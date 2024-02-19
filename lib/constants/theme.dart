@@ -1,9 +1,9 @@
-import 'package:rentspace/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:rentspace/constants/colors.dart';
 
 class Themes {
-  //Light Theme params
-  final lightTheme = ThemeData().copyWith(
+  // Light Theme
+  final lightTheme = ThemeData.light().copyWith(
     primaryColor: brandOne,
     appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.white,
@@ -11,21 +11,23 @@ class Themes {
       color: brandOne,
     ),
     canvasColor: const Color(0xFFFFFFFF),
-    cardColor: const Color(0xFFF5F5F5),
-    primaryColorLight: const Color(0xFFf2eeed),
+    cardColor: brandTwo.withOpacity(0.2),
+    primaryColorLight: brandOne,
     unselectedWidgetColor: brandOne,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandOne,
       primary: Colors.white,
+      background: Colors.white,
     ),
   );
-  //Dark Theme params
-  final darkTheme = ThemeData().copyWith(
+
+  // Dark Theme
+  final darkTheme = ThemeData.dark().copyWith(
     primaryColor: Colors.white,
     appBarTheme: const AppBarTheme(
-      backgroundColor: brandOne,
+      backgroundColor: Color(0xff1B1C1E),
     ),
-    scaffoldBackgroundColor: brandOne,
+    scaffoldBackgroundColor: const Color(0xff1B1C1E),
     unselectedWidgetColor: Colors.white,
     iconTheme: const IconThemeData(
       color: Colors.white,
@@ -33,9 +35,10 @@ class Themes {
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandTwo,
       primary: brandOne,
+      background: brandTwo,
     ),
-    canvasColor: const Color(0xFF00283C),
-    cardColor: const Color(0xFF363636),
-    primaryColorLight: const Color(0xFF363636),
+    canvasColor: const Color(0xff1B1C1E),
+    cardColor: const Color(0xFFFFFFFF),
+    primaryColorLight: const Color(0xff1B1C1E),
   );
 }

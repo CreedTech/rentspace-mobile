@@ -17,8 +17,18 @@ String obscureEmail(String email) {
         localPart.substring(2 + obscuredLength);
 
     // Recreate the obscured email address
-    return obscuredLocalPart + '@' + domainPart;
+    return '$obscuredLocalPart@$domainPart';
   }
 
   return email; // If the email format is unexpected, return the original email.
+}
+
+String obscureBVN(String bvn) {
+  if (bvn.isEmpty) {
+    return bvn;
+  }
+
+  String numberString = bvn.toString();
+  String obscuredNumber = numberString.replaceRange(5, 10, '*****');
+  return obscuredNumber;
 }

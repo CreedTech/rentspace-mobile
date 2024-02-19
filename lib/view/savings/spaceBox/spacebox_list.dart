@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -88,18 +89,18 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
                                             height: 200,
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(30.0),
-                                                topRight: Radius.circular(30.0),
+                                                topLeft: Radius.circular(30.0.sp),
+                                                topRight: Radius.circular(30.0.sp),
                                               ),
                                               child: Container(
                                                 color: Theme.of(context)
                                                     .canvasColor,
                                                 padding: EdgeInsets.fromLTRB(
-                                                    10, 5, 10, 5),
+                                                    10.sp, 5.sp, 10.sp, 5.sp),
                                                 child: Column(
                                                   children: [
                                                     SizedBox(
-                                                      height: 50,
+                                                      height: 50.h,
                                                     ),
                                                     Text(
                                                       'Are you sure you want to delete this SpaceBox?',

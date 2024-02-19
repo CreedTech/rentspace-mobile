@@ -1,49 +1,54 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cupertino_progress_bar/cupertino_progress_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
+// import 'package:rentspace/constants/db/firebase_db.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
-import 'package:rentspace/view/dashboard/profile.dart';
+import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/security.dart';
-import 'package:rentspace/view/login_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
-import '../../constants/db/firebase_db.dart';
-import '../../constants/firebase_auth_constants.dart';
+// import '../../constants/firebase_auth_constants.dart';
 import '../../constants/theme_services.dart';
+import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
-import '../../controller/user_controller.dart';
+// import '../../controller/user_controller.dart';
+import '../../controller/auth/auth_controller.dart';
 import '../actions/bank_and_card.dart';
 import '../actions/share_and_earn.dart';
 import '../faqs.dart';
 import 'dashboard.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
 }
 
-final _auth = FirebaseAuth.instance;
-User? _user;
+// final _auth = FirebaseAuth.instance;
+// User? _user;
 bool _isEmailVerified = false;
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 String _message = "Not Authorized";
@@ -53,13 +58,15 @@ final hasBiometricStorage = GetStorage();
 bool _hasFeeds = true;
 final hasFeedsStorage = GetStorage();
 
-class _SettingsPageState extends State<SettingsPage>
+class _SettingsPageState extends ConsumerState<SettingsPage>
     with TickerProviderStateMixin {
   File? selectedImage;
   final UserController userController = Get.find();
+  final WalletController walletController = Get.find();
   late AnimationController controller;
 
   Future getImage(BuildContext context) async {
+    print('getting...');
     var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -70,76 +77,62 @@ class _SettingsPageState extends State<SettingsPage>
   }
 
   Future updateVerification() async {
-    var userUpdate = FirebaseFirestore.instance.collection('accounts');
+    // var userUpdate = FirebaseFirestore.instance.collection('accounts');
 
-    await userUpdate.doc(userId).update({
-      'has_verified_email': 'true',
-    }).catchError((error) {
-      print(error);
-    });
+    // await userUpdate.doc(userId).update({
+    //   'has_verified_email': 'true',
+    // }).catchError((error) {
+    //   print(error);
+    // });
   }
 
   Future uploadImg(BuildContext context) async {
-    EasyLoading.show(
-      indicator: const CustomLoader(),
-      maskType: EasyLoadingMaskType.black,
-      dismissOnTap: true,
-    );
-    var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
+    // EasyLoading.show(
+    //   indicator: const CustomLoader(),
+    //   maskType: EasyLoadingMaskType.black,
+    //   dismissOnTap: true,
+    // );
+    // var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
 
-    FirebaseStorage storage = FirebaseStorage.instance;
-    String fileName = basename(selectedImage!.path);
-    Reference ref = storage.ref().child(fileName);
-    UploadTask uploadTask = ref.putFile(selectedImage!);
-    var downloadURL =
-        await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
-    var url = downloadURL.toString();
-    await userPinUpdate.doc(userId).update({
-      'image': url,
-    }).then((value) {
-      // Get.back();
-      EasyLoading.dismiss();
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Your profile picture has been updated successfully. !!',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
-      // Get.snackbar(
-      //   "Profile updated!",
-      //   'Your profile picture has been updated successfully',
-      //   animationDuration: const Duration(seconds: 1),
-      //   backgroundColor: brandOne,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.TOP,
-      // );
-    }).catchError((error) {
-      EasyLoading.dismiss();
-      Get.snackbar(
-        "Error",
-        error.toString(),
-        animationDuration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    });
+    // FirebaseStorage storage = FirebaseStorage.instance;
+    // String fileName = basename(selectedImage!.path);
+    // Reference ref = storage.ref().child(fileName);
+    // UploadTask uploadTask = ref.putFile(selectedImage!);
+    // var downloadURL =
+    //     await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+    // var url = downloadURL.toString();
+    // await userPinUpdate.doc(userId).update({
+    //   'image': url,
+    // }).then((value) {
+    //   // Get.back();
+    //   EasyLoading.dismiss();
+    //   showTopSnackBar(
+    //     Overlay.of(context),
+    //     CustomSnackBar.success(
+    //       backgroundColor: brandOne,
+    //       message: 'Your profile picture has been updated successfully. !!',
+    //       textStyle: GoogleFonts.nunito(
+    //         fontSize: 14,
+    //         color: Colors.white,
+    //         fontWeight: FontWeight.w700,
+    //       ),
+    //     ),
+    //   );
+    // }).catchError((error) {
+    //   EasyLoading.dismiss();
+    //   customErrorDialog(context, 'Error', error.toString());
+    // });
   }
 
   late double valueNotifier;
   @override
   initState() {
     super.initState();
-    userController.user.isEmpty
+    userController.users.isEmpty
         ? valueNotifier = 0.0
-        : valueNotifier =
-            double.tryParse(userController.user[0].finance_health)!;
+        : valueNotifier = double.tryParse(userController
+            .userModel!.userDetails![0].financeHealth
+            .toString())!;
 
     controller = AnimationController(
       vsync: this,
@@ -147,26 +140,32 @@ class _SettingsPageState extends State<SettingsPage>
     )..addListener(() {});
     // controller.repeat(reverse: false);
 
-    _user = _auth.currentUser;
-    _isEmailVerified = _user!.emailVerified;
+    // _user = _auth.currentUser;
+    _isEmailVerified =
+        userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     checkingForBioMetrics();
     print(_isEmailVerified);
   }
 
-  enableBiometrics() {
+  enableBiometrics(BuildContext context) {
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == false) {
       hasBiometricStorage.write('hasBiometric', true);
       Get.back();
-      Get.snackbar(
-        "Enabled",
-        "Biometrics enabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics enabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+
       if (hasBiometricStorage.read('hasBiometric') == false) {
         setState(
           () {
@@ -175,13 +174,17 @@ class _SettingsPageState extends State<SettingsPage>
           },
         );
         Get.back();
-        Get.snackbar(
-          "Enabled",
-          "Biometrics enabled",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics enabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
       } else {
         return;
@@ -192,19 +195,24 @@ class _SettingsPageState extends State<SettingsPage>
     //print()
   }
 
-  disableBiometrics() {
+  disableBiometrics(BuildContext context) {
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == true) {
       hasBiometricStorage.write('hasBiometric', false);
       Get.back();
-      Get.snackbar(
-        "Disabled",
-        "Biometrics disabled",
-        animationDuration: const Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Biometrics disabled',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       );
+
       if (hasBiometricStorage.read('hasBiometric') == true) {
         setState(
           () {
@@ -213,13 +221,17 @@ class _SettingsPageState extends State<SettingsPage>
           },
         );
         Get.back();
-        Get.snackbar(
-          "Disabled",
-          "Biometrics disabled",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Biometrics disabled',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         );
       } else {
         return;
@@ -236,7 +248,7 @@ class _SettingsPageState extends State<SettingsPage>
     return canCheckBiometrics;
   }
 
-  Future<void> _authenticateMe() async {
+  Future<void> _authenticateMe(BuildContext context) async {
     bool authenticated = false;
     try {
       authenticated = await _localAuthentication.authenticate(
@@ -246,16 +258,9 @@ class _SettingsPageState extends State<SettingsPage>
         _message = authenticated ? "Authorized" : "Not Authorized";
       });
       if (authenticated) {
-        enableBiometrics();
+        enableBiometrics(context);
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
       }
 
       print("Authenticated");
@@ -265,7 +270,7 @@ class _SettingsPageState extends State<SettingsPage>
     if (!mounted) return;
   }
 
-  Future<void> _NotAuthenticateMe() async {
+  Future<void> _NotAuthenticateMe(BuildContext context) async {
     bool authenticated = false;
     try {
       authenticated = await _localAuthentication.authenticate(
@@ -276,16 +281,9 @@ class _SettingsPageState extends State<SettingsPage>
       });
 
       if (authenticated) {
-        disableBiometrics();
+        disableBiometrics(context);
       } else {
-        Get.snackbar(
-          "Error",
-          "could not authenticate",
-          animationDuration: const Duration(seconds: 1),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        customErrorDialog(context, 'Error', "Could not authenticate");
       }
 
       print("Authenticated");
@@ -297,6 +295,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider.notifier);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
@@ -306,7 +305,7 @@ class _SettingsPageState extends State<SettingsPage>
           children: [
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Container(
+              child: SizedBox(
                 // height: 80,
                 width: MediaQuery.of(context).size.width - 20,
                 // decoration: BoxDecoration(
@@ -321,7 +320,9 @@ class _SettingsPageState extends State<SettingsPage>
                         Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            border: Border.all(color: brandOne, width: 1),
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 1),
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Container(
@@ -340,7 +341,8 @@ class _SettingsPageState extends State<SettingsPage>
                                 ),
                                 fit: BoxFit.cover,
                                 image: CachedNetworkImageProvider(
-                                  userController.user[0].image,
+                                  userController
+                                      .userModel!.userDetails![0].avatar,
                                 ),
                                 // NetworkImage(
                                 //   userController.user[0].image,
@@ -360,12 +362,96 @@ class _SettingsPageState extends State<SettingsPage>
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              getImage(context);
+                              // getImage(context);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        30, 20, 30, 20),
+                                    elevation: 0.h,
+                                    alignment: Alignment.bottomCenter,
+                                    backgroundColor:
+                                        Theme.of(context).canvasColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30.h),
+                                        topRight: Radius.circular(30.h),
+                                      ),
+                                    ),
+                                    insetPadding: const EdgeInsets.all(0),
+                                    title: null,
+                                    content: SizedBox(
+                                      height: 200.h,
+                                      width: 400.h,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Container(
+                                              width: 70,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                color: brandThree,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              getImage(context);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          1000),
+                                                  color: brandOne),
+                                              child: Image.asset(
+                                                'assets/icons/RentSpace-icon2.png',
+                                                width: 80,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              getImage(context);
+                                            },
+                                            child: Center(
+                                              child: Text(
+                                                'Tap to Change',
+                                                style: GoogleFonts.nunito(
+                                                  color: brandOne,
+                                                  fontSize: 17.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          //  SizedBox(
+                                          //   height: 10.sp,
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              // setProfilePictuteDialog(
+                              //     context, getImage(context));
                             },
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: const Icon(
@@ -386,19 +472,21 @@ class _SettingsPageState extends State<SettingsPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${userController.user[0].userFirst} ${userController.user[0].userLast}",
+                            "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
                             style: GoogleFonts.nunito(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w700,
-                              color: brandOne,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          (userController.user[0].status == 'verified')
-                              ? const Icon(
+                          (userController.userModel!.userDetails![0].status ==
+                                  'verified')
+                              ? Icon(
                                   Iconsax.verify5,
-                                  color: brandOne,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
 
                           //  ? const Icon(
                           //   Iconsax.verify5,
@@ -413,12 +501,18 @@ class _SettingsPageState extends State<SettingsPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Wallet ID: ${userController.user[0].userWalletNumber}",
+                            (userController.userModel!.userDetails![0].hasDva ==
+                                    true)
+                                ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
+                                : "Wallet ID: ${walletController.walletModel!.wallet![0].walletId}",
                             style: GoogleFonts.nunito(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w400,
-                              color: brandTwo,
+                              color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          const SizedBox(
+                            width: 4,
                           ),
                           const Icon(
                             Iconsax.copy,
@@ -450,13 +544,15 @@ class _SettingsPageState extends State<SettingsPage>
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: brandOne,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: Text(
                                     'Financial Health',
-                                    style:
-                                        GoogleFonts.nunito(color: Colors.white),
+                                    style: GoogleFonts.nunito(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -519,7 +615,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.user,
@@ -529,18 +625,18 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Profile',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
-                  Get.to(const ProfilePage());
+                  Get.to(const PersonalDetails());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -552,7 +648,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.security_safe,
@@ -562,7 +658,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Security',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -571,9 +667,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const Security());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -585,7 +681,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.brush_3,
@@ -595,7 +691,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Theme',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -605,7 +701,7 @@ class _SettingsPageState extends State<SettingsPage>
                 //   // Navigator.pushNamed(context, RouteList.profile);
                 // },
                 trailing: Switch(
-                  activeColor: brandOne,
+                  activeColor: Theme.of(context).primaryColor,
                   inactiveTrackColor: brandTwo,
                   value: themeChange.isSavedDarkMode(),
                   onChanged: (_themeMode) {
@@ -627,7 +723,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.share,
@@ -637,7 +733,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Referral',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -646,43 +742,12 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const ShareAndEarn());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 7),
-            //   child: ListTile(
-            //     leading: Container(
-            //       padding: const EdgeInsets.all(9),
-            //       decoration: BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         color: brandTwo.withOpacity(0.2),
-            //       ),
-            //       child: const Icon(
-            //         Iconsax.share,
-            //         color: brandOne,
-            //       ),
-            //     ),
-            //     title: Text(
-            //       'Referral',
-            //       style: GoogleFonts.nunito(
-            //         color: brandOne,
-            //         fontSize: 17,
-            //         fontWeight: FontWeight.w600,
-            //       ),
-            //     ),
-            //     onTap: () {
-            //       // Navigator.pushNamed(context, RouteList.profile);
-            //     },
-            //     trailing: const Icon(
-            //       Iconsax.arrow_right_3,
-            //       color: brandOne,
-            //     ),
-            //   ),
-            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7),
@@ -691,7 +756,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.card,
@@ -701,21 +766,21 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Bank & Card Details',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
-                  if (userController.user[0].cardCVV == '') {
+                  if (userController.userModel!.userDetails![0].cardCVV == '') {
                     Get.to(const AddCard());
                   } else {
                     Get.to(BankAndCard());
                   }
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -726,7 +791,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.call,
@@ -736,7 +801,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Contact Us',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -745,9 +810,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const ContactUsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -758,7 +823,7 @@ class _SettingsPageState extends State<SettingsPage>
                   padding: const EdgeInsets.all(9),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: brandTwo.withOpacity(0.2),
+                    color: Theme.of(context).cardColor,
                   ),
                   child: const Icon(
                     Iconsax.information,
@@ -768,7 +833,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'FAQs',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -777,9 +842,9 @@ class _SettingsPageState extends State<SettingsPage>
                   Get.to(const FaqsPage());
                   // Navigator.pushNamed(context, RouteList.profile);
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -800,7 +865,7 @@ class _SettingsPageState extends State<SettingsPage>
                 title: Text(
                   'Logout',
                   style: GoogleFonts.nunito(
-                    color: brandOne,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -828,7 +893,7 @@ class _SettingsPageState extends State<SettingsPage>
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   // fontFamily: "DefaultFontFamily",
-                                  color: brandOne,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const SizedBox(
@@ -842,12 +907,15 @@ class _SettingsPageState extends State<SettingsPage>
                                     padding: const EdgeInsets.all(3),
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        await auth.signOut().then(
-                                          (value) {
-                                            // _user == null;
-                                            GetStorage().erase();
-                                          },
-                                        );
+                                        authState.logout(context).then(
+                                              (value) => GetStorage().erase(),
+                                            );
+                                        // await auth.signOut().then(
+                                        //   (value) {
+                                        //     // _user == null;
+                                        //     GetStorage().erase();
+                                        //   },
+                                        // );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red,
@@ -860,9 +928,9 @@ class _SettingsPageState extends State<SettingsPage>
                                         textStyle: const TextStyle(
                                             color: brandFour, fontSize: 13),
                                       ),
-                                      child: const Text(
+                                      child: Text(
                                         "Yes",
-                                        style: TextStyle(
+                                        style: GoogleFonts.nunito(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -890,9 +958,9 @@ class _SettingsPageState extends State<SettingsPage>
                                         textStyle: const TextStyle(
                                             color: brandFour, fontSize: 13),
                                       ),
-                                      child: const Text(
+                                      child: Text(
                                         "No",
-                                        style: TextStyle(
+                                        style: GoogleFonts.nunito(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -913,9 +981,9 @@ class _SettingsPageState extends State<SettingsPage>
 
                   // .then((value) => {Get.to(LoginPage())});
                 },
-                trailing: const Icon(
+                trailing: Icon(
                   Iconsax.arrow_right_3,
-                  color: brandOne,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

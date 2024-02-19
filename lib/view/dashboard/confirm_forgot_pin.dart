@@ -158,9 +158,9 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: const TextStyle(
+      textStyle:  GoogleFonts.nunito(
         fontSize: 20,
-        color: brandOne,
+        color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1.0),
@@ -187,7 +187,7 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: const TextStyle(
+        textStyle:  GoogleFonts.nunito(
           fontSize: 20,
           color: brandOne,
         ),
@@ -222,7 +222,7 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
         title: Text(
           'Confirm PIN',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
         ),
       ),
       body: SingleChildScrollView(
@@ -244,7 +244,7 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
                             child: Text(
                               'Confirm Transaction PIN',
                               style: GoogleFonts.nunito(
-                                color: brandOne,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
                                 // fontFamily: "DefaultFontFamily",

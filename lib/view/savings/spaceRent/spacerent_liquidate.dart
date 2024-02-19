@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +17,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 
 import '../../../constants/widgets/custom_dialog.dart';
@@ -22,11 +27,11 @@ class RentLiquidate extends StatefulWidget {
   int index, balance;
   bool isWallet;
   RentLiquidate({
-    Key? key,
+    super.key,
     required this.index,
     required this.balance,
     required this.isWallet,
-  }) : super(key: key);
+  });
 
   @override
   _RentLiquidateState createState() => _RentLiquidateState();
@@ -324,6 +329,18 @@ class _RentLiquidateState extends State<RentLiquidate> {
           notLoading = true;
         });
         Get.back();
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Wallet withdrawal successful.',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
         Get.snackbar(
           "Success!",
           'Liquidation successful.',
@@ -880,18 +897,16 @@ class _RentLiquidateState extends State<RentLiquidate> {
                           (widget.isWallet)
                               ? Text(
                                   "Note that the withdrawal process will be according to our Terms of use",
-                                  style: TextStyle(
+                                  style: GoogleFonts.nunito(
                                     fontSize: 20,
-                                    fontFamily: "DefaultFontFamily",
                                     letterSpacing: 2.0,
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 )
                               : Text(
                                   "Note that the liquidation process will be according to our Terms of use",
-                                  style: TextStyle(
+                                  style: GoogleFonts.nunito(
                                     fontSize: 20,
-                                    fontFamily: "DefaultFontFamily",
                                     letterSpacing: 0.5,
                                     color: Theme.of(context).primaryColor,
                                   ),
@@ -901,9 +916,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                           ),
                           Text(
                             "Available balance: ${nairaFormaet.format((rentController.rent[widget.index].savedAmount.toInt()) - ((0.025 * rentController.rent[widget.index].savedAmount.toInt()) + 20))}",
-                            style: TextStyle(
+                            style: GoogleFonts.nunito(
                               fontSize: 16,
-                              fontFamily: "DefaultFontFamily",
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
@@ -916,18 +930,16 @@ class _RentLiquidateState extends State<RentLiquidate> {
                             child: (widget.isWallet)
                                 ? Text(
                                     "Why do you want to withdraw?",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
                                       //letterSpacing: 2.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   )
                                 : Text(
                                     "Why do you want to liquidate?",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
                                       //letterSpacing: 2.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
@@ -943,9 +955,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                       15.0, 2, 15.0, 2),
                                   child: Text(
                                     "Where should we send your withdrawal?",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
                                       //letterSpacing: 2.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
@@ -979,9 +990,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                                 20.0, 10, 20.0, 10),
                                             child: Text(
                                               "Loading banks...",
-                                              style: TextStyle(
+                                              style: GoogleFonts.nunito(
                                                 fontSize: 16,
-                                                fontFamily: "DefaultFontFamily",
                                                 //letterSpacing: 2.0,
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -1003,9 +1013,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                                           20.0, 10, 20.0, 10),
                                       child: Text(
                                         _bankAccountName,
-                                        style: TextStyle(
+                                        style: GoogleFonts.nunito(
                                           fontSize: 16.0,
-                                          fontFamily: "DefaultFontFamily",
                                           letterSpacing: 0.5,
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context).primaryColor,
@@ -1024,18 +1033,16 @@ class _RentLiquidateState extends State<RentLiquidate> {
                             child: (widget.isWallet)
                                 ? Text(
                                     "How much do you want to withdraw?",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
                                       //letterSpacing: 2.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   )
                                 : Text(
                                     "How much do you want to liquidate?",
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
                                       //letterSpacing: 2.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
@@ -1495,18 +1502,16 @@ class _RentLiquidateState extends State<RentLiquidate> {
                               }
                             },
                             child: (widget.isWallet)
-                                ? const Text(
+                                ?  Text(
                                     'Withdraw',
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
                                     ),
                                   )
-                                : const Text(
+                                :  Text(
                                     'Liquidate',
-                                    style: TextStyle(
+                                    style: GoogleFonts.nunito(
                                       color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
                                     ),
                                   ),
                           ),
@@ -1538,9 +1543,8 @@ class _RentLiquidateState extends State<RentLiquidate> {
                             children: [
                               Text(
                                 "Processing...",
-                                style: TextStyle(
+                                style: GoogleFonts.nunito(
                                   fontSize: 20,
-                                  fontFamily: "DefaultFontFamily",
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -1581,10 +1585,9 @@ class _RentLiquidateState extends State<RentLiquidate> {
                         child: Flexible(
                           child: Text(
                             "kindly confirm your BVN to perform this action.",
-                            style: TextStyle(
+                            style: GoogleFonts.nunito(
                               fontSize: 16.0,
                               letterSpacing: 0.5,
-                              fontFamily: "DefaultFontFamily",
                               color: Theme.of(context).primaryColor,
                             ),
                           ),

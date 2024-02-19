@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_faq/flutter_faq.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
-import 'package:readmore/readmore.dart';
-
 class FaqsPage extends StatefulWidget {
-  const FaqsPage({Key? key}) : super(key: key);
+  const FaqsPage({super.key});
 
   @override
   _FaqsPageState createState() => _FaqsPageState();
@@ -31,28 +27,21 @@ class _FaqsPageState extends State<FaqsPage> {
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
-            color: brandOne,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         title: Text(
           'FAQS',
           style: GoogleFonts.nunito(
-              color: brandOne, fontSize: 24, fontWeight: FontWeight.w700),
+              color: Theme.of(context).primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.05,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
@@ -101,7 +90,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       'How do I Sign Up?',
                       style: GoogleFonts.nunito(
@@ -138,7 +127,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       'What do I need to verify my account on the RentSpace App?',
                       style: GoogleFonts.nunito(
@@ -175,7 +164,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       'What Products or services does RentSpace offer?',
                       style: GoogleFonts.nunito(
@@ -212,7 +201,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       'Is there a limit to the number of savings plans i can have at a particular time?',
                       style: GoogleFonts.nunito(
@@ -250,7 +239,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       "I can't sign into my account / I forgot my password?",
                       style: GoogleFonts.nunito(
@@ -287,7 +276,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       "How safe is my personal data on the RentSpace App?",
                       style: GoogleFonts.nunito(
@@ -324,7 +313,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: ExpansionTile(
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     title: Text(
                       "How do I qualify for interest on the RentSpace App?",
                       style: GoogleFonts.nunito(

@@ -22,6 +22,14 @@ class _SliderDoneState extends State<SliderDone> {
     super.initState();
   }
 
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
