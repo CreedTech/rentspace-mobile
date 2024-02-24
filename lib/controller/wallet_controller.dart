@@ -111,6 +111,7 @@ class WalletController extends GetxController {
         print(result);
 
         walletModel = WalletModel.fromJson(result);
+        isLoading(false);
       } else {
         print(response.body);
         print('error fetching data');

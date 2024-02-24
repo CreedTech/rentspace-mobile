@@ -155,6 +155,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     super.initState();
     // ref.read(userSettingsProvider.notifier).getUserProfileDetails();
     getConnectivity();
+    print("isLoading");
+    print(userController.isLoading.value);
     // userController.fetchData();
     // Fetch user details when the widget is initialized
     // _getUserDetailsFromPrefs();
@@ -333,8 +335,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         child: const Icon(Icons.support_agent_sharp),
       ),
       body: Obx(
-        () => userController.isLoading.value
-            ? const CustomLoader()
+        () => userController.isLoading.value 
+            ? const Center(
+                child: CustomLoader(),
+              )
             : LiquidPullToRefresh(
                 height: 100,
                 animSpeedFactor: 2,

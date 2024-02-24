@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/controller/app_controller.dart';
+import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:intl/intl.dart';
@@ -16,11 +19,11 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 
 import '../../../constants/widgets/custom_dialog.dart';
 
-class RentSpaceSubscription extends StatefulWidget {
+class RentSpaceSubscription extends ConsumerStatefulWidget {
   const RentSpaceSubscription({Key? key}) : super(key: key);
 
   @override
-  _RentSpaceSubscriptionState createState() => _RentSpaceSubscriptionState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RentSpaceSubscriptionState();
 }
 
 var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
@@ -34,7 +37,7 @@ String _hasCalculate = 'true';
 String _hasCreated = 'false';
 String _canShowRent = 'false';
 double _dailyPaymentamount = 0.0;
-String _userID = '';
+// String _userID = '';
 String _id = '';
 String _rentSpaceID = '';
 String _amountValue = "";
@@ -70,7 +73,8 @@ final RoundedLoadingButtonController _weeklyModalController =
 final RoundedLoadingButtonController _monthlyModalController =
     RoundedLoadingButtonController();
 
-class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
+class _RentSpaceSubscriptionState extends ConsumerState<RentSpaceSubscription> {
+  final UserController userController = Get.find();
   DateTime _endDate = DateTime.now();
 
   // Future<void> _selectEndDate(BuildContext context, rent) async {
@@ -157,21 +161,22 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
         ),
       );
   getCurrentUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _userFirst = data?['firstname'];
-        _userLast = data?['lastname'];
-        _userAddress = data?['address'];
-        _userMail = data?['email'];
-        _userID = data?['rentspace_id'];
-        _id = data?['id'];
-        _rentSpaceID = getRandom(20);
-      });
-      print(_userID);
-    }
+    // var collection = FirebaseFirestore.instance.collection('accounts');
+    // var docSnapshot = await collection.doc(userId).get();
+    // if (docSnapshot.exists) {
+    //   Map<String, dynamic>? data = docSnapshot.data();
+    // }
+    setState(() {
+      // _userFirst = userController.userModel!.userDetails![0].firstName;
+      // _userLast = userController.userModel!.userDetails![0].lastName;
+      // _userAddress = userController.userModel!.userDetails![0].residentialAddress;
+      // _userMail = userController.userModel!.userDetails![0].email;
+      // _userID = userController.userModel!.userDetails![0].rentspaceID;
+      _id = userController.userModel!.userDetails![0].id;
+      // _rentSpaceID = getRandom(20);
+    });
+    print(_id);
+    // print(_rentSpaceID);
   }
 
   @override
@@ -197,6 +202,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
   @override
   Widget build(BuildContext context) {
+    final rentState = ref.watch(appControllerProvider.notifier);
 //validation function
 
     validateFunc(text) {
@@ -282,15 +288,15 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
       // update the state variable when the text changes
       onChanged: (text) {
         setState(() {
-      _amountValue = "";
-      _rentValue = 0.0;
-      _rentSeventy = 0.0;
-      _rentThirty = 0.0;
-      _holdingFee = 0.0;
-      _hasCalculate = 'true';
-      _hasCreated = 'false';
-      _canShowRent = 'false';
-    });
+          _amountValue = "";
+          _rentValue = 0.0;
+          _rentSeventy = 0.0;
+          _rentThirty = 0.0;
+          _holdingFee = 0.0;
+          _hasCalculate = 'true';
+          _hasCreated = 'false';
+          _canShowRent = 'false';
+        });
         setState(() => _amountValue = text);
       },
       style: GoogleFonts.nunito(
@@ -673,9 +679,9 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          Timer(const Duration(seconds: 1), () {
-                                            _dailyModalController.stop();
-                                          });
+                                          // Timer(const Duration(seconds: 1), () {
+                                          //   _dailyModalController.stop();
+                                          // });
                                           var userUpdate = FirebaseFirestore
                                               .instance
                                               .collection('accounts');
@@ -684,9 +690,9 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                               .collection('rent_space');
 
                                           await updateRent.add({
-                                            'user_id': _userID,
+                                            // 'user_id': _userID,
                                             'id': _id,
-                                            'rentspace_id': _rentSpaceID,
+                                            // 'rentspace_id': _rentSpaceID,
                                             'date': formattedDate,
                                             'interval_amount': _dailyValue,
                                             'target_amount': _rentValue,
@@ -754,7 +760,6 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 .primaryColor,
                                                           ),
                                                         ),
-
                                                         Column(
                                                           children: [
                                                             Row(
@@ -764,9 +769,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                               children: [
                                                                 Text(
                                                                   'Total Rent: ',
-                                                                  style: GoogleFonts
-                                                                      .nunito(
-                                                                    fontSize: 16.sp,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        16.sp,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -774,17 +781,18 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 ),
                                                                 Text(
                                                                   ch8t
-                                                                      .format(double
-                                                                          .tryParse(
-                                                                              _amountValue
-                                                                                  .toString()))
+                                                                      .format(double.tryParse(
+                                                                          _amountValue
+                                                                              .toString()))
                                                                       .toString(),
                                                                   overflow:
                                                                       TextOverflow
                                                                           .clip,
-                                                                  style: GoogleFonts
-                                                                      .nunito(
-                                                                    fontSize: 16.sp,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        16.sp,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -792,7 +800,6 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 ),
                                                               ],
                                                             ),
-                                                          
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -800,9 +807,11 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                               children: [
                                                                 Text(
                                                                   'Holding Fee: ',
-                                                                  style: GoogleFonts
-                                                                      .nunito(
-                                                                    fontSize: 16.sp,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        16.sp,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -810,17 +819,18 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 ),
                                                                 Text(
                                                                   ch8t
-                                                                      .format(double
-                                                                          .tryParse(
-                                                                              _holdingFee
-                                                                                  .toString()))
+                                                                      .format(double.tryParse(
+                                                                          _holdingFee
+                                                                              .toString()))
                                                                       .toString(),
                                                                   overflow:
                                                                       TextOverflow
                                                                           .clip,
-                                                                  style: GoogleFonts
-                                                                      .nunito(
-                                                                    fontSize: 16.sp,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        16.sp,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -828,7 +838,6 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                 ),
                                                               ],
                                                             ),
-                                                          
                                                           ],
                                                         ),
                                                         const SizedBox(
@@ -867,21 +876,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   onPressed:
                                                                       () async {
                                                                     Get.back();
-                                                                    Get.to(
-                                                                        SpaceRentFunding(
-                                                                      amount: _dailyValue
-                                                                          .toInt(),
-                                                                      date:
-                                                                          formattedDate,
-                                                                      interval:
-                                                                          'daily',
-                                                                      numPayment:
-                                                                          0,
-                                                                      refId:
-                                                                          _rentSpaceID,
-                                                                      userID:
-                                                                          _userID,
-                                                                    ));
+                                                                    // Get.to(
+                                                                    //     SpaceRentFunding(
+                                                                    //   amount: _dailyValue
+                                                                    //       .toInt(),
+                                                                    //   date:
+                                                                    //       formattedDate,
+                                                                    //   interval:
+                                                                    //       'daily',
+                                                                    //   numPayment:
+                                                                    //       0,
+                                                                    //   refId:
+                                                                    //       _rentSpaceID,
+                                                                    //   userID:
+                                                                    //       _id,
+                                                                    // ));
                                                                     resetCalculator();
                                                                   },
                                                                   child: Text(
@@ -1052,7 +1061,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
                                           await updateRent.add({
                                             'id': _id,
-                                            'user_id': _userID,
+                                            // 'user_id': _userID,
                                             'rentspace_id': _rentSpaceID,
                                             'date': formattedDate,
                                             'interval_amount': _weeklyValue,
@@ -1157,21 +1166,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   onPressed:
                                                                       () async {
                                                                     Get.back();
-                                                                    Get.to(
-                                                                        SpaceRentFunding(
-                                                                      amount: _weeklyValue
-                                                                          .toInt(),
-                                                                      date:
-                                                                          formattedDate,
-                                                                      interval:
-                                                                          'weekly',
-                                                                      numPayment:
-                                                                          0,
-                                                                      refId:
-                                                                          _rentSpaceID,
-                                                                      userID:
-                                                                          _userID,
-                                                                    ));
+                                                                    // Get.to(
+                                                                    //     SpaceRentFunding(
+                                                                    //   amount: _weeklyValue
+                                                                    //       .toInt(),
+                                                                    //   date:
+                                                                    //       formattedDate,
+                                                                    //   interval:
+                                                                    //       'weekly',
+                                                                    //   numPayment:
+                                                                    //       0,
+                                                                    //   refId:
+                                                                    //       _rentSpaceID,
+                                                                    //   userID:
+                                                                    //       _id,
+                                                                    // ));
                                                                     resetCalculator();
                                                                   },
                                                                   child: Text(
@@ -1330,7 +1339,7 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
 
                                           await updateRent.add({
                                             'id': _id,
-                                            'user_id': _userID,
+                                            // 'user_id': _userID,
                                             'rentspace_id': _rentSpaceID,
                                             'date': formattedDate,
                                             'interval_amount': _monthlyValue,
@@ -1435,21 +1444,21 @@ class _RentSpaceSubscriptionState extends State<RentSpaceSubscription> {
                                                                   onPressed:
                                                                       () async {
                                                                     Get.back();
-                                                                    Get.to(
-                                                                        SpaceRentFunding(
-                                                                      amount: _monthlyValue
-                                                                          .toInt(),
-                                                                      date:
-                                                                          formattedDate,
-                                                                      interval:
-                                                                          'monthly',
-                                                                      numPayment:
-                                                                          0,
-                                                                      refId:
-                                                                          _rentSpaceID,
-                                                                      userID:
-                                                                          _userID,
-                                                                    ));
+                                                                    // Get.to(
+                                                                    //     SpaceRentFunding(
+                                                                    //   amount: _monthlyValue
+                                                                    //       .toInt(),
+                                                                    //   date:
+                                                                    //       formattedDate,
+                                                                    //   interval:
+                                                                    //       'monthly',
+                                                                    //   numPayment:
+                                                                    //       0,
+                                                                    //   refId:
+                                                                    //       _rentSpaceID,
+                                                                    //   userID:
+                                                                    //       _id,
+                                                                    // ));
                                                                     resetCalculator();
                                                                   },
                                                                   child: Text(

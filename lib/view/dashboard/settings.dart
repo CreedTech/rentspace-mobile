@@ -141,8 +141,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     // controller.repeat(reverse: false);
 
     // _user = _auth.currentUser;
-    _isEmailVerified =
-        userController.userModel!.userDetails![0].hasVerifiedEmail;
+    // _isEmailVerified =
+    //     userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     checkingForBioMetrics();
     print(_isEmailVerified);
@@ -907,15 +907,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     padding: const EdgeInsets.all(3),
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        authState.logout(context).then(
+                                        Navigator.pop(context);
+                                        await authState.logout(context).then(
                                               (value) => GetStorage().erase(),
                                             );
-                                        // await auth.signOut().then(
-                                        //   (value) {
-                                        //     // _user == null;
-                                        //     GetStorage().erase();
-                                        //   },
-                                        // );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red,

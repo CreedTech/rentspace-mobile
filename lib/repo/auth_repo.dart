@@ -290,7 +290,7 @@ Future<ResponseModel> createPin(body) async {
     print(response);
     print(response.body);
     if (response.statusCode == 200) {
-      responseModel = ResponseModel("Password Reset Successful", true);
+      responseModel = ResponseModel("Pin Creation Successful", true);
       return responseModel;
     }
     print("Here in repo${jsonDecode(response.body)}");

@@ -18,6 +18,7 @@ import 'package:rentspace/view/onboarding_slider.dart';
 
 import '../constants/widgets/custom_dialog.dart';
 import '../constants/widgets/custom_loader.dart';
+import '../core/helper/helper_route_path.dart';
 import '../view/home_page.dart';
 
 bool hasConnection = false.obs();
@@ -235,7 +236,13 @@ class AuthController extends GetxController {
                 isLoading = false,
                 EasyLoading.dismiss(),
               })
-          .then((value) => Get.to(const FirstPage()));
+          .then(
+            (value) => Navigator.of(context).pushNamedAndRemoveUntil(
+              // RouteList.pin_code,
+              home,
+              (route) => false,
+            ),
+          );
 
       // await Get.to(const FirstPage());
     } catch (error) {

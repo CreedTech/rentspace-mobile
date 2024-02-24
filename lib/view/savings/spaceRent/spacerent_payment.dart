@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -12,7 +11,10 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../api/global_services.dart';
+import '../../../constants/app_constants.dart';
 import '../../../constants/widgets/custom_dialog.dart';
+import '../../FirstPage.dart';
 
 String fundedAmount = "0";
 var now = DateTime.now();
@@ -31,16 +33,21 @@ String _mssgBody = "";
 var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
 
 class SpaceRentFunding extends StatefulWidget {
-  int amount, numPayment;
-  String refId, userID, date, interval;
+  double amount;
+  // , numPayment;
+  String
+      // refId,
+      // userID,
+      //  date,
+      interval;
   SpaceRentFunding({
     Key? key,
     required this.amount,
-    required this.date,
+    // required this.date,
     required this.interval,
-    required this.numPayment,
-    required this.refId,
-    required this.userID,
+    // required this.numPayment,
+    // required this.refId,
+    // required this.userID,
   }) : super(key: key);
 
   @override
@@ -70,30 +77,29 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
       );
 
   createPayment() async {
-    const String apiUrl = 'https://api-d.squadco.com/transaction/initiate';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
-
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    // const String apiUrl = AppConstants.CREATE_PAYMENT;
+    // const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
     final response = await http.post(
-      Uri.parse(apiUrl),
+      Uri.parse(AppConstants.BASE_URL + AppConstants.CREATE_PAYMENT),
       headers: {
-        'Authorization': 'Bearer $bearerToken',
+        'Authorization': 'Bearer $authToken',
         "Content-Type": "application/json"
       },
-      body: jsonEncode(<String, String>{
-        "amount": (widget.amount * 100).toString(),
-        // "email": userController.user[0].email.toString(),
+      body: jsonEncode({
+        "amount": widget.amount,
+        "email": userController.userModel!.userDetails![0].email.toString(),
+        "country": "NG",
         "currency": "NGN",
-        "initiate_type": "inline",
-        "transaction_ref": "REN${widget.refId}",
-        "callback_url": "https://rentspace.tech/payment-notice/",
-        "is_recurring": "true"
+        // "initiate_type": "inline",
+        "payment_methods": "card",
       }),
     );
-
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      final checkoutUrl = jsonResponse['data']["checkout_url"];
+      final checkoutUrl = jsonResponse['message']['data']["url"];
       print(checkoutUrl);
       setState(() {
         _payUrl = checkoutUrl;
@@ -111,6 +117,49 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
   }
+
+  // createPayment() async {
+  //   const String apiUrl = 'https://api-d.squadco.com/transaction/initiate';
+  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {
+  //       'Authorization': 'Bearer $bearerToken',
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       "amount": (widget.amount * 100).toString(),
+  //       // "email": userController.user[0].email.toString(),
+  //       "currency": "NGN",
+  //       "initiate_type": "inline",
+  //       "transaction_ref": "REN${widget.refId}",
+  //       "callback_url": "https://rentspace.tech/payment-notice/",
+  //       "is_recurring": "true"
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     // Request successful, handle the response data
+  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
+  //     final checkoutUrl = jsonResponse['data']["checkout_url"];
+  //     print(checkoutUrl);
+  //     setState(() {
+  //       _payUrl = checkoutUrl;
+  //       hasCreatedPayment = true;
+  //       _mssg = "Loading payment modal...";
+  //     });
+  //   } else {
+  //     // Error handling
+  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
+  //     setState(() {
+  //       _mssg = "Payment failed!";
+  //       _mssgBody = jsonResponse["message"].toString();
+  //     });
+  //     print(
+  //         'Request failed with status: ${response.statusCode}, ${response.body}');
+  //   }
+  // }
 
   @override
   void initState() {

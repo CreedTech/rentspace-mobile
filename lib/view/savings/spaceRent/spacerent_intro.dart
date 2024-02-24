@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
+// import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 
 import '../../dashboard/dashboard.dart';
@@ -123,7 +124,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(const RentSpaceSubscription());
+                  Get.to(const SpaceRentCreation());
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

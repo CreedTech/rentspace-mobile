@@ -145,6 +145,7 @@ class ActivitiesController extends GetxController {
         // print(result);
 
         activitiesModel = ActivitiesModel.fromJson(result);
+        isLoading(false);
         print(activitiesModel!.activities);
       } else {
         print(response.body);

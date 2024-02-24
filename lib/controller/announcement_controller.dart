@@ -20,7 +20,7 @@ class AnnouncementController extends GetxController {
       // state = const AsyncLoading();
       EasyLoading.show(
         indicator: CustomLoader(),
-        maskType: EasyLoadingMaskType.clear,
+        maskType: EasyLoadingMaskType.black,
         dismissOnTap: true,
       );
       var response = await anouncementRepository.fetchAnnouncementData('url');

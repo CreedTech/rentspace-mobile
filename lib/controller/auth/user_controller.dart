@@ -145,6 +145,7 @@ class UserController extends GetxController {
         print(result);
 
         userModel = UserModel.fromJson(result);
+        isLoading(false);
       } else {
         print(response.body);
         print('error fetching data');

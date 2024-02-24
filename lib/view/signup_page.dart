@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +26,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../constants/db/firebase_db.dart';
+// import '../constants/db/firebase_db.dart';
 import '../controller/auth/auth_controller.dart';
 import '../controller/user_controller.dart';
 import 'package:http/http.dart' as http;
@@ -46,9 +46,9 @@ class SignupPage extends ConsumerStatefulWidget {
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-CollectionReference users = FirebaseFirestore.instance.collection('accounts');
-CollectionReference allUsers =
-    FirebaseFirestore.instance.collection('accounts');
+// CollectionReference users = FirebaseFirestore.instance.collection('accounts');
+// CollectionReference allUsers =
+//     FirebaseFirestore.instance.collection('accounts');
 String _mssg = "";
 String vName = "";
 String vNum = "";
@@ -57,7 +57,7 @@ bool notLoading = true;
 class _SignupPageState extends ConsumerState<SignupPage> {
   // final UserController userController = Get.find();
   final form = intl.NumberFormat.decimalPattern();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String collectionName = 'dva';
 
   Timer? timer;
@@ -102,337 +102,337 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   //       ),
   //     );
 
-  createNewDVA() async {
-    setState(() {
-      notLoading = false;
-    });
-    const String apiUrl = 'https://api-d.squadco.com/virtual-account';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $bearerToken',
-        "Content-Type": "application/json"
-      },
-      body: jsonEncode(<String, String>{
-        "customer_identifier":
-            "SPACER/${_usernameController.text.trim().toString().toUpperCase()} ${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
-        "first_name":
-            "SPACER/ - ${_usernameController.text.trim().toString().toUpperCase()}",
-        "last_name": _lastnameController.text.trim(),
-        "mobile_num":
-            "0${_phoneController.text.trim().replaceFirst('+234', '')}",
-        "email": _emailController.text.trim(),
-        "bvn": _bvnController.text.trim(),
-        "dob": selectedDate.toString(),
-        "address": _addressController.text,
-        "gender": genderValue.toString()
-      }),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> parsedJson = json.decode(response.body);
-      var updateLiquidate = FirebaseFirestore.instance.collection('dva');
-      setState(() {
-        vNum = parsedJson['data']['virtual_account_number'];
-        vName = parsedJson['data']['customer_identifier'];
-      });
-      await updateLiquidate.add({
-        'dva_name': vName,
-        'dva_date': formattedDate,
-        'dva_number': vNum,
-        'dva_username':
-            _usernameController.text.trim().toString().toUpperCase(),
-      }).then((value) async {
-        var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-        await walletUpdate.doc(userId).update({
-          'has_dva': 'true',
-          'dva_name': vName,
-          'dva_number': vNum,
-          'dva_username':
-              _usernameController.text.trim().toString().toUpperCase(),
-          'dva_date': formattedDate,
-          "activities": FieldValue.arrayUnion(
-            [
-              "$formattedDate \nDVA Created",
-            ],
-          ),
-        });
-        setState(() {
-          notLoading = true;
-        });
-        _usernameController.clear();
-        // Get.bottomSheet(
-        //   isDismissible: false,
-        //   SizedBox(
-        //     height: 400,
-        //     child: ClipRRect(
-        //       borderRadius: const BorderRadius.only(
-        //         topLeft: Radius.circular(30.0),
-        //         topRight: Radius.circular(30.0),
-        //       ),
-        //       child: Container(
-        //         color: Theme.of(context).canvasColor,
-        //         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-        //         child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: [
-        //             const SizedBox(
-        //               height: 30,
-        //             ),
-        //             const Icon(
-        //               Icons.check_circle_outline,
-        //               color: brandOne,
-        //               size: 80,
-        //             ),
-        //             const SizedBox(
-        //               height: 10,
-        //             ),
-        //             Text(
-        //               'DVA Created',
-        //               style: TextStyle(
-        //                 fontSize: 20,
-        //                 fontWeight: FontWeight.bold,
-        //                 fontFamily: "DefaultFontFamily",
-        //                 color: Theme.of(context).primaryColor,
-        //               ),
-        //               textAlign: TextAlign.center,
-        //             ),
-        //             const SizedBox(
-        //               height: 20,
-        //             ),
-        //             Text(
-        //               'DVA Name: ${vName}',
-        //               style: TextStyle(
-        //                 fontSize: 16,
-        //                 fontWeight: FontWeight.bold,
-        //                 fontFamily: "DefaultFontFamily",
-        //                 color: Theme.of(context).primaryColor,
-        //               ),
-        //               textAlign: TextAlign.center,
-        //             ),
-        //             const SizedBox(
-        //               height: 20,
-        //             ),
-        //             Text(
-        //               'DVA Number: ${vNum}',
-        //               style: TextStyle(
-        //                 fontSize: 16,
-        //                 fontWeight: FontWeight.bold,
-        //                 fontFamily: "DefaultFontFamily",
-        //                 color: Theme.of(context).primaryColor,
-        //               ),
-        //               textAlign: TextAlign.center,
-        //             ),
-        //             const SizedBox(
-        //               height: 20,
-        //             ),
-        //             Text(
-        //               'DVA Bank: GTBank',
-        //               style: TextStyle(
-        //                 fontSize: 16,
-        //                 fontWeight: FontWeight.bold,
-        //                 fontFamily: "DefaultFontFamily",
-        //                 color: Theme.of(context).primaryColor,
-        //               ),
-        //               textAlign: TextAlign.center,
-        //             ),
-        //             const SizedBox(
-        //               height: 30,
-        //             ),
-        //             GFButton(
-        //               onPressed: () {
-        //                 for (int i = 0; i < 2; i++) {
-        //                   Get.back();
-        //                 }
-        //               },
-        //               icon: const Icon(
-        //                 Icons.arrow_right_outlined,
-        //                 size: 30,
-        //                 color: Colors.white,
-        //               ),
-        //               color: brandOne,
-        //               text: "Done",
-        //               shape: GFButtonShape.pills,
-        //               fullWidthButton: true,
-        //             ),
-        //             const SizedBox(
-        //               height: 20,
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // );
-      }).catchError((error) {
-        setState(() {
-          notLoading = true;
-        });
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: null,
-                elevation: 0,
-                content: SizedBox(
-                  height: 250,
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              // color: brandOne,
-                            ),
-                            child: Icon(
-                              Iconsax.close_circle,
-                              color: Theme.of(context).primaryColor,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Iconsax.warning_24,
-                          color: Colors.red,
-                          size: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Oops!',
-                        style: GoogleFonts.nunito(
-                          color: Colors.red,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Something went wrong, try again later",
-                        textAlign: TextAlign.center,
-                        style:
-                            GoogleFonts.nunito(color: Colors.red, fontSize: 18),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
+  // createNewDVA() async {
+  //   setState(() {
+  //     notLoading = false;
+  //   });
+  //   const String apiUrl = 'https://api-d.squadco.com/virtual-account';
+  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {
+  //       'Authorization': 'Bearer $bearerToken',
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       "customer_identifier":
+  //           "SPACER/${_usernameController.text.trim().toString().toUpperCase()} ${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
+  //       "first_name":
+  //           "SPACER/ - ${_usernameController.text.trim().toString().toUpperCase()}",
+  //       "last_name": _lastnameController.text.trim(),
+  //       "mobile_num":
+  //           "0${_phoneController.text.trim().replaceFirst('+234', '')}",
+  //       "email": _emailController.text.trim(),
+  //       "bvn": _bvnController.text.trim(),
+  //       "dob": selectedDate.toString(),
+  //       "address": _addressController.text,
+  //       "gender": genderValue.toString()
+  //     }),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> parsedJson = json.decode(response.body);
+  //     var updateLiquidate = FirebaseFirestore.instance.collection('dva');
+  //     setState(() {
+  //       vNum = parsedJson['data']['virtual_account_number'];
+  //       vName = parsedJson['data']['customer_identifier'];
+  //     });
+  //     await updateLiquidate.add({
+  //       'dva_name': vName,
+  //       'dva_date': formattedDate,
+  //       'dva_number': vNum,
+  //       'dva_username':
+  //           _usernameController.text.trim().toString().toUpperCase(),
+  //     }).then((value) async {
+  //       var walletUpdate = FirebaseFirestore.instance.collection('accounts');
+  //       await walletUpdate.doc(userId).update({
+  //         'has_dva': 'true',
+  //         'dva_name': vName,
+  //         'dva_number': vNum,
+  //         'dva_username':
+  //             _usernameController.text.trim().toString().toUpperCase(),
+  //         'dva_date': formattedDate,
+  //         "activities": FieldValue.arrayUnion(
+  //           [
+  //             "$formattedDate \nDVA Created",
+  //           ],
+  //         ),
+  //       });
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       _usernameController.clear();
+  //       // Get.bottomSheet(
+  //       //   isDismissible: false,
+  //       //   SizedBox(
+  //       //     height: 400,
+  //       //     child: ClipRRect(
+  //       //       borderRadius: const BorderRadius.only(
+  //       //         topLeft: Radius.circular(30.0),
+  //       //         topRight: Radius.circular(30.0),
+  //       //       ),
+  //       //       child: Container(
+  //       //         color: Theme.of(context).canvasColor,
+  //       //         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+  //       //         child: Column(
+  //       //           crossAxisAlignment: CrossAxisAlignment.center,
+  //       //           children: [
+  //       //             const SizedBox(
+  //       //               height: 30,
+  //       //             ),
+  //       //             const Icon(
+  //       //               Icons.check_circle_outline,
+  //       //               color: brandOne,
+  //       //               size: 80,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 10,
+  //       //             ),
+  //       //             Text(
+  //       //               'DVA Created',
+  //       //               style: TextStyle(
+  //       //                 fontSize: 20,
+  //       //                 fontWeight: FontWeight.bold,
+  //       //                 fontFamily: "DefaultFontFamily",
+  //       //                 color: Theme.of(context).primaryColor,
+  //       //               ),
+  //       //               textAlign: TextAlign.center,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 20,
+  //       //             ),
+  //       //             Text(
+  //       //               'DVA Name: ${vName}',
+  //       //               style: TextStyle(
+  //       //                 fontSize: 16,
+  //       //                 fontWeight: FontWeight.bold,
+  //       //                 fontFamily: "DefaultFontFamily",
+  //       //                 color: Theme.of(context).primaryColor,
+  //       //               ),
+  //       //               textAlign: TextAlign.center,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 20,
+  //       //             ),
+  //       //             Text(
+  //       //               'DVA Number: ${vNum}',
+  //       //               style: TextStyle(
+  //       //                 fontSize: 16,
+  //       //                 fontWeight: FontWeight.bold,
+  //       //                 fontFamily: "DefaultFontFamily",
+  //       //                 color: Theme.of(context).primaryColor,
+  //       //               ),
+  //       //               textAlign: TextAlign.center,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 20,
+  //       //             ),
+  //       //             Text(
+  //       //               'DVA Bank: GTBank',
+  //       //               style: TextStyle(
+  //       //                 fontSize: 16,
+  //       //                 fontWeight: FontWeight.bold,
+  //       //                 fontFamily: "DefaultFontFamily",
+  //       //                 color: Theme.of(context).primaryColor,
+  //       //               ),
+  //       //               textAlign: TextAlign.center,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 30,
+  //       //             ),
+  //       //             GFButton(
+  //       //               onPressed: () {
+  //       //                 for (int i = 0; i < 2; i++) {
+  //       //                   Get.back();
+  //       //                 }
+  //       //               },
+  //       //               icon: const Icon(
+  //       //                 Icons.arrow_right_outlined,
+  //       //                 size: 30,
+  //       //                 color: Colors.white,
+  //       //               ),
+  //       //               color: brandOne,
+  //       //               text: "Done",
+  //       //               shape: GFButtonShape.pills,
+  //       //               fullWidthButton: true,
+  //       //             ),
+  //       //             const SizedBox(
+  //       //               height: 20,
+  //       //             ),
+  //       //           ],
+  //       //         ),
+  //       //       ),
+  //       //     ),
+  //       //   ),
+  //       // );
+  //     }).catchError((error) {
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       showDialog(
+  //           context: context,
+  //           barrierDismissible: false,
+  //           builder: (BuildContext context) {
+  //             return AlertDialog(
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(10),
+  //               ),
+  //               title: null,
+  //               elevation: 0,
+  //               content: SizedBox(
+  //                 height: 250,
+  //                 child: Column(
+  //                   children: [
+  //                     GestureDetector(
+  //                       onTap: () {
+  //                         Navigator.of(context).pop();
+  //                       },
+  //                       child: Align(
+  //                         alignment: Alignment.topRight,
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                             borderRadius: BorderRadius.circular(30),
+  //                             // color: brandOne,
+  //                           ),
+  //                           child: Icon(
+  //                             Iconsax.close_circle,
+  //                             color: Theme.of(context).primaryColor,
+  //                             size: 30,
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     const Align(
+  //                       alignment: Alignment.center,
+  //                       child: Icon(
+  //                         Iconsax.warning_24,
+  //                         color: Colors.red,
+  //                         size: 75,
+  //                       ),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 12,
+  //                     ),
+  //                     Text(
+  //                       'Oops!',
+  //                       style: GoogleFonts.nunito(
+  //                         color: Colors.red,
+  //                         fontSize: 28,
+  //                         fontWeight: FontWeight.w800,
+  //                       ),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "Something went wrong, try again later",
+  //                       textAlign: TextAlign.center,
+  //                       style:
+  //                           GoogleFonts.nunito(color: Colors.red, fontSize: 18),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 10,
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           });
 
-        // Get.snackbar(
-        //   "Oops",
-        //   "Something went wrong, try again later",
-        //   animationDuration: const Duration(seconds: 2),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
-      });
-    } else {
-      setState(() {
-        notLoading = true;
-      });
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: null,
-              elevation: 0,
-              content: SizedBox(
-                height: 250,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            // color: brandOne,
-                          ),
-                          child: const Icon(
-                            Iconsax.close_circle,
-                            color: brandOne,
-                            size: 30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Iconsax.warning_24,
-                        color: Colors.red,
-                        size: 75,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      'Error!',
-                      style: GoogleFonts.nunito(
-                        color: Colors.red,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "something went wrong",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
+  //       // Get.snackbar(
+  //       //   "Oops",
+  //       //   "Something went wrong, try again later",
+  //       //   animationDuration: const Duration(seconds: 2),
+  //       //   backgroundColor: Colors.red,
+  //       //   colorText: Colors.white,
+  //       //   snackPosition: SnackPosition.BOTTOM,
+  //       // );
+  //     });
+  //   } else {
+  //     setState(() {
+  //       notLoading = true;
+  //     });
+  //     // ignore: use_build_context_synchronously
+  //     showDialog(
+  //         context: context,
+  //         barrierDismissible: false,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(10),
+  //             ),
+  //             title: null,
+  //             elevation: 0,
+  //             content: SizedBox(
+  //               height: 250,
+  //               child: Column(
+  //                 children: [
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       Navigator.of(context).pop();
+  //                     },
+  //                     child: Align(
+  //                       alignment: Alignment.topRight,
+  //                       child: Container(
+  //                         decoration: BoxDecoration(
+  //                           borderRadius: BorderRadius.circular(30),
+  //                           // color: brandOne,
+  //                         ),
+  //                         child: const Icon(
+  //                           Iconsax.close_circle,
+  //                           color: brandOne,
+  //                           size: 30,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const Align(
+  //                     alignment: Alignment.center,
+  //                     child: Icon(
+  //                       Iconsax.warning_24,
+  //                       color: Colors.red,
+  //                       size: 75,
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 12,
+  //                   ),
+  //                   Text(
+  //                     'Error!',
+  //                     style: GoogleFonts.nunito(
+  //                       color: Colors.red,
+  //                       fontSize: 28,
+  //                       fontWeight: FontWeight.w800,
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 5,
+  //                   ),
+  //                   Text(
+  //                     "something went wrong",
+  //                     textAlign: TextAlign.center,
+  //                     style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           );
+  //         });
 
-      // Get.snackbar(
-      //   "Error!",
-      //   "something went wrong",
-      //   animationDuration: const Duration(seconds: 1),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
-    }
-  }
+  //     // Get.snackbar(
+  //     //   "Error!",
+  //     //   "something went wrong",
+  //     //   animationDuration: const Duration(seconds: 1),
+  //     //   backgroundColor: Colors.red,
+  //     //   colorText: Colors.white,
+  //     //   snackPosition: SnackPosition.BOTTOM,
+  //     // );
+  //     print(
+  //         'Request failed with status: ${response.statusCode}, ${response.body}');
+  //   }
+  // }
 
   void visibility() {
     if (obscurity == true) {
@@ -448,25 +448,25 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     }
   }
 
-  checkUserNameValidity() async {
-    QuerySnapshot querySnapshot =
-        await _firestore.collection(collectionName).get();
+  // checkUserNameValidity() async {
+  //   QuerySnapshot querySnapshot =
+  //       await _firestore.collection(collectionName).get();
 
-    for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
-      Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-      if (data != null &&
-          data['dva_username'].toString().toLowerCase() ==
-              _usernameController.text.trim().toLowerCase()) {
-        setState(() {
-          _mssg = "username exists, choose another.";
-        });
-      } else {
-        setState(() {
-          _mssg = "username is available.";
-        });
-      }
-    }
-  }
+  //   for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
+  //     Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+  //     if (data != null &&
+  //         data['dva_username'].toString().toLowerCase() ==
+  //             _usernameController.text.trim().toLowerCase()) {
+  //       setState(() {
+  //         _mssg = "username exists, choose another.";
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _mssg = "username is available.";
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   initState() {
@@ -1134,18 +1134,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 );
               });
 
-          // showTopSnackBar(
-          //   Overlay.of(context),
-          //   CustomSnackBar.error(
-          //     // backgroundColor: brandOne,
-          //     message: 'Error! :(. Age must be at least $minimumAge years.',
-          //     textStyle: GoogleFonts.nunito(
-          //       fontSize: 14,
-          //       color: Colors.white,
-          //       fontWeight: FontWeight.w700,
-          //     ),
-          //   ),
-          // );
+        
         } else {
           setState(() {
             selectedDate = picked;

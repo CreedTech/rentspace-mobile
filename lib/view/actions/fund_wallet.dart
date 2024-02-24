@@ -242,7 +242,7 @@ class _FundWalletState extends State<FundWallet> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Row(
+                            Wrap(
                               children: [
                                 Text(
                                   'Account Name: ',
@@ -255,6 +255,7 @@ class _FundWalletState extends State<FundWallet> {
                                 Text(
                                   userController
                                       .userModel!.userDetails![0].dvaName,
+                                      maxLines: 2,
                                   style: GoogleFonts.nunito(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 14,

@@ -14,8 +14,10 @@ import 'package:rentspace/view/login_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/widgets/custom_loader.dart';
+import '../../core/helper/helper_route_path.dart';
 import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
+import '../../view/FirstPage.dart';
 import '../../view/actions/reset_password.dart';
 // import 'user_controller.dart';
 
@@ -365,7 +367,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           password,
           rememberMe,
         );
-        Get.offAll(const FirstPage());
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          home,
+          (route) => true,
+        );
+        // Navigator.pushReplacementNamed(context, home);
+        // Get.offAll(const FirstPage());
 
         return;
       } else {
@@ -722,7 +729,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       state = const AsyncLoading();
       EasyLoading.show(
         indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.clear,
+        maskType: EasyLoadingMaskType.black,
         dismissOnTap: true,
       );
       var response = await authRepository.getUserData();
@@ -772,7 +779,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       state = const AsyncLoading();
       EasyLoading.show(
         indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.clear,
+        maskType: EasyLoadingMaskType.black,
         dismissOnTap: true,
       );
       var response = await authRepository.logout();
@@ -784,7 +791,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // notifyListeners();
         state = const AsyncValue.data(true);
         await GlobalService.sharedPreferencesManager.setAuthToken(value: '');
-        Get.offAll(const LoginPage());
+        // Get.offAll(const LoginPage());
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LoginPage()),
+            (route) => false);
         return;
       } else {
         print(response.message.toString());
@@ -838,7 +849,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       state = const AsyncLoading();
       EasyLoading.show(
         indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.clear,
+        maskType: EasyLoadingMaskType.black,
         dismissOnTap: true,
       );
       var response = await authRepository.createPin(params);

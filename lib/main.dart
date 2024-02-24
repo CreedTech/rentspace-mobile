@@ -286,6 +286,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
+import 'core/helper/helper_route_path.dart';
+import 'core/helper/helper_routes.dart';
 import 'services/implementations/notification_service.dart';
 import 'view/splash_screen.dart';
 
@@ -324,7 +326,6 @@ Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   await firebaseInitialization.then((value) async {
     // Get.put(AuthController());
-  
   });
   await initNotifications();
   // _showAnnouncementNotification('yo', 'test');
@@ -445,6 +446,7 @@ void configLoading() {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
 // Be sure to cancel subscription after you are done
   @override
   initState() {
@@ -498,8 +500,12 @@ class _MyAppState extends State<MyApp> {
           darkTheme: Themes().darkTheme,
           themeMode: ThemeServices().getThemeMode(),
           debugShowCheckedModeBanner: false,
+          navigatorKey: _navigatorKey,
           title: 'RentSpace',
-          home: const SplashScreen(),
+          initialRoute: root,
+          // home: const SplashScreen(),
+          onGenerateRoute: RouterGenerator().generate,
+          onUnknownRoute: RouterGenerator.onUnknownRoute,
           builder: EasyLoading.init(),
         );
       },

@@ -62,7 +62,7 @@ int targetBalance = 0;
 int totalSavings = 0;
 int totalAssets = 0;
 bool hideBalance = false;
-List<SpaceRent> _cachedRentData = [];
+// List<SpaceRent> _cachedRentData = [];
 bool _isLoading = false;
 
 class _SavingsPageState extends State<SavingsPage> {
@@ -99,6 +99,8 @@ class _SavingsPageState extends State<SavingsPage> {
   // }
 
   getSavings() {
+    print("rentController.rent");
+    print(rentController.rent);
     // if (tankController.tank.isNotEmpty) {
     //   for (int i = 0; i < tankController.tank.length; i++) {
     //     tankBalance += tankController.tank[i].targetAmount.toInt();
@@ -163,7 +165,7 @@ class _SavingsPageState extends State<SavingsPage> {
     depositBalance = 0;
     totalSavings = 0;
     totalAssets = 0;
-    fetchCachedRentData();
+    // fetchCachedRentData();
     // Then start fetching the updated data
     fetchRentData();
     // rentController.startFetchingRent();
@@ -172,14 +174,14 @@ class _SavingsPageState extends State<SavingsPage> {
     getSavings();
   }
 
-  Future<void> fetchCachedRentData() async {
-    // Your code to fetch cached rent data
-    // Assuming you have a RentController instance called rentController
-    _cachedRentData = await rentController.getCachedRentData();
-    setState(() {}); // Update the UI to display cached data
-    print("_cachedRentData");
-    print(_cachedRentData[0].amount);
-  }
+  // Future<void> fetchCachedRentData() async {
+  //   // Your code to fetch cached rent data
+  //   // Assuming you have a RentController instance called rentController
+  //   // _cachedRentData = await rentController.getCachedRentData();
+  //   setState(() {}); // Update the UI to display cached data
+  //   print("_cachedRentData");
+  //   // print(_cachedRentData[0].amount);
+  // }
 
   Future<void> fetchRentData() async {
     setState(() {

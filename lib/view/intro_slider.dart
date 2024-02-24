@@ -23,7 +23,13 @@ class _IntroScreenState extends State<IntroScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Get.offAll(() => SliderDone());
+    Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => SliderDone(),
+            ),
+            (route) => false,
+            );
+    // Get.offAll(() => SliderDone());
   }
 
   Widget _buildFullscreenImage(String name) {

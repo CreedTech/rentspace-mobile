@@ -17,7 +17,7 @@ class RentDB {
 
   Stream<List<SpaceRent>> get rentStream => _rentStreamController.stream;
 
-  static const String _rentKey = 'rentData';
+  // static const String _rentKey = 'rentData';
 
   String? appBaseUrl = AppConstants.BASE_URL;
   late Map<String, String> _mainHeaders;
@@ -37,15 +37,15 @@ class RentDB {
     print('authToken here');
     print(authToken);
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // Check if cached data exists
-      if (prefs.containsKey(_rentKey)) {
-        final String cachedData = prefs.getString(_rentKey)!;
-        final List<SpaceRent> cachedRent =
-            SpaceRentResponse.fromJson(jsonDecode(cachedData)).rent;
-        _rentStreamController.add(cachedRent);
-      }
+      // // Check if cached data exists
+      // if (prefs.containsKey(_rentKey)) {
+      //   final String cachedData = prefs.getString(_rentKey)!;
+      //   final List<SpaceRent> cachedRent =
+      //       SpaceRentResponse.fromJson(jsonDecode(cachedData)).rent;
+      //   _rentStreamController.add(cachedRent);
+      // }
       final response = await http.get(
         Uri.parse(AppConstants.BASE_URL + AppConstants.GET_RENT),
         headers: {
@@ -67,9 +67,12 @@ class RentDB {
         print("rents");
         print(responseBody);
         // Update cache with new data
-        await prefs.setString(_rentKey, json.encode(responseBody.toJson()));
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
+        // await prefs.setString(_rentKey, json.encode(responseBody.toJson()));
         _rentStreamController.add(responseBody.rent);
+        // print(_rentKey);
       } else {
+        // await prefs.remove(_rentKey);
         throw Exception('Failed to fetch rent data: ${response.reasonPhrase}');
       }
     } catch (e) {
@@ -164,19 +167,19 @@ class RentController extends GetxController {
     _rentService.stopFetchingRent();
   }
 
-  static const String _rentKey = 'rentData';
+  // static const String _rentKey = 'rentData';
 
-  Future<List<SpaceRent>> getCachedRentData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(_rentKey)) {
-      final String cachedData = prefs.getString(_rentKey)!;
-      final List<SpaceRent> cachedRent =
-          SpaceRentResponse.fromJson(jsonDecode(cachedData)).rent;
-      return cachedRent;
-    } else {
-      return [];
-    }
-  }
+  // Future<List<SpaceRent>> getCachedRentData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   if (prefs.containsKey(_rentKey)) {
+  //     final String cachedData = prefs.getString(_rentKey)!;
+  //     final List<SpaceRent> cachedRent =
+  //         SpaceRentResponse.fromJson(jsonDecode(cachedData)).rent;
+  //     return cachedRent;
+  //   } else {
+  //     return [];
+  //   }
+  // }
 
   // @override
   // void onInit() {

@@ -56,7 +56,13 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
   }
 
   void _onIntroEnd(context) {
-    Get.offAll(() => const SliderDone());
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => SliderDone(),
+      ),
+      (route) => false,
+    );
+    // Get.offAll(() => const SliderDone());
   }
 
   Widget _buildFullscreenImage(String name) {
@@ -243,7 +249,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
               },
             ),
           ),
-          ],
+        ],
       ),
     );
   }

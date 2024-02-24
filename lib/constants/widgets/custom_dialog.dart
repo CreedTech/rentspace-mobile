@@ -138,11 +138,12 @@ void verification(BuildContext context, String message, String subText,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.offUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (route) => false,
-                      );
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                          (route) => false);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: brandFive,
@@ -173,6 +174,7 @@ void verification(BuildContext context, String message, String subText,
         );
       });
 }
+
 void redirectingAlert(BuildContext context, String message, String subText,
     String redirectText) async {
   showDialog(
@@ -192,13 +194,17 @@ void redirectingAlert(BuildContext context, String message, String subText,
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(height: 20.h,),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   Image.asset(
                     'assets/check.png',
                     width: 150,
                     height: 150,
                   ),
-                  SizedBox(height: 20.h,),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   Text(
                     message,
                     style: GoogleFonts.nunito(
@@ -225,11 +231,11 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.offUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (route) => false,
-                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                          (route) => false);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: brandFive,

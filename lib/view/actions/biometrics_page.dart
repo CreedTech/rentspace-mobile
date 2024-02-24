@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -16,6 +18,7 @@ import 'package:upgrader/upgrader.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
+import '../../core/helper/helper_route_path.dart';
 
 class BiometricsPage extends StatefulWidget {
   BiometricsPage({
@@ -69,8 +72,13 @@ class _BiometricsPageState extends State<BiometricsPage> {
         setState(() {
           screenInfo = "App unlocked";
         });
-           Get.put(UserController());
-        Get.to(const FirstPage());
+        Get.put(UserController());
+        // Get.to(const FirstPage());
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          // RouteList.pin_code,
+          home,
+          (route) => false,
+        );
         // await registerControllers().then(Get.to(const FirstPage()));
         //  Get.put(UserController());
         // Get.to(const FirstPage());
@@ -116,7 +124,12 @@ class _BiometricsPageState extends State<BiometricsPage> {
       (hasBiometricStorage.read('hasBiometric') != null &&
               hasBiometricStorage.read('hasBiometric') == true)
           ? checkingForBioMetrics()
-          : Get.to(const FirstPage());
+          : Navigator.of(context).pushNamedAndRemoveUntil(
+              // RouteList.pin_code,
+              home,
+              (route) => false,
+            );
+      //  Get.to(const FirstPage()
     });
   }
 
@@ -168,7 +181,6 @@ class _BiometricsPageState extends State<BiometricsPage> {
                       ),
                     ),
                     const CustomLoader(),
-                 
                     const SizedBox(
                       height: 30,
                     ),

@@ -232,25 +232,26 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         // backgroundColor: const Color(0xffE0E0E0),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 25,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        centerTitle: false,
-        title: Text(
-          'Back',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Icon(
+        //     Icons.arrow_back,
+        //     size: 25,
+        //     color: Theme.of(context).primaryColor,
+        //   ),
+        // ),
+        centerTitle: true,
+        // title: Text(
+        //   'Login',
+        //   style: TextStyle(
+        //     color: Theme.of(context).primaryColor,
+        //     fontWeight: FontWeight.w700,
+        //     fontSize: 16,
+        //   ),
+        // ),
       ),
       body: Stack(
         children: [
@@ -345,7 +346,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            (_rememberMe == true)
+                            (_rememberMe == false)
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
