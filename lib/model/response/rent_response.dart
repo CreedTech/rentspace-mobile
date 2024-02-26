@@ -1,4 +1,29 @@
-import 'package:rentspace/model/spacerent_model.dart';
+// import '../spacerent_model.dart';
+
+// class SpaceRentResponse {
+//   String? msg;
+//   SpaceRent rent;
+
+//   SpaceRentResponse({required this.msg, required this.rent});
+
+//   factory SpaceRentResponse.fromJson(Map<String, dynamic> json) {
+//     return SpaceRentResponse(
+//       msg: json['msg'] as String?,
+//       rent: SpaceRent.fromJson(json['rent']),
+//     );
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'msg': msg,
+//       'rent': rent.toJson(),
+//     };
+//   }
+// }
+
+
+
+import '../spacerent_model.dart';
 
 class SpaceRentResponse {
   String? msg;

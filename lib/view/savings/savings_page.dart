@@ -100,7 +100,7 @@ class _SavingsPageState extends State<SavingsPage> {
 
   getSavings() {
     print("rentController.rent");
-    print(rentController.rent);
+    print(rentController.rentModel!.rent![0].intervalAmount);
     // if (tankController.tank.isNotEmpty) {
     //   for (int i = 0; i < tankController.tank.length; i++) {
     //     tankBalance += tankController.tank[i].targetAmount.toInt();
@@ -111,8 +111,8 @@ class _SavingsPageState extends State<SavingsPage> {
     //   });
     // }
     if (rentController.rent.isNotEmpty) {
-      rentBalance += rentController.rent[0].paidAmount;
-      targetBalance += rentController.rent[0].amount;
+      rentBalance += rentController.rentModel!.rent![0].paidAmount;
+      targetBalance += rentController.rentModel!.rent![0].amount;
       // for (int j = 0; j < rentController.rent.length; j++) {
       //   rentBalance += rentController.rent[j].paidAmount;
       //   targetBalance += rentController.rent[j].amount;
@@ -165,9 +165,10 @@ class _SavingsPageState extends State<SavingsPage> {
     depositBalance = 0;
     totalSavings = 0;
     totalAssets = 0;
+    rentController.fetchRent();
     // fetchCachedRentData();
     // Then start fetching the updated data
-    fetchRentData();
+    // fetchRentData();
     // rentController.startFetchingRent();
     // getUser();
     //deleteSpecifiedDocs();
@@ -183,23 +184,23 @@ class _SavingsPageState extends State<SavingsPage> {
   //   // print(_cachedRentData[0].amount);
   // }
 
-  Future<void> fetchRentData() async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      // Your code to fetch rent data
-      // Assuming you have a RentController instance called rentController
-      await rentController.startFetchingRent();
-    } catch (e) {
-      print('Error fetching rent: $e');
-      // Handle error
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  // Future<void> fetchRentData() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   try {
+  //     // Your code to fetch rent data
+  //     // Assuming you have a RentController instance called rentController
+  //     await rentController.startFetchingRent();
+  //   } catch (e) {
+  //     print('Error fetching rent: $e');
+  //     // Handle error
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -334,89 +335,6 @@ class _SavingsPageState extends State<SavingsPage> {
                       ],
                     ),
                   ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, bottom: 15),
-                  //   child: Container(
-                  //     width: 200,
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(15),
-                  //     ),
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         Padding(
-                  //           padding: const EdgeInsets.all(8.0),
-                  //           child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             children: [
-                  //               Row(
-                  //                 children: [
-                  //                   Container(
-                  //                     padding: EdgeInsets.all(5.sp),
-                  //                     decoration: BoxDecoration(
-                  //                       color: brandTwo.withOpacity(0.2),
-                  //                       borderRadius:
-                  //                           BorderRadius.circular(100.sp),
-                  //                     ),
-                  //                     child: Image.asset(
-                  //                       'assets/icons/space_rent.png',
-                  //                       color: brandOne,
-                  //                       scale: 4.sp,
-                  //                       // width: 20,
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(
-                  //                     width: 5,
-                  //                   ),
-                  //                   Text(
-                  //                     'SpaceRent',
-                  //                     textAlign: TextAlign.center,
-                  //                     style: GoogleFonts.nunito(
-                  //                       fontSize: 15.0,
-                  //                       fontWeight: FontWeight.w600,
-                  //                       // fontFamily: "DefaultFontFamily",
-                  //                       // letterSpacing: 0.5,
-                  //                       color: brandOne,
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               GestureDetector(
-                  //                 onTap: () {
-                  //                   (rentController.rent.isEmpty)
-                  //                       ? Get.to(const SpaceRentIntro())
-                  //                       : Get.to(const RentSpaceList());
-                  //                 },
-                  //                 child: const Icon(
-                  //                   Icons.arrow_forward_ios,
-                  //                   size: 15,
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.all(8.0),
-                  //           child: Text(
-                  //             " ${hideBalance ? nairaFormaet.format(totalSavings).toString() : "*****"}",
-                  //             //  textAlign: TextAlign.center,
-                  //             style: GoogleFonts.nunito(
-                  //               fontSize: 17.0.sp,
-                  //               // fontFamily: "DefaultFontFamily",
-                  //               // letterSpacing: 0.5,
-                  //               fontWeight: FontWeight.w700,
-                  //               color: brandOne,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
                   SizedBox(
                     height: 100,
                     child: ListView(
@@ -635,7 +553,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      (rentController.rent.isEmpty)
+                      (rentController.rentModel!.rent!.isEmpty)
                           ? Get.to(const SpaceRentIntro())
                           : Get.to(const RentSpaceList());
                     },

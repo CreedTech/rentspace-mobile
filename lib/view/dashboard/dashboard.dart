@@ -23,6 +23,7 @@ import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
+import 'package:rentspace/view/actions/transaction_receipt.dart';
 
 import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
@@ -1842,8 +1843,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                       () {
                                                                     (userController.userModel!.userDetails![0].wallet.mainBalance.obs() >
                                                                             0)
-                                                                        ? Get.to(
-                                                                            const WalletWithdrawal())
+                                                                        ? Get.to(TransactionReceipt())
+                                                                        //  Get.to(
+                                                                        //     const WalletWithdrawal())
                                                                         : customErrorDialog(
                                                                             context,
                                                                             'Wallet Empty! :)',

@@ -95,17 +95,17 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   @override
   Widget build(BuildContext context) {
-    String chosenDateString = rentController.rent[0].date;
-    String interval = rentController.rent[0].interval;
+    String chosenDateString = rentController.rentModel!.rent![0].date;
+    String interval = rentController.rentModel!.rent![0].interval;
     int numberOfIntervals =
-        int.parse(rentController.rent[0].paymentCount);
+        int.parse(rentController.rentModel!.rent![0].paymentCount);
     DateTime nextPaymentDate =
         calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
     String formattedNextDate = formatDate(nextPaymentDate);
-    print(((rentController.rent[0].paidAmount.abs()) ==
-        (rentController.rent[0].amount * 0.7).abs()));
-    print(((rentController.rent[0].paidAmount)));
-    print(((rentController.rent[0].amount * 0.7)));
+    print(((rentController.rentModel!.rent![0].paidAmount.abs()) ==
+        (rentController.rentModel!.rent![0].amount * 0.7).abs()));
+    print(((rentController.rentModel!.rent![0].paidAmount)));
+    print(((rentController.rentModel!.rent![0].amount * 0.7)));
 
     // return Text(
     //   formattedTimeAgo,
@@ -115,8 +115,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
       appBar: AppBar(
         // toolbarHeight: 105.0,
         backgroundColor:
-            ((rentController.rent[0].paidAmount) !=
-                    (rentController.rent[0].amount * 0.7))
+            ((rentController.rentModel!.rent![0].paidAmount) !=
+                    (rentController.rentModel!.rent![0].amount * 0.7))
                 ? Theme.of(context).primaryColorLight
                 : Theme.of(context).canvasColor,
         elevation: 1.0,
@@ -127,8 +127,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
           child: Icon(
             Icons.arrow_back,
             size: 30,
-            color: ((rentController.rent[0].paidAmount) !=
-                    (rentController.rent[0].amount * 0.7))
+            color: ((rentController.rentModel!.rent![0].paidAmount) !=
+                    (rentController.rentModel!.rent![0].amount * 0.7))
                 ? Colors.white
                 : Theme.of(context).primaryColor,
           ),
@@ -137,8 +137,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
         title: Text(
           'Space Rent',
           style: GoogleFonts.nunito(
-            color: ((rentController.rent[0].paidAmount) !=
-                    (rentController.rent[0].amount * 0.7))
+            color: ((rentController.rentModel!.rent![0].paidAmount) !=
+                    (rentController.rentModel!.rent![0].amount * 0.7))
                 ? Colors.white
                 : Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
@@ -148,8 +148,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
       ),
       //
       body: Obx(
-        () => ((rentController.rent[0].paidAmount.obs()) !=
-                (rentController.rent[0].amount * 0.7))
+        () => ((rentController.rentModel!.rent![0].paidAmount.obs()) !=
+                (rentController.rentModel!.rent![0].amount * 0.7))
             ? SingleChildScrollView(
                 child: Column(
                   children: [
@@ -170,7 +170,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               ),
                             ),
                             Text(
-                              "${nairaFormaet.format(rentController.rent[0].paidAmount).toString()} $testdum",
+                              "${nairaFormaet.format(rentController.rentModel!.rent![0].paidAmount).toString()} $testdum",
                               style: GoogleFonts.nunito(
                                 color: Theme.of(context).colorScheme.background,
                                 fontWeight: FontWeight.w800,
@@ -191,7 +191,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 Text(
                                   nairaFormaet
                                       .format(rentController
-                                          .rent[0].amount)
+                                          .rentModel!.rent![0].amount)
                                       .toString(),
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
@@ -217,16 +217,17 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               child: LinearPercentIndicator(
                                 backgroundColor: Colors.white,
                                 // trailing: Text(
-                                //   ' ${((rentController.rent[0].paidAmount / rentController.rent[0].amount) * 100).toInt()}%',
+                                //   ' ${((rentController.rentModel!.rent![0].paidAmount / rentController.rentModel!.rent![0].amount) * 100).toInt()}%',
                                 //   style: GoogleFonts.nunito(
                                 //     fontSize: MediaQuery.of(context).size.width / 30,
                                 //     fontWeight: FontWeight.w700,
                                 //     color: brandOne,
                                 //   ),
                                 // ),
-                                percent: ((rentController.rent[0].paidAmount /
+                                percent: ((rentController.rentModel!
+                                            .rent![0].paidAmount /
                                         rentController
-                                            .rent[0].amount))
+                                            .rentModel!.rent![0].amount))
                                     .toDouble(),
                                 animation: true,
                                 barRadius: const Radius.circular(10.0),
@@ -249,7 +250,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               children: [
                                 Text(
                                   nairaFormaet
-                                      .format(rentController.rent[0].intervalAmount)
+                                      .format(rentController.rentModel!
+                                          .rent![0].intervalAmount)
                                       .toString(),
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
@@ -272,13 +274,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 ),
                                 Text(
                                   rentController
-                                          .rent[0].interval
+                                          .rentModel!.rent![0].interval
                                           .substring(0, 1)
                                           .toUpperCase() +
                                       rentController
-                                          .rent[0].interval
+                                          .rentModel!.rent![0].interval
                                           .substring(1),
-                                  // intl.capitalizedFirst(rentController.rent[0].interval),
+                                  // intl.capitalizedFirst(rentController.rentModel!.rent![0].interval),
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -335,10 +337,12 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                               child: Text(
                                                 nairaFormaet
                                                     .format(rentController
-                                                            .rent[0]
+                                                            .rentModel!
+                                                            .rent![0]
                                                             .amount -
                                                         (rentController
-                                                                .rent[0]
+                                                                .rentModel!
+                                                                .rent![0]
                                                                 .amount *
                                                             0.7))
                                                     .toString(),
@@ -476,7 +480,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        // print(int.parse(rentController.rent[0].id));
+                                        // print(int.parse(rentController.rentModel!.rent![0].id));
                                         Get.to(SpaceRentHistory(
                                           current: 0,
                                         ));
@@ -494,7 +498,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                   ],
                                 ),
                               ),
-                              // rentController.rent[0].history.isEmpty
+                              // rentController.rentModel!.rent![0].history.isEmpty
                               //     ? Column(
                               //         mainAxisAlignment:
                               //             MainAxisAlignment.center,
@@ -524,13 +528,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               //           shrinkWrap: true,
                               //           physics: const ClampingScrollPhysics(),
                               //           itemCount: rentController
-                              //               .rent[0].history.reversed
+                              //               .rentModel!.rent![0].history.reversed
                               //               .toList()
                               //               .length,
                               //           itemBuilder:
                               //               (BuildContext context, int index) {
                               //             // DateTime targetDate = DateTime.parse(
-                              //             //     rentController.rent[0].history.reversed
+                              //             //     rentController.rentModel!.rent![0].history.reversed
                               //             //         .toList()[index]
                               //             //         .split(" ")[0]);
                               //             // String formattedTimeAgo = timeago
@@ -577,14 +581,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               //                 ),
                               //                 subtitle: Text(
                               //                   _formatTime(DateTime.parse(
-                              //                           (rentController.rent[0]
+                              //                           (rentController.rentModel!.rent![0]
                               //                               .history.reversed
                               //                               .toList()[index]
                               //                               .split(" ")[0]
                               //                               .substring(
                               //                                   0,
                               //                                   rentController
-                              //                                           .rent[0]
+                              //                                           .rentModel!.rent![0]
                               //                                           .history
                               //                                           .reversed
                               //                                           .toList()[
@@ -606,9 +610,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               //                 //   // Navigator.pushNamed(context, RouteList.profile);
                               //                 // },
                               //                 trailing: Text(
-                              //                   '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}'
+                              //                   '+ ₦${extractAmount(rentController.rentModel!.rent![0].history.reversed.toList()[index])}'
                               //                   // rentController
-                              //                   //     .rent[0].history.reversed
+                              //                   //     .rentModel!.rent![0].history.reversed
                               //                   //     .toList()[index]
                               //                   //     .split(" ")
                               //                   //     .last
@@ -666,8 +670,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                   ),
                   Text(
                     nairaFormaet
-                        .format(rentController.rent[0].amount -
-                            (rentController.rent[0].amount *
+                        .format(rentController.rentModel!.rent![0].amount -
+                            (rentController.rentModel!.rent![0].amount *
                                 0.7))
                         .toString(),
                     overflow: TextOverflow.ellipsis,
@@ -712,8 +716,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
               ),
       ),
 
-      backgroundColor: ((rentController.rent[0].paidAmount) !=
-              (rentController.rent[0].amount * 0.7))
+      backgroundColor: ((rentController.rentModel!.rent![0].paidAmount) !=
+              (rentController.rentModel!.rent![0].amount * 0.7))
           ? Theme.of(context).primaryColorLight
           : Theme.of(context).canvasColor,
     );
