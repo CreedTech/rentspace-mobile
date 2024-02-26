@@ -15,12 +15,13 @@
 //   }
 // }
 
+import 'wallet_model.dart';
+
 class UserModel {
   UserModel({
     required this.userDetails,
   });
   List<UserDetailsModel>? userDetails;
-
 
 // UserModel.fromJson(Map<String, dynamic> json) {
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -128,7 +129,8 @@ class UserDetailsModel {
   // TODO  change to final string
   final String rentspaceID;
   final String avatar;
-  // Activities activities;
+  final List<dynamic> activities;
+  final Wallet wallet;
 
   UserDetailsModel({
     required this.kyc,
@@ -187,7 +189,8 @@ class UserDetailsModel {
     // required this.accountName,
     // required this.accountNumber,
     // required this.referalId,
-    // required this.activities,
+    required this.wallet,
+    required this.activities,
   });
 
   factory UserDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -249,6 +252,8 @@ class UserDetailsModel {
         // accountName: json["account_name"] ?? '',
         // accountDate: json["account_date"] ?? '',
         // activities: Activities.fromJson(json["activities"]),
+        wallet: Wallet.fromJson(json["wallet"]),
+        activities: json["activities"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -307,7 +312,8 @@ class UserDetailsModel {
         // "account_name": accountName,
         // "card_holder": cardHolder,
         // "account_number": accountNumber,
-        // "activities": activities.toJson(),
+        "activities": activities,
+        "wallet": wallet.toJson(),
       };
 }
 

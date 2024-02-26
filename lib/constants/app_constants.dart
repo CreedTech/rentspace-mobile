@@ -25,6 +25,9 @@ class AppConstants {
   static const GET_ANNOUNCEMENT = '/api/auth/announcements';
   static const CREATE_PAYMENT = '/api/watu/create-payment';
   static const FUND_RENT_WITH_WALLET = '/api/rent/fund-rentWithWallet';
+  static const VERFIY_ACCOUNT_DETAILS = '/api/banks/verfiy-account';
+  static const WALLET_WITHDRAWAL = '/api/wallet/wallet-withdrawal';
+  static const GET_BANKS_LIST = '/api/banks/bank-lists';
   static const VERFIY_BVN = '/api/bvn/verify-bvn';
   static const BVN_DEBIT = '/api/bvn/bvn-debit';
   static const CREATE_DVA = '/api/dva/create-dva';

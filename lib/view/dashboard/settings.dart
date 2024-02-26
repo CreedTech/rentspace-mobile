@@ -19,7 +19,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+// import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
@@ -62,7 +62,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     with TickerProviderStateMixin {
   File? selectedImage;
   final UserController userController = Get.find();
-  final WalletController walletController = Get.find();
+  // final WalletController walletController = Get.find();
   late AnimationController controller;
 
   Future getImage(BuildContext context) async {
@@ -504,7 +504,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             (userController.userModel!.userDetails![0].hasDva ==
                                     true)
                                 ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
-                                : "Wallet ID: ${walletController.walletModel!.wallet![0].walletId}",
+                                : "Wallet ID: ${userController.userModel!.userDetails![0].wallet.walletId}",
                             style: GoogleFonts.nunito(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w400,

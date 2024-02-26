@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rentspace/controller/activities_controller.dart';
+// import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
@@ -67,8 +67,8 @@ class Dashboard extends ConsumerStatefulWidget {
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 final themeChange = Get.put(ThemeServices());
 final UserController userController = Get.put(UserController());
-final ActivitiesController activitiesController =
-    Get.put(ActivitiesController());
+// final ActivitiesController activitiesController =
+//     Get.put(ActivitiesController());
 final WalletController walletController = Get.put(WalletController());
 
 final hasFeedsStorage = GetStorage();
@@ -335,1216 +335,1372 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         child: const Icon(Icons.support_agent_sharp),
       ),
       body: Obx(
-        () => userController.isLoading.value 
-            ? const Center(
-                child: CustomLoader(),
-              )
-            : LiquidPullToRefresh(
-                height: 100,
-                animSpeedFactor: 2,
-                color: brandOne,
-                backgroundColor: Colors.white,
-                showChildOpacityTransition: false,
-                onRefresh: onRefresh,
-                child: SafeArea(
-                  child: Padding(
-                    //padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    padding: EdgeInsets.fromLTRB(
-                      20.0.w,
-                      0.0.h,
-                      20.0.w,
-                      0.0.h,
-                    ),
-                    child: ListView(
-                      children: [
-                        Column(
-                          children: [
-                            // SizedBox(
-                            //   height: 30.h,
-                            // ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.to(const SettingsPage());
+        () =>
+            //  userController.isLoading.value
+            //     ? const Center(
+            //         child: CustomLoader(),
+            //       )
+            //     :
+            LiquidPullToRefresh(
+          height: 100,
+          animSpeedFactor: 2,
+          color: brandOne,
+          backgroundColor: Colors.white,
+          showChildOpacityTransition: false,
+          onRefresh: onRefresh,
+          child: SafeArea(
+            child: Padding(
+              //padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+              padding: EdgeInsets.fromLTRB(
+                20.0.w,
+                0.0.h,
+                20.0.w,
+                0.0.h,
+              ),
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      // SizedBox(
+                      //   height: 30.h,
+                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(const SettingsPage());
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50.sp),
+                                    child: CachedNetworkImage(
+                                      imageUrl: userController
+                                          .userModel!.userDetails![0].avatar
+                                          .obs(),
+                                      height: 40.h,
+                                      width: 40.w,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) {
+                                        return Image.asset(
+                                          'assets/icons/RentSpace-icon.png',
+                                          height: 40.h,
+                                          width: 40.w,
+                                          fit: BoxFit.cover,
+                                        );
                                       },
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50.sp),
-                                          child: CachedNetworkImage(
-                                            imageUrl: userController.userModel!
-                                                .userDetails![0].avatar,
-                                            height: 40.h,
-                                            width: 40.w,
-                                            fit: BoxFit.cover,
-                                            placeholder: (context, url) {
-                                              return Image.asset(
-                                                'assets/icons/RentSpace-icon.png',
-                                                height: 40.h,
-                                                width: 40.w,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                            errorWidget: (context, url, error) {
-                                              return Image.asset(
-                                                'assets/icons/RentSpace-icon.png',
-                                                height: 40.h,
-                                                width: 40.w,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                            // progressIndicatorBuilder:
-                                            //     (context, url, progress) {
-                                            //   return const CircularProgressIndicator();
-                                            // },
-                                          ),
-                                          // Image.network(
-                                          //   userInfo[0].image,
-                                          //   height: 40,
-                                          //   width: 40,
-                                          //   fit: BoxFit.fill,
-                                          // ),
-                                        ),
-                                      ),
+                                      errorWidget: (context, url, error) {
+                                        return Image.asset(
+                                          'assets/icons/RentSpace-icon.png',
+                                          height: 40.h,
+                                          width: 40.w,
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                      // progressIndicatorBuilder:
+                                      //     (context, url, progress) {
+                                      //   return const CircularProgressIndicator();
+                                      // },
                                     ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Hi, ${userController.userModel!.userDetails![0].firstName}👋 $dum1",
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 20.0.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                        // Text(
-                                        //   "Hi, ${userInfo[0].userFirst}👋$dum1",
-                                        //   style: GoogleFonts.nunito(
-                                        //     fontSize: 20.0.sp,
-                                        //     fontWeight: FontWeight.w700,
-                                        //     color: Theme.of(context).primaryColor,
-                                        //   ),
-                                        // ),
-                                        Text(
-                                          _greeting,
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 16.0.sp,
-                                            // letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w700,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                    // Image.network(
+                                    //   userInfo[0].image,
+                                    //   height: 40,
+                                    //   width: 40,
+                                    //   fit: BoxFit.fill,
+                                    // ),
+                                  ),
                                 ),
-                                // <NotificationService>(
-                                //     builder: (context, notificationService, _) {
-                                //   return Padding(
-                                //     padding: EdgeInsets.all(8.0.sp),
-                                //     child: GestureDetector(
-                                //       onTap: () async {
-                                //         await notificationService
-                                //             .fetchNotificationsFromFirestore();
-                                //         Get.to(const NotificationsPage());
-                                //       },
-                                //       child: Stack(
-                                //         children: [
-                                //           Icon(
-                                //             Icons.notifications_outlined,
-                                //             color: Theme.of(context).primaryColor,
-                                //             size: 22.sp,
-                                //           ),
-                                //           if (notificationService.hasUnreadNotification)
-                                //             Positioned(
-                                //               top: 0.sp,
-                                //               right: 0.0.sp,
-                                //               child: Container(
-                                //                 padding: EdgeInsets.all(4.0.sp),
-                                //                 decoration: const BoxDecoration(
-                                //                   shape: BoxShape.circle,
-                                //                   color: Colors.red,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //   );
-                                // }),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 0),
-                              child: (userController
-                                          .userModel!.userDetails![0].hasDva ==
-                                      true)
-                                  ? Container(
-                                      width: 420.w,
-                                      height: 210.h,
-                                      decoration: BoxDecoration(
-                                          color: brandOne,
-                                          // image: DecorationImage(
-                                          //   image: const AssetImage(
-                                          //     "assets/card.jpg",
-                                          //   ),
-                                          //   fit: BoxFit.cover,
-                                          //   colorFilter: ColorFilter.mode(
-                                          //     Colors.white.withOpacity(
-                                          //         0.5), // Adjust the opacity here
-                                          //     BlendMode.darken,
-                                          //   ),
-                                          // ),
-                                          borderRadius:
-                                              BorderRadius.circular(20.sp)),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 24.h),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva == true) ? " - DVA" : ""}",
-                                                  style: GoogleFonts.nunito(
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5.w,
-                                                ),
-                                                GestureDetector(
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Hi, ${userController.userModel!.userDetails![0].firstName.obs}👋 $dum1",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 20.0.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   "Hi, ${userInfo[0].userFirst}👋$dum1",
+                                  //   style: GoogleFonts.nunito(
+                                  //     fontSize: 20.0.sp,
+                                  //     fontWeight: FontWeight.w700,
+                                  //     color: Theme.of(context).primaryColor,
+                                  //   ),
+                                  // ),
+                                  Text(
+                                    _greeting,
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.0.sp,
+                                      // letterSpacing: 1.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          // <NotificationService>(
+                          //     builder: (context, notificationService, _) {
+                          //   return Padding(
+                          //     padding: EdgeInsets.all(8.0.sp),
+                          //     child: GestureDetector(
+                          //       onTap: () async {
+                          //         await notificationService
+                          //             .fetchNotificationsFromFirestore();
+                          //         Get.to(const NotificationsPage());
+                          //       },
+                          //       child: Stack(
+                          //         children: [
+                          //           Icon(
+                          //             Icons.notifications_outlined,
+                          //             color: Theme.of(context).primaryColor,
+                          //             size: 22.sp,
+                          //           ),
+                          //           if (notificationService.hasUnreadNotification)
+                          //             Positioned(
+                          //               top: 0.sp,
+                          //               right: 0.0.sp,
+                          //               child: Container(
+                          //                 padding: EdgeInsets.all(4.0.sp),
+                          //                 decoration: const BoxDecoration(
+                          //                   shape: BoxShape.circle,
+                          //                   color: Colors.red,
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   );
+                          // }),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0),
+                        child: (userController.userModel!.userDetails![0].hasDva
+                                    .obs() ==
+                                true)
+                            ? Container(
+                                width: 420.w,
+                                height: 210.h,
+                                decoration: BoxDecoration(
+                                    color: brandOne,
+                                    // image: DecorationImage(
+                                    //   image: const AssetImage(
+                                    //     "assets/card.jpg",
+                                    //   ),
+                                    //   fit: BoxFit.cover,
+                                    //   colorFilter: ColorFilter.mode(
+                                    //     Colors.white.withOpacity(
+                                    //         0.5), // Adjust the opacity here
+                                    //     BlendMode.darken,
+                                    //   ),
+                                    // ),
+                                    borderRadius: BorderRadius.circular(20.sp)),
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 24.h),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva.obs() == true) ? " - DVA" : ""}",
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                hideBalance = !hideBalance;
+                                              });
+                                            },
+                                            child: Icon(
+                                              hideBalance
+                                                  ? Icons
+                                                      .visibility_off_outlined
+                                                  : Icons.visibility_outlined,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            (userController.userModel!
+                                                        .userDetails![0].hasDva
+                                                        .obs() ==
+                                                    true)
+                                                ? userController.userModel!
+                                                    .userDetails![0].dvaNumber
+                                                    .toString()
+                                                : '${userController.userModel!.userDetails![0].wallet.walletId.obs.substring(0, 3)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(3, 6)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(6, 10)}',
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                letterSpacing: 4),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          (userController.userModel!
+                                                      .userDetails![0].hasDva
+                                                      .obs() ==
+                                                  true)
+                                              ? InkWell(
                                                   onTap: () {
-                                                    setState(() {
-                                                      hideBalance =
-                                                          !hideBalance;
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    hideBalance
-                                                        ? Icons
-                                                            .visibility_off_outlined
-                                                        : Icons
-                                                            .visibility_outlined,
-                                                    color: Colors.white,
-                                                    size: 20,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  (userController
-                                                              .userModel!
-                                                              .userDetails![0]
-                                                              .hasDva ==
-                                                          true)
-                                                      ? userController
-                                                          .userModel!
-                                                          .userDetails![0]
-                                                          .dvaNumber
-                                                          .toString()
-                                                      : '${walletController.walletModel!.wallet![0].walletId.substring(0, 3)}-${walletController.walletModel!.wallet![0].walletId.substring(3, 6)}-${walletController.walletModel!.wallet![0].walletId.substring(6, 10)}',
-                                                  style: GoogleFonts.nunito(
-                                                      fontSize: 20.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                      letterSpacing: 4),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                (userController
+                                                    Clipboard.setData(
+                                                      ClipboardData(
+                                                        text: userController
                                                             .userModel!
                                                             .userDetails![0]
-                                                            .hasDva ==
-                                                        true)
-                                                    ? InkWell(
-                                                        onTap: () {
-                                                          Clipboard.setData(
-                                                            ClipboardData(
-                                                              text: userController
-                                                                  .userModel!
-                                                                  .userDetails![
-                                                                      0]
-                                                                  .dvaNumber
-                                                                  .toString(),
-                                                            ),
-                                                          );
-                                                          Fluttertoast
-                                                              .showToast(
-                                                            msg:
-                                                                "Account Number copied to clipboard!",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .CENTER,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                brandOne,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0,
-                                                          );
-                                                        },
-                                                        child: const Icon(
-                                                          Icons.copy,
-                                                          size: 16,
-                                                          color: Colors.white,
-                                                        ),
-                                                      )
-                                                    : const SizedBox(),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                // width: 280,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20.w,
-                                                    vertical: 10.h),
-
-                                                child: (walletController
-                                                        .isLoading.value)
-                                                    ? const CustomLoader()
-                                                    : Text(
-                                                        " ${hideBalance ? nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance).toString() : "******"}",
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                fontSize: 25.sp,
-                                                                color: Colors
-                                                                    .white),
+                                                            .dvaNumber
+                                                            .obs()
+                                                            .toString(),
                                                       ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Get.to(const FundWallet());
-                                                  },
-                                                  child: Container(
-                                                    height: 40.h,
-                                                    width: 140.w,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              35.sp),
-                                                      color: brandTwo
-                                                          .withOpacity(0.3),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.add_circle,
-                                                          size: 14.sp,
-                                                          color: Colors.white,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5.w,
-                                                        ),
-                                                        Text(
-                                                          'Add Money',
-                                                          style: GoogleFonts
-                                                              .nunito(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      14.sp),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    walletController
-                                                        .fetchWallet();
+                                                    );
+                                                    Fluttertoast.showToast(
+                                                      msg:
+                                                          "Account Number copied to clipboard!",
+                                                      toastLength:
+                                                          Toast.LENGTH_SHORT,
+                                                      gravity:
+                                                          ToastGravity.CENTER,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: brandOne,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0,
+                                                    );
                                                   },
                                                   child: const Icon(
-                                                    Iconsax.refresh,
+                                                    Icons.copy,
+                                                    size: 16,
                                                     color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-
-                                  //  FlipCard(
-                                  //     front: Neumorphic(
-                                  //       style: NeumorphicStyle(
-                                  //           shape: NeumorphicShape.flat,
-                                  //           boxShape:
-                                  //               NeumorphicBoxShape.roundRect(
-                                  //                   BorderRadius.circular(12)),
-                                  //           depth: 0,
-                                  //           lightSource: LightSource.bottomRight,
-                                  //           color: Colors.white),
-                                  //       child: Container(
-                                  //         height: 220,
-                                  //         padding: const EdgeInsets.fromLTRB(
-                                  //             20.0, 20.0, 20.0, 20.0),
-                                  //         decoration: BoxDecoration(
-                                  //           color:
-                                  //               Theme.of(context).canvasColor,
-                                  //           image: const DecorationImage(
-                                  //             image:
-                                  //                 AssetImage("assets/card.jpg"),
-                                  //             fit: BoxFit.cover,
-                                  //           ),
-                                  //         ),
-                                  //         child: Row(
-                                  //           mainAxisAlignment:
-                                  //               MainAxisAlignment.spaceBetween,
-                                  //           children: [
-                                  //             Column(
-                                  //               crossAxisAlignment:
-                                  //                   CrossAxisAlignment.start,
-                                  //               children: [
-                                  //                 Row(
-                                  //                   mainAxisAlignment:
-                                  //                       MainAxisAlignment.start,
-                                  //                   children: [
-                                  //                     Image.asset(
-                                  //                       'assets/icons/logo.png',
-                                  //                       height: 24,
-                                  //                     ),
-                                  //                     const SizedBox(
-                                  //                       width: 10,
-                                  //                     ),
-                                  //                     Text(
-                                  //                       "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva == true) ? " - DVA" : ""}",
-                                  //                       style:
-                                  //                           GoogleFonts.nunito(
-                                  //                         fontSize: 20.0,
-                                  //                         color: Colors.white,
-                                  //                         fontWeight: FontWeight.w700
-                                  //                       ),
-                                  //                     ),
-                                  //                   ],
-                                  //                 ),
-                                  //                 const SizedBox(
-                                  //                   height: 5,
-                                  //                 ),
-                                  //                 Row(
-                                  //                   children: [
-                                  //                     Text(
-                                  //                       (userController
-                                  //                                   .userModel!
-                                  //                                   .userDetails![
-                                  //                                       0]
-                                  //                                   .hasDva ==
-                                  //                               true)
-                                  //                           ? '${userController.userModel!.userDetails![0].dvaNumber.toString().substring(0, 3)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(3, 6)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(6, 10)}'
-                                  //                           : '${walletController.walletModel!.wallet![0].walletId.substring(0, 3)}-${walletController.walletModel!.wallet![0].walletId.substring(3, 6)}-${walletController.walletModel!.wallet![0].walletId.substring(6, 10)}',
-                                  //                       style:
-                                  //                           GoogleFonts.nunito(
-                                  //                         fontSize: 20.0,
-                                  //                         fontWeight:
-                                  //                             FontWeight.bold,
-                                  //                         color: Colors.white,
-                                  //                       ),
-                                  //                       textAlign:
-                                  //                           TextAlign.center,
-                                  //                     ),
-                                  //                     const SizedBox(
-                                  //                       width: 10,
-                                  //                     ),
-                                  //                     (userController
-                                  //                                 .userModel!
-                                  //                                 .userDetails![
-                                  //                                     0]
-                                  //                                 .hasDva ==
-                                  //                             true)
-                                  //                         ? InkWell(
-                                  //                             onTap: () {
-                                  //                               Clipboard
-                                  //                                   .setData(
-                                  //                                 ClipboardData(
-                                  //                                   text: userController
-                                  //                                       .userModel!
-                                  //                                       .userDetails![
-                                  //                                           0]
-                                  //                                       .dvaNumber
-                                  //                                       .toString(),
-                                  //                                 ),
-                                  //                               );
-                                  //                               Fluttertoast
-                                  //                                   .showToast(
-                                  //                                 msg:
-                                  //                                     "Account Number copied to clipboard!",
-                                  //                                 toastLength: Toast
-                                  //                                     .LENGTH_SHORT,
-                                  //                                 gravity:
-                                  //                                     ToastGravity
-                                  //                                         .CENTER,
-                                  //                                 timeInSecForIosWeb:
-                                  //                                     1,
-                                  //                                 backgroundColor:
-                                  //                                     brandOne,
-                                  //                                 textColor:
-                                  //                                     Colors
-                                  //                                         .white,
-                                  //                                 fontSize:
-                                  //                                     16.0,
-                                  //                               );
-                                  //                             },
-                                  //                             child: const Icon(
-                                  //                               Icons.copy,
-                                  //                               size: 16,
-                                  //                               color: Colors
-                                  //                                   .white,
-                                  //                             ),
-                                  //                           )
-                                  //                         : const SizedBox(),
-                                  //                   ],
-                                  //                 ),
-                                  //                 const SizedBox(
-                                  //                   height: 10,
-                                  //                 ),
-                                  //                 Container(
-                                  //                   width: 280,
-                                  //                   padding: const EdgeInsets
-                                  //                       .fromLTRB(
-                                  //                       0.0, 0.0, 0.0, 0.0),
-                                  //                   decoration: BoxDecoration(
-                                  //                     color: brandFour,
-                                  //                     borderRadius:
-                                  //                         BorderRadius.circular(
-                                  //                             10),
-                                  //                   ),
-                                  //                   child: Text(
-                                  //                     nairaFormaet
-                                  //                         .format(
-                                  //                             walletController
-                                  //                                 .walletModel!
-                                  //                                 .wallet![0]
-                                  //                                 .mainBalance)
-                                  //                         .toString(),
-                                  //                     style: GoogleFonts.nunito(
-                                  //                       fontSize: 30.0,
-                                  //                       fontWeight:
-                                  //                           FontWeight.w700,
-                                  //                       color: Colors.white,
-                                  //                     ),
-                                  //                   ),
-                                  //                 ),
-                                  //                 const SizedBox(
-                                  //                   height: 40,
-                                  //                 ),
-                                  //                 Row(
-                                  //                   children: [
-                                  //                     Text(
-                                  //                       (userController
-                                  //                                   .userModel!
-                                  //                                   .userDetails![
-                                  //                                       0]
-                                  //                                   .hasDva ==
-                                  //                               false)
-                                  //                           ? "${userController.userModel!.userDetails![0].firstName.toUpperCase()} ${userController.userModel!.userDetails![0].lastName.toUpperCase()}"
-                                  //                           : userController
-                                  //                               .userModel!
-                                  //                               .userDetails![0]
-                                  //                               .dvaName
-                                  //                               .toUpperCase(),
-                                  //                       style:
-                                  //                           GoogleFonts.nunito(
-                                  //                         fontSize: 15.0,
-                                  //                         color: Colors.white,
-                                  //                       ),
-                                  //                       textAlign:
-                                  //                           TextAlign.center,
-                                  //                     ),
-                                  //                   ],
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //     back: Neumorphic(
-                                  //       style: NeumorphicStyle(
-                                  //           shape: NeumorphicShape.concave,
-                                  //           boxShape:
-                                  //               NeumorphicBoxShape.roundRect(
-                                  //                   BorderRadius.circular(
-                                  //                       12.sp)),
-                                  //           depth: 0,
-                                  //           lightSource: LightSource.topLeft,
-                                  //           color:
-                                  //               Theme.of(context).canvasColor),
-                                  //       child: Container(
-                                  //         height: 220.h,
-                                  //         padding: EdgeInsets.fromLTRB(
-                                  //           0.0.w,
-                                  //           10.0.h,
-                                  //           0.0.w,
-                                  //           10.0.h,
-                                  //         ),
-                                  //         decoration: BoxDecoration(
-                                  //           color:
-                                  //               Theme.of(context).canvasColor,
-                                  //           image: const DecorationImage(
-                                  //             image:
-                                  //                 AssetImage("assets/card.jpg"),
-                                  //             fit: BoxFit.cover,
-                                  //           ),
-                                  //         ),
-                                  //         child: Column(
-                                  //           children: [
-                                  //             Row(
-                                  //               mainAxisAlignment:
-                                  //                   MainAxisAlignment.start,
-                                  //               children: [
-                                  //                 Padding(
-                                  //                   padding:
-                                  //                       EdgeInsets.fromLTRB(
-                                  //                     20.0.w,
-                                  //                     10.0.h,
-                                  //                     20.0.w,
-                                  //                     5.0.h,
-                                  //                   ),
-                                  //                   child: Text(
-                                  //                     "Property of RentSpace",
-                                  //                     style: GoogleFonts.nunito(
-                                  //                       fontSize: 14.0.sp,
-                                  //                       color: Colors.white,
-                                  //                     ),
-                                  //                   ),
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //             SizedBox(
-                                  //               height: 5.h,
-                                  //             ),
-                                  //             Container(
-                                  //               color: Colors.black,
-                                  //               height: 40.h,
-                                  //             ),
-                                  //             Padding(
-                                  //               padding: EdgeInsets.fromLTRB(
-                                  //                 40.0.w,
-                                  //                 20.0.h,
-                                  //                 40.0.w,
-                                  //                 5.0.h,
-                                  //               ),
-                                  //               child: Container(
-                                  //                 color: Colors.white,
-                                  //                 width: MediaQuery.of(context)
-                                  //                     .size
-                                  //                     .width,
-                                  //                 padding: EdgeInsets.fromLTRB(
-                                  //                   5.0.w,
-                                  //                   4.0.h,
-                                  //                   5.0.w,
-                                  //                   4.0.h,
-                                  //                 ),
-                                  //                 child: Text(
-                                  //                   (userController
-                                  //                               .userModel!
-                                  //                               .userDetails![0]
-                                  //                               .id !=
-                                  //                           "")
-                                  //                       ? userController
-                                  //                           .userModel!
-                                  //                           .userDetails![0]
-                                  //                           .id
-                                  //                           .substring(0, 3)
-                                  //                       : "000",
-                                  //                   style: GoogleFonts.nunito(
-                                  //                     fontSize: 14.0.sp,
-                                  //                     color: Colors.black,
-                                  //                   ),
-                                  //                   textAlign: TextAlign.end,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //             Padding(
-                                  //               padding: EdgeInsets.fromLTRB(
-                                  //                 20.0.w,
-                                  //                 10.0.h,
-                                  //                 20.0.w,
-                                  //                 5.0.h,
-                                  //               ),
-                                  //               child: Text(
-                                  //                 "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
-                                  //                 style: GoogleFonts.nunito(
-                                  //                   fontSize: 8.0.sp,
-                                  //                   color: Colors.white,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   )
-
-                                  : Container(
-                                      width: 420.w,
-                                      height: 230.h,
-                                      decoration: BoxDecoration(
-                                          color: brandTwo,
-                                          image: DecorationImage(
-                                            image: const AssetImage(
-                                              "assets/card.jpg",
-                                            ),
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.white.withOpacity(
-                                                  0.5), // Adjust the opacity here
-                                              BlendMode.darken,
-                                            ),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20.sp)),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 24.h),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Space Wallet',
-                                                  style: GoogleFonts.nunito(
-                                                    color: Colors.white,
-                                                    fontSize: 20.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5.w,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      hideBalance =
-                                                          !hideBalance;
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    hideBalance
-                                                        ? Icons
-                                                            .visibility_off_outlined
-                                                        : Icons
-                                                            .visibility_outlined,
-                                                    color: Colors.white,
-                                                    size: 27.sp,
                                                   ),
                                                 )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 15.h,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                // width: 280,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20.w,
-                                                    vertical: 10.h),
-                                                decoration: BoxDecoration(
-                                                  color: brandFour,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.sp),
-                                                ),
-                                                child: Text(
-                                                  " ${hideBalance ? nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance).toString() : "********"}",
+                                              : const SizedBox(),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          // width: 280,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.w, vertical: 10.h),
+
+                                          child: (walletController
+                                                  .isLoading.value)
+                                              ? const CustomLoader()
+                                              : Text(
+                                                  hideBalance
+                                                      ? nairaFormaet
+                                                          .format(walletController
+                                                                  .walletModel!
+                                                                  .wallet![0]
+                                                                  .mainBalance
+                                                                  .obs() ??
+                                                              0)
+                                                          .toString()
+                                                      : "******",
                                                   style: GoogleFonts.nunito(
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       fontSize: 25.sp,
                                                       color: Colors.white),
                                                 ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 25.h,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (userController.userModel!
-                                                        .userDetails![0].bvn ==
-                                                    "") {
-                                                  Get.to(const BvnPage());
-                                                } else {
-                                                  // Get.to(ViewBvnAndKyc(
-                                                  //   bvn: userController.userModel?.userDetails![0].bvn,
-                                                  //   hasVerifiedBvn: userController
-                                                  //       .users[0].hasVerifiedBvn
-                                                  //       .toString(),
-                                                  //   hasVerifiedKyc: userController
-                                                  //       .users[0].hasVerifiedKyc
-                                                  //       .toString(),
-                                                  //   kyc: userController.userModel?.userDetails![0].kyc,
-                                                  //   idImage: userController
-                                                  //       .users[0].Idimage
-                                                  //       .toString(),
-                                                  // ));
-                                                }
-                                              },
-                                              child: Container(
-                                                height: 61.h,
-                                                width: 210.w,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          35.sp),
-                                                  color:
-                                                      brandTwo.withOpacity(0.3),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Setup Wallet',
-                                                      style: GoogleFonts.nunito(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.white,
-                                                          fontSize: 20.sp),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10.w,
-                                                    ),
-                                                    Icon(
-                                                      Icons.add_circle,
-                                                      size: 30.sp,
-                                                      color: Colors.white,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
                                         ),
                                       ),
-                                    ),
-
-                              // Container(
-                              //     height: 220,
-                              //     padding: const EdgeInsets.fromLTRB(
-                              //         20.0, 20.0, 20.0, 20.0),
-                              //     decoration: BoxDecoration(
-                              //       color: brandOne,
-                              //       borderRadius: BorderRadius.circular(12),
-                              //     ),
-                              //     child: Stack(
-                              //       children: [
-                              //         Positioned(
-                              //           top: 0,
-                              //           left: 0,
-                              //           child: Image.asset(
-                              //             'assets/cash.png',
-                              //             width: 42,
-                              //           ),
-                              //         ),
-                              //         Positioned(
-                              //           bottom: 0,
-                              //           left: 0,
-                              //           child: Column(
-                              //             children: [
-                              //               Text(
-                              //                 '₦0.00',
-                              //                 style: GoogleFonts.nunito(
-                              //                   color: Colors.white,
-                              //                   fontSize: 22,
-                              //                   fontWeight: FontWeight.w700,
-                              //                 ),
-                              //               ),
-                              //               const SizedBox(
-                              //                 height: 5,
-                              //               ),
-                              //               Text(
-                              //                 'Space Wallet',
-                              //                 style: GoogleFonts.nunito(
-                              //                   color: Colors.white,
-                              //                   fontSize: 12,
-                              //                   fontWeight: FontWeight.w400,
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //     // width: ,
-                              //   ),
-                            ),
-                          ],
-                        ),
-                        // const SizedBox(
-                        //   height: 25,
-                        // ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0.sp),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Account Activities",
-                                style: GoogleFonts.nunito(
-                                  fontSize: 16.0.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).primaryColor,
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(const FundWallet());
+                                            },
+                                            child: Container(
+                                              height: 40.h,
+                                              width: 140.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        35.sp),
+                                                color:
+                                                    brandTwo.withOpacity(0.3),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.add_circle,
+                                                    size: 14.sp,
+                                                    color: Colors.white,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Text(
+                                                    'Add Money',
+                                                    style: GoogleFonts.nunito(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              walletController.fetchWallet();
+                                            },
+                                            child: const Icon(
+                                              Iconsax.refresh,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(AllActivities(
-                                      // activities: userInfo[0].activities.id,
-                                      // activitiesLength:
-                                      //     userInfo[0].activities.length,
-                                      ));
-                                },
-                                child: Text(
-                                  "See all",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 14.0.sp,
-                                    // letterSpacing: 1.0,
-                                    // fontFamily: "DefaultFontFamily",
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).primaryColor,
-                                    decoration: TextDecoration.underline,
+                              )
+
+                            //  FlipCard(
+                            //     front: Neumorphic(
+                            //       style: NeumorphicStyle(
+                            //           shape: NeumorphicShape.flat,
+                            //           boxShape:
+                            //               NeumorphicBoxShape.roundRect(
+                            //                   BorderRadius.circular(12)),
+                            //           depth: 0,
+                            //           lightSource: LightSource.bottomRight,
+                            //           color: Colors.white),
+                            //       child: Container(
+                            //         height: 220,
+                            //         padding: const EdgeInsets.fromLTRB(
+                            //             20.0, 20.0, 20.0, 20.0),
+                            //         decoration: BoxDecoration(
+                            //           color:
+                            //               Theme.of(context).canvasColor,
+                            //           image: const DecorationImage(
+                            //             image:
+                            //                 AssetImage("assets/card.jpg"),
+                            //             fit: BoxFit.cover,
+                            //           ),
+                            //         ),
+                            //         child: Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: [
+                            //             Column(
+                            //               crossAxisAlignment:
+                            //                   CrossAxisAlignment.start,
+                            //               children: [
+                            //                 Row(
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.start,
+                            //                   children: [
+                            //                     Image.asset(
+                            //                       'assets/icons/logo.png',
+                            //                       height: 24,
+                            //                     ),
+                            //                     const SizedBox(
+                            //                       width: 10,
+                            //                     ),
+                            //                     Text(
+                            //                       "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva == true) ? " - DVA" : ""}",
+                            //                       style:
+                            //                           GoogleFonts.nunito(
+                            //                         fontSize: 20.0,
+                            //                         color: Colors.white,
+                            //                         fontWeight: FontWeight.w700
+                            //                       ),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 5,
+                            //                 ),
+                            //                 Row(
+                            //                   children: [
+                            //                     Text(
+                            //                       (userController
+                            //                                   .userModel!
+                            //                                   .userDetails![
+                            //                                       0]
+                            //                                   .hasDva ==
+                            //                               true)
+                            //                           ? '${userController.userModel!.userDetails![0].dvaNumber.toString().substring(0, 3)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(3, 6)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(6, 10)}'
+                            //                           : '${walletController.walletModel!.wallet![0].walletId.substring(0, 3)}-${walletController.walletModel!.wallet![0].walletId.substring(3, 6)}-${walletController.walletModel!.wallet![0].walletId.substring(6, 10)}',
+                            //                       style:
+                            //                           GoogleFonts.nunito(
+                            //                         fontSize: 20.0,
+                            //                         fontWeight:
+                            //                             FontWeight.bold,
+                            //                         color: Colors.white,
+                            //                       ),
+                            //                       textAlign:
+                            //                           TextAlign.center,
+                            //                     ),
+                            //                     const SizedBox(
+                            //                       width: 10,
+                            //                     ),
+                            //                     (userController
+                            //                                 .userModel!
+                            //                                 .userDetails![
+                            //                                     0]
+                            //                                 .hasDva ==
+                            //                             true)
+                            //                         ? InkWell(
+                            //                             onTap: () {
+                            //                               Clipboard
+                            //                                   .setData(
+                            //                                 ClipboardData(
+                            //                                   text: userController
+                            //                                       .userModel!
+                            //                                       .userDetails![
+                            //                                           0]
+                            //                                       .dvaNumber
+                            //                                       .toString(),
+                            //                                 ),
+                            //                               );
+                            //                               Fluttertoast
+                            //                                   .showToast(
+                            //                                 msg:
+                            //                                     "Account Number copied to clipboard!",
+                            //                                 toastLength: Toast
+                            //                                     .LENGTH_SHORT,
+                            //                                 gravity:
+                            //                                     ToastGravity
+                            //                                         .CENTER,
+                            //                                 timeInSecForIosWeb:
+                            //                                     1,
+                            //                                 backgroundColor:
+                            //                                     brandOne,
+                            //                                 textColor:
+                            //                                     Colors
+                            //                                         .white,
+                            //                                 fontSize:
+                            //                                     16.0,
+                            //                               );
+                            //                             },
+                            //                             child: const Icon(
+                            //                               Icons.copy,
+                            //                               size: 16,
+                            //                               color: Colors
+                            //                                   .white,
+                            //                             ),
+                            //                           )
+                            //                         : const SizedBox(),
+                            //                   ],
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 10,
+                            //                 ),
+                            //                 Container(
+                            //                   width: 280,
+                            //                   padding: const EdgeInsets
+                            //                       .fromLTRB(
+                            //                       0.0, 0.0, 0.0, 0.0),
+                            //                   decoration: BoxDecoration(
+                            //                     color: brandFour,
+                            //                     borderRadius:
+                            //                         BorderRadius.circular(
+                            //                             10),
+                            //                   ),
+                            //                   child: Text(
+                            //                     nairaFormaet
+                            //                         .format(
+                            //                             walletController
+                            //                                 .walletModel!
+                            //                                 .wallet![0]
+                            //                                 .mainBalance)
+                            //                         .toString(),
+                            //                     style: GoogleFonts.nunito(
+                            //                       fontSize: 30.0,
+                            //                       fontWeight:
+                            //                           FontWeight.w700,
+                            //                       color: Colors.white,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 40,
+                            //                 ),
+                            //                 Row(
+                            //                   children: [
+                            //                     Text(
+                            //                       (userController
+                            //                                   .userModel!
+                            //                                   .userDetails![
+                            //                                       0]
+                            //                                   .hasDva ==
+                            //                               false)
+                            //                           ? "${userController.userModel!.userDetails![0].firstName.toUpperCase()} ${userController.userModel!.userDetails![0].lastName.toUpperCase()}"
+                            //                           : userController
+                            //                               .userModel!
+                            //                               .userDetails![0]
+                            //                               .dvaName
+                            //                               .toUpperCase(),
+                            //                       style:
+                            //                           GoogleFonts.nunito(
+                            //                         fontSize: 15.0,
+                            //                         color: Colors.white,
+                            //                       ),
+                            //                       textAlign:
+                            //                           TextAlign.center,
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     back: Neumorphic(
+                            //       style: NeumorphicStyle(
+                            //           shape: NeumorphicShape.concave,
+                            //           boxShape:
+                            //               NeumorphicBoxShape.roundRect(
+                            //                   BorderRadius.circular(
+                            //                       12.sp)),
+                            //           depth: 0,
+                            //           lightSource: LightSource.topLeft,
+                            //           color:
+                            //               Theme.of(context).canvasColor),
+                            //       child: Container(
+                            //         height: 220.h,
+                            //         padding: EdgeInsets.fromLTRB(
+                            //           0.0.w,
+                            //           10.0.h,
+                            //           0.0.w,
+                            //           10.0.h,
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           color:
+                            //               Theme.of(context).canvasColor,
+                            //           image: const DecorationImage(
+                            //             image:
+                            //                 AssetImage("assets/card.jpg"),
+                            //             fit: BoxFit.cover,
+                            //           ),
+                            //         ),
+                            //         child: Column(
+                            //           children: [
+                            //             Row(
+                            //               mainAxisAlignment:
+                            //                   MainAxisAlignment.start,
+                            //               children: [
+                            //                 Padding(
+                            //                   padding:
+                            //                       EdgeInsets.fromLTRB(
+                            //                     20.0.w,
+                            //                     10.0.h,
+                            //                     20.0.w,
+                            //                     5.0.h,
+                            //                   ),
+                            //                   child: Text(
+                            //                     "Property of RentSpace",
+                            //                     style: GoogleFonts.nunito(
+                            //                       fontSize: 14.0.sp,
+                            //                       color: Colors.white,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //             SizedBox(
+                            //               height: 5.h,
+                            //             ),
+                            //             Container(
+                            //               color: Colors.black,
+                            //               height: 40.h,
+                            //             ),
+                            //             Padding(
+                            //               padding: EdgeInsets.fromLTRB(
+                            //                 40.0.w,
+                            //                 20.0.h,
+                            //                 40.0.w,
+                            //                 5.0.h,
+                            //               ),
+                            //               child: Container(
+                            //                 color: Colors.white,
+                            //                 width: MediaQuery.of(context)
+                            //                     .size
+                            //                     .width,
+                            //                 padding: EdgeInsets.fromLTRB(
+                            //                   5.0.w,
+                            //                   4.0.h,
+                            //                   5.0.w,
+                            //                   4.0.h,
+                            //                 ),
+                            //                 child: Text(
+                            //                   (userController
+                            //                               .userModel!
+                            //                               .userDetails![0]
+                            //                               .id !=
+                            //                           "")
+                            //                       ? userController
+                            //                           .userModel!
+                            //                           .userDetails![0]
+                            //                           .id
+                            //                           .substring(0, 3)
+                            //                       : "000",
+                            //                   style: GoogleFonts.nunito(
+                            //                     fontSize: 14.0.sp,
+                            //                     color: Colors.black,
+                            //                   ),
+                            //                   textAlign: TextAlign.end,
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Padding(
+                            //               padding: EdgeInsets.fromLTRB(
+                            //                 20.0.w,
+                            //                 10.0.h,
+                            //                 20.0.w,
+                            //                 5.0.h,
+                            //               ),
+                            //               child: Text(
+                            //                 "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
+                            //                 style: GoogleFonts.nunito(
+                            //                   fontSize: 8.0.sp,
+                            //                   color: Colors.white,
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   )
+
+                            : Container(
+                                width: 420.w,
+                                height: 230.h,
+                                decoration: BoxDecoration(
+                                    color: brandTwo,
+                                    image: DecorationImage(
+                                      image: const AssetImage(
+                                        "assets/card.jpg",
+                                      ),
+                                      fit: BoxFit.cover,
+                                      colorFilter: ColorFilter.mode(
+                                        Colors.white.withOpacity(
+                                            0.5), // Adjust the opacity here
+                                        BlendMode.darken,
+                                      ),
+                                    ),
+                                    borderRadius: BorderRadius.circular(20.sp)),
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 24.h),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Space Wallet',
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.white,
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                hideBalance = !hideBalance;
+                                              });
+                                            },
+                                            child: Icon(
+                                              hideBalance
+                                                  ? Icons
+                                                      .visibility_off_outlined
+                                                  : Icons.visibility_outlined,
+                                              color: Colors.white,
+                                              size: 27.sp,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          // width: 280,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.w, vertical: 10.h),
+                                          decoration: BoxDecoration(
+                                            color: brandFour,
+                                            borderRadius:
+                                                BorderRadius.circular(10.sp),
+                                          ),
+                                          child: Text(
+                                            " ${hideBalance ? nairaFormaet.format(userController.userModel!.userDetails![0].wallet.mainBalance.obs()).toString() : "********"}",
+                                            style: GoogleFonts.nunito(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 25.sp,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 25.h,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (userController.userModel!
+                                                  .userDetails![0].bvn ==
+                                              "") {
+                                            Get.to(const BvnPage());
+                                          } else {
+                                            // Get.to(ViewBvnAndKyc(
+                                            //   bvn: userController.userModel?.userDetails![0].bvn,
+                                            //   hasVerifiedBvn: userController
+                                            //       .users[0].hasVerifiedBvn
+                                            //       .toString(),
+                                            //   hasVerifiedKyc: userController
+                                            //       .users[0].hasVerifiedKyc
+                                            //       .toString(),
+                                            //   kyc: userController.userModel?.userDetails![0].kyc,
+                                            //   idImage: userController
+                                            //       .users[0].Idimage
+                                            //       .toString(),
+                                            // ));
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 61.h,
+                                          width: 210.w,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(35.sp),
+                                            color: brandTwo.withOpacity(0.3),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Setup Wallet',
+                                                style: GoogleFonts.nunito(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white,
+                                                    fontSize: 20.sp),
+                                              ),
+                                              SizedBox(
+                                                width: 10.w,
+                                              ),
+                                              Icon(
+                                                Icons.add_circle,
+                                                size: 30.sp,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
+
+                        // Container(
+                        //     height: 220,
+                        //     padding: const EdgeInsets.fromLTRB(
+                        //         20.0, 20.0, 20.0, 20.0),
+                        //     decoration: BoxDecoration(
+                        //       color: brandOne,
+                        //       borderRadius: BorderRadius.circular(12),
+                        //     ),
+                        //     child: Stack(
+                        //       children: [
+                        //         Positioned(
+                        //           top: 0,
+                        //           left: 0,
+                        //           child: Image.asset(
+                        //             'assets/cash.png',
+                        //             width: 42,
+                        //           ),
+                        //         ),
+                        //         Positioned(
+                        //           bottom: 0,
+                        //           left: 0,
+                        //           child: Column(
+                        //             children: [
+                        //               Text(
+                        //                 '₦0.00',
+                        //                 style: GoogleFonts.nunito(
+                        //                   color: Colors.white,
+                        //                   fontSize: 22,
+                        //                   fontWeight: FontWeight.w700,
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 5,
+                        //               ),
+                        //               Text(
+                        //                 'Space Wallet',
+                        //                 style: GoogleFonts.nunito(
+                        //                   color: Colors.white,
+                        //                   fontSize: 12,
+                        //                   fontWeight: FontWeight.w400,
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     // width: ,
+                        //   ),
+                      ),
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0.sp),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Account Activities",
+                          style: GoogleFonts.nunito(
+                            fontSize: 16.0.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                        InkWell(
+                          onTap: () {
+                            Get.to(AllActivities(
+                                // activities: userInfo[0].activities.id,
+                                // activitiesLength:
+                                //     userInfo[0].activities.length,
+                                ));
+                          },
+                          child: Text(
+                            "See all",
+                            style: GoogleFonts.nunito(
+                              fontSize: 14.0.sp,
+                              // letterSpacing: 1.0,
+                              // fontFamily: "DefaultFontFamily",
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
-                        // Text(activitiesController.activitiesModel!.activities![0].description),
-                        activitiesController
-                                .activitiesModel!.activities!.isNotEmpty
-                            ? ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                physics: const ClampingScrollPhysics(),
-                                itemCount: (activitiesController
-                                            .activitiesModel!
-                                            .activities!
-                                            .length <
-                                        2)
-                                    ? activitiesController.activitiesModel!
-                                            .activities!.length -
-                                        1
-                                    : 2,
-                                itemBuilder: (BuildContext context, int index) {
-                                  int reversedIndex = activitiesController
-                                          .activitiesModel!.activities!.length -
-                                      1 -
-                                      index;
-                                  // Access the activities in reverse order
-                                  final activity = activitiesController
-                                      .activitiesModel!
-                                      .activities![reversedIndex];
-                                  return Container(
-                                    color: Theme.of(context).canvasColor,
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10.0, 10, 10.0, 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/iconset/Group462.png',
-                                          height: 40,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          activity.description,
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 14,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Center(
-                                  child: Text(
-                                    "No Activites Yet",
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // Text(activitiesController.activitiesModel!.activities![0].description),
+                  userController.userModel!.userDetails![0].activities
+                          .obs()
+                          .isNotEmpty
+                      ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: (userController
+                                      .userModel!.userDetails![0].activities
+                                      .obs()
+                                      .length <
+                                  2)
+                              ? userController.userModel!.userDetails![0]
+                                      .activities.length -
+                                  1
+                              : 2,
+                          itemBuilder: (BuildContext context, int index) {
+                            int reversedIndex = userController
+                                    .userModel!.userDetails![0].activities
+                                    .obs()
+                                    .length -
+                                1 -
+                                index;
+                            // Access the activities in reverse order
+                            final activity = userController.userModel!
+                                .userDetails![0].activities[reversedIndex];
+                            return Container(
+                              color: Theme.of(context).canvasColor,
+                              padding:
+                                  const EdgeInsets.fromLTRB(10.0, 10, 10.0, 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/iconset/Group462.png',
+                                    height: 40,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    activity['description'],
                                     style: GoogleFonts.nunito(
-                                      fontSize: 20,
-                                      // fontFamily: "DefaultFontFamily",
+                                      fontSize: 14,
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Visibility(
-                          visible: isContainerVisible,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(15),
+                            );
+                          },
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Center(
+                            child: Text(
+                              "No Activites Yet",
+                              style: GoogleFonts.nunito(
+                                fontSize: 20,
+                                // fontFamily: "DefaultFontFamily",
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 20.0),
-                              child: Column(
+                          ),
+                        ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Visibility(
+                    visible: isContainerVisible,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Account Setup',
-                                          style: GoogleFonts.nunito(
-                                            color: brandOne,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              isContainerVisible = false;
-                                            });
-                                          },
-                                          child: const Icon(
-                                            Iconsax.close_circle,
-                                            color: brandOne,
-                                          ),
-                                        ),
-                                      ],
+                                  Text(
+                                    'Account Setup',
+                                    style: GoogleFonts.nunito(
+                                      color: brandOne,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          (userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .hasVerifiedBvn ==
-                                                  false)
-                                              ? Iconsax.verify
-                                              : Iconsax.verify5,
-                                          color: brandOne,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          'BVN Setup',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: brandOne,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const MySeparator(),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(const KYCIntroPage());
+                                      setState(() {
+                                        isContainerVisible = false;
+                                      });
                                     },
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          (userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .hasVerifiedKyc ==
-                                                  false)
-                                              ? Iconsax.verify
-                                              : Iconsax.verify5,
-                                          color: brandOne,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          'KYC Setup',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: brandOne,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
+                                    child: const Icon(
+                                      Iconsax.close_circle,
+                                      color: brandOne,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    (userController.userModel!.userDetails![0]
+                                                .hasVerifiedBvn
+                                                .obs() ==
+                                            false)
+                                        ? Iconsax.verify
+                                        : Iconsax.verify5,
+                                    color: brandOne,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'BVN Setup',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.nunito(
+                                      color: brandOne,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const MySeparator(),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(const KYCIntroPage());
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    (userController.userModel!.userDetails![0]
+                                                .hasVerifiedKyc
+                                                .obs() ==
+                                            false)
+                                        ? Iconsax.verify
+                                        : Iconsax.verify5,
+                                    color: brandOne,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'KYC Setup',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.nunito(
+                                      color: brandOne,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  (userController.userModel!.userDetails![0].bvn.obs() != "" &&
+                          userController.userModel!.userDetails![0].hasDva
+                                  .obs() ==
+                              false)
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: brandThree,
+                            ),
+                            child: ListTile(
+                              onTap: () {
+                                Get.to(const CreateDVA());
+                              },
+                              leading: const Icon(
+                                Icons.person_add_outlined,
+                                color: Colors.black,
+                              ),
+                              title: Text(
+                                "Activate DVA",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Free Dynamic Virtual Account (DVA)",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              trailing: const Icon(
+                                Icons.arrow_right_outlined,
+                                color: Colors.black,
+                              ),
+                              tileColor: Colors.white,
+                            ),
                           ),
+                        )
+                      : const SizedBox(
+                          height: 1,
                         ),
 
-                        (userController.userModel!.userDetails![0].bvn != "" &&
-                                userController
-                                        .userModel!.userDetails![0].hasDva ==
-                                    false)
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: brandThree,
-                                  ),
-                                  child: ListTile(
-                                    onTap: () {
-                                      Get.to(const CreateDVA());
-                                    },
-                                    leading: const Icon(
-                                      Icons.person_add_outlined,
-                                      color: Colors.black,
-                                    ),
-                                    title: Text(
-                                      "Activate DVA",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      "Free Dynamic Virtual Account (DVA)",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    trailing: const Icon(
-                                      Icons.arrow_right_outlined,
-                                      color: Colors.black,
-                                    ),
-                                    tileColor: Colors.white,
-                                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    width: 400,
+                    height: 225,
+                    decoration: BoxDecoration(
+                      color: brandTwo,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 24, horizontal: 24),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/iconset/fundwallet.png',
+                                width: 30,
+                                color: brandOne,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Top Up Your Wallet',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               )
-                            : const SizedBox(
-                                height: 1,
-                              ),
-
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: 400,
-                          height: 225,
-                          decoration: BoxDecoration(
-                            color: brandTwo,
-                            borderRadius: BorderRadius.circular(20),
+                            ],
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 24, horizontal: 24),
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          Text(
+                            'Top up your wallet for seamless transactions! Add funds now and enjoy a hassle-free experience.',
+                            style: GoogleFonts.nunito(
+                              color: brandOne,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        AlertDialog(
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  30, 30, 30, 20),
+                                          elevation: 0,
+                                          alignment: Alignment.bottomCenter,
+                                          insetPadding: const EdgeInsets.all(0),
+                                          scrollable: true,
+                                          title: null,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              topRight: Radius.circular(30),
+                                            ),
+                                          ),
+                                          content: SizedBox(
+                                            child: SizedBox(
+                                              width: 400.w,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 40.h),
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical:
+                                                                      15.h),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .topCenter,
+                                                            child: Text(
+                                                              'Securely top up your wallet',
+                                                              style: GoogleFonts
+                                                                  .nunito(
+                                                                color: brandOne,
+                                                                fontSize: 16.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 10),
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(3),
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Get.to(
+                                                                        const FundWallet());
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    minimumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    maximumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    backgroundColor:
+                                                                        brandOne,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8),
+                                                                    ),
+                                                                    textStyle: const TextStyle(
+                                                                        color:
+                                                                            brandFour,
+                                                                        fontSize:
+                                                                            13),
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      const Icon(
+                                                                          Iconsax
+                                                                              .card),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        "Proceed To Top Up",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontSize:
+                                                                              12.sp,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                height: 49,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: brandOne,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.asset(
                                       'assets/icons/iconset/fundwallet.png',
-                                      width: 30,
-                                      color: brandOne,
+                                      width: 24,
                                     ),
                                     const SizedBox(
                                       width: 10,
                                     ),
                                     Text(
-                                      'Top Up Your Wallet',
-                                      textAlign: TextAlign.center,
+                                      'Fund Now',
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -1553,153 +1709,201 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     )
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    width: 400.w,
+                    height: 225.sp,
+                    decoration: BoxDecoration(
+                      color: brandOne,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 24.h, horizontal: 24.w),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/iconset/uil_money-withdrawal.png',
+                                width: 30.w,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                'Withdraw Your Funds',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
                                 ),
-                                Text(
-                                  'Top up your wallet for seamless transactions! Add funds now and enjoy a hassle-free experience.',
-                                  style: GoogleFonts.nunito(
-                                    color: brandOne,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              AlertDialog(
-                                                contentPadding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        30, 30, 30, 20),
-                                                elevation: 0,
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                insetPadding:
-                                                    const EdgeInsets.all(0),
-                                                scrollable: true,
-                                                title: null,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(30),
-                                                    topRight:
-                                                        Radius.circular(30),
-                                                  ),
-                                                ),
-                                                content: SizedBox(
-                                                  child: SizedBox(
-                                                    width: 400.w,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 14.h,
+                          ),
+                          Text(
+                            'Your security matters. Withdraw with confidence knowing your transactions are encrypted and secure.',
+                            style: GoogleFonts.nunito(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 14.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        AlertDialog(
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  30, 30, 30, 20),
+                                          elevation: 0,
+                                          alignment: Alignment.bottomCenter,
+                                          insetPadding: const EdgeInsets.all(0),
+                                          scrollable: true,
+                                          title: null,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              topRight: Radius.circular(30),
+                                            ),
+                                          ),
+                                          content: SizedBox(
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 40.h),
                                                     child: Column(
                                                       children: [
                                                         Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      40.h),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 15),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .topCenter,
+                                                            child: Text(
+                                                              'Withdraw your Secured Funds',
+                                                              style: GoogleFonts
+                                                                  .nunito(
+                                                                color: brandOne,
+                                                                fontSize: 16.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 10),
                                                           child: Column(
                                                             children: [
                                                               Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            15.h),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .topCenter,
-                                                                  child: Text(
-                                                                    'Securely top up your wallet',
-                                                                    style: GoogleFonts
-                                                                        .nunito(
-                                                                      color:
-                                                                          brandOne,
-                                                                      fontSize:
-                                                                          16.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(3),
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance.obs() >
+                                                                            0)
+                                                                        ? Get.to(
+                                                                            const WalletWithdrawal())
+                                                                        : customErrorDialog(
+                                                                            context,
+                                                                            'Wallet Empty! :)',
+                                                                            'You need to fund your wallet first!',
+                                                                          );
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    minimumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    maximumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    backgroundColor:
+                                                                        brandOne,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8),
                                                                     ),
+                                                                    textStyle: const TextStyle(
+                                                                        color:
+                                                                            brandFour,
+                                                                        fontSize:
+                                                                            13),
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      const Icon(
+                                                                          Iconsax
+                                                                              .card),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        "Proceed To Withdrawal",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontSize:
+                                                                              10.sp,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            10),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              3),
-                                                                      child:
-                                                                          ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Get.to(
-                                                                              const FundWallet());
-                                                                        },
-                                                                        style: ElevatedButton
-                                                                            .styleFrom(
-                                                                          minimumSize: const Size(
-                                                                              300,
-                                                                              50),
-                                                                          maximumSize: const Size(
-                                                                              300,
-                                                                              50),
-                                                                          backgroundColor:
-                                                                              brandOne,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8),
-                                                                          ),
-                                                                          textStyle: const TextStyle(
-                                                                              color: brandFour,
-                                                                              fontSize: 13),
-                                                                        ),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            const Icon(Iconsax.card),
-                                                                            const SizedBox(
-                                                                              width: 10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Proceed To Top Up",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontSize: 12.sp,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          10,
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                              const SizedBox(
+                                                                height: 10,
                                                               ),
                                                             ],
                                                           ),
@@ -1707,43 +1911,363 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       ],
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: 49,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: brandOne,
-                                        borderRadius: BorderRadius.circular(30),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                height: 49.h,
+                                width: 180.w,
+                                decoration: BoxDecoration(
+                                  color: brandTwo,
+                                  borderRadius: BorderRadius.circular(30.sp),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/iconset/uil_money-withdrawal.png',
+                                      width: 24.w,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      'Withdraw Now',
+                                      style: GoogleFonts.nunito(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                      child: Row(
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        // const SizedBox(
+                        //   height: 30,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Text(
+                        //         "Quick Options",
+                        //         style: GoogleFonts.nunito(
+                        //           fontWeight: FontWeight.w700,
+                        //           fontSize: 24.0,
+                        //           // fontFamily: "DefaultFontFamily",
+                        //           color: Theme.of(context).primaryColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         //Wallet top up
+                        //         Get.bottomSheet(
+                        //           SizedBox(
+                        //             height: 200,
+                        //             child: ClipRRect(
+                        //               borderRadius: const BorderRadius.only(
+                        //                 topLeft: Radius.circular(30.0),
+                        //                 topRight: Radius.circular(30.0),
+                        //               ),
+                        //               child: Container(
+                        //                 color: Theme.of(context).canvasColor,
+                        //                 padding: const EdgeInsets.fromLTRB(
+                        //                     10, 5, 10, 5),
+                        //                 child: Column(
+                        //                   children: [
+                        //                     const SizedBox(
+                        //                       height: 50,
+                        //                     ),
+                        //                     Text(
+                        //                       'Securely top up your wallet',
+                        //                       style: TextStyle(
+                        //                         fontSize: 14,
+                        //                         color: Theme.of(context)
+                        //                             .primaryColor,
+                        //                         fontFamily: "DefaultFontFamily",
+                        //                       ),
+                        //                     ),
+                        //                     const SizedBox(
+                        //                       height: 10,
+                        //                     ),
+                        //                     //card
+                        //                     InkWell(
+                        //                       onTap: () async {
+                        //                         Get.back();
+                        //                         Get.to(const FundWallet());
+                        //                       },
+                        //                       child: Container(
+                        //                         width: MediaQuery.of(context)
+                        //                                 .size
+                        //                                 .width /
+                        //                             1.8,
+                        //                         decoration: BoxDecoration(
+                        //                           color: brandOne,
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(20),
+                        //                         ),
+                        //                         padding:
+                        //                             const EdgeInsets.fromLTRB(
+                        //                                 20, 5, 20, 5),
+                        //                         child: const Row(
+                        //                           mainAxisAlignment:
+                        //                               MainAxisAlignment.start,
+                        //                           children: [
+                        //                             Icon(
+                        //                               Icons
+                        //                                   .credit_card_outlined,
+                        //                               color: Colors.white,
+                        //                               size: 30,
+                        //                             ),
+                        //                             SizedBox(
+                        //                               width: 10,
+                        //                             ),
+                        //                             Text(
+                        //                               'Proceed to Top up',
+                        //                               style: TextStyle(
+                        //                                 fontSize: 12,
+                        //                                 fontFamily:
+                        //                                     "DefaultFontFamily",
+                        //                                 color: Colors.white,
+                        //                               ),
+                        //                             ),
+                        //                           ],
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         );
+                        //       },
+                        //       child: Container(
+                        //         height: 200,
+                        //         width: MediaQuery.of(context).size.width / 2.2,
+                        //         padding:
+                        //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        //         decoration: BoxDecoration(
+                        //           color: brandFour,
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //         child: Stack(
+                        //           children: [
+                        //             Positioned(
+                        //               bottom: 5,
+                        //               right: 5,
+                        //               child: Image.asset(
+                        //                 "assets/icons/iconset/fundwallet.png",
+                        //                 color: Colors.white.withOpacity(0.3),
+                        //                 width: 100,
+                        //                 height: 100,
+                        //                 fit: BoxFit.fitWidth,
+                        //                 // colorBlendMode: BlendMode.darken,
+                        //               ),
+                        //             ),
+                        //             Column(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.start,
+                        //               children: [
+                        //                 Image.asset(
+                        //                   "assets/icons/iconset/fundwallet.png",
+                        //                   width: 24,
+                        //                 ),
+                        //                 const SizedBox(
+                        //                   height: 4,
+                        //                 ),
+                        //                 const Text(
+                        //                   "Fund Wallet",
+                        //                   style: TextStyle(
+                        //                     fontSize: 12.0,
+                        //                     letterSpacing: 0.5,
+                        //                     color: Colors.white,
+                        //                     fontFamily: "DefaultFontFamily",
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     InkWell(
+                        //       onTap: () {
+                        //         (int.tryParse(userController
+                        //                     .user[0].userWalletBalance)! >
+                        //                 0)
+                        //             ? Get.to(const WalletWithdrawal())
+                        //             : Get.snackbar(
+                        //                 "Wallet Empty!",
+                        //                 'You need to fund your wallet first!',
+                        //                 animationDuration:
+                        //                     const Duration(seconds: 1),
+                        //                 backgroundColor: Colors.red,
+                        //                 colorText: Colors.white,
+                        //                 snackPosition: SnackPosition.BOTTOM,
+                        //               );
+                        //       },
+                        //       child: Container(
+                        //         height: 200,
+                        //         width: MediaQuery.of(context).size.width / 2.2,
+                        //         padding:
+                        //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        //         decoration: BoxDecoration(
+                        //           color: brandTwo,
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //         child: Stack(
+                        //           children: [
+                        //             Positioned(
+                        //               bottom: 5,
+                        //               right: 5,
+                        //               child: Image.asset(
+                        //                 "assets/icons/iconset/uil_money-withdrawal.png",
+                        //                 // color: Colors.transparent.withOpacity(0.9),
+                        //                 // opacity: Animation<0.3>,
+                        //                 width: 100,
+                        //                 height: 100,
+                        //                 fit: BoxFit.fitWidth,
+                        //                 colorBlendMode: BlendMode.overlay,
+                        //               ),
+                        //             ),
+                        //             Column(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.start,
+                        //               children: [
+                        //                 Image.asset(
+                        //                   "assets/icons/iconset/uil_money-withdrawal.png",
+                        //                   width: 35,
+                        //                 ),
+                        //                 const SizedBox(
+                        //                   height: 4,
+                        //                 ),
+                        //                 const Text(
+                        //                   "Withdraw Funds",
+                        //                   style: TextStyle(
+                        //                     fontSize: 12.0,
+                        //                     letterSpacing: 0.5,
+                        //                     fontFamily: "DefaultFontFamily",
+                        //                     color: Colors.white,
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+
+                        const SizedBox(
+                          height: 20,
+                        ),
+
+                        InkWell(
+                          onTap: () {
+                            showTopSnackBar(
+                              Overlay.of(context),
+                              CustomSnackBar.error(
+                                backgroundColor: brandOne,
+                                message: 'Coming Soon :)',
+                                textStyle: GoogleFonts.nunito(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: brandTwo,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 10, 0, 30),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        'assets/community.png',
+                                        width: 28,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Image.asset(
-                                            'assets/icons/iconset/fundwallet.png',
-                                            width: 24,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
                                           Text(
-                                            'Fund Now',
+                                            "RentSpace community",
                                             style: GoogleFonts.nunito(
+                                              fontSize: 18.0,
                                               color: Colors.white,
-                                              fontSize: 16,
                                               fontWeight: FontWeight.w700,
                                             ),
-                                          )
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Text(
+                                            "View the amazing community\nof other Spacers!",
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 12.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ],
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -1753,580 +2277,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          width: 400.w,
-                          height: 225.sp,
-                          decoration: BoxDecoration(
-                            color: brandOne,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 24.h, horizontal: 24.w),
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/iconset/uil_money-withdrawal.png',
-                                      width: 30.w,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Text(
-                                      'Withdraw Your Funds',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
-                                        color: Colors.white,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 14.h,
-                                ),
-                                Text(
-                                  'Your security matters. Withdraw with confidence knowing your transactions are encrypted and secure.',
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 14.h,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              AlertDialog(
-                                                contentPadding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        30, 30, 30, 20),
-                                                elevation: 0,
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                insetPadding:
-                                                    const EdgeInsets.all(0),
-                                                scrollable: true,
-                                                title: null,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(30),
-                                                    topRight:
-                                                        Radius.circular(30),
-                                                  ),
-                                                ),
-                                                content: SizedBox(
-                                                  child: SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      40.h),
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            15),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .topCenter,
-                                                                  child: Text(
-                                                                    'Withdraw your Secured Funds',
-                                                                    style: GoogleFonts
-                                                                        .nunito(
-                                                                      color:
-                                                                          brandOne,
-                                                                      fontSize:
-                                                                          16.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            10),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              3),
-                                                                      child:
-                                                                          ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          (walletController.walletModel!.wallet![0].mainBalance > 0)
-                                                                              ? Get.to(const WalletWithdrawal())
-                                                                              : customErrorDialog(
-                                                                                  context,
-                                                                                  'Wallet Empty! :)',
-                                                                                  'You need to fund your wallet first!',
-                                                                                );
-                                                                        },
-                                                                        style: ElevatedButton
-                                                                            .styleFrom(
-                                                                          minimumSize: const Size(
-                                                                              300,
-                                                                              50),
-                                                                          maximumSize: const Size(
-                                                                              300,
-                                                                              50),
-                                                                          backgroundColor:
-                                                                              brandOne,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8),
-                                                                          ),
-                                                                          textStyle: const TextStyle(
-                                                                              color: brandFour,
-                                                                              fontSize: 13),
-                                                                        ),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            const Icon(Iconsax.card),
-                                                                            const SizedBox(
-                                                                              width: 10,
-                                                                            ),
-                                                                            Text(
-                                                                              "Proceed To Withdrawal",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontSize: 10.sp,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          10,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Container(
-                                      height: 49.h,
-                                      width: 180.w,
-                                      decoration: BoxDecoration(
-                                        color: brandTwo,
-                                        borderRadius:
-                                            BorderRadius.circular(30.sp),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            'assets/icons/iconset/uil_money-withdrawal.png',
-                                            width: 24.w,
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Text(
-                                            'Withdraw Now',
-                                            style: GoogleFonts.nunito(
-                                              color: Colors.white,
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              // const SizedBox(
-                              //   height: 30,
-                              // ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.start,
-                              //   children: [
-                              //     Padding(
-                              //       padding: const EdgeInsets.all(8.0),
-                              //       child: Text(
-                              //         "Quick Options",
-                              //         style: GoogleFonts.nunito(
-                              //           fontWeight: FontWeight.w700,
-                              //           fontSize: 24.0,
-                              //           // fontFamily: "DefaultFontFamily",
-                              //           color: Theme.of(context).primaryColor,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     InkWell(
-                              //       onTap: () {
-                              //         //Wallet top up
-                              //         Get.bottomSheet(
-                              //           SizedBox(
-                              //             height: 200,
-                              //             child: ClipRRect(
-                              //               borderRadius: const BorderRadius.only(
-                              //                 topLeft: Radius.circular(30.0),
-                              //                 topRight: Radius.circular(30.0),
-                              //               ),
-                              //               child: Container(
-                              //                 color: Theme.of(context).canvasColor,
-                              //                 padding: const EdgeInsets.fromLTRB(
-                              //                     10, 5, 10, 5),
-                              //                 child: Column(
-                              //                   children: [
-                              //                     const SizedBox(
-                              //                       height: 50,
-                              //                     ),
-                              //                     Text(
-                              //                       'Securely top up your wallet',
-                              //                       style: TextStyle(
-                              //                         fontSize: 14,
-                              //                         color: Theme.of(context)
-                              //                             .primaryColor,
-                              //                         fontFamily: "DefaultFontFamily",
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 10,
-                              //                     ),
-                              //                     //card
-                              //                     InkWell(
-                              //                       onTap: () async {
-                              //                         Get.back();
-                              //                         Get.to(const FundWallet());
-                              //                       },
-                              //                       child: Container(
-                              //                         width: MediaQuery.of(context)
-                              //                                 .size
-                              //                                 .width /
-                              //                             1.8,
-                              //                         decoration: BoxDecoration(
-                              //                           color: brandOne,
-                              //                           borderRadius:
-                              //                               BorderRadius.circular(20),
-                              //                         ),
-                              //                         padding:
-                              //                             const EdgeInsets.fromLTRB(
-                              //                                 20, 5, 20, 5),
-                              //                         child: const Row(
-                              //                           mainAxisAlignment:
-                              //                               MainAxisAlignment.start,
-                              //                           children: [
-                              //                             Icon(
-                              //                               Icons
-                              //                                   .credit_card_outlined,
-                              //                               color: Colors.white,
-                              //                               size: 30,
-                              //                             ),
-                              //                             SizedBox(
-                              //                               width: 10,
-                              //                             ),
-                              //                             Text(
-                              //                               'Proceed to Top up',
-                              //                               style: TextStyle(
-                              //                                 fontSize: 12,
-                              //                                 fontFamily:
-                              //                                     "DefaultFontFamily",
-                              //                                 color: Colors.white,
-                              //                               ),
-                              //                             ),
-                              //                           ],
-                              //                         ),
-                              //                       ),
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         );
-                              //       },
-                              //       child: Container(
-                              //         height: 200,
-                              //         width: MediaQuery.of(context).size.width / 2.2,
-                              //         padding:
-                              //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                              //         decoration: BoxDecoration(
-                              //           color: brandFour,
-                              //           borderRadius: BorderRadius.circular(10),
-                              //         ),
-                              //         child: Stack(
-                              //           children: [
-                              //             Positioned(
-                              //               bottom: 5,
-                              //               right: 5,
-                              //               child: Image.asset(
-                              //                 "assets/icons/iconset/fundwallet.png",
-                              //                 color: Colors.white.withOpacity(0.3),
-                              //                 width: 100,
-                              //                 height: 100,
-                              //                 fit: BoxFit.fitWidth,
-                              //                 // colorBlendMode: BlendMode.darken,
-                              //               ),
-                              //             ),
-                              //             Column(
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.start,
-                              //               children: [
-                              //                 Image.asset(
-                              //                   "assets/icons/iconset/fundwallet.png",
-                              //                   width: 24,
-                              //                 ),
-                              //                 const SizedBox(
-                              //                   height: 4,
-                              //                 ),
-                              //                 const Text(
-                              //                   "Fund Wallet",
-                              //                   style: TextStyle(
-                              //                     fontSize: 12.0,
-                              //                     letterSpacing: 0.5,
-                              //                     color: Colors.white,
-                              //                     fontFamily: "DefaultFontFamily",
-                              //                   ),
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     InkWell(
-                              //       onTap: () {
-                              //         (int.tryParse(userController
-                              //                     .user[0].userWalletBalance)! >
-                              //                 0)
-                              //             ? Get.to(const WalletWithdrawal())
-                              //             : Get.snackbar(
-                              //                 "Wallet Empty!",
-                              //                 'You need to fund your wallet first!',
-                              //                 animationDuration:
-                              //                     const Duration(seconds: 1),
-                              //                 backgroundColor: Colors.red,
-                              //                 colorText: Colors.white,
-                              //                 snackPosition: SnackPosition.BOTTOM,
-                              //               );
-                              //       },
-                              //       child: Container(
-                              //         height: 200,
-                              //         width: MediaQuery.of(context).size.width / 2.2,
-                              //         padding:
-                              //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                              //         decoration: BoxDecoration(
-                              //           color: brandTwo,
-                              //           borderRadius: BorderRadius.circular(10),
-                              //         ),
-                              //         child: Stack(
-                              //           children: [
-                              //             Positioned(
-                              //               bottom: 5,
-                              //               right: 5,
-                              //               child: Image.asset(
-                              //                 "assets/icons/iconset/uil_money-withdrawal.png",
-                              //                 // color: Colors.transparent.withOpacity(0.9),
-                              //                 // opacity: Animation<0.3>,
-                              //                 width: 100,
-                              //                 height: 100,
-                              //                 fit: BoxFit.fitWidth,
-                              //                 colorBlendMode: BlendMode.overlay,
-                              //               ),
-                              //             ),
-                              //             Column(
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.start,
-                              //               children: [
-                              //                 Image.asset(
-                              //                   "assets/icons/iconset/uil_money-withdrawal.png",
-                              //                   width: 35,
-                              //                 ),
-                              //                 const SizedBox(
-                              //                   height: 4,
-                              //                 ),
-                              //                 const Text(
-                              //                   "Withdraw Funds",
-                              //                   style: TextStyle(
-                              //                     fontSize: 12.0,
-                              //                     letterSpacing: 0.5,
-                              //                     fontFamily: "DefaultFontFamily",
-                              //                     color: Colors.white,
-                              //                   ),
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-
-                              const SizedBox(
-                                height: 20,
-                              ),
-
-                              InkWell(
-                                onTap: () {
-                                  showTopSnackBar(
-                                    Overlay.of(context),
-                                    CustomSnackBar.error(
-                                      backgroundColor: brandOne,
-                                      message: 'Coming Soon :)',
-                                      textStyle: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: brandTwo,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 30),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                              'assets/community.png',
-                                              width: 28,
-                                              color: Colors.white,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "RentSpace community",
-                                                  style: GoogleFonts.nunito(
-                                                    fontSize: 18.0,
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Text(
-                                                  "View the amazing community\nof other Spacers!",
-                                                  style: GoogleFonts.nunito(
-                                                      fontSize: 12.0,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
+            ),
+          ),
+        ),
       ),
     );
   }

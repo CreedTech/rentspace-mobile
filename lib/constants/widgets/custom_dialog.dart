@@ -403,7 +403,7 @@ void customErrorDialog(
                   message,
                   style: GoogleFonts.nunito(
                     color: Colors.red,
-                    fontSize: 20.sp,
+                    fontSize: 28.sp,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -415,7 +415,7 @@ void customErrorDialog(
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
                     color: Colors.red,
-                    fontSize: 14.sp,
+                    fontSize: 16.sp,
                   ),
                 ),
                 const SizedBox(

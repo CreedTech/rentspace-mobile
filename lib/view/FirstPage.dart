@@ -64,7 +64,6 @@ List<Widget> listWidgets = [
   const SettingsPage()
 ];
 
-
 class CounterNew extends GetxController {
   final GlobalKey _one = GlobalKey();
   final GlobalKey _two = GlobalKey();
@@ -111,13 +110,13 @@ class _FirstPageState extends State<FirstPage> {
     // print(walletController.isLoading.value);
     // print(activitiesController.isLoading.value);
 
-    Future.delayed(const Duration(seconds: 2), () {
-      // fetchUserAndSetState();
-      
-      setState(() {
-        _hasPutController = true;
-      });
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   // fetchUserAndSetState();
+
+    //   setState(() {
+    //     _hasPutController = true;
+    //   });
+    // });
   }
   // Future<void> fetchUserAndSetState() async {
   //   try {
@@ -147,106 +146,108 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(ActivitiesController());
     Get.put(WalletController());
     Get.put(RentController());
-    return 
-    // Obx(
-    //   () =>
-       (!_hasPutController)
-          ? Scaffold(
-              backgroundColor: Theme.of(context).canvasColor,
-              body: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage(
-                      'assets/slider3.png',
-                    ),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), // Adjust the opacity here
-                      BlendMode.darken,
+    return
+        Obx(
+          () =>
+        (userController.isLoading.value)
+            ? Scaffold(
+                backgroundColor: Theme.of(context).canvasColor,
+                body: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: const AssetImage(
+                        'assets/slider3.png',
+                      ),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black
+                            .withOpacity(0.5), // Adjust the opacity here
+                        BlendMode.darken,
+                      ),
                     ),
                   ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 150),
-                      child: Image.asset(
-                        'assets/icons/RentSpaceWhite.png',
-                        // width: 140,
-                        height: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 150),
+                        child: Image.asset(
+                          'assets/icons/RentSpaceWhite.png',
+                          // width: 140,
+                          height: 60,
+                        ),
                       ),
-                    ),
-                    const Center(
-                      child: Column(
-                        children: [
-                          CustomLoader(),
-                          SizedBox(
-                            height: 30,
-                          ),
-                        ],
+                      const Center(
+                        child: Column(
+                          children: [
+                            CustomLoader(),
+                            SizedBox(
+                              height: 30,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                      const SizedBox(
+                        height: 30,
+                      ),
 
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: SizedBox(),
-                    ),
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           screenInfo,
-                    //           style: TextStyle(
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold,
-                    //             fontFamily: "DefaultFontFamily",
-                    //             color: Theme.of(context).primaryColor,
-                    //           ),
-                    //         ),
-                    //         const SizedBox(
-                    //           height: 30,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     const CircularProgressIndicator(
-                    //       color: brandOne,
-                    //     ),
-                    //     const SizedBox(
-                    //       height: 50,
-                    //     ),
-                    //     (_canShowAuth)
-                    //         ? GFButton(
-                    //             onPressed: () {
-                    //               checkingForBioMetrics();
-                    //             },
-                    //             text: "   Authenticate    ",
-                    //             shape: GFButtonShape.pills,
-                    //           )
-                    //         : const SizedBox(),
-                    //   ],
-                    // ),
-                  ],
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: SizedBox(),
+                      ),
+                      // Column(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     // const SizedBox(
+                      //     //   height: 50,
+                      //     // ),
+                      //     Row(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         Text(
+                      //           screenInfo,
+                      //           style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.bold,
+                      //             fontFamily: "DefaultFontFamily",
+                      //             color: Theme.of(context).primaryColor,
+                      //           ),
+                      //         ),
+                      //         const SizedBox(
+                      //           height: 30,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     // const SizedBox(
+                      //     //   height: 50,
+                      //     // ),
+                      //     const CircularProgressIndicator(
+                      //       color: brandOne,
+                      //     ),
+                      //     const SizedBox(
+                      //       height: 50,
+                      //     ),
+                      //     (_canShowAuth)
+                      //         ? GFButton(
+                      //             onPressed: () {
+                      //               checkingForBioMetrics();
+                      //             },
+                      //             text: "   Authenticate    ",
+                      //             shape: GFButtonShape.pills,
+                      //           )
+                      //         : const SizedBox(),
+                      //   ],
+                      // ),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          : (walletController.walletModel!.wallet![0].isPinSet == false)
-              ? const TransactionPin()
-              : const HomePage();
-    // );
+              )
+            : (userController.userModel!.userDetails![0].wallet.isPinSet ==
+                    false)
+                ? const TransactionPin()
+                : const HomePage()
+    );
   }
 }

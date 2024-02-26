@@ -72,7 +72,7 @@ import '../constants/app_constants.dart';
 // }
 
 class WalletController extends GetxController {
-  var isLoading = false.obs;
+  var isLoading = true.obs;
   final wallet = <Wallet>[].obs;
   WalletModel? walletModel;
 
