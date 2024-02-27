@@ -335,9 +335,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       var response = await appRepository.verifyBVN(params);
       if (response.success) {
         EasyLoading.dismiss();
-        bvnDebit(context, bvn).then(
-          (value) => createDva(context),
-        );
+        createDva(context);
+        // bvnDebit(context, bvn).then(
+        //   (value) => createDva(context),
+        // );
         // Get.offAll(const FirstPage());
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
         //     'Your pin has been successfully set.');
@@ -556,6 +557,92 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       state = AsyncError(e, StackTrace.current);
       message = "Ooops something went wrong";
       customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  Future buyAirtime(
+      BuildContext context, amount, phoneNumber, network, biller) async {
+    isLoading = true;
+    print("Fields");
+    print(amount);
+    print(phoneNumber);
+    print(network);
+    isLoading = true;
+    if (phoneNumber.isEmpty ||
+        phoneNumber == '' ||
+        network.isEmpty ||
+        network == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+
+      return;
+    }
+    Map<String, dynamic> body = {
+      'amount': amount,
+      'phoneNumber': phoneNumber,
+      'network': network,
+      'biller': biller
+    };
+    print("body");
+    print(body);
+    String message;
+
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
+      final response = await appRepository.buyAirtime(body);
+      if (response.success) {
+        EasyLoading.dismiss();
+        // Navigator.pushNamed(context, RouteList.login);
+        // SucessfulReciept();
+        // Navi
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("String must contain at least 10 character(s)")) {
+        EasyLoading.dismiss();
+        message = "Phone Number must be up to 10 characters long!!";
+
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("Number must be greater than or equal to 50")) {
+        EasyLoading.dismiss();
+        message = "Amount must be greate than or equal to 50 naira";
+        // custTomDialog(context, message);
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      print(e);
+      message = "Ooops something went wrong";
+      // custTomDialog(context, message);
+      customErrorDialog(context, 'Error', message);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     message: message,
+      //   ),
+      // );
 
       return;
     } finally {

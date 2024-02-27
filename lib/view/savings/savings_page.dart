@@ -192,38 +192,6 @@ class _SavingsPageState extends State<SavingsPage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        // bottom: TabBar(
-        //   // isScrollable: true,
-        //   // indicator: BoxDecoration(
-
-        //   // ),
-        //   indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
-        //   indicatorColor: Theme.of(context).primaryColor,
-        //   tabs: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(8),
-        //       child: Text(
-        //         'Savings',
-        //         style: GoogleFonts.nunito(
-        //           color: Theme.of(context).primaryColor,
-        //           fontSize: 22,
-        //           fontWeight: FontWeight.w700,
-        //         ),
-        //       ),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.all(8),
-        //       child: Text(
-        //         'Loans',
-        //         style: GoogleFonts.nunito(
-        //           color: Theme.of(context).primaryColor,
-        //           fontSize: 22,
-        //           fontWeight: FontWeight.w700,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
       body: Column(
         children: [

@@ -6,16 +6,17 @@ import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
 
-class TransactionReceipt extends StatefulWidget {
-  const TransactionReceipt({super.key});
+class UtilityTransactionReceipt extends StatefulWidget {
+  const UtilityTransactionReceipt({super.key});
 
   @override
-  State<TransactionReceipt> createState() => _TransactionReceiptState();
+  State<UtilityTransactionReceipt> createState() =>
+      _UtilityTransactionReceiptState();
 }
 
 var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
-class _TransactionReceiptState extends State<TransactionReceipt> {
+class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,5 +129,4 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       ),
     );
   }
-
 }

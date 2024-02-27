@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -21,6 +22,7 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/core/helper/helper_route_path.dart';
 import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
 import 'package:rentspace/view/actions/transaction_receipt.dart';
@@ -44,6 +46,7 @@ import 'dart:convert';
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
 import '../../constants/widgets/custom_dialog.dart';
+import '../../constants/widgets/icon_container.dart';
 import '../../constants/widgets/separator.dart';
 // import '../../controller/settings_controller.dart';
 import '../../model/response/user_details_response.dart';
@@ -1213,9 +1216,74 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: brandTwo.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0.h, horizontal: 20.0.h),
+                      child: Column(
+                        children: [
+                          // Align(
+                          //   alignment: Alignment.topLeft,
+                          //   child: Text(
+                          //     'Purchase',
+                          //     style: GoogleFonts.nunito(
+                          //       color: brandTwo,
+                          //       fontSize: 15.sp,
+                          //       fontWeight: FontWeight.w700,
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 17.h,
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconsContainer(
+                                IconsName: 'Airtime',
+                                icon: Iconsax.mobile5,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.push(context, route)
+                                  Navigator.pushNamed(context, airtime);
+                                },
+                              ),
+                              IconsContainer(
+                                IconsName: 'Data',
+                                icon: Icons.wifi,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.pushNamed(context, RouteList.airtime);
+                                },
+                              ),
+                              IconsContainer(
+                                IconsName: 'Cable',
+                                icon: Icons.tv_rounded,
+                                iconColor: brandOne,
+                                onTap: () {},
+                              ),
+                              IconsContainer(
+                                IconsName: 'More',
+                                icon: Iconsax.more5,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.pushNamed(context, RouteList.electricity);
+                                  // Navigator.pushNamed(context, RouteList.pay_bills);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),

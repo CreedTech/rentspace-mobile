@@ -3,8 +3,10 @@ import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/splash_screen.dart';
+import 'package:rentspace/view/utility/airtime.dart';
 
 import '../../view/FirstPage.dart';
+import '../../view/utility/utility_transaction_receipt.dart';
 import '../components/component_route_animation.dart';
 import 'helper_route_path.dart';
 
@@ -156,11 +158,16 @@ class RouterGenerator {
       //     ),
       //     settings: const RouteSettings(name: order_three),
       //   );
-      // case profile:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const ProfileView(),
-      //     settings: const RouteSettings(name: profile),
-      //   );
+      case airtime:
+        return MaterialPageRoute(
+          builder: (context) => const AirtimePage(),
+          settings: const RouteSettings(name: airtime),
+        );
+      case utilitytransactionReceipt:
+        return MaterialPageRoute(
+          builder: (context) => const UtilityTransactionReceipt(),
+          settings: const RouteSettings(name: utilitytransactionReceipt),
+        );
       // case my_information:
       //   return MaterialPageRoute(
       //     builder: (context) => const MyInformationView(),

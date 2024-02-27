@@ -34,6 +34,10 @@ class AppConstants {
   static const BVN_DEBIT = '/api/bvn/bvn-debit';
   static const CREATE_DVA = '/api/dva/create-dva';
 
+
+  static const BUY_AIRTIME = '/api/buy-airtime';
+  static const GET_AIRTIMES = '/api/get-airtimes';
+
   static const TOKEN = '';
   static const PROFILE_PICTURE = '';
 }

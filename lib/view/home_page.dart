@@ -1,4 +1,4 @@
-
+// ignore_for_file: use_build_context_synchronously
 
 //Second page
 import 'dart:io';
@@ -13,6 +13,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/utility/utilities_page.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../constants/colors.dart';
@@ -20,6 +23,29 @@ import 'dashboard/dashboard.dart';
 import 'dashboard/settings.dart';
 import 'portfolio/portfolio_page.dart';
 import 'savings/savings_page.dart';
+
+class CounterNew extends GetxController {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+  GlobalKey _four = GlobalKey();
+  GlobalKey _five = GlobalKey();
+  GlobalKey _six = GlobalKey();
+  GlobalKey _seven = GlobalKey();
+  GlobalKey _eight = GlobalKey();
+  GlobalKey _nine = GlobalKey();
+  GlobalKey _ten = GlobalKey();
+
+  get fewsureHelper1 => _eight;
+  get fewsureHelper2 => _nine;
+  get fewsureHelper3 => _ten;
+  get fewsureHelper4 => _six;
+  get fewsureHelper5 => _seven;
+}
+
+//Showcase player controller
+
+final counter = Get.put(CounterNew());
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,11 +57,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _hasOpened = false;
-final openedAppStorage = GetStorage();
-final hasReferredStorage = GetStorage();
-List<String> transIds = [];
-String fundedAmount = "0";
-String _message = "Not Authorized";
+  final openedAppStorage = GetStorage();
+  final hasReferredStorage = GetStorage();
+  List<String> transIds = [];
+  String fundedAmount = "0";
+  String _message = "Not Authorized";
   int _selectedIndex = 0;
   final WalletController walletController = Get.put(WalletController());
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
@@ -237,7 +263,7 @@ String _message = "Not Authorized";
               child: GFButton(
                 onPressed: () {
                   Get.back();
-                  // startShowCase();
+                  startShowCase();
                 },
                 fullWidthButton: true,
                 shape: GFButtonShape.pills,
@@ -266,16 +292,35 @@ String _message = "Not Authorized";
     //print()
   }
 
+  startShowCase() {
+    print('started');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ShowCaseWidget.of(context).startShowCase([
+        counter._one,
+        counter._two,
+        counter._three,
+        counter._four,
+        counter._five,
+        /* counter._six,
+        counter._seven,
+        counter._eight, */
+      ]);
+    });
+  }
+
   @override
   initState() {
     super.initState();
     transIds.clear();
     // checkStatus();
+        
+
     setState(() {
       fundedAmount = "0";
     });
     Future.delayed(const Duration(seconds: 1), () {
-      // checkIsOpenedApp();
+      checkIsOpenedApp();
     });
   }
 
@@ -440,15 +485,6 @@ String _message = "Not Authorized";
               ),
             );
           });
-
-      // Get.snackbar(
-      //   "Error",
-      //   "Biometrics failed",
-      //   animationDuration: const Duration(seconds: 2),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
     }
     if (!mounted) return;
   }
@@ -589,128 +625,124 @@ String _message = "Not Authorized";
             child: _buildPage(_selectedIndex),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            
             items: <BottomNavigationBarItem>[
-              
               BottomNavigationBarItem(
-                
-                icon: _selectedIndex == 0
-                    ? const Icon(Iconsax.home5)
-                    : const Icon(Iconsax.home),
-                // Showcase(
-                //   key: counter._one,
-                //   // titleTextStyle: TextStyle(),
-                //   title: 'Home',
-                //   description: 'All your dashboard in one place.',
-                //   disableAnimation: false,
-                //   showcaseBackgroundColor: brandOne,
-                //   showArrow: true,
-                //   textColor: Colors.white,
-                //   overlayPadding: const EdgeInsets.all(5),
-                //   animationDuration: const Duration(seconds: 2),
-                //   child: Image.asset(
-                //     "assets/icons/home_icon.png",
-                //     height: 30,
-                //     width: 30,
-                //     color: _selectedIndex == 0 ? brandOne : navigationcolorText,
-                //   ),
-                // ),
+                icon:
+                    // _selectedIndex == 0
+                    //     ? const Icon(Iconsax.home5)
+                    //     : const Icon(Iconsax.home),
+                    Showcase(
+                  key: counter._one,
+                  // titleTextStyle: TextStyle(),
+                  title: 'Home',
+                  description: 'All your dashboard in one place.',
+                  disableAnimation: false,
+                  showcaseBackgroundColor: brandOne,
+                  showArrow: true,
+                  textColor: Colors.white,
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
+                  child: _selectedIndex == 0
+                      ? const Icon(Iconsax.home5)
+                      : const Icon(Iconsax.home),
+                  // Image.asset(
+                  //   "assets/icons/home_icon.png",
+                  //   height: 30,
+                  //   width: 30,
+                  //   color: _selectedIndex == 0 ? brandOne : navigationcolorText,
+                  // )
+                  // ,
+                ),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: _selectedIndex == 1
-                    ? const Icon(Iconsax.activity5)
-                    : const Icon(Iconsax.activity),
-                //  Showcase(
-                //   key: counter._two,
-                //   title: 'Savings',
-                //   textColor: brandOne,
-                //   description: 'Create, manange and grow your savings',
-                //   disableAnimation: false,
-                //   showcaseBackgroundColor: brandOne,
-                //   showArrow: true,
-                //   overlayPadding: const EdgeInsets.all(5),
-                //   animationDuration: const Duration(seconds: 2),
-                //   child: Image.asset(
-                //     "assets/icons/savings_icon.png",
-                //     height: 30,
-                //     width: 30,
-                //     color: navigationcolorText,
-                //   ),
-                // ),
+                icon: Showcase(
+                  key: counter._two,
+                  title: 'Savings',
+                  textColor: Colors.white,
+                  description: 'Create, manange and grow your savings',
+                  disableAnimation: false,
+                  showcaseBackgroundColor: brandOne,
+                  showArrow: true,
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
+                  child: _selectedIndex == 1
+                      ? const Icon(Iconsax.activity5)
+                      : const Icon(Iconsax.activity),
+                ),
                 label: "Savings",
               ),
               BottomNavigationBarItem(
-                icon: _selectedIndex == 2
-                    ? Image.asset(
-                        "assets/icons/carbon_portfolio.png",
-                        // height: 28,
-                        width: 29.w,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )
-                    : Image.asset(
-                        "assets/icons/carbon_portfolio.png",
-                        // height: 28,
-                        width: 29.w,
-                        color: navigationcolorText,
-                      ),
-                // Showcase(
-                //   key: counter._three,
-                //   title: 'Portfolio',
-                //   textColor: Colors.white,
-                //   description:
-                //       'Build your portfolio, improve your finance health',
-                //   disableAnimation: false,
-                //   showcaseBackgroundColor: brandOne,
-                //   showArrow: true,
-                //   overlayPadding: const EdgeInsets.all(5),
-                //   animationDuration: const Duration(seconds: 2),
-                //   child: Image.asset(
-                //     "assets/icons/portfolio_icon.png",
-                //     height: 30,
-                //     width: 30,
-                //     color: navigationcolorText,
-                //   ),
-                // ),
+                icon: Showcase(
+                  key: counter._three,
+                  title: 'Portfolio',
+                  textColor: Colors.white,
+                  description:
+                      'Build your portfolio, improve your finance health',
+                  disableAnimation: false,
+                  showcaseBackgroundColor: brandOne,
+                  showArrow: true,
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
+                  child: _selectedIndex == 2
+                      ? Image.asset(
+                          "assets/icons/carbon_portfolio.png",
+                          // height: 28,
+                          width: 29.w,
+                          color: Theme.of(context).colorScheme.secondary,
+                        )
+                      : Image.asset(
+                          "assets/icons/carbon_portfolio.png",
+                          // height: 28,
+                          width: 29.w,
+                          color: navigationcolorText,
+                        ),
+                ),
                 label: "Portfolio",
               ),
-              // BottomNavigationBarItem(
-              //   icon: Showcase(
-              //     key: counter._four,
-              //     title: 'Utility',
-              //     textColor: Colors.white,
-              //     description:
-              //         'Pay your bills directly from your wallet and earn 1 SpacePoint!',
-              //     disableAnimation: false,
-              //     showcaseBackgroundColor: brandOne,
-              //     showArrow: true,
-              //     overlayPadding: const EdgeInsets.all(5),
-              //     animationDuration: const Duration(seconds: 2),
-              //     child: Image.asset(
-              //       "assets/icons/utility_icon.png",
-              //       height: 30,
-              //       width: 30,
-              //       color: brandTwo,
-              //     ),
-              //   ),
-              //   label: "Utility",
-              // ),
               BottomNavigationBarItem(
-                icon: _selectedIndex == 3
-                    ? const Icon(Icons.person)
-                    : const Icon(Icons.person_outline),
-                // Showcase(
-                //   key: counter._five,
-                //   title: 'Profile',
-                //   textColor: Colors.white,
-                //   description: 'Manage your account information',
-                //   disableAnimation: false,
-                //   showcaseBackgroundColor: brandOne,
-                //   showArrow: true,
-                //   overlayPadding: const EdgeInsets.all(5),
-                //   animationDuration: const Duration(seconds: 2),
-                //   child: Icon(Icons.person_outline),
-                // ),
+                icon: Showcase(
+                  key: counter._four,
+                  title: 'Utility',
+                  textColor: Colors.white,
+                  description:
+                      'Pay your bills directly from your wallet and earn 1 SpacePoint!',
+                  disableAnimation: false,
+                  showcaseBackgroundColor: brandOne,
+                  showArrow: true,
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
+                  child: _selectedIndex == 3
+                      ? Image.asset(
+                          "assets/icons/carbon_portfolio.png",
+                          // height: 28,
+                          width: 29.w,
+                          color: Theme.of(context).colorScheme.secondary,
+                        )
+                      : Image.asset(
+                          "assets/icons/utility_icon.png",
+                          height: 30,
+                          width: 30,
+                          color: navigationcolorText,
+                        ),
+                ),
+                label: "Utility",
+              ),
+              BottomNavigationBarItem(
+                icon: Showcase(
+                  key: counter._five,
+                  title: 'Profile',
+                  textColor: Colors.white,
+                  description: 'Manage your account information',
+                  disableAnimation: false,
+                  showcaseBackgroundColor: brandOne,
+                  showArrow: true,
+                  overlayPadding: const EdgeInsets.all(5),
+                  animationDuration: const Duration(seconds: 2),
+                  child: _selectedIndex == 4
+                      ? const Icon(Icons.person)
+                      : const Icon(Icons.person_outline),
+                ),
                 label: "Profile",
               ),
             ],
@@ -741,6 +773,7 @@ String _message = "Not Authorized";
       ),
     );
   }
+
   Widget _buildPage(int index) {
     switch (index) {
       case 0:
@@ -750,6 +783,8 @@ String _message = "Not Authorized";
       case 2:
         return const PortfolioPage();
       case 3:
+        return UtilitiesPage();
+      case 4:
         return const SettingsPage();
       default:
         return Dashboard();

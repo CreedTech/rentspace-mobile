@@ -86,6 +86,7 @@ void resendVerification(
           ),
         );
       });
+
 }
 
 void verification(BuildContext context, String message, String subText,

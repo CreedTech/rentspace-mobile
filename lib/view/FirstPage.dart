@@ -105,40 +105,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(WalletController());
     Get.put(ActivitiesController());
     Get.put(RentController());
-    // print("isLoading");
-    // print(userController.isLoading.value);
-    // print(walletController.isLoading.value);
-    // print(activitiesController.isLoading.value);
-
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   // fetchUserAndSetState();
-
-    //   setState(() {
-    //     _hasPutController = true;
-    //   });
-    // });
   }
-  // Future<void> fetchUserAndSetState() async {
-  //   try {
-  //     print('==============================================');
-  //     print('fetching users');
-  //     await userController
-  //         .fetchUsers()
-  //         .then((value) => (walletController.fetchWallet()))
-  //         .then((value) => (activitiesController.fetchActivities()))
-  //         .then(
-  //           (value) => setState(
-  //             () {
-  //               _hasPutController =
-  //                   true; // Set _hasPutController to true after users are fetched
-  //             },
-  //           ),
-  //         ); // Fetch users
-  //   } catch (error) {
-  //     print('Error fetching users: $error');
-  //     // Handle error (e.g., show error message)
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,108 +113,213 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(ActivitiesController());
     Get.put(WalletController());
     Get.put(RentController());
-    return
-        Obx(
-          () =>
-        (userController.isLoading.value)
-            ? Scaffold(
-                backgroundColor: Theme.of(context).canvasColor,
-                body: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: const AssetImage(
-                        'assets/slider3.png',
-                      ),
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                        Colors.black
-                            .withOpacity(0.5), // Adjust the opacity here
-                        BlendMode.darken,
-                      ),
+    return Obx(
+      () => (userController.isLoading.value)
+          ? Scaffold(
+              backgroundColor: Theme.of(context).canvasColor,
+              body: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage(
+                      'assets/slider3.png',
+                    ),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5), // Adjust the opacity here
+                      BlendMode.darken,
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 150),
-                        child: Image.asset(
-                          'assets/icons/RentSpaceWhite.png',
-                          // width: 140,
-                          height: 60,
-                        ),
-                      ),
-                      const Center(
-                        child: Column(
-                          children: [
-                            CustomLoader(),
-                            SizedBox(
-                              height: 30,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: SizedBox(),
-                      ),
-                      // Column(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     // const SizedBox(
-                      //     //   height: 50,
-                      //     // ),
-                      //     Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         Text(
-                      //           screenInfo,
-                      //           style: TextStyle(
-                      //             fontSize: 20,
-                      //             fontWeight: FontWeight.bold,
-                      //             fontFamily: "DefaultFontFamily",
-                      //             color: Theme.of(context).primaryColor,
-                      //           ),
-                      //         ),
-                      //         const SizedBox(
-                      //           height: 30,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     // const SizedBox(
-                      //     //   height: 50,
-                      //     // ),
-                      //     const CircularProgressIndicator(
-                      //       color: brandOne,
-                      //     ),
-                      //     const SizedBox(
-                      //       height: 50,
-                      //     ),
-                      //     (_canShowAuth)
-                      //         ? GFButton(
-                      //             onPressed: () {
-                      //               checkingForBioMetrics();
-                      //             },
-                      //             text: "   Authenticate    ",
-                      //             shape: GFButtonShape.pills,
-                      //           )
-                      //         : const SizedBox(),
-                      //   ],
-                      // ),
-                    ],
-                  ),
                 ),
-              )
-            : (userController.userModel!.userDetails![0].wallet.isPinSet ==
-                    false)
-                ? const TransactionPin()
-                : const HomePage()
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 150),
+                      child: Image.asset(
+                        'assets/icons/RentSpaceWhite.png',
+                        // width: 140,
+                        height: 60,
+                      ),
+                    ),
+                    const Center(
+                      child: Column(
+                        children: [
+                          CustomLoader(),
+                          SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: SizedBox(),
+                    ),
+                    // Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     // const SizedBox(
+                    //     //   height: 50,
+                    //     // ),
+                    //     Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           screenInfo,
+                    //           style: TextStyle(
+                    //             fontSize: 20,
+                    //             fontWeight: FontWeight.bold,
+                    //             fontFamily: "DefaultFontFamily",
+                    //             color: Theme.of(context).primaryColor,
+                    //           ),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 30,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     // const SizedBox(
+                    //     //   height: 50,
+                    //     // ),
+                    //     const CircularProgressIndicator(
+                    //       color: brandOne,
+                    //     ),
+                    //     const SizedBox(
+                    //       height: 50,
+                    //     ),
+                    //     (_canShowAuth)
+                    //         ? GFButton(
+                    //             onPressed: () {
+                    //               checkingForBioMetrics();
+                    //             },
+                    //             text: "   Authenticate    ",
+                    //             shape: GFButtonShape.pills,
+                    //           )
+                    //         : const SizedBox(),
+                    //   ],
+                    // ),
+                  ],
+                ),
+              ),
+            )
+          : Scaffold(
+              body: ShowCaseWidget(
+                autoPlay: false,
+                onFinish: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Discover',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              fontSize: 20.0,
+                              color: brandOne,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: SizedBox(
+                            height: MediaQuery.of(context).size.height / 2,
+                            child: SingleChildScrollView(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    "assets/discover.png",
+                                    fit: BoxFit.cover,
+                                    height: 200,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 13.0,
+                                      color: brandOne,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 13.0,
+                                      color: brandOne,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 13.0,
+                                      color: brandOne,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: brandOne,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      elevation: 0,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 40, vertical: 15),
+                                      textStyle: const TextStyle(
+                                          color: Colors.white, fontSize: 17),
+                                    ),
+                                    child: Text(
+                                      "That's Nice",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        // letterSpacing: 0.3,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                          ),
+                        );
+                      });
+                },
+                builder: Builder(
+                  builder: (context) => (userController
+                              .userModel!.userDetails![0].wallet.isPinSet ==
+                          false)
+                      ? const TransactionPin()
+                      : const HomePage(),
+                ),
+              ),
+            ),
     );
   }
 }
