@@ -37,19 +37,19 @@ class FinanceHealth extends StatefulWidget {
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 
-int tankBalance = 0;
-int boxBalance = 0;
-int depositBalance = 0;
-int rentBalance = 0;
+double tankBalance = 0;
+double boxBalance = 0;
+double depositBalance = 0;
+double rentBalance = 0;
 
-int tankInterest = 0;
-int boxInterest = 0;
-int depositInterest = 0;
+double tankInterest = 0;
+double boxInterest = 0;
+double depositInterest = 0;
 
-int totalUtility = 0;
-int totalSavings = 0;
-int totalInterest = 0;
-int totalWithdraw = 0;
+double totalUtility = 0;
+double totalSavings = 0;
+double totalInterest = 0;
+double totalWithdraw = 0;
 
 class _FinanceHealthState extends State<FinanceHealth> {
   TextEditingController _incomeController = TextEditingController();
@@ -93,7 +93,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
     //   });
     // }
     if (rentController.rent.isNotEmpty) {
-      rentBalance += rentController.rent[0].paidAmount.toInt();
+      rentBalance += rentController.rent[0].paidAmount;
       // for (int j = 0; j < rentController.rent.length; j++) {
       // }
     } else {

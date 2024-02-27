@@ -35,75 +35,75 @@ class SpaceRentModel {
 class SpaceRent {
   final String id;
   final String rentspaceId;
-  final String currentPayment;
-  // final String date;
-  // final bool hasPaid;
-  // final String dueDate;
-  // final String interval;
-  // final String amount;
-  // final String paymentCount;
-  // final bool completed;
-  // final String intervalAmount;
-  // final String paidAmount;
-  // final String paymentStatus;
-  // // final String token;
-  // final String createdAt;
-  // final String updatedAt;
+  final int currentPayment;
+  final String date;
+  final bool hasPaid;
+  final String dueDate;
+  final String interval;
+  final int amount;
+  final String paymentCount;
+  final bool completed;
+  final double intervalAmount;
+  final double paidAmount;
+  final String paymentStatus;
+  final String token;
+  final String createdAt;
+  final String updatedAt;
 
   SpaceRent({
     required this.id,
     required this.rentspaceId,
     required this.currentPayment,
-    // required this.date,
-    // required this.hasPaid,
-    // required this.dueDate,
-    // required this.interval,
-    // required this.amount,
-    // required this.paymentCount,
-    // required this.completed,
-    // required this.intervalAmount,
-    // required this.paidAmount,
-    // required this.paymentStatus,
-    // // required this.token,
-    // required this.createdAt,
-    // required this.updatedAt,
+    required this.date,
+    required this.hasPaid,
+    required this.dueDate,
+    required this.interval,
+    required this.amount,
+    required this.paymentCount,
+    required this.completed,
+    required this.intervalAmount,
+    required this.paidAmount,
+    required this.paymentStatus,
+    required this.token,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
         id: json['_id'],
         rentspaceId: json['rentspace_id'],
         currentPayment: json['current_payment'],
-        // date: json['date'],
-        // hasPaid: json['has_paid'],
-        // dueDate: json['due_date'],
-        // interval: json['interval'],
-        // amount: json['amount'],
-        // paymentCount: json['payment_count'],
-        // completed: json['completed'],
-        // intervalAmount: json['interval_amount'],
-        // paidAmount: json['paid_amount'],
-        // paymentStatus: json['payment_status'],
-        // // token: json['token'],
-        // createdAt: json['createdAt'],
-        // updatedAt: json['updatedAt'],
+        date: json['date'],
+        hasPaid: json['has_paid'],
+        dueDate: json['due_date'],
+        interval: json['interval'],
+        amount: json['amount'],
+        paymentCount: json['payment_count'],
+        completed: json['completed'],
+        intervalAmount: json['interval_amount'],
+        paidAmount: json['paid_amount'],
+        paymentStatus: json['payment_status'],
+        token: json['token'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
       );
 
   Map<String, dynamic> toJson() => {
         '_id': id,
         'rentspace_id': rentspaceId,
         'current_payment': currentPayment,
-        // 'date': date,
-        // 'has_paid': hasPaid,
-        // 'due_date': dueDate,
-        // 'interval': interval,
-        // 'amount': amount,
-        // 'payment_count': paymentCount,
-        // 'completed': completed,
-        // 'interval_amount': intervalAmount,
-        // 'paid_amount': paidAmount,
-        // 'payment_status': paymentStatus,
-        // // 'token': token,
-        // 'createdAt': createdAt,
-        // 'updatedAt': updatedAt,
+        'date': date,
+        'has_paid': hasPaid,
+        'due_date': dueDate,
+        'interval': interval,
+        'amount': amount,
+        'payment_count': paymentCount,
+        'completed': completed,
+        'interval_amount': intervalAmount,
+        'paid_amount': paidAmount,
+        'payment_status': paymentStatus,
+        'token': token,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
       };
 }

@@ -39,8 +39,8 @@ String _totalInvestments = "0";
 var changeOne = 6.obs();
 
 class _PortfolioPageState extends State<PortfolioPage> {
-  final RentController rentController = Get.find();
   final UserController userController = Get.find();
+  final RentController rentController = Get.find();
   getUser() async {
     // var collection = FirebaseFirestore.instance.collection('accounts');
     // var docSnapshot = await collection.doc(userId).get();
@@ -72,7 +72,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   initState() {
     super.initState();
-        userController.fetchData();
+        // userController.fetchData();
     userController.userModel!.userDetails!.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
         : valueNotifier = ValueNotifier(double.tryParse(userController
@@ -367,8 +367,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       ),
                     ),
                     onTap: () {
-                      ((rentController.rent[0].paidAmount) !=
-                              (rentController.rent[0].amount * 0.7))
+                      ((rentController.rentModel!.rent![0].paidAmount) !=
+                              (rentController.rentModel!.rent![0].amount * 0.7))
                           ? showDialog(
                               context: context,
                               barrierDismissible: false,

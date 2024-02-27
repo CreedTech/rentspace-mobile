@@ -674,48 +674,49 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               ),
             ),
             // Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: ListTile(
-                leading: Container(
-                  padding: const EdgeInsets.all(9),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: const Icon(
-                    Iconsax.brush_3,
-                    color: brandOne,
-                  ),
-                ),
-                title: Text(
-                  'Theme',
-                  style: GoogleFonts.nunito(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                // onTap: () {
-                //   ThemeServices().changeThemeMode();
-                //   // Navigator.pushNamed(context, RouteList.profile);
-                // },
-                trailing: Switch(
-                  activeColor: Theme.of(context).primaryColor,
-                  inactiveTrackColor: brandTwo,
-                  value: themeChange.isSavedDarkMode(),
-                  onChanged: (_themeMode) {
-                    // if(themeChange.isSavedDarkMode()){
-                    //   ThemeServices().changeThemeMode();
-                    // }
-                    ThemeServices().changeThemeMode();
-                    setState(() {
-                      !_themeMode;
-                    });
-                  },
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 7),
+            //   child: ListTile(
+            //     leading: Container(
+            //       padding: const EdgeInsets.all(9),
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         color: Theme.of(context).cardColor,
+            //       ),
+            //       child: const Icon(
+            //         Iconsax.brush_3,
+            //         color: brandOne,
+            //       ),
+            //     ),
+            //     title: Text(
+            //       'Theme',
+            //       style: GoogleFonts.nunito(
+            //         color: Theme.of(context).primaryColor,
+            //         fontSize: 17,
+            //         fontWeight: FontWeight.w600,
+            //       ),
+            //     ),
+            //     // onTap: () {
+            //     //   ThemeServices().changeThemeMode();
+            //     //   // Navigator.pushNamed(context, RouteList.profile);
+            //     // },
+            //     trailing: Switch(
+            //       activeColor: Theme.of(context).primaryColor,
+            //       inactiveTrackColor: brandTwo,
+            //       value: themeChange.isSavedDarkMode(),
+            //       onChanged: (_themeMode) {
+            //         // if(themeChange.isSavedDarkMode()){
+            //         //   ThemeServices().changeThemeMode();
+            //         // }
+            //         ThemeServices().changeThemeMode();
+            //         setState(() {
+            //           !_themeMode;
+            //         });
+            //       },
+            //     ),
+            //   ),
+            // ),
+
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7),
               child: ListTile(

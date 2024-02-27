@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:rentspace/constants/app_constants.dart';
-import 'package:rentspace/model/response/activities_response.dart';
 // import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;

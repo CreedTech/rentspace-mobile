@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
+import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/actions/transaction_pin.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
@@ -911,4 +912,122 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       isLoading = false;
     }
   }
+
+  Future forgotPin(BuildContext context, email) async {
+    print(email);
+    isLoading = true;
+    // if (email.isEmpty || email == '') {
+    //   customErrorDialog(context, 'Error', 'All fields are required');
+    //   return;
+    // }
+
+    Map<String, dynamic> mail = {'email': email};
+    print(mail);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
+      var response = await authRepository.forgotPin();
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ForgotPinOTPVerificationPage(email: email)));
+        return;
+      } else {
+        print(response.message.toString());
+      }
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("User not found")) {
+        message = "User not found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
+      isLoading = false;
+    }
+  }
+
+  Future resendPinOtp(BuildContext context, email) async {
+    print(email);
+    isLoading = true;
+    if (email.isEmpty || email == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+
+    Map<String, dynamic> mail = {'email': email};
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
+      var response = await authRepository.resendPasswordOtp(mail);
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        // resendVerification(context);
+        resendVerification(context, 'Successfully Sent 🎉',
+            'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
+        return;
+      } else {
+        print(response.message.toString());
+      }
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("User not found")) {
+        message = "User not found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+    }
+  }
+
 }

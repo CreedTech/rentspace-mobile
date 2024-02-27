@@ -37,18 +37,19 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   AppController(this.appRepository) : super(const AsyncLoading());
 
   Future createRent(BuildContext context, dueDate, interval, intervalAmount,
-      amount, paymentCount, paymentType) async {
+      amount, paymentCount) async {
     isLoading = true;
     if (dueDate.isEmpty ||
-        dueDate == '' ||
-        interval.isEmpty ||
-        interval == '' ||
-        intervalAmount == '' ||
-        amount == '' ||
-        paymentCount.isEmpty ||
-        paymentCount == '' ||
-        paymentType.isEmpty ||
-        paymentType == '') {
+            dueDate == '' ||
+            interval.isEmpty ||
+            interval == '' ||
+            intervalAmount == '' ||
+            amount == '' ||
+            paymentCount.isEmpty ||
+            paymentCount == ''
+        // paymentType.isEmpty ||
+        // paymentType == ''
+        ) {
       customErrorDialog(
           context, 'Error', 'Please fill in the required fields!!');
       return;
@@ -59,7 +60,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'interval_amount': intervalAmount,
       'amount': amount,
       'payment_count': paymentCount,
-      'payment_type': paymentType,
+      // 'payment_type': paymentType,
     };
     print('params');
     print(params);
@@ -78,125 +79,123 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         // await GlobalService.
-        // ?TODO ADD NAVIGATION TO PAYMENT PAGE
-        if (paymentType == "Debit Card") {
-          Get.to(
-            SpaceRentFunding(
-              amount: intervalAmount,
-              interval: interval,
-            ),
-          );
-        } else {
-          if (walletController.walletModel!.wallet![0].mainBalance <
-              intervalAmount) {
-            showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      AlertDialog(
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(30, 30, 30, 20),
-                        elevation: 0,
-                        alignment: Alignment.bottomCenter,
-                        insetPadding: const EdgeInsets.all(0),
-                        scrollable: true,
-                        title: null,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
+        if (walletController.walletModel!.wallet![0].mainBalance <
+            intervalAmount) {
+          showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AlertDialog(
+                      contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
+                      elevation: 0,
+                      alignment: Alignment.bottomCenter,
+                      insetPadding: const EdgeInsets.all(0),
+                      scrollable: true,
+                      title: null,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
                         ),
-                        content: SizedBox(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 40),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 15),
-                                        child: Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Text(
-                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
-                                              color: brandOne,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                      ),
+                      content: SizedBox(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 40),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            color: brandOne,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(3),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                  Get.to(const FundWallet());
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 60,
-                                                      vertical: 15),
-                                                  textStyle: const TextStyle(
-                                                      color: brandFour,
-                                                      fontSize: 13),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(3),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                Get.to(const FundWallet());
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-                                                child: const Text(
-                                                  "Fund Wallet",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                  ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 60,
+                                                        vertical: 15),
+                                                textStyle: const TextStyle(
+                                                    color: brandFour,
+                                                    fontSize: 13),
+                                              ),
+                                              child: const Text(
+                                                "Fund Wallet",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
-                  );
-                });
-          } else {
-            walletDebit(context);
-          }
+                      ),
+                    )
+                  ],
+                );
+              });
+        } else {
+          walletDebit(context);
         }
+        // if (paymentType == "Debit Card") {
+        //   Get.to(
+        //     SpaceRentFunding(
+        //       amount: intervalAmount,
+        //       interval: interval,
+        //     ),
+        //   );
+        // } else {
+
+        // }
 
         return;
       } else {

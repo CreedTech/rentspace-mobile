@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'dart:async';
 import 'package:rentspace/constants/icons.dart';
 import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
@@ -10,15 +10,15 @@ import 'package:get/get.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../dashboard/confirm_forgot_pin.dart';
 
-class ForgotPin extends StatefulWidget {
+class ForgotPin extends ConsumerStatefulWidget {
   final String pin;
   const ForgotPin({super.key, required this.pin});
 
   @override
-  _ForgotPinState createState() => _ForgotPinState();
+  _ForgotPinConsumerState createState() => _ForgotPinConsumerState();
 }
 
-class _ForgotPinState extends State<ForgotPin> {
+class _ForgotPinConsumerState extends ConsumerState<ForgotPin> {
   final TextEditingController _pinController = TextEditingController();
   // final TextEditingController _pinTwoController = TextEditingController();
   // final TextEditingController _passwordController = TextEditingController();
@@ -64,29 +64,9 @@ class _ForgotPinState extends State<ForgotPin> {
   // }
 
   void _doSomething() async {
-
     if (_pinController.text.trim() == widget.pin) {
-      customErrorDialog(context, "Invalid!", "PIN cannot be the same as existing one.");
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     // backgroundColor: Colors.red,
-      //     message: 'PIN cannot be the same as existing one.',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
-      // Get.snackbar(
-      //   "Error!",
-      //   'PIN cannot be the same as existing one.',
-      //   animationDuration: Duration(seconds: 1),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
+      customErrorDialog(
+          context, "Invalid!", "PIN cannot be the same as existing one.");
     }
     // else if (widget.password != _passwordController.text.trim() ||
     //     _passwordController.text.trim() == "") {
@@ -119,7 +99,7 @@ class _ForgotPinState extends State<ForgotPin> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle:  GoogleFonts.nunito(
+      textStyle: GoogleFonts.nunito(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),
@@ -141,8 +121,6 @@ class _ForgotPinState extends State<ForgotPin> {
       return null;
     }
 
-
-
     //Pin
     final pin = Pinput(
       obscureText: true,
@@ -151,7 +129,7 @@ class _ForgotPinState extends State<ForgotPin> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle:  GoogleFonts.nunito(
+        textStyle: GoogleFonts.nunito(
           fontSize: 20,
           color: Theme.of(context).primaryColor,
         ),
@@ -165,118 +143,118 @@ class _ForgotPinState extends State<ForgotPin> {
       onChanged: validatePinOne,
       // onCompleted: _doSomething,
       closeKeyboardWhenCompleted: true,
+      onCompleted: (val) {
+        Get.to(ConfirmForgotPin(pin: _pinController.text.trim()));
+      },
       keyboardType: TextInputType.number,
     );
- 
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Change PIN',
-          style: GoogleFonts.nunito(
-              color: Theme.of(context).primaryColor, fontSize: 24, fontWeight: FontWeight.w700),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                    child: Form(
-                      key: changePinformKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 20),
-                            child: Text(
-                              'Change Transaction PIN',
-                              style: GoogleFonts.nunito(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                                // fontFamily: "DefaultFontFamily",
-                              ),
-                            ),
-                          ),
-                          pin,
-                          const SizedBox(
-                            height: 70,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              // width: MediaQuery.of(context).size.width * 2,
-                              alignment: Alignment.center,
-                              // height: 110.h,
-                              child: Column(
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(250, 50),
-                                      backgroundColor: brandTwo,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (changePinformKey.currentState!
-                                          .validate()) {
-                                        _doSomething();
-                                      } else {
-                                        customErrorDialog(context, "Invalid!", "Please Input your pin to proceed");
-                                        // showTopSnackBar(
-                                        //   Overlay.of(context),
-                                        //   CustomSnackBar.error(
-                                        //     // backgroundColor: Colors.red,
-                                        //     message:
-                                        //         'Please fill the form properly to proceed',
-                                        //     textStyle: GoogleFonts.nunito(
-                                        //       fontSize: 14,
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.w700,
-                                        //     ),
-                                        //   ),
-                                        // );
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Proceed',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).canvasColor,
+      //   elevation: 0.0,
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       Get.back();
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back,
+      //       size: 30,
+      //       color: Theme.of(context).primaryColor,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   title: Text(
+      //     'Change PIN',
+      //     style: GoogleFonts.nunito(
+      //         color: Theme.of(context).primaryColor,
+      //         fontSize: 24,
+      //         fontWeight: FontWeight.w700),
+      //   ),
+      // ),
+
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Change Transaction PIN',
+                        style: GoogleFonts.nunito(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          // fontFamily: "DefaultFontFamily",
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Form(
+                          key: changePinformKey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 14,
+                            ),
+                            child: pin,
+                          ),
+                        ),
+                         const SizedBox(
+                        height: 30,
+                      ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(250, 50),
+                      backgroundColor: brandOne,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (changePinformKey.currentState!.validate()) {
+                        // _doSomething();
+                        Get.to(
+                            ConfirmForgotPin(pin: _pinController.text.trim()));
+                      } else {
+                        customErrorDialog(context, "Invalid!",
+                            "Please Input your pin to proceed");
+                      }
+                    },
+                    child: const Text(
+                      'Proceed',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

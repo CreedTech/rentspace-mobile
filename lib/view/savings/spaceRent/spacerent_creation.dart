@@ -33,7 +33,7 @@ double _rentThirty = 0.0;
 double _holdingFee = 0.0;
 String _canShowRent = 'false';
 String _hasCalculate = 'true';
-String durationType = "Daily";
+String durationType = "Weekly";
 String paymentCount = "";
 //savings goals
 double _dailyValue = 0.0;
@@ -51,11 +51,11 @@ final rentFormKey = GlobalKey<FormState>();
 final TextEditingController _rentAmountController = TextEditingController();
 final TextEditingController _endDateController = TextEditingController();
 final TextEditingController fundingController = TextEditingController();
-List<String> intervalLabels = ['Daily', 'Weekly', 'Monthly'];
+List<String> intervalLabels = ['Weekly', 'Monthly'];
 List<String> fundingSource = ['DVA Wallet', 'Debit Card'];
 
 class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
-final TextEditingController _intervalController = TextEditingController();
+  final TextEditingController _intervalController = TextEditingController();
   final UserController userController = Get.find();
   DateTime _endDate = DateTime.now();
 
@@ -159,10 +159,11 @@ final TextEditingController _intervalController = TextEditingController();
         _holdingFee = 0.01 * _rentSeventy;
         _rentValue = rent;
         _hasCalculate = 'true';
-        if (durationType == "Daily") {
-          paymentCount = _calculateDaysDifference().toString();
-          _savingValue = ((rent * 0.7) / _calculateDaysDifference());
-        } else if (durationType == "Weekly") {
+        // if (durationType == "Daily") {
+        //   paymentCount = _calculateDaysDifference().toString();
+        //   _savingValue = ((rent * 0.7) / _calculateDaysDifference());
+        // } else
+        if (durationType == "Weekly") {
           paymentCount = _calculateWeeksDifference().toString();
           _savingValue = ((rent * 0.7) / _calculateWeeksDifference());
         } else {
@@ -223,6 +224,7 @@ final TextEditingController _intervalController = TextEditingController();
               customErrorDialog(
                   context, 'Invalid date', 'Maximum duration is 8 months');
             } else {
+              showSaveButton = true;
               _endDateController.text = DateFormat('dd/MM/yyyy').format(picked);
             }
           } else {
@@ -508,61 +510,61 @@ final TextEditingController _intervalController = TextEditingController();
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 3),
-                          child: Text(
-                            'Select Funding Source',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        CustomDropdown(
-                          selectedStyle: GoogleFonts.nunito(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 12,
-                          ),
-                          hintText: 'Select Source?',
-                          hintStyle: GoogleFonts.nunito(fontSize: 12),
-                          excludeSelected: true,
-                          fillColor: Colors.transparent,
-                          listItemStyle: GoogleFonts.nunito(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 12),
-                          items: fundingSource,
-                          controller: fundingController,
-                          borderSide:
-                              BorderSide(color: Theme.of(context).primaryColor),
-                          fieldSuffixIcon: Icon(
-                            Iconsax.arrow_down5,
-                            size: 25.h,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onChanged: (String val) {
-                            if (mounted) {
-                              // Check if the widget is still mounted
-                              setState(() {
-                                selectedId = fundingController.text;
-                                showSaveButton = true;
-                              });
-                            }
-                            print(val);
-                            print("_amountValue");
-                            print(_amountValue);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.symmetric(
+                    //           vertical: 4, horizontal: 3),
+                    //       child: Text(
+                    //         'Select Funding Source',
+                    //         style: GoogleFonts.nunito(
+                    //           color: Theme.of(context).primaryColor,
+                    //           fontWeight: FontWeight.w700,
+                    //           fontSize: 12,
+                    //           // fontFamily: "DefaultFontFamily",
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     CustomDropdown(
+                    //       selectedStyle: GoogleFonts.nunito(
+                    //         color: Theme.of(context).primaryColor,
+                    //         fontSize: 12,
+                    //       ),
+                    //       hintText: 'Select Source?',
+                    //       hintStyle: GoogleFonts.nunito(fontSize: 12),
+                    //       excludeSelected: true,
+                    //       fillColor: Colors.transparent,
+                    //       listItemStyle: GoogleFonts.nunito(
+                    //           color: Theme.of(context).colorScheme.secondary,
+                    //           fontSize: 12),
+                    //       items: fundingSource,
+                    //       controller: fundingController,
+                    //       borderSide:
+                    //           BorderSide(color: Theme.of(context).primaryColor),
+                    //       fieldSuffixIcon: Icon(
+                    //         Iconsax.arrow_down5,
+                    //         size: 25.h,
+                    //         color: Theme.of(context).primaryColor,
+                    //       ),
+                    //       onChanged: (String val) {
+                    //         if (mounted) {
+                    //           // Check if the widget is still mounted
+                    //           setState(() {
+                    //             selectedId = fundingController.text;
+                    //             showSaveButton = true;
+                    //           });
+                    //         }
+                    //         print(val);
+                    //         print("_amountValue");
+                    //         print(_amountValue);
+                    //       },
+                    //     ),
+                    //     const SizedBox(
+                    //       height: 10,
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -682,32 +684,32 @@ final TextEditingController _intervalController = TextEditingController();
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Holding Fee: ',
-                                              style: GoogleFonts.nunito(
-                                                  fontSize: 14.sp,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            Text(
-                                              currencyFormat
-                                                  .format(double.tryParse(
-                                                      _holdingFee.toString()))
-                                                  .toString(),
-                                              overflow: TextOverflow.clip,
-                                              style: GoogleFonts.nunito(
-                                                  fontSize: 14.sp,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.center,
+                                        //   children: [
+                                        //     Text(
+                                        //       'Holding Fee: ',
+                                        //       style: GoogleFonts.nunito(
+                                        //           fontSize: 14.sp,
+                                        //           color: Theme.of(context)
+                                        //               .primaryColor,
+                                        //           fontWeight: FontWeight.w700),
+                                        //     ),
+                                        //     Text(
+                                        //       currencyFormat
+                                        //           .format(double.tryParse(
+                                        //               _holdingFee.toString()))
+                                        //           .toString(),
+                                        //       overflow: TextOverflow.clip,
+                                        //       style: GoogleFonts.nunito(
+                                        //           fontSize: 14.sp,
+                                        //           color: Theme.of(context)
+                                        //               .primaryColor,
+                                        //           fontWeight: FontWeight.w700),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ],
                                     ),
                                     const SizedBox(
@@ -740,7 +742,7 @@ final TextEditingController _intervalController = TextEditingController();
                                                 print(durationType);
                                                 print(_savingValue);
                                                 print(paymentCount);
-                                                print(fundingController.text);
+                                                // print(fundingController.text);
                                                 print(_rentValue);
                                                 print(durationType);
                                                 rentState.createRent(
@@ -749,8 +751,9 @@ final TextEditingController _intervalController = TextEditingController();
                                                     durationType,
                                                     _savingValue,
                                                     _rentValue,
-                                                    paymentCount,
-                                                    fundingController.text);
+                                                    paymentCount
+                                                    // fundingController.text,
+                                                    );
 
                                                 // Get.to(
                                                 //     SpaceRentFunding(

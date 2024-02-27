@@ -53,14 +53,14 @@ var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 // final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 String _hasRent = "";
-int tankBalance = 0;
+double tankBalance = 0;
 // var dum2 = "".obs();
-int boxBalance = 0;
-int depositBalance = 0;
-int rentBalance = 0;
-int targetBalance = 0;
-int totalSavings = 0;
-int totalAssets = 0;
+double boxBalance = 0;
+double depositBalance = 0;
+double rentBalance = 0;
+double targetBalance = 0;
+double totalSavings = 0;
+double totalAssets = 0;
 bool hideBalance = false;
 // List<SpaceRent> _cachedRentData = [];
 bool _isLoading = false;
@@ -110,7 +110,7 @@ class _SavingsPageState extends State<SavingsPage> {
     //     tankBalance = 0;
     //   });
     // }
-    if (rentController.rent.isNotEmpty) {
+    if (rentController.rentModel!.rent!.isNotEmpty) {
       rentBalance += rentController.rentModel!.rent![0].paidAmount;
       targetBalance += rentController.rentModel!.rent![0].amount;
       // for (int j = 0; j < rentController.rent.length; j++) {

@@ -143,15 +143,15 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        centerTitle: false,
-        title: Text(
-          'Back',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
+        // centerTitle: false,
+        // title: Text(
+        //   'Back',
+        //   style: TextStyle(
+        //     color: Theme.of(context).primaryColor,
+        //     fontWeight: FontWeight.w700,
+        //     fontSize: 16,
+        //   ),
+        // ),
       ),
       body: Stack(
         children: [

@@ -5,6 +5,8 @@ class AppConstants {
   static const SIGN_UP = '/api/user/create';
     static const GET_WALLET = '/api/wallet/get-wallet';
   static const CREATE_PIN = '/api/wallet/create-pin';
+  static const FORGOT_PIN = '/api/wallet/reset-pin';
+    static const RESEND_PIN_OTP = '/api/user/resend-password-otp';
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
   static const LOGOUT = '/api/user/logout';

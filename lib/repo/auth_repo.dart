@@ -309,4 +309,57 @@ Future<ResponseModel> createPin(body) async {
     // return responseModel = ResponseModel(error, false);
   }
 
+ Future<ResponseModel> forgotPin() async {
+    print('Got here in auth repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.FORGOT_PIN, '');
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Code sent to your email", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
+  Future<ResponseModel> resendPinOtp(email) async {
+    print('Got here in auth repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.RESEND_PASSWORD_OTP, jsonEncode(email));
+    print('response');
+    print(response);
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("Code sent to your email", true);
+      return responseModel;
+    }
+    print("Here in repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    return responseModel = ResponseModel(error, false);
+  }
+
 }

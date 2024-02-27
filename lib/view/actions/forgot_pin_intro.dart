@@ -1,4 +1,6 @@
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/api/global_services.dart';
@@ -8,17 +10,18 @@ import 'package:rentspace/view/actions/forgot_pin.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
+import '../../controller/auth/auth_controller.dart';
 import '../../controller/auth/user_controller.dart';
 // import '../../controller/user_controller.dart';
 
-class ForgotPinIntro extends StatefulWidget {
+class ForgotPinIntro extends ConsumerStatefulWidget {
   const ForgotPinIntro({super.key});
 
   @override
-  State<ForgotPinIntro> createState() => _ForgotPinIntroState();
+  ConsumerState<ForgotPinIntro> createState() => _ForgotPinIntroConsumerState();
 }
 
-class _ForgotPinIntroState extends State<ForgotPinIntro> {
+class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
   final TextEditingController _passwordController = TextEditingController();
@@ -44,18 +47,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
   }
 
   void doSomething() async {
-    String userPin = await GlobalService.sharedPreferencesManager.getPin();
-    if (userController.userModel!.userDetails![0].password !=
-        _passwordController.text.trim()) {
-      // ignore: use_build_context_synchronously
-      customErrorDialog(context, "Invalid!", "Password is incorrect");
-    } else {
-      Get.to(
-        ForgotPin(
-            // password: _passwordController.text.trim(),
-            pin: walletController.wallet[0].pin),
-      );
-    }
+    // String userPin = await GlobalService.sharedPreferencesManager.getPin();
   }
 
   bool obscurity = true;
@@ -63,6 +55,7 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.read(authControllerProvider.notifier);
     validatePass(passValue) {
       if (passValue == null || passValue.isEmpty) {
         return 'Input a valid password';
@@ -83,21 +76,24 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
             color: Colors.red,
             width: 2.0,
           ),
@@ -193,7 +189,30 @@ class _ForgotPinIntroState extends State<ForgotPinIntro> {
                                   onPressed: () {
                                     if (passwordformKey.currentState!
                                         .validate()) {
-                                      doSomething();
+                                      BCrypt.checkpw(
+                                        _passwordController.text.trim(),
+                                        userController.userModel!
+                                            .userDetails![0].password,
+                                      );
+                                      if (!BCrypt.checkpw(
+                                        _passwordController.text.trim(),
+                                        userController.userModel!
+                                            .userDetails![0].password,
+                                      )) {
+                                        // ignore: use_build_context_synchronously
+                                        customErrorDialog(context, "Invalid!",
+                                            "Password is incorrect");
+                                      } else {
+                                        print('email');
+                                        print(userController
+                                            .userModel!.userDetails![0].email);
+                                        authState.forgotPin(
+                                          context,
+                                          userController
+                                              .userModel!.userDetails![0].email,
+                                        );
+                                       
+                                      }
                                     } else {
                                       customErrorDialog(context, "Invalid!",
                                           "Please fill the form properly to proceed");
