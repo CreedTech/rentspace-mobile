@@ -100,7 +100,6 @@ class _SavingsPageState extends State<SavingsPage> {
 
   getSavings() {
     print("rentController.rent");
-    print(rentController.rentModel!.rent![0].intervalAmount);
     // if (tankController.tank.isNotEmpty) {
     //   for (int i = 0; i < tankController.tank.length; i++) {
     //     tankBalance += tankController.tank[i].targetAmount.toInt();
@@ -110,13 +109,13 @@ class _SavingsPageState extends State<SavingsPage> {
     //     tankBalance = 0;
     //   });
     // }
-    if (rentController.rentModel!.rent!.isNotEmpty) {
-      rentBalance += rentController.rentModel!.rent![0].paidAmount;
-      targetBalance += rentController.rentModel!.rent![0].amount;
-      // for (int j = 0; j < rentController.rent.length; j++) {
-      //   rentBalance += rentController.rent[j].paidAmount;
-      //   targetBalance += rentController.rent[j].amount;
-      // }
+    if (rentController.rentModel!.rents!.isNotEmpty) {
+      // rentBalance += rentController.rentModel!.rent![0].paidAmount;
+      // targetBalance += rentController.rentModel!.rent![0].amount;
+      for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
+        rentBalance += rentController.rentModel!.rents![j].paidAmount;
+        targetBalance += rentController.rentModel!.rents![j].amount;
+      }
     } else {
       setState(() {
         rentBalance = 0;
@@ -165,7 +164,7 @@ class _SavingsPageState extends State<SavingsPage> {
     depositBalance = 0;
     totalSavings = 0;
     totalAssets = 0;
-    rentController.fetchRent();
+
     // fetchCachedRentData();
     // Then start fetching the updated data
     // fetchRentData();
@@ -175,33 +174,7 @@ class _SavingsPageState extends State<SavingsPage> {
     getSavings();
   }
 
-  // Future<void> fetchCachedRentData() async {
-  //   // Your code to fetch cached rent data
-  //   // Assuming you have a RentController instance called rentController
-  //   // _cachedRentData = await rentController.getCachedRentData();
-  //   setState(() {}); // Update the UI to display cached data
-  //   print("_cachedRentData");
-  //   // print(_cachedRentData[0].amount);
-  // }
-
-  // Future<void> fetchRentData() async {
-  //   setState(() {
-  //     _isLoading = true;
-  //   });
-  //   try {
-  //     // Your code to fetch rent data
-  //     // Assuming you have a RentController instance called rentController
-  //     await rentController.startFetchingRent();
-  //   } catch (e) {
-  //     print('Error fetching rent: $e');
-  //     // Handle error
-  //   } finally {
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   }
-  // }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -553,7 +526,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      (rentController.rentModel!.rent!.isEmpty)
+                      (rentController.rentModel!.rents!.isEmpty)
                           ? Get.to(const SpaceRentIntro())
                           : Get.to(const RentSpaceList());
                     },

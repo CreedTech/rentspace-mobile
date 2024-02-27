@@ -333,167 +333,167 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: ListTile(
-                    minLeadingWidth: 0,
-                    // shape: ShapeBorder,
-                    leading: Container(
-                      padding: const EdgeInsets.all(9),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).cardColor,
-                      ),
-                      child: const Icon(
-                        Iconsax.money_recive5,
-                        color: brandOne,
-                      ),
-                    ),
-                    title: Text(
-                      'Loan',
-                      style: GoogleFonts.nunito(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    subtitle: Text(
-                      "Access Your Loan",
-                      style: GoogleFonts.nunito(
-                        fontSize: 14.0,
-                        // letterSpacing: 0.5,
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 7),
+                //   child: ListTile(
+                //     minLeadingWidth: 0,
+                //     // shape: ShapeBorder,
+                //     leading: Container(
+                //       padding: const EdgeInsets.all(9),
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         color: Theme.of(context).cardColor,
+                //       ),
+                //       child: const Icon(
+                //         Iconsax.money_recive5,
+                //         color: brandOne,
+                //       ),
+                //     ),
+                //     title: Text(
+                //       'Loan',
+                //       style: GoogleFonts.nunito(
+                //         color: Theme.of(context).primaryColor,
+                //         fontSize: 17,
+                //         fontWeight: FontWeight.w600,
+                //       ),
+                //     ),
+                //     subtitle: Text(
+                //       "Access Your Loan",
+                //       style: GoogleFonts.nunito(
+                //         fontSize: 14.0,
+                //         // letterSpacing: 0.5,
 
-                        color: const Color(0xff828282),
-                      ),
-                    ),
-                    onTap: () {
-                      ((rentController.rentModel!.rent![0].paidAmount) !=
-                              (rentController.rentModel!.rent![0].amount * 0.7))
-                          ? showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  title: null,
-                                  scrollable: true,
-                                  elevation: 0,
-                                  content: SizedBox(
-                                    height: 500.h,
-                                    child: Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Align(
-                                            alignment: Alignment.topRight,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                // color: brandOne,
-                                              ),
-                                              child: Icon(
-                                                Iconsax.close_circle,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                size: 30,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 45.h,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Image.asset(
-                                            'assets/cancel_round.png',
-                                            width: 104,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 70.h,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'Loan not Available',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontSize: 22.sp,
-                                                fontWeight: FontWeight.w800,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'You currently do not qualify for a rent loan. You would be able to need to save up to 70% of Your total rent CONSISTENTLY!!! to qualify',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        SizedBox(
-                                          height: 40.h,
-                                        ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(300, 50),
-                                            maximumSize: const Size(400, 50),
-                                            backgroundColor: brandOne,
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                10,
-                                              ),
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            'Go Back',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
-                                              color: Colors.white,
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              })
-                          : (userController.userModel!.userDetails![0]
-                                      .hasVerifiedKyc ==
-                                  false)
-                              ? Get.to(const KYCIntroPage())
-                              : Get.to(const LoanPage());
-                      // Get.to(const ProfilePage());
-                      // Navigator.pushNamed(context, RouteList.profile);
-                    },
-                    trailing: Icon(
-                      Iconsax.arrow_right_3,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
+                //         color: const Color(0xff828282),
+                //       ),
+                //     ),
+                //     onTap: () {
+                //       ((rentController.rentModel!.rent![0].paidAmount) !=
+                //               (rentController.rentModel!.rent![0].amount * 0.7))
+                //           ? showDialog(
+                //               context: context,
+                //               barrierDismissible: false,
+                //               builder: (BuildContext context) {
+                //                 return AlertDialog(
+                //                   shape: RoundedRectangleBorder(
+                //                     borderRadius: BorderRadius.circular(16),
+                //                   ),
+                //                   title: null,
+                //                   scrollable: true,
+                //                   elevation: 0,
+                //                   content: SizedBox(
+                //                     height: 500.h,
+                //                     child: Column(
+                //                       children: [
+                //                         GestureDetector(
+                //                           onTap: () {
+                //                             Navigator.of(context).pop();
+                //                           },
+                //                           child: Align(
+                //                             alignment: Alignment.topRight,
+                //                             child: Container(
+                //                               decoration: BoxDecoration(
+                //                                 borderRadius:
+                //                                     BorderRadius.circular(30),
+                //                                 // color: brandOne,
+                //                               ),
+                //                               child: Icon(
+                //                                 Iconsax.close_circle,
+                //                                 color: Theme.of(context)
+                //                                     .primaryColor,
+                //                                 size: 30,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                         ),
+                //                         SizedBox(
+                //                           height: 45.h,
+                //                         ),
+                //                         Align(
+                //                           alignment: Alignment.center,
+                //                           child: Image.asset(
+                //                             'assets/cancel_round.png',
+                //                             width: 104,
+                //                           ),
+                //                         ),
+                //                         SizedBox(
+                //                           height: 70.h,
+                //                         ),
+                //                         Column(
+                //                           children: [
+                //                             Text(
+                //                               'Loan not Available',
+                //                               style: GoogleFonts.nunito(
+                //                                 color: Theme.of(context)
+                //                                     .primaryColor,
+                //                                 fontSize: 22.sp,
+                //                                 fontWeight: FontWeight.w800,
+                //                               ),
+                //                             ),
+                //                           ],
+                //                         ),
+                //                         const SizedBox(
+                //                           height: 5,
+                //                         ),
+                //                         Text(
+                //                           'You currently do not qualify for a rent loan. You would be able to need to save up to 70% of Your total rent CONSISTENTLY!!! to qualify',
+                //                           textAlign: TextAlign.center,
+                //                           style: GoogleFonts.nunito(
+                //                               color: Theme.of(context)
+                //                                   .primaryColor,
+                //                               fontSize: 14,
+                //                               fontWeight: FontWeight.w400),
+                //                         ),
+                //                         SizedBox(
+                //                           height: 40.h,
+                //                         ),
+                //                         ElevatedButton(
+                //                           style: ElevatedButton.styleFrom(
+                //                             minimumSize: const Size(300, 50),
+                //                             maximumSize: const Size(400, 50),
+                //                             backgroundColor: brandOne,
+                //                             elevation: 0,
+                //                             shape: RoundedRectangleBorder(
+                //                               borderRadius:
+                //                                   BorderRadius.circular(
+                //                                 10,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                           onPressed: () {
+                //                             Navigator.of(context).pop();
+                //                           },
+                //                           child: Text(
+                //                             'Go Back',
+                //                             textAlign: TextAlign.center,
+                //                             style: GoogleFonts.nunito(
+                //                               color: Colors.white,
+                //                               fontSize: 14.sp,
+                //                               fontWeight: FontWeight.w500,
+                //                             ),
+                //                           ),
+                //                         ),
+                //                         SizedBox(
+                //                           height: 10.h,
+                //                         ),
+                //                       ],
+                //                     ),
+                //                   ),
+                //                 );
+                //               })
+                //           : (userController.userModel!.userDetails![0]
+                //                       .hasVerifiedKyc ==
+                //                   false)
+                //               ? Get.to(const KYCIntroPage())
+                //               : Get.to(const LoanPage());
+                //       // Get.to(const ProfilePage());
+                //       // Navigator.pushNamed(context, RouteList.profile);
+                //     },
+                //     trailing: Icon(
+                //       Iconsax.arrow_right_3,
+                //       color: Theme.of(context).primaryColor,
+                //     ),
+                //   ),
+                // ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),

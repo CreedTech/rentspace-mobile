@@ -289,6 +289,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         isRefresh = true;
       });
     }
+    userController.fetchData();
 
     // final result = await getWalletData(refresh: true);
     // if (result == true) {
@@ -1843,7 +1844,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                       () {
                                                                     (userController.userModel!.userDetails![0].wallet.mainBalance.obs() >
                                                                             0)
-                                                                        ? Get.to(TransactionReceipt())
+                                                                        ? Get.to(
+                                                                            TransactionReceipt())
                                                                         //  Get.to(
                                                                         //     const WalletWithdrawal())
                                                                         : customErrorDialog(

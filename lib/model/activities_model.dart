@@ -22,23 +22,7 @@ class ActivitiesModel {
       activities = [];
     }
   }
-  //   ActivitiesModel.fromJson(Map<String, dynamic> json) {
-  //     //  assets = List.from(json['assets']).map((e) => Assets.fromJson(e)).toList();
-  //     // List<Activities>.from(json.decode('userActivities').map((x) => Activities.fromJson(x)));
-  //   final dynamic activitiesData = json['userActivities'];
-  //   if (activitiesData is Map<String, dynamic>) {
-  //     // If activitiesData is a Map, create a single activitiesModel object.
-  //     activities = [Activities.fromJson(activitiesData)];
-  //     print(activities);
-  //   } else {
-  //     // Handle the case where activitiesData is not a Map (e.g., it's a List).
-  //     // You might want to log an error or handle this case differently based on your requirements.
-  //     activities = activitiesData.map((e) => ActivitiesModel.fromJson(e)).toList();
-  //     print('activitiesData is not a Map: $activitiesData');
-  //     // Set activities to an empty list or null, depending on your needs.
-  //     // wallet = [];
-  //   }
-  // }
+
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -47,11 +31,6 @@ class ActivitiesModel {
   }
 }
 
-// List<Activities> modelUserFromJson(String str) =>
-//     List<Activities>.from(json.decode(str).map((x) => Activities.fromJson(x)));
-
-// String modelUserToJson(List<Activities> data) =>
-//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Activities {
   final String id;

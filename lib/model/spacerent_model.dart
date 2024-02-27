@@ -2,38 +2,37 @@ import 'dart:convert';
 
 class SpaceRentModel {
   SpaceRentModel({
-    required this.rent,
+    required this.rents,
   });
-  List<SpaceRent>? rent;
+  List<SpaceRent>? rents;
 
   SpaceRentModel.fromJson(Map<String, dynamic> json) {
     final dynamic spaceRentData = json['rent'];
     print('spaceRentData');
     print(spaceRentData);
-    if (spaceRentData is Map<String, dynamic>) {
+    if (spaceRentData is List<dynamic>) {
+      rents = spaceRentData.map((e) => SpaceRent.fromJson(e)).toList();
+      print('rents length');
+      print(rents!.length);
+    } else if (spaceRentData is Map<String, dynamic>) {
       print("Here");
-      // If userDetailsData is a Map, create a single UserDetailsModel object.
-      rent = [SpaceRent.fromJson(spaceRentData)];
-      print("rent");
-      print(rent);
-    } else {
-      // Handle the case where userDetailsData is not a Map (e.g., it's a List).
-      // You might want to log an error or handle this case differently based on your requirements.
-      print('spacerentData is not a Map: $spaceRentData');
-      // Set userDetails to an empty list or null, depending on your needs.
-      rent = [];
+
+      rents = [SpaceRent.fromJson(spaceRentData)];
+      print("rents");
+      print(rents);
     }
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['rent'] = rent!.map((e) => e.toJson()).toList();
+    _data['rent'] = rents!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
 class SpaceRent {
   final String id;
+  final String rentName;
   final String rentspaceId;
   final int currentPayment;
   final String date;
@@ -43,8 +42,8 @@ class SpaceRent {
   final int amount;
   final String paymentCount;
   final bool completed;
-  final double intervalAmount;
-  final double paidAmount;
+  final dynamic intervalAmount;
+  final dynamic paidAmount;
   final String paymentStatus;
   final String token;
   final String createdAt;
@@ -52,6 +51,7 @@ class SpaceRent {
 
   SpaceRent({
     required this.id,
+    required this.rentName,
     required this.rentspaceId,
     required this.currentPayment,
     required this.date,
@@ -71,6 +71,7 @@ class SpaceRent {
 
   factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
         id: json['_id'],
+        rentName: json['rentName'],
         rentspaceId: json['rentspace_id'],
         currentPayment: json['current_payment'],
         date: json['date'],
@@ -90,6 +91,7 @@ class SpaceRent {
 
   Map<String, dynamic> toJson() => {
         '_id': id,
+        'rentName': rentName,
         'rentspace_id': rentspaceId,
         'current_payment': currentPayment,
         'date': date,

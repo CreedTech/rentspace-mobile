@@ -92,15 +92,15 @@ class _FinanceHealthState extends State<FinanceHealth> {
     //     tankBalance = 0;
     //   });
     // }
-    if (rentController.rent.isNotEmpty) {
-      rentBalance += rentController.rent[0].paidAmount;
-      // for (int j = 0; j < rentController.rent.length; j++) {
-      // }
-    } else {
-      setState(() {
-        rentBalance = 0;
-      });
-    }
+    // if (rentController.rent.isNotEmpty) {
+    //   rentBalance += rentController.rent[0].paidAmount;
+    //   // for (int j = 0; j < rentController.rent.length; j++) {
+    //   // }
+    // } else {
+    //   setState(() {
+    //     rentBalance = 0;
+    //   });
+    // }
     // if (boxController.box.isNotEmpty) {
     //   for (int i = 0; i < boxController.box.length; i++) {
     //     boxBalance += boxController.box[i].savedAmount.toInt();
