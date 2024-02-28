@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
@@ -164,6 +165,8 @@ final TextEditingController _electricAmountController = TextEditingController();
 final TextEditingController _betNumberController = TextEditingController();
 final TextEditingController _betPinController = TextEditingController();
 final TextEditingController _betAmountController = TextEditingController();
+final airtimeFormKey = GlobalKey<FormState>();
+final dataFormKey = GlobalKey<FormState>();
 
 class _UtilitiesPageState extends State<UtilitiesPage> {
   List<DataList> dataList = [];
@@ -171,6 +174,45 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
   List<Bill> betList = [];
   final UserController userController = Get.find();
 //bet
+
+  validateNumber(text) {
+    if (text.isEmpty) {
+      return 'Can\'t be empty';
+    }
+    if (int.tryParse(text.replaceAll(',', '')) == null) {
+      return 'enter valid value';
+    }
+    if (int.tryParse(text.replaceAll(',', '')) == 0) {
+      return 'number cannot be zero';
+    }
+    if (text.length != 11) {
+      return 'Recipient Number must be 11 Digit';
+    }
+    if (int.tryParse(text.replaceAll(',', ''))!.isNegative) {
+      return 'enter positive value';
+    }
+    return null;
+  }
+
+  validatePin(pinOneValue) {
+    if (pinOneValue.isEmpty) {
+      return 'pin cannot be empty';
+    }
+    if (pinOneValue.length < 4) {
+      return 'pin is incomplete';
+    }
+
+    if (!BCrypt.checkpw(
+      int.tryParse(pinOneValue).toString(),
+      userController.userModel!.userDetails![0].wallet.pin,
+    )) {
+      return 'incorrect PIN';
+    }
+    if (int.tryParse(pinOneValue) == null) {
+      return 'enter valid number';
+    }
+    return null;
+  }
 
   firstBetFund(String bId, bBiller) {
     Get.bottomSheet(
@@ -1099,288 +1141,640 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
         showLoading = false;
       });
       Get.bottomSheet(
-        Container(
+        SizedBox(
           height: 500,
-          child: ListView.builder(
-            itemCount: dataList.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    dataPlanName = dataList[index].name;
-                  });
-                  Get.back();
-                  Get.bottomSheet(
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SizedBox(
-                          height: 500,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40),
+            child: ListView.builder(
+              itemCount: dataList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        dataPlanName = dataList[index].name;
+                      });
+                      Get.back();
+                      Get.bottomSheet(
+                        SingleChildScrollView(
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 100,
-                                ),
-                                Text(
-                                  "Subscribe to $dataPlanName and earn 1 SpacePoint!",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  "(₦20 charges applies)",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                TextFormField(
-                                  enableSuggestions: true,
-                                  cursorColor: Colors.black,
-                                  controller: _dataNumberController,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboardType: TextInputType.phone,
-                                  maxLengthEnforcement:
-                                      MaxLengthEnforcement.enforced,
-                                  maxLength: 11,
-
-                                  // update the state variable when the text changes
-
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    prefix: Text(
-                                      "$varValue",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              height: 500,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 100,
+                                    ),
+                                    Text(
+                                      "Subscribe to $dataPlanName and earn 1 SpacePoint!",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Form(
+                                      key: dataFormKey,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            enableSuggestions: true,
+                                            cursorColor:
+                                                Theme.of(context).primaryColor,
+                                            controller: _dataNumberController,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
+                                            // validator: validateNumber,
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            keyboardType: TextInputType.phone,
+                                            maxLengthEnforcement:
+                                                MaxLengthEnforcement.enforced,
+                                            maxLength: 11,
+                                            decoration: InputDecoration(
+                                              prefix: Text(
+                                                "$varValue",
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              label: Text(
+                                                "Enter valid number",
+                                                style: GoogleFonts.nunito(
+                                                  color: Colors.grey,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                borderSide: const BorderSide(
+                                                  color: Color(0xffE0E0E0),
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                borderSide: const BorderSide(
+                                                    color: brandOne,
+                                                    width: 2.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                borderSide: const BorderSide(
+                                                  color: Color(0xffE0E0E0),
+                                                ),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.red,
+                                                    width:
+                                                        2.0), // Change color to yellow
+                                              ),
+                                              filled: false,
+                                              contentPadding:
+                                                  const EdgeInsets.all(14),
+                                              fillColor: brandThree,
+                                              hintText: 'e.g 080 123 456 789 ',
+                                              hintStyle: GoogleFonts.nunito(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    label: const Text(
-                                      "Enter valid number",
-                                      style: TextStyle(
-                                        color: Colors.grey,
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.bottomSheet(
+                                          isDismissible: true,
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 350,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(30.0),
+                                                topRight: Radius.circular(30.0),
+                                              ),
+                                              child: Container(
+                                                color: Theme.of(context)
+                                                    .canvasColor,
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 10, 5),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                    Text(
+                                                      'Enter PIN to Proceed',
+                                                      style: GoogleFonts.nunito(
+                                                          fontSize: 18,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w800),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    Pinput(
+                                                      obscureText: true,
+                                                      defaultPinTheme: PinTheme(
+                                                        width: 50,
+                                                        height: 50,
+                                                        textStyle:
+                                                            const TextStyle(
+                                                          fontSize: 20,
+                                                          color: brandOne,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color: brandTwo,
+                                                              width: 1.0),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                      ),
+                                                      onCompleted:
+                                                          (String val) async {
+                                                        if (BCrypt.checkpw(
+                                                          _pinController.text
+                                                              .trim()
+                                                              .toString(),
+                                                          userController
+                                                              .userModel!
+                                                              .userDetails![0]
+                                                              .wallet
+                                                              .pin,
+                                                        )) {
+                                                          _pinController
+                                                              .clear();
+                                                          Get.back();
+                                                          Get.back();
+                                                          setState(() {
+                                                            loadMssg =
+                                                                "Processing...";
+                                                            canLoad = false;
+                                                          });
+
+                                                          if (dataFormKey
+                                                              .currentState!
+                                                              .validate()) {
+                                                            const String
+                                                                apiUrl =
+                                                                'https://api.watupay.com/v1/watubill/vend';
+                                                            const String
+                                                                bearerToken =
+                                                                'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                                            final response =
+                                                                await http.post(
+                                                              Uri.parse(apiUrl),
+                                                              headers: {
+                                                                'Authorization':
+                                                                    'Bearer $bearerToken',
+                                                                "Content-Type":
+                                                                    "application/json"
+                                                              },
+                                                              body:
+                                                                  jsonEncode(<String,
+                                                                      String>{
+                                                                "channel":
+                                                                    billId,
+                                                                "business_signature":
+                                                                    "a390960dfa37469d824ffe6cb80472f6",
+                                                                'phone_number':
+                                                                    _dataNumberController
+                                                                        .text
+                                                                        .trim()
+                                                                        .toString(),
+                                                                'validity':
+                                                                    dataList[
+                                                                            index]
+                                                                        .validity,
+                                                                "name": dataList[
+                                                                        index]
+                                                                    .name,
+                                                                "amount":
+                                                                    dataList[
+                                                                            index]
+                                                                        .amount
+                                                              }),
+                                                            );
+
+                                                            if (response
+                                                                    .statusCode ==
+                                                                200) {
+                                                              // var walletUpdate = FirebaseFirestore
+                                                              //     .instance
+                                                              //     .collection('accounts');
+                                                              // await walletUpdate.doc(userId).update({
+                                                              //   'wallet_balance': (((int.tryParse(
+                                                              //               userController.user[0]
+                                                              //                   .userWalletBalance))!) -
+                                                              //           ((int.tryParse(dataList[index]
+                                                              //                   .amount))! +
+                                                              //               20))
+                                                              //       .toString(),
+                                                              //   'utility_points': (((int.tryParse(
+                                                              //               userController.user[0]
+                                                              //                   .utilityPoints)!)) +
+                                                              //           1)
+                                                              //       .toString(),
+                                                              // }).then((value) async {
+                                                              //   var addUtility = FirebaseFirestore
+                                                              //       .instance
+                                                              //       .collection('utility');
+                                                              //   await addUtility.add({
+                                                              //     'user_id': userController
+                                                              //         .user[0].rentspaceID,
+                                                              //     'id': userController.user[0].id,
+                                                              //     'amount': dataList[index].amount,
+                                                              //     'biller': dataList[index].name,
+                                                              //     'transaction_id': getRandom(8),
+                                                              //     'timestamp':
+                                                              //         FieldValue.serverTimestamp(),
+                                                              //     'date': formattedDate,
+                                                              //     'description': 'subscribed to data',
+                                                              //     'charge': '20'
+                                                              //   });
+                                                              // });
+
+                                                              _dataPinController
+                                                                  .clear();
+                                                              _dataNumberController
+                                                                  .clear();
+                                                              setState(() {
+                                                                canLoad = true;
+                                                              });
+                                                              showTopSnackBar(
+                                                                Overlay.of(
+                                                                    context),
+                                                                CustomSnackBar
+                                                                    .success(
+                                                                  backgroundColor:
+                                                                      brandOne,
+                                                                  message:
+                                                                      'You just earned a Space point!',
+                                                                  textStyle:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              setState(() {
+                                                                canLoad = true;
+                                                              });
+                                                              // Error handling
+                                                              _dataPinController
+                                                                  .clear();
+                                                              _dataNumberController
+                                                                  .clear();
+
+                                                              customErrorDialog(
+                                                                  context,
+                                                                  "Error",
+                                                                  "Try again later");
+                                                            }
+                                                          } else {
+                                                            setState(() {
+                                                              canLoad = true;
+                                                            });
+                                                            customErrorDialog(
+                                                                context,
+                                                                "Incomplete",
+                                                                "Fill the field correctly to proceed");
+                                                          }
+                                                        } else {
+                                                          _pinController
+                                                              .clear();
+                                                          if (context.mounted) {
+                                                            customErrorDialog(
+                                                                context,
+                                                                "Invalid PIN",
+                                                                'Enter correct PIN to proceed');
+                                                          }
+                                                        }
+                                                      },
+                                                      // validator: validatePin,
+                                                      onChanged: validatePin,
+                                                      controller:
+                                                          _pinController,
+                                                      length: 4,
+                                                      closeKeyboardWhenCompleted:
+                                                          true,
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 40,
+                                                    ),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        minimumSize:
+                                                            const Size(300, 50),
+                                                        backgroundColor:
+                                                            brandOne,
+                                                        elevation: 0,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () async {
+                                                        if (BCrypt.checkpw(
+                                                          _pinController.text
+                                                              .trim()
+                                                              .toString(),
+                                                          userController
+                                                              .userModel!
+                                                              .userDetails![0]
+                                                              .wallet
+                                                              .pin,
+                                                        )) {
+                                                          _pinController
+                                                              .clear();
+                                                          Get.back();
+                                                          // _doWallet();
+                                                          Get.back();
+                                                          setState(() {
+                                                            loadMssg =
+                                                                "Processing...";
+                                                            canLoad = false;
+                                                          });
+
+                                                          if (dataFormKey
+                                                              .currentState!
+                                                              .validate()) {
+                                                            const String
+                                                                apiUrl =
+                                                                'https://api.watupay.com/v1/watubill/vend';
+                                                            const String
+                                                                bearerToken =
+                                                                'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                                            final response =
+                                                                await http.post(
+                                                              Uri.parse(apiUrl),
+                                                              headers: {
+                                                                'Authorization':
+                                                                    'Bearer $bearerToken',
+                                                                "Content-Type":
+                                                                    "application/json"
+                                                              },
+                                                              body:
+                                                                  jsonEncode(<String,
+                                                                      String>{
+                                                                "channel":
+                                                                    billId,
+                                                                "business_signature":
+                                                                    "a390960dfa37469d824ffe6cb80472f6",
+                                                                'phone_number':
+                                                                    _dataNumberController
+                                                                        .text
+                                                                        .trim()
+                                                                        .toString(),
+                                                                'validity':
+                                                                    dataList[
+                                                                            index]
+                                                                        .validity,
+                                                                "name": dataList[
+                                                                        index]
+                                                                    .name,
+                                                                "amount":
+                                                                    dataList[
+                                                                            index]
+                                                                        .amount
+                                                              }),
+                                                            );
+
+                                                            if (response
+                                                                    .statusCode ==
+                                                                200) {
+                                                              // var walletUpdate = FirebaseFirestore
+                                                              //     .instance
+                                                              //     .collection('accounts');
+                                                              // await walletUpdate.doc(userId).update({
+                                                              //   'wallet_balance': (((int.tryParse(
+                                                              //               userController.user[0]
+                                                              //                   .userWalletBalance))!) -
+                                                              //           ((int.tryParse(dataList[index]
+                                                              //                   .amount))! +
+                                                              //               20))
+                                                              //       .toString(),
+                                                              //   'utility_points': (((int.tryParse(
+                                                              //               userController.user[0]
+                                                              //                   .utilityPoints)!)) +
+                                                              //           1)
+                                                              //       .toString(),
+                                                              // }).then((value) async {
+                                                              //   var addUtility = FirebaseFirestore
+                                                              //       .instance
+                                                              //       .collection('utility');
+                                                              //   await addUtility.add({
+                                                              //     'user_id': userController
+                                                              //         .user[0].rentspaceID,
+                                                              //     'id': userController.user[0].id,
+                                                              //     'amount': dataList[index].amount,
+                                                              //     'biller': dataList[index].name,
+                                                              //     'transaction_id': getRandom(8),
+                                                              //     'timestamp':
+                                                              //         FieldValue.serverTimestamp(),
+                                                              //     'date': formattedDate,
+                                                              //     'description': 'subscribed to data',
+                                                              //     'charge': '20'
+                                                              //   });
+                                                              // });
+
+                                                              _dataPinController
+                                                                  .clear();
+                                                              _dataNumberController
+                                                                  .clear();
+                                                              setState(() {
+                                                                canLoad = true;
+                                                              });
+                                                              showTopSnackBar(
+                                                                Overlay.of(
+                                                                    context),
+                                                                CustomSnackBar
+                                                                    .success(
+                                                                  backgroundColor:
+                                                                      brandOne,
+                                                                  message:
+                                                                      'You just earned a Space point!',
+                                                                  textStyle:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              setState(() {
+                                                                canLoad = true;
+                                                              });
+                                                              // Error handling
+                                                              _dataPinController
+                                                                  .clear();
+                                                              _dataNumberController
+                                                                  .clear();
+
+                                                              customErrorDialog(
+                                                                  context,
+                                                                  "Error",
+                                                                  "Try again later");
+                                                            }
+                                                          } else {
+                                                            setState(() {
+                                                              canLoad = true;
+                                                            });
+                                                            customErrorDialog(
+                                                                context,
+                                                                "Incomplete",
+                                                                "Fill the field correctly to proceed");
+                                                          }
+                                                        } else {
+                                                          _pinController
+                                                              .clear();
+                                                          if (context.mounted) {
+                                                            customErrorDialog(
+                                                                context,
+                                                                "Invalid PIN",
+                                                                'Enter correct PIN to proceed');
+                                                          }
+                                                        }
+                                                      },
+                                                      child: Text(
+                                                        'Subscribe',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: brandOne,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(13),
+                                          child: Align(
+                                            child: Text(
+                                              'Pay',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.nunito(
+                                                color: Colors.white,
+                                                fontSize: 19.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: const BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: brandThree,
-                                    hintText: '',
-                                    hintStyle: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Pinput(
-                                  defaultPinTheme: PinTheme(
-                                    width: 30,
-                                    height: 30,
-                                    textStyle: TextStyle(
-                                      fontSize: 20,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: brandOne, width: 2.0),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  controller: _dataPinController,
-                                  length: 4,
-                                  closeKeyboardWhenCompleted: true,
-                                  keyboardType: TextInputType.number,
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                GFButton(
-                                  onPressed: () async {
-                                    if (_dataNumberController.text.trim() !=
-                                            "" &&
-                                        (!BCrypt.checkpw(
-                                          _dataPinController.text.trim(),
-                                          userController.userModel!
-                                              .userDetails![0].wallet.pin,
-                                        )) &&
-                                        (((int.tryParse(
-                                                    dataList[index].amount)! +
-                                                50) <
-                                            (userController
-                                                .userModel!
-                                                .userDetails![0]
-                                                .wallet
-                                                .mainBalance)))) {
-                                      Get.back();
-                                      setState(() {
-                                        loadMssg = "Processing...";
-                                        canLoad = false;
-                                      });
-                                      const String apiUrl =
-                                          'https://api.watupay.com/v1/watubill/vend';
-                                      const String bearerToken =
-                                          'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                      final response = await http.post(
-                                        Uri.parse(apiUrl),
-                                        headers: {
-                                          'Authorization':
-                                              'Bearer $bearerToken',
-                                          "Content-Type": "application/json"
-                                        },
-                                        body: jsonEncode(<String, String>{
-                                          "channel": billId,
-                                          "business_signature":
-                                              "a390960dfa37469d824ffe6cb80472f6",
-                                          'phone_number': _dataNumberController
-                                              .text
-                                              .trim()
-                                              .toString(),
-                                          'validity': dataList[index].validity,
-                                          "name": dataList[index].name,
-                                          "amount": dataList[index].amount
-                                        }),
-                                      );
-
-                                      if (response.statusCode == 200) {
-                                        // var walletUpdate = FirebaseFirestore
-                                        //     .instance
-                                        //     .collection('accounts');
-                                        // await walletUpdate.doc(userId).update({
-                                        //   'wallet_balance': (((int.tryParse(
-                                        //               userController.user[0]
-                                        //                   .userWalletBalance))!) -
-                                        //           ((int.tryParse(dataList[index]
-                                        //                   .amount))! +
-                                        //               20))
-                                        //       .toString(),
-                                        //   'utility_points': (((int.tryParse(
-                                        //               userController.user[0]
-                                        //                   .utilityPoints)!)) +
-                                        //           1)
-                                        //       .toString(),
-                                        // }).then((value) async {
-                                        //   var addUtility = FirebaseFirestore
-                                        //       .instance
-                                        //       .collection('utility');
-                                        //   await addUtility.add({
-                                        //     'user_id': userController
-                                        //         .user[0].rentspaceID,
-                                        //     'id': userController.user[0].id,
-                                        //     'amount': dataList[index].amount,
-                                        //     'biller': dataList[index].name,
-                                        //     'transaction_id': getRandom(8),
-                                        //     'timestamp':
-                                        //         FieldValue.serverTimestamp(),
-                                        //     'date': formattedDate,
-                                        //     'description': 'subscribed to data',
-                                        //     'charge': '20'
-                                        //   });
-                                        // });
-
-                                        _dataPinController.clear();
-                                        _dataNumberController.clear();
-                                        setState(() {
-                                          canLoad = true;
-                                        });
-                                        Get.snackbar(
-                                          "Success!",
-                                          "You just earned a Space point!",
-                                          animationDuration:
-                                              const Duration(seconds: 2),
-                                          backgroundColor: brandOne,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.TOP,
-                                        );
-                                      } else {
-                                        setState(() {
-                                          canLoad = true;
-                                        });
-                                        // Error handling
-                                        _dataPinController.clear();
-                                        _dataNumberController.clear();
-
-                                        Get.snackbar(
-                                          "Error",
-                                          "Try again later",
-                                          animationDuration:
-                                              const Duration(seconds: 2),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
-                                      }
-                                    } else {
-                                      setState(() {
-                                        canLoad = true;
-                                      });
-                                      Get.snackbar(
-                                        "Error",
-                                        "Fill the field correctly to proceed",
-                                        animationDuration:
-                                            const Duration(seconds: 2),
-                                        backgroundColor: Colors.red,
-                                        colorText: Colors.white,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                      );
-                                    }
-                                  },
-                                  text: "  Subscribe  ",
-                                  fullWidthButton: true,
-                                  color: brandOne,
-                                  shape: GFButtonShape.pills,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
+                        elevation: 2,
+                        backgroundColor: Theme.of(context).canvasColor,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        tileColor: Colors.white,
+                        title: Text(dataList[index].name,
+                            style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w700)),
+                        subtitle: Text(
+                          'Amount: ${nairaFormaet.format(int.tryParse(dataList[index].amount.toString()))}, ',
+                          style: GoogleFonts.nunito(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        // trailing: Icon(Icons.arrow_right_alt_outlined,
+                        //     color: Theme.of(context).primaryColor),
                       ),
                     ),
-                    elevation: 2,
-                    backgroundColor: Theme.of(context).canvasColor,
-                  );
-                },
-                child: ListTile(
-                  title: Text(dataList[index].name,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      )),
-                  subtitle: Text(
-                    'Amount: ${nairaFormaet.format(int.tryParse(dataList[index].amount.toString()))}, Validity: ${dataList[index].validity}',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
                   ),
-                  trailing: Icon(Icons.arrow_right_alt_outlined,
-                      color: Theme.of(context).primaryColor),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
         elevation: 2,
@@ -1414,7 +1808,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
         showTvLoading = false;
       });
       Get.bottomSheet(
-        Container(
+        SizedBox(
           height: 500,
           child: ListView.builder(
             itemCount: tvList.length,
@@ -1638,7 +2032,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       if (int.tryParse(pinOneValue) == null) {
         return 'enter valid number';
       }
-      return '';
+      return null;
     }
 
     validateAmount(text) {
@@ -1646,8 +2040,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
         return 'Can\'t be empty';
       }
       if ((int.tryParse(text.replaceAll(',', ''))! >= 1) &&
-          (int.tryParse(text.replaceAll(',', ''))! < 100)) {
-        return 'minimum amount is ₦100';
+          (int.tryParse(text.replaceAll(',', ''))! < 50)) {
+        return 'minimum amount is ₦50';
       }
       if (((int.tryParse(text.replaceAll(',', ''))! + 50) >
           userController.userModel!.userDetails![0].wallet.mainBalance)) {
@@ -1662,7 +2056,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       if (int.tryParse(text.replaceAll(',', ''))!.isNegative) {
         return 'enter positive number';
       }
-      return '';
+      return null;
     }
 
     validateNumber(text) {
@@ -1675,10 +2069,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       if (int.tryParse(text.replaceAll(',', '')) == 0) {
         return 'number cannot be zero';
       }
+      if (text.length != 11) {
+        return 'Recipient Number must be 11 Digit';
+      }
       if (int.tryParse(text.replaceAll(',', ''))!.isNegative) {
         return 'enter positive value';
       }
-      return '';
+      return null;
     }
 
     //pin theme
@@ -1695,104 +2092,116 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       ),
     );
     //widget build --airtime purchase
+
     final airtimeAmount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _airtimeAmountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-
       // update the state variable when the text changes
 
-      style: const TextStyle(
-        color: Colors.black,
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
-        prefix: Text(
-          "₦$varValue",
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.grey,
-          ),
-        ),
-        label: const Text(
+        label: Text(
           "How much do you want to recharge?",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
-        fillColor: brandThree,
-        hintText: 'Amount in Naira',
-        hintStyle: const TextStyle(
-          color: Colors.grey,
+        prefixText: "₦ ",
+        prefixStyle: GoogleFonts.nunito(
+          color: Colors.black,
           fontSize: 13,
+          fontWeight: FontWeight.w700,
+        ),
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
+        hintText: 'Amount in Naira',
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
     final airtimePhone = TextFormField(
       enableSuggestions: true,
-      cursorColor: Colors.black,
+      cursorColor: Theme.of(context).primaryColor,
       controller: _airtimeNumberController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+      ),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       maxLength: 11,
-
-      // update the state variable when the text changes
-
-      style: const TextStyle(
-        color: Colors.black,
-      ),
       decoration: InputDecoration(
-        prefix: Text(
-          "$varValue",
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-        ),
-        label: const Text(
+        label: Text(
           "Enter valid number",
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
-        ),
-        filled: true,
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
-        hintText: '',
-        hintStyle: const TextStyle(
+        hintText: 'e.g 080 123 456 789 ',
+        hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 13,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -1959,16 +2368,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.all(10.0),
-                                    //   child: Text(
-                                    //     'Available services:',
-                                    //     style: GoogleFonts.nunito(
-                                    //       color: Theme.of(context).primaryColor,
-                                    //       fontSize: 16,
-                                    //     ),
-                                    //   ),
-                                    // ),
+
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -1976,7 +2376,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
                                       child: ExpansionTile(
-                                        initiallyExpanded: true,
+                                        initiallyExpanded: false,
                                         title: Text(
                                           'Airtime Top Up',
                                           style: GoogleFonts.nunito(
@@ -2002,1363 +2402,58 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               BorderRadius.circular(20),
                                         ),
                                         children: [
-                                          ListTile(
-                                            onTap: () {
-                                              Get.bottomSheet(
-                                                isDismissible: true,
-                                                SingleChildScrollView(
-                                                  child: SizedBox(
-                                                    height: 500,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                30.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                30.0),
-                                                      ),
-                                                      child: Container(
-                                                        color: Theme.of(context)
-                                                            .canvasColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                50, 5, 50, 5),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Image.asset(
-                                                              "assets/utility/mtn.jpg",
-                                                              height: 80,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(
-                                                              'Recharge and get 1 SpacePoint!',
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            Text(
-                                                              "(₦20 charges applies)",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                            Text(
-                                                              "Valid MTN Phone number",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                              ),
-                                                            ),
-                                                            airtimePhone,
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            airtimeAmount,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Text(
-                                                              "4 digit transaction PIN",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            pinInput,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            RoundedLoadingButton(
-                                                              controller:
-                                                                  _airtimeController,
-                                                              onPressed:
-                                                                  () async {
-                                                                Timer(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1),
-                                                                    () {
-                                                                  _airtimeController
-                                                                      .stop();
-                                                                });
-                                                                Get.back();
-                                                                setState(() {
-                                                                  loadMssg =
-                                                                      "Processing...";
-                                                                  canLoad =
-                                                                      false;
-                                                                });
-
-                                                                if (validateAmount(_airtimeAmountController.text.trim()) == "" &&
-                                                                    validateNumber(_airtimeNumberController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "" &&
-                                                                    validatePin(_pinController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "") {
-                                                                  const String
-                                                                      apiUrl =
-                                                                      'https://api.watupay.com/v1/watubill/vend';
-                                                                  const String
-                                                                      bearerToken =
-                                                                      'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                                  final response =
-                                                                      await http
-                                                                          .post(
-                                                                    Uri.parse(
-                                                                        apiUrl),
-                                                                    headers: {
-                                                                      'Authorization':
-                                                                          'Bearer $bearerToken',
-                                                                      "Content-Type":
-                                                                          "application/json"
-                                                                    },
-                                                                    body: jsonEncode(<String,
-                                                                        String>{
-                                                                      "amount": _airtimeAmountController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString(),
-                                                                      "channel":
-                                                                          "bill-25",
-                                                                      "business_signature":
-                                                                          "a390960dfa37469d824ffe6cb80472f6",
-                                                                      "phone_number": _airtimeNumberController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString()
-                                                                    }),
-                                                                  );
-
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    // var walletUpdate = FirebaseFirestore
-                                                                    //     .instance
-                                                                    //     .collection('accounts');
-                                                                    // await walletUpdate
-                                                                    //     .doc(userId)
-                                                                    //     .update({
-                                                                    //   'wallet_balance':
-                                                                    //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
-                                                                    //   'utility_points':
-                                                                    //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
-                                                                    // }).then((value) async {
-                                                                    //   var addUtility = FirebaseFirestore
-                                                                    //       .instance
-                                                                    //       .collection('utility');
-                                                                    //   await addUtility
-                                                                    //       .add({
-                                                                    //     'user_id':
-                                                                    //         userController.user[0].rentspaceID,
-                                                                    //     'id':
-                                                                    //         userController.user[0].id,
-                                                                    //     'amount':
-                                                                    //         _airtimeAmountController.text.trim().toString(),
-                                                                    //     'charge':
-                                                                    //         '20',
-                                                                    //     'timestamp':
-                                                                    //         FieldValue.serverTimestamp(),
-                                                                    //     'biller':
-                                                                    //         "MTN AIRTIME",
-                                                                    //     'transaction_id':
-                                                                    //         getRandom(8),
-                                                                    //     'date':
-                                                                    //         formattedDate,
-                                                                    //     'description':
-                                                                    //         'bought airtime',
-                                                                    //   });
-                                                                    // });
-
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    showTopSnackBar(
-                                                                      Overlay.of(
-                                                                          context),
-                                                                      CustomSnackBar
-                                                                          .success(
-                                                                        backgroundColor:
-                                                                            brandOne,
-                                                                        message:
-                                                                            'You just earned a Space point!',
-                                                                        textStyle:
-                                                                            GoogleFonts.nunito(
-                                                                          fontSize:
-                                                                              14,
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  } else {
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    // Error handling
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-
-                                                                    customErrorDialog(
-                                                                        context,
-                                                                        "Error",
-                                                                        "Try again later");
-                                                                  }
-                                                                } else {
-                                                                  setState(() {
-                                                                    canLoad =
-                                                                        true;
-                                                                  });
-                                                                  customErrorDialog(
-                                                                      context,
-                                                                      "Incomplete",
-                                                                      "Fill the field correctly to proceed");
-                                                                }
-                                                              },
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              color: brandOne,
-                                                              child: const Text(
-                                                                'Proceed to payment',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 13,
-                                                                  fontFamily:
-                                                                      "DefaultFontFamily",
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            tileColor: brandSix,
-                                            leading: Text(
-                                              'MTN airtime',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/mtn.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                          ),
+                                          mtnAirtimeMethod(
+                                              context,
+                                              airtimePhone,
+                                              airtimeAmount,
+                                              validatePin),
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          ListTile(
-                                            onTap: () {
-                                              Get.bottomSheet(
-                                                isDismissible: true,
-                                                SingleChildScrollView(
-                                                  child: SizedBox(
-                                                    height: 500,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                30.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                30.0),
-                                                      ),
-                                                      child: Container(
-                                                        color: Theme.of(context)
-                                                            .canvasColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                50, 5, 50, 5),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Image.asset(
-                                                              "assets/utility/glo.jpg",
-                                                              height: 80,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(
-                                                              'Recharge and get 1 SpacePoint!',
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            Text(
-                                                              "(₦20 charges applies)",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                            Text(
-                                                              "Valid GLO Phone number",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            airtimePhone,
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            airtimeAmount,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Text(
-                                                              "4 digit transaction PIN",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            pinInput,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            RoundedLoadingButton(
-                                                              controller:
-                                                                  _airtimeController,
-                                                              onPressed:
-                                                                  () async {
-                                                                Timer(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1),
-                                                                    () {
-                                                                  _airtimeController
-                                                                      .stop();
-                                                                });
-                                                                Get.back();
-                                                                setState(() {
-                                                                  loadMssg =
-                                                                      "Processing...";
-                                                                  canLoad =
-                                                                      false;
-                                                                });
-                                                                if (validateAmount(_airtimeAmountController.text.trim()) == "" &&
-                                                                    validateNumber(_airtimeNumberController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "" &&
-                                                                    validatePin(_pinController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "") {
-                                                                  const String
-                                                                      apiUrl =
-                                                                      'https://api.watupay.com/v1/watubill/vend';
-                                                                  const String
-                                                                      bearerToken =
-                                                                      'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                                  final response =
-                                                                      await http
-                                                                          .post(
-                                                                    Uri.parse(
-                                                                        apiUrl),
-                                                                    headers: {
-                                                                      'Authorization':
-                                                                          'Bearer $bearerToken',
-                                                                      "Content-Type":
-                                                                          "application/json"
-                                                                    },
-                                                                    body: jsonEncode(<String,
-                                                                        String>{
-                                                                      "amount": _airtimeAmountController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString(),
-                                                                      "channel":
-                                                                          "bill-27",
-                                                                      "business_signature":
-                                                                          "a390960dfa37469d824ffe6cb80472f6",
-                                                                      "phone_number": _airtimeNumberController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString()
-                                                                    }),
-                                                                  );
-
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    // var walletUpdate = FirebaseFirestore
-                                                                    //     .instance
-                                                                    //     .collection(
-                                                                    //         'accounts');
-                                                                    // await walletUpdate
-                                                                    //     .doc(
-                                                                    //         userId)
-                                                                    //     .update({
-                                                                    //   'wallet_balance':
-                                                                    //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20))
-                                                                    //           .toString(),
-                                                                    //   'utility_points':
-                                                                    //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1)
-                                                                    //           .toString(),
-                                                                    // }).then((value) async {
-                                                                    //   var addUtility = FirebaseFirestore
-                                                                    //       .instance
-                                                                    //       .collection(
-                                                                    //           'utility');
-                                                                    //   await addUtility
-                                                                    //       .add({
-                                                                    //     'user_id': userController
-                                                                    //         .user[0]
-                                                                    //         .rentspaceID,
-                                                                    //     'id': userController
-                                                                    //         .user[0]
-                                                                    //         .id,
-                                                                    //     'amount': _airtimeAmountController
-                                                                    //         .text
-                                                                    //         .trim()
-                                                                    //         .toString(),
-                                                                    //     'charge':
-                                                                    //         '20',
-                                                                    //     'timestamp':
-                                                                    //         FieldValue.serverTimestamp(),
-                                                                    //     'biller':
-                                                                    //         "GLO AIRTIME",
-                                                                    //     'transaction_id':
-                                                                    //         getRandom(8),
-                                                                    //     'date':
-                                                                    //         formattedDate,
-                                                                    //     'description':
-                                                                    //         'bought airtime',
-                                                                    //   });
-                                                                    // });
-
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    Get.snackbar(
-                                                                      "Success!",
-                                                                      "You just earned a Space point!",
-                                                                      animationDuration:
-                                                                          const Duration(
-                                                                              seconds: 2),
-                                                                      backgroundColor:
-                                                                          brandOne,
-                                                                      colorText:
-                                                                          Colors
-                                                                              .white,
-                                                                      snackPosition:
-                                                                          SnackPosition
-                                                                              .TOP,
-                                                                    );
-                                                                  } else {
-                                                                    // Error handling
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    Get.snackbar(
-                                                                      "Error",
-                                                                      "Try again later",
-                                                                      animationDuration:
-                                                                          const Duration(
-                                                                              seconds: 2),
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .red,
-                                                                      colorText:
-                                                                          Colors
-                                                                              .white,
-                                                                      snackPosition:
-                                                                          SnackPosition
-                                                                              .BOTTOM,
-                                                                    );
-                                                                  }
-                                                                } else {
-                                                                  setState(() {
-                                                                    canLoad =
-                                                                        true;
-                                                                  });
-                                                                  Get.snackbar(
-                                                                    "Incomplete",
-                                                                    "Fill the field correctly to proceed",
-                                                                    animationDuration:
-                                                                        const Duration(
-                                                                            seconds:
-                                                                                2),
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .red,
-                                                                    colorText:
-                                                                        Colors
-                                                                            .white,
-                                                                    snackPosition:
-                                                                        SnackPosition
-                                                                            .BOTTOM,
-                                                                  );
-                                                                }
-                                                              },
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              color: brandOne,
-                                                              child: const Text(
-                                                                'Proceed to payment',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      "DefaultFontFamily",
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 13,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            tileColor: brandSix,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/glo.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'GLO airtime',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
+                                          gloMethod(context, airtimePhone,
+                                              airtimeAmount, validatePin),
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          ListTile(
-                                            onTap: () {
-                                              Get.bottomSheet(
-                                                isDismissible: true,
-                                                SingleChildScrollView(
-                                                  child: SizedBox(
-                                                    height: 500,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                30.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                30.0),
-                                                      ),
-                                                      child: Container(
-                                                        color: Theme.of(context)
-                                                            .canvasColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                50, 5, 50, 5),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Image.asset(
-                                                              "assets/utility/airtel.jpg",
-                                                              height: 80,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(
-                                                              'Recharge and get 1 SpacePoint!',
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            Text(
-                                                              "(₦20 charges applies)",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                            Text(
-                                                              "Valid AIRTEL Phone number",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            airtimePhone,
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            airtimeAmount,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Text(
-                                                              "4 digit transaction PIN",
-                                                              style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontFamily:
-                                                                    "DefaultFontFamily",
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            pinInput,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            RoundedLoadingButton(
-                                                              controller:
-                                                                  _airtimeController,
-                                                              onPressed:
-                                                                  () async {
-                                                                Timer(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1),
-                                                                    () {
-                                                                  _airtimeController
-                                                                      .stop();
-                                                                });
-                                                                Get.back();
-                                                                setState(() {
-                                                                  loadMssg =
-                                                                      "Processing...";
-                                                                  canLoad =
-                                                                      false;
-                                                                });
-                                                                if (validateAmount(_airtimeAmountController.text.trim()) == "" &&
-                                                                    validateNumber(_airtimeNumberController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "" &&
-                                                                    validatePin(_pinController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "") {
-                                                                  const String
-                                                                      apiUrl =
-                                                                      'https://api.watupay.com/v1/watubill/vend';
-                                                                  const String
-                                                                      bearerToken =
-                                                                      'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                                  final response =
-                                                                      await http
-                                                                          .post(
-                                                                    Uri.parse(
-                                                                        apiUrl),
-                                                                    headers: {
-                                                                      'Authorization':
-                                                                          'Bearer $bearerToken',
-                                                                      "Content-Type":
-                                                                          "application/json"
-                                                                    },
-                                                                    body: jsonEncode(<String,
-                                                                        String>{
-                                                                      "amount": _airtimeAmountController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString(),
-                                                                      "channel":
-                                                                          "bill-28",
-                                                                      "business_signature":
-                                                                          "a390960dfa37469d824ffe6cb80472f6",
-                                                                      "phone_number": _airtimeNumberController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString()
-                                                                    }),
-                                                                  );
-
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    // var walletUpdate = FirebaseFirestore
-                                                                    //     .instance
-                                                                    //     .collection('accounts');
-                                                                    // await walletUpdate
-                                                                    //     .doc(userId)
-                                                                    //     .update({
-                                                                    //   'wallet_balance':
-                                                                    //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
-                                                                    //   'utility_points':
-                                                                    //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
-                                                                    // }).then((value) async {
-                                                                    //   var addUtility = FirebaseFirestore
-                                                                    //       .instance
-                                                                    //       .collection('utility');
-                                                                    //   await addUtility
-                                                                    //       .add({
-                                                                    //     'user_id':
-                                                                    //         userController.user[0].rentspaceID,
-                                                                    //     'id':
-                                                                    //         userController.user[0].id,
-                                                                    //     'amount':
-                                                                    //         _airtimeAmountController.text.trim().toString(),
-                                                                    //     'charge':
-                                                                    //         '20',
-                                                                    //     'timestamp':
-                                                                    //         FieldValue.serverTimestamp(),
-                                                                    //     'biller':
-                                                                    //         "AIRTEL AIRTIME",
-                                                                    //     'transaction_id':
-                                                                    //         getRandom(8),
-                                                                    //     'date':
-                                                                    //         formattedDate,
-                                                                    //     'description':
-                                                                    //         'bought airtime',
-                                                                    //   });
-                                                                    // });
-
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    showTopSnackBar(
-                                                                      Overlay.of(
-                                                                          context),
-                                                                      CustomSnackBar
-                                                                          .success(
-                                                                        backgroundColor:
-                                                                            brandOne,
-                                                                        message:
-                                                                            'You just earned a Space point!',
-                                                                        textStyle:
-                                                                            GoogleFonts.nunito(
-                                                                          fontSize:
-                                                                              14,
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  } else {
-                                                                    // Error handling
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    customErrorDialog(
-                                                                        context,
-                                                                        "Error",
-                                                                        "Try again later");
-                                                                  }
-                                                                } else {
-                                                                  setState(() {
-                                                                    canLoad =
-                                                                        true;
-                                                                  });
-                                                                  Get.snackbar(
-                                                                    "Incomplete",
-                                                                    "Fill the field correctly to proceed",
-                                                                    animationDuration:
-                                                                        const Duration(
-                                                                            seconds:
-                                                                                2),
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .red,
-                                                                    colorText:
-                                                                        Colors
-                                                                            .white,
-                                                                    snackPosition:
-                                                                        SnackPosition
-                                                                            .BOTTOM,
-                                                                  );
-                                                                }
-                                                              },
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              color: brandOne,
-                                                              child: const Text(
-                                                                'Proceed to payment',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 13,
-                                                                  fontFamily:
-                                                                      "DefaultFontFamily",
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            tileColor: brandSix,
-                                            leading: Text(
-                                              'Airtel airtime',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/airtel.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                          ),
+                                          airtelMethod(context, airtimePhone,
+                                              airtimeAmount, validatePin),
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          ListTile(
-                                            onTap: () {
-                                              Get.bottomSheet(
-                                                isDismissible: true,
-                                                SingleChildScrollView(
-                                                  child: SizedBox(
-                                                    height: 500,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                30.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                30.0),
-                                                      ),
-                                                      child: Container(
-                                                        color: Theme.of(context)
-                                                            .canvasColor,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                50, 5, 50, 5),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Image.asset(
-                                                              "assets/utility/9mobile.jpg",
-                                                              height: 80,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(
-                                                              'Recharge and get 1 SpacePoint!',
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                fontSize: 16,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            Text(
-                                                              "(₦20 charges applies)",
-                                                              style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                            Text(
-                                                              "Valid 9MOBILE Phone number",
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                fontSize: 14,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            airtimePhone,
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            airtimeAmount,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            Text(
-                                                              "4 digit transaction PIN",
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                fontSize: 14,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                            pinInput,
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            RoundedLoadingButton(
-                                                              controller:
-                                                                  _airtimeController,
-                                                              onPressed:
-                                                                  () async {
-                                                                Timer(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1),
-                                                                    () {
-                                                                  _airtimeController
-                                                                      .stop();
-                                                                });
-                                                                Get.back();
-                                                                setState(() {
-                                                                  loadMssg =
-                                                                      "Processing...";
-                                                                  canLoad =
-                                                                      false;
-                                                                });
-                                                                if (validateAmount(_airtimeAmountController.text.trim()) == "" &&
-                                                                    validateNumber(_airtimeNumberController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "" &&
-                                                                    validatePin(_pinController
-                                                                            .text
-                                                                            .trim()) ==
-                                                                        "") {
-                                                                  const String
-                                                                      apiUrl =
-                                                                      'https://api.watupay.com/v1/watubill/vend';
-                                                                  const String
-                                                                      bearerToken =
-                                                                      'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                                  final response =
-                                                                      await http
-                                                                          .post(
-                                                                    Uri.parse(
-                                                                        apiUrl),
-                                                                    headers: {
-                                                                      'Authorization':
-                                                                          'Bearer $bearerToken',
-                                                                      "Content-Type":
-                                                                          "application/json"
-                                                                    },
-                                                                    body: jsonEncode(<String,
-                                                                        String>{
-                                                                      "amount": _airtimeAmountController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString(),
-                                                                      "channel":
-                                                                          "bill-26",
-                                                                      "business_signature":
-                                                                          "a390960dfa37469d824ffe6cb80472f6",
-                                                                      "phone_number": _airtimeNumberController
-                                                                          .text
-                                                                          .trim()
-                                                                          .toString()
-                                                                    }),
-                                                                  );
-
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    // var walletUpdate = FirebaseFirestore
-                                                                    //     .instance
-                                                                    //     .collection(
-                                                                    //         'accounts');
-                                                                    // await walletUpdate
-                                                                    //     .doc(
-                                                                    //         userId)
-                                                                    //     .update({
-                                                                    //   'wallet_balance':
-                                                                    //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20))
-                                                                    //           .toString(),
-                                                                    //   'utility_points':
-                                                                    //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1)
-                                                                    //           .toString(),
-                                                                    // }).then((value) async {
-                                                                    //   var addUtility = FirebaseFirestore
-                                                                    //       .instance
-                                                                    //       .collection(
-                                                                    //           'utility');
-                                                                    //   await addUtility
-                                                                    //       .add({
-                                                                    //     'user_id': userController
-                                                                    //         .user[0]
-                                                                    //         .rentspaceID,
-                                                                    //     'id': userController
-                                                                    //         .user[0]
-                                                                    //         .id,
-                                                                    //     'amount': _airtimeAmountController
-                                                                    //         .text
-                                                                    //         .trim()
-                                                                    //         .toString(),
-                                                                    //     'charge':
-                                                                    //         '20',
-                                                                    //     'timestamp':
-                                                                    //         FieldValue.serverTimestamp(),
-                                                                    //     'biller':
-                                                                    //         "9MOBILE AIRTIME",
-                                                                    //     'transaction_id':
-                                                                    //         getRandom(8),
-                                                                    //     'date':
-                                                                    //         formattedDate,
-                                                                    //     'description':
-                                                                    //         'bought airtime',
-                                                                    //   });
-                                                                    // });
-
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    showTopSnackBar(
-                                                                      Overlay.of(
-                                                                          context),
-                                                                      CustomSnackBar
-                                                                          .success(
-                                                                        backgroundColor:
-                                                                            brandOne,
-                                                                        message:
-                                                                            "You just earned a Space point!",
-                                                                        textStyle:
-                                                                            GoogleFonts.nunito(
-                                                                          fontSize:
-                                                                              14,
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  } else {
-                                                                    // Error handling
-                                                                    _airtimeAmountController
-                                                                        .clear();
-                                                                    _airtimeNumberController
-                                                                        .clear();
-                                                                    _pinController
-                                                                        .clear();
-                                                                    setState(
-                                                                        () {
-                                                                      canLoad =
-                                                                          true;
-                                                                    });
-                                                                    customErrorDialog(
-                                                                        context,
-                                                                        "Error",
-                                                                        "Try again later");
-                                                                  }
-                                                                } else {
-                                                                  setState(() {
-                                                                    canLoad =
-                                                                        true;
-                                                                  });
-                                                                  Get.snackbar(
-                                                                    "Incomplete",
-                                                                    "Fill the field correctly to proceed",
-                                                                    animationDuration:
-                                                                        const Duration(
-                                                                            seconds:
-                                                                                2),
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .red,
-                                                                    colorText:
-                                                                        Colors
-                                                                            .white,
-                                                                    snackPosition:
-                                                                        SnackPosition
-                                                                            .BOTTOM,
-                                                                  );
-                                                                }
-                                                              },
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              color: brandOne,
-                                                              child: Text(
-                                                                'Proceed to payment',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 13,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            tileColor: brandSix,
-                                            leading: Text(
-                                              '9Mobile airtime',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/9mobile.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                          ),
+                                          etisalatMethod(context, airtimePhone,
+                                              airtimeAmount, validatePin),
                                         ],
                                       ),
                                     ),
-
-                                  
-                                    GFAccordion(
-                                      expandedIcon: Container(
-                                        decoration: BoxDecoration(
-                                          color: brandThree,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      child: ExpansionTile(
+                                        initiallyExpanded: false,
+                                        title: Text(
+                                          'Data Subscription',
+                                          style: GoogleFonts.nunito(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white),
+                                        ),
+                                        backgroundColor: brandOne,
+                                        collapsedBackgroundColor: brandOne,
+                                        iconColor: Colors.white,
+                                        collapsedIconColor: Colors.white,
+                                        tilePadding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                        childrenPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 10),
+                                        shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20),
                                         ),
-                                        padding: const EdgeInsets.all(2),
-                                        child: const Icon(
-                                          Icons.remove,
-                                          color: brandOne,
-                                        ),
-                                      ),
-                                      collapsedIcon: Container(
-                                        decoration: BoxDecoration(
-                                          color: brandThree,
+                                        collapsedShape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20),
                                         ),
-                                        padding: const EdgeInsets.all(2),
-                                        child: const Icon(
-                                          Icons.add,
-                                          color: brandOne,
-                                        ),
-                                      ),
-                                      title: "Data Subscription",
-                                      textStyle: GoogleFonts.nunito(
-                                        color: Colors.black,
-                                      ),
-                                      contentBackgroundColor:
-                                          Colors.transparent,
-                                      expandedTitleBackgroundColor: brandThree,
-                                      collapsedTitleBackgroundColor: brandThree,
-                                      onToggleCollapsed: (e) {},
-                                      contentChild: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           ListTile(
                                             onTap: () {
@@ -3368,19 +2463,23 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               dataList.clear();
                                               getData("bill-18");
                                             },
-                                            tileColor: brandSix,
+                                            tileColor: Colors.white,
+                                            trailing: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              child: Image.asset(
+                                                "assets/utility/mtn.jpg",
+                                                height: 40,
+                                                width: 40,
+                                              ),
+                                            ),
                                             leading: Text(
                                               'MTN Data Plans',
                                               style: GoogleFonts.nunito(
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .canvasColor,
                                                 fontSize: 15,
                                               ),
-                                            ),
-                                            trailing: Image.asset(
-                                              "assets/utility/mtn.jpg",
-                                              height: 40,
-                                              width: 40,
                                             ),
                                           ),
                                           const SizedBox(
@@ -3395,18 +2494,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               getData("bill-07");
                                             },
                                             tileColor: brandSix,
+                                            trailing: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              child: Image.asset(
+                                                "assets/utility/glo.jpg",
+                                                height: 40,
+                                                width: 40,
+                                              ),
+                                            ),
                                             leading: Text(
                                               'GLO Data Plans',
                                               style: GoogleFonts.nunito(
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .canvasColor,
                                                 fontSize: 15,
                                               ),
-                                            ),
-                                            trailing: Image.asset(
-                                              "assets/utility/glo.jpg",
-                                              height: 40,
-                                              width: 40,
                                             ),
                                           ),
                                           const SizedBox(
@@ -3421,18 +2524,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               getData("bill-16");
                                             },
                                             tileColor: brandSix,
+                                            trailing: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              child: Image.asset(
+                                                "assets/utility/airtel.jpg",
+                                                height: 40,
+                                                width: 40,
+                                              ),
+                                            ),
                                             leading: Text(
                                               'Airtel Data Plans',
                                               style: GoogleFonts.nunito(
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .canvasColor,
                                                 fontSize: 15,
                                               ),
-                                            ),
-                                            trailing: Image.asset(
-                                              "assets/utility/airtel.jpg",
-                                              height: 40,
-                                              width: 40,
                                             ),
                                           ),
                                           const SizedBox(
@@ -3448,18 +2555,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               getData("bill-19");
                                             },
                                             tileColor: brandSix,
+                                            trailing: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              child: Image.asset(
+                                                "assets/utility/9mobile.jpg",
+                                                height: 40,
+                                                width: 40,
+                                              ),
+                                            ),
                                             leading: Text(
                                               '9Mobile Data Plans',
                                               style: GoogleFonts.nunito(
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .canvasColor,
                                                 fontSize: 15,
                                               ),
-                                            ),
-                                            trailing: Image.asset(
-                                              "assets/utility/9mobile.jpg",
-                                              height: 40,
-                                              width: 40,
                                             ),
                                           ),
                                         ],
@@ -3467,15 +2578,10 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     ),
 
                                     (showLoading)
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Text(
-                                              "Loading data plans...",
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              textAlign: TextAlign.center,
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Center(
+                                              child: CustomLoader(),
                                             ),
                                           )
                                         : const SizedBox(),
@@ -3863,297 +2969,6 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       ),
                                     ),
 
-                                    // GFAccordion(
-                                    //   expandedIcon: Container(
-                                    //     decoration: BoxDecoration(
-                                    //       color: brandThree,
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(20.0),
-                                    //     ),
-                                    //     padding: const EdgeInsets.all(2),
-                                    //     child: const Icon(
-                                    //       Icons.remove,
-                                    //       color: brandOne,
-                                    //     ),
-                                    //   ),
-                                    //   collapsedIcon: Container(
-                                    //     decoration: BoxDecoration(
-                                    //       color: brandThree,
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(20.0),
-                                    //     ),
-                                    //     padding: const EdgeInsets.all(2),
-                                    //     child: const Icon(
-                                    //       Icons.add,
-                                    //       color: brandOne,
-                                    //     ),
-                                    //   ),
-                                    //   title: "Betting",
-                                    //   textStyle:  GoogleFonts.nunito(
-                                    //     color: Colors.black,
-                                    //
-                                    //   ),
-                                    //   contentBackgroundColor:
-                                    //       Colors.transparent,
-                                    //   expandedTitleBackgroundColor: brandThree,
-                                    //   collapsedTitleBackgroundColor: brandThree,
-                                    //   onToggleCollapsed: (e) {},
-                                    //   contentChild: Column(
-                                    //     mainAxisAlignment:
-                                    //         MainAxisAlignment.spaceBetween,
-                                    //     children: [
-                                    //       //
-                                    //       (betList.isNotEmpty)
-                                    //           ? ListView.builder(
-                                    //               shrinkWrap: true,
-                                    //               physics:
-                                    //                   const ClampingScrollPhysics(),
-                                    //               itemCount: betList.length,
-                                    //               itemBuilder:
-                                    //                   (context, index) {
-                                    //                 final bill = betList[index];
-                                    //                 return Padding(
-                                    //                   padding: const EdgeInsets
-                                    //                       .fromLTRB(0, 6, 0, 6),
-                                    //                   child: ListTile(
-                                    //                     onTap: () {
-                                    //                       Get.bottomSheet(
-                                    //                         SingleChildScrollView(
-                                    //                           child: Padding(
-                                    //                             padding:
-                                    //                                 const EdgeInsets
-                                    //                                     .all(
-                                    //                                     10.0),
-                                    //                             child: SizedBox(
-                                    //                               height: 500,
-                                    //                               child:
-                                    //                                   Padding(
-                                    //                                 padding: const EdgeInsets
-                                    //                                     .fromLTRB(
-                                    //                                     20.0,
-                                    //                                     0,
-                                    //                                     20,
-                                    //                                     0),
-                                    //                                 child:
-                                    //                                     Column(
-                                    //                                   children: [
-                                    //                                     const SizedBox(
-                                    //                                       height:
-                                    //                                           100,
-                                    //                                     ),
-                                    //                                     Image
-                                    //                                         .network(
-                                    //                                       bill.icon,
-                                    //                                       height:
-                                    //                                           80,
-                                    //                                       width:
-                                    //                                           80,
-                                    //                                     ),
-                                    //                                     const SizedBox(
-                                    //                                       height:
-                                    //                                           5,
-                                    //                                     ),
-                                    //                                     Text(
-                                    //                                       bill.name,
-                                    //                                       style:
-                                    //                                           TextStyle(
-                                    //                                         color:
-                                    //                                             Theme.of(context).primaryColor,
-                                    //                                         fontSize:
-                                    //                                             18,
-                                    //                                       ),
-                                    //                                     ),
-                                    //                                     const SizedBox(
-                                    //                                       height:
-                                    //                                           30,
-                                    //                                     ),
-                                    //                                     TextFormField(
-                                    //                                       enableSuggestions:
-                                    //                                           true,
-                                    //                                       cursorColor:
-                                    //                                           Colors.black,
-                                    //                                       controller:
-                                    //                                           _betNumberController,
-                                    //                                       autovalidateMode:
-                                    //                                           AutovalidateMode.onUserInteraction,
-                                    //                                       keyboardType:
-                                    //                                           TextInputType.phone,
-                                    //                                       maxLengthEnforcement:
-                                    //                                           MaxLengthEnforcement.enforced,
-                                    //                                       maxLength:
-                                    //                                           11,
-                                    //                                       style:
-                                    //                                           const TextStyle(
-                                    //                                         color:
-                                    //                                             Colors.black,
-                                    //                                       ),
-                                    //                                       decoration:
-                                    //                                           InputDecoration(
-                                    //                                         prefix:
-                                    //                                             Text(
-                                    //                                           "$varValue",
-                                    //                                           style: const TextStyle(
-                                    //                                             fontSize: 15,
-                                    //                                             color: Colors.black,
-                                    //                                           ),
-                                    //                                         ),
-                                    //                                         label:
-                                    //                                             Text(
-                                    //                                           "Enter valid ${bill.name} account number",
-                                    //                                           style: const TextStyle(
-                                    //                                             color: Colors.grey,
-                                    //                                           ),
-                                    //                                         ),
-                                    //                                         border:
-                                    //                                             OutlineInputBorder(
-                                    //                                           borderRadius: BorderRadius.circular(10.0),
-                                    //                                           borderSide: const BorderSide(color: brandOne, width: 2.0),
-                                    //                                         ),
-                                    //                                         focusedBorder:
-                                    //                                             const OutlineInputBorder(
-                                    //                                           borderSide: BorderSide(color: brandOne, width: 2.0),
-                                    //                                         ),
-                                    //                                         enabledBorder:
-                                    //                                             const OutlineInputBorder(
-                                    //                                           borderSide: BorderSide(color: brandOne, width: 2.0),
-                                    //                                         ),
-                                    //                                         filled:
-                                    //                                             true,
-                                    //                                         fillColor:
-                                    //                                             brandThree,
-                                    //                                         hintText:
-                                    //                                             '',
-                                    //                                         hintStyle:
-                                    //                                             const TextStyle(
-                                    //                                           color: Colors.black,
-                                    //                                           fontSize: 13,
-                                    //                                         ),
-                                    //                                       ),
-                                    //                                     ),
-                                    //                                     const SizedBox(
-                                    //                                       height:
-                                    //                                           50,
-                                    //                                     ),
-                                    //                                     GFButton(
-                                    //                                       onPressed:
-                                    //                                           () async {
-                                    //                                         if (_betNumberController.text.trim() !=
-                                    //                                             "") {
-                                    //                                           Get.back();
-                                    //                                           setState(() {
-                                    //                                             canLoad = false;
-
-                                    //                                             loadMssg = "Validating...";
-                                    //                                           });
-                                    //                                           const String apiUrl = 'https://api.watupay.com/v1/watubill/validate';
-                                    //                                           const String bearerToken = 'WTP-L-PK-6a559c833bc54b2698e6a833f107f1e7';
-                                    //                                           final response = await http.post(
-                                    //                                             Uri.parse(apiUrl),
-                                    //                                             headers: {
-                                    //                                               'Authorization': 'Bearer $bearerToken',
-                                    //                                               "Content-Type": "application/json"
-                                    //                                             },
-                                    //                                             body: jsonEncode(<String, String>{
-                                    //                                               "channel": bill.id,
-                                    //                                               "account_number": _betNumberController.text.trim().toString()
-                                    //                                             }),
-                                    //                                           );
-
-                                    //                                           if (response.statusCode == 200) {
-                                    //                                             Map<String, dynamic> apiResponse = jsonDecode(response.body);
-
-                                    //                                             setState(() {
-                                    //                                               userBetName = apiResponse['data']['customer_name'];
-                                    //                                               userBetAddress = apiResponse['data']['account_number'];
-
-                                    //                                               canLoad = true;
-
-                                    //                                               print(userBetName);
-                                    //                                             });
-
-                                    //                                             firstBetFund(bill.id, bill.name);
-                                    //                                           } else {
-                                    //                                             setState(() {
-                                    //                                               canLoad = true;
-                                    //                                             });
-                                    //                                             // customErrorDialog(context, "Failed!",
-                                    //                                             //   "The request failed. Check that the Account Number is valid and retry.");
-                                    //                                             Get.snackbar(
-                                    //                                               "Failed!",
-                                    //                                               "The request failed. Check that the Account Number is valid and retry.",
-                                    //                                               animationDuration: const Duration(seconds: 2),
-                                    //                                               backgroundColor: Colors.red,
-                                    //                                               colorText: Colors.white,
-                                    //                                               snackPosition: SnackPosition.BOTTOM,
-                                    //                                             );
-                                    //                                           }
-                                    //                                         }
-                                    //                                       },
-                                    //                                       text:
-                                    //                                           "  Validate  ",
-                                    //                                       fullWidthButton:
-                                    //                                           true,
-                                    //                                       color:
-                                    //                                           brandOne,
-                                    //                                       shape:
-                                    //                                           GFButtonShape.pills,
-                                    //                                     ),
-                                    //                                   ],
-                                    //                                 ),
-                                    //                               ),
-                                    //                             ),
-                                    //                           ),
-                                    //                         ),
-                                    //                         elevation: 2,
-                                    //                         backgroundColor:
-                                    //                             Theme.of(
-                                    //                                     context)
-                                    //                                 .canvasColor,
-                                    //                       );
-                                    //                     },
-                                    //                     title: Text(
-                                    //                       bill.name,
-                                    //                       style: TextStyle(
-                                    //                         fontSize: 15,
-                                    //                         fontFamily:
-                                    //                             "DefaultFontFamily",
-                                    //                         color: Theme.of(
-                                    //                                 context)
-                                    //                             .primaryColor,
-                                    //                       ),
-                                    //                     ),
-                                    //                     trailing: Image.network(
-                                    //                       bill.icon,
-                                    //                       height: 40,
-                                    //                       width: 40,
-                                    //                     ),
-                                    //                     tileColor: brandSix,
-                                    //                   ),
-                                    //                 );
-                                    //               },
-                                    //             )
-                                    //           : Center(
-                                    //               child: Padding(
-                                    //                 padding:
-                                    //                     const EdgeInsets.all(
-                                    //                         10.0),
-                                    //                 child: Text(
-                                    //                   "Loading...",
-                                    //                   style: TextStyle(
-                                    //                     fontSize: 15,
-                                    //                     fontFamily:
-                                    //                         "DefaultFontFamily",
-                                    //                     color: Theme.of(context)
-                                    //                         .primaryColor,
-                                    //                   ),
-                                    //                 ),
-                                    //               ),
-                                    //             )
-                                    //     ],
-                                    //   ),
-                                    // ),
-
-                                    //
                                     const SizedBox(
                                       height: 80,
                                     ),
@@ -4172,15 +2987,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          child: Flexible(
-                                            child: Text(
-                                              "kindly confirm your BVN to use this service.",
-                                              style: GoogleFonts.nunito(
-                                                fontSize: 16.0,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
+                                        Flexible(
+                                          child: Text(
+                                            "kindly confirm your BVN to use this service.",
+                                            style: GoogleFonts.nunito(
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                             ),
                                           ),
                                         ),
@@ -4202,7 +3016,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                 ),
                               ),
                       )
-                    : Container(
+                    : SizedBox(
                         height: double.infinity,
                         width: double.infinity,
                         child: Column(
@@ -4230,45 +3044,2076 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             const SizedBox(
                               height: 50,
                             ),
-                            CustomLoader(),
+                            const CustomLoader(),
                           ],
                         ),
                       )),
           )
         : Scaffold(
             backgroundColor: Theme.of(context).canvasColor,
-            body: Container(
-              height: double.infinity,
-              width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20.0, 200, 20, 0),
-              child: Center(
-                child: ListView(
-                  children: [
-                    Text(
-                      "You need to fund your SpaceWallet to use this service.",
-                      style: GoogleFonts.nunito(
-                        fontSize: 16.0,
-                        letterSpacing: 0.5,
-                        color: Theme.of(context).primaryColor,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "You need to fund your SpaceWallet to use this service.",
+                  style: GoogleFonts.nunito(
+                    fontSize: 16.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(300, 50),
+                      backgroundColor: brandOne,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                       ),
+                    ),
+                    onPressed: () {
+                      Get.to(const FundWallet());
+                    },
+                    child: Text(
+                      'Fund Wallet',
                       textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GFButton(
-                      onPressed: () async {
-                        Get.to(const FundWallet());
-                      },
-                      text: "  Fund SpaceWallet  ",
-                      fullWidthButton: false,
-                      color: brandOne,
-                      shape: GFButtonShape.pills,
-                    )
-                  ],
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  ListTile gloMethod(
+      BuildContext context,
+      TextFormField airtimePhone,
+      TextFormField airtimeAmount,
+      String? Function(dynamic pinOneValue) validatePin) {
+    return ListTile(
+      onTap: () {
+        Get.bottomSheet(
+          isDismissible: true,
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 500,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.asset(
+                          "assets/utility/glo.jpg",
+                          height: 80,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Recharge and get 1 SpacePoint!',
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Form(
+                        key: airtimeFormKey,
+                        child: Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Valid GLO Phone number",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                airtimePhone,
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            airtimeAmount,
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.bottomSheet(
+                            isDismissible: true,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 350,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                                child: Container(
+                                  color: Theme.of(context).canvasColor,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      Text(
+                                        'Enter PIN to Proceed',
+                                        style: GoogleFonts.nunito(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w800),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Pinput(
+                                        obscureText: true,
+                                        defaultPinTheme: PinTheme(
+                                          width: 50,
+                                          height: 50,
+                                          textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            color: brandOne,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: brandTwo, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                        ),
+                                        onCompleted: (String val) async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-27",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(300, 50),
+                                          backgroundColor: brandOne,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            // _doWallet();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-27",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'Proceed to Payment',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: brandOne,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(13),
+                            child: Align(
+                              child: Text(
+                                'Pay',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 19.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          );
+          ),
+        );
+      },
+      tileColor: brandSix,
+      trailing: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: Image.asset(
+          "assets/utility/glo.jpg",
+          height: 40,
+          width: 40,
+        ),
+      ),
+      leading: Text(
+        'GLO airtime',
+        style: GoogleFonts.nunito(
+          color: Theme.of(context).canvasColor,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  ListTile airtelMethod(
+      BuildContext context,
+      TextFormField airtimePhone,
+      TextFormField airtimeAmount,
+      String? Function(dynamic pinOneValue) validatePin) {
+    return ListTile(
+      onTap: () {
+        Get.bottomSheet(
+          isDismissible: true,
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 500,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.asset(
+                          "assets/utility/airtel.jpg",
+                          height: 80,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Recharge and get 1 SpacePoint!',
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Form(
+                        key: airtimeFormKey,
+                        child: Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Valid AIRTEL Phone number",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                airtimePhone,
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            airtimeAmount,
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.bottomSheet(
+                            isDismissible: true,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 350,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                                child: Container(
+                                  color: Theme.of(context).canvasColor,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      Text(
+                                        'Enter PIN to Proceed',
+                                        style: GoogleFonts.nunito(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w800),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Pinput(
+                                        obscureText: true,
+                                        defaultPinTheme: PinTheme(
+                                          width: 50,
+                                          height: 50,
+                                          textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            color: brandOne,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: brandTwo, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                        ),
+                                        onCompleted: (String val) async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-28",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(300, 50),
+                                          backgroundColor: brandOne,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            // _doWallet();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-28",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'Proceed to Payment',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: brandOne,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(13),
+                            child: Align(
+                              child: Text(
+                                'Pay',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 19.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      tileColor: brandSix,
+      trailing: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: Image.asset(
+          "assets/utility/airtel.jpg",
+          height: 40,
+          width: 40,
+        ),
+      ),
+      leading: Text(
+        'Airtel airtime',
+        style: GoogleFonts.nunito(
+          color: Theme.of(context).canvasColor,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  ListTile etisalatMethod(
+      BuildContext context,
+      TextFormField airtimePhone,
+      TextFormField airtimeAmount,
+      String? Function(dynamic pinOneValue) validatePin) {
+    return ListTile(
+      onTap: () {
+        Get.bottomSheet(
+          isDismissible: true,
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 500,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.asset(
+                          "assets/utility/9mobile.jpg",
+                          height: 80,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Recharge and get 1 SpacePoint!',
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Form(
+                        key: airtimeFormKey,
+                        child: Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Valid 9MOBILE Phone number",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                airtimePhone,
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            airtimeAmount,
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.bottomSheet(
+                            isDismissible: true,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 350,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                                child: Container(
+                                  color: Theme.of(context).canvasColor,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      Text(
+                                        'Enter PIN to Proceed',
+                                        style: GoogleFonts.nunito(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w800),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Pinput(
+                                        obscureText: true,
+                                        defaultPinTheme: PinTheme(
+                                          width: 50,
+                                          height: 50,
+                                          textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            color: brandOne,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: brandTwo, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                        ),
+                                        onCompleted: (String val) async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-26",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(300, 50),
+                                          backgroundColor: brandOne,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            // _doWallet();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-26",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'Proceed to Payment',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: brandOne,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(13),
+                            child: Align(
+                              child: Text(
+                                'Pay',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 19.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      tileColor: brandSix,
+      trailing: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: Image.asset(
+          "assets/utility/9mobile.jpg",
+          height: 40,
+          width: 40,
+        ),
+      ),
+      leading: Text(
+        '9Mobile airtime',
+        style: GoogleFonts.nunito(
+          color: Theme.of(context).canvasColor,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  ListTile mtnAirtimeMethod(
+      BuildContext context,
+      TextFormField airtimePhone,
+      TextFormField airtimeAmount,
+      String? Function(dynamic pinOneValue) validatePin) {
+    return ListTile(
+      onTap: () {
+        Get.bottomSheet(
+          isDismissible: true,
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 500.h,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.asset(
+                          "assets/utility/mtn.jpg",
+                          height: 80,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Recharge and get 1 SpacePoint!',
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Form(
+                        key: airtimeFormKey,
+                        child: Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Valid MTN Phone number",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                airtimePhone,
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            airtimeAmount,
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.bottomSheet(
+                            isDismissible: true,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 350,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                                child: Container(
+                                  color: Theme.of(context).canvasColor,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      Text(
+                                        'Enter PIN to Proceed',
+                                        style: GoogleFonts.nunito(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.w800),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Pinput(
+                                        obscureText: true,
+                                        defaultPinTheme: PinTheme(
+                                          width: 50,
+                                          height: 50,
+                                          textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            color: brandOne,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: brandTwo, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                        ),
+                                        onCompleted: (String val) async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-25",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(300, 50),
+                                          backgroundColor: brandOne,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (BCrypt.checkpw(
+                                            _pinController.text
+                                                .trim()
+                                                .toString(),
+                                            userController.userModel!
+                                                .userDetails![0].wallet.pin,
+                                          )) {
+                                            _pinController.clear();
+                                            Get.back();
+                                            // _doWallet();
+                                            Get.back();
+                                            setState(() {
+                                              loadMssg = "Processing...";
+                                              canLoad = false;
+                                            });
+
+                                            if (airtimeFormKey.currentState!
+                                                .validate()) {
+                                              const String apiUrl =
+                                                  'https://api.watupay.com/v1/watubill/vend';
+                                              const String bearerToken =
+                                                  'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                              final response = await http.post(
+                                                Uri.parse(apiUrl),
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $bearerToken',
+                                                  "Content-Type":
+                                                      "application/json"
+                                                },
+                                                body:
+                                                    jsonEncode(<String, String>{
+                                                  "amount":
+                                                      _airtimeAmountController
+                                                          .text
+                                                          .trim()
+                                                          .toString(),
+                                                  "channel": "bill-25",
+                                                  "business_signature":
+                                                      "a390960dfa37469d824ffe6cb80472f6",
+                                                  "phone_number":
+                                                      _airtimeNumberController
+                                                          .text
+                                                          .trim()
+                                                          .toString()
+                                                }),
+                                              );
+
+                                              if (response.statusCode == 200) {
+                                                // var walletUpdate = FirebaseFirestore
+                                                //     .instance
+                                                //     .collection('accounts');
+                                                // await walletUpdate
+                                                //     .doc(userId)
+                                                //     .update({
+                                                //   'wallet_balance':
+                                                //       (((int.tryParse(userController.user[0].userWalletBalance))!) - ((int.tryParse(_airtimeAmountController.text.trim().toString()))! + 20)).toString(),
+                                                //   'utility_points':
+                                                //       (((int.tryParse(userController.user[0].utilityPoints)!)) + 1).toString(),
+                                                // }).then((value) async {
+                                                //   var addUtility = FirebaseFirestore
+                                                //       .instance
+                                                //       .collection('utility');
+                                                //   await addUtility
+                                                //       .add({
+                                                //     'user_id':
+                                                //         userController.user[0].rentspaceID,
+                                                //     'id':
+                                                //         userController.user[0].id,
+                                                //     'amount':
+                                                //         _airtimeAmountController.text.trim().toString(),
+                                                //     'charge':
+                                                //         '20',
+                                                //     'timestamp':
+                                                //         FieldValue.serverTimestamp(),
+                                                //     'biller':
+                                                //         "MTN AIRTIME",
+                                                //     'transaction_id':
+                                                //         getRandom(8),
+                                                //     'date':
+                                                //         formattedDate,
+                                                //     'description':
+                                                //         'bought airtime',
+                                                //   });
+                                                // });
+
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+                                                showTopSnackBar(
+                                                  Overlay.of(context),
+                                                  CustomSnackBar.success(
+                                                    backgroundColor: brandOne,
+                                                    message:
+                                                        'You just earned a Space point!',
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  canLoad = true;
+                                                });
+                                                // Error handling
+                                                _airtimeAmountController
+                                                    .clear();
+                                                _airtimeNumberController
+                                                    .clear();
+                                                _pinController.clear();
+
+                                                customErrorDialog(context,
+                                                    "Error", "Try again later");
+                                              }
+                                            } else {
+                                              setState(() {
+                                                canLoad = true;
+                                              });
+                                              customErrorDialog(
+                                                  context,
+                                                  "Incomplete",
+                                                  "Fill the field correctly to proceed");
+                                            }
+                                          } else {
+                                            _pinController.clear();
+                                            if (context.mounted) {
+                                              customErrorDialog(
+                                                  context,
+                                                  "Invalid PIN",
+                                                  'Enter correct PIN to proceed');
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'Proceed to Payment',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: brandOne,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(13),
+                            child: Align(
+                              child: Text(
+                                'Pay',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 19.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      tileColor: brandSix,
+      leading: Text(
+        'MTN airtime',
+        style: GoogleFonts.nunito(
+          color: Theme.of(context).canvasColor,
+          fontSize: 15,
+        ),
+      ),
+      trailing: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: Image.asset(
+          "assets/utility/mtn.jpg",
+          height: 40,
+          width: 40,
+        ),
+      ),
+    );
   }
 }

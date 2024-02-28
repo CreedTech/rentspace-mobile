@@ -911,17 +911,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         Enter_Transaction_Pin(
-                                  //       amount: amount,
-                                  //       phoneNumber: number.toString(),
-                                  //       network: _selectedCarrier,
-                                  //     ),
-                                  //   ),
-                                  // );
+                                 
                                   Get.bottomSheet(
                                     isDismissible: true,
                                     SizedBox(
