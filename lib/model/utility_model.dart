@@ -1,33 +1,96 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
-class Utility {
-  final String amount;
-  final String biller;
-  final String userID;
-  final String description;
-  final String transactionId;
-  final String date;
-  final String id;
-
-  const Utility({
-    required this.userID,
-    required this.description,
-    required this.transactionId,
-    required this.amount,
-    required this.date,
-    required this.id,
-    required this.biller,
+class UtilityHistoryModel {
+  UtilityHistoryModel({
+    required this.utilityHistories,
   });
-  static Utility fromSnapshot(DocumentSnapshot data) {
-    Utility utility = Utility(
-      id: data['id'],
-      userID: data['user_id'],
-      description: data['description'],
-      transactionId: data['transaction_id'],
-      amount: data['amount'],
-      date: data['date'],
-      biller: data['biller'],
-    );
-    return utility;
+  List<UtilityHistory>? utilityHistories;
+
+  UtilityHistoryModel.fromJson(Map<String, dynamic> json) {
+    final dynamic utilityHistoriesData = json['utilityHistories'];
+    print('utilityHistoriesData');
+    print(utilityHistoriesData);
+    if (utilityHistoriesData is List<dynamic>) {
+      utilityHistories =
+          utilityHistoriesData.map((e) => UtilityHistory.fromJson(e)).toList();
+      print('utilityHistories length');
+      print(utilityHistories!.length);
+    } else if (utilityHistoriesData is Map<String, dynamic>) {
+      print("Here");
+
+      utilityHistories = [UtilityHistory.fromJson(utilityHistoriesData)];
+      print("utilityHistories");
+      print(utilityHistories);
+    } else {
+      print('Invalid activities data: $utilityHistoriesData');
+      utilityHistories = [];
+    }
   }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['utilityHistories'] =
+        utilityHistories!.map((e) => e.toJson()).toList();
+    return _data;
+  }
+}
+
+class UtilityHistory {
+  final String id;
+  final String transactionType;
+  final dynamic amount;
+  final String biller;
+  final String transactionReference;
+  final String merchantReference;
+  final String description;
+  final String status;
+  final String fees;
+  final String totalAmount;
+  final String createdAt;
+  final String updatedAt;
+
+  UtilityHistory({
+    required this.id,
+    required this.transactionType,
+    required this.amount,
+    required this.biller,
+    required this.transactionReference,
+    required this.merchantReference,
+    required this.description,
+    required this.status,
+    required this.fees,
+    required this.totalAmount,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory UtilityHistory.fromJson(Map<String, dynamic> json) => UtilityHistory(
+        id: json['_id'],
+        transactionType: json['transactionType'],
+        amount: json['amount'],
+        biller: json['biller'],
+        transactionReference: json['transactionReference'],
+        description: json['description'],
+        merchantReference: json['merchantReference'],
+        status: json['status'],
+        fees: json['fees'],
+        totalAmount: json['totalAmount'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        '_id': id,
+        'transactionType': transactionType,
+        'amount': amount,
+        'biller': biller,
+        'transactionReference': transactionReference,
+        'description': description,
+        'merchantReference': merchantReference,
+        'status': status,
+        'fees': fees,
+        'totalAmount': totalAmount,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+      };
 }

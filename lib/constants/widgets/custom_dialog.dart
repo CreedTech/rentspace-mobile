@@ -367,7 +367,7 @@ void customErrorDialog(
           title: null,
           elevation: 0,
           content: SizedBox(
-            height: 250,
+            height: 250.h,
             child: Column(
               children: [
                 GestureDetector(
@@ -384,21 +384,21 @@ void customErrorDialog(
                       child: Icon(
                         Iconsax.close_circle,
                         color: Theme.of(context).primaryColor,
-                        size: 30,
+                        size: 30.sp,
                       ),
                     ),
                   ),
                 ),
-                const Align(
+                 Align(
                   alignment: Alignment.center,
                   child: Icon(
                     Iconsax.warning_24,
                     color: Colors.red,
-                    size: 75,
+                    size: 75.sp,
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
+                 SizedBox(
+                  height: 12.h,
                 ),
                 Text(
                   message,
@@ -408,8 +408,8 @@ void customErrorDialog(
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
+                 SizedBox(
+                  height: 5.h,
                 ),
                 Text(
                   subText,
@@ -419,8 +419,8 @@ void customErrorDialog(
                     fontSize: 16.sp,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                 SizedBox(
+                  height: 10.h,
                 ),
               ],
             ),

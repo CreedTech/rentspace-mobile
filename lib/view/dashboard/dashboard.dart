@@ -160,6 +160,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     // ref.read(userSettingsProvider.notifier).getUserProfileDetails();
     getConnectivity();
     print("isLoading");
+    hideBalance = false;
     print(userController.isLoading.value);
     // userController.fetchData();
     // Fetch user details when the widget is initialized
@@ -634,8 +635,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                           .format(walletController
                                                                   .walletModel!
                                                                   .wallet![0]
-                                                                  .mainBalance
-                                                                  .obs() ??
+                                                                  .mainBalance ??
                                                               0)
                                                           .toString()
                                                       : "******",
@@ -1093,7 +1093,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                 BorderRadius.circular(10.sp),
                                           ),
                                           child: Text(
-                                            " ${hideBalance ? nairaFormaet.format(userController.userModel!.userDetails![0].wallet.mainBalance.obs()).toString() : "********"}",
+                                            " ${hideBalance ? nairaFormaet.format(userController.userModel!.userDetails![0].wallet.mainBalance).toString() : "********"}",
                                             style: GoogleFonts.nunito(
                                                 fontWeight: FontWeight.w800,
                                                 fontSize: 25.sp,
@@ -1216,74 +1216,61 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: brandTwo.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 20.0.h, horizontal: 20.0.h),
-                      child: Column(
-                        children: [
-                          // Align(
-                          //   alignment: Alignment.topLeft,
-                          //   child: Text(
-                          //     'Purchase',
-                          //     style: GoogleFonts.nunito(
-                          //       color: brandTwo,
-                          //       fontSize: 15.sp,
-                          //       fontWeight: FontWeight.w700,
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 17.h,
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconsContainer(
-                                IconsName: 'Airtime',
-                                icon: Iconsax.mobile5,
-                                iconColor: brandOne,
-                                onTap: () {
-                                  // Navigator.push(context, route)
-                                  Navigator.pushNamed(context, airtime);
-                                },
-                              ),
-                              IconsContainer(
-                                IconsName: 'Data',
-                                icon: Icons.wifi,
-                                iconColor: brandOne,
-                                onTap: () {
-                                  // Navigator.pushNamed(context, RouteList.airtime);
-                                },
-                              ),
-                              IconsContainer(
-                                IconsName: 'Cable',
-                                icon: Icons.tv_rounded,
-                                iconColor: brandOne,
-                                onTap: () {},
-                              ),
-                              IconsContainer(
-                                IconsName: 'More',
-                                icon: Iconsax.more5,
-                                iconColor: brandOne,
-                                onTap: () {
-                                  // Navigator.pushNamed(context, RouteList.electricity);
-                                  // Navigator.pushNamed(context, RouteList.pay_bills);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: brandTwo.withOpacity(0.2),
+                  //     borderRadius: BorderRadius.circular(15.r),
+                  //   ),
+                  //   child: Padding(
+                  //     padding: EdgeInsets.symmetric(
+                  //         vertical: 20.0.h, horizontal: 20.0.h),
+                  //     child: Column(
+                  //       children: [
+                  //          Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             IconsContainer(
+                  //               IconsName: 'Airtime',
+                  //               icon: Iconsax.mobile5,
+                  //               iconColor: brandOne,
+                  //               onTap: () {
+                  //                 // Navigator.push(context, route)
+                  //                 Navigator.pushNamed(context, airtime);
+                  //               },
+                  //             ),
+                  //             IconsContainer(
+                  //               IconsName: 'Data',
+                  //               icon: Icons.wifi,
+                  //               iconColor: brandOne,
+                  //               onTap: () {
+                  //                 // Navigator.pushNamed(context, RouteList.airtime);
+                  //               },
+                  //             ),
+                  //             IconsContainer(
+                  //               IconsName: 'Cable',
+                  //               icon: Icons.tv_rounded,
+                  //               iconColor: brandOne,
+                  //               onTap: () {},
+                  //             ),
+                  //             IconsContainer(
+                  //               IconsName: 'More',
+                  //               icon: Iconsax.more5,
+                  //               iconColor: brandOne,
+                  //               onTap: () {
+                  //                 // Navigator.pushNamed(context, RouteList.electricity);
+                  //                 // Navigator.pushNamed(context, RouteList.pay_bills);
+                  //               },
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+
                   SizedBox(
                     height: 20.h,
                   ),
@@ -1813,7 +1800,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 width: 10.w,
                               ),
                               Text(
-                                'Withdraw Your Funds',
+                                'Transfer Your Funds',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
                                   color: Colors.white,
@@ -1827,7 +1814,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             height: 14.h,
                           ),
                           Text(
-                            'Your security matters. Withdraw with confidence knowing your transactions are encrypted and secure.',
+                            'Your security matters. Transfer with confidence knowing your transactions are encrypted and secure.',
                             style: GoogleFonts.nunito(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -1883,7 +1870,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                             alignment: Alignment
                                                                 .topCenter,
                                                             child: Text(
-                                                              'Withdraw your Secured Funds',
+                                                              'Transfer your Secured Funds',
                                                               style: GoogleFonts
                                                                   .nunito(
                                                                 color: brandOne,
@@ -1910,12 +1897,13 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                     ElevatedButton(
                                                                   onPressed:
                                                                       () {
-                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance.obs() >
+                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance >
                                                                             0)
-                                                                        ? Get.to(
-                                                                            TransactionReceipt())
+                                                                        ?
                                                                         //  Get.to(
-                                                                        //     const WalletWithdrawal())
+                                                                        //     TransactionReceipt())
+                                                                        Get.to(
+                                                                            const WalletWithdrawal())
                                                                         : customErrorDialog(
                                                                             context,
                                                                             'Wallet Empty! :)',
@@ -1959,7 +1947,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                             10,
                                                                       ),
                                                                       Text(
-                                                                        "Proceed To Withdrawal",
+                                                                        "Proceed To Transfer",
                                                                         style:
                                                                             TextStyle(
                                                                           color:
@@ -2012,7 +2000,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       width: 10.w,
                                     ),
                                     Text(
-                                      'Withdraw Now',
+                                      'Transfer Now',
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
                                         fontSize: 14.sp,

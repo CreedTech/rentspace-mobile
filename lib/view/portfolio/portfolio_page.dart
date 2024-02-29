@@ -31,11 +31,11 @@ class PortfolioPage extends StatefulWidget {
 }
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
-String _totalInterest = "0";
+double _totalInterest = 0;
 String _loanAmount = "0";
-String _totalSavings = "0";
-String _totalDebts = "0";
-String _totalInvestments = "0";
+dynamic _totalSavings = 0;
+double _totalDebts = 0;
+double _totalInvestments = 0;
 var changeOne = 6.obs();
 
 class _PortfolioPageState extends State<PortfolioPage> {
@@ -56,14 +56,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
     // }
 
     setState(() {
-      _totalInterest =
-          userController.userModel!.userDetails![0].totalInterests.toString();
+      // _totalInterest =
+      //     userController.userModel!.userDetails![0].totalInterests;
       _loanAmount =
           userController.userModel!.userDetails![0].loanAmount.toString();
       _totalSavings =
-          userController.userModel!.userDetails![0].totalSavings.toString();
-      _totalDebts =
-          userController.userModel!.userDetails![0].totalDebts.toString();
+          userController.userModel!.userDetails![0].totalSavings;
+      // _totalDebts =
+      //     userController.userModel!.userDetails![0].totalDebts;
       // _totalInvestments = userController.userModel!.userDetails![0].tot.toString();
     });
   }
@@ -72,14 +72,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   initState() {
     super.initState();
-        // userController.fetchData();
+    // userController.fetchData();
     userController.userModel!.userDetails!.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
         : valueNotifier = ValueNotifier(double.tryParse(userController
             .userModel!.userDetails![0].financeHealth
             .toString())!);
     getUser();
-
   }
 
   @override
@@ -179,7 +178,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   ),
                                   Text(
                                     nairaFormaet
-                                        .format(int.parse(_totalInterest)),
+                                        .format(_totalInterest),
                                     style: GoogleFonts.nunito(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
@@ -213,8 +212,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                   ),
                                   Text(
-                                    nairaFormaet
-                                        .format(int.parse(_totalSavings)),
+                                    nairaFormaet.format(_totalSavings),
                                     style: GoogleFonts.nunito(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
@@ -248,7 +246,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                   ),
                                   Text(
-                                    nairaFormaet.format(int.parse(_loanAmount)),
+                                    nairaFormaet.format(double.parse(_loanAmount)),
                                     style: GoogleFonts.nunito(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
@@ -282,7 +280,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                   ),
                                   Text(
-                                    nairaFormaet.format(int.parse(_totalDebts)),
+                                    nairaFormaet.format(_totalDebts),
                                     style: GoogleFonts.nunito(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,

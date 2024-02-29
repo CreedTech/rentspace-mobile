@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/controller/utility_controller.dart';
 import 'package:intl/intl.dart';
@@ -38,102 +40,102 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        centerTitle: true,
+        title: Text(
+          'Utility History',
+          style: GoogleFonts.nunito(
+            color: Theme.of(context).primaryColor,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+          (utilityController.utilityHistoryModel!.utilityHistories!.isEmpty)
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'Transaction history',
-                      style: TextStyle(
-                        fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                    Image.asset(
+                      'assets/card_empty.png',
+                      height: 300.h,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: utilityController.utility.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (utilityController.utility.isEmpty) {
-                    return Center(
+                    Center(
                       child: Text(
-                        "Nothing to show here",
-                        style: TextStyle(
+                        "No Transaction history",
+                        style: GoogleFonts.nunito(
                           fontSize: 20,
-                          color: brandOne,
-                          fontFamily: "DefaultFontFamily",
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    );
-                  } else {
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: utilityController
+                      .utilityHistoryModel!.utilityHistories!.length,
+                  itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
                       child: ListTile(
                         leading: Icon(
-                          Icons.shopping_cart_checkout_outlined,
+                          Icons.outbond,
+                          size: 40,
                           color: Theme.of(context).primaryColor,
                         ),
-                        title: Text(
-                          "${utilityController.utility[index].biller} ${nairaFormaet.format(double.parse(utilityController.utility[index].amount.toString()))}",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
-                            color: Theme.of(context).primaryColor,
-                          ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${utilityController.utilityHistoryModel!.utilityHistories![index].biller} ",
+                              style: GoogleFonts.nunito(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                         subtitle: Text(
-                          "${utilityController.utility[index].description} ${utilityController.utility[index].transactionId}",
-                          style: TextStyle(
+                          formatDateTime(utilityController.utilityHistoryModel!
+                              .utilityHistories![index].createdAt),
+                          style: GoogleFonts.nunito(
                             fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
                         trailing: Text(
-                          utilityController.utility[index].date,
-                          style: TextStyle(
+                          "- ${nairaFormaet.format(double.parse(utilityController.utilityHistoryModel!.utilityHistories![index].amount.toString()))}",
+                          style: GoogleFonts.nunito(
                             fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
+                            fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
                     );
-                  }
-                },
-              ),
-            ],
-          ),
+                  },
+                ),
         ],
       ),
     );
+  }
+
+  String formatDateTime(String dateTimeString) {
+    // Parse the date string into a DateTime object
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    // Define the date format you want
+    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
+
+    // Format the DateTime object into a string
+    String formattedDateTime = formatter.format(dateTime);
+
+    return formattedDateTime;
   }
 }

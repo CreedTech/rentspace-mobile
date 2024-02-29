@@ -36,18 +36,17 @@ class ApiClient {
     print('got to api client');
 
     try {
-      final response = await http
-          .post(
-            Uri.parse(AppConstants.BASE_URL + url),
-            headers: _mainHeaders,
-            // headers: {
-            //   'Content-type': 'application/json; charset=UTF-8',
-            //   'Accept': 'application/json',
-            //   'Authorization': 'Bearer $token',
-            // },
-            body: body,
-          )
-          .timeout(const Duration(seconds: 30));
+      final response = await http.post(
+        Uri.parse(AppConstants.BASE_URL + url),
+        headers: _mainHeaders,
+        // headers: {
+        //   'Content-type': 'application/json; charset=UTF-8',
+        //   'Accept': 'application/json',
+        //   'Authorization': 'Bearer $token',
+        // },
+        body: body,
+      );
+      // .timeout(const Duration(seconds: 30));
 
       print(AppConstants.BASE_URL + url);
       if (response.statusCode == 201 || response.statusCode == 200) {

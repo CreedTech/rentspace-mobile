@@ -9,7 +9,7 @@ import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
 
 class RentController extends GetxController {
-  final rent = <SpaceRent>[].obs;
+  // final rent = <SpaceRent>[].obs;
   var isLoading = false.obs;
   // final rent = <Rent>[].obs;
   SpaceRentModel? rentModel;
@@ -44,8 +44,16 @@ class RentController extends GetxController {
         rentModel = SpaceRentModel.fromJson(result);
         print('Rent data successfully fetched');
         print(rentModel!.rents!);
+        if (rentModel!.rents!.isEmpty) {
+          // Show a message or handle the case where no space rent is found
+          // For example, you can set a default value or display a message to the user
+          print('No space rent found');
+        }
         isLoading(false);
       } else {
+        // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
+        //   rentModel = ;
+        // }
         print(response.body);
         print('error fetching data');
       }

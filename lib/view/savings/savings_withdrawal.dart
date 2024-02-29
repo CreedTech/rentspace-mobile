@@ -486,7 +486,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       }
       if (int.tryParse(amountValue)! >
           walletController.walletModel!.wallet![0].mainBalance - 20) {
-        return 'you cannot withdraw more than your balance';
+        return 'you cannot transfer more than your balance';
       }
       return null;
     }
@@ -648,7 +648,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           ),
         ),
         title: Text(
-          'Withdraw Funds',
+          'Transfer Funds',
           style: GoogleFonts.nunito(
             color: brandOne,
             fontSize: 20,
@@ -677,7 +677,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                               height: 30,
                             ),
                             Text(
-                              "Note that the withdrawal process will be according to our Terms of use",
+                              "Note that the transfer process will be according to our Terms of use",
                               style: GoogleFonts.nunito(
                                 fontSize: 20,
                                 color: Theme.of(context).primaryColor,
@@ -725,7 +725,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                       padding:
                                           const EdgeInsets.fromLTRB(0, 5, 0, 5),
                                       child: Text(
-                                        "How much do you want to withdraw?",
+                                        "How much do you want to transfer?",
                                         style: GoogleFonts.nunito(
                                           fontSize: 14,
                                           color: Theme.of(context).primaryColor,
@@ -744,7 +744,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                     padding: const EdgeInsets.fromLTRB(
                                         0.0, 5, 0.0, 5),
                                     child: Text(
-                                      "Where should we send your withdrawal?",
+                                      "Where should we send your transfer?",
                                       style: GoogleFonts.nunito(
                                         fontSize: 16,
                                         //letterSpacing: 2.0,
@@ -1030,7 +1030,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                       }
                                                     },
                                                     child: Text(
-                                                      'Proceed to Withdraw',
+                                                      'Proceed to Transfer',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: GoogleFonts.nunito(
@@ -1148,7 +1148,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                     }
                                   },
                                   child: Text(
-                                    'Withdraw',
+                                    'Transfer',
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.nunito(
                                       color: Colors.white,

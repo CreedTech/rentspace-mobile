@@ -225,65 +225,85 @@ class _HomePageState extends State<HomePage> {
           },
         );
         // mustRefer();
-        Get.defaultDialog(
-          titlePadding: EdgeInsets.fromLTRB(0.w, 50.h, 0.w, 0.h),
-          title: "Welcome Spacer!",
-          content: Padding(
-            padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/ava_intro.png",
-                  fit: BoxFit.fill,
-                  height: 200.h,
-                  width: 200.w,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(
-                  "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(
+                  'Welcome Spacer!',
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
-                    fontSize: 13.0.sp,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: brandOne,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                10.w,
-                0.h,
-                10.w,
-                20.h,
-              ),
-              child: GFButton(
-                onPressed: () {
-                  Get.back();
-                  startShowCase();
-                },
-                fullWidthButton: true,
-                shape: GFButtonShape.pills,
-                text: "Start",
-                icon: Icon(
-                  Icons.arrow_right_outlined,
-                  color: Colors.white,
-                  size: 18.sp,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                color: brandOne,
-                textStyle: GoogleFonts.nunito(
-                  color: Colors.white,
-                  fontSize: 16,
+                content: SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: SingleChildScrollView(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/ava_intro.png",
+                          fit: BoxFit.fill,
+                          height: 200.h,
+                          width: 200.w,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
+                          style: GoogleFonts.nunito(
+                            fontSize: 13.0,
+                            color: brandOne,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.back();
+                            startShowCase();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: brandOne,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 15),
+                            textStyle: const TextStyle(
+                                color: Colors.white, fontSize: 17),
+                          ),
+                          child: Text(
+                            "Start",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              color: Colors.white,
+                              fontSize: 14,
+                              // letterSpacing: 0.3,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
                 ),
-              ),
-            ),
-          ],
-          barrierDismissible: false,
-        );
-      } else {
+              );
+            });
+  } else {
         return;
       }
     } else {
@@ -314,7 +334,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     transIds.clear();
     // checkStatus();
-        
 
     setState(() {
       fundedAmount = "0";
@@ -714,7 +733,7 @@ class _HomePageState extends State<HomePage> {
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 3
                       ? Image.asset(
-                          "assets/icons/carbon_portfolio.png",
+                          "assets/icons/utility_icon.png",
                           // height: 28,
                           width: 29.w,
                           color: Theme.of(context).colorScheme.secondary,

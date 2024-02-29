@@ -28,21 +28,22 @@ class AppRepository {
     _apiClient.updateHeaders(authToken);
     Response response =
         await _apiClient.postData(AppConstants.CREATE_RENT, jsonEncode(body));
-    log("response");
-    log(response.body);
+    print("response here");
+    print(jsonDecode(response.body)['createSpaceRent']);
     if (response.statusCode == 200) {
-      responseModel = ResponseModel("Spacerent Creation successful", true);
+      responseModel = ResponseModel(
+          jsonDecode(response.body)['createSpaceRent']['rentspace_id'], true);
       return responseModel;
     }
 
-    log("Here in repo${jsonDecode(response.body)}");
+    print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
       return responseModel = ResponseModel(error, false);
     } else {
       var error = jsonDecode(response.body)['error'].toString();
-      log("Here in error$error");
+      print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     }
   }
@@ -56,21 +57,21 @@ class AppRepository {
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
         AppConstants.FUND_RENT_WITH_WALLET, jsonEncode(body));
-    log("response");
-    log(response.body);
+    print("response");
+    print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Wallet Debit successful", true);
       return responseModel;
     }
 
-    log("Here in repo${jsonDecode(response.body)}");
+    print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
       return responseModel = ResponseModel(error, false);
     } else {
       var error = jsonDecode(response.body)['error'].toString();
-      log("Here in error$error");
+      print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     }
   }
@@ -84,52 +85,52 @@ class AppRepository {
     _apiClient.updateHeaders(authToken);
     Response response =
         await _apiClient.postData(AppConstants.VERFIY_BVN, jsonEncode(body));
-    log("response");
-    log(response.body);
+    print("response");
+    print(response);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("BVN Verification successful", true);
       return responseModel;
     }
 
-    log("Here in repo${jsonDecode(response.body)}");
+    print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
       return responseModel = ResponseModel(error, false);
     } else {
       var error = jsonDecode(response.body)['error'].toString();
-      log("Here in error$error");
+      print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     }
   }
 
-  Future<ResponseModel> bvnDebit(body) async {
-    ResponseModel responseModel;
+  // Future<ResponseModel> bvnDebit(body) async {
+  //   ResponseModel responseModel;
 
-    String authToken =
-        await GlobalService.sharedPreferencesManager.getAuthToken();
+  //   String authToken =
+  //       await GlobalService.sharedPreferencesManager.getAuthToken();
 
-    _apiClient.updateHeaders(authToken);
-    Response response =
-        await _apiClient.postData(AppConstants.BVN_DEBIT, jsonEncode(body));
-    log("response");
-    log(response.body);
-    if (response.statusCode == 200) {
-      responseModel = ResponseModel("BVN Debit successful", true);
-      return responseModel;
-    }
+  //   _apiClient.updateHeaders(authToken);
+  //   Response response =
+  //       await _apiClient.postData(AppConstants.BVN_DEBIT, jsonEncode(body));
+  //   print("response");
+  //   print(response.body);
+  //   if (response.statusCode == 200) {
+  //     responseModel = ResponseModel("BVN Debit successful", true);
+  //     return responseModel;
+  //   }
 
-    log("Here in repo${jsonDecode(response.body)}");
+  //   print("Here in repo${jsonDecode(response.body)}");
 
-    if (response.body.contains('errors')) {
-      var error = jsonDecode(response.body)['errors'].toString();
-      return responseModel = ResponseModel(error, false);
-    } else {
-      var error = jsonDecode(response.body)['error'].toString();
-      log("Here in error$error");
-      return responseModel = ResponseModel(error, false);
-    }
-  }
+  //   if (response.body.contains('errors')) {
+  //     var error = jsonDecode(response.body)['errors'].toString();
+  //     return responseModel = ResponseModel(error, false);
+  //   } else {
+  //     var error = jsonDecode(response.body)['error'].toString();
+  //     print("Here in error$error");
+  //     return responseModel = ResponseModel(error, false);
+  //   }
+  // }
 
   Future<ResponseModel> createDva(body) async {
     ResponseModel responseModel;
@@ -139,22 +140,22 @@ class AppRepository {
 
     _apiClient.updateHeaders(authToken);
     Response response =
-        await _apiClient.postData(AppConstants.BVN_DEBIT, jsonEncode(body));
-    log("response");
-    log(response.body);
+        await _apiClient.postData(AppConstants.CREATE_DVA, jsonEncode(body));
+    print("response");
+    print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("DVA Creation successful", true);
       return responseModel;
     }
 
-    log("Here in repo${jsonDecode(response.body)}");
+    print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
       return responseModel = ResponseModel(error, false);
     } else {
       var error = jsonDecode(response.body)['error'].toString();
-      log("Here in error$error");
+      print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     }
   }
@@ -174,7 +175,32 @@ class AppRepository {
       responseModel = ResponseModel('Airtime Bought', true);
       return responseModel;
     }
-if (response.body.contains('errors')) {
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
+  Future<ResponseModel> uploadImage(body) async {
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postPhoto(AppConstants.UPDATE_PHOTO, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Photo Updated', true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
       return responseModel = ResponseModel(error, false);
     } else {

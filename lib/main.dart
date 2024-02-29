@@ -328,7 +328,7 @@ Future<void> main() async {
     // Get.put(AuthController());
   });
   await initNotifications();
-  // _showAnnouncementNotification('yo', 'test');
+  _showAnnouncementNotification('yo', 'test');
 
   // configLoading();
   runApp(const ProviderScope(child: MyApp()));

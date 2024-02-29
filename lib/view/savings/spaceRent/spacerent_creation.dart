@@ -49,6 +49,7 @@ var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 final rentFormKey = GlobalKey<FormState>();
 final TextEditingController _rentAmountController = TextEditingController();
+final TextEditingController _rentNameController = TextEditingController();
 final TextEditingController _endDateController = TextEditingController();
 final TextEditingController fundingController = TextEditingController();
 List<String> intervalLabels = ['Weekly', 'Monthly'];
@@ -108,7 +109,19 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     showSaveButton = false;
     selectedId = '';
     _savingValue = 0.0;
+    _rentNameController.clear();
     getCurrentUser();
+    resetCalculator();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _rentNameController.clear();
+    _rentAmountController.clear();
+    _endDateController.clear();
+    fundingController.clear();
+    _intervalController.clear();
   }
 
   @override
@@ -142,6 +155,18 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       if (text.isEmpty) {
         return 'Can\'t be empty';
       }
+      return null;
+    }
+
+    //validation function
+    validateName(text) {
+      if (text.isEmpty) {
+        return 'Can\'t be empty';
+      }
+      if (text.length < 1) {
+        return 'Too short';
+      }
+
       return null;
     }
 
@@ -237,15 +262,62 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           // calculateRent(rent);
           _canShowRent = 'true';
         });
-
-        // if (!isWithinRange()) {
-        //   // ignore: use_build_context_synchronously
-        //   customErrorDialog(context, 'Invalid date',
-        //       'Pick a different date (minimum of 6 months and maximum of 8 months).');
-        // }
       }
     }
 
+    final rentName = TextFormField(
+      enableSuggestions: true,
+      cursorColor: Theme.of(context).primaryColor,
+      controller: _rentNameController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validateName,
+      // update the state variable when the text changes
+      // onChanged: (text) => setState(() => _nameValue = text),
+      style: GoogleFonts.nunito(
+        color: Theme.of(context).primaryColor,
+      ),
+      keyboardType: TextInputType.text,
+      inputFormatters: const [],
+      decoration: InputDecoration(
+        label: Text(
+          "Enter Rent name",
+          style: GoogleFonts.nunito(
+            color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 2.0), // Change color to yellow
+        ),
+        filled: false,
+        contentPadding: const EdgeInsets.all(14),
+        hintText: '',
+        hintStyle: GoogleFonts.nunito(
+          color: Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
     final rentAmount = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
@@ -421,151 +493,175 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
           child: Stack(
             children: [
-              Form(
-                key: rentFormKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 3),
-                          child: Text(
-                            'Target Amount',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              // fontFamily: "DefaultFontFamily",
+              SingleChildScrollView(
+                child: Form(
+                  key: rentFormKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 3),
+                            child: Text(
+                              'Space Rent Name',
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
                             ),
                           ),
-                        ),
-                        rentAmount,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 3),
-                          child: Text(
-                            'Select Frequency',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              // fontFamily: "DefaultFontFamily",
+                          rentName,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 3),
+                            child: Text(
+                              'Target Amount',
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    intervalSelection,
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 3),
-                          child: Text(
-                            'End Date',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              // fontFamily: "DefaultFontFamily",
+                          rentAmount,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 3),
+                            child: Text(
+                              'Select Frequency',
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
                             ),
                           ),
-                        ),
-                        endDate,
-                        (numberInDays < 182)
-                            ? const Text("")
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 3, vertical: 3),
-                                child: Text(
-                                  'Due in ${_calculateDaysDifference()} days',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).primaryColor,
+                        ],
+                      ),
+                      intervalSelection,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 3),
+                            child: Text(
+                              'End Date',
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          endDate,
+                          (numberInDays < 182)
+                              ? const Text("")
+                              : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 3, vertical: 3),
+                                  child: Text(
+                                    'Due in ${_calculateDaysDifference()} days',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.symmetric(
-                    //           vertical: 4, horizontal: 3),
-                    //       child: Text(
-                    //         'Select Funding Source',
-                    //         style: GoogleFonts.nunito(
-                    //           color: Theme.of(context).primaryColor,
-                    //           fontWeight: FontWeight.w700,
-                    //           fontSize: 12,
-                    //           // fontFamily: "DefaultFontFamily",
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     CustomDropdown(
-                    //       selectedStyle: GoogleFonts.nunito(
-                    //         color: Theme.of(context).primaryColor,
-                    //         fontSize: 12,
-                    //       ),
-                    //       hintText: 'Select Source?',
-                    //       hintStyle: GoogleFonts.nunito(fontSize: 12),
-                    //       excludeSelected: true,
-                    //       fillColor: Colors.transparent,
-                    //       listItemStyle: GoogleFonts.nunito(
-                    //           color: Theme.of(context).colorScheme.secondary,
-                    //           fontSize: 12),
-                    //       items: fundingSource,
-                    //       controller: fundingController,
-                    //       borderSide:
-                    //           BorderSide(color: Theme.of(context).primaryColor),
-                    //       fieldSuffixIcon: Icon(
-                    //         Iconsax.arrow_down5,
-                    //         size: 25.h,
-                    //         color: Theme.of(context).primaryColor,
-                    //       ),
-                    //       onChanged: (String val) {
-                    //         if (mounted) {
-                    //           // Check if the widget is still mounted
-                    //           setState(() {
-                    //             selectedId = fundingController.text;
-                    //             showSaveButton = true;
-                    //           });
-                    //         }
-                    //         print(val);
-                    //         print("_amountValue");
-                    //         print(_amountValue);
-                    //       },
-                    //     ),
-                    //     const SizedBox(
-                    //       height: 10,
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.symmetric(
+                      //           vertical: 4, horizontal: 3),
+                      //       child: Text(
+                      //         'Select Funding Source',
+                      //         style: GoogleFonts.nunito(
+                      //           color: Theme.of(context).primaryColor,
+                      //           fontWeight: FontWeight.w700,
+                      //           fontSize: 12,
+                      //           // fontFamily: "DefaultFontFamily",
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     CustomDropdown(
+                      //       selectedStyle: GoogleFonts.nunito(
+                      //         color: Theme.of(context).primaryColor,
+                      //         fontSize: 12,
+                      //       ),
+                      //       hintText: 'Select Source?',
+                      //       hintStyle: GoogleFonts.nunito(fontSize: 12),
+                      //       excludeSelected: true,
+                      //       fillColor: Colors.transparent,
+                      //       listItemStyle: GoogleFonts.nunito(
+                      //           color: Theme.of(context).colorScheme.secondary,
+                      //           fontSize: 12),
+                      //       items: fundingSource,
+                      //       controller: fundingController,
+                      //       borderSide:
+                      //           BorderSide(color: Theme.of(context).primaryColor),
+                      //       fieldSuffixIcon: Icon(
+                      //         Iconsax.arrow_down5,
+                      //         size: 25.h,
+                      //         color: Theme.of(context).primaryColor,
+                      //       ),
+                      //       onChanged: (String val) {
+                      //         if (mounted) {
+                      //           // Check if the widget is still mounted
+                      //           setState(() {
+                      //             selectedId = fundingController.text;
+                      //             showSaveButton = true;
+                      //           });
+                      //         }
+                      //         print(val);
+                      //         print("_amountValue");
+                      //         print(_amountValue);
+                      //       },
+                      //     ),
+                      //     const SizedBox(
+                      //       height: 10,
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
+                  ),
                 ),
               ),
               // (showSaveButton == true)
@@ -747,6 +843,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 print(durationType);
                                                 rentState.createRent(
                                                     context,
+                                                    _rentNameController.text,
                                                     _endDateController.text,
                                                     durationType,
                                                     _savingValue,
@@ -801,24 +898,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                             "Please Fill All Required Fields");
                       }
 
-                      // if (confirmPinformKey.currentState!.validate()) {
-                      //   if (_confirmPinController.text.trim() !=
-                      //       widget.pin) {
-                      //     customErrorDialog(context, 'Pin Mismatch',
-                      //         'Pin does not match');
-
-                      //     _confirmPinController.clear();
-                      //   } else {
-                      //     authState.createPin(
-                      //         context, _confirmPinController.text.trim());
-                      //     // Navigator.pushNamed(
-                      //     //     context, RouteList.enable_user_notification);
-                      //   }
-                      //   // _doSomething();
-                      // } else {
-                      //   customErrorDialog(context, "Invalid!",
-                      //       "Please Input your pin to proceed");
-                      // }
                     },
                     child: const Text(
                       'Proceed',
@@ -846,6 +925,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       _hasCalculate = 'true';
       _canShowRent = 'false';
     });
+    _rentNameController.clear();
     _rentAmountController.clear();
     _endDateController.clear();
     fundingController.clear();

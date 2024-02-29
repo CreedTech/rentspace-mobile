@@ -20,6 +20,9 @@ class SpaceRentModel {
       rents = [SpaceRent.fromJson(spaceRentData)];
       print("rents");
       print(rents);
+    } else {
+      print('Invalid activities data: $spaceRentData');
+      rents = [];
     }
   }
 

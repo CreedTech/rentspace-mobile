@@ -31,12 +31,14 @@ class AppConstants {
   static const WALLET_WITHDRAWAL = '/api/wallet/wallet-withdrawal';
   static const GET_BANKS_LIST = '/api/banks/bank-lists';
   static const VERFIY_BVN = '/api/bvn/verify-bvn';
-  static const BVN_DEBIT = '/api/bvn/bvn-debit';
+  // static const BVN_DEBIT = '/api/bvn/bvn-debit';
   static const CREATE_DVA = '/api/dva/create-dva';
 
 
   static const BUY_AIRTIME = '/api/buy-airtime';
   static const GET_AIRTIMES = '/api/get-airtimes';
+  static const ADD_UTILITY_HISTORY = '/api/utilities/add-utility';
+  static const UTILITY_HISTORY = '/api/utilities/utility-history';
 
   static const TOKEN = '';
   static const PROFILE_PICTURE = '';

@@ -57,7 +57,7 @@ class Wallet {
   final String pin;
   // Account account;
   final bool isPinSet;
-  final int mainBalance;
+  final dynamic mainBalance;
   final int availableBalance;
   final String walletId;
   final String createdAt;

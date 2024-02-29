@@ -856,10 +856,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.createPin(params);
       if (response.success) {
         EasyLoading.dismiss();
-        await GlobalService.sharedPreferencesManager.savePin(pin);
+        await userController.fetchData();
+        print(userController.userModel!.userDetails![0].isPinSet);
+        // await GlobalService.sharedPreferencesManager.savePin(pin);
         Get.offAll(const FirstPage());
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
+        //     'Your pin has been successfully set.','Login');
         // await GlobalService.sharedPreferencesManager.setPin(value: pin);
         // Navigator.pushNamedAndRemoveUntil(
         //   context,
@@ -1029,5 +1031,4 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       isLoading = false;
     }
   }
-
 }

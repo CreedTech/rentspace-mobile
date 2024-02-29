@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,8 +18,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart';
+import 'package:rentspace/constants/app_constants.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/view/FirstPage.dart';
 // import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
@@ -27,6 +30,7 @@ import 'package:rentspace/view/dashboard/security.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../api/global_services.dart';
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
 // import '../../constants/firebase_auth_constants.dart';
@@ -74,6 +78,60 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     });
     if (!context.mounted) return;
     uploadImg(context);
+  }
+
+  uploadImage(BuildContext context, File imageFile) async {
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    var headers = {'Authorization': 'Bearer $authToken'};
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: true,
+    );
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(AppConstants.BASE_URL + AppConstants.UPDATE_PHOTO));
+    request.files
+        .add(await http.MultipartFile.fromPath('image', imageFile.path));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    EasyLoading.dismiss();
+    if (response.statusCode == 200) {
+      EasyLoading.dismiss();
+      print('Image uploaded successfully');
+      Get.back();
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: brandOne,
+          message: 'Your profile picture has been updated successfully. !!',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+      userController.fetchData();
+      // Get.to(FirstPage());
+    } else {
+      EasyLoading.dismiss();
+      print(response.request);
+      print(response.reasonPhrase);
+      print('Image upload failed with status ${response.statusCode}');
+    }
+  }
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      uploadImage(context, imageFile);
+    } else {
+      print('No image selected.');
+    }
   }
 
   Future updateVerification() async {
@@ -404,36 +462,51 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           SizedBox(
                                             height: 5.h,
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              getImage(context);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          1000),
-                                                  color: brandOne),
-                                              child: Image.asset(
-                                                'assets/icons/RentSpace-icon2.png',
-                                                width: 80,
-                                              ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(1000),
+                                                color: brandOne),
+                                            child: Image.asset(
+                                              'assets/icons/RentSpace-icon2.png',
+                                              width: 80,
                                             ),
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              getImage(context);
-                                            },
-                                            child: Center(
-                                              child: Text(
-                                                'Tap to Change',
-                                                style: GoogleFonts.nunito(
-                                                  color: brandOne,
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w500,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () => _pickImage(context,
+                                                    ImageSource.gallery),
+                                                child: Center(
+                                                  child: Text(
+                                                    'From Gallery',
+                                                    style: GoogleFonts.nunito(
+                                                      color: brandOne,
+                                                      fontSize: 17.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                              GestureDetector(
+                                                onTap: () => _pickImage(context,
+                                                    ImageSource.camera),
+                                                child: Center(
+                                                  child: Text(
+                                                    'From Camera',
+                                                    style: GoogleFonts.nunito(
+                                                      color: brandOne,
+                                                      fontSize: 17.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           //  SizedBox(
                                           //   height: 10.sp,

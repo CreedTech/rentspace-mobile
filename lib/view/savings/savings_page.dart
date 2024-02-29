@@ -17,7 +17,10 @@ import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_intro.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_intro.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
+import 'package:rentspace/view/savings/spaceTank/spacetank_subscription.dart';
 
+import '../../constants/widgets/custom_dialog.dart';
+import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
 import '../../model/spacerent_model.dart';
 
@@ -70,7 +73,7 @@ class _SavingsPageState extends State<SavingsPage> {
   // final BoxController boxController = Get.find();
   // final DepositController depositController = Get.find();
   // final TankController tankController = Get.find();
-  // final UserController userController = Get.find();
+  final UserController userController = Get.find();
   final WalletController walletController = Get.find();
 
   // deleteSpecifiedDocs() async {
@@ -109,14 +112,19 @@ class _SavingsPageState extends State<SavingsPage> {
     //     tankBalance = 0;
     //   });
     // }
+    // if (userController.userModel!.userDetails![0].hasRent == true) {
     if (rentController.rentModel!.rents!.isNotEmpty) {
       // rentBalance += rentController.rentModel!.rent![0].paidAmount;
       // targetBalance += rentController.rentModel!.rent![0].amount;
       for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
         rentBalance += rentController.rentModel!.rents![j].paidAmount;
         targetBalance += rentController.rentModel!.rents![j].amount;
+        print('paid');
+        print(rentController.rentModel!.rents![j].paidAmount);
       }
-    } else {
+    }
+    // }
+    else {
       setState(() {
         rentBalance = 0;
         targetBalance = 0;
@@ -164,7 +172,8 @@ class _SavingsPageState extends State<SavingsPage> {
     depositBalance = 0;
     totalSavings = 0;
     totalAssets = 0;
-
+    hideBalance = false;
+    // walletController.fetchWallet();
     // fetchCachedRentData();
     // Then start fetching the updated data
     // fetchRentData();
@@ -174,7 +183,6 @@ class _SavingsPageState extends State<SavingsPage> {
     getSavings();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,17 +270,28 @@ class _SavingsPageState extends State<SavingsPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          " ${hideBalance ? nairaFormaet.format(totalAssets).toString() : "*****"}",
-                          //  textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
-                            fontSize: 22.0.sp,
-                            // fontFamily: "DefaultFontFamily",
-                            // letterSpacing: 0.5,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
+                        (walletController.isLoading.value)
+                            ? Text(
+                                nairaFormaet.format(0),
+                                style: GoogleFonts.nunito(
+                                  fontSize: 22.0.sp,
+                                  // fontFamily: "DefaultFontFamily",
+                                  // letterSpacing: 0.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                " ${hideBalance ? nairaFormaet.format(totalAssets).toString() : "*****"}",
+                                //  textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  fontSize: 22.0.sp,
+                                  // fontFamily: "DefaultFontFamily",
+                                  // letterSpacing: 0.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -347,17 +366,28 @@ class _SavingsPageState extends State<SavingsPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    " ${hideBalance ? nairaFormaet.format(rentBalance).toString() : "*****"}",
-                                    //  textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 17.0.sp,
-                                      // fontFamily: "DefaultFontFamily",
-                                      // letterSpacing: 0.5,
-                                      fontWeight: FontWeight.w700,
-                                      color: brandOne,
-                                    ),
-                                  ),
+                                  child: (rentController.isLoading.value)
+                                      ? Text(
+                                          nairaFormaet.format(0),
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 17.0.sp,
+                                            // fontFamily: "DefaultFontFamily",
+                                            // letterSpacing: 0.5,
+                                            fontWeight: FontWeight.w700,
+                                            color: brandOne,
+                                          ),
+                                        )
+                                      : Text(
+                                          " ${hideBalance ? nairaFormaet.format(rentBalance).toString() : "*****"}",
+                                          //  textAlign: TextAlign.center,
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 17.0.sp,
+                                            // fontFamily: "DefaultFontFamily",
+                                            // letterSpacing: 0.5,
+                                            fontWeight: FontWeight.w700,
+                                            color: brandOne,
+                                          ),
+                                        ),
                                 ),
                               ],
                             ),
@@ -494,9 +524,17 @@ class _SavingsPageState extends State<SavingsPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      (rentController.rentModel!.rents!.isEmpty)
-                          ? Get.to(const SpaceRentIntro())
-                          : Get.to(const RentSpaceList());
+                      (userController
+                                  .userModel!.userDetails![0].hasVerifiedBvn ==
+                              true)
+                          ? (rentController.rentModel!.rents!.isEmpty)
+                              ? Get.to(const SpaceRentIntro())
+                              : Get.to(const RentSpaceList())
+                          : customErrorDialog(
+                              context,
+                              'Verification!',
+                              'You need to verify your BVN in order to use this service!',
+                            );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

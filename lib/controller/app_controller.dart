@@ -11,12 +11,14 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/home_page.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
+import '../view/FirstPage.dart';
 import '../view/actions/fund_wallet.dart';
 import '../view/dashboard/dashboard.dart';
 import 'wallet_controller.dart';
@@ -36,10 +38,12 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   // bool get loading => _isLoading;
   AppController(this.appRepository) : super(const AsyncLoading());
 
-  Future createRent(BuildContext context, dueDate, interval, intervalAmount,
-      amount, paymentCount) async {
+  Future createRent(BuildContext context, rentName, dueDate, interval,
+      intervalAmount, amount, paymentCount) async {
     isLoading = true;
-    if (dueDate.isEmpty ||
+    if (rentName.isEmpty ||
+            rentName == '' ||
+            dueDate.isEmpty ||
             dueDate == '' ||
             interval.isEmpty ||
             interval == '' ||
@@ -55,6 +59,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
     Map<String, dynamic> params = {
+      'rentName': rentName,
       'due_date': dueDate,
       'interval': interval,
       'interval_amount': intervalAmount,
@@ -78,9 +83,14 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       var response = await appRepository.createRent(params);
       if (response.success) {
         EasyLoading.dismiss();
+
+        print('response.message');
+        print(response.message);
+        var rentspaceId = response.message;
         // await GlobalService.
         if (walletController.walletModel!.wallet![0].mainBalance <
             intervalAmount) {
+          Get.back();
           showDialog(
               context: context,
               barrierDismissible: true,
@@ -184,7 +194,20 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                 );
               });
         } else {
-          walletDebit(context);
+          print(response.message);
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: brandOne,
+              message: 'Space Rent Successfully!!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          );
+          walletDebit(context, intervalAmount, amount, rentspaceId);
         }
         // if (paymentType == "Debit Card") {
         //   Get.to(
@@ -241,16 +264,22 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      return;
     }
   }
 
-  Future walletDebit(BuildContext context) async {
+  Future walletDebit(
+      BuildContext context, intervalAmount, amount, rentspaceId) async {
     isLoading = true;
     // if (bvn.isEmpty || bvn == '') {
     //   customErrorDialog(context, 'Error', 'Please input your bvn!!');
     //   return;
     // }
-    Map<String, dynamic> params = {};
+    Map<String, dynamic> params = {
+      'rentspaceId': rentspaceId,
+      'interval_amount': intervalAmount,
+      'amount': amount,
+    };
     print('params');
     print(params);
     String message;
@@ -263,10 +292,29 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: true,
       );
       var response = await appRepository.walletDebit(params);
+      EasyLoading.dismiss();
+      state = const AsyncData(false);
+      print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
+        Get.back();
+        Get.back();
+        // Get.back();
+        Get.to(RentSpaceList());
 
-        // Get.offAll(const FirstPage());
+        // Get.offAll(const FirstPage())!.then((value) => showTopSnackBar(
+        //       Overlay.of(context),
+        //       CustomSnackBar.success(
+        //         backgroundColor: brandOne,
+        //         message: 'Space Rent Successfully!!',
+        //         textStyle: GoogleFonts.nunito(
+        //           fontSize: 14,
+        //           color: Colors.white,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ));
+
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
         //     'Your pin has been successfully set.');
         // await GlobalService.sharedPreferencesManager.setPin(value: pin);
@@ -278,8 +326,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else {
         print('response.message.toString()');
+        print(response.message.toString());
       }
-      print(response.message.toString());
 
       // check for different reasons to enhance users experience
       if (response.success == false &&
@@ -301,6 +349,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         return;
       }
     } catch (e) {
+      print('wallet');
+      print(e);
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       message = "Ooops something went wrong";
@@ -309,6 +359,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      return;
     }
   }
 
@@ -333,6 +384,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: true,
       );
       var response = await appRepository.verifyBVN(params);
+      print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
         createDva(context);
@@ -378,7 +430,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         print('response again');
         print(response.success);
         print(response.message);
-        message = "Something went wrong";
+        message = "Something went wrong. Try Again later";
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -392,88 +444,90 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      return;
     }
   }
 
-  Future bvnDebit(BuildContext context, bvn) async {
-    isLoading = true;
-    if (bvn.isEmpty || bvn == '') {
-      customErrorDialog(context, 'Error', 'Please input your bvn!!');
-      return;
-    }
-    Map<String, dynamic> params = {
-      'bvn': bvn,
-    };
-    print('params');
-    print(params);
-    String message;
-    try {
-      isLoading = true;
-      state = const AsyncLoading();
-      EasyLoading.show(
-        indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
-      );
-      var response = await appRepository.bvnDebit(params);
-      if (response.success) {
-        EasyLoading.dismiss();
+  // Future bvnDebit(BuildContext context, bvn) async {
+  //   isLoading = true;
+  //   if (bvn.isEmpty || bvn == '') {
+  //     customErrorDialog(context, 'Error', 'Please input your bvn!!');
+  //     return;
+  //   }
+  //   Map<String, dynamic> params = {
+  //     'bvn': bvn,
+  //   };
+  //   print('params');
+  //   print(params);
+  //   String message;
+  //   try {
+  //     isLoading = true;
+  //     state = const AsyncLoading();
+  //     EasyLoading.show(
+  //       indicator: const CustomLoader(),
+  //       maskType: EasyLoadingMaskType.black,
+  //       dismissOnTap: true,
+  //     );
+  //     var response = await appRepository.bvnDebit(params);
+  //     if (response.success) {
+  //       EasyLoading.dismiss();
 
-        // Get.offAll(const FirstPage());
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
-        return;
-      } else {
-        print('response.message.toString()');
-      }
-      print(response.message.toString());
+  //       // Get.offAll(const FirstPage());
+  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
+  //       //     'Your pin has been successfully set.');
+  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+  //       // Navigator.pushNamedAndRemoveUntil(
+  //       //   context,
+  //       //   RouteList.enable_user_notification,
+  //       //   (route) => false,
+  //       // );
+  //       return;
+  //     } else {
+  //       print('response.message.toString()');
+  //     }
+  //     print(response.message.toString());
 
-      // check for different reasons to enhance users experience
-      if (response.success == false &&
-          response.message.contains("User already has bvn verified")) {
-        EasyLoading.dismiss();
-        message = "User already has bvn verified";
-        customErrorDialog(context, 'Error', message);
+  //     // check for different reasons to enhance users experience
+  //     if (response.success == false &&
+  //         response.message.contains("User already has bvn verified")) {
+  //       EasyLoading.dismiss();
+  //       message = "User already has bvn verified";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else if (response.success == false &&
-          response.message.contains("User with this BVN already exists")) {
-        EasyLoading.dismiss();
-        print('response here');
-        print(response.success);
-        print(response);
-        message = "Oops! User with this BVN already exists";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else if (response.success == false &&
+  //         response.message.contains("User with this BVN already exists")) {
+  //       EasyLoading.dismiss();
+  //       print('response here');
+  //       print(response.success);
+  //       print(response);
+  //       message = "Oops! User with this BVN already exists";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else {
-        EasyLoading.dismiss();
-        // to capture other errors later
-        print('response again');
-        print(response.success);
-        print(response.message);
-        message = "Something went wrong";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else {
+  //       EasyLoading.dismiss();
+  //       // to capture other errors later
+  //       print('response again');
+  //       print(response.success);
+  //       print(response.message);
+  //       message = "Something went wrong";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      }
-    } catch (e) {
-      EasyLoading.dismiss();
-      state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
-      customErrorDialog(context, 'Error', message);
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     EasyLoading.dismiss();
+  //     state = AsyncError(e, StackTrace.current);
+  //     message = "Ooops something went wrong";
+  //     customErrorDialog(context, 'Error', message);
 
-      return;
-    } finally {
-      isLoading = false;
-    }
-  }
+  //     return;
+  //   } finally {
+  //     isLoading = false;
+  //     return;
+  //   }
+  // }
 
   Future createDva(BuildContext context) async {
     isLoading = true;
@@ -492,7 +546,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     //   customErrorDialog(
     //       context, 'Error', 'Please input your bvn!!');
     //   return;
-    // }
+    // }22283481549
     Map<String, dynamic> params = {};
     print('params');
     print(params);
@@ -506,9 +560,23 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: true,
       );
       var response = await appRepository.createDva(params);
+      print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
-        // Get.offAll(const FirstPage());
+        await userController.fetchData();
+        Get.offAll(const FirstPage());
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'BVN Verified Successfully!!',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
         //     'Your pin has been successfully set.');
         // await GlobalService.sharedPreferencesManager.setPin(value: pin);
@@ -561,6 +629,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      return;
     }
   }
 
@@ -647,6 +716,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      return;
     }
   }
 }

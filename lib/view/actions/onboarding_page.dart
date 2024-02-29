@@ -301,18 +301,18 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                             fontSize: 16,
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "This BVN verification will attract a charge of ₦45 from your SpaceWallet",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        // Text(
+                        //   "This BVN verification will attract a charge of ₦45 from your SpaceWallet",
+                        //   textAlign: TextAlign.center,
+                        //   style: GoogleFonts.nunito(
+                        //     fontSize: 12.0,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: Theme.of(context).primaryColor,
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 120,
                         ),
@@ -337,10 +337,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    if (walletController.walletModel!.wallet![0]
-                                            .mainBalance >=
-                                        45) {
-                                      if (bvnformKey.currentState!.validate()) {
+                                    if (bvnformKey.currentState!.validate()) {
                                         // verifyBVN();
                                         appState.verifyBVN(context,
                                             _bvnController.text.trim());
@@ -350,140 +347,153 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                             'Invalid! :)',
                                             'Please fill the form properly to proceed');
                                       }
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          barrierDismissible: true,
-                                          builder: (BuildContext context) {
-                                            return Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                AlertDialog(
-                                                  contentPadding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          30, 30, 30, 20),
-                                                  elevation: 0,
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  insetPadding:
-                                                      const EdgeInsets.all(0),
-                                                  scrollable: true,
-                                                  title: null,
-                                                  shape:
-                                                      const RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(30),
-                                                      topRight:
-                                                          Radius.circular(30),
-                                                    ),
-                                                  ),
-                                                  content: SizedBox(
-                                                    child: SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                        40),
-                                                            child: Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          15),
-                                                                  child: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child: Text(
-                                                                      'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: GoogleFonts
-                                                                          .nunito(
-                                                                        color:
-                                                                            brandOne,
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          10),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .all(
-                                                                            3),
-                                                                        child:
-                                                                            ElevatedButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            Get.back();
-                                                                            Get.to(const FundWallet());
-                                                                          },
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            backgroundColor:
-                                                                                Theme.of(context).colorScheme.secondary,
-                                                                            shape:
-                                                                                RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(8),
-                                                                            ),
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                            textStyle:
-                                                                                const TextStyle(color: brandFour, fontSize: 13),
-                                                                          ),
-                                                                          child:
-                                                                              const Text(
-                                                                            "Fund Wallet",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.w700,
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            10,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                          });
-                                    }
+                                    // if (walletController.walletModel!.wallet![0]
+                                    //         .mainBalance >=
+                                    //     45) {
+                                    //   if (bvnformKey.currentState!.validate()) {
+                                    //     // verifyBVN();
+                                    //     appState.verifyBVN(context,
+                                    //         _bvnController.text.trim());
+                                    //   } else {
+                                    //     customErrorDialog(
+                                    //         context,
+                                    //         'Invalid! :)',
+                                    //         'Please fill the form properly to proceed');
+                                    //   }
+                                    // } else {
+                                    //   showDialog(
+                                    //       context: context,
+                                    //       barrierDismissible: true,
+                                    //       builder: (BuildContext context) {
+                                    //         return Column(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.end,
+                                    //           children: [
+                                    //             AlertDialog(
+                                    //               contentPadding:
+                                    //                   const EdgeInsets.fromLTRB(
+                                    //                       30, 30, 30, 20),
+                                    //               elevation: 0,
+                                    //               alignment:
+                                    //                   Alignment.bottomCenter,
+                                    //               insetPadding:
+                                    //                   const EdgeInsets.all(0),
+                                    //               scrollable: true,
+                                    //               title: null,
+                                    //               shape:
+                                    //                   const RoundedRectangleBorder(
+                                    //                 borderRadius:
+                                    //                     BorderRadius.only(
+                                    //                   topLeft:
+                                    //                       Radius.circular(30),
+                                    //                   topRight:
+                                    //                       Radius.circular(30),
+                                    //                 ),
+                                    //               ),
+                                    //               content: SizedBox(
+                                    //                 child: SizedBox(
+                                    //                   width:
+                                    //                       MediaQuery.of(context)
+                                    //                           .size
+                                    //                           .width,
+                                    //                   child: Column(
+                                    //                     children: [
+                                    //                       Padding(
+                                    //                         padding:
+                                    //                             const EdgeInsets
+                                    //                                 .symmetric(
+                                    //                                 vertical:
+                                    //                                     40),
+                                    //                         child: Column(
+                                    //                           children: [
+                                    //                             Padding(
+                                    //                               padding: const EdgeInsets
+                                    //                                   .symmetric(
+                                    //                                   vertical:
+                                    //                                       15),
+                                    //                               child: Align(
+                                    //                                 alignment:
+                                    //                                     Alignment
+                                    //                                         .topCenter,
+                                    //                                 child: Text(
+                                    //                                   'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                    //                                   textAlign:
+                                    //                                       TextAlign
+                                    //                                           .center,
+                                    //                                   style: GoogleFonts
+                                    //                                       .nunito(
+                                    //                                     color:
+                                    //                                         brandOne,
+                                    //                                     fontSize:
+                                    //                                         16,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight.w600,
+                                    //                                   ),
+                                    //                                 ),
+                                    //                               ),
+                                    //                             ),
+                                    //                             Padding(
+                                    //                               padding: const EdgeInsets
+                                    //                                   .symmetric(
+                                    //                                   vertical:
+                                    //                                       10),
+                                    //                               child: Column(
+                                    //                                 children: [
+                                    //                                   Padding(
+                                    //                                     padding: const EdgeInsets
+                                    //                                         .all(
+                                    //                                         3),
+                                    //                                     child:
+                                    //                                         ElevatedButton(
+                                    //                                       onPressed:
+                                    //                                           () {
+                                    //                                         Get.back();
+                                    //                                         Get.to(const FundWallet());
+                                    //                                       },
+                                    //                                       style:
+                                    //                                           ElevatedButton.styleFrom(
+                                    //                                         backgroundColor:
+                                    //                                             Theme.of(context).colorScheme.secondary,
+                                    //                                         shape:
+                                    //                                             RoundedRectangleBorder(
+                                    //                                           borderRadius: BorderRadius.circular(8),
+                                    //                                         ),
+                                    //                                         padding:
+                                    //                                             const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                                    //                                         textStyle:
+                                    //                                             const TextStyle(color: brandFour, fontSize: 13),
+                                    //                                       ),
+                                    //                                       child:
+                                    //                                           const Text(
+                                    //                                         "Fund Wallet",
+                                    //                                         style:
+                                    //                                             TextStyle(
+                                    //                                           color: Colors.white,
+                                    //                                           fontWeight: FontWeight.w700,
+                                    //                                           fontSize: 16,
+                                    //                                         ),
+                                    //                                       ),
+                                    //                                     ),
+                                    //                                   ),
+                                    //                                   const SizedBox(
+                                    //                                     height:
+                                    //                                         10,
+                                    //                                   ),
+                                    //                                 ],
+                                    //                               ),
+                                    //                             ),
+                                    //                           ],
+                                    //                         ),
+                                    //                       ),
+                                    //                     ],
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //             )
+                                    //           ],
+                                    //         );
+                                    //       });
+                                    // }
                                   },
                                   child: const Text(
                                     'Verify BVN',

@@ -8,6 +8,7 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
@@ -47,7 +48,7 @@ String fundedAmount = "0";
 String randomRef = "";
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
-String formattedDate = formatter.format(now);
+// String formattedDate = formatter.format(now);
 // String _newWalletBalance = "0";
 bool hasLoaded = false;
 bool _hasOpened = false;
@@ -65,22 +66,7 @@ List<Widget> listWidgets = [
 ];
 
 class CounterNew extends GetxController {
-  final GlobalKey _one = GlobalKey();
-  final GlobalKey _two = GlobalKey();
-  final GlobalKey _three = GlobalKey();
-  final GlobalKey _four = GlobalKey();
-  final GlobalKey _five = GlobalKey();
-  final GlobalKey _six = GlobalKey();
-  final GlobalKey _seven = GlobalKey();
-  final GlobalKey _eight = GlobalKey();
-  final GlobalKey _nine = GlobalKey();
-  final GlobalKey _ten = GlobalKey();
-
-  get fewsureHelper1 => _eight;
-  get fewsureHelper2 => _nine;
-  get fewsureHelper3 => _ten;
-  get fewsureHelper4 => _six;
-  get fewsureHelper5 => _seven;
+ 
 }
 
 //Showcase player controller
@@ -105,6 +91,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(WalletController());
     Get.put(ActivitiesController());
     Get.put(RentController());
+    Get.put(UtilityController());
   }
 
   @override
@@ -113,6 +100,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(ActivitiesController());
     Get.put(WalletController());
     Get.put(RentController());
+    Get.put(UtilityController());
     return Obx(
       () => (userController.isLoading.value)
           ? Scaffold(
@@ -313,7 +301,8 @@ class _FirstPageState extends State<FirstPage> {
                 },
                 builder: Builder(
                   builder: (context) => (userController
-                              .userModel!.userDetails![0].wallet.isPinSet ==
+                              .userModel!.userDetails![0].isPinSet
+                              .obs() ==
                           false)
                       ? const TransactionPin()
                       : const HomePage(),

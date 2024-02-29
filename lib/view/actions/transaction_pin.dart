@@ -97,29 +97,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
     );
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).canvasColor,
-      //   elevation: 0.0,
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Get.back();
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back,
-      //       size: 30,
-      //       color: Theme.of(context).primaryColor,
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   title: Text(
-      //     'Set PIN',
-      //     style: GoogleFonts.nunito(
-      //         color: Theme.of(context).primaryColor,
-      //         fontSize: 24,
-      //         fontWeight: FontWeight.w700),
-      //   ),
-      // ),
-
+  
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),

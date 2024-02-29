@@ -87,6 +87,7 @@ class UserDetailsModel {
   final String bvn;
   final String kyc;
   final bool hasBvn;
+  final bool isPinSet;
   final bool hasRent;
   final bool hasVerifiedBvn;
   final bool hasVerifiedEmail;
@@ -101,13 +102,13 @@ class UserDetailsModel {
   final int referals;
   // TODO  change to number
   final int utilityPoints;
-  final int financeHealth;
+  final dynamic financeHealth;
   final String status;
-  final int totalAssets;
-  final int totalInterests;
-  final int totalDebts;
-  final int totalProfits;
-  final int totalSavings;
+  final dynamic totalAssets;
+  final dynamic totalInterests;
+  final dynamic totalDebts;
+  final dynamic totalProfits;
+  final dynamic totalSavings;
   // TODO  change to final string
   final String cardCVV;
   final String cardDigit;
@@ -143,6 +144,7 @@ class UserDetailsModel {
     required this.cardCVV,
     required this.cardDigit,
     required this.cardExpire,
+    required this.isPinSet,
     // TODO ADD TO BACKEND
     // required this.cardHolder,
     required this.id,
@@ -209,6 +211,7 @@ class UserDetailsModel {
         dateOfBirth: json["date_of_birth"],
         verified: json["verified"],
         role: json["role"],
+        isPinSet: json["isPinSet"],
         active: json["active"],
         bvn: json["bvn"],
         hasBvn: json["has_bvn"],
@@ -270,6 +273,7 @@ class UserDetailsModel {
         "date_of_birth": dateOfBirth,
         "verified": verified,
         "role": role,
+        "isPinSet": isPinSet,
         "active": active,
         // "id_card": Idimage,
         "kyc": kyc,
