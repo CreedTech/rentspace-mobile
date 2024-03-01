@@ -1600,7 +1600,7 @@ class _RentLiquidateState extends State<RentLiquidate> {
                   ),
                   GFButton(
                     onPressed: () async {
-                      Get.to(const BvnPage());
+                      // Get.to( BvnPage(email: userController.us));
                     },
                     text: "  Begin Verification  ",
                     fullWidthButton: false,

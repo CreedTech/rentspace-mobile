@@ -1236,7 +1236,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(const BvnPage());
+                      Get.to(BvnPage(
+                          email:
+                              userController.userModel!.userDetails![0].email));
                     },
                     child: Text(
                       'Begin Verification',

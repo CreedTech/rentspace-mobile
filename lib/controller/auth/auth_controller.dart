@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
+import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/actions/transaction_pin.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../api/global_services.dart';
+import '../../constants/colors.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../core/helper/helper_route_path.dart';
 import '../../model/user_model.dart';
@@ -219,12 +225,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       final response = await authRepository.verifyOtp(body);
       EasyLoading.dismiss();
       if (response.success) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginPage(),
-          ),
-        );
+        Get.offAll(BvnPage(email: email));
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => BvnPage(email: email),
+        //   ),
+        // );
         // Navigator.pushNamed(context, RouteList.login);
         return;
       } else if (response.success == false &&
@@ -261,6 +268,195 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+    }
+  }
+
+  Future verifyBVN(BuildContext context, bvn, email) async {
+    print(email);
+    isLoading = true;
+    if (bvn.isEmpty || bvn == '') {
+      customErrorDialog(context, 'Error', 'Please input your bvn!!');
+      return;
+    }
+    Map<String, dynamic> params = {'bvn': bvn, 'email': email};
+    print('params');
+    print(params);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var response = await authRepository.verifyBVN(params);
+      print(response.message.toString());
+      if (response.success) {
+        // EasyLoading.dismiss();
+        createDva(context, email);
+        // bvnDebit(context, bvn).then(
+        //   (value) => createDva(context),
+        // );
+        // Get.offAll(const FirstPage());
+        // redirectingAlert(context, '🎉 Congratulations! 🎉',
+        //     'Your pin has been successfully set.');
+        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   RouteList.enable_user_notification,
+        //   (route) => false,
+        // );
+        return;
+      } else {
+        print('response.message.toString()');
+      }
+      print(response.message.toString());
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("User already has bvn verified")) {
+        EasyLoading.dismiss();
+        message = "User already has bvn verified";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("User with this BVN already exists")) {
+        EasyLoading.dismiss();
+        print('response here');
+        print(response.success);
+        print(response);
+        message = "Oops! User with this BVN already exists";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        EasyLoading.dismiss();
+        // to capture other errors later
+        print('response again');
+        print(response.success);
+        print(response.message);
+        message = "Something went wrong. Try Again later";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future createDva(BuildContext context, email) async {
+    isLoading = true;
+    // if (
+    //   dvaName.isEmpty ||
+    //     dvaName == ''
+    //   customerEmail.isEmpty ||
+    //     customerEmail == ''
+    //   dvaName.isEmpty ||
+    //     dvaName == ''
+    //   dvaName.isEmpty ||
+    //     dvaName == ''
+    //   dvaName.isEmpty ||
+    //     dvaName == ''
+    //     ) {
+    //   customErrorDialog(
+    //       context, 'Error', 'Please input your bvn!!');
+    //   return;
+    // }22283481549
+    Map<String, dynamic> params = {'email': email};
+    print('params');
+    print(params);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var response = await authRepository.createDva(params);
+      print(response.message.toString());
+      if (response.success) {
+        // await userController.fetchData();
+        Get.offAll(const LoginPage());
+        EasyLoading.dismiss();
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'BVN Verified Successfully!!',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+
+        // redirectingAlert(context, '🎉 Congratulations! 🎉',
+        //     'Your pin has been successfully set.');
+        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   RouteList.enable_user_notification,
+        //   (route) => false,
+        // );
+        return;
+      } else {
+        print('response.message.toString()');
+      }
+      print(response.message.toString());
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("User already has DVA")) {
+        EasyLoading.dismiss();
+        message = "User already has a Virtual Account";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("User with this BVN already exists")) {
+        EasyLoading.dismiss();
+        print('response here');
+        print(response.success);
+        print(response);
+        message = "Oops! User with this BVN already exists";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        EasyLoading.dismiss();
+        // to capture other errors later
+        print('response again');
+        print(response.success);
+        print(response.message);
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+      return;
     }
   }
 
@@ -368,6 +564,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           password,
           rememberMe,
         );
+        await GlobalService.sharedPreferencesManager
+            .setHasSeenOnboarding(value: true);
         Navigator.of(context).pushNamedAndRemoveUntil(
           home,
           (route) => true,
@@ -791,7 +989,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         // notifyListeners();
         state = const AsyncValue.data(true);
+        await GlobalService.sharedPreferencesManager.deleteLoginInfo();
         await GlobalService.sharedPreferencesManager.setAuthToken(value: '');
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('hasSeenOnboarding', false);
+        print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
         Navigator.of(context).pushAndRemoveUntil(
@@ -855,11 +1057,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.createPin(params);
       if (response.success) {
-        EasyLoading.dismiss();
         await userController.fetchData();
         print(userController.userModel!.userDetails![0].isPinSet);
         // await GlobalService.sharedPreferencesManager.savePin(pin);
         Get.offAll(const FirstPage());
+        EasyLoading.dismiss();
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
         //     'Your pin has been successfully set.','Login');
         // await GlobalService.sharedPreferencesManager.setPin(value: pin);

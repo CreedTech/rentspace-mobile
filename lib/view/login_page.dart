@@ -52,14 +52,14 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     }
   }
 
-  Future<void> setHasSeenOnboardingPreference(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('hasSeenOnboarding', value);
-    print("====================");
-    print("Checking for new users.....");
-    print(prefs.get('hasSeenOnboarding'));
-    print("====================");
-  }
+  // Future<void> setHasSeenOnboardingPreference(bool value) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('hasSeenOnboarding', value);
+  //   print("====================");
+  //   print("Checking for new users.....");
+  //   print(prefs.get('hasSeenOnboarding'));
+  //   print("====================");
+  // }
 
   // void _doSomething() async {
   //   Timer(const Duration(seconds: 1), () {
@@ -74,7 +74,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
 
   @override
   initState() {
-    setHasSeenOnboardingPreference(true);
+    // setHasSeenOnboardingPreference(true);
     super.initState();
     _getSavedLoginInfo();
   }

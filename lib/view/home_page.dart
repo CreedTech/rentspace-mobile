@@ -25,16 +25,16 @@ import 'portfolio/portfolio_page.dart';
 import 'savings/savings_page.dart';
 
 class CounterNew extends GetxController {
-  GlobalKey _one = GlobalKey();
-  GlobalKey _two = GlobalKey();
-  GlobalKey _three = GlobalKey();
-  GlobalKey _four = GlobalKey();
-  GlobalKey _five = GlobalKey();
-  GlobalKey _six = GlobalKey();
-  GlobalKey _seven = GlobalKey();
-  GlobalKey _eight = GlobalKey();
-  GlobalKey _nine = GlobalKey();
-  GlobalKey _ten = GlobalKey();
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
+  final GlobalKey _three = GlobalKey();
+  final GlobalKey _four = GlobalKey();
+  final GlobalKey _five = GlobalKey();
+  final GlobalKey _six = GlobalKey();
+  final GlobalKey _seven = GlobalKey();
+  final GlobalKey _eight = GlobalKey();
+  final GlobalKey _nine = GlobalKey();
+  final GlobalKey _ten = GlobalKey();
 
   get fewsureHelper1 => _eight;
   get fewsureHelper2 => _nine;
@@ -303,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             });
-  } else {
+      } else {
         return;
       }
     } else {

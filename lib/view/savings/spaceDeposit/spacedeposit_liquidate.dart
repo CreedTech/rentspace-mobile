@@ -1516,7 +1516,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
                   ),
                   GFButton(
                     onPressed: () async {
-                      Get.to(BvnPage());
+                      // Get.to(BvnPage());
                     },
                     text: "  Begin Verification  ",
                     fullWidthButton: false,

@@ -1513,7 +1513,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
                   ),
                   GFButton(
                     onPressed: () async {
-                      Get.to(const BvnPage());
+                      // Get.to(const BvnPage());
                     },
                     text: "  Begin Verification  ",
                     fullWidthButton: false,

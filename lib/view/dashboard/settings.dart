@@ -790,38 +790,38 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
             //   ),
             // ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: ListTile(
-                leading: Container(
-                  padding: const EdgeInsets.all(9),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: const Icon(
-                    Iconsax.share,
-                    color: brandOne,
-                  ),
-                ),
-                title: Text(
-                  'Referral',
-                  style: GoogleFonts.nunito(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onTap: () {
-                  Get.to(const ShareAndEarn());
-                  // Navigator.pushNamed(context, RouteList.profile);
-                },
-                trailing: Icon(
-                  Iconsax.arrow_right_3,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 7),
+            //   child: ListTile(
+            //     leading: Container(
+            //       padding: const EdgeInsets.all(9),
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         color: Theme.of(context).cardColor,
+            //       ),
+            //       child: const Icon(
+            //         Iconsax.share,
+            //         color: brandOne,
+            //       ),
+            //     ),
+            //     title: Text(
+            //       'Referral',
+            //       style: GoogleFonts.nunito(
+            //         color: Theme.of(context).primaryColor,
+            //         fontSize: 17,
+            //         fontWeight: FontWeight.w600,
+            //       ),
+            //     ),
+            //     onTap: () {
+            //       Get.to(const ShareAndEarn());
+            //       // Navigator.pushNamed(context, RouteList.profile);
+            //     },
+            //     trailing: Icon(
+            //       Iconsax.arrow_right_3,
+            //       color: Theme.of(context).primaryColor,
+            //     ),
+            //   ),
+            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7),

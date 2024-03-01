@@ -3281,7 +3281,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                     ),
                                     GFButton(
                                       onPressed: () async {
-                                        Get.to(const nt.BvnPage());
+                                        Get.to( nt.BvnPage(email:
+                              userController.userModel!.userDetails![0].email));
                                       },
                                       text: "  Begin Verification  ",
                                       fullWidthButton: false,

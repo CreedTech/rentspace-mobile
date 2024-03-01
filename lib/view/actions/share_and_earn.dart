@@ -133,7 +133,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           ),
                           onPressed: () {
                             Clipboard.setData(
-                              ClipboardData(
+                              const ClipboardData(
                                 text:
                                     "Sign up with my code: userController.users[0].referalCode to earn a free point!",
                               ),

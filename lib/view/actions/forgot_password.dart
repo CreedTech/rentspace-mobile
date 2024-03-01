@@ -25,7 +25,6 @@ class ForgotPassword extends ConsumerStatefulWidget {
 class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
 
-  final newpasswordforformkey = GlobalKey<FormState>();
   // final RoundedLoadingButtonController _btnController =
   //     RoundedLoadingButtonController();
   final forgotPassFormKey = GlobalKey<FormState>();

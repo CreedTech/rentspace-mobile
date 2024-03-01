@@ -60,6 +60,62 @@ class AuthRepository {
     return responseModel = ResponseModel(error, false);
   }
 
+  Future<ResponseModel> verifyBVN(body) async {
+    ResponseModel responseModel;
+
+    // String authToken =
+    //     await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.VERFIY_BVN, jsonEncode(body));
+    print("response");
+    print(response);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("BVN Verification successful", true);
+      return responseModel;
+    }
+
+    print("Here in repo${jsonDecode(response.body)}");
+
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
+  Future<ResponseModel> createDva(body) async {
+    ResponseModel responseModel;
+
+    // String authToken =
+    //     await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.CREATE_DVA, jsonEncode(body));
+    print("response");
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("DVA Creation successful", true);
+      return responseModel;
+    }
+
+    print("Here in repo${jsonDecode(response.body)}");
+
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
   Future<ResponseModel> resendOTP(email) async {
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token

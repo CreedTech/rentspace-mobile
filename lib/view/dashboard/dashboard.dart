@@ -30,6 +30,7 @@ import 'package:rentspace/view/actions/transaction_receipt.dart';
 import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:rentspace/view/savings/savings_withdrawal.dart';
@@ -1109,7 +1110,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           if (userController.userModel!
                                                   .userDetails![0].bvn ==
                                               "") {
-                                            Get.to(const BvnPage());
+                                            Get.to(BvnPage(
+                                                email: userController.userModel!
+                                                    .userDetails![0].email));
                                           } else {
                                             // Get.to(ViewBvnAndKyc(
                                             //   bvn: userController.userModel?.userDetails![0].bvn,
@@ -1427,7 +1430,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(PersonalDetails());
+                              },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [

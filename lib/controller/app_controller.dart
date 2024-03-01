@@ -21,6 +21,7 @@ import '../repo/app_repository.dart';
 import '../view/FirstPage.dart';
 import '../view/actions/fund_wallet.dart';
 import '../view/dashboard/dashboard.dart';
+import '../view/login_page.dart';
 import 'wallet_controller.dart';
 
 final appControllerProvider =
@@ -363,90 +364,90 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future verifyBVN(BuildContext context, bvn) async {
-    isLoading = true;
-    if (bvn.isEmpty || bvn == '') {
-      customErrorDialog(context, 'Error', 'Please input your bvn!!');
-      return;
-    }
-    Map<String, dynamic> params = {
-      'bvn': bvn,
-    };
-    print('params');
-    print(params);
-    String message;
-    try {
-      isLoading = true;
-      state = const AsyncLoading();
-      EasyLoading.show(
-        indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
-      );
-      var response = await appRepository.verifyBVN(params);
-      print(response.message.toString());
-      if (response.success) {
-        EasyLoading.dismiss();
-        createDva(context);
-        // bvnDebit(context, bvn).then(
-        //   (value) => createDva(context),
-        // );
-        // Get.offAll(const FirstPage());
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
-        return;
-      } else {
-        print('response.message.toString()');
-      }
-      print(response.message.toString());
+  // Future verifyBVN(BuildContext context, bvn) async {
+  //   isLoading = true;
+  //   if (bvn.isEmpty || bvn == '') {
+  //     customErrorDialog(context, 'Error', 'Please input your bvn!!');
+  //     return;
+  //   }
+  //   Map<String, dynamic> params = {
+  //     'bvn': bvn,
+  //   };
+  //   print('params');
+  //   print(params);
+  //   String message;
+  //   try {
+  //     isLoading = true;
+  //     state = const AsyncLoading();
+  //     EasyLoading.show(
+  //       indicator: const CustomLoader(),
+  //       maskType: EasyLoadingMaskType.black,
+  //       dismissOnTap: false,
+  //     );
+  //     var response = await appRepository.verifyBVN(params);
+  //     print(response.message.toString());
+  //     if (response.success) {
+  //       // EasyLoading.dismiss();
+  //       createDva(context);
+  //       // bvnDebit(context, bvn).then(
+  //       //   (value) => createDva(context),
+  //       // );
+  //       // Get.offAll(const FirstPage());
+  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
+  //       //     'Your pin has been successfully set.');
+  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+  //       // Navigator.pushNamedAndRemoveUntil(
+  //       //   context,
+  //       //   RouteList.enable_user_notification,
+  //       //   (route) => false,
+  //       // );
+  //       return;
+  //     } else {
+  //       print('response.message.toString()');
+  //     }
+  //     print(response.message.toString());
 
-      // check for different reasons to enhance users experience
-      if (response.success == false &&
-          response.message.contains("User already has bvn verified")) {
-        EasyLoading.dismiss();
-        message = "User already has bvn verified";
-        customErrorDialog(context, 'Error', message);
+  //     // check for different reasons to enhance users experience
+  //     if (response.success == false &&
+  //         response.message.contains("User already has bvn verified")) {
+  //       EasyLoading.dismiss();
+  //       message = "User already has bvn verified";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else if (response.success == false &&
-          response.message.contains("User with this BVN already exists")) {
-        EasyLoading.dismiss();
-        print('response here');
-        print(response.success);
-        print(response);
-        message = "Oops! User with this BVN already exists";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else if (response.success == false &&
+  //         response.message.contains("User with this BVN already exists")) {
+  //       EasyLoading.dismiss();
+  //       print('response here');
+  //       print(response.success);
+  //       print(response);
+  //       message = "Oops! User with this BVN already exists";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else {
-        EasyLoading.dismiss();
-        // to capture other errors later
-        print('response again');
-        print(response.success);
-        print(response.message);
-        message = "Something went wrong. Try Again later";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else {
+  //       EasyLoading.dismiss();
+  //       // to capture other errors later
+  //       print('response again');
+  //       print(response.success);
+  //       print(response.message);
+  //       message = "Something went wrong. Try Again later";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      }
-    } catch (e) {
-      EasyLoading.dismiss();
-      state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
-      customErrorDialog(context, 'Error', message);
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     EasyLoading.dismiss();
+  //     state = AsyncError(e, StackTrace.current);
+  //     message = "Ooops something went wrong";
+  //     customErrorDialog(context, 'Error', message);
 
-      return;
-    } finally {
-      isLoading = false;
-      return;
-    }
-  }
+  //     return;
+  //   } finally {
+  //     isLoading = false;
+  //     return;
+  //   }
+  // }
 
   // Future bvnDebit(BuildContext context, bvn) async {
   //   isLoading = true;
@@ -529,109 +530,110 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   //   }
   // }
 
-  Future createDva(BuildContext context) async {
-    isLoading = true;
-    // if (
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   customerEmail.isEmpty ||
-    //     customerEmail == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //     ) {
-    //   customErrorDialog(
-    //       context, 'Error', 'Please input your bvn!!');
-    //   return;
-    // }22283481549
-    Map<String, dynamic> params = {};
-    print('params');
-    print(params);
-    String message;
-    try {
-      isLoading = true;
-      state = const AsyncLoading();
-      EasyLoading.show(
-        indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
-      );
-      var response = await appRepository.createDva(params);
-      print(response.message.toString());
-      if (response.success) {
-        EasyLoading.dismiss();
-        await userController.fetchData();
-        Get.offAll(const FirstPage());
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: brandOne,
-            message: 'BVN Verified Successfully!!',
-            textStyle: GoogleFonts.nunito(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
-        return;
-      } else {
-        print('response.message.toString()');
-      }
-      print(response.message.toString());
+  // Future createDva(BuildContext context) async {
+  //   isLoading = true;
+  //   // if (
+  //   //   dvaName.isEmpty ||
+  //   //     dvaName == ''
+  //   //   customerEmail.isEmpty ||
+  //   //     customerEmail == ''
+  //   //   dvaName.isEmpty ||
+  //   //     dvaName == ''
+  //   //   dvaName.isEmpty ||
+  //   //     dvaName == ''
+  //   //   dvaName.isEmpty ||
+  //   //     dvaName == ''
+  //   //     ) {
+  //   //   customErrorDialog(
+  //   //       context, 'Error', 'Please input your bvn!!');
+  //   //   return;
+  //   // }22283481549
+  //   Map<String, dynamic> params = {};
+  //   print('params');
+  //   print(params);
+  //   String message;
+  //   try {
+  //     isLoading = true;
+  //     state = const AsyncLoading();
+  //     EasyLoading.show(
+  //       indicator: const CustomLoader(),
+  //       maskType: EasyLoadingMaskType.black,
+  //       dismissOnTap: false,
+  //     );
+  //     var response = await appRepository.createDva(params);
+  //     print(response.message.toString());
+  //     if (response.success) {
+  //       // await userController.fetchData();
+  //       Get.offAll(const LoginPage());
+  //       EasyLoading.dismiss();
+  //       showTopSnackBar(
+  //         Overlay.of(context),
+  //         CustomSnackBar.success(
+  //           backgroundColor: brandOne,
+  //           message: 'BVN Verified Successfully!!',
+  //           textStyle: GoogleFonts.nunito(
+  //             fontSize: 14,
+  //             color: Colors.white,
+  //             fontWeight: FontWeight.w700,
+  //           ),
+  //         ),
+  //       );
 
-      // check for different reasons to enhance users experience
-      if (response.success == false &&
-          response.message.contains("User already has DVA")) {
-        EasyLoading.dismiss();
-        message = "User already has a Virtual Account";
-        customErrorDialog(context, 'Error', message);
+  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
+  //       //     'Your pin has been successfully set.');
+  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+  //       // Navigator.pushNamedAndRemoveUntil(
+  //       //   context,
+  //       //   RouteList.enable_user_notification,
+  //       //   (route) => false,
+  //       // );
+  //       return;
+  //     } else {
+  //       print('response.message.toString()');
+  //     }
+  //     print(response.message.toString());
 
-        return;
-      } else if (response.success == false &&
-          response.message.contains("User with this BVN already exists")) {
-        EasyLoading.dismiss();
-        print('response here');
-        print(response.success);
-        print(response);
-        message = "Oops! User with this BVN already exists";
-        customErrorDialog(context, 'Error', message);
+  //     // check for different reasons to enhance users experience
+  //     if (response.success == false &&
+  //         response.message.contains("User already has DVA")) {
+  //       EasyLoading.dismiss();
+  //       message = "User already has a Virtual Account";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else {
-        EasyLoading.dismiss();
-        // to capture other errors later
-        print('response again');
-        print(response.success);
-        print(response.message);
-        message = "Something went wrong";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else if (response.success == false &&
+  //         response.message.contains("User with this BVN already exists")) {
+  //       EasyLoading.dismiss();
+  //       print('response here');
+  //       print(response.success);
+  //       print(response);
+  //       message = "Oops! User with this BVN already exists";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      }
-    } catch (e) {
-      EasyLoading.dismiss();
-      state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
-      customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else {
+  //       EasyLoading.dismiss();
+  //       // to capture other errors later
+  //       print('response again');
+  //       print(response.success);
+  //       print(response.message);
+  //       message = "Something went wrong";
+  //       customErrorDialog(context, 'Error', message);
 
-      return;
-    } finally {
-      isLoading = false;
-      return;
-    }
-  }
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     EasyLoading.dismiss();
+  //     state = AsyncError(e, StackTrace.current);
+  //     message = "Ooops something went wrong";
+  //     customErrorDialog(context, 'Error', message);
+
+  //     return;
+  //   } finally {
+  //     isLoading = false;
+  //     return;
+  //   }
+  // }
 
   Future buyAirtime(
       BuildContext context, amount, phoneNumber, network, biller) async {

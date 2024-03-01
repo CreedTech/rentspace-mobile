@@ -45,6 +45,11 @@ class SharedPreferencesManager {
     return _prefs.setBool(HAS_SEEN_ONBOARDING, value);
   }
 
+  Future<bool> removeHasSeenOnboarding({required bool value}) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.setBool(HAS_SEEN_ONBOARDING, value);
+  }
+
   Future<bool> setAuthToken({required String value}) async {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setString(TOKEN, value);
@@ -57,6 +62,13 @@ class SharedPreferencesManager {
     _prefs.setString('email', email);
     _prefs.setString('password', password);
     _prefs.setBool('rememberMe', rememberMe);
+  }
+
+  Future<void> deleteLoginInfo() async {
+    // final prefs = await SharedPreferences.getInstance();
+    _prefs.remove('email');
+    _prefs.remove('password');
+    _prefs.remove('rememberMe');
   }
 
   Future<String> getAuthToken() async {
