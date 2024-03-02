@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:rentspace/constants/utils/snackbar.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 // import 'package:rentspace/constants/theme_services.dart';
 // import 'package:get_storage/get_storage.dart';
@@ -100,21 +101,24 @@ class _FundWalletState extends State<FundWallet> {
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,
@@ -147,7 +151,7 @@ class _FundWalletState extends State<FundWallet> {
           'Fund Wallet',
           style: GoogleFonts.nunito(
               color: Theme.of(context).primaryColor,
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -161,32 +165,21 @@ class _FundWalletState extends State<FundWallet> {
                   key: fundWalletFormKey,
                   child: Column(
                     children: [
-                      // const SizedBox(
-                      //   height: 100,
-                      // ),
-                      // Text(
-                      //   "Fund your Space wallet",
-                      //   style: GoogleFonts.nunito(
-                      //     fontSize: 20.0,
-                      //     fontWeight: FontWeight.w700,
-                      //     color: Theme.of(context).primaryColor,
-                      //   ),
-                      // ),
-                       SizedBox(
+                      SizedBox(
                         height: 60.h,
                       ),
                       amount,
-                       SizedBox(
+                      SizedBox(
                         height: 80.h,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(400, 50),
+                          minimumSize: const Size(300, 50),
                           backgroundColor: brandOne,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
-                              10,
+                              10.r,
                             ),
                           ),
                         ),
@@ -215,13 +208,13 @@ class _FundWalletState extends State<FundWallet> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 100,
+                SizedBox(
+                  height: 100.h,
                 ),
                 (userController.userModel!.userDetails![0].hasDva == true)
                     ? Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 40, horizontal: 40),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 40.h, horizontal: 40.h),
                         decoration: BoxDecoration(
                           color: brandTwo.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(15),
@@ -234,13 +227,13 @@ class _FundWalletState extends State<FundWallet> {
                               'Or use your Virtual Account to Fund your SpaceWallet',
                               style: GoogleFonts.nunito(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height: 20.h,
                             ),
                             Wrap(
                               children: [
@@ -248,31 +241,33 @@ class _FundWalletState extends State<FundWallet> {
                                   'Account Name: ',
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 Text(
                                   userController
                                       .userModel!.userDetails![0].dvaName,
-                                      maxLines: 2,
+                                  maxLines: 2,
                                   style: GoogleFonts.nunito(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600),
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height: 20.h,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   'Account Number: ',
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -280,13 +275,15 @@ class _FundWalletState extends State<FundWallet> {
                                 Text(
                                   userController
                                       .userModel!.userDetails![0].dvaNumber,
+                                  maxLines: 2,
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 14,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
+                                SizedBox(
+                                  width: 10.sp,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -296,47 +293,51 @@ class _FundWalletState extends State<FundWallet> {
                                             .userDetails![0].dvaNumber,
                                       ),
                                     );
+
                                     Fluttertoast.showToast(
-                                      msg:
-                                          "Account Number copied to clipboard!",
+                                      msg: "Copied!!",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: brandOne,
                                       textColor: Colors.white,
-                                      fontSize: 16.0,
+                                      fontSize: 12.0.sp,
                                     );
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.copy_outlined,
-                                    size: 20,
+                                    size: 14.sp,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height: 20.sp,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   'Bank Name: ',
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 Text(
                                   'Providus Bank',
+                                  maxLines: 2,
                                   style: GoogleFonts.nunito(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600),
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 20,
+                             SizedBox(
+                              height: 20.sp,
                             ),
                             Center(
                               child: Text(
@@ -344,7 +345,7 @@ class _FundWalletState extends State<FundWallet> {
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
                                   color: Colors.red,
-                                  fontSize: 12,
+                                  fontSize: 10.sp,
                                 ),
                               ),
                             ),

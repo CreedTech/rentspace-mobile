@@ -1,14 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
+import 'package:rentspace/view/actions/reset_pin.dart';
 import 'package:rentspace/view/actions/transaction_pin.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
@@ -997,7 +1000,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // Get.offAll(const LoginPage());
 
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
             (route) => false);
         return;
       } else {
@@ -1196,7 +1199,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         maskType: EasyLoadingMaskType.black,
         dismissOnTap: true,
       );
-      var response = await authRepository.resendPasswordOtp(mail);
+      var response = await authRepository.resendPinOtp(mail);
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
@@ -1232,5 +1235,123 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       isLoading = false;
     }
+  }
+
+  Future verifyForgotPinOtp(BuildContext context, email, otp) async {
+    print("Fields");
+    print(email);
+    print(otp);
+    isLoading = true;
+    if (otp.isEmpty || otp == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+    Map<String, dynamic> body = {'otp': otp};
+    print("body");
+    print(body);
+    String message;
+    try {
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await authRepository.verifyForgotPinOtp(body);
+      EasyLoading.dismiss();
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Invalid OTP")) {
+        message = "Invalid OTP";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("This otp has expired")) {
+        message = "This otp has expired";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      message = "Oops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    }
+    return;
+  }
+
+  Future setNewPin(BuildContext context, newPin, confirmNewPin) async {
+    print("Fields");
+    print(newPin);
+    print(confirmNewPin);
+    isLoading = true;
+    if (newPin.isEmpty ||
+        newPin == '' ||
+        confirmNewPin.isEmpty ||
+        confirmNewPin == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+    Map<String, dynamic> body = {
+      'newPin': newPin,
+      'confirmNewPin': confirmNewPin
+    };
+    print("body");
+    print(body);
+    String message;
+    try {
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await authRepository.setNewPin(body);
+      EasyLoading.dismiss();
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: Colors.green,
+            message: 'Payment Pin Reset Successful!!',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+        Get.offAll(const FirstPage());
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Wallet not found")) {
+        message = "Wallet not found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("New pin and confirm pin do not match")) {
+        message = "Pin Mismatch error";
+        // Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      message = "Oops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    }
+    return;
   }
 }

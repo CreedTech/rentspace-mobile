@@ -17,6 +17,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/view/FirstPage.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -211,9 +212,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken here');
     print(authToken);
-    // const String bankApiUrl =
-    // 'https://api.watupay.com/v1/country/NG/financial-institutions';
-    // const String bearerToken = 'WTP-L-PK-6a559c833bc54b2698e6a833f107f1e7';
     final response = await http.get(
       Uri.parse(AppConstants.BASE_URL + AppConstants.GET_BANKS_LIST),
       headers: {
@@ -295,17 +293,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     notLoading = true;
     // getCurrentUser();
     getBanksList();
-    //   final String passwordHashed = BCrypt.hashpw(
-    //   '7679',
-    //   BCrypt.gensalt(),
-    // );
-    // var word = "\$2b\$10\$XmGXD6mydlXp8zRdJXcba.Htb3OB1Suo9qJay4P/amCu93MNX.jkS";
-    // print(passwordHashed);
-    //   final bool checkPassword = BCrypt.checkpw(
-    //   '7679',
-    //   "\$2b\$10\$Mj7bACy9tx2bjXzqjChupugfnpSZzPuIkVG1TD3MFgvnL/O.1lLmK",
-    // );
-    //   print(checkPassword);
   }
 
   void _doWallet() async {
@@ -320,8 +307,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       _btnController.stop();
     });
     // var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
-    const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+    // const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
+    // const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
 
     final response = await http.post(
       Uri.parse(AppConstants.BASE_URL + AppConstants.WALLET_WITHDRAWAL),
@@ -342,127 +329,19 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     );
 
     if (response.statusCode == 200) {
-      // await updateLiquidate.add({
-      //   'user_id': userID,
-      //   'date': formattedDate,
-      //   'amount': _amountController.text.trim(),
-      //   'reason': liquidateReason,
-      //   'name': 'SpaceWallet Withdrawal',
-      //   'charges': '20',
-      //   'bank_name': _currentBankName,
-      //   'status': 'success',
-      //   'trans_id': getRandom(10),
-      //   'id': uId,
-      //   'account_number': _accountNumberController.text.trim(),
-      //   'account_name': _bankAccountName,
-      //   'withdrawal_location': "Bank",
-      //   'liquidation_source': "Space Wallet"
-      // }).then((value) async {
-      //   var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-      //   await walletUpdate.doc(userId).update({
-      //     'wallet_balance': (walletController.wallet[0].wallet.mainBalance -
-      //             ((int.tryParse(_amountController.text.trim().toString()))! +
-      //                 20))
-      //         .toString(),
-      //     "activities": FieldValue.arrayUnion(
-      //       [
-      //         "$formattedDate \nBank Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceWallet",
-      //       ],
-      //     ),
-      //   });
-      //   setState(() {
-      //     notLoading = true;
-      //   });
-      //   Get.back();
-      //   showTopSnackBar(
-      //     Overlay.of(context),
-      //     CustomSnackBar.success(
-      //       backgroundColor: brandOne,
-      //       message: 'Wallet withdrawal successful.',
-      //       textStyle: GoogleFonts.nunito(
-      //         fontSize: 14,
-      //         color: Colors.white,
-      //         fontWeight: FontWeight.w700,
-      //       ),
-      //     ),
-      //   );
-
-      // }).catchError((error) {
-      //   setState(() {
-      //     notLoading = true;
-      //   });
-      //   if (context.mounted) {
-      //     showDialog(
-      //         context: context,
-      //         barrierDismissible: false,
-      //         builder: (BuildContext context) {
-      //           return AlertDialog(
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10),
-      //             ),
-      //             title: null,
-      //             elevation: 0,
-      //             content: SizedBox(
-      //               height: 250,
-      //               child: Column(
-      //                 children: [
-      //                   GestureDetector(
-      //                     onTap: () {
-      //                       Navigator.of(context).pop();
-      //                     },
-      //                     child: Align(
-      //                       alignment: Alignment.topRight,
-      //                       child: Container(
-      //                         decoration: BoxDecoration(
-      //                           borderRadius: BorderRadius.circular(30),
-      //                           // color: brandOne,
-      //                         ),
-      //                         child: const Icon(
-      //                           Iconsax.close_circle,
-      //                           color: brandOne,
-      //                           size: 30,
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   const Align(
-      //                     alignment: Alignment.center,
-      //                     child: Icon(
-      //                       Iconsax.warning_24,
-      //                       color: Colors.red,
-      //                       size: 75,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 12,
-      //                   ),
-      //                   Text(
-      //                     'Oops',
-      //                     style: GoogleFonts.nunito(
-      //                       color: Colors.red,
-      //                       fontSize: 28,
-      //                       fontWeight: FontWeight.w800,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 5,
-      //                   ),
-      //                   Text(
-      //                     "Something went wrong, try again later",
-      //                     textAlign: TextAlign.center,
-      //                     style:
-      //                         GoogleFonts.nunito(color: brandOne, fontSize: 18),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 10,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           );
-      //         });
-      //   }
-      // });
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: Colors.green,
+          message: 'Wallet Transfer Successful',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+      Get.offAll(FirstPage());
     } else {
       if (context.mounted) {
         customErrorDialog(context, 'Error', 'Something went wrong');
@@ -485,7 +364,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         return 'enter valid number';
       }
       if (int.tryParse(amountValue)! >
-          walletController.walletModel!.wallet![0].mainBalance - 20) {
+          walletController.walletModel!.wallet![0].mainBalance) {
         return 'you cannot transfer more than your balance';
       }
       return null;
@@ -659,15 +538,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       body: (userController.userModel!.userDetails![0].hasBvn == true)
           ? Stack(
               children: [
-                // Positioned.fill(
-                //   child: Opacity(
-                //     opacity: 0.3,
-                //     child: Image.asset(
-                //       'assets/icons/RentSpace-icon.png',
-                //       fit: BoxFit.cover,
-                //     ),
-                //   ),
-                // ),
                 (notLoading)
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
@@ -676,27 +546,27 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             const SizedBox(
                               height: 30,
                             ),
+                            // Text(
+                            //   "Note that the transfer process will be according to our Terms of use",
+                            //   style: GoogleFonts.nunito(
+                            //     fontSize: 20,
+                            //     color: Theme.of(context).primaryColor,
+                            //     fontWeight: FontWeight.w700,
+                            //   ),
+                            // ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Text(
-                              "Note that the transfer process will be according to our Terms of use",
+                              "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance)}",
                               style: GoogleFonts.nunito(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             SizedBox(
-                              height: 10.h,
-                            ),
-                            Text(
-                              "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance - 20)}",
-                              style: GoogleFonts.nunito(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
+                              height: 30.h,
                             ),
                             Form(
                               key: withdrawFormKey,
@@ -704,23 +574,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.fromLTRB(
-                                  //       0.0, 5, 0.0, 5),
-                                  //   child: Text(
-                                  //     "Why do you want to withdraw?",
-                                  //     style: GoogleFonts.nunito(
-                                  //       fontSize: 16,
-                                  //       //letterSpacing: 2.0,
-                                  //       color: Theme.of(context).primaryColor,
-                                  //       fontWeight: FontWeight.w600,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // reasonOption,
-                                  // const SizedBox(
-                                  //   height: 20,
-                                  // ),
                                   Padding(
                                       padding:
                                           const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -973,22 +826,22 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                     keyboardType:
                                                         TextInputType.number,
                                                   ),
-                                                  const SizedBox(
-                                                    height: 20,
+                                                  SizedBox(
+                                                    height: 20.sp,
                                                   ),
-                                                  Text(
-                                                    '(₦20 charges applied)',
-                                                    style: GoogleFonts.nunito(
-                                                      fontSize: 14,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 40,
+                                                  // Text(
+                                                  //   '(₦20 charges applied)',
+                                                  //   style: GoogleFonts.nunito(
+                                                  //     fontSize: 14,
+                                                  //     color: Theme.of(context)
+                                                  //         .primaryColor,
+                                                  //     fontWeight:
+                                                  //         FontWeight.w700,
+                                                  //   ),
+                                                  //   textAlign: TextAlign.center,
+                                                  // ),
+                                                  SizedBox(
+                                                    height: 40.sp,
                                                   ),
                                                   ElevatedButton(
                                                     style: ElevatedButton
@@ -1051,9 +904,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                         ),
                                       );
                                     } else {
-                                      // Timer(const Duration(seconds: 1), () {
-                                      //   _btnController.stop();
-                                      // });
                                       showDialog(
                                           context: context,
                                           barrierDismissible: false,
@@ -1135,16 +985,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               ),
                                             );
                                           });
-
-                                      // Get.snackbar(
-                                      //   "Invalid",
-                                      //   'Please fill the form properly to proceed',
-                                      //   animationDuration:
-                                      //       const Duration(seconds: 1),
-                                      //   backgroundColor: Colors.red,
-                                      //   colorText: Colors.white,
-                                      //   snackPosition: SnackPosition.BOTTOM,
-                                      // );
                                     }
                                   },
                                   child: Text(

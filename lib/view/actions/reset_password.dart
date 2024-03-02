@@ -238,20 +238,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                   const SizedBox(
                     height: 35,
                   ),
-                  // Align(
-                  //   alignment: Alignment.center,
-                  //   child: Text(
-                  //     'Reset Password',
-                  //     style: GoogleFonts.nunito(
-                  //       color: brandOne,
-                  //       fontWeight: FontWeight.w800,
-                  //       fontSize: 16,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
+             
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(

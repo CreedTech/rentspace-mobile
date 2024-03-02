@@ -172,21 +172,24 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
           child: lockIcon,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         filled: false,

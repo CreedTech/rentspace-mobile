@@ -3,10 +3,13 @@
 class AppConstants {
   static const BASE_URL = 'https://rs-b-production.up.railway.app';
   static const SIGN_UP = '/api/user/create';
-    static const GET_WALLET = '/api/wallet/get-wallet';
+  static const GET_WALLET = '/api/wallet/get-wallet';
+  static const WALLET_TRANSFER = '/api/wallet/wallet-withdrawal';
   static const CREATE_PIN = '/api/wallet/create-pin';
   static const FORGOT_PIN = '/api/wallet/reset-pin';
-    static const RESEND_PIN_OTP = '/api/user/resend-password-otp';
+  static const RESEND_PIN_OTP = '/api/wallet/resend-pinOtp';
+  static const VERIFY_RESET_PIN_OTP = '/api/wallet/verify-otp';
+  static const SET_NEW_PIN_OTP = '/api/wallet/set-pin';
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
   static const LOGOUT = '/api/user/logout';
@@ -33,7 +36,6 @@ class AppConstants {
   static const VERFIY_BVN = '/api/bvn/verify-bvn';
   // static const BVN_DEBIT = '/api/bvn/bvn-debit';
   static const CREATE_DVA = '/api/dva/create-dva';
-
 
   static const BUY_AIRTIME = '/api/buy-airtime';
   static const GET_AIRTIMES = '/api/get-airtimes';

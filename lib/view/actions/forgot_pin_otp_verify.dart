@@ -128,7 +128,7 @@ class _ForgotPinOTPVerificationPageState
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) {
-        authState.verifyForgotPasswordOtp(
+        authState.verifyForgotPinOtp(
           context,
           widget.email,
           otpController.text.trim(),
@@ -244,7 +244,7 @@ class _ForgotPinOTPVerificationPageState
                                     isClicked = true;
                                   });
                                   resetCountdown();
-                                  authState.resendPasswordOtp(
+                                  authState.resendPinOtp(
                                       context, widget.email);
                                 },
                                 child: Text(
@@ -292,7 +292,7 @@ class _ForgotPinOTPVerificationPageState
                   ),
                   onPressed: () {
                     if (otprestpinFormKey.currentState!.validate()) {
-                      authState.verifyForgotPasswordOtp(
+                      authState.verifyForgotPinOtp(
                         context,
                         widget.email,
                         otpController.text.trim(),

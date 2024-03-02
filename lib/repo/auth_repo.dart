@@ -404,7 +404,7 @@ Future<ResponseModel> createPin(body) async {
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
-        AppConstants.RESEND_PASSWORD_OTP, jsonEncode(email));
+        AppConstants.RESEND_PIN_OTP, jsonEncode(email));
     print('response');
     print(response);
     print(response.body);
@@ -417,5 +417,81 @@ Future<ResponseModel> createPin(body) async {
 
     return responseModel = ResponseModel(error, false);
   }
+
+  Future<ResponseModel> verifyForgotPinOtp(body) async {
+    print('Got here in verify forgot pin otp repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.VERIFY_RESET_PIN_OTP, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified', true);
+      return responseModel;
+    }
+    print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+  
+  Future<ResponseModel> setNewPin(body) async {
+    print('Got here in set new pin otp repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.SET_NEW_PIN_OTP, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified', true);
+      return responseModel;
+    }
+    print("Here in set new pin otp repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+  
+  Future<ResponseModel> walletTransfer(body) async {
+    print('Got here in verify forgot pin otp repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken');
+    print(authToken);
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.WALLET_TRANSFER, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified', true);
+      return responseModel;
+    }
+    print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
+    var error = jsonDecode(response.body)['errors'].toString();
+
+    //  print("Here in repo" + response.reasonPhrase.toString());
+    return responseModel = ResponseModel(error, false);
+  }
+
 
 }

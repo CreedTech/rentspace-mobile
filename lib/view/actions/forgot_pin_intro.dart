@@ -189,11 +189,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                   onPressed: () {
                                     if (passwordformKey.currentState!
                                         .validate()) {
-                                      BCrypt.checkpw(
-                                        _passwordController.text.trim(),
-                                        userController.userModel!
-                                            .userDetails![0].password,
-                                      );
+                                     
                                       if (!BCrypt.checkpw(
                                         _passwordController.text.trim(),
                                         userController.userModel!
@@ -211,24 +207,10 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                           userController
                                               .userModel!.userDetails![0].email,
                                         );
-                                       
                                       }
                                     } else {
                                       customErrorDialog(context, "Invalid!",
                                           "Please fill the form properly to proceed");
-                                      // showTopSnackBar(
-                                      //   Overlay.of(context),
-                                      //   CustomSnackBar.error(
-                                      //     // backgroundColor: Colors.red,
-                                      //     message:
-                                      //         'Please fill the form properly to proceed',
-                                      //     textStyle: GoogleFonts.nunito(
-                                      //       fontSize: 14,
-                                      //       color: Colors.white,
-                                      //       fontWeight: FontWeight.w700,
-                                      //     ),
-                                      //   ),
-                                      // );
                                     }
                                   },
                                   child: const Text(

@@ -503,20 +503,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 true)
                             ? Container(
                                 width: 420.w,
-                                height: 210.h,
+                                height: 210.sp,
                                 decoration: BoxDecoration(
                                     color: brandOne,
-                                    // image: DecorationImage(
-                                    //   image: const AssetImage(
-                                    //     "assets/card.jpg",
-                                    //   ),
-                                    //   fit: BoxFit.cover,
-                                    //   colorFilter: ColorFilter.mode(
-                                    //     Colors.white.withOpacity(
-                                    //         0.5), // Adjust the opacity here
-                                    //     BlendMode.darken,
-                                    //   ),
-                                    // ),
                                     borderRadius: BorderRadius.circular(20.sp)),
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 24.h),
@@ -715,318 +704,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   ),
                                 ),
                               )
-
-                            //  FlipCard(
-                            //     front: Neumorphic(
-                            //       style: NeumorphicStyle(
-                            //           shape: NeumorphicShape.flat,
-                            //           boxShape:
-                            //               NeumorphicBoxShape.roundRect(
-                            //                   BorderRadius.circular(12)),
-                            //           depth: 0,
-                            //           lightSource: LightSource.bottomRight,
-                            //           color: Colors.white),
-                            //       child: Container(
-                            //         height: 220,
-                            //         padding: const EdgeInsets.fromLTRB(
-                            //             20.0, 20.0, 20.0, 20.0),
-                            //         decoration: BoxDecoration(
-                            //           color:
-                            //               Theme.of(context).canvasColor,
-                            //           image: const DecorationImage(
-                            //             image:
-                            //                 AssetImage("assets/card.jpg"),
-                            //             fit: BoxFit.cover,
-                            //           ),
-                            //         ),
-                            //         child: Row(
-                            //           mainAxisAlignment:
-                            //               MainAxisAlignment.spaceBetween,
-                            //           children: [
-                            //             Column(
-                            //               crossAxisAlignment:
-                            //                   CrossAxisAlignment.start,
-                            //               children: [
-                            //                 Row(
-                            //                   mainAxisAlignment:
-                            //                       MainAxisAlignment.start,
-                            //                   children: [
-                            //                     Image.asset(
-                            //                       'assets/icons/logo.png',
-                            //                       height: 24,
-                            //                     ),
-                            //                     const SizedBox(
-                            //                       width: 10,
-                            //                     ),
-                            //                     Text(
-                            //                       "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva == true) ? " - DVA" : ""}",
-                            //                       style:
-                            //                           GoogleFonts.nunito(
-                            //                         fontSize: 20.0,
-                            //                         color: Colors.white,
-                            //                         fontWeight: FontWeight.w700
-                            //                       ),
-                            //                     ),
-                            //                   ],
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 5,
-                            //                 ),
-                            //                 Row(
-                            //                   children: [
-                            //                     Text(
-                            //                       (userController
-                            //                                   .userModel!
-                            //                                   .userDetails![
-                            //                                       0]
-                            //                                   .hasDva ==
-                            //                               true)
-                            //                           ? '${userController.userModel!.userDetails![0].dvaNumber.toString().substring(0, 3)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(3, 6)}-${userController.userModel!.userDetails![0].dvaNumber.toString().substring(6, 10)}'
-                            //                           : '${walletController.walletModel!.wallet![0].walletId.substring(0, 3)}-${walletController.walletModel!.wallet![0].walletId.substring(3, 6)}-${walletController.walletModel!.wallet![0].walletId.substring(6, 10)}',
-                            //                       style:
-                            //                           GoogleFonts.nunito(
-                            //                         fontSize: 20.0,
-                            //                         fontWeight:
-                            //                             FontWeight.bold,
-                            //                         color: Colors.white,
-                            //                       ),
-                            //                       textAlign:
-                            //                           TextAlign.center,
-                            //                     ),
-                            //                     const SizedBox(
-                            //                       width: 10,
-                            //                     ),
-                            //                     (userController
-                            //                                 .userModel!
-                            //                                 .userDetails![
-                            //                                     0]
-                            //                                 .hasDva ==
-                            //                             true)
-                            //                         ? InkWell(
-                            //                             onTap: () {
-                            //                               Clipboard
-                            //                                   .setData(
-                            //                                 ClipboardData(
-                            //                                   text: userController
-                            //                                       .userModel!
-                            //                                       .userDetails![
-                            //                                           0]
-                            //                                       .dvaNumber
-                            //                                       .toString(),
-                            //                                 ),
-                            //                               );
-                            //                               Fluttertoast
-                            //                                   .showToast(
-                            //                                 msg:
-                            //                                     "Account Number copied to clipboard!",
-                            //                                 toastLength: Toast
-                            //                                     .LENGTH_SHORT,
-                            //                                 gravity:
-                            //                                     ToastGravity
-                            //                                         .CENTER,
-                            //                                 timeInSecForIosWeb:
-                            //                                     1,
-                            //                                 backgroundColor:
-                            //                                     brandOne,
-                            //                                 textColor:
-                            //                                     Colors
-                            //                                         .white,
-                            //                                 fontSize:
-                            //                                     16.0,
-                            //                               );
-                            //                             },
-                            //                             child: const Icon(
-                            //                               Icons.copy,
-                            //                               size: 16,
-                            //                               color: Colors
-                            //                                   .white,
-                            //                             ),
-                            //                           )
-                            //                         : const SizedBox(),
-                            //                   ],
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 10,
-                            //                 ),
-                            //                 Container(
-                            //                   width: 280,
-                            //                   padding: const EdgeInsets
-                            //                       .fromLTRB(
-                            //                       0.0, 0.0, 0.0, 0.0),
-                            //                   decoration: BoxDecoration(
-                            //                     color: brandFour,
-                            //                     borderRadius:
-                            //                         BorderRadius.circular(
-                            //                             10),
-                            //                   ),
-                            //                   child: Text(
-                            //                     nairaFormaet
-                            //                         .format(
-                            //                             walletController
-                            //                                 .walletModel!
-                            //                                 .wallet![0]
-                            //                                 .mainBalance)
-                            //                         .toString(),
-                            //                     style: GoogleFonts.nunito(
-                            //                       fontSize: 30.0,
-                            //                       fontWeight:
-                            //                           FontWeight.w700,
-                            //                       color: Colors.white,
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 40,
-                            //                 ),
-                            //                 Row(
-                            //                   children: [
-                            //                     Text(
-                            //                       (userController
-                            //                                   .userModel!
-                            //                                   .userDetails![
-                            //                                       0]
-                            //                                   .hasDva ==
-                            //                               false)
-                            //                           ? "${userController.userModel!.userDetails![0].firstName.toUpperCase()} ${userController.userModel!.userDetails![0].lastName.toUpperCase()}"
-                            //                           : userController
-                            //                               .userModel!
-                            //                               .userDetails![0]
-                            //                               .dvaName
-                            //                               .toUpperCase(),
-                            //                       style:
-                            //                           GoogleFonts.nunito(
-                            //                         fontSize: 15.0,
-                            //                         color: Colors.white,
-                            //                       ),
-                            //                       textAlign:
-                            //                           TextAlign.center,
-                            //                     ),
-                            //                   ],
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     back: Neumorphic(
-                            //       style: NeumorphicStyle(
-                            //           shape: NeumorphicShape.concave,
-                            //           boxShape:
-                            //               NeumorphicBoxShape.roundRect(
-                            //                   BorderRadius.circular(
-                            //                       12.sp)),
-                            //           depth: 0,
-                            //           lightSource: LightSource.topLeft,
-                            //           color:
-                            //               Theme.of(context).canvasColor),
-                            //       child: Container(
-                            //         height: 220.h,
-                            //         padding: EdgeInsets.fromLTRB(
-                            //           0.0.w,
-                            //           10.0.h,
-                            //           0.0.w,
-                            //           10.0.h,
-                            //         ),
-                            //         decoration: BoxDecoration(
-                            //           color:
-                            //               Theme.of(context).canvasColor,
-                            //           image: const DecorationImage(
-                            //             image:
-                            //                 AssetImage("assets/card.jpg"),
-                            //             fit: BoxFit.cover,
-                            //           ),
-                            //         ),
-                            //         child: Column(
-                            //           children: [
-                            //             Row(
-                            //               mainAxisAlignment:
-                            //                   MainAxisAlignment.start,
-                            //               children: [
-                            //                 Padding(
-                            //                   padding:
-                            //                       EdgeInsets.fromLTRB(
-                            //                     20.0.w,
-                            //                     10.0.h,
-                            //                     20.0.w,
-                            //                     5.0.h,
-                            //                   ),
-                            //                   child: Text(
-                            //                     "Property of RentSpace",
-                            //                     style: GoogleFonts.nunito(
-                            //                       fontSize: 14.0.sp,
-                            //                       color: Colors.white,
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //             SizedBox(
-                            //               height: 5.h,
-                            //             ),
-                            //             Container(
-                            //               color: Colors.black,
-                            //               height: 40.h,
-                            //             ),
-                            //             Padding(
-                            //               padding: EdgeInsets.fromLTRB(
-                            //                 40.0.w,
-                            //                 20.0.h,
-                            //                 40.0.w,
-                            //                 5.0.h,
-                            //               ),
-                            //               child: Container(
-                            //                 color: Colors.white,
-                            //                 width: MediaQuery.of(context)
-                            //                     .size
-                            //                     .width,
-                            //                 padding: EdgeInsets.fromLTRB(
-                            //                   5.0.w,
-                            //                   4.0.h,
-                            //                   5.0.w,
-                            //                   4.0.h,
-                            //                 ),
-                            //                 child: Text(
-                            //                   (userController
-                            //                               .userModel!
-                            //                               .userDetails![0]
-                            //                               .id !=
-                            //                           "")
-                            //                       ? userController
-                            //                           .userModel!
-                            //                           .userDetails![0]
-                            //                           .id
-                            //                           .substring(0, 3)
-                            //                       : "000",
-                            //                   style: GoogleFonts.nunito(
-                            //                     fontSize: 14.0.sp,
-                            //                     color: Colors.black,
-                            //                   ),
-                            //                   textAlign: TextAlign.end,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //             Padding(
-                            //               padding: EdgeInsets.fromLTRB(
-                            //                 20.0.w,
-                            //                 10.0.h,
-                            //                 20.0.w,
-                            //                 5.0.h,
-                            //               ),
-                            //               child: Text(
-                            //                 "Disclaimer: Space wallet is 'NOT' a bank account and as such, cannot be used as one. With space wallet, you can perform in app transactions including but not limited to utility payment, savings subscription and top-up",
-                            //                 style: GoogleFonts.nunito(
-                            //                   fontSize: 8.0.sp,
-                            //                   color: Colors.white,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   )
-
                             : Container(
                                 width: 420.w,
                                 height: 230.h,
@@ -1431,7 +1108,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(PersonalDetails());
+                                Get.to(const PersonalDetails());
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1547,19 +1224,263 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           height: 1,
                         ),
 
-                  const SizedBox(
-                    height: 20,
+                   SizedBox(
+                    height: 20.h,
                   ),
                   Container(
-                    width: 400,
-                    height: 225,
+                    width: 400.w,
+                    height: 225.sp,
+                    decoration: BoxDecoration(
+                      color: brandOne,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 24.h, horizontal: 24.w),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/iconset/uil_money-withdrawal.png',
+                                width: 30.w,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                'Transfer Your Funds',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 14.h,
+                          ),
+                          Text(
+                            'Your security matters. Transfer with confidence knowing your transactions are encrypted and secure.',
+                            style: GoogleFonts.nunito(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        AlertDialog(
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  30, 30, 30, 20),
+                                          elevation: 0,
+                                          alignment: Alignment.bottomCenter,
+                                          insetPadding: const EdgeInsets.all(0),
+                                          scrollable: true,
+                                          title: null,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              topRight: Radius.circular(30),
+                                            ),
+                                          ),
+                                          content: SizedBox(
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 40.h),
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 15),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .topCenter,
+                                                            child: Text(
+                                                              'Transfer your Secured Funds',
+                                                              style: GoogleFonts
+                                                                  .nunito(
+                                                                color: brandOne,
+                                                                fontSize: 16.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 10),
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(3),
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance >
+                                                                            0)
+                                                                        ?
+                                                                        //  Get.to(
+                                                                        //     TransactionReceipt())
+                                                                        Get.to(
+                                                                            const WalletWithdrawal())
+                                                                        : customErrorDialog(
+                                                                            context,
+                                                                            'Wallet Empty! :)',
+                                                                            'You need to fund your wallet first!',
+                                                                          );
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    minimumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    maximumSize:
+                                                                        const Size(
+                                                                            300,
+                                                                            50),
+                                                                    backgroundColor:
+                                                                        brandOne,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8),
+                                                                    ),
+                                                                    textStyle: const TextStyle(
+                                                                        color:
+                                                                            brandFour,
+                                                                        fontSize:
+                                                                            13),
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      const Icon(
+                                                                          Iconsax
+                                                                              .card),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        "Proceed To Transfer",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontSize:
+                                                                              12.sp,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                height: 49.h,
+                                width: 180.w,
+                                decoration: BoxDecoration(
+                                  color: brandTwo,
+                                  borderRadius: BorderRadius.circular(30.sp),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/iconset/uil_money-withdrawal.png',
+                                      width: 24.w,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      'Transfer Now',
+                                      style: GoogleFonts.nunito(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Container(
+                    width: 400.w,
+                    height: 225.sp,
                     decoration: BoxDecoration(
                       color: brandTwo,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24, horizontal: 24),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 24.h, horizontal: 24.w),
                       child: Column(
                         children: [
                           Row(
@@ -1567,25 +1488,25 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             children: [
                               Image.asset(
                                 'assets/icons/iconset/fundwallet.png',
-                                width: 30,
+                                width: 30.sp,
                                 color: brandOne,
                               ),
-                              const SizedBox(
-                                width: 10,
+                              SizedBox(
+                                width: 10.w,
                               ),
                               Text(
                                 'Top Up Your Wallet',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
                                   color: Colors.white,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w700,
                                 ),
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 14,
+                          SizedBox(
+                            height: 14.h,
                           ),
                           Text(
                             'Top up your wallet for seamless transactions! Add funds now and enjoy a hassle-free experience.',
@@ -1595,8 +1516,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               fontSize: 14.sp,
                             ),
                           ),
-                          const SizedBox(
-                            height: 14,
+                          SizedBox(
+                            height: 20.h,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -1745,8 +1666,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Container(
-                                height: 49,
-                                width: 150,
+                                height: 49.h,
+                                width: 150.w,
                                 decoration: BoxDecoration(
                                   color: brandOne,
                                   borderRadius: BorderRadius.circular(30),
@@ -1756,260 +1677,17 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   children: [
                                     Image.asset(
                                       'assets/icons/iconset/fundwallet.png',
-                                      width: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Fund Now',
-                                      style: GoogleFonts.nunito(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    width: 400.w,
-                    height: 225.sp,
-                    decoration: BoxDecoration(
-                      color: brandOne,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 24.h, horizontal: 24.w),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/iconset/uil_money-withdrawal.png',
-                                width: 30.w,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                'Transfer Your Funds',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
-                                  color: Colors.white,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          Text(
-                            'Your security matters. Transfer with confidence knowing your transactions are encrypted and secure.',
-                            style: GoogleFonts.nunito(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        AlertDialog(
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  30, 30, 30, 20),
-                                          elevation: 0,
-                                          alignment: Alignment.bottomCenter,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          scrollable: true,
-                                          title: null,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              topRight: Radius.circular(30),
-                                            ),
-                                          ),
-                                          content: SizedBox(
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 40.h),
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 15),
-                                                          child: Align(
-                                                            alignment: Alignment
-                                                                .topCenter,
-                                                            child: Text(
-                                                              'Transfer your Secured Funds',
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                color: brandOne,
-                                                                fontSize: 16.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 10),
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(3),
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance >
-                                                                            0)
-                                                                        ?
-                                                                        //  Get.to(
-                                                                        //     TransactionReceipt())
-                                                                        Get.to(
-                                                                            const WalletWithdrawal())
-                                                                        : customErrorDialog(
-                                                                            context,
-                                                                            'Wallet Empty! :)',
-                                                                            'You need to fund your wallet first!',
-                                                                          );
-                                                                  },
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    minimumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    maximumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    backgroundColor:
-                                                                        brandOne,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                    ),
-                                                                    textStyle: const TextStyle(
-                                                                        color:
-                                                                            brandFour,
-                                                                        fontSize:
-                                                                            13),
-                                                                  ),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      const Icon(
-                                                                          Iconsax
-                                                                              .card),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        "Proceed To Transfer",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize:
-                                                                              10.sp,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                height: 49.h,
-                                width: 180.w,
-                                decoration: BoxDecoration(
-                                  color: brandTwo,
-                                  borderRadius: BorderRadius.circular(30.sp),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/iconset/uil_money-withdrawal.png',
-                                      width: 24.w,
+                                      width: 20.sp,
                                     ),
                                     SizedBox(
                                       width: 10.w,
                                     ),
                                     Text(
-                                      'Transfer Now',
+                                      'Fund Now',
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     )
                                   ],
