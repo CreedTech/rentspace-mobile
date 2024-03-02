@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:rentspace/controller/rent_controller.dart';
+
+import '../../../controller/rent/rent_controller.dart';
 
 class SpaceRentHistory extends StatefulWidget {
   int current;
@@ -57,7 +59,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
     super.initState();
     doSomeThing();
     setState(() {
-      _payments = rentController.rent[0].history.reversed.toList();
+      _payments =
+          rentController.rentModel!.rents![widget.current].rentHistories;
     });
   }
 
@@ -89,22 +92,23 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            rentController.rent[widget.current].history.isEmpty
+            rentController
+                    .rentModel!.rents![widget.current].rentHistories.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/card_empty.png',
-                        height: 500,
+                        height: 500.h,
                       ),
                       Center(
                         child: Text(
-                          "Nothing to show",
+                          "No Space Rent Transactions",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16.sp,
                             color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -121,73 +125,39 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                         child: ListTile(
                           leading: Container(
                             padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Theme.of(context).cardColor,
+                              color: brandOne,
                             ),
                             child: Image.asset(
                               "assets/icons/savings/spacerent.png",
                               height: 20,
                               width: 20,
-                              color: brandOne,
+                              color: Colors.white,
                             ),
                           ),
                           title: Text(
-                            'Space Rent Saving',
+                            _payments[index]['message'],
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           subtitle: Text(
-                            // _payments[index]
-                            //     .split(" ")[0]
-                            //     .substring(0,
-                            //         _payments[index].split(" ")[0].length - 3)
-                            // _formatTime(_formatedTime(_payments[index]
-                            //     .split(" ")[0]
-                            //     .substring(0,
-                            //         _payments[index].split(" ")[0].length - 3))
-                            // DateTime.parse(_payments[index]
-                            //   .split(" ")[0]
-                            //   .substring(0,
-                            //       _payments[index].split(" ")[0].length - 3)))
-                            // DateFormat.yMMMMd().add_jm().format(
-                            //       DateTime.parse((_payments[index]
-                            //           .split(" ")[0]
-                            //           .substring(
-                            //               0,
-                            //               _payments[index]
-                            //                       .split(" ")[0]
-                            //                       .length -
-                            //                   3)).toString()),
-                            //     )
-                            // _payments[index]
-                            _formatTime(DateTime.parse((_payments[index]
-                                    .split(" ")[0]
-                                    .substring(
-                                        0,
-                                        _payments[index].split(" ")[0].length -
-                                            4))))
-                                .toString(),
+                            _formatTime(DateTime.parse(
+                                (_payments[index]['createdAt']))),
                             style: GoogleFonts.nunito(
-                              color: brandTwo,
-                              fontSize: 12,
+                              color: brandOne,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          // onTap: () {
-                          //   Get.to(
-                          //       CustomTransactionDetailsCard(current: index));
-                          //   // Navigator.pushNamed(context, RouteList.profile);
-                          // },
                           trailing: Text(
-                            '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}',
-                            // '+ ${_payments[index].split(" ").last}',
+                            '+ ₦${_payments[index]['amount'].toString()}',
                             style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
+                              color: Colors.green,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -216,7 +186,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
       return 'just now';
     }
   }
-   String extractAmount(String input) {
+
+  String extractAmount(String input) {
     final nairaIndex = input.indexOf('₦');
     if (nairaIndex != -1 && nairaIndex < input.length - 1) {
       return input.substring(nairaIndex + 1).trim();

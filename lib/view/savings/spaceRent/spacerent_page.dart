@@ -58,7 +58,22 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
   }
 
   String formatDate(DateTime date) {
+    print(date);
+    print(DateFormat('dd/MM/yyyy').format(date));
     return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  DateTime calculateNextPaymentDateUpdate(
+      DateTime lastPaymentDate, String interval) {
+    // Calculate the next payment date based on the interval
+    DateTime nextPaymentDate;
+    if (interval == 'weekly') {
+      nextPaymentDate = lastPaymentDate.add(const Duration(days: 7));
+    } else {
+      // Assuming monthly intervals, you can adjust this logic as needed
+      nextPaymentDate = lastPaymentDate.add(const Duration(days: 30));
+    }
+    return nextPaymentDate;
   }
 
   DateTime calculateNextPaymentDate(
@@ -67,9 +82,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
     DateTime nextPaymentDate;
 
     switch (interval.toLowerCase()) {
-      case 'daily':
-        nextPaymentDate = chosenDate.add(const Duration(days: 1));
-        break;
+      // case 'daily':
+      //   nextPaymentDate = chosenDate.add(const Duration(days: 1));
+      //   break;
       case 'weekly':
         nextPaymentDate = chosenDate.add(const Duration(days: 7));
         break;
@@ -96,6 +111,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
   Widget build(BuildContext context) {
     String chosenDateString =
         rentController.rentModel!.rents![widget.current].date;
+    print(chosenDateString);
     String interval = rentController.rentModel!.rents![widget.current].interval;
     int numberOfIntervals = int.parse(
         rentController.rentModel!.rents![widget.current].paymentCount);
@@ -115,7 +131,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
     return Scaffold(
       appBar: AppBar(
         // toolbarHeight: 105.0,
-        backgroundColor: ((rentController.rentModel!.rents![widget.current].paidAmount) !=
+        backgroundColor: ((rentController
+                    .rentModel!.rents![widget.current].paidAmount) !=
                 (rentController.rentModel!.rents![widget.current].amount * 0.7))
             ? Theme.of(context).primaryColorLight
             : Theme.of(context).canvasColor,
@@ -127,8 +144,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           child: Icon(
             Icons.arrow_back,
             size: 30,
-            color: ((rentController.rentModel!.rents![widget.current].paidAmount) !=
-                    (rentController.rentModel!.rents![widget.current].amount * 0.7))
+            color: ((rentController
+                        .rentModel!.rents![widget.current].paidAmount) !=
+                    (rentController.rentModel!.rents![widget.current].amount *
+                        0.7))
                 ? Colors.white
                 : Theme.of(context).primaryColor,
           ),
@@ -137,8 +156,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         title: Text(
           'Space Rent',
           style: GoogleFonts.nunito(
-            color: ((rentController.rentModel!.rents![widget.current].paidAmount) !=
-                    (rentController.rentModel!.rents![widget.current].amount * 0.7))
+            color: ((rentController
+                        .rentModel!.rents![widget.current].paidAmount) !=
+                    (rentController.rentModel!.rents![widget.current].amount *
+                        0.7))
                 ? Colors.white
                 : Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
@@ -149,7 +170,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       //
       body: Obx(
         () => ((rentController.rentModel!.rents![widget.current].paidAmount) !=
-                (rentController.rentModel!.rents![widget.current].amount.obs * 0.7))
+                (rentController.rentModel!.rents![widget.current].amount.obs *
+                    0.7))
             ? SingleChildScrollView(
                 child: Column(
                   children: [
@@ -190,8 +212,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 ),
                                 Text(
                                   nairaFormaet
-                                      .format(rentController
-                                          .rentModel!.rents![widget.current].amount)
+                                      .format(rentController.rentModel!
+                                          .rents![widget.current].amount)
                                       .toString(),
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
@@ -224,10 +246,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 //     color: brandOne,
                                 //   ),
                                 // ),
-                                percent: ((rentController
-                                            .rentModel!.rents![widget.current].paidAmount /
-                                        rentController
-                                            .rentModel!.rents![widget.current].amount))
+                                percent: ((rentController.rentModel!
+                                            .rents![widget.current].paidAmount /
+                                        rentController.rentModel!
+                                            .rents![widget.current].amount))
                                     .toDouble(),
                                 animation: true,
                                 barRadius: const Radius.circular(10.0),
@@ -251,7 +273,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 Text(
                                   nairaFormaet
                                       .format(rentController
-                                          .rentModel!.rents![widget.current].intervalAmount)
+                                          .rentModel!
+                                          .rents![widget.current]
+                                          .intervalAmount)
                                       .toString(),
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
@@ -273,11 +297,12 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   ),
                                 ),
                                 Text(
-                                  rentController.rentModel!.rents![widget.current].interval
+                                  rentController.rentModel!
+                                          .rents![widget.current].interval
                                           .substring(0, 1)
                                           .toUpperCase() +
-                                      rentController
-                                          .rentModel!.rents![widget.current].interval
+                                      rentController.rentModel!
+                                          .rents![widget.current].interval
                                           .substring(1),
                                   // intl.capitalizedFirst(rentController.rentModel!.rents![widget.current].interval),
                                   style: GoogleFonts.nunito(
@@ -337,11 +362,13 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                 nairaFormaet
                                                     .format(rentController
                                                             .rentModel!
-                                                            .rents![widget.current]
+                                                            .rents![
+                                                                widget.current]
                                                             .amount -
                                                         (rentController
                                                                 .rentModel!
-                                                                .rents![widget.current]
+                                                                .rents![widget
+                                                                    .current]
                                                                 .amount *
                                                             0.7))
                                                     .toString(),
@@ -422,7 +449,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   ),
                                 ),
                                 Text(
-                                  formattedNextDate.toString(),
+                                  rentController.rentModel!
+                                      .rents![widget.current].nextDate,
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -447,10 +475,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          left: 20,
+                          left: 10,
                           top: 20,
                           bottom: 5,
-                          right: 20,
+                          right: 10,
                         ),
                         child: Container(
                           decoration: BoxDecoration(
@@ -472,7 +500,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       'Savings History',
                                       textAlign: TextAlign.left,
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.0.sp,
                                         fontWeight: FontWeight.w700,
                                         color: Theme.of(context).primaryColor,
                                       ),
@@ -481,13 +509,13 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       onTap: () {
                                         // print(int.parse(rentController.rentModel!.rents![widget.current].id));
                                         Get.to(SpaceRentHistory(
-                                          current: 0,
+                                          current: widget.current,
                                         ));
                                       },
                                       child: Text(
                                         "See All",
                                         style: GoogleFonts.nunito(
-                                          fontSize: 12.0,
+                                          fontSize: 12.0.sp,
                                           fontWeight: FontWeight.w700,
                                           color: Theme.of(context).primaryColor,
                                           // decoration: TextDecoration.underline,
@@ -497,137 +525,102 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   ],
                                 ),
                               ),
-                              // rentController.rentModel!.rents![widget.current].history.isEmpty
-                              //     ? Column(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.center,
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.stretch,
-                              //         children: [
-                              //           Image.asset(
-                              //             'assets/card_empty.png',
-                              //             height: 200,
-                              //           ),
-                              //           Center(
-                              //             child: Text(
-                              //               "Nothing to show",
-                              //               style: GoogleFonts.nunito(
-                              //                 fontSize: 20,
-                              //                 color: Theme.of(context)
-                              //                     .primaryColor,
-                              //                 fontWeight: FontWeight.bold,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       )
-                              //     : Expanded(
-                              //         child: ListView.builder(
-                              //           scrollDirection: Axis.vertical,
-                              //           shrinkWrap: true,
-                              //           physics: const ClampingScrollPhysics(),
-                              //           itemCount: rentController
-                              //               .rentModel!.rents![widget.current].history.reversed
-                              //               .toList()
-                              //               .length,
-                              //           itemBuilder:
-                              //               (BuildContext context, int index) {
-                              //             // DateTime targetDate = DateTime.parse(
-                              //             //     rentController.rentModel!.rents![widget.current].history.reversed
-                              //             //         .toList()[index]
-                              //             //         .split(" ")[0]);
-                              //             // String formattedTimeAgo = timeago
-                              //             //     .format(targetDate, locale: 'en');
+                              rentController.rentModel!.rents![widget.current]
+                                      .rentHistories.isEmpty
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Image.asset(
+                                          'assets/card_empty.png',
+                                          height: 200,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            "Nothing to show",
+                                            style: GoogleFonts.nunito(
+                                              fontSize: 20,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Expanded(
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        physics: const ClampingScrollPhysics(),
+                                        itemCount: rentController
+                                            .rentModel!
+                                            .rents![widget.current]
+                                            .rentHistories
+                                            .length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          final history = rentController
+                                              .rentModel!
+                                              .rents![widget.current]
+                                              .rentHistories[index];
 
-                              //             // // If the difference is more than 24 hours, convert to days
-                              //             // if (DateTime.now()
-                              //             //         .difference(targetDate)
-                              //             //         .inHours >
-                              //             //     24) {
-                              //             //   int daysAgo = DateTime.now()
-                              //             //       .difference(targetDate)
-                              //             //       .inDays;
-                              //             //   formattedTimeAgo =
-                              //             //       '$daysAgo ${daysAgo == 1 ? 'day' : 'days'} ago';
-                              //             // }
-                              //             return Padding(
-                              //               padding: const EdgeInsets.symmetric(
-                              //                   vertical: 7),
-                              //               child: ListTile(
-                              //                 leading: Container(
-                              //                   padding:
-                              //                       const EdgeInsets.all(12),
-                              //                   decoration: BoxDecoration(
-                              //                     shape: BoxShape.circle,
-                              //                     color: Theme.of(context)
-                              //                         .primaryColor,
-                              //                   ),
-                              //                   child: Icon(
-                              //                     Icons.arrow_outward_sharp,
-                              //                     color: Theme.of(context)
-                              //                         .colorScheme
-                              //                         .primary,
-                              //                   ),
-                              //                 ),
-                              //                 title: Text(
-                              //                   'Space Rent Saving',
-                              //                   style: GoogleFonts.nunito(
-                              //                     color: Theme.of(context)
-                              //                         .primaryColor,
-                              //                     fontSize: 17,
-                              //                     fontWeight: FontWeight.w600,
-                              //                   ),
-                              //                 ),
-                              //                 subtitle: Text(
-                              //                   _formatTime(DateTime.parse(
-                              //                           (rentController.rentModel!.rents![widget.current]
-                              //                               .history.reversed
-                              //                               .toList()[index]
-                              //                               .split(" ")[0]
-                              //                               .substring(
-                              //                                   0,
-                              //                                   rentController
-                              //                                           .rentModel!.rents![widget.current]
-                              //                                           .history
-                              //                                           .reversed
-                              //                                           .toList()[
-                              //                                               index]
-                              //                                           .split(
-                              //                                               " ")[0]
-                              //                                           .length -
-                              //                                       4))))
-                              //                       .toString(),
-                              //                   style: GoogleFonts.nunito(
-                              //                     color: brandTwo,
-                              //                     fontSize: 12,
-                              //                     fontWeight: FontWeight.w400,
-                              //                   ),
-                              //                 ),
-                              //                 // onTap: () {
-                              //                 //   Get.to(
-                              //                 //       CustomTransactionDetailsCard(current: index));
-                              //                 //   // Navigator.pushNamed(context, RouteList.profile);
-                              //                 // },
-                              //                 trailing: Text(
-                              //                   '+ ₦${extractAmount(rentController.rentModel!.rents![widget.current].history.reversed.toList()[index])}'
-                              //                   // rentController
-                              //                   //     .rentModel!.rents![widget.current].history.reversed
-                              //                   //     .toList()[index]
-                              //                   //     .split(" ")
-                              //                   //     .last
-                              //                   ,
-                              //                   style: GoogleFonts.nunito(
-                              //                     color: Theme.of(context)
-                              //                         .primaryColor,
-                              //                     fontSize: 16,
-                              //                     fontWeight: FontWeight.w600,
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //             );
-                              //           },
-                              //         ),
-                              //       ),
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 7),
+                                            child: ListTile(
+                                              leading: Container(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: brandOne,
+                                                ),
+                                                child: Image.asset(
+                                                  "assets/icons/savings/spacerent.png",
+                                                  height: 20,
+                                                  width: 20,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              title: Text(
+                                                history['message'],
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontSize: 13.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                _formatTime(DateTime.parse(
+                                                    history['createdAt'])),
+                                                style: GoogleFonts.nunito(
+                                                  color: brandOne,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              // onTap: () {
+                                              //   Get.to(
+                                              //       CustomTransactionDetailsCard(current: index));
+                                              //   // Navigator.pushNamed(context, RouteList.profile);
+                                              // },
+                                              trailing: Text(
+                                                '+ ₦${history['amount'].toString()}',
+                                                style: GoogleFonts.nunito(
+                                                  color: Colors.green,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
                             ],
                           ),
                         ),
@@ -669,8 +662,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                   ),
                   Text(
                     nairaFormaet
-                        .format(rentController.rentModel!.rents![widget.current].amount -
-                            (rentController.rentModel!.rents![widget.current].amount * 0.7))
+                        .format(rentController
+                                .rentModel!.rents![widget.current].amount -
+                            (rentController
+                                    .rentModel!.rents![widget.current].amount *
+                                0.7))
                         .toString(),
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.nunito(
@@ -714,7 +710,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
               ),
       ),
 
-      backgroundColor: ((rentController.rentModel!.rents![widget.current].paidAmount) !=
+      backgroundColor: ((rentController
+                  .rentModel!.rents![widget.current].paidAmount) !=
               (rentController.rentModel!.rents![widget.current].amount * 0.7))
           ? Theme.of(context).primaryColorLight
           : Theme.of(context).canvasColor,

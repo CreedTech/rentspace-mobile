@@ -83,10 +83,18 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
                       child: ListTile(
-                        leading: Icon(
-                          Icons.outbond,
-                          size: 40,
-                          color: Theme.of(context).primaryColor,
+                        leading: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: Image.asset(
+                            "assets/icons/savings/spacerent.png",
+                            height: 20,
+                            width: 20,
+                            color: brandOne,
+                          ),
                         ),
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

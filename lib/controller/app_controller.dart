@@ -40,21 +40,20 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   AppController(this.appRepository) : super(const AsyncLoading());
 
   Future createRent(BuildContext context, rentName, dueDate, interval,
-      intervalAmount, amount, paymentCount) async {
+      intervalAmount, amount, paymentCount, date) async {
     isLoading = true;
     if (rentName.isEmpty ||
-            rentName == '' ||
-            dueDate.isEmpty ||
-            dueDate == '' ||
-            interval.isEmpty ||
-            interval == '' ||
-            intervalAmount == '' ||
-            amount == '' ||
-            paymentCount.isEmpty ||
-            paymentCount == ''
-        // paymentType.isEmpty ||
-        // paymentType == ''
-        ) {
+        rentName == '' ||
+        dueDate.isEmpty ||
+        dueDate == '' ||
+        interval.isEmpty ||
+        interval == '' ||
+        intervalAmount == '' ||
+        amount == '' ||
+        paymentCount.isEmpty ||
+        paymentCount == '' ||
+        date.isEmpty ||
+        date == '') {
       customErrorDialog(
           context, 'Error', 'Please fill in the required fields!!');
       return;
@@ -66,7 +65,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'interval_amount': intervalAmount,
       'amount': amount,
       'payment_count': paymentCount,
-      // 'payment_type': paymentType,
+      'date': date,
     };
     print('params');
     print(params);
@@ -199,7 +198,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           showTopSnackBar(
             Overlay.of(context),
             CustomSnackBar.success(
-              backgroundColor: brandOne,
+              backgroundColor: Colors.green,
               message: 'Space Rent Successfully!!',
               textStyle: GoogleFonts.nunito(
                 fontSize: 14,
@@ -208,7 +207,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
               ),
             ),
           );
-          walletDebit(context, intervalAmount, amount, rentspaceId);
+          walletDebit(context, intervalAmount, amount, rentspaceId, date,interval);
         }
         // if (paymentType == "Debit Card") {
         //   Get.to(
@@ -270,7 +269,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future walletDebit(
-      BuildContext context, intervalAmount, amount, rentspaceId) async {
+      BuildContext context, intervalAmount, amount, rentspaceId, date,interval) async {
     isLoading = true;
     // if (bvn.isEmpty || bvn == '') {
     //   customErrorDialog(context, 'Error', 'Please input your bvn!!');
@@ -280,6 +279,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'rentspaceId': rentspaceId,
       'interval_amount': intervalAmount,
       'amount': amount,
+      'date': date,
+      'interval':interval
     };
     print('params');
     print(params);
@@ -301,7 +302,102 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         Get.back();
         Get.back();
         // Get.back();
-        Get.to(RentSpaceList());
+        Get.to(const RentSpaceList());
+        // calculateNextPaymentDate(context, date, interval);
+        // Get.to(const RentSpaceList());
+
+        // Get.offAll(const FirstPage())!.then((value) => showTopSnackBar(
+        //       Overlay.of(context),
+        //       CustomSnackBar.success(
+        //         backgroundColor: brandOne,
+        //         message: 'Space Rent Successfully!!',
+        //         textStyle: GoogleFonts.nunito(
+        //           fontSize: 14,
+        //           color: Colors.white,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ));
+
+        // redirectingAlert(context, '🎉 Congratulations! 🎉',
+        //     'Your pin has been successfully set.');
+        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   RouteList.enable_user_notification,
+        //   (route) => false,
+        // );
+        return;
+      } else {
+        print('response.message.toString()');
+        print(response.message.toString());
+      }
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("Rent not found")) {
+        EasyLoading.dismiss();
+        message = "Space Rent Not Found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        EasyLoading.dismiss();
+        // to capture other errors later
+        print('response again');
+        print(response.success);
+        print(response.message);
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      print('wallet');
+      print(e);
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future calculateNextPaymentDate(BuildContext context, date, interval) async {
+    isLoading = true;
+    // if (bvn.isEmpty || bvn == '') {
+    //   customErrorDialog(context, 'Error', 'Please input your bvn!!');
+    //   return;
+    // }
+    Map<String, dynamic> params = {
+      'date': date,
+      'interval': interval,
+    };
+    print('params');
+    print(params);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: true,
+      );
+      var response = await appRepository.calculateNextPaymentDate(params);
+      EasyLoading.dismiss();
+      state = const AsyncData(false);
+      print(response.message.toString());
+      if (response.success) {
+        EasyLoading.dismiss();
+        Get.back();
+        Get.back();
+        // Get.back();
+        Get.to(const RentSpaceList());
 
         // Get.offAll(const FirstPage())!.then((value) => showTopSnackBar(
         //       Overlay.of(context),

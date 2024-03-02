@@ -76,6 +76,35 @@ class AppRepository {
     }
   }
 
+  Future<ResponseModel> calculateNextPaymentDate(body) async {
+    ResponseModel responseModel;
+
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.CALCULATE_NEXT_PAYMENT_DATE, jsonEncode(body));
+    print("response");
+    print(response.body);
+    if (response.statusCode == 200) {
+      responseModel =
+          ResponseModel("Next Payment Date Calculated successful", true);
+      return responseModel;
+    }
+
+    print("Here in repo${jsonDecode(response.body)}");
+
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
   // Future<ResponseModel> verifyBVN(body) async {
   //   ResponseModel responseModel;
 

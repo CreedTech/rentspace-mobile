@@ -1002,14 +1002,13 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemCount: (userController
-                                      .userModel!.userDetails![0].activities
-                                      .obs()
-                                      .length <
-                                  2)
+                                  .userModel!.userDetails![0].activities
+                                  .obs()
+                                  .isEmpty)
                               ? userController.userModel!.userDetails![0]
                                       .activities.length -
                                   1
-                              : 2,
+                              : 1,
                           itemBuilder: (BuildContext context, int index) {
                             int reversedIndex = userController
                                     .userModel!.userDetails![0].activities
@@ -1224,7 +1223,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           height: 1,
                         ),
 
-                   SizedBox(
+                  SizedBox(
                     height: 20.h,
                   ),
                   Container(

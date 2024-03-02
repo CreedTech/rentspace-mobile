@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/app_constants.dart';
@@ -171,170 +172,179 @@ class _WalletFundingState extends State<WalletFunding> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              (cardCvv == '' || cardDigit == '' || cardExpire == '')
-                  ? customErrorDialog(context, 'Card not found!',
-                      "You need to add a card to suggest details during in-app payment.")
-                  : Get.bottomSheet(
-                      SizedBox(
-                        height: 180,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0),
-                          ),
-                          child: Container(
-                            color: Theme.of(context).canvasColor,
-                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Text(
-                                  'Copy card details',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GFButton(
-                                      onPressed: (() {
-                                        Clipboard.setData(
-                                          ClipboardData(
-                                            text: cardDigit,
-                                          ),
-                                        );
-                                        Get.back();
-                                        Fluttertoast.showToast(
-                                          msg:
-                                              "Card digits copied to clipboard!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: brandOne,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      }),
-                                      color: Colors.cyan,
-                                      text: "Digits",
-                                      icon: const Icon(
-                                        Icons.copy_outlined,
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 4, 10, 4),
-                                      shape: GFButtonShape.pills,
-                                      size: 26,
-                                    ),
-                                    GFButton(
-                                      onPressed: (() {
-                                        Clipboard.setData(
-                                          ClipboardData(
-                                            text: cardCvv,
-                                          ),
-                                        );
-                                        Get.back();
-                                        Fluttertoast.showToast(
-                                          msg: "Card cvv copied to clipboard!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: brandOne,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      }),
-                                      color: Colors.pink,
-                                      text: "cvv",
-                                      icon: const Icon(
-                                        Icons.copy_outlined,
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 4, 10, 4),
-                                      shape: GFButtonShape.pills,
-                                      size: 26,
-                                    ),
-                                    GFButton(
-                                      onPressed: (() {
-                                        Clipboard.setData(
-                                          ClipboardData(
-                                            text: cardExpire,
-                                          ),
-                                        );
-                                        Get.back();
-                                        Fluttertoast.showToast(
-                                          msg:
-                                              "Card expiry date copied to clipboard!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: brandOne,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      }),
-                                      color: Colors.amber,
-                                      text: "Expiry date",
-                                      icon: const Icon(
-                                        Icons.copy_outlined,
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 4, 10, 4),
-                                      shape: GFButtonShape.pills,
-                                      size: 26,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-            },
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 2, 10, 2),
-              child: Row(
-                children: [
-                  Text(
-                    "Copy card details",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontFamily: "DefaultFontFamily",
-                      letterSpacing: 0.5,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Icon(
-                    Icons.copy_outlined,
-                    size: 30,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ],
-              ),
-            ),
+        title: Text(
+          'Top Up With Card',
+          style: GoogleFonts.nunito(
+            color: Theme.of(context).primaryColor,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
           ),
-        ],
+        ),
+        // actions: [
+        //   GestureDetector(
+        //     onTap: () {
+        //       (cardCvv == '' || cardDigit == '' || cardExpire == '')
+        //           ? customErrorDialog(context, 'Card not found!',
+        //               "You need to add a card to suggest details during in-app payment.")
+        //           : Get.bottomSheet(
+        //               SizedBox(
+        //                 height: 180,
+        //                 child: ClipRRect(
+        //                   borderRadius: const BorderRadius.only(
+        //                     topLeft: Radius.circular(30.0),
+        //                     topRight: Radius.circular(30.0),
+        //                   ),
+        //                   child: Container(
+        //                     color: Theme.of(context).canvasColor,
+        //                     padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+        //                     child: Column(
+        //                       children: [
+        //                         const SizedBox(
+        //                           height: 40,
+        //                         ),
+        //                         Text(
+        //                           'Copy card details',
+        //                           style: TextStyle(
+        //                             fontSize: 14,
+        //                             color: Theme.of(context).primaryColor,
+        //                           ),
+        //                         ),
+        //                         const SizedBox(
+        //                           height: 10,
+        //                         ),
+        //                         Row(
+        //                           mainAxisAlignment:
+        //                               MainAxisAlignment.spaceBetween,
+        //                           children: [
+        //                             GFButton(
+        //                               onPressed: (() {
+        //                                 Clipboard.setData(
+        //                                   ClipboardData(
+        //                                     text: cardDigit,
+        //                                   ),
+        //                                 );
+        //                                 Get.back();
+        //                                 Fluttertoast.showToast(
+        //                                   msg:
+        //                                       "Card digits copied to clipboard!",
+        //                                   toastLength: Toast.LENGTH_SHORT,
+        //                                   gravity: ToastGravity.BOTTOM,
+        //                                   timeInSecForIosWeb: 1,
+        //                                   backgroundColor: brandOne,
+        //                                   textColor: Colors.white,
+        //                                   fontSize: 16.0,
+        //                                 );
+        //                               }),
+        //                               color: Colors.cyan,
+        //                               text: "Digits",
+        //                               icon: const Icon(
+        //                                 Icons.copy_outlined,
+        //                                 color: Colors.white,
+        //                                 size: 12,
+        //                               ),
+        //                               padding: const EdgeInsets.fromLTRB(
+        //                                   10, 4, 10, 4),
+        //                               shape: GFButtonShape.pills,
+        //                               size: 26,
+        //                             ),
+        //                             GFButton(
+        //                               onPressed: (() {
+        //                                 Clipboard.setData(
+        //                                   ClipboardData(
+        //                                     text: cardCvv,
+        //                                   ),
+        //                                 );
+        //                                 Get.back();
+        //                                 Fluttertoast.showToast(
+        //                                   msg: "Card cvv copied to clipboard!",
+        //                                   toastLength: Toast.LENGTH_SHORT,
+        //                                   gravity: ToastGravity.CENTER,
+        //                                   timeInSecForIosWeb: 1,
+        //                                   backgroundColor: brandOne,
+        //                                   textColor: Colors.white,
+        //                                   fontSize: 16.0,
+        //                                 );
+        //                               }),
+        //                               color: Colors.pink,
+        //                               text: "cvv",
+        //                               icon: const Icon(
+        //                                 Icons.copy_outlined,
+        //                                 color: Colors.white,
+        //                                 size: 12,
+        //                               ),
+        //                               padding: const EdgeInsets.fromLTRB(
+        //                                   10, 4, 10, 4),
+        //                               shape: GFButtonShape.pills,
+        //                               size: 26,
+        //                             ),
+        //                             GFButton(
+        //                               onPressed: (() {
+        //                                 Clipboard.setData(
+        //                                   ClipboardData(
+        //                                     text: cardExpire,
+        //                                   ),
+        //                                 );
+        //                                 Get.back();
+        //                                 Fluttertoast.showToast(
+        //                                   msg:
+        //                                       "Card expiry date copied to clipboard!",
+        //                                   toastLength: Toast.LENGTH_SHORT,
+        //                                   gravity: ToastGravity.CENTER,
+        //                                   timeInSecForIosWeb: 1,
+        //                                   backgroundColor: brandOne,
+        //                                   textColor: Colors.white,
+        //                                   fontSize: 16.0,
+        //                                 );
+        //                               }),
+        //                               color: Colors.amber,
+        //                               text: "Expiry date",
+        //                               icon: const Icon(
+        //                                 Icons.copy_outlined,
+        //                                 color: Colors.white,
+        //                                 size: 12,
+        //                               ),
+        //                               padding: const EdgeInsets.fromLTRB(
+        //                                   10, 4, 10, 4),
+        //                               shape: GFButtonShape.pills,
+        //                               size: 26,
+        //                             ),
+        //                           ],
+        //                         ),
+        //                         const SizedBox(
+        //                           height: 40,
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //             );
+        //     },
+        //     child: Padding(
+        //       padding: const EdgeInsets.fromLTRB(10.0, 2, 10, 2),
+        //       child: Row(
+        //         children: [
+        //           Text(
+        //             "Copy card details",
+        //             style: TextStyle(
+        //               fontSize: 20.0,
+        //               fontFamily: "DefaultFontFamily",
+        //               letterSpacing: 0.5,
+        //               color: Theme.of(context).primaryColor,
+        //             ),
+        //           ),
+        //           const SizedBox(width: 5),
+        //           Icon(
+        //             Icons.copy_outlined,
+        //             size: 30,
+        //             color: Theme.of(context).primaryColor,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ],
+      
       ),
       body: (!hasDoneWebview && !hasCreatedPayment)
           ? Column(

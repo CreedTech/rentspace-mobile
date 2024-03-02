@@ -838,6 +838,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 print(durationType);
                                                 print(_savingValue);
                                                 print(paymentCount);
+                                                print(DateFormat('dd/MM/yyyy')
+                                                    .format(DateTime.now()));
                                                 // print(fundingController.text);
                                                 print(_rentValue);
                                                 print(durationType);
@@ -848,7 +850,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                     durationType,
                                                     _savingValue,
                                                     _rentValue,
-                                                    paymentCount
+                                                    paymentCount,
+                                                   DateFormat('dd/MM/yyyy')
+                                                    .format(DateTime.now()),
                                                     // fundingController.text,
                                                     );
 
@@ -897,7 +901,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                         customErrorDialog(context, "Invalid",
                             "Please Fill All Required Fields");
                       }
-
                     },
                     child: const Text(
                       'Proceed',
