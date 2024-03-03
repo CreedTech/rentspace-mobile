@@ -323,24 +323,24 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     // final data = ref.watch(userProfileDetailsProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showTopSnackBar(
-            Overlay.of(context),
-            CustomSnackBar.error(
-              backgroundColor: brandOne,
-              message: 'Coming Soon :)',
-              textStyle: GoogleFonts.nunito(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
-          // Get.to(const ChatMain());
-        },
-        child: const Icon(Icons.support_agent_sharp),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     showTopSnackBar(
+      //       Overlay.of(context),
+      //       CustomSnackBar.error(
+      //         backgroundColor: brandOne,
+      //         message: 'Coming Soon :)',
+      //         textStyle: GoogleFonts.nunito(
+      //           fontSize: 14,
+      //           color: Colors.white,
+      //           fontWeight: FontWeight.w700,
+      //         ),
+      //       ),
+      //     );
+      //     // Get.to(const ChatMain());
+      //   },
+      //   child: const Icon(Icons.support_agent_sharp),
+      // ),
       body: Obx(
         () =>
             //  userController.isLoading.value
