@@ -9,7 +9,7 @@ import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'dart:math';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
@@ -63,22 +63,22 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
           ),
         ),
       );
-  getCurrentUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _userFirst = data?['firstname'];
-        _userLast = data?['lastname'];
-        _userAddress = data?['address'];
-        _userMail = data?['email'];
-        _userID = data?['rentspace_id'];
-        _id = data?['id'];
-        _rentSpaceID = getRandom(20);
-      });
-    }
-  }
+  // getCurrentUser() async {
+  //   var collection = FirebaseFirestore.instance.collection('accounts');
+  //   var docSnapshot = await collection.doc(userId).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic>? data = docSnapshot.data();
+  //     setState(() {
+  //       _userFirst = data?['firstname'];
+  //       _userLast = data?['lastname'];
+  //       _userAddress = data?['address'];
+  //       _userMail = data?['email'];
+  //       _userID = data?['rentspace_id'];
+  //       _id = data?['id'];
+  //       _rentSpaceID = getRandom(20);
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       _planNameController.clear();
       _planDurationController.clear();
     });
-    getCurrentUser();
+    // getCurrentUser();
   }
 
   @override
@@ -505,333 +505,334 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            //resetCalculator();
-            Get.back();
-          },
-          child: Icon(
-            Icons.close,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.3,
-              child: Image.asset(
-                'assets/icons/RentSpace-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-            child: ListView(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              children: [
-                SizedBox(
-                  height: 100,
-                ),
-                Text(
-                  "Let's get you started" + varValue.toString(),
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "DefaultFontFamily",
-                    letterSpacing: 0.5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        planName,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        autoAmount,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        planDuration,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum" +
-                              varValue.toString(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
-                            //height: 1.5,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        Text(
-                          interestText,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: "DefaultFontFamily",
-                            //height: 1.5,
-                            color: Colors.red,
-                          ),
-                        ),
-                        (showNotice)
-                            ? Text(
-                                amountNotice,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: "DefaultFontFamily",
-                                  //height: 1.5,
-                                  color: Colors.red,
-                                ),
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        (showSaveButton)
-                            ? GFButton(
-                                shape: GFButtonShape.pills,
-                                onPressed: (_planNameController.text.trim() !=
-                                            "" &&
-                                        ((validateAmount(_boxAmountController
-                                                    .text
-                                                    .trim()) ==
-                                                "") &&
-                                            (validateDuration(
-                                                    _planDurationController.text
-                                                        .trim()) ==
-                                                "")))
-                                    ? () async {
-                                        _boxController.stop();
-                                        var userUpdate = FirebaseFirestore
-                                            .instance
-                                            .collection('accounts');
-                                        var updateBox = FirebaseFirestore
-                                            .instance
-                                            .collection('spacebox');
+      // appBar: AppBar(
+      //   elevation: 0.0,
+      //   backgroundColor: Theme.of(context).canvasColor,
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       //resetCalculator();
+      //       Get.back();
+      //     },
+      //     child: Icon(
+      //       Icons.close,
+      //       size: 30,
+      //       color: Theme.of(context).primaryColor,
+      //     ),
+      //   ),
+      // ),
+      // body: Stack(
+      //   children: [
+      //     Positioned.fill(
+      //       child: Opacity(
+      //         opacity: 0.3,
+      //         child: Image.asset(
+      //           'assets/icons/RentSpace-icon.png',
+      //           fit: BoxFit.cover,
+      //         ),
+      //       ),
+      //     ),
+      //     Padding(
+      //       padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+      //       child: ListView(
+      //         shrinkWrap: true,
+      //         physics: ClampingScrollPhysics(),
+      //         children: [
+      //           SizedBox(
+      //             height: 100,
+      //           ),
+      //           Text(
+      //             "Let's get you started" + varValue.toString(),
+      //             style: TextStyle(
+      //               fontSize: 20,
+      //               fontFamily: "DefaultFontFamily",
+      //               letterSpacing: 0.5,
+      //               color: Theme.of(context).primaryColor,
+      //             ),
+      //           ),
+      //           SizedBox(
+      //             height: 20,
+      //           ),
+      //           Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             children: <Widget>[
+      //               Column(
+      //                 children: [
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   planName,
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   autoAmount,
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   planDuration,
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Text(
+      //                     "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum" +
+      //                         varValue.toString(),
+      //                     style: TextStyle(
+      //                       fontSize: 14,
+      //                       fontFamily: "DefaultFontFamily",
+      //                       //height: 1.5,
+      //                       color: Theme.of(context).primaryColor,
+      //                     ),
+      //                   ),
+      //                   Text(
+      //                     interestText,
+      //                     style: TextStyle(
+      //                       fontSize: 14,
+      //                       fontFamily: "DefaultFontFamily",
+      //                       //height: 1.5,
+      //                       color: Colors.red,
+      //                     ),
+      //                   ),
+      //                   (showNotice)
+      //                       ? Text(
+      //                           amountNotice,
+      //                           style: TextStyle(
+      //                             fontSize: 14,
+      //                             fontFamily: "DefaultFontFamily",
+      //                             //height: 1.5,
+      //                             color: Colors.red,
+      //                           ),
+      //                         )
+      //                       : SizedBox(),
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   (showSaveButton)
+      //                       ? GFButton(
+      //                           shape: GFButtonShape.pills,
+      //                           onPressed: (_planNameController.text.trim() !=
+      //                                       "" &&
+      //                                   ((validateAmount(_boxAmountController
+      //                                               .text
+      //                                               .trim()) ==
+      //                                           "") &&
+      //                                       (validateDuration(
+      //                                               _planDurationController.text
+      //                                                   .trim()) ==
+      //                                           "")))
+      //                               ? () async {
+      //                                   _boxController.stop();
+      //                                   var userUpdate = FirebaseFirestore
+      //                                       .instance
+      //                                       .collection('accounts');
+      //                                   var updateBox = FirebaseFirestore
+      //                                       .instance
+      //                                       .collection('spacebox');
 
-                                        await updateBox.add({
-                                          'user_id': _userID,
-                                          'id': _id,
-                                          'interest': 0,
-                                          'upfront':
-                                              double.tryParse(interestValue),
-                                          'plan_name':
-                                              _planNameController.text.trim(),
-                                          'savings_id': _rentSpaceID,
-                                          'date': formattedDate,
-                                          'interval_amount': ((double.tryParse(
-                                                  _boxAmountController.text
-                                                      .trim()
-                                                      .replaceAll(',', '')))! /
-                                              (int.tryParse(
-                                                  _planDurationController.text
-                                                      .trim()))!),
-                                          'target_amount': double.tryParse(
-                                              _boxAmountController.text
-                                                  .trim()
-                                                  .replaceAll(',', '')),
-                                          'paid_amount': 0,
-                                          'interval': "monthly",
-                                          'has_paid': 'false',
-                                          'status': 'active',
-                                          'history': _history,
-                                          'is_new': 'true',
-                                          'no_of_payments': ((int.tryParse(
-                                              _planDurationController.text
-                                                  .trim()))!),
-                                          'current_payment': '0',
-                                          'token': ''
-                                        });
-                                        await userUpdate.doc(userId).update({
-                                          "activities": FieldValue.arrayUnion(
-                                            [
-                                              "$formattedDate\nSpaceBox created\n${ch8t.format(double.tryParse(_boxAmountController.text.trim().replaceAll(',', ''))).toString()} target amount.",
-                                            ],
-                                          ),
-                                        }).then((value) {
-                                          _boxController.stop();
+      //                                   await updateBox.add({
+      //                                     'user_id': _userID,
+      //                                     'id': _id,
+      //                                     'interest': 0,
+      //                                     'upfront':
+      //                                         double.tryParse(interestValue),
+      //                                     'plan_name':
+      //                                         _planNameController.text.trim(),
+      //                                     'savings_id': _rentSpaceID,
+      //                                     'date': formattedDate,
+      //                                     'interval_amount': ((double.tryParse(
+      //                                             _boxAmountController.text
+      //                                                 .trim()
+      //                                                 .replaceAll(',', '')))! /
+      //                                         (int.tryParse(
+      //                                             _planDurationController.text
+      //                                                 .trim()))!),
+      //                                     'target_amount': double.tryParse(
+      //                                         _boxAmountController.text
+      //                                             .trim()
+      //                                             .replaceAll(',', '')),
+      //                                     'paid_amount': 0,
+      //                                     'interval': "monthly",
+      //                                     'has_paid': 'false',
+      //                                     'status': 'active',
+      //                                     'history': _history,
+      //                                     'is_new': 'true',
+      //                                     'no_of_payments': ((int.tryParse(
+      //                                         _planDurationController.text
+      //                                             .trim()))!),
+      //                                     'current_payment': '0',
+      //                                     'token': ''
+      //                                   });
+      //                                   await userUpdate.doc(userId).update({
+      //                                     "activities": FieldValue.arrayUnion(
+      //                                       [
+      //                                         "$formattedDate\nSpaceBox created\n${ch8t.format(double.tryParse(_boxAmountController.text.trim().replaceAll(',', ''))).toString()} target amount.",
+      //                                       ],
+      //                                     ),
+      //                                   }).then((value) {
+      //                                     _boxController.stop();
 
-                                          Get.bottomSheet(
-                                            isDismissible: true,
-                                            SizedBox(
-                                              height: 300,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(30.0),
-                                                  topRight:
-                                                      Radius.circular(30.0),
-                                                ),
-                                                child: Container(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      10, 5, 10, 5),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 50,
-                                                      ),
-                                                      Icon(
-                                                        Icons
-                                                            .check_circle_outline,
-                                                        color: brandOne,
-                                                        size: 80,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      Text(
-                                                        'SpaceBox created',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontFamily:
-                                                              "DefaultFontFamily",
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 30,
-                                                      ),
-                                                      RoundedLoadingButton(
-                                                        controller:
-                                                            _boxController,
-                                                        onPressed: () {
-                                                          _boxController.stop();
-                                                          Get.back();
-                                                          Get.to(
-                                                              SpaceBoxPayment(
-                                                            amount: ((double.tryParse(
-                                                                    _boxAmountController
-                                                                        .text
-                                                                        .trim()
-                                                                        .replaceAll(
-                                                                            ',',
-                                                                            '')))! /
-                                                                (int.tryParse(
-                                                                    _planDurationController
-                                                                        .text
-                                                                        .trim()))!),
-                                                            refId: _rentSpaceID,
-                                                          ));
-                                                        },
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            2,
-                                                        child: Text(
-                                                          'Proceed to payment',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 13,
-                                                            fontFamily:
-                                                                "DefaultFontFamily",
-                                                          ),
-                                                        ),
-                                                        color: brandOne,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }).catchError((error) {
-                                          Get.snackbar(
-                                            "Oops",
-                                            "Something went wrong, try again later",
-                                            animationDuration:
-                                                Duration(seconds: 2),
-                                            backgroundColor: Colors.red,
-                                            colorText: Colors.white,
-                                            snackPosition: SnackPosition.BOTTOM,
-                                          );
-                                        });
-                                      }
-                                    : () {
-                                        _boxController.stop();
-                                        Get.snackbar(
-                                          "Incompleted!",
-                                          "fill all the fields to continue",
-                                          animationDuration:
-                                              Duration(seconds: 1),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
-                                      },
-                                child: Text(
-                                  "Save ${ch8t.format((((double.tryParse(_boxAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_boxAmountController.text.trim().replaceAll(',', '')))!) : 1) / (((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))} monthly for ${_planDurationController.text.trim()} months",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontFamily: "DefaultFontFamily",
-                                  ),
-                                ),
-                                color: brandOne,
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        (showSaveButton)
-                            ? InkWell(
-                                onTap: () {
-                                  Get.to(TermsAndConditions());
-                                },
-                                child: Text(
-                                  "By proceeding, you agree with our terms and conditions",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.red,
-                                    fontFamily: "DefaultFontFamily",
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : Text(""),
-                        SizedBox(
-                          height: 50,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      //                                     Get.bottomSheet(
+      //                                       isDismissible: true,
+      //                                       SizedBox(
+      //                                         height: 300,
+      //                                         child: ClipRRect(
+      //                                           borderRadius: BorderRadius.only(
+      //                                             topLeft:
+      //                                                 Radius.circular(30.0),
+      //                                             topRight:
+      //                                                 Radius.circular(30.0),
+      //                                           ),
+      //                                           child: Container(
+      //                                             color: Theme.of(context)
+      //                                                 .canvasColor,
+      //                                             padding: EdgeInsets.fromLTRB(
+      //                                                 10, 5, 10, 5),
+      //                                             child: Column(
+      //                                               crossAxisAlignment:
+      //                                                   CrossAxisAlignment
+      //                                                       .center,
+      //                                               children: [
+      //                                                 SizedBox(
+      //                                                   height: 50,
+      //                                                 ),
+      //                                                 Icon(
+      //                                                   Icons
+      //                                                       .check_circle_outline,
+      //                                                   color: brandOne,
+      //                                                   size: 80,
+      //                                                 ),
+      //                                                 SizedBox(
+      //                                                   height: 20,
+      //                                                 ),
+      //                                                 Text(
+      //                                                   'SpaceBox created',
+      //                                                   style: TextStyle(
+      //                                                     fontSize: 16,
+      //                                                     fontFamily:
+      //                                                         "DefaultFontFamily",
+      //                                                     color:
+      //                                                         Theme.of(context)
+      //                                                             .primaryColor,
+      //                                                   ),
+      //                                                 ),
+      //                                                 SizedBox(
+      //                                                   height: 30,
+      //                                                 ),
+      //                                                 RoundedLoadingButton(
+      //                                                   controller:
+      //                                                       _boxController,
+      //                                                   onPressed: () {
+      //                                                     _boxController.stop();
+      //                                                     Get.back();
+      //                                                     Get.to(
+      //                                                         SpaceBoxPayment(
+      //                                                       amount: ((double.tryParse(
+      //                                                               _boxAmountController
+      //                                                                   .text
+      //                                                                   .trim()
+      //                                                                   .replaceAll(
+      //                                                                       ',',
+      //                                                                       '')))! /
+      //                                                           (int.tryParse(
+      //                                                               _planDurationController
+      //                                                                   .text
+      //                                                                   .trim()))!),
+      //                                                       refId: _rentSpaceID,
+      //                                                     ));
+      //                                                   },
+      //                                                   width: MediaQuery.of(
+      //                                                               context)
+      //                                                           .size
+      //                                                           .width /
+      //                                                       2,
+      //                                                   child: Text(
+      //                                                     'Proceed to payment',
+      //                                                     style: TextStyle(
+      //                                                       color: Colors.white,
+      //                                                       fontSize: 13,
+      //                                                       fontFamily:
+      //                                                           "DefaultFontFamily",
+      //                                                     ),
+      //                                                   ),
+      //                                                   color: brandOne,
+      //                                                 ),
+      //                                                 SizedBox(
+      //                                                   height: 20,
+      //                                                 ),
+      //                                               ],
+      //                                             ),
+      //                                           ),
+      //                                         ),
+      //                                       ),
+      //                                     );
+      //                                   }).catchError((error) {
+      //                                     Get.snackbar(
+      //                                       "Oops",
+      //                                       "Something went wrong, try again later",
+      //                                       animationDuration:
+      //                                           Duration(seconds: 2),
+      //                                       backgroundColor: Colors.red,
+      //                                       colorText: Colors.white,
+      //                                       snackPosition: SnackPosition.BOTTOM,
+      //                                     );
+      //                                   });
+      //                                 }
+      //                               : () {
+      //                                   _boxController.stop();
+      //                                   Get.snackbar(
+      //                                     "Incompleted!",
+      //                                     "fill all the fields to continue",
+      //                                     animationDuration:
+      //                                         Duration(seconds: 1),
+      //                                     backgroundColor: Colors.red,
+      //                                     colorText: Colors.white,
+      //                                     snackPosition: SnackPosition.BOTTOM,
+      //                                   );
+      //                                 },
+      //                           child: Text(
+      //                             "Save ${ch8t.format((((double.tryParse(_boxAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_boxAmountController.text.trim().replaceAll(',', '')))!) : 1) / (((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))} monthly for ${_planDurationController.text.trim()} months",
+      //                             style: TextStyle(
+      //                               color: Colors.white,
+      //                               fontSize: 13,
+      //                               fontFamily: "DefaultFontFamily",
+      //                             ),
+      //                           ),
+      //                           color: brandOne,
+      //                         )
+      //                       : SizedBox(),
+      //                   SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   (showSaveButton)
+      //                       ? InkWell(
+      //                           onTap: () {
+      //                             Get.to(TermsAndConditions());
+      //                           },
+      //                           child: Text(
+      //                             "By proceeding, you agree with our terms and conditions",
+      //                             style: TextStyle(
+      //                               decoration: TextDecoration.underline,
+      //                               color: Colors.red,
+      //                               fontFamily: "DefaultFontFamily",
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         )
+      //                       : Text(""),
+      //                   SizedBox(
+      //                     height: 50,
+      //                   ),
+      //                 ],
+      //               ),
+      //             ],
+      //           ),
+      //           SizedBox(
+      //             height: 50,
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
+   
     );
   }
 }

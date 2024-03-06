@@ -363,6 +363,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       if (int.tryParse(amountValue)!.isNegative) {
         return 'enter valid number';
       }
+      if (int.tryParse(amountValue)! <
+          10) {
+        return 'minimum amount is ₦10.00';
+      }
       if (int.tryParse(amountValue)! >
           walletController.walletModel!.wallet![0].mainBalance) {
         return 'you cannot transfer more than your balance';

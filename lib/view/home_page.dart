@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 content: SizedBox(
-                  height: MediaQuery.of(context).size.height / 2,
+                  height: MediaQuery.of(context).size.height / 2.2,
                   child: SingleChildScrollView(
                       child: Padding(
                     padding: const EdgeInsets.all(8.0),

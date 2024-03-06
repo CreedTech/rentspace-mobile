@@ -623,6 +623,23 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
         // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
         return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "BVN not verified, please verify your bvn to continue")) {
+        // authStatus = AuthStatus.NOT_LOGGED_IN;
+        message = "BVN not verified, please verify your bvn to continue";
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BvnPage(
+              email: email,
+            ),
+          ),
+        );
+        customErrorDialog(context, 'Error', message);
+
+        // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
+        return;
       } else {
         // authStatus = AuthStatus.NOT_LOGGED_IN;
         // to capture other errors later

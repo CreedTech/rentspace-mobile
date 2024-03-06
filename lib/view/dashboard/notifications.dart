@@ -16,7 +16,7 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-  final NotificationController notificationController = Get.find();
+  // final NotificationController notificationController = Get.find();
   @override
   Widget build(BuildContext context) {
     // print(notificationController.notification);
@@ -51,82 +51,83 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Consumer<NotificationService>(
-                  builder: (context, notificationService, _) {
-                // print('notification');
-                // NotificationService().fetchNotificationsFromFirestore();
-                return ListView.builder(
-                    itemCount: notificationService.notifications.length,
-                    itemBuilder: (context, index) {
-                      final notifications =
-                          notificationService.notifications[index];
-                      // print(notifications);
-                      final formattedTime =
-                          _formatTime(notifications.timestamp);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: ListTile(
-                          minLeadingWidth: 0,
-                          contentPadding: EdgeInsets.zero,
-                          leading: Stack(
-                            children: [
-                              Container(
-                                // width: 48,
-                                // height: 48,
-                                padding: EdgeInsets.all(15.sp),
-                                decoration: const BoxDecoration(
-                                  color: brandThree,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(50),
-                                  ),
-                                ),
-                                child: Image.asset(
-                                  'assets/icons/notification-box.png',
-                                  color: brandOne,
-                                  // width: 24.w,
-                                  // scale: 4,
-                                ),
-                              ),
-                              !notifications.isRead
-                                  ? Positioned(
-                                      right: 5,
-                                      child: Container(
-                                        width: 8,
-                                        height: 8,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(50),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                          title: Text(
-                            notifications.title,
-                            style: GoogleFonts.nunito(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          subtitle: Text(
-                            notifications.message,
-                            style: GoogleFonts.nunito(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          trailing: Text(formattedTime),
-                        ),
-                      );
-                    });
-              }),
-            ),
-          ],
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 2),
+            //   child: Consumer<NotificationService>(
+            //       builder: (context, notificationService, _) {
+            //     // print('notification');
+            //     // NotificationService().fetchNotificationsFromFirestore();
+            //     return ListView.builder(
+            //         itemCount: notificationService.notifications.length,
+            //         itemBuilder: (context, index) {
+            //           final notifications =
+            //               notificationService.notifications[index];
+            //           // print(notifications);
+            //           final formattedTime =
+            //               _formatTime(notifications.timestamp);
+            //           return Padding(
+            //             padding: const EdgeInsets.symmetric(vertical: 5),
+            //             child: ListTile(
+            //               minLeadingWidth: 0,
+            //               contentPadding: EdgeInsets.zero,
+            //               leading: Stack(
+            //                 children: [
+            //                   Container(
+            //                     // width: 48,
+            //                     // height: 48,
+            //                     padding: EdgeInsets.all(15.sp),
+            //                     decoration: const BoxDecoration(
+            //                       color: brandThree,
+            //                       borderRadius: BorderRadius.all(
+            //                         Radius.circular(50),
+            //                       ),
+            //                     ),
+            //                     child: Image.asset(
+            //                       'assets/icons/notification-box.png',
+            //                       color: brandOne,
+            //                       // width: 24.w,
+            //                       // scale: 4,
+            //                     ),
+            //                   ),
+            //                   !notifications.isRead
+            //                       ? Positioned(
+            //                           right: 5,
+            //                           child: Container(
+            //                             width: 8,
+            //                             height: 8,
+            //                             decoration: const BoxDecoration(
+            //                               color: Colors.red,
+            //                               borderRadius: BorderRadius.all(
+            //                                 Radius.circular(50),
+            //                               ),
+            //                             ),
+            //                           ),
+            //                         )
+            //                       : const SizedBox(),
+            //                 ],
+            //               ),
+            //               title: Text(
+            //                 notifications.title,
+            //                 style: GoogleFonts.nunito(
+            //                   fontSize: 14,
+            //                   fontWeight: FontWeight.w500,
+            //                 ),
+            //               ),
+            //               subtitle: Text(
+            //                 notifications.message,
+            //                 style: GoogleFonts.nunito(
+            //                   fontSize: 14,
+            //                   fontWeight: FontWeight.w400,
+            //                 ),
+            //               ),
+            //               trailing: Text(formattedTime),
+            //             ),
+            //           );
+            //         });
+            //   }),
+            // ),
+         
+         ],
         ),
       ),
     );

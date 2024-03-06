@@ -1,3 +1,4 @@
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -7,6 +8,8 @@ import 'package:rentspace/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'dart:io';
+
+import '../../controller/auth/user_controller.dart';
 
 class IdlePage extends StatefulWidget {
   const IdlePage({Key? key}) : super(key: key);
@@ -38,8 +41,12 @@ class _IdlePageState extends State<IdlePage> {
       if (pinOneValue.length < 4) {
         return 'pin is incomplete';
       }
-      if (int.tryParse(pinOneValue).toString() !=
-          userController.user[0].transactionPIN) {
+
+      if (BCrypt.checkpw(
+            int.tryParse(pinOneValue).toString(),
+            userController.userModel!.userDetails![0].wallet.pin,
+          ) ==
+          false) {
         return 'incorrect PIN';
       }
       if (int.tryParse(pinOneValue) == null) {

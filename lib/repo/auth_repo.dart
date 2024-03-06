@@ -158,6 +158,10 @@ class AuthRepository {
         'User not verified, please verify your account') {
       error = 'User not verified, please verify your account';
     }
+    if (jsonDecode(response.body)['error'] ==
+        'BVN not verified, please verify your bvn to continue') {
+      error = 'BVN not verified, please verify your bvn to continue';
+    }
 
 //  Here in repo{error: User not verified, please verify your account}
     //  print("Here in repo" + response.reasonPhrase.toString());

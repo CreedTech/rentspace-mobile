@@ -227,16 +227,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                             )),
-                        onTap: () {
-                          (userController.userModel!.userDetails![0]
-                                      .hasVerifiedPhone ==
-                                  false)
-                              ? Get.to(PhoneVerificationScreen())
-                              : null;
-                        },
+                        // onTap: () {
+                        //   (userController.userModel!.userDetails![0]
+                        //               .hasVerifiedPhone ==
+                        //           false)
+                        //       ? Get.to(PhoneVerificationScreen())
+                        //       : null;
+                        // },
                         trailing: (userController.userModel!.userDetails![0]
                                     .hasVerifiedPhone ==
-                                false)
+                                true)
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -254,10 +254,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 Iconsax.verify5,
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                        //  const Icon(
-                        //   Iconsax.edit,
-                        //   color: brandOne,
-                        // ),
+                        
                       ),
                     ),
                     Padding(

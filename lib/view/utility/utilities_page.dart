@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pinput/pinput.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +41,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../api/global_services.dart';
 import '../../controller/auth/user_controller.dart';
+import '../../controller/utility_controller.dart';
 
 class DataList {
   final String amount;
@@ -177,9 +180,13 @@ final airtimeFormKey = GlobalKey<FormState>();
 final dataFormKey = GlobalKey<FormState>();
 
 class _UtilitiesPageState extends State<UtilitiesPage> {
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  bool isRefresh = false;
   List<DataList> dataList = [];
   List<TvList> tvList = [];
   List<Bill> betList = [];
+  final UtilityController utilityController = Get.find();
   final UserController userController = Get.find();
 //bet
 
@@ -2159,30 +2166,30 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
   }
 
   //Utility calls - Get Tv
-  getBet() async {
-    const String apiUrl =
-        'https://api.watupay.com/v1/watubill/channels?is_favourite=0&should_paginate=0&country=NG&group=betting';
-    const String bearerToken = 'WTP-L-PK-6a559c833bc54b2698e6a833f107f1e7';
-    final responseRef = await http.get(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $bearerToken',
-        "Content-Type": "application/json"
-      },
-    );
+  // getBet() async {
+  //   const String apiUrl =
+  //       'https://api.watupay.com/v1/watubill/channels?is_favourite=0&should_paginate=0&country=NG&group=betting';
+  //   const String bearerToken = 'WTP-L-PK-6a559c833bc54b2698e6a833f107f1e7';
+  //   final responseRef = await http.get(
+  //     Uri.parse(apiUrl),
+  //     headers: {
+  //       'Authorization': 'Bearer $bearerToken',
+  //       "Content-Type": "application/json"
+  //     },
+  //   );
 
-    if (responseRef.statusCode == 200) {
-      final jsonResponse = jsonDecode(responseRef.body);
-      final bills = (jsonResponse['data'] as List)
-          .map((billData) => Bill.fromJson(billData))
-          .toList();
-      setState(() {
-        betList = bills;
-      });
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+  //   if (responseRef.statusCode == 200) {
+  //     final jsonResponse = jsonDecode(responseRef.body);
+  //     final bills = (jsonResponse['data'] as List)
+  //         .map((billData) => Bill.fromJson(billData))
+  //         .toList();
+  //     setState(() {
+  //       betList = bills;
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
+  // }
 
   @override
   initState() {
@@ -2199,12 +2206,25 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
       _pinController.clear();
     });
     betList.clear();
-    getBet();
+    // getBet();
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         canLoad = true;
       });
     });
+  }
+
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
+    if (mounted) {
+      setState(() {
+        isRefresh = true;
+      });
+    }
+    userController.fetchData();
+    rentController.fetchRent();
+    utilityController.fetchUtilityHistories();
   }
 
   @override
@@ -2460,838 +2480,881 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                   ],
                 ),
                 body: (canLoad)
-                    ? SizedBox(
-                        child: (userController.userModel!.userDetails![0]
-                                    .hasVerifiedBvn ==
-                                true)
-                            ? Container(
-                                height: double.infinity,
-                                width: double.infinity,
-                                padding:
-                                    const EdgeInsets.fromLTRB(2.0, 5, 2.0, 5),
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  children: [
-                                    // const SizedBox(
-                                    //   height: 30,
-                                    // ),
+                    ? LiquidPullToRefresh(
+                        height: 100,
+                        animSpeedFactor: 2,
+                        color: brandOne,
+                        backgroundColor: Colors.white,
+                        showChildOpacityTransition: false,
+                        onRefresh: onRefresh,
+                        child: SizedBox(
+                          child: (userController.userModel!.userDetails![0]
+                                      .hasVerifiedBvn ==
+                                  true)
+                              ? Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2.0, 5, 2.0, 5),
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    children: [
+                                      // const SizedBox(
+                                      //   height: 30,
+                                      // ),
 
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 10),
-                                          child: Text(
-                                            "Pay for your bills and earn one SpacePoint!",
-                                            // textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                          ),
-                                          child: Text(
-                                            "Get access to a wide range of utilities and earn a SpacePoint when you make payment from your SpaceWallet!",
-                                            // textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
-                                              fontSize: 14,
-                                              //height: 0.5,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 10),
-                                      child: Column(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Wallet balance",
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.nunito(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 10),
+                                            child: Text(
+                                              "Pay for your bills and earn one SpacePoint!",
+                                              // textAlign: TextAlign.center,
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                               ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    hideBalance = !hideBalance;
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  hideBalance
-                                                      ? Icons
-                                                          .visibility_outlined
-                                                      : Icons
-                                                          .visibility_off_outlined,
-                                                  color: brandOne,
-                                                  size: 15.sp,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                            ),
+                                            child: Text(
+                                              "Get access to a wide range of utilities and earn a SpacePoint when you make payment from your SpaceWallet!",
+                                              // textAlign: TextAlign.center,
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 14,
+                                                //height: 0.5,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              (userController.isLoading.value)
-                                                  ? Text(
-                                                      '${nairaFormaet.format(0)} ',
-                                                      style: GoogleFonts.nunito(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
+                                        ],
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Wallet balance",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.nunito(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      hideBalance =
+                                                          !hideBalance;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    hideBalance
+                                                        ? Icons
+                                                            .visibility_outlined
+                                                        : Icons
+                                                            .visibility_off_outlined,
+                                                    color: brandOne,
+                                                    size: 15.sp,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                (userController.isLoading.value)
+                                                    ? Text(
+                                                        '${nairaFormaet.format(0)} ',
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
+                                                      )
+                                                    : Text(
+                                                        '${hideBalance ? nairaFormaet.format(double.parse(userController.userModel!.userDetails![0].wallet.mainBalance.toString())) : "*****"} ',
+                                                        style:
+                                                            GoogleFonts.nunito(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
                                                       ),
-                                                    )
-                                                  : Text(
-                                                      '${hideBalance ? nairaFormaet.format(double.parse(userController.userModel!.userDetails![0].wallet.mainBalance.toString())) : "*****"} ',
-                                                      style: GoogleFonts.nunito(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                      ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 0),
+                                        child: Row(
+                                          children: [
+                                            (userController.isLoading.value)
+                                                ? Text(
+                                                    'SpacePoints: 0',
+                                                    style: GoogleFonts.nunito(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
                                                     ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 0),
-                                      child: Row(
-                                        children: [
-                                          (userController.isLoading.value)
-                                              ? Text(
-                                                  'SpacePoints: 0',
-                                                  style: GoogleFonts.nunito(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
+                                                  )
+                                                : Text(
+                                                    'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.toString()}',
+                                                    style: GoogleFonts.nunito(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                    ),
                                                   ),
-                                                )
-                                              : Text(
-                                                  'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.toString()}',
-                                                  style: GoogleFonts.nunito(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
 
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: ExpansionTile(
-                                        initiallyExpanded: false,
-                                        title: Text(
-                                          'Airtime Top Up',
-                                          style: GoogleFonts.nunito(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        ),
-                                        backgroundColor: brandOne,
-                                        collapsedBackgroundColor: brandOne,
-                                        iconColor: Colors.white,
-                                        collapsedIconColor: Colors.white,
-                                        tilePadding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        childrenPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        collapsedShape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        children: [
-                                          mtnAirtimeMethod(
-                                              context,
-                                              airtimePhone,
-                                              airtimeAmount,
-                                              validatePin),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          gloMethod(context, airtimePhone,
-                                              airtimeAmount, validatePin),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          airtelMethod(context, airtimePhone,
-                                              airtimeAmount, validatePin),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          etisalatMethod(context, airtimePhone,
-                                              airtimeAmount, validatePin),
-                                        ],
+                                      const SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: ExpansionTile(
-                                        initiallyExpanded: false,
-                                        title: Text(
-                                          'Data Subscription',
-                                          style: GoogleFonts.nunito(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        ),
-                                        backgroundColor: brandOne,
-                                        collapsedBackgroundColor: brandOne,
-                                        iconColor: Colors.white,
-                                        collapsedIconColor: Colors.white,
-                                        tilePadding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        childrenPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        collapsedShape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        children: [
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showLoading = true;
-                                              });
-                                              dataList.clear();
-                                              getData("bill-18", 'MTN');
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/mtn.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'MTN Data Plans',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showLoading = true;
-                                              });
-                                              dataList.clear();
-                                              getData("bill-07", 'GLO');
-                                            },
-                                            tileColor: brandSix,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/glo.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'GLO Data Plans',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showLoading = true;
-                                              });
-                                              dataList.clear();
-                                              getData("bill-16", 'AIRTEL');
-                                            },
-                                            tileColor: brandSix,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/airtel.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Airtel Data Plans',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showLoading = true;
-                                              });
-                                              dataList.clear();
 
-                                              getData("bill-19", '9MOBILE');
-                                            },
-                                            tileColor: brandSix,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/9mobile.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              '9Mobile Data Plans',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const SizedBox(
+                                        height: 10,
                                       ),
-                                    ),
-
-                                    (showLoading)
-                                        ? const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Center(
-                                              child: CustomLoader(),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: ExpansionTile(
-                                        initiallyExpanded: false,
-                                        title: Text(
-                                          'Cable Tv',
-                                          style: GoogleFonts.nunito(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        ),
-                                        backgroundColor: brandOne,
-                                        collapsedBackgroundColor: brandOne,
-                                        iconColor: Colors.white,
-                                        collapsedIconColor: Colors.white,
-                                        tilePadding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        childrenPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        collapsedShape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        children: [
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showTvLoading = true;
-                                              });
-                                              tvList.clear();
-
-                                              getTv("bill-20");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/dstv.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'DSTV - Subscription',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                showTvLoading = true;
-                                              });
-                                              tvList.clear();
-
-                                              getTv("bill-14");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/gotv.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'GOtv - Subscription',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          // ListTile(
-                                          //   onTap: () {
-                                          //     setState(() {
-                                          //       showTvLoading = true;
-                                          //     });
-                                          //     tvList.clear();
-
-                                          //     getTv("bill-15");
-                                          //   },
-                                          //   tileColor: Colors.white,
-                                          //   trailing: ClipRRect(
-                                          //     borderRadius:
-                                          //         BorderRadius.circular(100.0),
-                                          //     child: Image.asset(
-                                          //       "assets/utility/startimes.jpg",
-                                          //       height: 40,
-                                          //       width: 40,
-                                          //     ),
-                                          //   ),
-                                          //   leading: Text(
-                                          //     'Startimes - Subscription',
-                                          //     style: GoogleFonts.nunito(
-                                          //       color: Theme.of(context)
-                                          //           .canvasColor,
-                                          //       fontSize: 15,
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          // const SizedBox(
-                                          //   height: 10,
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    (showTvLoading)
-                                        ? const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Center(
-                                              child: CustomLoader(),
-                                            ),
-                                          )
-                                        : const SizedBox(),
-
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: ExpansionTile(
-                                        initiallyExpanded: false,
-                                        title: Text(
-                                          'Electricity - Prepaid',
-                                          style: GoogleFonts.nunito(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        ),
-                                        backgroundColor: brandOne,
-                                        collapsedBackgroundColor: brandOne,
-                                        iconColor: Colors.white,
-                                        collapsedIconColor: Colors.white,
-                                        tilePadding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        childrenPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        collapsedShape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        children: [
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "Areas in Lagos covered by Ikeja Electricity Distribution Company (IKEDC) inlcude Abule Egba, Akowonjo, Ikeja, Ikorodu, Oshodi & Shomolu.";
-                                              });
-                                              validateElectric("bill-11");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/7.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Ikeja Electric',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "Places covered in Lagos by Eko Electricity Distribution Company (EKEDC) include Ojo, Festac,  Ijora, Mushin, Orile Apapa, Lekki, Ibeju, Lagos Island, Ajele & Agbara.";
-                                              });
-                                              validateElectric("bill-02");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/9.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'EKO Electric',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "States and Areas covered by Ibadan Electricity Distribution Plc (IBEDC) include Oyo, Ogun, Osun, Kwara and parts of Niger(Mokwa), Ekiti and Kogi states.";
-                                              });
-                                              validateElectric("bill-03");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/11.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'IBEDC',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "States and Areas covered by  Jos Electricity Distribution Plc (JEDC) include Bauchi, Benue, Gombe Plateau.";
-                                              });
-                                              validateElectric("bill-32");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/13.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Jos Electricity',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "States and Areas covered by Abuja Electricity Distribution Plc (AEDC) include FCT, Kogi, Nasarawa  & most parts of Niger (Minna, Suleja) States.";
-                                              });
-                                              validateElectric("bill-05");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/15.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Abuja Electricity',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "States covered by Kaduna Electricity Distribution Plc (KNEDC) include Kaduna, Kebbi, Sokoto, Zamfara.";
-                                              });
-                                              validateElectric("bill-31");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/17.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Kaduna Electric',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "States and Areas covered by Kano Electricity Distribution Plc (KEDCO) include Kano, Katsina, Jigawa.";
-                                              });
-                                              validateElectric("bill-09");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/19.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'Kano Electric',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ListTile(
-                                            onTap: () {
-                                              setState(() {
-                                                electricName =
-                                                    "PortHarcourt Prepaid";
-                                              });
-                                              validateElectric("bill-35");
-                                            },
-                                            tileColor: Colors.white,
-                                            trailing: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                "assets/utility/21.jpg",
-                                                height: 40,
-                                                width: 40,
-                                              ),
-                                            ),
-                                            leading: Text(
-                                              'PH Electric',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // const SizedBox(
-                                    //   height: 80,
-                                    // ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                height: double.infinity,
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            "kindly confirm your BVN to use this service.",
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: ExpansionTile(
+                                          initiallyExpanded: true,
+                                          title: Text(
+                                            'Airtime Top Up',
                                             style: GoogleFonts.nunito(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white),
+                                          ),
+                                          backgroundColor: brandOne,
+                                          collapsedBackgroundColor: brandOne,
+                                          iconColor: Colors.white,
+                                          collapsedIconColor: Colors.white,
+                                          tilePadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          childrenPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          collapsedShape:
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          children: [
+                                            mtnAirtimeMethod(
+                                                context,
+                                                airtimePhone,
+                                                airtimeAmount,
+                                                validatePin),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            gloMethod(context, airtimePhone,
+                                                airtimeAmount, validatePin),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            airtelMethod(context, airtimePhone,
+                                                airtimeAmount, validatePin),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            etisalatMethod(
+                                                context,
+                                                airtimePhone,
+                                                airtimeAmount,
+                                                validatePin),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: ExpansionTile(
+                                          initiallyExpanded: true,
+                                          title: Text(
+                                            'Data Subscription',
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white),
+                                          ),
+                                          backgroundColor: brandOne,
+                                          collapsedBackgroundColor: brandOne,
+                                          iconColor: Colors.white,
+                                          collapsedIconColor: Colors.white,
+                                          tilePadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          childrenPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          collapsedShape:
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          children: [
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showLoading = true;
+                                                });
+                                                dataList.clear();
+                                                getData("bill-18", 'MTN');
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/mtn.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'MTN Data Plans',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showLoading = true;
+                                                });
+                                                dataList.clear();
+                                                getData("bill-07", 'GLO');
+                                              },
+                                              tileColor: brandSix,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/glo.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'GLO Data Plans',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showLoading = true;
+                                                });
+                                                dataList.clear();
+                                                getData("bill-16", 'AIRTEL');
+                                              },
+                                              tileColor: brandSix,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/airtel.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Airtel Data Plans',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showLoading = true;
+                                                });
+                                                dataList.clear();
+
+                                                getData("bill-19", '9MOBILE');
+                                              },
+                                              tileColor: brandSix,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/9mobile.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                '9Mobile Data Plans',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      (showLoading)
+                                          ? const Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Center(
+                                                child: CustomLoader(),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: ExpansionTile(
+                                          initiallyExpanded: true,
+                                          title: Text(
+                                            'Cable Tv',
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white),
+                                          ),
+                                          backgroundColor: brandOne,
+                                          collapsedBackgroundColor: brandOne,
+                                          iconColor: Colors.white,
+                                          collapsedIconColor: Colors.white,
+                                          tilePadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          childrenPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          collapsedShape:
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          children: [
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showTvLoading = true;
+                                                });
+                                                tvList.clear();
+
+                                                getTv("bill-20");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/dstv.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'DSTV - Subscription',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  showTvLoading = true;
+                                                });
+                                                tvList.clear();
+
+                                                getTv("bill-14");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/gotv.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'GOtv - Subscription',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            // ListTile(
+                                            //   onTap: () {
+                                            //     setState(() {
+                                            //       showTvLoading = true;
+                                            //     });
+                                            //     tvList.clear();
+
+                                            //     getTv("bill-15");
+                                            //   },
+                                            //   tileColor: Colors.white,
+                                            //   trailing: ClipRRect(
+                                            //     borderRadius:
+                                            //         BorderRadius.circular(100.0),
+                                            //     child: Image.asset(
+                                            //       "assets/utility/startimes.jpg",
+                                            //       height: 40,
+                                            //       width: 40,
+                                            //     ),
+                                            //   ),
+                                            //   leading: Text(
+                                            //     'Startimes - Subscription',
+                                            //     style: GoogleFonts.nunito(
+                                            //       color: Theme.of(context)
+                                            //           .canvasColor,
+                                            //       fontSize: 15,
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            // const SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      (showTvLoading)
+                                          ? const Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Center(
+                                                child: CustomLoader(),
+                                              ),
+                                            )
+                                          : const SizedBox(),
+
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: ExpansionTile(
+                                          initiallyExpanded: true,
+                                          title: Text(
+                                            'Electricity - Prepaid',
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white),
+                                          ),
+                                          backgroundColor: brandOne,
+                                          collapsedBackgroundColor: brandOne,
+                                          iconColor: Colors.white,
+                                          collapsedIconColor: Colors.white,
+                                          tilePadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          childrenPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          collapsedShape:
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          children: [
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "Areas in Lagos covered by Ikeja Electricity Distribution Company (IKEDC) inlcude Abule Egba, Akowonjo, Ikeja, Ikorodu, Oshodi & Shomolu.";
+                                                });
+                                                validateElectric("bill-11");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/7.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Ikeja Electric',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "Places covered in Lagos by Eko Electricity Distribution Company (EKEDC) include Ojo, Festac,  Ijora, Mushin, Orile Apapa, Lekki, Ibeju, Lagos Island, Ajele & Agbara.";
+                                                });
+                                                validateElectric("bill-02");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/9.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'EKO Electric',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "States and Areas covered by Ibadan Electricity Distribution Plc (IBEDC) include Oyo, Ogun, Osun, Kwara and parts of Niger(Mokwa), Ekiti and Kogi states.";
+                                                });
+                                                validateElectric("bill-03");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/11.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'IBEDC',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "States and Areas covered by  Jos Electricity Distribution Plc (JEDC) include Bauchi, Benue, Gombe Plateau.";
+                                                });
+                                                validateElectric("bill-32");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/13.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Jos Electricity',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "States and Areas covered by Abuja Electricity Distribution Plc (AEDC) include FCT, Kogi, Nasarawa  & most parts of Niger (Minna, Suleja) States.";
+                                                });
+                                                validateElectric("bill-05");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/15.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Abuja Electricity',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "States covered by Kaduna Electricity Distribution Plc (KNEDC) include Kaduna, Kebbi, Sokoto, Zamfara.";
+                                                });
+                                                validateElectric("bill-31");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/17.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Kaduna Electric',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "States and Areas covered by Kano Electricity Distribution Plc (KEDCO) include Kano, Katsina, Jigawa.";
+                                                });
+                                                validateElectric("bill-09");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/19.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'Kano Electric',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  electricName =
+                                                      "PortHarcourt Prepaid";
+                                                });
+                                                validateElectric("bill-35");
+                                              },
+                                              tileColor: Colors.white,
+                                              trailing: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  "assets/utility/21.jpg",
+                                                  height: 40,
+                                                  width: 40,
+                                                ),
+                                              ),
+                                              leading: Text(
+                                                'PH Electric',
+                                                style: GoogleFonts.nunito(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      // const SizedBox(
+                                      //   height: 80,
+                                      // ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                            child: Text(
+                                              "kindly confirm your BVN to use this service.",
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w700,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    GFButton(
-                                      onPressed: () async {
-                                        Get.to( nt.BvnPage(email:
-                              userController.userModel!.userDetails![0].email));
-                                      },
-                                      text: "  Begin Verification  ",
-                                      fullWidthButton: false,
-                                      color: brandOne,
-                                      shape: GFButtonShape.pills,
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      GFButton(
+                                        onPressed: () async {
+                                          Get.to(nt.BvnPage(
+                                              email: userController.userModel!
+                                                  .userDetails![0].email));
+                                        },
+                                        text: "  Begin Verification  ",
+                                        fullWidthButton: false,
+                                        color: brandOne,
+                                        shape: GFButtonShape.pills,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                        ),
                       )
                     : SizedBox(
                         height: double.infinity,

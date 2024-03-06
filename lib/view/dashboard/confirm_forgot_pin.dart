@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,119 +39,78 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
   bool obscurity = true;
   Icon lockIcon = LockIcon().open;
 
-  Future updatePin() async {
-    var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
-    await userPinUpdate.doc(userId).update({
-      'transaction_pin': _pinConfirmController.text.trim(),
-    }).then((value) {
-      for (int i = 0; i < 3; i++) {
-        Get.back();
-      }
-      // Get.to(SettingsPage());
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Your transaction PIN has been updated successfully!!',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
-      // Get.snackbar(
-      //   "PIN updated!",
-      //   'Your transaction PIN has been updated successfully',
-      //   animationDuration: Duration(seconds: 1),
-      //   backgroundColor: brandOne,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.TOP,
-      // );
-    }).catchError((error) {
-      if (context.mounted) {
-        customErrorDialog(
-            context, 'Oops (:', "Something went wrong, please try again");
-      }
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     backgroundColor: Colors.red,
-      //     message: 'Oops (: Something went wrong, please try again',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
-      // Get.snackbar(
-      //   "Oops",
-      //   "something went wrong, please try again",
-      //   animationDuration: Duration(seconds: 2),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
-    });
-  }
+  // Future updatePin() async {
+  //   var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
+  //   await userPinUpdate.doc(userId).update({
+  //     'transaction_pin': _pinConfirmController.text.trim(),
+  //   }).then((value) {
+  //     for (int i = 0; i < 3; i++) {
+  //       Get.back();
+  //     }
+  //     // Get.to(SettingsPage());
+  //     showTopSnackBar(
+  //       Overlay.of(context),
+  //       CustomSnackBar.success(
+  //         backgroundColor: brandOne,
+  //         message: 'Your transaction PIN has been updated successfully!!',
+  //         textStyle: GoogleFonts.nunito(
+  //           fontSize: 14,
+  //           color: Colors.white,
+  //           fontWeight: FontWeight.w700,
+  //         ),
+  //       ),
+  //     );
+  //     // Get.snackbar(
+  //     //   "PIN updated!",
+  //     //   'Your transaction PIN has been updated successfully',
+  //     //   animationDuration: Duration(seconds: 1),
+  //     //   backgroundColor: brandOne,
+  //     //   colorText: Colors.white,
+  //     //   snackPosition: SnackPosition.TOP,
+  //     // );
+  //   }).catchError((error) {
+  //     if (context.mounted) {
+  //       customErrorDialog(
+  //           context, 'Oops (:', "Something went wrong, please try again");
+  //     }
+  //     // showTopSnackBar(
+  //     //   Overlay.of(context),
+  //     //   CustomSnackBar.error(
+  //     //     backgroundColor: Colors.red,
+  //     //     message: 'Oops (: Something went wrong, please try again',
+  //     //     textStyle: GoogleFonts.nunito(
+  //     //       fontSize: 14,
+  //     //       color: Colors.white,
+  //     //       fontWeight: FontWeight.w700,
+  //     //     ),
+  //     //   ),
+  //     // );
+  //     // Get.snackbar(
+  //     //   "Oops",
+  //     //   "something went wrong, please try again",
+  //     //   animationDuration: Duration(seconds: 2),
+  //     //   backgroundColor: Colors.red,
+  //     //   colorText: Colors.white,
+  //     //   snackPosition: SnackPosition.BOTTOM,
+  //     // );
+  //   });
+  // }
 
-  void _doSomething() async {
-    // Timer(Duration(seconds: 1), () {
-    //   _btnController.stop();
-    // });
-    if ((widget.pin != _pinConfirmController.text.trim())) {
-      if (context.mounted) {
-        customErrorDialog(context, 'Invalid', "Pin does not match!!");
-      }
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     backgroundColor: Colors.red,
-      //     message: 'Pin does not match!!',
-      //     textStyle: GoogleFonts.nunito(
-      //       fontSize: 14,
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w700,
-      //     ),
-      //   ),
-      // );
-      // Get.snackbar(
-      //   "Invalid",
-      //   'PIN is unacceptable.',
-      //   animationDuration: Duration(seconds: 1),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
-    }
-    // if (_pinOneController.text.trim() == widget.pin ||
-    //     _pinTwoController.text.trim() == widget.pin) {
-    //   Get.snackbar(
-    //     "Error!",
-    //     'PIN cannot be the same as existing one.',
-    //     animationDuration: Duration(seconds: 1),
-    //     backgroundColor: Colors.red,
-    //     colorText: Colors.white,
-    //     snackPosition: SnackPosition.BOTTOM,
-    //   );
-    // }
-    // else if (widget.password != _passwordController.text.trim() ||
-    //     _passwordController.text.trim() == "") {
-    //   Get.snackbar(
-    //     "Invalid",
-    //     'Password is incorrect',
-    //     animationDuration: Duration(seconds: 1),
-    //     backgroundColor: Colors.red,
-    //     colorText: Colors.white,
-    //     snackPosition: SnackPosition.BOTTOM,
-    //   );
+  // void _doSomething() async {
+  //   // Timer(Duration(seconds: 1), () {
+  //   //   _btnController.stop();
+  //   // });
+  //   if ((widget.pin != _pinConfirmController.text.trim())) {
+  //     if (context.mounted) {
+  //       customErrorDialog(context, 'Invalid', "Pin does not match!!");
+  //     }
 
-    // }
-    else {
-      updatePin();
-    }
-  }
+  //   }
+
+  //   else {
+  //     updatePin();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +236,7 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
                                     onPressed: () {
                                       if (confirmPinformKey.currentState!
                                           .validate()) {
-                                        _doSomething();
+                                        // _doSomething();
                                       } else {
                                         customErrorDialog(
                                           context,

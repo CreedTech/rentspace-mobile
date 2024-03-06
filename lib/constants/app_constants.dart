@@ -42,6 +42,7 @@ class AppConstants {
   static const GET_AIRTIMES = '/api/get-airtimes';
   static const ADD_UTILITY_HISTORY = '/api/utilities/add-utility';
   static const UTILITY_HISTORY = '/api/utilities/utility-history';
+  static const WALLET_HISTORY = '/api/wallet/wallet-histories';
 
   static const TOKEN = '';
   static const PROFILE_PICTURE = '';

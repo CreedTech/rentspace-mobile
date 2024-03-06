@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rentspace/view/actions/new_notification_page.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
@@ -23,6 +24,11 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const FirstPage(),
           settings: const RouteSettings(name: home),
+        );
+      case newNotification:
+        return MaterialPageRoute(
+          builder: (context) => const NewNotificationPage(),
+          settings: const RouteSettings(name: newNotification),
         );
       // case onboarding:
       //   return MaterialPageRoute(

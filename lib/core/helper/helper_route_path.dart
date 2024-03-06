@@ -9,3 +9,4 @@ const home = "/home";
 
 const airtime = "/airtime";
 const utilitytransactionReceipt = "/transactionReceipt";
+const newNotification = '/newNotification';

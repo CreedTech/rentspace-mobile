@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
 
 import 'package:get/get.dart';
@@ -67,25 +67,25 @@ class _WalletFundingState extends State<WalletFunding> {
   String _mssg = "Initiating payment...";
   String _mssgBody = "";
 
-  getCurrentUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        userFirst = data?['firstname'];
-        userLast = data?['lastname'];
-        userMail = data?['email'];
-        userPhone = data?['phone'];
-        walletID = data?['wallet_id'];
-        cardCvv = data?['card_cvv'];
-        cardDigit = data?['card_digit'];
-        cardExpire = data?['card_expire'];
-        walletBalance = data?['wallet_balance'];
-        intWalletBalance = int.tryParse(walletBalance)!;
-      });
-    }
-  }
+  // getCurrentUser() async {
+  //   var collection = FirebaseFirestore.instance.collection('accounts');
+  //   var docSnapshot = await collection.doc(userId).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic>? data = docSnapshot.data();
+  //     setState(() {
+  //       userFirst = data?['firstname'];
+  //       userLast = data?['lastname'];
+  //       userMail = data?['email'];
+  //       userPhone = data?['phone'];
+  //       walletID = data?['wallet_id'];
+  //       cardCvv = data?['card_cvv'];
+  //       cardDigit = data?['card_digit'];
+  //       cardExpire = data?['card_expire'];
+  //       walletBalance = data?['wallet_balance'];
+  //       intWalletBalance = int.tryParse(walletBalance)!;
+  //     });
+  //   }
+  // }
 
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
@@ -141,7 +141,7 @@ class _WalletFundingState extends State<WalletFunding> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    // getCurrentUser();
     setState(() {
       canGoBack = false;
       hasCreatedPayment = false;

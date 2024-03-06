@@ -35,7 +35,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   bool isLoading = false;
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  final ActivitiesController activitiesController = Get.find();
+  // final ActivitiesController activitiesController = Get.find();
   // bool get loading => _isLoading;
   AppController(this.appRepository) : super(const AsyncLoading());
 

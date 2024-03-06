@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/rent_controller.dart';
+import '../../controller/rent/rent_controller.dart';
 import '../colors.dart';
 
 class CustomTransactionDetailsCard extends StatefulWidget {
@@ -23,7 +23,7 @@ class _CustomTransactionDetailsCardState
       print('rentController.rent[widget.current].hasPaid');
     }
     if (kDebugMode) {
-      print(rentController.rent[widget.current].id);
+      print(rentController.rentModel!.rents![widget.current].id);
     }
   }
 

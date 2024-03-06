@@ -131,26 +131,26 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     }
   }
 
-  Future<void> _showAnnouncementNotification(String title, String body) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      'announcement_channel_id',
-      'Announcement Notifications',
-      channelDescription: 'Notifications for announcements',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+  // Future<void> _showAnnouncementNotification(String title, String body) async {
+  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  //       AndroidNotificationDetails(
+  //     'announcement_channel_id',
+  //     'Announcement Notifications',
+  //     channelDescription: 'Notifications for announcements',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //   );
+  //   const NotificationDetails platformChannelSpecifics =
+  //       NotificationDetails(android: androidPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.show(
-      id++,
-      title,
-      body,
-      platformChannelSpecifics,
-      payload: 'item x',
-    );
-  }
+  //   await flutterLocalNotificationsPlugin.show(
+  //     id++,
+  //     title,
+  //     body,
+  //     platformChannelSpecifics,
+  //     payload: 'item x',
+  //   );
+  // }
 
   // final CollectionReference notifications =
   //     FirebaseFirestore.instance.collection('notifications');
@@ -954,47 +954,41 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Account Activities",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Transaction Histories",
+                        style: GoogleFonts.nunito(
+                          fontSize: 16.0.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(AllActivities(
+                              ));
+                        },
+                        child: Text(
+                          "See all",
                           style: GoogleFonts.nunito(
-                            fontSize: 16.0.sp,
+                            fontSize: 14.0.sp,
+                            // letterSpacing: 1.0,
+                            // fontFamily: "DefaultFontFamily",
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(AllActivities(
-                                // activities: userInfo[0].activities.id,
-                                // activitiesLength:
-                                //     userInfo[0].activities.length,
-                                ));
-                          },
-                          child: Text(
-                            "See all",
-                            style: GoogleFonts.nunito(
-                              fontSize: 14.0.sp,
-                              // letterSpacing: 1.0,
-                              // fontFamily: "DefaultFontFamily",
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context).primaryColor,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   // Text(activitiesController.activitiesModel!.activities![0].description),
-                  userController.userModel!.userDetails![0].activities
+                  userController.userModel!.userDetails![0].walletHistories
                           .obs()
                           .isNotEmpty
                       ? ListView.builder(
@@ -1002,47 +996,75 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemCount: (userController
-                                  .userModel!.userDetails![0].activities
+                                  .userModel!.userDetails![0].walletHistories
                                   .obs()
                                   .isEmpty)
                               ? userController.userModel!.userDetails![0]
-                                      .activities.length -
+                                      .walletHistories.length -
                                   1
                               : 1,
                           itemBuilder: (BuildContext context, int index) {
                             int reversedIndex = userController
-                                    .userModel!.userDetails![0].activities
+                                    .userModel!.userDetails![0].walletHistories
                                     .obs()
                                     .length -
                                 1 -
                                 index;
                             // Access the activities in reverse order
                             final activity = userController.userModel!
-                                .userDetails![0].activities[reversedIndex];
-                            return Container(
-                              color: Theme.of(context).canvasColor,
-                              padding:
-                                  const EdgeInsets.fromLTRB(10.0, 10, 10.0, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                .userDetails![0].walletHistories[reversedIndex];
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              minLeadingWidth: 0,
+                              leading: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_outward_sharp,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Image.asset(
-                                    'assets/icons/iconset/Group462.png',
-                                    height: 40,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
                                   Text(
-                                    activity['description'],
+                                    "${activity['description']} ",
                                     style: GoogleFonts.nunito(
-                                      fontSize: 14,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
                                       color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
+                              subtitle: Text(
+                                formatDateTime(activity['createdAt']),
+                                style: GoogleFonts.nunito(
+                                  fontSize: 14,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              trailing:
+                                  (activity['transactionType'] == 'Credit')
+                                      ? Text(
+                                          "+ ${nairaFormaet.format(activity['amount'])}",
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.green,
+                                          ),
+                                        )
+                                      : Text(
+                                          "- ${nairaFormaet.format(activity['amount'])}",
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.red,
+                                          ),
+                                        ),
                             );
                           },
                         )
@@ -1050,9 +1072,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           padding: const EdgeInsets.all(15.0),
                           child: Center(
                             child: Text(
-                              "No Activites Yet",
+                              "No Wallet Transactions Yet",
                               style: GoogleFonts.nunito(
-                                fontSize: 20,
+                                fontSize: 16.sp,
                                 // fontFamily: "DefaultFontFamily",
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -1136,92 +1158,93 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 ],
                               ),
                             ),
-                            const MySeparator(),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(const KYCIntroPage());
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    (userController.userModel!.userDetails![0]
-                                                .hasVerifiedKyc
-                                                .obs() ==
-                                            false)
-                                        ? Iconsax.verify
-                                        : Iconsax.verify5,
-                                    color: brandOne,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'KYC Setup',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      color: brandOne,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // const MySeparator(),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Get.to(const KYCIntroPage());
+                            //   },
+                            //   child: Row(
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     children: [
+                            //       Icon(
+                            //         (userController.userModel!.userDetails![0]
+                            //                     .hasVerifiedKyc
+                            //                     .obs() ==
+                            //                 false)
+                            //             ? Iconsax.verify
+                            //             : Iconsax.verify5,
+                            //         color: brandOne,
+                            //       ),
+                            //       const SizedBox(
+                            //         width: 10,
+                            //       ),
+                            //       Text(
+                            //         'KYC Setup',
+                            //         textAlign: TextAlign.center,
+                            //         style: GoogleFonts.nunito(
+                            //           color: brandOne,
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.w600,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                         
                           ],
                         ),
                       ),
                     ),
                   ),
 
-                  (userController.userModel!.userDetails![0].bvn.obs() != "" &&
-                          userController.userModel!.userDetails![0].hasDva
-                                  .obs() ==
-                              false)
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: brandThree,
-                            ),
-                            child: ListTile(
-                              onTap: () {
-                                Get.to(const CreateDVA());
-                              },
-                              leading: const Icon(
-                                Icons.person_add_outlined,
-                                color: Colors.black,
-                              ),
-                              title: Text(
-                                "Activate DVA",
-                                style: GoogleFonts.nunito(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "Free Dynamic Virtual Account (DVA)",
-                                style: GoogleFonts.nunito(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              trailing: const Icon(
-                                Icons.arrow_right_outlined,
-                                color: Colors.black,
-                              ),
-                              tileColor: Colors.white,
-                            ),
-                          ),
-                        )
-                      : const SizedBox(
-                          height: 1,
-                        ),
+                  // (userController.userModel!.userDetails![0].bvn.obs() != "" &&
+                  //         userController.userModel!.userDetails![0].hasDva
+                  //                 .obs() ==
+                  //             false)
+                  //     ? Padding(
+                  //         padding: const EdgeInsets.only(top: 20),
+                  //         child: Container(
+                  //           padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                  //           width: MediaQuery.of(context).size.width,
+                  //           decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //             color: brandThree,
+                  //           ),
+                  //           child: ListTile(
+                  //             onTap: () {
+                  //               Get.to(const CreateDVA());
+                  //             },
+                  //             leading: const Icon(
+                  //               Icons.person_add_outlined,
+                  //               color: Colors.black,
+                  //             ),
+                  //             title: Text(
+                  //               "Activate DVA",
+                  //               style: GoogleFonts.nunito(
+                  //                 fontSize: 15.0,
+                  //                 fontWeight: FontWeight.w800,
+                  //                 color: Colors.black,
+                  //               ),
+                  //             ),
+                  //             subtitle: Text(
+                  //               "Free Dynamic Virtual Account (DVA)",
+                  //               style: GoogleFonts.nunito(
+                  //                 fontSize: 14.0,
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.w500,
+                  //               ),
+                  //             ),
+                  //             trailing: const Icon(
+                  //               Icons.arrow_right_outlined,
+                  //               color: Colors.black,
+                  //             ),
+                  //             tileColor: Colors.white,
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : const SizedBox(
+                  //         height: 1,
+                  //       ),
 
                   SizedBox(
                     height: 20.h,
@@ -2036,5 +2059,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     subscription.cancel();
     // valueNotifier.dispose();
     super.dispose();
+  }
+
+  String formatDateTime(String dateTimeString) {
+    // Parse the date string into a DateTime object
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    // Define the date format you want
+    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
+
+    // Format the DateTime object into a string
+    String formattedDateTime = formatter.format(dateTime);
+
+    return formattedDateTime;
   }
 }

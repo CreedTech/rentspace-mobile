@@ -132,7 +132,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       appBar: AppBar(
         // toolbarHeight: 105.0,
         backgroundColor: ((rentController
-                    .rentModel!.rents![widget.current].paidAmount) !=
+                    .rentModel!.rents![widget.current].paidAmount)  <=
                 (rentController.rentModel!.rents![widget.current].amount * 0.7))
             ? Theme.of(context).primaryColorLight
             : Theme.of(context).canvasColor,
@@ -145,7 +145,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
             Icons.arrow_back,
             size: 30,
             color: ((rentController
-                        .rentModel!.rents![widget.current].paidAmount) !=
+                        .rentModel!.rents![widget.current].paidAmount)  <=
                     (rentController.rentModel!.rents![widget.current].amount *
                         0.7))
                 ? Colors.white
@@ -157,7 +157,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           'Space Rent',
           style: GoogleFonts.nunito(
             color: ((rentController
-                        .rentModel!.rents![widget.current].paidAmount) !=
+                        .rentModel!.rents![widget.current].paidAmount)  <=
                     (rentController.rentModel!.rents![widget.current].amount *
                         0.7))
                 ? Colors.white
@@ -169,7 +169,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       ),
       //
       body: Obx(
-        () => ((rentController.rentModel!.rents![widget.current].paidAmount) !=
+        () => ((rentController.rentModel!.rents![widget.current].paidAmount)  <=
                 (rentController.rentModel!.rents![widget.current].amount.obs *
                     0.7))
             ? SingleChildScrollView(
@@ -679,31 +679,65 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                     height: 70.h,
                   ),
                   // Spacer(),
-                  Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 50),
-                        backgroundColor: brandOne,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            10,
+                  Column(
+                    children: [
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            backgroundColor: Colors.white,
+                            elevation: 0,
+                          
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: brandOne),
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Get.to(const LoanPage());
+                          },
+                          child: Text(
+                            'Continue Saving',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              color: brandOne,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        Get.to(const LoanPage());
-                      },
-                      child: Text(
-                        'Take Loan',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                  SizedBox(height: 10.h,),
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            backgroundColor: brandOne,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Get.to(const LoanPage());
+                          },
+                          child: Text(
+                            'Take Loan',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                  
+                    ],
                   )
                   // Spacer(),
                 ],
@@ -711,7 +745,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       ),
 
       backgroundColor: ((rentController
-                  .rentModel!.rents![widget.current].paidAmount) !=
+                  .rentModel!.rents![widget.current].paidAmount)  <=
               (rentController.rentModel!.rents![widget.current].amount * 0.7))
           ? Theme.of(context).primaryColorLight
           : Theme.of(context).canvasColor,

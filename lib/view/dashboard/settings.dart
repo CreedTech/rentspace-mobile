@@ -85,6 +85,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     uploadImg(context);
   }
 
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
+
   uploadImage(BuildContext context, File imageFile) async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
@@ -107,6 +115,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
       EasyLoading.dismiss();
       print('Image uploaded successfully');
       Get.back();
+
+      refreshController.refreshCompleted();
+      if (mounted) {
+        setState(() {
+          isRefresh = true;
+        });
+      }
+
       showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.success(
@@ -119,7 +135,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
           ),
         ),
       );
-      userController.fetchData();
+      await fetchUserData(refresh: true);
       // Get.to(FirstPage());
     } else {
       EasyLoading.dismiss();
@@ -366,17 +382,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     }
     userController.fetchData();
 
-    // final result = await getWalletData(refresh: true);
-    // if (result == true) {
-    //   if (mounted) {
-    //     setState(() {
-    //       isRefresh = false;
-    //     });
-    //   }
-    // } else {
-    //   refreshController.refreshFailed();
-    // }
-    // }
   }
 
   @override
@@ -865,42 +870,43 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               //   ),
               // ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    child: const Icon(
-                      Iconsax.card,
-                      color: brandOne,
-                    ),
-                  ),
-                  title: Text(
-                    'Bank & Card Details',
-                    style: GoogleFonts.nunito(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  onTap: () {
-                    if (userController.userModel!.userDetails![0].cardCVV ==
-                        '') {
-                      Get.to(const AddCard());
-                    } else {
-                      Get.to(BankAndCard());
-                    }
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 7),
+              //   child: ListTile(
+              //     leading: Container(
+              //       padding: const EdgeInsets.all(9),
+              //       decoration: BoxDecoration(
+              //         shape: BoxShape.circle,
+              //         color: Theme.of(context).cardColor,
+              //       ),
+              //       child: const Icon(
+              //         Iconsax.card,
+              //         color: brandOne,
+              //       ),
+              //     ),
+              //     title: Text(
+              //       'Bank & Card Details',
+              //       style: GoogleFonts.nunito(
+              //         color: Theme.of(context).primaryColor,
+              //         fontSize: 17,
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //     onTap: () {
+              //       if (userController.userModel!.userDetails![0].cardCVV ==
+              //           '') {
+              //         Get.to(const AddCard());
+              //       } else {
+              //         Get.to(BankAndCard());
+              //       }
+              //     },
+              //     trailing: Icon(
+              //       Iconsax.arrow_right_3,
+              //       color: Theme.of(context).primaryColor,
+              //     ),
+              //   ),
+              // ),
+              
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: ListTile(

@@ -28,18 +28,18 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   // final RoundedLoadingButtonController _btnController =
   //     RoundedLoadingButtonController();
   final forgotPassFormKey = GlobalKey<FormState>();
-  void _doSomething() async {
-    // Timer(const Duration(seconds: 1), () {
-    //   _btnController.stop();
-    // });
+  // void _doSomething() async {
+  //   // Timer(const Duration(seconds: 1), () {
+  //   //   _btnController.stop();
+  //   // });
 
-    if (forgotPassFormKey.currentState!.validate()) {
-      authController.reset(context, _emailController.text.trim());
-      setState(() {
-        _emailController.clear();
-      });
-    }
-  }
+  //   if (forgotPassFormKey.currentState!.validate()) {
+  //     authController.reset(context, _emailController.text.trim());
+  //     setState(() {
+  //       _emailController.clear();
+  //     });
+  //   }
+  // }
 
   @override
   initState() {

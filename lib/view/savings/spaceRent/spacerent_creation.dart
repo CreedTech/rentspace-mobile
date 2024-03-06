@@ -14,6 +14,7 @@ import '../../../constants/colors.dart';
 import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/app_controller.dart';
 import '../../../controller/auth/user_controller.dart';
+import '../../actions/fund_wallet.dart';
 
 class SpaceRentCreation extends ConsumerStatefulWidget {
   const SpaceRentCreation({super.key});
@@ -843,7 +844,131 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 // print(fundingController.text);
                                                 print(_rentValue);
                                                 print(durationType);
-                                                rentState.createRent(
+                                                if (userController
+                                                        .userModel!
+                                                        .userDetails![0]
+                                                        .wallet
+                                                        .mainBalance <
+                                                    _savingValue) {
+                                                  Get.back();
+                                                  showDialog(
+                                                      context: context,
+                                                      barrierDismissible: true,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            AlertDialog(
+                                                              contentPadding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      30,
+                                                                      30,
+                                                                      30,
+                                                                      20),
+                                                              elevation: 0,
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
+                                                              insetPadding:
+                                                                  const EdgeInsets
+                                                                      .all(0),
+                                                              scrollable: true,
+                                                              title: null,
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          30),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          30),
+                                                                ),
+                                                              ),
+                                                              content: SizedBox(
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical:
+                                                                                40),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.symmetric(vertical: 15),
+                                                                              child: Align(
+                                                                                alignment: Alignment.topCenter,
+                                                                                child: Text(
+                                                                                  'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: GoogleFonts.nunito(
+                                                                                    color: brandOne,
+                                                                                    fontSize: 16,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.symmetric(vertical: 10),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.all(3),
+                                                                                    child: ElevatedButton(
+                                                                                      onPressed: () {
+                                                                                        Get.back();
+                                                                                        Get.to(const FundWallet());
+                                                                                      },
+                                                                                      style: ElevatedButton.styleFrom(
+                                                                                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                                                                                        shape: RoundedRectangleBorder(
+                                                                                          borderRadius: BorderRadius.circular(8),
+                                                                                        ),
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                                                                                        textStyle: const TextStyle(color: brandFour, fontSize: 13),
+                                                                                      ),
+                                                                                      child: const Text(
+                                                                                        "Fund Wallet",
+                                                                                        style: TextStyle(
+                                                                                          color: Colors.white,
+                                                                                          fontWeight: FontWeight.w700,
+                                                                                          fontSize: 16,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(
+                                                                                    height: 10,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        );
+                                                      });
+                                                } else {
+                                                  rentState.createRent(
                                                     context,
                                                     _rentNameController.text,
                                                     _endDateController.text,
@@ -851,28 +976,11 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                     _savingValue,
                                                     _rentValue,
                                                     paymentCount,
-                                                   DateFormat('dd/MM/yyyy')
-                                                    .format(DateTime.now()),
+                                                    DateFormat('dd/MM/yyyy')
+                                                        .format(DateTime.now()),
                                                     // fundingController.text,
-                                                    );
-
-                                                // Get.to(
-                                                //     SpaceRentFunding(
-                                                //   amount: _dailyValue
-                                                //       .toInt(),
-                                                //   date:
-                                                //       formattedDate,
-                                                //   interval:
-                                                //       'daily',
-                                                //   numPayment:
-                                                //       0,
-                                                //   refId:
-                                                //       _rentSpaceID,
-                                                //   userID:
-                                                //       _id,
-                                                // ));
-
-                                                // resetCalculator();
+                                                  );
+                                                }
                                               },
                                               child: Text(
                                                 'Create Space Rent',

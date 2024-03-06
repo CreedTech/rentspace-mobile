@@ -4,7 +4,9 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
@@ -44,6 +46,9 @@ bool hideBalance = false;
 bool _isLoading = false.obs();
 
 class _RentSpaceListState extends State<RentSpaceList> {
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  bool isRefresh = false;
   final RentController rentController = Get.find();
 
   getSavings() {
@@ -77,7 +82,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
     getSavings();
   }
 
-  Future<void> fetchRentData() async {
+  Future<void> fetchRentData({bool refresh = true}) async {
     setState(() {
       _isLoading = true;
     });
@@ -96,6 +101,17 @@ class _RentSpaceListState extends State<RentSpaceList> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
+    if (mounted) {
+      setState(() {
+        isRefresh = true;
+      });
+    }
+    rentController.fetchRent();
   }
 
   @override
@@ -125,511 +141,519 @@ class _RentSpaceListState extends State<RentSpaceList> {
             ? const Center(
                 child: CustomLoader(),
               )
-            : SafeArea(
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Total Rent Balance',
-                                style: GoogleFonts.nunito(
-                                  color: brandOne,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    hideBalance = !hideBalance;
-                                  });
-                                },
-                                child: Icon(
-                                  hideBalance ? Iconsax.eye : Iconsax.eye_slash,
-                                  color: brandOne,
-                                  size: 20.h,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.sp,
-                          ),
-                          Text(
-                            " ${hideBalance ? ch8t.format(totalSavings) : "****"}",
-                            style: GoogleFonts.nunito(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 24.sp,
-                                color: brandOne),
-                          ),
-                          SizedBox(
-                            height: 10.sp,
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: (rentController.rentModel!.rents!.isEmpty)
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Image.asset(
-                                    'assets/card_empty.png',
-                                    height: 200,
+            : LiquidPullToRefresh(
+        height: 100,
+        animSpeedFactor: 2,
+        color: brandOne,
+        backgroundColor: Colors.white,
+        showChildOpacityTransition: false,
+        onRefresh: onRefresh,
+              child: SafeArea(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Total Rent Balance',
+                                  style: GoogleFonts.nunito(
+                                    color: brandOne,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                  Center(
-                                    child: Text(
-                                      "Nothing to show",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 20,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.bold,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      hideBalance = !hideBalance;
+                                    });
+                                  },
+                                  child: Icon(
+                                    hideBalance ? Iconsax.eye : Iconsax.eye_slash,
+                                    color: brandOne,
+                                    size: 20.h,
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.sp,
+                            ),
+                            Text(
+                              " ${hideBalance ? ch8t.format(totalSavings) : "****"}",
+                              style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 24.sp,
+                                  color: brandOne),
+                            ),
+                            SizedBox(
+                              height: 10.sp,
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: (rentController.rentModel!.rents!.isEmpty)
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Image.asset(
+                                      'assets/card_empty.png',
+                                      height: 200,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "Nothing to show",
+                                        style: GoogleFonts.nunito(
+                                          fontSize: 20,
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                physics: const ClampingScrollPhysics(),
-                                itemCount: rentController
-                                    .rentModel!.rents!.length
-                                    .obs(),
-                                itemBuilder: (context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.to(SpaceRentPage(
-                                        current: index,
-                                      ));
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(bottom: 20.h),
-                                      padding: EdgeInsets.all(30.w),
-                                      decoration: BoxDecoration(
-                                        color: brandTwo.withOpacity(0.1),
-                                        borderRadius:
-                                            BorderRadius.circular(15.r),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Flexible(
-                                                  // flex: 6,
-                                                  child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        rentController
-                                                            .rentModel!
-                                                            .rents![index]
-                                                            .rentName,
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                                fontSize: 15.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color:
-                                                                    brandOne),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      (rentController
-                                                                  .rentModel!
-                                                                  .rents![index]
-                                                                  .hasPaid ==
-                                                              true)
-                                                          ? Tooltip(
-                                                              preferBelow:
-                                                                  false,
-                                                              message:
-                                                                  'Active Payment',
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: brandOne
-                                                                    .withOpacity(
-                                                                        0.9),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
+                                  ],
+                                )
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: rentController
+                                      .rentModel!.rents!.length
+                                      .obs(),
+                                  itemBuilder: (context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.to(SpaceRentPage(
+                                          current: index,
+                                        ));
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(bottom: 20.h),
+                                        padding: EdgeInsets.all(30.w),
+                                        decoration: BoxDecoration(
+                                          color: brandTwo.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(15.r),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                    // flex: 6,
+                                                    child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          rentController
+                                                              .rentModel!
+                                                              .rents![index]
+                                                              .rentName,
+                                                          style:
+                                                              GoogleFonts.nunito(
+                                                                  fontSize: 15.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color:
+                                                                      brandOne),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5.w,
+                                                        ),
+                                                        (rentController
+                                                                    .rentModel!
+                                                                    .rents![index]
+                                                                    .hasPaid ==
+                                                                true)
+                                                            ? Tooltip(
+                                                                preferBelow:
+                                                                    false,
+                                                                message:
+                                                                    'Active Payment',
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: brandOne
+                                                                      .withOpacity(
+                                                                          0.9),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20),
+                                                                ),
+                                                                child: const Icon(
+                                                                  Iconsax.verify5,
+                                                                  color: Colors
+                                                                      .green,
+                                                                  size: 20,
+                                                                ),
+                                                              )
+                                                            : Tooltip(
+                                                                preferBelow:
+                                                                    false,
+                                                                message:
+                                                                    'Inactive Payment',
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: brandOne
+                                                                      .withOpacity(
+                                                                          0.9),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20),
+                                                                ),
+                                                                child: const Icon(
+                                                                  Iconsax
+                                                                      .info_circle5,
+                                                                  color:
+                                                                      Colors.red,
+                                                                  size: 20,
+                                                                ),
                                                               ),
-                                                              child: const Icon(
-                                                                Iconsax.verify5,
-                                                                color: Colors
-                                                                    .green,
-                                                                size: 20,
-                                                              ),
-                                                            )
-                                                          : Tooltip(
-                                                              preferBelow:
-                                                                  false,
-                                                              message:
-                                                                  'Inactive Payment',
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: brandOne
-                                                                    .withOpacity(
-                                                                        0.9),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
-                                                              ),
-                                                              child: const Icon(
-                                                                Iconsax
-                                                                    .info_circle5,
-                                                                color:
-                                                                    Colors.red,
-                                                                size: 20,
-                                                              ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                AutoSizeText(
+                                                                  hideBalance
+                                                                      ? ch8t.format(rentController
+                                                                          .rentModel!
+                                                                          .rents![
+                                                                              index]
+                                                                          .amount)
+                                                                      : "****",
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                                AutoSizeText(
+                                                                  'Target Amount',
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.h,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                hideBalance
-                                                                    ? ch8t.format(rentController
-                                                                        .rentModel!
-                                                                        .rents![
-                                                                            index]
-                                                                        .amount)
-                                                                    : "****",
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                AutoSizeText(
+                                                                  hideBalance
+                                                                      ? ch8t.format(rentController
+                                                                          .rentModel!
+                                                                          .rents![
+                                                                              index]
+                                                                          .paidAmount)
+                                                                      : "****",
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              AutoSizeText(
-                                                                'Target Amount',
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
+                                                                AutoSizeText(
+                                                                  'Saved',
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                AutoSizeText(
+                                                                  _calculateDaysDifference(rentController
+                                                                          .rentModel!
+                                                                          .rents![
+                                                                              index]
+                                                                          .dueDate)
+                                                                      .toString(),
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                                AutoSizeText(
+                                                                  'Days Left',
+                                                                  maxLines: 2,
+                                                                  minFontSize:
+                                                                      2.0,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .nunito(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.h,
+                                                    ),
+                                                    const MySeparator(),
+                                                    SizedBox(
+                                                      height: 5.h,
+                                                    ),
+                                                    LinearPercentIndicator(
+                                                      animateFromLastPercent:
+                                                          true,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      trailing: Container(
+                                                        padding: const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 5),
+                                                        decoration: BoxDecoration(
+                                                          color: Theme.of(context)
+                                                              .colorScheme
+                                                              .secondary,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(100),
+                                                        ),
+                                                        child: Text(
+                                                          ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
+                                                          style:
+                                                              GoogleFonts.nunito(
+                                                            color: Colors.white,
                                                           ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                hideBalance
-                                                                    ? ch8t.format(rentController
-                                                                        .rentModel!
-                                                                        .rents![
-                                                                            index]
-                                                                        .paidAmount)
-                                                                    : "****",
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                              AutoSizeText(
-                                                                'Saved',
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                _calculateDaysDifference(rentController
-                                                                        .rentModel!
-                                                                        .rents![
-                                                                            index]
-                                                                        .dueDate)
-                                                                    .toString(),
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                              AutoSizeText(
-                                                                'Days Left',
-                                                                maxLines: 2,
-                                                                minFontSize:
-                                                                    2.0,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .nunito(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5.h,
-                                                  ),
-                                                  const MySeparator(),
-                                                  SizedBox(
-                                                    height: 5.h,
-                                                  ),
-                                                  LinearPercentIndicator(
-                                                    animateFromLastPercent:
-                                                        true,
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    trailing: Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 5),
-                                                      decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .secondary,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(100),
-                                                      ),
-                                                      child: Text(
-                                                        ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
-                                                        style:
-                                                            GoogleFonts.nunito(
-                                                          color: Colors.white,
                                                         ),
                                                       ),
+              
+                                                      // Text(
+                                                      //   ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
+                                                      //   style: GoogleFonts.nunito(
+                                                      //     fontSize:
+                                                      //         MediaQuery.of(context)
+                                                      //                 .size
+                                                      //                 .width /
+                                                      //             30,
+                                                      //     fontWeight: FontWeight.w700,
+                                                      //     color: brandOne,
+                                                      //   ),
+                                                      // ),
+              
+                                                      percent: ((rentController
+                                                                  .rentModel!
+                                                                  .rents![index]
+                                                                  .paidAmount /
+                                                              rentController
+                                                                  .rentModel!
+                                                                  .rents![index]
+                                                                  .amount))
+                                                          .toDouble(),
+                                                      animation: true,
+                                                      barRadius:
+                                                          const Radius.circular(
+                                                              10.0),
+                                                      lineHeight:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              40,
+                                                      fillColor:
+                                                          Colors.transparent,
+                                                      progressColor: brandTwo,
                                                     ),
-
-                                                    // Text(
-                                                    //   ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
-                                                    //   style: GoogleFonts.nunito(
-                                                    //     fontSize:
-                                                    //         MediaQuery.of(context)
-                                                    //                 .size
-                                                    //                 .width /
-                                                    //             30,
-                                                    //     fontWeight: FontWeight.w700,
-                                                    //     color: brandOne,
-                                                    //   ),
-                                                    // ),
-
-                                                    percent: ((rentController
-                                                                .rentModel!
-                                                                .rents![index]
-                                                                .paidAmount /
-                                                            rentController
-                                                                .rentModel!
-                                                                .rents![index]
-                                                                .amount))
-                                                        .toDouble(),
-                                                    animation: true,
-                                                    barRadius:
-                                                        const Radius.circular(
-                                                            10.0),
-                                                    lineHeight:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            40,
-                                                    fillColor:
-                                                        Colors.transparent,
-                                                    progressColor: brandTwo,
-                                                  ),
-                                                ],
-                                              )),
-                                            ],
-                                          ),
-                                          // SizedBox(
-                                          //   height: 15.h,
-                                          // ),
-                                          // Row(
-                                          //   mainAxisAlignment:
-                                          //       MainAxisAlignment.end,
-                                          //   children: [
-                                          //     Text(
-                                          //       formatDateTime(rentController
-                                          //           .rentModel!.rents![index].date),
-                                          //       style: GoogleFonts.nunito(
-                                          //         color: brandOne,
-                                          //       ),
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                        ],
+                                                  ],
+                                                )),
+                                              ],
+                                            ),
+                                            // SizedBox(
+                                            //   height: 15.h,
+                                            // ),
+                                            // Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.end,
+                                            //   children: [
+                                            //     Text(
+                                            //       formatDateTime(rentController
+                                            //           .rentModel!.rents![index].date),
+                                            //       style: GoogleFonts.nunito(
+                                            //         color: brandOne,
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                          ),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(350, 50),
-                              backgroundColor: brandOne,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  10,
+                                    );
+                                  },
+                                ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                            ),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(350, 50),
+                                backgroundColor: brandOne,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
                                 ),
                               ),
-                            ),
-                            onPressed: () {
-                              Get.to(SpaceRentCreation());
-                            },
-                            child: Text(
-                              'Create New Space rent',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
-                                  fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              onPressed: () {
+                                Get.to(SpaceRentCreation());
+                              },
+                              child: Text(
+                                'Create New Space rent',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunito(
+                                    fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+            ),
       ),
     );
   }

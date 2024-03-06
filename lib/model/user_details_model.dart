@@ -131,6 +131,7 @@ class UserDetailsModel {
   final String rentspaceID;
   final String avatar;
   final List<dynamic> activities;
+  final List<dynamic> walletHistories;
   final Wallet wallet;
 
   UserDetailsModel({
@@ -193,6 +194,7 @@ class UserDetailsModel {
     // required this.referalId,
     required this.wallet,
     required this.activities,
+    required this.walletHistories,
   });
 
   factory UserDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -257,6 +259,7 @@ class UserDetailsModel {
         // activities: Activities.fromJson(json["activities"]),
         wallet: Wallet.fromJson(json["wallet"]),
         activities: json["activities"],
+        walletHistories: json["walletHistories"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -317,6 +320,7 @@ class UserDetailsModel {
         // "card_holder": cardHolder,
         // "account_number": accountNumber,
         "activities": activities,
+        "walletHistories": walletHistories,
         "wallet": wallet.toJson(),
       };
 }

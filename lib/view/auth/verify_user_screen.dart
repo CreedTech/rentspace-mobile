@@ -187,7 +187,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   ),
                                 ),
                                 Text(
-                                  'Enter a six-digit OTP sent to the provided email address',
+                                  'Enter a four-digit OTP sent to the provided email address',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.nunito(
                                     color: Theme.of(context).primaryColor,

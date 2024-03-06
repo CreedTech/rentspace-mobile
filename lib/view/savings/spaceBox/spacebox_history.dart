@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/box_controller.dart';
@@ -22,14 +22,14 @@ class SpaceBoxHistory extends StatefulWidget {
 }
 
 class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
-  final BoxController boxController = Get.find();
+  // final BoxController boxController = Get.find();
   List _payments = [];
 
   @override
   initState() {
     super.initState();
     setState(() {
-      _payments = boxController.box[widget.current].history.reversed.toList();
+      // _payments = boxController.box[widget.current].history.reversed.toList();
     });
   }
 
@@ -86,63 +86,64 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
             SizedBox(
               height: 30,
             ),
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: boxController.box[widget.current].history.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (boxController.box[widget.current].history.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "Nothing to show",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: "DefaultFontFamily",
-                        color: brandOne,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          color: Colors.transparent,
-                          padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.radio_button_checked_outlined,
-                                color: Theme.of(context).primaryColor,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                _payments[index],
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
+            // ListView.builder(
+            //   scrollDirection: Axis.vertical,
+            //   shrinkWrap: true,
+            //   physics: ClampingScrollPhysics(),
+            //   itemCount: boxController.box[widget.current].history.length,
+            //   itemBuilder: (BuildContext context, int index) {
+            //     if (boxController.box[widget.current].history.isEmpty) {
+            //       return Center(
+            //         child: Text(
+            //           "Nothing to show",
+            //           style: TextStyle(
+            //             fontSize: 20,
+            //             fontFamily: "DefaultFontFamily",
+            //             color: brandOne,
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         ),
+            //       );
+            //     } else {
+            //       return Padding(
+            //         padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
+            //         child: Column(
+            //           children: [
+            //             Container(
+            //               color: Colors.transparent,
+            //               padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.start,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.radio_button_checked_outlined,
+            //                     color: Theme.of(context).primaryColor,
+            //                     size: 20,
+            //                   ),
+            //                   SizedBox(
+            //                     width: 10,
+            //                   ),
+            //                   Text(
+            //                     _payments[index],
+            //                     style: TextStyle(
+            //                       fontSize: 20,
+            //                       color: Theme.of(context).primaryColor,
+            //                       fontFamily: "DefaultFontFamily",
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //             SizedBox(
+            //               height: 5,
+            //             ),
+            //           ],
+            //         ),
+            //       );
+            //     }
+            //   },
+            // ),
+        
           ],
         ),
       ),

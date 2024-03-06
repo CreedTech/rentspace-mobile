@@ -1,15 +1,19 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/controller/wallet_histories_controller.dart';
 import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
@@ -33,10 +37,13 @@ import 'package:upgrader/upgrader.dart';
 
 import 'actions/transaction_pin.dart';
 import 'home_page.dart';
+import 'offline/no_internet_screen.dart';
+import 'offline/something_went_wrong.dart';
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 final UserController userController = Get.find();
-final ActivitiesController activitiesController = Get.find();
+// final ActivitiesController activitiesController = Get.find();
+final WalletHistoriesController walletHistoriesController = Get.find();
 final WalletController walletController = Get.find();
 final RentController rentController = Get.find();
 String _message = "Not Authorized";
@@ -65,9 +72,7 @@ List<Widget> listWidgets = [
   const SettingsPage()
 ];
 
-class CounterNew extends GetxController {
- 
-}
+class CounterNew extends GetxController {}
 
 //Showcase player controller
 
@@ -81,28 +86,87 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
+  late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
+  bool isInternetConnected = true;
   // final UserController userController = Get.find();
   bool _hasPutController = false;
+
+  void checkConnectivity() async {
+    final hasConnection = await InternetConnectionChecker().hasConnection;
+    setState(() {
+      isInternetConnected = hasConnection;
+    });
+
+    // if (isInternetConnected) {
+    //   redirectToAppropriateScreen();
+    // } else {
+    //   showNoInternetScreen();
+    // }
+
+    _connectivitySubscription = InternetConnectionChecker()
+        .onStatusChange
+        .listen((InternetConnectionStatus status) {
+      // if (status == InternetConnectionStatus.connected) {
+      //   redirectToAppropriateScreen();
+      // } else {
+      //   showNoInternetScreen();
+      // }
+    });
+  }
+
+  Future<void> redirectToAppropriateScreen() async {}
 
   @override
   initState() {
     super.initState();
+    checkConnectivity();
     Get.put(UserController());
     Get.put(WalletController());
-    Get.put(ActivitiesController());
+    Get.put(WalletHistoriesController());
     Get.put(RentController());
     Get.put(UtilityController());
+    // Get.put(ActivitiesController());
+    Future.delayed(const Duration(seconds: 2), () {
+      // fetchUserAndSetState();
+      setState(() {
+        _hasPutController = true;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+
+    super.dispose();
+  }
+
+  void onTryAgain() {
+    checkConnectivity();
+  }
+
+  void checkUserInfo() async {
+    userController.fetchData();
+    // final hasConnection = await InternetConnectionChecker().hasConnection;
+    setState(() {
+      userController.userModel != null;
+    });
+  }
+
+  void onReloadAgain() {
+    checkUserInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     Get.put(UserController());
-    Get.put(ActivitiesController());
     Get.put(WalletController());
+    Get.put(WalletHistoriesController());
     Get.put(RentController());
     Get.put(UtilityController());
+    // Get.put(ActivitiesController());
     return Obx(
-      () => (userController.isLoading.value)
+      () => (!_hasPutController.obs())
           ? Scaffold(
               backgroundColor: Theme.of(context).canvasColor,
               body: Container(
@@ -143,55 +207,10 @@ class _FirstPageState extends State<FirstPage> {
                     const SizedBox(
                       height: 30,
                     ),
-
                     const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: SizedBox(),
                     ),
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           screenInfo,
-                    //           style: TextStyle(
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.bold,
-                    //             fontFamily: "DefaultFontFamily",
-                    //             color: Theme.of(context).primaryColor,
-                    //           ),
-                    //         ),
-                    //         const SizedBox(
-                    //           height: 30,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     // const SizedBox(
-                    //     //   height: 50,
-                    //     // ),
-                    //     const CircularProgressIndicator(
-                    //       color: brandOne,
-                    //     ),
-                    //     const SizedBox(
-                    //       height: 50,
-                    //     ),
-                    //     (_canShowAuth)
-                    //         ? GFButton(
-                    //             onPressed: () {
-                    //               checkingForBioMetrics();
-                    //             },
-                    //             text: "   Authenticate    ",
-                    //             shape: GFButtonShape.pills,
-                    //           )
-                    //         : const SizedBox(),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -300,12 +319,15 @@ class _FirstPageState extends State<FirstPage> {
                       });
                 },
                 builder: Builder(
-                  builder: (context) => (userController
-                              .userModel!.userDetails![0].isPinSet
-                              .obs() ==
-                          false)
-                      ? const TransactionPin()
-                      : const HomePage(),
+                  builder: (context) => (isInternetConnected)
+                      ? (userController.userModel == null)
+                          ? SomethingWentWrong(onTap: onReloadAgain)
+                          : (userController.userModel!.userDetails![0].isPinSet
+                                      .obs() ==
+                                  false)
+                              ? const TransactionPin()
+                              : const HomePage()
+                      : No_internetScreen(onTap: onTryAgain),
                 ),
               ),
             ),

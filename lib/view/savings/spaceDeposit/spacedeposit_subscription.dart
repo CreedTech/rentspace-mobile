@@ -14,7 +14,7 @@ import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'dart:math';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:typewritertext/typewritertext.dart';
@@ -73,22 +73,22 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           ),
         ),
       );
-  getCurrentUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _userFirst = data?['firstname'];
-        _userLast = data?['lastname'];
-        _userAddress = data?['address'];
-        _userMail = data?['email'];
-        _userID = data?['rentspace_id'];
-        _id = data?['id'];
-        _rentSpaceID = getRandom(20);
-      });
-    }
-  }
+  // getCurrentUser() async {
+  //   var collection = FirebaseFirestore.instance.collection('accounts');
+  //   var docSnapshot = await collection.doc(userId).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic>? data = docSnapshot.data();
+  //     setState(() {
+  //       _userFirst = data?['firstname'];
+  //       _userLast = data?['lastname'];
+  //       _userAddress = data?['address'];
+  //       _userMail = data?['email'];
+  //       _userID = data?['rentspace_id'];
+  //       _id = data?['id'];
+  //       _rentSpaceID = getRandom(20);
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -104,7 +104,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       _planNameController.clear();
       _planDurationController.clear();
     });
-    getCurrentUser();
+    // getCurrentUser();
   }
 
   @override
@@ -700,406 +700,407 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-            child: ListView(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Let's get you started$varValue",
-                  style: GoogleFonts.nunito(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    // letterSpacing: 0.5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
-                              child: Text(
-                                'Name of Saving',
-                                style: GoogleFonts.nunito(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ),
-                            planName,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
-                              child: Text(
-                                'Target Amount',
-                                style: GoogleFonts.nunito(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ),
-                            autoAmount,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
-                              child: Text(
-                                'Saving Frequency',
-                                style: GoogleFonts.nunito(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ),
-                            durationOption,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
-                              child: Text(
-                                'Saving Frequency',
-                                style: GoogleFonts.nunito(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  // fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ),
-                            planDuration,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum$varValue",
-                          style: GoogleFonts.nunito(
-                            fontSize: 14,
-                            //height: 1.5,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        Text(
-                          interestText,
-                          style: GoogleFonts.nunito(
-                            fontSize: 14,
-                            //height: 1.5,
-                            color: Colors.red,
-                          ),
-                        ),
-                        (showNotice)
-                            ? Text(
-                                amountNotice,
-                                style: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  //height: 1.5,
-                                  color: Colors.red,
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        (showSaveButton)
-                            ? ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(300, 50),
-                                  maximumSize: const Size(400, 50),
-                                  backgroundColor: brandOne,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      10,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: (_planNameController.text.trim() !=
-                                            "" &&
-                                        ((validateAmount(
-                                                    _depositAmountController
-                                                        .text
-                                                        .trim()) ==
-                                                "") &&
-                                            (validateDuration(
-                                                    _planDurationController.text
-                                                        .trim()) ==
-                                                "")))
-                                    ? () async {
-                                        Timer(const Duration(seconds: 1), () {
-                                          _depositController.stop();
-                                        });
-                                        var userUpdate = FirebaseFirestore
-                                            .instance
-                                            .collection('accounts');
-                                        var updateDeposit = FirebaseFirestore
-                                            .instance
-                                            .collection('spacedeposit');
+      // body: Stack(
+      //   children: [
+      //     Padding(
+      //       padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+      //       child: ListView(
+      //         shrinkWrap: true,
+      //         physics: const ClampingScrollPhysics(),
+      //         children: [
+      //           const SizedBox(
+      //             height: 10,
+      //           ),
+      //           Text(
+      //             "Let's get you started$varValue",
+      //             style: GoogleFonts.nunito(
+      //               fontSize: 20.sp,
+      //               fontWeight: FontWeight.bold,
+      //               // letterSpacing: 0.5,
+      //               color: Theme.of(context).primaryColor,
+      //             ),
+      //           ),
+      //           const SizedBox(
+      //             height: 20,
+      //           ),
+      //           Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             children: <Widget>[
+      //               Column(
+      //                 children: [
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Column(
+      //                     crossAxisAlignment: CrossAxisAlignment.start,
+      //                     children: [
+      //                       Padding(
+      //                         padding: const EdgeInsets.symmetric(
+      //                             vertical: 3, horizontal: 3),
+      //                         child: Text(
+      //                           'Name of Saving',
+      //                           style: GoogleFonts.nunito(
+      //                             color: Theme.of(context).primaryColor,
+      //                             fontWeight: FontWeight.w700,
+      //                             fontSize: 16,
+      //                             // fontFamily: "DefaultFontFamily",
+      //                           ),
+      //                         ),
+      //                       ),
+      //                       planName,
+      //                     ],
+      //                   ),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Column(
+      //                     crossAxisAlignment: CrossAxisAlignment.start,
+      //                     children: [
+      //                       Padding(
+      //                         padding: const EdgeInsets.symmetric(
+      //                             vertical: 3, horizontal: 3),
+      //                         child: Text(
+      //                           'Target Amount',
+      //                           style: GoogleFonts.nunito(
+      //                             color: Theme.of(context).primaryColor,
+      //                             fontWeight: FontWeight.w700,
+      //                             fontSize: 16,
+      //                             // fontFamily: "DefaultFontFamily",
+      //                           ),
+      //                         ),
+      //                       ),
+      //                       autoAmount,
+      //                     ],
+      //                   ),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Column(
+      //                     crossAxisAlignment: CrossAxisAlignment.start,
+      //                     children: [
+      //                       Padding(
+      //                         padding: const EdgeInsets.symmetric(
+      //                             vertical: 3, horizontal: 3),
+      //                         child: Text(
+      //                           'Saving Frequency',
+      //                           style: GoogleFonts.nunito(
+      //                             color: Theme.of(context).primaryColor,
+      //                             fontWeight: FontWeight.w700,
+      //                             fontSize: 16,
+      //                             // fontFamily: "DefaultFontFamily",
+      //                           ),
+      //                         ),
+      //                       ),
+      //                       durationOption,
+      //                     ],
+      //                   ),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Column(
+      //                     crossAxisAlignment: CrossAxisAlignment.start,
+      //                     children: [
+      //                       Padding(
+      //                         padding: const EdgeInsets.symmetric(
+      //                             vertical: 3, horizontal: 3),
+      //                         child: Text(
+      //                           'Saving Frequency',
+      //                           style: GoogleFonts.nunito(
+      //                             color: Theme.of(context).primaryColor,
+      //                             fontWeight: FontWeight.w700,
+      //                             fontSize: 16,
+      //                             // fontFamily: "DefaultFontFamily",
+      //                           ),
+      //                         ),
+      //                       ),
+      //                       planDuration,
+      //                     ],
+      //                   ),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   Text(
+      //                     "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum$varValue",
+      //                     style: GoogleFonts.nunito(
+      //                       fontSize: 14,
+      //                       //height: 1.5,
+      //                       color: Theme.of(context).primaryColor,
+      //                     ),
+      //                   ),
+      //                   Text(
+      //                     interestText,
+      //                     style: GoogleFonts.nunito(
+      //                       fontSize: 14,
+      //                       //height: 1.5,
+      //                       color: Colors.red,
+      //                     ),
+      //                   ),
+      //                   (showNotice)
+      //                       ? Text(
+      //                           amountNotice,
+      //                           style: GoogleFonts.nunito(
+      //                             fontSize: 14,
+      //                             //height: 1.5,
+      //                             color: Colors.red,
+      //                           ),
+      //                         )
+      //                       : const SizedBox(),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   (showSaveButton)
+      //                       ? ElevatedButton(
+      //                           style: ElevatedButton.styleFrom(
+      //                             minimumSize: const Size(300, 50),
+      //                             maximumSize: const Size(400, 50),
+      //                             backgroundColor: brandOne,
+      //                             elevation: 0,
+      //                             shape: RoundedRectangleBorder(
+      //                               borderRadius: BorderRadius.circular(
+      //                                 10,
+      //                               ),
+      //                             ),
+      //                           ),
+      //                           onPressed: (_planNameController.text.trim() !=
+      //                                       "" &&
+      //                                   ((validateAmount(
+      //                                               _depositAmountController
+      //                                                   .text
+      //                                                   .trim()) ==
+      //                                           "") &&
+      //                                       (validateDuration(
+      //                                               _planDurationController.text
+      //                                                   .trim()) ==
+      //                                           "")))
+      //                               ? () async {
+      //                                   Timer(const Duration(seconds: 1), () {
+      //                                     _depositController.stop();
+      //                                   });
+      //                                   var userUpdate = FirebaseFirestore
+      //                                       .instance
+      //                                       .collection('accounts');
+      //                                   var updateDeposit = FirebaseFirestore
+      //                                       .instance
+      //                                       .collection('spacedeposit');
 
-                                        await updateDeposit.add({
-                                          'user_id': _userID,
-                                          'id': _id,
-                                          'interest': 0,
-                                          'plan_name':
-                                              _planNameController.text.trim(),
-                                          'savings_id': _rentSpaceID,
-                                          'date': formattedDate,
-                                          'upfront':
-                                              double.tryParse(interestValue),
-                                          'withdrawal_count': 0,
-                                          'interval_amount': ((double.tryParse(
-                                                  _depositAmountController.text
-                                                      .trim()
-                                                      .replaceAll(',', '')))! /
-                                              (int.tryParse(
-                                                  _planDurationController.text
-                                                      .trim()))!),
-                                          'target_amount': double.tryParse(
-                                              _depositAmountController.text
-                                                  .trim()
-                                                  .replaceAll(',', '')),
-                                          'paid_amount': 0,
-                                          'interval': durationType,
-                                          'has_paid': 'false',
-                                          'status': 'active',
-                                          'history': _history,
-                                          'is_new': 'true',
-                                          'no_of_payments': ((int.tryParse(
-                                              _planDurationController.text
-                                                  .trim()))!),
-                                          'current_payment': '0',
-                                          'token': ''
-                                        });
-                                        await userUpdate.doc(userId).update({
-                                          "activities": FieldValue.arrayUnion(
-                                            [
-                                              "$formattedDate\nSpaceDeposit created\n${ch8t.format(double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))).toString()} target amount.",
-                                            ],
-                                          ),
-                                        }).then((value) {
-                                          Get.bottomSheet(
-                                            isDismissible: true,
-                                            SizedBox(
-                                              height: 300,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(30.0),
-                                                  topRight:
-                                                      Radius.circular(30.0),
-                                                ),
-                                                child: Container(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          10, 5, 10, 5),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 50,
-                                                      ),
-                                                      const Icon(
-                                                        Icons
-                                                            .check_circle_outline,
-                                                        color: brandOne,
-                                                        size: 80,
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      Text(
-                                                        'SpaceDeposit created',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              "DefaultFontFamily",
-                                                          fontSize: 16,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 30,
-                                                      ),
-                                                      RoundedLoadingButton(
-                                                        controller:
-                                                            _depositController,
-                                                        onPressed: () async {
-                                                          Timer(
-                                                              const Duration(
-                                                                  seconds: 1),
-                                                              () {
-                                                            _depositController
-                                                                .stop();
-                                                          });
-                                                          Get.back();
-                                                          Get.to(
-                                                              SpaceDepositPayment(
-                                                            amount: ((double.tryParse(
-                                                                    _depositAmountController
-                                                                        .text
-                                                                        .trim()
-                                                                        .replaceAll(
-                                                                            ',',
-                                                                            '')))! /
-                                                                (int.tryParse(
-                                                                    _planDurationController
-                                                                        .text
-                                                                        .trim()))!),
-                                                            refId: _rentSpaceID,
-                                                          ));
-                                                        },
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            2,
-                                                        color: brandOne,
-                                                        child: const Text(
-                                                          'Proceed to payment',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                "DefaultFontFamily",
-                                                            color: Colors.white,
-                                                            fontSize: 13,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }).catchError((error) {
-                                          Get.snackbar(
-                                            "Oops",
-                                            "Something went wrong, try again later",
-                                            animationDuration:
-                                                const Duration(seconds: 2),
-                                            backgroundColor: Colors.red,
-                                            colorText: Colors.white,
-                                            snackPosition: SnackPosition.BOTTOM,
-                                          );
-                                        });
-                                      }
-                                    : () async {
-                                        Timer(const Duration(seconds: 1), () {
-                                          _depositController.stop();
-                                        });
-                                        Get.snackbar(
-                                          "Incompleted!",
-                                          "fill all the fields to continue",
-                                          animationDuration:
-                                              const Duration(seconds: 1),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                        );
-                                      },
-                                child: Text(
-                                  "Save ${ch8t.format(((((double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_depositAmountController.text.trim().replaceAll(',', '')))!) : 1) / ((((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))))} for ${_planDurationController.text.trim()} ${durationType}",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
-                            :
+      //                                   await updateDeposit.add({
+      //                                     'user_id': _userID,
+      //                                     'id': _id,
+      //                                     'interest': 0,
+      //                                     'plan_name':
+      //                                         _planNameController.text.trim(),
+      //                                     'savings_id': _rentSpaceID,
+      //                                     'date': formattedDate,
+      //                                     'upfront':
+      //                                         double.tryParse(interestValue),
+      //                                     'withdrawal_count': 0,
+      //                                     'interval_amount': ((double.tryParse(
+      //                                             _depositAmountController.text
+      //                                                 .trim()
+      //                                                 .replaceAll(',', '')))! /
+      //                                         (int.tryParse(
+      //                                             _planDurationController.text
+      //                                                 .trim()))!),
+      //                                     'target_amount': double.tryParse(
+      //                                         _depositAmountController.text
+      //                                             .trim()
+      //                                             .replaceAll(',', '')),
+      //                                     'paid_amount': 0,
+      //                                     'interval': durationType,
+      //                                     'has_paid': 'false',
+      //                                     'status': 'active',
+      //                                     'history': _history,
+      //                                     'is_new': 'true',
+      //                                     'no_of_payments': ((int.tryParse(
+      //                                         _planDurationController.text
+      //                                             .trim()))!),
+      //                                     'current_payment': '0',
+      //                                     'token': ''
+      //                                   });
+      //                                   await userUpdate.doc(userId).update({
+      //                                     "activities": FieldValue.arrayUnion(
+      //                                       [
+      //                                         "$formattedDate\nSpaceDeposit created\n${ch8t.format(double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))).toString()} target amount.",
+      //                                       ],
+      //                                     ),
+      //                                   }).then((value) {
+      //                                     Get.bottomSheet(
+      //                                       isDismissible: true,
+      //                                       SizedBox(
+      //                                         height: 300,
+      //                                         child: ClipRRect(
+      //                                           borderRadius:
+      //                                               const BorderRadius.only(
+      //                                             topLeft:
+      //                                                 Radius.circular(30.0),
+      //                                             topRight:
+      //                                                 Radius.circular(30.0),
+      //                                           ),
+      //                                           child: Container(
+      //                                             color: Theme.of(context)
+      //                                                 .canvasColor,
+      //                                             padding:
+      //                                                 const EdgeInsets.fromLTRB(
+      //                                                     10, 5, 10, 5),
+      //                                             child: Column(
+      //                                               crossAxisAlignment:
+      //                                                   CrossAxisAlignment
+      //                                                       .center,
+      //                                               children: [
+      //                                                 const SizedBox(
+      //                                                   height: 50,
+      //                                                 ),
+      //                                                 const Icon(
+      //                                                   Icons
+      //                                                       .check_circle_outline,
+      //                                                   color: brandOne,
+      //                                                   size: 80,
+      //                                                 ),
+      //                                                 const SizedBox(
+      //                                                   height: 20,
+      //                                                 ),
+      //                                                 Text(
+      //                                                   'SpaceDeposit created',
+      //                                                   style: TextStyle(
+      //                                                     fontFamily:
+      //                                                         "DefaultFontFamily",
+      //                                                     fontSize: 16,
+      //                                                     color:
+      //                                                         Theme.of(context)
+      //                                                             .primaryColor,
+      //                                                   ),
+      //                                                 ),
+      //                                                 const SizedBox(
+      //                                                   height: 30,
+      //                                                 ),
+      //                                                 RoundedLoadingButton(
+      //                                                   controller:
+      //                                                       _depositController,
+      //                                                   onPressed: () async {
+      //                                                     Timer(
+      //                                                         const Duration(
+      //                                                             seconds: 1),
+      //                                                         () {
+      //                                                       _depositController
+      //                                                           .stop();
+      //                                                     });
+      //                                                     Get.back();
+      //                                                     Get.to(
+      //                                                         SpaceDepositPayment(
+      //                                                       amount: ((double.tryParse(
+      //                                                               _depositAmountController
+      //                                                                   .text
+      //                                                                   .trim()
+      //                                                                   .replaceAll(
+      //                                                                       ',',
+      //                                                                       '')))! /
+      //                                                           (int.tryParse(
+      //                                                               _planDurationController
+      //                                                                   .text
+      //                                                                   .trim()))!),
+      //                                                       refId: _rentSpaceID,
+      //                                                     ));
+      //                                                   },
+      //                                                   width: MediaQuery.of(
+      //                                                               context)
+      //                                                           .size
+      //                                                           .width /
+      //                                                       2,
+      //                                                   color: brandOne,
+      //                                                   child: const Text(
+      //                                                     'Proceed to payment',
+      //                                                     style: TextStyle(
+      //                                                       fontFamily:
+      //                                                           "DefaultFontFamily",
+      //                                                       color: Colors.white,
+      //                                                       fontSize: 13,
+      //                                                     ),
+      //                                                   ),
+      //                                                 ),
+      //                                                 const SizedBox(
+      //                                                   height: 20,
+      //                                                 ),
+      //                                               ],
+      //                                             ),
+      //                                           ),
+      //                                         ),
+      //                                       ),
+      //                                     );
+      //                                   }).catchError((error) {
+      //                                     Get.snackbar(
+      //                                       "Oops",
+      //                                       "Something went wrong, try again later",
+      //                                       animationDuration:
+      //                                           const Duration(seconds: 2),
+      //                                       backgroundColor: Colors.red,
+      //                                       colorText: Colors.white,
+      //                                       snackPosition: SnackPosition.BOTTOM,
+      //                                     );
+      //                                   });
+      //                                 }
+      //                               : () async {
+      //                                   Timer(const Duration(seconds: 1), () {
+      //                                     _depositController.stop();
+      //                                   });
+      //                                   Get.snackbar(
+      //                                     "Incompleted!",
+      //                                     "fill all the fields to continue",
+      //                                     animationDuration:
+      //                                         const Duration(seconds: 1),
+      //                                     backgroundColor: Colors.red,
+      //                                     colorText: Colors.white,
+      //                                     snackPosition: SnackPosition.BOTTOM,
+      //                                   );
+      //                                 },
+      //                           child: Text(
+      //                             "Save ${ch8t.format(((((double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_depositAmountController.text.trim().replaceAll(',', '')))!) : 1) / ((((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))))} for ${_planDurationController.text.trim()} ${durationType}",
+      //                             textAlign: TextAlign.center,
+      //                             style: GoogleFonts.nunito(
+      //                               color: Colors.white,
+      //                               fontSize: 14.sp,
+      //                               fontWeight: FontWeight.w500,
+      //                             ),
+      //                           ),
+      //                         )
+      //                       :
 
-                            const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        (showSaveButton)
-                            ? InkWell(
-                                onTap: () {
-                                  Get.to(const TermsAndConditions());
-                                },
-                                child: Text(
-                                  "By proceeding, you agree with our terms and conditions",
-                                  style: GoogleFonts.nunito(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.red,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : const Text(""),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      //                       const SizedBox(),
+      //                   const SizedBox(
+      //                     height: 20,
+      //                   ),
+      //                   (showSaveButton)
+      //                       ? InkWell(
+      //                           onTap: () {
+      //                             Get.to(const TermsAndConditions());
+      //                           },
+      //                           child: Text(
+      //                             "By proceeding, you agree with our terms and conditions",
+      //                             style: GoogleFonts.nunito(
+      //                               decoration: TextDecoration.underline,
+      //                               color: Colors.red,
+      //                               fontSize: 12.sp,
+      //                               fontWeight: FontWeight.w500,
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         )
+      //                       : const Text(""),
+      //                   const SizedBox(
+      //                     height: 50,
+      //                   ),
+      //                 ],
+      //               ),
+      //             ],
+      //           ),
+      //           const SizedBox(
+      //             height: 50,
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
+    
     );
   }
 }

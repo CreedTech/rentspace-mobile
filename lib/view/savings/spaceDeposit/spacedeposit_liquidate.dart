@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/deposit_controller.dart';
@@ -43,8 +43,8 @@ int expectedInterest = 1;
 int deductibleInterest = 1;
 
 class _DepositLiquidateState extends State<DepositLiquidate> {
-  final DepositController depositController = Get.find();
-  final UserController userController = Get.find();
+  // final DepositController depositController = Get.find();
+  // final UserController userController = Get.find();
 
   String liquidateReason = "I have an emergency";
   String liquidateLocation = "Space Wallet";
@@ -73,19 +73,19 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
         ),
       );
 
-  getCurrentUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        walletID = data?['wallet_id'];
-        userID = data?['rentspace_id'];
-        uId = data?['id'];
-        walletBalance = data?['wallet_balance'];
-      });
-    }
-  }
+  // getCurrentUser() async {
+  //   var collection = FirebaseFirestore.instance.collection('accounts');
+  //   var docSnapshot = await collection.doc(userId).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic>? data = docSnapshot.data();
+  //     setState(() {
+  //       walletID = data?['wallet_id'];
+  //       userID = data?['rentspace_id'];
+  //       uId = data?['id'];
+  //       walletBalance = data?['wallet_balance'];
+  //     });
+  //   }
+  // }
 
   final TextEditingController _accountNumberController =
       TextEditingController();
@@ -164,17 +164,17 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
     }
   }
 
-  getPayable() {
-    setState(() {
-      noPaid = depositController.deposit[widget.index].history.length;
-      noTarget = depositController.deposit[widget.index].numPayment;
-      expectedInterest =
-          depositController.deposit[widget.index].upfront.toInt();
-      currentInterest = ((noPaid) ~/ (noTarget) * (expectedInterest));
-      deductibleInterest =
-          ((currentInterest) - (0.025 * currentInterest)).toInt();
-    });
-  }
+  // getPayable() {
+  //   setState(() {
+  //     noPaid = depositController.deposit[widget.index].history.length;
+  //     noTarget = depositController.deposit[widget.index].numPayment;
+  //     expectedInterest =
+  //         depositController.deposit[widget.index].upfront.toInt();
+  //     currentInterest = ((noPaid) ~/ (noTarget) * (expectedInterest));
+  //     deductibleInterest =
+  //         ((currentInterest) - (0.025 * currentInterest)).toInt();
+  //   });
+  // }
 
   getBanksList() async {
     const String bankApiUrl =
@@ -226,8 +226,8 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       expectedInterest = 1;
       deductibleInterest = 1;
     });
-    getPayable();
-    getCurrentUser();
+    // getPayable();
+    // getCurrentUser();
     getBanksList();
 
     if (widget.isWallet) {
@@ -235,275 +235,275 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
         accountToUse = widget.balance.toString();
       });
     } else {
-      setState(() {
-        accountToUse =
-            depositController.deposit[widget.index].savedAmount.toString();
-      });
+      // setState(() {
+      //   accountToUse =
+      //       depositController.deposit[widget.index].savedAmount.toString();
+      // });
     }
   }
 
-  void _doLiquidateBank() async {
-    setState(() {
-      notLoading = false;
-    });
-    Timer(Duration(seconds: 1), () {
-      _btnController.stop();
-    });
-    var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
+  // void _doLiquidateBank() async {
+  //   setState(() {
+  //     notLoading = false;
+  //   });
+  //   Timer(Duration(seconds: 1), () {
+  //     _btnController.stop();
+  //   });
+  //   var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
 
-    const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+  //   const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
+  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $bearerToken',
-        "Content-Type": "application/json"
-      },
-      body: jsonEncode(<String, String>{
-        "remark": "Spacedeposit Liquidation ",
-        "bank_code": _currentBankName,
-        "currency_id": "NGN",
-        "amount":
-            (int.tryParse(_amountController.text.trim())! * 100).toString(),
-        "account_number": _accountNumberController.text.trim().toString(),
-        "transaction_reference": "C6NZ61CS_" + getRandom(11),
-        "account_name": _bankAccountName,
-      }),
-    );
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {
+  //       'Authorization': 'Bearer $bearerToken',
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       "remark": "Spacedeposit Liquidation ",
+  //       "bank_code": _currentBankName,
+  //       "currency_id": "NGN",
+  //       "amount":
+  //           (int.tryParse(_amountController.text.trim())! * 100).toString(),
+  //       "account_number": _accountNumberController.text.trim().toString(),
+  //       "transaction_reference": "C6NZ61CS_" + getRandom(11),
+  //       "account_name": _bankAccountName,
+  //     }),
+  //   );
 
-    if (response.statusCode == 200) {
-      await updateLiquidate.add({
-        'user_id': userID,
-        'date': formattedDate,
-        'amount': _amountController.text.trim(),
-        'reason': liquidateReason,
-        'charges': '20',
-        'bank_name': _currentBankName,
-        'status': 'success',
-        'name': 'SpaceDeposit Liquidation',
-        'trans_id': getRandom(10),
-        'id': uId,
-        'account_number': _accountNumberController.text.trim(),
-        'account_name': _bankAccountName,
-        'withdrawal_location': "Bank",
-        'liquidation_source': "Spacedeposit"
-      }).then((value) async {
-        var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-        await walletUpdate.doc(userId).update({
-          "activities": FieldValue.arrayUnion(
-            [
-              "$formattedDate \nBank Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
-            ],
-          ),
-        });
-      }).then((value) async {
-        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-        final querySnapshot = await _firestore
-            .collection('spacedeposit')
-            .where('savings_id',
-                isEqualTo: depositController.deposit[widget.index].depositId)
-            .get();
-        var doc = querySnapshot.docs.first;
-        doc.reference.update({
-          'paid_amount': depositController.deposit[widget.index].savedAmount -
-              ((int.tryParse(_amountController.text.trim()))!.toInt() + 20)
-        });
+  //   if (response.statusCode == 200) {
+  //     await updateLiquidate.add({
+  //       'user_id': userID,
+  //       'date': formattedDate,
+  //       'amount': _amountController.text.trim(),
+  //       'reason': liquidateReason,
+  //       'charges': '20',
+  //       'bank_name': _currentBankName,
+  //       'status': 'success',
+  //       'name': 'SpaceDeposit Liquidation',
+  //       'trans_id': getRandom(10),
+  //       'id': uId,
+  //       'account_number': _accountNumberController.text.trim(),
+  //       'account_name': _bankAccountName,
+  //       'withdrawal_location': "Bank",
+  //       'liquidation_source': "Spacedeposit"
+  //     }).then((value) async {
+  //       var walletUpdate = FirebaseFirestore.instance.collection('accounts');
+  //       await walletUpdate.doc(userId).update({
+  //         "activities": FieldValue.arrayUnion(
+  //           [
+  //             "$formattedDate \nBank Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
+  //           ],
+  //         ),
+  //       });
+  //     }).then((value) async {
+  //       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //       final querySnapshot = await _firestore
+  //           .collection('spacedeposit')
+  //           .where('savings_id',
+  //               isEqualTo: depositController.deposit[widget.index].depositId)
+  //           .get();
+  //       var doc = querySnapshot.docs.first;
+  //       doc.reference.update({
+  //         'paid_amount': depositController.deposit[widget.index].savedAmount -
+  //             ((int.tryParse(_amountController.text.trim()))!.toInt() + 20)
+  //       });
 
-        setState(() {
-          notLoading = true;
-        });
-        Get.back();
-        Get.snackbar(
-          "Success!",
-          'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
-        );
-      }).catchError((error) {
-        setState(() {
-          notLoading = true;
-        });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      });
-    } else {
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
-    }
-  }
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       Get.back();
+  //       Get.snackbar(
+  //         "Success!",
+  //         'Liquidation successful.',
+  //         animationDuration: Duration(seconds: 1),
+  //         backgroundColor: brandOne,
+  //         colorText: Colors.white,
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //     }).catchError((error) {
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       Get.snackbar(
+  //         "Oops",
+  //         "Something went wrong, try again later",
+  //         animationDuration: Duration(seconds: 2),
+  //         backgroundColor: Colors.red,
+  //         colorText: Colors.white,
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     });
+  //   } else {
+  //     Get.snackbar(
+  //       "Error!",
+  //       "something went wrong",
+  //       animationDuration: Duration(seconds: 1),
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //     print(
+  //         'Request failed with status: ${response.statusCode}, ${response.body}');
+  //   }
+  // }
 
-  void _doLiquidateWallet() async {
-    Timer(Duration(seconds: 1), () {
-      _btnController.stop();
-    });
+  // void _doLiquidateWallet() async {
+  //   Timer(Duration(seconds: 1), () {
+  //     _btnController.stop();
+  //   });
 
-    var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
-    await updateLiquidate.add({
-      'user_id': userID,
-      'date': formattedDate,
-      'status': 'success',
-      'id': uId,
-      'trans_id': getRandom(10),
-      'name': 'SpaceDeposit Liquidation',
-      'amount': _amountController.text.trim(),
-      'reason': liquidateReason,
-      'withdrawal_location': "Space Wallet",
-      'liquidation_source': (widget.isWallet)
-          ? "Space Wallet"
-          : 'Spacedeposit: ' +
-              depositController.deposit[widget.index].depositId,
-    }).then((value) async {
-      var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-      await walletUpdate.doc(userId).update({
-        "activities": FieldValue.arrayUnion(
-          [
-            "$formattedDate \nWallet Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
-          ],
-        ),
-      });
-    }).then((value) {
-      Get.back();
-      Get.snackbar(
-        "Success!",
-        'Savings liquidation process has begun, you will be notified shortly.',
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: brandOne,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-    }).catchError((error) {
-      Get.snackbar(
-        "Oops",
-        "Something went wrong, try again later",
-        animationDuration: Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    });
-  }
+  //   var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
+  //   await updateLiquidate.add({
+  //     'user_id': userID,
+  //     'date': formattedDate,
+  //     'status': 'success',
+  //     'id': uId,
+  //     'trans_id': getRandom(10),
+  //     'name': 'SpaceDeposit Liquidation',
+  //     'amount': _amountController.text.trim(),
+  //     'reason': liquidateReason,
+  //     'withdrawal_location': "Space Wallet",
+  //     'liquidation_source': (widget.isWallet)
+  //         ? "Space Wallet"
+  //         : 'Spacedeposit: ' +
+  //             depositController.deposit[widget.index].depositId,
+  //   }).then((value) async {
+  //     var walletUpdate = FirebaseFirestore.instance.collection('accounts');
+  //     await walletUpdate.doc(userId).update({
+  //       "activities": FieldValue.arrayUnion(
+  //         [
+  //           "$formattedDate \nWallet Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
+  //         ],
+  //       ),
+  //     });
+  //   }).then((value) {
+  //     Get.back();
+  //     Get.snackbar(
+  //       "Success!",
+  //       'Savings liquidation process has begun, you will be notified shortly.',
+  //       animationDuration: Duration(seconds: 1),
+  //       backgroundColor: brandOne,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //   }).catchError((error) {
+  //     Get.snackbar(
+  //       "Oops",
+  //       "Something went wrong, try again later",
+  //       animationDuration: Duration(seconds: 2),
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //   });
+  // }
 
-  void _doWallet() async {
-    setState(() {
-      notLoading = false;
-    });
-    Timer(Duration(seconds: 1), () {
-      _btnController.stop();
-    });
-    var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
-    const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
-    const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+  // void _doWallet() async {
+  //   setState(() {
+  //     notLoading = false;
+  //   });
+  //   Timer(Duration(seconds: 1), () {
+  //     _btnController.stop();
+  //   });
+  //   var updateLiquidate = FirebaseFirestore.instance.collection('liquidation');
+  //   const String apiUrl = 'https://api-d.squadco.com/payout/transfer';
+  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $bearerToken',
-        "Content-Type": "application/json"
-      },
-      body: jsonEncode(<String, String>{
-        "remark": "Spacedeposit Liquidation ",
-        "bank_code": _currentBankName,
-        "currency_id": "NGN",
-        "amount":
-            (int.tryParse(_amountController.text.trim())! * 100).toString(),
-        "account_number": _accountNumberController.text.trim().toString(),
-        "transaction_reference": "C6NZ61CS_" + getRandom(11),
-        "account_name": _bankAccountName,
-      }),
-    );
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {
+  //       'Authorization': 'Bearer $bearerToken',
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       "remark": "Spacedeposit Liquidation ",
+  //       "bank_code": _currentBankName,
+  //       "currency_id": "NGN",
+  //       "amount":
+  //           (int.tryParse(_amountController.text.trim())! * 100).toString(),
+  //       "account_number": _accountNumberController.text.trim().toString(),
+  //       "transaction_reference": "C6NZ61CS_" + getRandom(11),
+  //       "account_name": _bankAccountName,
+  //     }),
+  //   );
 
-    if (response.statusCode == 200) {
-      await updateLiquidate.add({
-        'user_id': userID,
-        'date': formattedDate,
-        'amount': _amountController.text.trim(),
-        'reason': liquidateReason,
-        'charges': '20',
-        'name': 'SpaceDeposit Liquidation',
-        'bank_name': _currentBankName,
-        'status': 'success',
-        'trans_id': getRandom(10),
-        'id': uId,
-        'account_number': _accountNumberController.text.trim(),
-        'account_name': _bankAccountName,
-        'withdrawal_location': "Bank",
-        'liquidation_source': "Spacedeposit"
-      }).then((value) async {
-        var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-        await walletUpdate.doc(userId).update({
-          "activities": FieldValue.arrayUnion(
-            [
-              "$formattedDate \nBank Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
-            ],
-          ),
-        });
-      }).then((value) async {
-        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-        final querySnapshot = await _firestore
-            .collection('spacedeposit')
-            .where('savings_id',
-                isEqualTo: depositController.deposit[widget.index].depositId)
-            .get();
-        var doc = querySnapshot.docs.first;
-        doc.reference.update({
-          'paid_amount': depositController.deposit[widget.index].savedAmount -
-              ((int.tryParse(_amountController.text.trim()))!.toInt() + 20)
-        });
-        setState(() {
-          notLoading = true;
-        });
-        Get.back();
-        Get.snackbar(
-          "Success!",
-          'Liquidation successful.',
-          animationDuration: Duration(seconds: 1),
-          backgroundColor: brandOne,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
-        );
-      }).catchError((error) {
-        setState(() {
-          notLoading = true;
-        });
-        Get.snackbar(
-          "Oops",
-          "Something went wrong, try again later",
-          animationDuration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      });
-    } else {
-      Get.snackbar(
-        "Error!",
-        "something went wrong",
-        animationDuration: Duration(seconds: 1),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     await updateLiquidate.add({
+  //       'user_id': userID,
+  //       'date': formattedDate,
+  //       'amount': _amountController.text.trim(),
+  //       'reason': liquidateReason,
+  //       'charges': '20',
+  //       'name': 'SpaceDeposit Liquidation',
+  //       'bank_name': _currentBankName,
+  //       'status': 'success',
+  //       'trans_id': getRandom(10),
+  //       'id': uId,
+  //       'account_number': _accountNumberController.text.trim(),
+  //       'account_name': _bankAccountName,
+  //       'withdrawal_location': "Bank",
+  //       'liquidation_source': "Spacedeposit"
+  //     }).then((value) async {
+  //       var walletUpdate = FirebaseFirestore.instance.collection('accounts');
+  //       await walletUpdate.doc(userId).update({
+  //         "activities": FieldValue.arrayUnion(
+  //           [
+  //             "$formattedDate \nBank Withdrawal\n${nairaFormaet.format(double.tryParse(_amountController.text.trim()))} from SpaceDeposit",
+  //           ],
+  //         ),
+  //       });
+  //     }).then((value) async {
+  //       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //       final querySnapshot = await _firestore
+  //           .collection('spacedeposit')
+  //           .where('savings_id',
+  //               isEqualTo: depositController.deposit[widget.index].depositId)
+  //           .get();
+  //       var doc = querySnapshot.docs.first;
+  //       doc.reference.update({
+  //         'paid_amount': depositController.deposit[widget.index].savedAmount -
+  //             ((int.tryParse(_amountController.text.trim()))!.toInt() + 20)
+  //       });
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       Get.back();
+  //       Get.snackbar(
+  //         "Success!",
+  //         'Liquidation successful.',
+  //         animationDuration: Duration(seconds: 1),
+  //         backgroundColor: brandOne,
+  //         colorText: Colors.white,
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //     }).catchError((error) {
+  //       setState(() {
+  //         notLoading = true;
+  //       });
+  //       Get.snackbar(
+  //         "Oops",
+  //         "Something went wrong, try again later",
+  //         animationDuration: Duration(seconds: 2),
+  //         backgroundColor: Colors.red,
+  //         colorText: Colors.white,
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     });
+  //   } else {
+  //     Get.snackbar(
+  //       "Error!",
+  //       "something went wrong",
+  //       animationDuration: Duration(seconds: 1),
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //     print(
+  //         'Request failed with status: ${response.statusCode}, ${response.body}');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -797,735 +797,736 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.close,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-      ),
-      body: (userController.user[0].status == "verified")
-          ? Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/icons/RentSpace-icon.png"),
-                  fit: BoxFit.cover,
-                  opacity: 0.1,
-                ),
-              ),
-              padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
-              child: (notLoading)
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          (widget.isWallet)
-                              ? Text(
-                                  "Note that the withdrawal process will be according to our Terms of use",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "DefaultFontFamily",
-                                    letterSpacing: 2.0,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                )
-                              : Text(
-                                  "Note that the liquidation process will be according to our Terms of use",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "DefaultFontFamily",
-                                    letterSpacing: 0.5,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Available balance: " +
-                                nairaFormaet.format(
-                                    ((int.tryParse(accountToUse))! +
-                                        (deductibleInterest) -
-                                        (20))),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: "DefaultFontFamily",
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
-                            child: (widget.isWallet)
-                                ? Text(
-                                    "Why do you want to withdraw?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
-                                      //letterSpacing: 2.0,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  )
-                                : Text(
-                                    "Why do you want to liquidate?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
-                                      //letterSpacing: 2.0,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                          ),
-                          reasonOption,
-                          SizedBox(
-                            height: 10,
-                          ),
-                          (!widget.isWallet)
-                              ? Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      15.0, 2, 15.0, 2),
-                                  child: Text(
-                                    "Where should we send your withdrawal?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
-                                      //letterSpacing: 2.0,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(),
-                          (!widget.isWallet) ? locationOption : SizedBox(),
-                          (liquidateLocation == "Bank Account" ||
-                                  widget.isWallet)
-                              ? Column(
-                                  children: [
-                                    (canShowOption)
-                                        ? Column(
-                                            children: [
-                                              fewBankOption,
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        15.0, 2, 15.0, 2),
-                                                child: accountNumber,
-                                              ),
-                                            ],
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20.0, 10, 20.0, 10),
-                                            child: Text(
-                                              "Loading banks...",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: "DefaultFontFamily",
-                                                //letterSpacing: 2.0,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                            ),
-                                          ),
-                                    (isChecking)
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20.0, 0, 20.0, 10),
-                                            child: LinearProgressIndicator(
-                                              color: brandOne,
-                                              minHeight: 4,
-                                            ),
-                                          )
-                                        : SizedBox(),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20.0, 10, 20.0, 10),
-                                      child: Text(
-                                        _bankAccountName,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "DefaultFontFamily",
-                                          letterSpacing: 0.5,
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Text(""),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
-                            child: (widget.isWallet)
-                                ? Text(
-                                    "How much do you want to withdraw?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
-                                      //letterSpacing: 2.0,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  )
-                                : Text(
-                                    "How much do you want to liquidate?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "DefaultFontFamily",
-                                      //letterSpacing: 2.0,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
-                            child: amount,
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          RoundedLoadingButton(
-                            child: (widget.isWallet)
-                                ? Text(
-                                    'Withdraw',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
-                                    ),
-                                  )
-                                : Text(
-                                    'Liquidate',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "DefaultFontFamily",
-                                    ),
-                                  ),
-                            elevation: 0.0,
-                            successColor: brandOne,
-                            color: brandOne,
-                            controller: _btnController,
-                            onPressed: () {
-                              if (validateAmount(
-                                      _amountController.text.trim()) ==
-                                  "") {
-                                if (liquidateLocation == "Bank Account" &&
-                                    validateName(_bankAccountName) == "" &&
-                                    validateNumber(_accountNumberController.text
-                                            .trim()) ==
-                                        "") {
-                                  Timer(Duration(seconds: 1), () {
-                                    _btnController.stop();
-                                  });
-                                  Get.bottomSheet(
-                                    isDismissible: true,
-                                    SizedBox(
-                                      height: 300,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30.0),
-                                          topRight: Radius.circular(30.0),
-                                        ),
-                                        child: Container(
-                                          color: Theme.of(context).canvasColor,
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: 50,
-                                              ),
-                                              Text(
-                                                'Enter PIN to Proceed',
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontFamily:
-                                                      "DefaultFontFamily",
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Pinput(
-                                                defaultPinTheme: PinTheme(
-                                                  width: 30,
-                                                  height: 30,
-                                                  textStyle: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: brandOne,
-                                                        width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                ),
-                                                controller: _aPinController,
-                                                length: 4,
-                                                closeKeyboardWhenCompleted:
-                                                    true,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                              ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Text(
-                                                '(₦20 charges applied)',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily:
-                                                      "DefaultFontFamily",
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              SizedBox(
-                                                height: 30,
-                                              ),
-                                              GFButton(
-                                                onPressed: () {
-                                                  if (_aPinController.text
-                                                          .trim()
-                                                          .toString() ==
-                                                      userController.user[0]
-                                                          .transactionPIN) {
-                                                    Get.back();
-                                                    _doLiquidateBank();
-                                                  } else {
-                                                    Get.snackbar(
-                                                      "Invalid PIN",
-                                                      "Enter correct PIN",
-                                                      animationDuration:
-                                                          Duration(seconds: 2),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      colorText: Colors.white,
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                    );
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                  Icons.arrow_right_outlined,
-                                                  size: 30,
-                                                  color: Colors.white,
-                                                ),
-                                                color: brandOne,
-                                                text: "Proceed to Withdraw",
-                                                shape: GFButtonShape.pills,
-                                                fullWidthButton: false,
-                                              ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                } else if (liquidateLocation ==
-                                    "Space Wallet") {
-                                  if (validateName(_bankAccountName) == "" &&
-                                      validateNumber(_accountNumberController
-                                              .text
-                                              .trim()) ==
-                                          "" &&
-                                      widget.isWallet == true) {
-                                    Timer(Duration(seconds: 1), () {
-                                      _btnController.stop();
-                                    });
-                                    Get.bottomSheet(
-                                      isDismissible: true,
-                                      SizedBox(
-                                        height: 300,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30.0),
-                                            topRight: Radius.circular(30.0),
-                                          ),
-                                          child: Container(
-                                            color:
-                                                Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 5, 10, 5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  height: 50,
-                                                ),
-                                                Text(
-                                                  'Enter PIN to Proceed',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontFamily:
-                                                        "DefaultFontFamily",
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                Pinput(
-                                                  defaultPinTheme: PinTheme(
-                                                    width: 30,
-                                                    height: 30,
-                                                    textStyle: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: brandOne,
-                                                          width: 2.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                  ),
-                                                  controller: _aPinController,
-                                                  length: 4,
-                                                  closeKeyboardWhenCompleted:
-                                                      true,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Text(
-                                                  '(₦20 charges applied)',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        "DefaultFontFamily",
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                SizedBox(
-                                                  height: 30,
-                                                ),
-                                                GFButton(
-                                                  onPressed: () {
-                                                    if (_aPinController.text
-                                                            .trim()
-                                                            .toString() ==
-                                                        userController.user[0]
-                                                            .transactionPIN) {
-                                                      Get.back();
-                                                      _doWallet();
-                                                    } else {
-                                                      Get.snackbar(
-                                                        "Invalid PIN",
-                                                        "Enter correct PIN",
-                                                        animationDuration:
-                                                            Duration(
-                                                                seconds: 2),
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        colorText: Colors.white,
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.arrow_right_outlined,
-                                                    size: 30,
-                                                    color: Colors.white,
-                                                  ),
-                                                  color: brandOne,
-                                                  text: "Proceed to Withdraw",
-                                                  shape: GFButtonShape.pills,
-                                                  fullWidthButton: false,
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    Timer(Duration(seconds: 1), () {
-                                      _btnController.stop();
-                                    });
-                                    Get.bottomSheet(
-                                      isDismissible: true,
-                                      SizedBox(
-                                        height: 300,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30.0),
-                                            topRight: Radius.circular(30.0),
-                                          ),
-                                          child: Container(
-                                            color:
-                                                Theme.of(context).canvasColor,
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 5, 10, 5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  height: 50,
-                                                ),
-                                                Text(
-                                                  'Enter PIN to Proceed',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontFamily:
-                                                        "DefaultFontFamily",
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                Pinput(
-                                                  defaultPinTheme: PinTheme(
-                                                    width: 30,
-                                                    height: 30,
-                                                    textStyle: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: brandOne,
-                                                          width: 2.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                  ),
-                                                  controller: _aPinController,
-                                                  length: 4,
-                                                  closeKeyboardWhenCompleted:
-                                                      true,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Text(
-                                                  '(₦20 charges applied)',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        "DefaultFontFamily",
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                SizedBox(
-                                                  height: 30,
-                                                ),
-                                                GFButton(
-                                                  onPressed: () {
-                                                    if (_aPinController.text
-                                                            .trim()
-                                                            .toString() ==
-                                                        userController.user[0]
-                                                            .transactionPIN) {
-                                                      Get.back();
-                                                      _doLiquidateWallet();
-                                                    } else {
-                                                      Get.snackbar(
-                                                        "Invalid PIN",
-                                                        "Enter correct PIN",
-                                                        animationDuration:
-                                                            Duration(
-                                                                seconds: 2),
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        colorText: Colors.white,
-                                                        snackPosition:
-                                                            SnackPosition
-                                                                .BOTTOM,
-                                                      );
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.arrow_right_outlined,
-                                                    size: 30,
-                                                    color: Colors.white,
-                                                  ),
-                                                  color: brandOne,
-                                                  text: "Proceed to Withdraw",
-                                                  shape: GFButtonShape.pills,
-                                                  fullWidthButton: false,
-                                                ),
-                                                SizedBox(
-                                                  height: 20,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  Get.snackbar(
-                                    "Invalid",
-                                    'Please fill the form properly to proceed',
-                                    animationDuration: Duration(seconds: 1),
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
-                                }
-                              } else {
-                                Timer(Duration(seconds: 1), () {
-                                  _btnController.stop();
-                                });
-                                Get.snackbar(
-                                  "Invalid",
-                                  'Please fill the form properly to proceed',
-                                  animationDuration: Duration(seconds: 1),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  snackPosition: SnackPosition.BOTTOM,
-                                );
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/icons/RentSpace-icon.png"),
-                            fit: BoxFit.cover,
-                            opacity: 0.1),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Processing...",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "DefaultFontFamily",
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          CircularProgressIndicator(
-                            color: brandOne,
-                          ),
-                        ],
-                      ),
-                    ),
-            )
-          : Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/icons/RentSpace-icon.png"),
-                  fit: BoxFit.cover,
-                  opacity: 0.1,
-                ),
-              ),
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Flexible(
-                          child: Text(
-                            "kindly confirm your BVN to perform this action.",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              letterSpacing: 0.5,
-                              fontFamily: "DefaultFontFamily",
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GFButton(
-                    onPressed: () async {
-                      // Get.to(BvnPage());
-                    },
-                    text: "  Begin Verification  ",
-                    fullWidthButton: false,
-                    color: brandOne,
-                    shape: GFButtonShape.pills,
-                  ),
-                ],
-              ),
-            ),
+      // appBar: AppBar(
+      //   elevation: 0.0,
+      //   backgroundColor: Theme.of(context).canvasColor,
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       Get.back();
+      //     },
+      //     child: Icon(
+      //       Icons.close,
+      //       size: 30,
+      //       color: Theme.of(context).primaryColor,
+      //     ),
+      //   ),
+      // ),
+      // body: (userController.user[0].status == "verified")
+      //     ? Container(
+      //         height: double.infinity,
+      //         width: double.infinity,
+      //         decoration: BoxDecoration(
+      //           image: DecorationImage(
+      //             image: AssetImage("assets/icons/RentSpace-icon.png"),
+      //             fit: BoxFit.cover,
+      //             opacity: 0.1,
+      //           ),
+      //         ),
+      //         padding: const EdgeInsets.fromLTRB(10.0, 2, 10.0, 2),
+      //         child: (notLoading)
+      //             ? Padding(
+      //                 padding: const EdgeInsets.all(8.0),
+      //                 child: ListView(
+      //                   children: [
+      //                     SizedBox(
+      //                       height: 50,
+      //                     ),
+      //                     (widget.isWallet)
+      //                         ? Text(
+      //                             "Note that the withdrawal process will be according to our Terms of use",
+      //                             style: TextStyle(
+      //                               fontSize: 20,
+      //                               fontFamily: "DefaultFontFamily",
+      //                               letterSpacing: 2.0,
+      //                               color: Theme.of(context).primaryColor,
+      //                             ),
+      //                           )
+      //                         : Text(
+      //                             "Note that the liquidation process will be according to our Terms of use",
+      //                             style: TextStyle(
+      //                               fontSize: 20,
+      //                               fontFamily: "DefaultFontFamily",
+      //                               letterSpacing: 0.5,
+      //                               color: Theme.of(context).primaryColor,
+      //                             ),
+      //                           ),
+      //                     SizedBox(
+      //                       height: 5,
+      //                     ),
+      //                     Text(
+      //                       "Available balance: " +
+      //                           nairaFormaet.format(
+      //                               ((int.tryParse(accountToUse))! +
+      //                                   (deductibleInterest) -
+      //                                   (20))),
+      //                       style: TextStyle(
+      //                         fontSize: 16,
+      //                         fontFamily: "DefaultFontFamily",
+      //                         color: Theme.of(context).primaryColor,
+      //                       ),
+      //                     ),
+      //                     SizedBox(
+      //                       height: 30,
+      //                     ),
+      //                     Padding(
+      //                       padding:
+      //                           const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
+      //                       child: (widget.isWallet)
+      //                           ? Text(
+      //                               "Why do you want to withdraw?",
+      //                               style: TextStyle(
+      //                                 fontSize: 14,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                                 //letterSpacing: 2.0,
+      //                                 color: Theme.of(context).primaryColor,
+      //                               ),
+      //                             )
+      //                           : Text(
+      //                               "Why do you want to liquidate?",
+      //                               style: TextStyle(
+      //                                 fontSize: 14,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                                 //letterSpacing: 2.0,
+      //                                 color: Theme.of(context).primaryColor,
+      //                               ),
+      //                             ),
+      //                     ),
+      //                     reasonOption,
+      //                     SizedBox(
+      //                       height: 10,
+      //                     ),
+      //                     (!widget.isWallet)
+      //                         ? Padding(
+      //                             padding: const EdgeInsets.fromLTRB(
+      //                                 15.0, 2, 15.0, 2),
+      //                             child: Text(
+      //                               "Where should we send your withdrawal?",
+      //                               style: TextStyle(
+      //                                 fontSize: 14,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                                 //letterSpacing: 2.0,
+      //                                 color: Theme.of(context).primaryColor,
+      //                               ),
+      //                             ),
+      //                           )
+      //                         : SizedBox(),
+      //                     (!widget.isWallet) ? locationOption : SizedBox(),
+      //                     (liquidateLocation == "Bank Account" ||
+      //                             widget.isWallet)
+      //                         ? Column(
+      //                             children: [
+      //                               (canShowOption)
+      //                                   ? Column(
+      //                                       children: [
+      //                                         fewBankOption,
+      //                                         SizedBox(
+      //                                           height: 10,
+      //                                         ),
+      //                                         Padding(
+      //                                           padding:
+      //                                               const EdgeInsets.fromLTRB(
+      //                                                   15.0, 2, 15.0, 2),
+      //                                           child: accountNumber,
+      //                                         ),
+      //                                       ],
+      //                                     )
+      //                                   : Padding(
+      //                                       padding: const EdgeInsets.fromLTRB(
+      //                                           20.0, 10, 20.0, 10),
+      //                                       child: Text(
+      //                                         "Loading banks...",
+      //                                         style: TextStyle(
+      //                                           fontSize: 16,
+      //                                           fontFamily: "DefaultFontFamily",
+      //                                           //letterSpacing: 2.0,
+      //                                           color: Theme.of(context)
+      //                                               .primaryColor,
+      //                                         ),
+      //                                       ),
+      //                                     ),
+      //                               (isChecking)
+      //                                   ? Padding(
+      //                                       padding: const EdgeInsets.fromLTRB(
+      //                                           20.0, 0, 20.0, 10),
+      //                                       child: LinearProgressIndicator(
+      //                                         color: brandOne,
+      //                                         minHeight: 4,
+      //                                       ),
+      //                                     )
+      //                                   : SizedBox(),
+      //                               Padding(
+      //                                 padding: const EdgeInsets.fromLTRB(
+      //                                     20.0, 10, 20.0, 10),
+      //                                 child: Text(
+      //                                   _bankAccountName,
+      //                                   style: TextStyle(
+      //                                     fontSize: 16.0,
+      //                                     fontFamily: "DefaultFontFamily",
+      //                                     letterSpacing: 0.5,
+      //                                     fontWeight: FontWeight.bold,
+      //                                     color: Theme.of(context).primaryColor,
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           )
+      //                         : Text(""),
+      //                     SizedBox(
+      //                       height: 10,
+      //                     ),
+      //                     Padding(
+      //                       padding:
+      //                           const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
+      //                       child: (widget.isWallet)
+      //                           ? Text(
+      //                               "How much do you want to withdraw?",
+      //                               style: TextStyle(
+      //                                 fontSize: 14,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                                 //letterSpacing: 2.0,
+      //                                 color: Theme.of(context).primaryColor,
+      //                               ),
+      //                             )
+      //                           : Text(
+      //                               "How much do you want to liquidate?",
+      //                               style: TextStyle(
+      //                                 fontSize: 14,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                                 //letterSpacing: 2.0,
+      //                                 color: Theme.of(context).primaryColor,
+      //                               ),
+      //                             ),
+      //                     ),
+      //                     Padding(
+      //                       padding:
+      //                           const EdgeInsets.fromLTRB(15.0, 2, 15.0, 2),
+      //                       child: amount,
+      //                     ),
+      //                     SizedBox(
+      //                       height: 50,
+      //                     ),
+      //                     RoundedLoadingButton(
+      //                       child: (widget.isWallet)
+      //                           ? Text(
+      //                               'Withdraw',
+      //                               style: TextStyle(
+      //                                 color: Colors.white,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                               ),
+      //                             )
+      //                           : Text(
+      //                               'Liquidate',
+      //                               style: TextStyle(
+      //                                 color: Colors.white,
+      //                                 fontFamily: "DefaultFontFamily",
+      //                               ),
+      //                             ),
+      //                       elevation: 0.0,
+      //                       successColor: brandOne,
+      //                       color: brandOne,
+      //                       controller: _btnController,
+      //                       onPressed: () {
+      //                         if (validateAmount(
+      //                                 _amountController.text.trim()) ==
+      //                             "") {
+      //                           if (liquidateLocation == "Bank Account" &&
+      //                               validateName(_bankAccountName) == "" &&
+      //                               validateNumber(_accountNumberController.text
+      //                                       .trim()) ==
+      //                                   "") {
+      //                             Timer(Duration(seconds: 1), () {
+      //                               _btnController.stop();
+      //                             });
+      //                             Get.bottomSheet(
+      //                               isDismissible: true,
+      //                               SizedBox(
+      //                                 height: 300,
+      //                                 child: ClipRRect(
+      //                                   borderRadius: BorderRadius.only(
+      //                                     topLeft: Radius.circular(30.0),
+      //                                     topRight: Radius.circular(30.0),
+      //                                   ),
+      //                                   child: Container(
+      //                                     color: Theme.of(context).canvasColor,
+      //                                     padding:
+      //                                         EdgeInsets.fromLTRB(10, 5, 10, 5),
+      //                                     child: Column(
+      //                                       crossAxisAlignment:
+      //                                           CrossAxisAlignment.center,
+      //                                       children: [
+      //                                         SizedBox(
+      //                                           height: 50,
+      //                                         ),
+      //                                         Text(
+      //                                           'Enter PIN to Proceed',
+      //                                           style: TextStyle(
+      //                                             fontSize: 18,
+      //                                             fontFamily:
+      //                                                 "DefaultFontFamily",
+      //                                             color: Theme.of(context)
+      //                                                 .primaryColor,
+      //                                           ),
+      //                                           textAlign: TextAlign.center,
+      //                                         ),
+      //                                         Pinput(
+      //                                           defaultPinTheme: PinTheme(
+      //                                             width: 30,
+      //                                             height: 30,
+      //                                             textStyle: TextStyle(
+      //                                               fontSize: 20,
+      //                                               color: Theme.of(context)
+      //                                                   .primaryColor,
+      //                                             ),
+      //                                             decoration: BoxDecoration(
+      //                                               border: Border.all(
+      //                                                   color: brandOne,
+      //                                                   width: 2.0),
+      //                                               borderRadius:
+      //                                                   BorderRadius.circular(
+      //                                                       10),
+      //                                             ),
+      //                                           ),
+      //                                           controller: _aPinController,
+      //                                           length: 4,
+      //                                           closeKeyboardWhenCompleted:
+      //                                               true,
+      //                                           keyboardType:
+      //                                               TextInputType.number,
+      //                                         ),
+      //                                         SizedBox(
+      //                                           height: 20,
+      //                                         ),
+      //                                         Text(
+      //                                           '(₦20 charges applied)',
+      //                                           style: TextStyle(
+      //                                             fontSize: 14,
+      //                                             fontFamily:
+      //                                                 "DefaultFontFamily",
+      //                                             color: Theme.of(context)
+      //                                                 .primaryColor,
+      //                                           ),
+      //                                           textAlign: TextAlign.center,
+      //                                         ),
+      //                                         SizedBox(
+      //                                           height: 30,
+      //                                         ),
+      //                                         GFButton(
+      //                                           onPressed: () {
+      //                                             if (_aPinController.text
+      //                                                     .trim()
+      //                                                     .toString() ==
+      //                                                 userController.user[0]
+      //                                                     .transactionPIN) {
+      //                                               Get.back();
+      //                                               _doLiquidateBank();
+      //                                             } else {
+      //                                               Get.snackbar(
+      //                                                 "Invalid PIN",
+      //                                                 "Enter correct PIN",
+      //                                                 animationDuration:
+      //                                                     Duration(seconds: 2),
+      //                                                 backgroundColor:
+      //                                                     Colors.red,
+      //                                                 colorText: Colors.white,
+      //                                                 snackPosition:
+      //                                                     SnackPosition.BOTTOM,
+      //                                               );
+      //                                             }
+      //                                           },
+      //                                           icon: Icon(
+      //                                             Icons.arrow_right_outlined,
+      //                                             size: 30,
+      //                                             color: Colors.white,
+      //                                           ),
+      //                                           color: brandOne,
+      //                                           text: "Proceed to Withdraw",
+      //                                           shape: GFButtonShape.pills,
+      //                                           fullWidthButton: false,
+      //                                         ),
+      //                                         SizedBox(
+      //                                           height: 20,
+      //                                         ),
+      //                                       ],
+      //                                     ),
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                             );
+      //                           } else if (liquidateLocation ==
+      //                               "Space Wallet") {
+      //                             if (validateName(_bankAccountName) == "" &&
+      //                                 validateNumber(_accountNumberController
+      //                                         .text
+      //                                         .trim()) ==
+      //                                     "" &&
+      //                                 widget.isWallet == true) {
+      //                               Timer(Duration(seconds: 1), () {
+      //                                 _btnController.stop();
+      //                               });
+      //                               Get.bottomSheet(
+      //                                 isDismissible: true,
+      //                                 SizedBox(
+      //                                   height: 300,
+      //                                   child: ClipRRect(
+      //                                     borderRadius: BorderRadius.only(
+      //                                       topLeft: Radius.circular(30.0),
+      //                                       topRight: Radius.circular(30.0),
+      //                                     ),
+      //                                     child: Container(
+      //                                       color:
+      //                                           Theme.of(context).canvasColor,
+      //                                       padding: EdgeInsets.fromLTRB(
+      //                                           10, 5, 10, 5),
+      //                                       child: Column(
+      //                                         crossAxisAlignment:
+      //                                             CrossAxisAlignment.center,
+      //                                         children: [
+      //                                           SizedBox(
+      //                                             height: 50,
+      //                                           ),
+      //                                           Text(
+      //                                             'Enter PIN to Proceed',
+      //                                             style: TextStyle(
+      //                                               fontSize: 18,
+      //                                               fontFamily:
+      //                                                   "DefaultFontFamily",
+      //                                               color: Theme.of(context)
+      //                                                   .primaryColor,
+      //                                             ),
+      //                                             textAlign: TextAlign.center,
+      //                                           ),
+      //                                           Pinput(
+      //                                             defaultPinTheme: PinTheme(
+      //                                               width: 30,
+      //                                               height: 30,
+      //                                               textStyle: TextStyle(
+      //                                                 fontSize: 20,
+      //                                                 color: Theme.of(context)
+      //                                                     .primaryColor,
+      //                                               ),
+      //                                               decoration: BoxDecoration(
+      //                                                 border: Border.all(
+      //                                                     color: brandOne,
+      //                                                     width: 2.0),
+      //                                                 borderRadius:
+      //                                                     BorderRadius.circular(
+      //                                                         10),
+      //                                               ),
+      //                                             ),
+      //                                             controller: _aPinController,
+      //                                             length: 4,
+      //                                             closeKeyboardWhenCompleted:
+      //                                                 true,
+      //                                             keyboardType:
+      //                                                 TextInputType.number,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 20,
+      //                                           ),
+      //                                           Text(
+      //                                             '(₦20 charges applied)',
+      //                                             style: TextStyle(
+      //                                               fontSize: 14,
+      //                                               fontFamily:
+      //                                                   "DefaultFontFamily",
+      //                                               color: Theme.of(context)
+      //                                                   .primaryColor,
+      //                                             ),
+      //                                             textAlign: TextAlign.center,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 30,
+      //                                           ),
+      //                                           GFButton(
+      //                                             onPressed: () {
+      //                                               if (_aPinController.text
+      //                                                       .trim()
+      //                                                       .toString() ==
+      //                                                   userController.user[0]
+      //                                                       .transactionPIN) {
+      //                                                 Get.back();
+      //                                                 _doWallet();
+      //                                               } else {
+      //                                                 Get.snackbar(
+      //                                                   "Invalid PIN",
+      //                                                   "Enter correct PIN",
+      //                                                   animationDuration:
+      //                                                       Duration(
+      //                                                           seconds: 2),
+      //                                                   backgroundColor:
+      //                                                       Colors.red,
+      //                                                   colorText: Colors.white,
+      //                                                   snackPosition:
+      //                                                       SnackPosition
+      //                                                           .BOTTOM,
+      //                                                 );
+      //                                               }
+      //                                             },
+      //                                             icon: Icon(
+      //                                               Icons.arrow_right_outlined,
+      //                                               size: 30,
+      //                                               color: Colors.white,
+      //                                             ),
+      //                                             color: brandOne,
+      //                                             text: "Proceed to Withdraw",
+      //                                             shape: GFButtonShape.pills,
+      //                                             fullWidthButton: false,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 20,
+      //                                           ),
+      //                                         ],
+      //                                       ),
+      //                                     ),
+      //                                   ),
+      //                                 ),
+      //                               );
+      //                             } else {
+      //                               Timer(Duration(seconds: 1), () {
+      //                                 _btnController.stop();
+      //                               });
+      //                               Get.bottomSheet(
+      //                                 isDismissible: true,
+      //                                 SizedBox(
+      //                                   height: 300,
+      //                                   child: ClipRRect(
+      //                                     borderRadius: BorderRadius.only(
+      //                                       topLeft: Radius.circular(30.0),
+      //                                       topRight: Radius.circular(30.0),
+      //                                     ),
+      //                                     child: Container(
+      //                                       color:
+      //                                           Theme.of(context).canvasColor,
+      //                                       padding: EdgeInsets.fromLTRB(
+      //                                           10, 5, 10, 5),
+      //                                       child: Column(
+      //                                         crossAxisAlignment:
+      //                                             CrossAxisAlignment.center,
+      //                                         children: [
+      //                                           SizedBox(
+      //                                             height: 50,
+      //                                           ),
+      //                                           Text(
+      //                                             'Enter PIN to Proceed',
+      //                                             style: TextStyle(
+      //                                               fontSize: 18,
+      //                                               fontFamily:
+      //                                                   "DefaultFontFamily",
+      //                                               color: Theme.of(context)
+      //                                                   .primaryColor,
+      //                                             ),
+      //                                             textAlign: TextAlign.center,
+      //                                           ),
+      //                                           Pinput(
+      //                                             defaultPinTheme: PinTheme(
+      //                                               width: 30,
+      //                                               height: 30,
+      //                                               textStyle: TextStyle(
+      //                                                 fontSize: 20,
+      //                                                 color: Theme.of(context)
+      //                                                     .primaryColor,
+      //                                               ),
+      //                                               decoration: BoxDecoration(
+      //                                                 border: Border.all(
+      //                                                     color: brandOne,
+      //                                                     width: 2.0),
+      //                                                 borderRadius:
+      //                                                     BorderRadius.circular(
+      //                                                         10),
+      //                                               ),
+      //                                             ),
+      //                                             controller: _aPinController,
+      //                                             length: 4,
+      //                                             closeKeyboardWhenCompleted:
+      //                                                 true,
+      //                                             keyboardType:
+      //                                                 TextInputType.number,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 20,
+      //                                           ),
+      //                                           Text(
+      //                                             '(₦20 charges applied)',
+      //                                             style: TextStyle(
+      //                                               fontSize: 14,
+      //                                               fontFamily:
+      //                                                   "DefaultFontFamily",
+      //                                               color: Theme.of(context)
+      //                                                   .primaryColor,
+      //                                             ),
+      //                                             textAlign: TextAlign.center,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 30,
+      //                                           ),
+      //                                           GFButton(
+      //                                             onPressed: () {
+      //                                               if (_aPinController.text
+      //                                                       .trim()
+      //                                                       .toString() ==
+      //                                                   userController.user[0]
+      //                                                       .transactionPIN) {
+      //                                                 Get.back();
+      //                                                 _doLiquidateWallet();
+      //                                               } else {
+      //                                                 Get.snackbar(
+      //                                                   "Invalid PIN",
+      //                                                   "Enter correct PIN",
+      //                                                   animationDuration:
+      //                                                       Duration(
+      //                                                           seconds: 2),
+      //                                                   backgroundColor:
+      //                                                       Colors.red,
+      //                                                   colorText: Colors.white,
+      //                                                   snackPosition:
+      //                                                       SnackPosition
+      //                                                           .BOTTOM,
+      //                                                 );
+      //                                               }
+      //                                             },
+      //                                             icon: Icon(
+      //                                               Icons.arrow_right_outlined,
+      //                                               size: 30,
+      //                                               color: Colors.white,
+      //                                             ),
+      //                                             color: brandOne,
+      //                                             text: "Proceed to Withdraw",
+      //                                             shape: GFButtonShape.pills,
+      //                                             fullWidthButton: false,
+      //                                           ),
+      //                                           SizedBox(
+      //                                             height: 20,
+      //                                           ),
+      //                                         ],
+      //                                       ),
+      //                                     ),
+      //                                   ),
+      //                                 ),
+      //                               );
+      //                             }
+      //                           } else {
+      //                             Get.snackbar(
+      //                               "Invalid",
+      //                               'Please fill the form properly to proceed',
+      //                               animationDuration: Duration(seconds: 1),
+      //                               backgroundColor: Colors.red,
+      //                               colorText: Colors.white,
+      //                               snackPosition: SnackPosition.BOTTOM,
+      //                             );
+      //                           }
+      //                         } else {
+      //                           Timer(Duration(seconds: 1), () {
+      //                             _btnController.stop();
+      //                           });
+      //                           Get.snackbar(
+      //                             "Invalid",
+      //                             'Please fill the form properly to proceed',
+      //                             animationDuration: Duration(seconds: 1),
+      //                             backgroundColor: Colors.red,
+      //                             colorText: Colors.white,
+      //                             snackPosition: SnackPosition.BOTTOM,
+      //                           );
+      //                         }
+      //                       },
+      //                     ),
+      //                     SizedBox(
+      //                       height: 50,
+      //                     ),
+      //                   ],
+      //                 ),
+      //               )
+      //             : Container(
+      //                 height: double.infinity,
+      //                 width: double.infinity,
+      //                 decoration: BoxDecoration(
+      //                   image: DecorationImage(
+      //                       image:
+      //                           AssetImage("assets/icons/RentSpace-icon.png"),
+      //                       fit: BoxFit.cover,
+      //                       opacity: 0.1),
+      //                 ),
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   crossAxisAlignment: CrossAxisAlignment.center,
+      //                   children: [
+      //                     SizedBox(
+      //                       height: 50,
+      //                     ),
+      //                     Row(
+      //                       mainAxisAlignment: MainAxisAlignment.center,
+      //                       children: [
+      //                         Text(
+      //                           "Processing...",
+      //                           style: TextStyle(
+      //                             fontSize: 20,
+      //                             fontFamily: "DefaultFontFamily",
+      //                             color: Theme.of(context).primaryColor,
+      //                           ),
+      //                         ),
+      //                         SizedBox(
+      //                           height: 30,
+      //                         ),
+      //                       ],
+      //                     ),
+      //                     SizedBox(
+      //                       height: 50,
+      //                     ),
+      //                     CircularProgressIndicator(
+      //                       color: brandOne,
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //       )
+      //     : Container(
+      //         height: double.infinity,
+      //         width: double.infinity,
+      //         decoration: BoxDecoration(
+      //           image: DecorationImage(
+      //             image: AssetImage("assets/icons/RentSpace-icon.png"),
+      //             fit: BoxFit.cover,
+      //             opacity: 0.1,
+      //           ),
+      //         ),
+      //         padding: const EdgeInsets.all(20.0),
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           crossAxisAlignment: CrossAxisAlignment.center,
+      //           children: [
+      //             Row(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: [
+      //                 Container(
+      //                   child: Flexible(
+      //                     child: Text(
+      //                       "kindly confirm your BVN to perform this action.",
+      //                       style: TextStyle(
+      //                         fontSize: 16.0,
+      //                         letterSpacing: 0.5,
+      //                         fontFamily: "DefaultFontFamily",
+      //                         color: Theme.of(context).primaryColor,
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //             SizedBox(
+      //               height: 20,
+      //             ),
+      //             GFButton(
+      //               onPressed: () async {
+      //                 // Get.to(BvnPage());
+      //               },
+      //               text: "  Begin Verification  ",
+      //               fullWidthButton: false,
+      //               color: brandOne,
+      //               shape: GFButtonShape.pills,
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+   
     );
   }
 }

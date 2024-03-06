@@ -61,7 +61,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
   final kycFormKey4 = GlobalKey<FormState>();
   List<String> item = const <String>[
     'Driver\'s Liscense',
-    'Passport Photograph',
+    'International Passport',
     'Voters Card',
     // 'Friends',
   ];

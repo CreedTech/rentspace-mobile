@@ -11,7 +11,7 @@ import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -21,6 +21,8 @@ import 'dart:async';
 
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../controller/auth/user_controller.dart';
+import '../../controller/rent/rent_controller.dart';
 import '../../controller/rent_controller.dart';
 import '../dashboard/dashboard.dart';
 import '../savings/spaceRent/spacerent_history.dart';
@@ -100,39 +102,39 @@ class _LoanPageState extends State<LoanPage> {
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
 
-  getUser() async {
-    var collection = FirebaseFirestore.instance.collection('accounts');
-    var docSnapshot = await collection.doc(userId).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      setState(() {
-        _userFirst = data?['firstname'];
-        _userLast = data?['lastname'];
-        _userId = data?['rentspace_id'];
-        _hasBvn = data?['bvn'];
-        _hasKyc = data?['kyc_details'];
-      });
-    }
-  }
+  // getUser() async {
+  //   var collection = FirebaseFirestore.instance.collection('accounts');
+  //   var docSnapshot = await collection.doc(userId).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic>? data = docSnapshot.data();
+  //     setState(() {
+  //       _userFirst = data?['firstname'];
+  //       _userLast = data?['lastname'];
+  //       _userId = data?['rentspace_id'];
+  //       _hasBvn = data?['bvn'];
+  //       _hasKyc = data?['kyc_details'];
+  //     });
+  //   }
+  // }
 
   @override
   initState() {
     super.initState();
-    getUser();
+    // getUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    String chosenDateString = rentController.rent[0].date;
-    String interval = rentController.rent[0].interval;
-    int numberOfIntervals = int.parse(rentController.rent[0].numPayment);
+    String chosenDateString = rentController.rentModel!.rents![0].date;
+    String interval = rentController.rentModel!.rents![0].interval;
+    int numberOfIntervals = int.parse(rentController.rentModel!.rents![0].paymentCount);
     DateTime nextPaymentDate =
         calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
     String formattedNextDate = formatDate(nextPaymentDate);
-    print(((rentController.rent[0].savedAmount.abs()) ==
-        (rentController.rent[0].targetAmount * 0.7).abs()));
-    print(((rentController.rent[0].savedAmount)));
-    print(((rentController.rent[0].targetAmount * 0.7)));
+    print(((rentController.rentModel!.rents![0].paidAmount) ==
+        (rentController.rentModel!.rents![0].amount * 0.7).abs()));
+    print(((rentController.rentModel!.rents![0].paidAmount)));
+    print(((rentController.rentModel!.rents![0].amount * 0.7)));
 
     validateReason(reasonValue) {
       if (reasonValue.isEmpty) {
@@ -377,8 +379,7 @@ class _LoanPageState extends State<LoanPage> {
                         ),
                         Text(
                           nairaFormaet
-                              .format(
-                                  int.parse(userController.user[0].loanAmount))
+                              .format(userController.userModel!.userDetails![0].loanAmount)
                               .toString(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).colorScheme.background,
@@ -399,7 +400,7 @@ class _LoanPageState extends State<LoanPage> {
                             ),
                             Text(
                               nairaFormaet
-                                  .format(rentController.rent[0].targetAmount)
+                                  .format(rentController.rentModel!.rents![0].amount)
                                   .toString(),
                               style: GoogleFonts.nunito(
                                 color: Theme.of(context).colorScheme.background,
@@ -448,9 +449,9 @@ class _LoanPageState extends State<LoanPage> {
                                         child: Text(
                                           nairaFormaet
                                               .format(rentController
-                                                      .rent[0].targetAmount -
-                                                  (rentController.rent[0]
-                                                          .targetAmount *
+                                                      .rentModel!.rents![0].amount -
+                                                  (rentController.rentModel!.rents![0]
+                                                          .amount *
                                                       0.7))
                                               .toString(),
                                           overflow: TextOverflow.ellipsis,
@@ -605,7 +606,7 @@ class _LoanPageState extends State<LoanPage> {
                               ],
                             ),
                           ),
-                          rentController.rent[0].history.isEmpty
+                          rentController.rentModel!.rents![0].rentHistories.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment:
@@ -633,7 +634,7 @@ class _LoanPageState extends State<LoanPage> {
                                     shrinkWrap: true,
                                     physics: const ClampingScrollPhysics(),
                                     itemCount: rentController
-                                        .rent[0].history.reversed
+                                        .rentModel!.rents![0].rentHistories.reversed
                                         .toList()
                                         .length,
                                     itemBuilder:
@@ -667,15 +668,15 @@ class _LoanPageState extends State<LoanPage> {
                                           ),
                                           subtitle: Text(
                                             _formatTime(DateTime.parse(
-                                                    (rentController.rent[0]
-                                                        .history.reversed
+                                                    (rentController.rentModel!.rents![0]
+                                                        .rentHistories.reversed
                                                         .toList()[index]
                                                         .split(" ")[0]
                                                         .substring(
                                                             0,
                                                             rentController
-                                                                    .rent[0]
-                                                                    .history
+                                                                    .rentModel!.rents![0]
+                                                                    .rentHistories
                                                                     .reversed
                                                                     .toList()[
                                                                         index]
@@ -696,7 +697,7 @@ class _LoanPageState extends State<LoanPage> {
                                           //   // Navigator.pushNamed(context, RouteList.profile);
                                           // },
                                           trailing: Text(
-                                            '+ ₦${extractAmount(rentController.rent[0].history.reversed.toList()[index])}'
+                                            '+ ₦${extractAmount(rentController.rentModel!.rents![0].rentHistories.reversed.toList()[index])}'
                                             // rentController
                                             //     .rent[0].history.reversed
                                             //     .toList()[index]
