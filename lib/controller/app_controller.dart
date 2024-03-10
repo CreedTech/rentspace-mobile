@@ -5,22 +5,16 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
-import '../view/FirstPage.dart';
 import '../view/actions/fund_wallet.dart';
-import '../view/dashboard/dashboard.dart';
 import '../view/login_page.dart';
 import 'wallet_controller.dart';
 
@@ -301,6 +295,18 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         Get.back();
         Get.back();
+        showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: Colors.green,
+          message: 'Space Rent Creation Successful',
+          textStyle: GoogleFonts.nunito(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
         // Get.back();
         Get.to(const RentSpaceList());
         // calculateNextPaymentDate(context, date, interval);
@@ -763,7 +769,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       final response = await appRepository.buyAirtime(body);
       if (response.success) {

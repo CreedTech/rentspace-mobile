@@ -239,24 +239,25 @@ class _ForgotPasswordOTPVerificationPageState
                               // const SizedBox(
                               //   width: 10,
                               // ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isClicked = true;
-                                  });
-                                  resetCountdown();
-                                  authState.resendPasswordOtp(
-                                      context, widget.email);
-                                },
-                                child: Text(
-                                  ' Click here',
-                                  style: GoogleFonts.nunito(
-                                    color: brandTwo,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                              if (isClicked == false)
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isClicked = true;
+                                    });
+                                    resetCountdown();
+                                    authState.resendPasswordOtp(
+                                        context, widget.email);
+                                  },
+                                  child: Text(
+                                    ' Click here',
+                                    style: GoogleFonts.nunito(
+                                      color: brandTwo,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                           if (isClicked == true)
@@ -303,7 +304,8 @@ class _ForgotPasswordOTPVerificationPageState
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(250, 50),

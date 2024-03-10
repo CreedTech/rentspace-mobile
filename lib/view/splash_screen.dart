@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -12,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/global_services.dart';
 import '../constants/widgets/common/annnotated_scaffold.dart';
+import '../constants/widgets/custom_loader.dart';
 import 'offline/no_internet_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -56,7 +58,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkConnectivity() async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
     final hasConnection = await InternetConnectionChecker().hasConnection;
+    print(hasConnection);
+    EasyLoading.dismiss();
     setState(() {
       isInternetConnected = hasConnection;
     });

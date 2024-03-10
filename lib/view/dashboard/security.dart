@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/actions/change_pin_intro.dart';
 import 'package:rentspace/view/actions/forgot_pin_intro.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -292,7 +293,7 @@ class _SecurityState extends State<Security> {
                           ),
                         ),
                         onTap: () {
-                          Get.to(const ForgotPinIntro());
+                          Get.to(const ChangePinIntro());
                           // Get.to(ForgotPin(
                           //   password: userController.user[0].userPassword,
                           //   pin: userController.user[0].transactionPIN,

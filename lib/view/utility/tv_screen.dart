@@ -19,6 +19,7 @@ import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
+import '../FirstPage.dart';
 import '../actions/fund_wallet.dart';
 
 class TvScreen extends StatefulWidget {
@@ -50,6 +51,13 @@ class TvScreen extends StatefulWidget {
 class _TvScreenState extends State<TvScreen> {
   final TextEditingController _pinController = TextEditingController();
   final setPinformKey = GlobalKey<FormState>();
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
 
   vendTv(String billId) async {
     const String apiUrl = 'https://api.watupay.com/v1/watubill/vend';
@@ -114,10 +122,11 @@ class _TvScreenState extends State<TvScreen> {
 
       _pinController.clear();
 
+      await fetchUserData(refresh: true);
       showTopSnackBar(
         Overlay.of(context),
-        CustomSnackBar.error(
-          backgroundColor: brandOne,
+        CustomSnackBar.success(
+          backgroundColor: Colors.green,
           message: 'You just earned a Space point!',
           textStyle: GoogleFonts.nunito(
             fontSize: 14,

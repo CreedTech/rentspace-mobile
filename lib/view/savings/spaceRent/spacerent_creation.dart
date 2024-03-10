@@ -34,7 +34,7 @@ double _rentThirty = 0.0;
 double _holdingFee = 0.0;
 String _canShowRent = 'false';
 String _hasCalculate = 'true';
-String durationType = "Weekly";
+
 String paymentCount = "";
 //savings goals
 double _dailyValue = 0.0;
@@ -53,13 +53,17 @@ final TextEditingController _rentAmountController = TextEditingController();
 final TextEditingController _rentNameController = TextEditingController();
 final TextEditingController _endDateController = TextEditingController();
 final TextEditingController fundingController = TextEditingController();
-List<String> intervalLabels = ['Weekly', 'Monthly'];
+
 List<String> fundingSource = ['DVA Wallet', 'Debit Card'];
 
 class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   final TextEditingController _intervalController = TextEditingController();
   final UserController userController = Get.find();
   DateTime _endDate = DateTime.now();
+  List<String> intervalLabels = ['Weekly', 'Monthly'];
+
+  bool idSelected = false;
+  String durationType = "";
 
   int _calculateMonthsDifference() {
     final differenceMonths = _endDate
@@ -113,6 +117,14 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     _rentNameController.clear();
     getCurrentUser();
     resetCalculator();
+    _intervalController.addListener(_updateDurationType);
+  }
+
+  void _updateDurationType() {
+    setState(() {
+      durationType = _intervalController.text;
+    });
+    print(durationType);
   }
 
   @override
@@ -437,33 +449,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       ),
     );
 
-    final intervalSelection = CustomDropdown(
-      selectedStyle: GoogleFonts.nunito(
-          color: Theme.of(context).primaryColor, fontSize: 12),
-      hintText: 'Select frequency',
-      hintStyle: GoogleFonts.nunito(fontSize: 12),
-      excludeSelected: true,
-      fillColor: Colors.transparent,
-      listItemStyle: GoogleFonts.nunito(
-          color: Theme.of(context).colorScheme.secondary, fontSize: 12),
-      items: intervalLabels,
-      controller: _intervalController,
-      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-      fieldSuffixIcon: Icon(
-        Iconsax.arrow_down5,
-        size: 25.h,
-        color: Theme.of(context).primaryColor,
-      ),
-      onChanged: (String? val) {
-        setState(() {
-          durationType = val!;
-          // idSelected = true;
-          // durationType = _intervalController.text;
-        });
-        print(val);
-      },
-    );
-
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -562,7 +547,37 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                           ),
                         ],
                       ),
-                      intervalSelection,
+                      CustomDropdown(
+                        selectedStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12),
+                        hintText: 'Select frequency',
+                        hintStyle: GoogleFonts.nunito(fontSize: 12),
+                        excludeSelected: true,
+                        fillColor: Colors.transparent,
+                        listItemStyle: GoogleFonts.nunito(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 12),
+                        items: intervalLabels,
+                        controller: _intervalController,
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                        fieldSuffixIcon: Icon(
+                          Iconsax.arrow_down5,
+                          size: 25.h,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onChanged: (String val) {
+                          setState(() {
+                            idSelected = true;
+                            durationType = _intervalController.text;
+                            // durationType = _intervalController.text;
+                          });
+
+                          print(val);
+                        },
+                      ),
+                      (idSelected == true) ? SizedBox() : SizedBox(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -606,61 +621,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                       const SizedBox(
                         height: 20,
                       ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Padding(
-                      //       padding: const EdgeInsets.symmetric(
-                      //           vertical: 4, horizontal: 3),
-                      //       child: Text(
-                      //         'Select Funding Source',
-                      //         style: GoogleFonts.nunito(
-                      //           color: Theme.of(context).primaryColor,
-                      //           fontWeight: FontWeight.w700,
-                      //           fontSize: 12,
-                      //           // fontFamily: "DefaultFontFamily",
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     CustomDropdown(
-                      //       selectedStyle: GoogleFonts.nunito(
-                      //         color: Theme.of(context).primaryColor,
-                      //         fontSize: 12,
-                      //       ),
-                      //       hintText: 'Select Source?',
-                      //       hintStyle: GoogleFonts.nunito(fontSize: 12),
-                      //       excludeSelected: true,
-                      //       fillColor: Colors.transparent,
-                      //       listItemStyle: GoogleFonts.nunito(
-                      //           color: Theme.of(context).colorScheme.secondary,
-                      //           fontSize: 12),
-                      //       items: fundingSource,
-                      //       controller: fundingController,
-                      //       borderSide:
-                      //           BorderSide(color: Theme.of(context).primaryColor),
-                      //       fieldSuffixIcon: Icon(
-                      //         Iconsax.arrow_down5,
-                      //         size: 25.h,
-                      //         color: Theme.of(context).primaryColor,
-                      //       ),
-                      //       onChanged: (String val) {
-                      //         if (mounted) {
-                      //           // Check if the widget is still mounted
-                      //           setState(() {
-                      //             selectedId = fundingController.text;
-                      //             showSaveButton = true;
-                      //           });
-                      //         }
-                      //         print(val);
-                      //         print("_amountValue");
-                      //         print(_amountValue);
-                      //       },
-                      //     ),
-                      //     const SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
@@ -781,32 +741,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                             ),
                                           ],
                                         ),
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.center,
-                                        //   children: [
-                                        //     Text(
-                                        //       'Holding Fee: ',
-                                        //       style: GoogleFonts.nunito(
-                                        //           fontSize: 14.sp,
-                                        //           color: Theme.of(context)
-                                        //               .primaryColor,
-                                        //           fontWeight: FontWeight.w700),
-                                        //     ),
-                                        //     Text(
-                                        //       currencyFormat
-                                        //           .format(double.tryParse(
-                                        //               _holdingFee.toString()))
-                                        //           .toString(),
-                                        //       overflow: TextOverflow.clip,
-                                        //       style: GoogleFonts.nunito(
-                                        //           fontSize: 14.sp,
-                                        //           color: Theme.of(context)
-                                        //               .primaryColor,
-                                        //           fontWeight: FontWeight.w700),
-                                        //     ),
-                                        //   ],
-                                        // ),
                                       ],
                                     ),
                                     const SizedBox(

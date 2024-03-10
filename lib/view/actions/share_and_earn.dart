@@ -60,7 +60,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                 child: Column(
                   children: [
                     Text(
-                      userController.users[0].referals.toString(),
+                      userController.userModel!.userDetails![0].referrals
+                          .toString(),
                       style: GoogleFonts.nunito(
                         fontSize: 40.0,
                         // letterSpacing: 1.0,
@@ -96,7 +97,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  "Participate in our exclusive program and seize the opportunity to earn ₦1,000 simply by referring friends through your unique code . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
+                  "Participate in our exclusive program and seize the opportunity to earn 500 space points simply by referring friends through your unique code . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
                     fontSize: 16.0,
@@ -133,9 +134,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           ),
                           onPressed: () {
                             Clipboard.setData(
-                              const ClipboardData(
+                              ClipboardData(
                                 text:
-                                    "Sign up with my code: userController.users[0].referalCode to earn a free point!",
+                                    "Sign up with my code: ${userController.userModel!.userDetails![0].referralCode} to earn a free point!",
                               ),
                             );
                             Fluttertoast.showToast(
@@ -149,7 +150,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               fontSize: 16.0,
                             );
                             Share.share(
-                                "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, userController.users[0].referalCode to sign up and earn a point!");
+                                "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.userModel!.userDetails![0].referralCode} to sign up and earn a point!");
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

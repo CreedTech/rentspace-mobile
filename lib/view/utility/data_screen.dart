@@ -19,6 +19,7 @@ import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
+import '../FirstPage.dart';
 import '../actions/fund_wallet.dart';
 
 class DataScreen extends StatefulWidget {
@@ -45,6 +46,15 @@ String loadMssg = "Loading services...";
 class _DataScreenState extends State<DataScreen> {
   final TextEditingController _pinController = TextEditingController();
   final setPinformKey = GlobalKey<FormState>();
+
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -186,10 +196,12 @@ class _DataScreenState extends State<DataScreen> {
                 maskType: EasyLoadingMaskType.black,
                 dismissOnTap: true,
               );
+              // Get.to(FirstPage());
+              await fetchUserData(refresh: true);
               showTopSnackBar(
                 Overlay.of(context),
                 CustomSnackBar.success(
-                  backgroundColor: brandOne,
+                  backgroundColor: Colors.green,
                   message: 'You just earned a Space point!',
                   textStyle: GoogleFonts.nunito(
                     fontSize: 14,

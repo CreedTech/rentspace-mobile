@@ -3,11 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:rentspace/constants/widgets/separator.dart';
 
 import '../../constants/colors.dart';
 
 class TransactionReceipt extends StatefulWidget {
-  const TransactionReceipt({super.key});
+  const TransactionReceipt(
+      {super.key,
+      required this.amount,
+      required this.status,
+      required this.transactionType});
+  final num amount;
+  final String status, transactionType;
 
   @override
   State<TransactionReceipt> createState() => _TransactionReceiptState();
@@ -54,27 +61,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
                 child: Column(
                   children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     Image.asset(
-                    //       'assets/icons/RentSpace-icon.png',
-                    //       width: 50,
-                    //     ),
-                    //     Text('Transaction Receipt',
-                    //     style: GoogleFonts.nunito(
-                    //       fontWeight: FontWeight.w700,
-                    //       fontSize: 14.sp,
-                    //       color: brandOne,
-                    //     ),),
-                    //   ],
-                    // ),
                     Center(
                       child: Column(
                         children: [
                           Text(
-                            '- ${currencyFormat.format(10000)}',
+                            '- ${currencyFormat.format(widget.amount)}',
                             style: GoogleFonts.nunito(
                               fontWeight: FontWeight.w800,
                               fontSize: 28.sp,
@@ -82,16 +73,132 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               color: brandOne,
                             ),
                           ),
-                          Text(
-                            'Successful',
-                            style: GoogleFonts.nunito(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.sp,
-                              color: const Color.fromARGB(255, 1, 197, 8),
-                            ),
-                          ),
+                          (widget.status == 'completed')
+                              ? Text(
+                                  'Successful',
+                                  style: GoogleFonts.nunito(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.sp,
+                                    color: Colors.green,
+                                  ),
+                                )
+                              : (widget.status == 'failed')
+                                  ? Text(
+                                      'Failed',
+                                      style: GoogleFonts.nunito(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16.sp,
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  : Text(
+                                      'Pending',
+                                      style: GoogleFonts.nunito(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16.sp,
+                                        color: Colors.yellow[800],
+                                      ),
+                                    ),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5.sp,
+                    ),
+                    MySeparator(),
+                    SizedBox(
+                      height: 5.sp,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Amount',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                            Text(
+                              currencyFormat.format(widget.amount),
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Fee',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                            Text(
+                              currencyFormat.format(0),
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    MySeparator(),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Transaction Details',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Description',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                            Text(
+                              '',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w600,
+                                // fontSize: 16.sp,
+                                color: brandOne,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -128,5 +235,4 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       ),
     );
   }
-
 }

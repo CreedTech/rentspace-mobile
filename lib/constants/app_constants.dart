@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 class AppConstants {
-  static const BASE_URL = 'https://rs-b-production.up.railway.app';
+  static const BASE_URL = 'https://rentspacetech-backend-production.up.railway.app';
   static const SIGN_UP = '/api/user/create';
   static const GET_WALLET = '/api/wallet/get-wallet';
   static const WALLET_TRANSFER = '/api/wallet/wallet-withdrawal';

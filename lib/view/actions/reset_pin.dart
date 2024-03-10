@@ -7,6 +7,7 @@ import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/actions/confirm_reset_pin_page.dart';
 
 import '../../constants/colors.dart';
+import '../../constants/widgets/custom_dialog.dart';
 
 class ResetPIN extends ConsumerStatefulWidget {
   const ResetPIN({super.key, required this.email});
@@ -75,6 +76,91 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
       keyboardType: TextInputType.number,
     );
    
-    return Container();
+      return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
+  
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Set New Transaction PIN',
+                        style: GoogleFonts.nunito(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          // fontFamily: "DefaultFontFamily",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Form(
+                          key: resetPinFormKey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 14,
+                            ),
+                            child: pin,
+                          ),
+                        ),
+                         const SizedBox(
+                        height: 30,
+                      ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(250, 50),
+                      backgroundColor: brandOne,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (resetPinFormKey.currentState!.validate()) {
+                        // _doSomething();
+                        Get.to(ConfirmResetPinPage(
+                            pin: _pinController.text.trim()));
+                      } else {
+                        customErrorDialog(context, "Invalid!",
+                            "Please Input your pin to proceed");
+                      }
+                    },
+                    child: const Text(
+                      'Proceed',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  
   }
 }

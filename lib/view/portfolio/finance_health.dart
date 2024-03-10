@@ -248,21 +248,11 @@ class _FinanceHealthState extends State<FinanceHealth> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.3,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
             child: Form(
               key: financeformKey,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(
                     height: 30,
@@ -272,7 +262,6 @@ class _FinanceHealthState extends State<FinanceHealth> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      // fontFamily: "DefaultFontFamily",
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
                     ),

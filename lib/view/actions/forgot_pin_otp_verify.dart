@@ -238,6 +238,7 @@ class _ForgotPinOTPVerificationPageState
                               // const SizedBox(
                               //   width: 10,
                               // ),
+                              if (isClicked == false)
                               GestureDetector(
                                 onTap: () {
                                   setState(() {

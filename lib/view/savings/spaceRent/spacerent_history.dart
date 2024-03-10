@@ -42,7 +42,7 @@ doSomeThing() {
       .substring(0, paymentInfo.split(" ")[0].length - 4));
 
   try {
-    DateTime dateTime = DateTime.parse(dateString);
+    DateTime dateTime = DateTime.parse(dateString).add(const Duration(hours: 1));
     print("Parsed DateTime: $dateTime");
   } catch (e) {
     print("Error parsing date: $e");
@@ -146,7 +146,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                           ),
                           subtitle: Text(
                             _formatTime(DateTime.parse(
-                                (_payments[index]['createdAt']))),
+                                (_payments[index]['createdAt'])).add(const Duration(hours: 1))),
                             style: GoogleFonts.nunito(
                               color: brandOne,
                               fontSize: 12.sp,

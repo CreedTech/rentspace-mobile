@@ -1009,16 +1009,17 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         // notifyListeners();
         state = const AsyncValue.data(true);
+        await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();
-        await GlobalService.sharedPreferencesManager.setAuthToken(value: '');
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('hasSeenOnboarding', false);
         print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-            (route) => false);
+        Get.offAll(const LoginPage());
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(builder: (context) => const LoginPage()),
+        //     (route) => false);
         return;
       } else {
         print(response.message.toString());
@@ -1371,4 +1372,72 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     return;
   }
+  Future changePin(BuildContext context, newPin,currentPin) async {
+    print("Fields");
+    print(newPin);
+    print(currentPin);
+    isLoading = true;
+    if (newPin.isEmpty ||
+        newPin == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+    Map<String, dynamic> body = {
+      'newPin': newPin,
+      'currentPin': currentPin
+    };
+    print("body");
+    print(body);
+    String message;
+    try {
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await authRepository.changePin(body);
+      EasyLoading.dismiss();
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: Colors.green,
+            message: 'Payment Pin Changed Successfully!!',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+        Get.offAll(const FirstPage());
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Wallet not found")) {
+        message = "Wallet not found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("New pin and confirm pin do not match")) {
+        message = "Pin Mismatch error";
+        // Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      message = "Oops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    }
+    return;
+  }
+
+
 }

@@ -420,7 +420,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               ),
                                             ),
                                             Text(
-                                              '30%',
+                                              '10%',
                                               style: GoogleFonts.nunito(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -434,6 +434,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       ),
                                     ),
                                   ),
+                               
                                 ],
                               ),
                             ),
@@ -596,7 +597,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               ),
                                               subtitle: Text(
                                                 _formatTime(DateTime.parse(
-                                                    history['createdAt'])),
+                                                    history['createdAt']).add(const Duration(hours: 1))),
                                                 style: GoogleFonts.nunito(
                                                   color: brandOne,
                                                   fontSize: 12.sp,
@@ -675,6 +676,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                       fontSize: 31.sp,
                     ),
                   ),
+                  
                   SizedBox(
                     height: 70.h,
                   ),
@@ -723,7 +725,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Get.to(const LoanPage());
+                            // Get.to(const KycP());
                           },
                           child: Text(
                             'Take Loan',

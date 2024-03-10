@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:flutter/material.dart';
@@ -142,15 +143,15 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        // centerTitle: false,
-        // title: Text(
-        //   'Back',
-        //   style: TextStyle(
-        //     color: Theme.of(context).primaryColor,
-        //     fontWeight: FontWeight.w700,
-        //     fontSize: 16,
-        //   ),
-        // ),
+        centerTitle: true,
+        title: Text(
+          'Forgot Password',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -179,15 +180,15 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Forgot Password',
-                          style: GoogleFonts.nunito(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            // fontFamily: "DefaultFontFamily",
-                          ),
-                        ),
+                        // Text(
+                        //   'Forgot Password',
+                        //   style: GoogleFonts.nunito(
+                        //     color: Theme.of(context).primaryColor,
+                        //     fontWeight: FontWeight.w700,
+                        //     fontSize: 18,
+                        //     // fontFamily: "DefaultFontFamily",
+                        //   ),
+                        // ),
                         Text(
                           'Regain access with password recovery.',
                           style: GoogleFonts.nunito(
@@ -199,8 +200,8 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 51,
+                    SizedBox(
+                      height: 10.h,
                     ),
                     Form(
                       key: forgotPassFormKey,

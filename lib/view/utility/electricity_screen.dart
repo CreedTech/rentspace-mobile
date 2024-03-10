@@ -56,6 +56,13 @@ String electricToken = "";
 class _ElectricityScreenState extends State<ElectricityScreen> {
   final TextEditingController _pinController = TextEditingController();
   final setPinformKey = GlobalKey<FormState>();
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
 
   vendElectric(String billId) async {
     const String apiUrl = 'https://api.watupay.com/v1/watubill/vend';
@@ -120,11 +127,12 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
       }
 
       _pinController.clear();
-      Get.to(FirstPage());
+      // Get.to(FirstPage());
+      await fetchUserData(refresh: true);
       showTopSnackBar(
         Overlay.of(context),
-        CustomSnackBar.error(
-          backgroundColor: brandOne,
+        CustomSnackBar.success(
+          backgroundColor: Colors.green,
           message: 'You just earned a Space point!',
           textStyle: GoogleFonts.nunito(
             fontSize: 14,

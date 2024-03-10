@@ -29,7 +29,11 @@ class _NewNotificationPageState extends State<NewNotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Center(child: Text(message,style: TextStyle(color: black,fontSize: 100),)),
+        child: Center(
+            child: Text(
+          message,
+          style: TextStyle(color: black, fontSize: 100),
+        )),
       ),
     );
   }

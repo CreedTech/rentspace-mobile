@@ -99,7 +99,7 @@ class UserDetailsModel {
   final String dvaNumber;
   final String dvaUsername;
   //  final String Idimage;
-  final int referals;
+  final int referrals;
   // TODO  change to number
   final int utilityPoints;
   final dynamic financeHealth;
@@ -120,7 +120,7 @@ class UserDetailsModel {
   final String updatedAt;
   //  final String userWalletBalance;
   //  final String userWalletNumber;
-  //  final String referrar_id;
+  //  final String referrar_id; 
   //  final String otp;
   //  final int otpExpireIn;
   //  final String accountDate;
@@ -140,7 +140,7 @@ class UserDetailsModel {
     required this.dvaName,
     required this.dvaNumber,
     required this.dvaUsername,
-    required this.referals,
+    required this.referrals,
     required this.utilityPoints,
     required this.cardCVV,
     required this.cardDigit,
@@ -240,7 +240,7 @@ class UserDetailsModel {
         dvaNumber: json["dva_number"],
         dvaUsername: json["dva_username"],
         kyc: json["kyc"],
-        referals: json["referals"],
+        referrals: json["referrals"],
         utilityPoints: json["utility_points"],
         cardCVV: json["card_cvv"],
         cardDigit: json["card_digit"],
@@ -302,7 +302,7 @@ class UserDetailsModel {
         "dva_name": dvaName,
         "dva_number": dvaNumber,
         "dva_username": dvaUsername,
-        "referals": referals,
+        "referrals": referrals,
         "utility_points": utilityPoints,
         // "card_cvv": cardCVV,
         // "card_digit": cardDigit,

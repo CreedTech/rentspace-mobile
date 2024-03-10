@@ -61,9 +61,9 @@ import 'notifications.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
-  Dashboard({
-    Key? key,
-  }) : super(key: key);
+  const Dashboard({
+    super.key,
+  });
 
   @override
   _DashboardConsumerState createState() => _DashboardConsumerState();
@@ -295,19 +295,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
       });
     }
     userController.fetchData();
-
-    // final result = await getWalletData(refresh: true);
-    // if (result == true) {
-    //   if (mounted) {
-    //     setState(() {
-    //       isRefresh = false;
-    //     });
-    //   }
-    // } else {
-    //   refreshController.refreshFailed();
-    // }
-    // }
-  }
+ }
 
   // void onLoading() async {
   //   final result = await getWalletData(refresh: true);
@@ -967,8 +955,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(AllActivities(
-                              ));
+                          Get.to(AllActivities());
                         },
                         child: Text(
                           "See all",
@@ -995,23 +982,13 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
-                          itemCount: (userController
-                                  .userModel!.userDetails![0].walletHistories
-                                  .obs()
-                                  .isEmpty)
-                              ? userController.userModel!.userDetails![0]
-                                      .walletHistories.length -
-                                  1
-                              : 1,
+                          itemCount: 1,
                           itemBuilder: (BuildContext context, int index) {
-                            int reversedIndex = userController
-                                    .userModel!.userDetails![0].walletHistories
-                                    .obs()
-                                    .length -
+                            int reversedIndex = userController.userModel!
+                                    .userDetails![0].walletHistories.length -
                                 1 -
                                 index;
-                            // Access the activities in reverse order
-                            final activity = userController.userModel!
+                            final history = userController.userModel!
                                 .userDetails![0].walletHistories[reversedIndex];
                             return ListTile(
                               contentPadding: EdgeInsets.zero,
@@ -1020,18 +997,28 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Theme.of(context).primaryColor,
+                                  color:
+                                      (history['transactionType'] == 'Credit')
+                                          ? Colors.green
+                                          : Colors.red,
                                 ),
-                                child: Icon(
-                                  Icons.arrow_outward_sharp,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                                child: (history['transactionType'] == 'Credit')
+                                    ? Icon(Icons.call_received,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary)
+                                    : Icon(Icons.arrow_outward_sharp,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
                               ),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${activity['description']} ",
+                                    "${history['description']}",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.nunito(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w700,
@@ -1041,30 +1028,39 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 ],
                               ),
                               subtitle: Text(
-                                formatDateTime(activity['createdAt']),
+                                formatDateTime(history['createdAt']),
                                 style: GoogleFonts.nunito(
-                                  fontSize: 14,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w300,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              trailing:
-                                  (activity['transactionType'] == 'Credit')
-                                      ? Text(
-                                          "+ ${nairaFormaet.format(activity['amount'])}",
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.green,
-                                          ),
-                                        )
-                                      : Text(
-                                          "- ${nairaFormaet.format(activity['amount'])}",
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.red,
-                                          ),
-                                        ),
+                              trailing: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "${(history['transactionType'] == 'Credit') ? '+' : '-'} ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: brandOne,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${(history['status'] == 'completed') ? 'Successful' : (history['transactionType'] == 'failed') ? 'Failed' : 'Pending'}',
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: (history['status'] == 'completed')
+                                          ? Colors.green
+                                          : (history['transactionType'] ==
+                                                  'failed')
+                                              ? Colors.red
+                                              : Colors.yellow[800],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         )
@@ -1190,7 +1186,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             //     ],
                             //   ),
                             // ),
-                         
                           ],
                         ),
                       ),
@@ -1299,159 +1294,171 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        AlertDialog(
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  30, 30, 30, 20),
-                                          elevation: 0,
-                                          alignment: Alignment.bottomCenter,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          scrollable: true,
-                                          title: null,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              topRight: Radius.circular(30),
-                                            ),
-                                          ),
-                                          content: SizedBox(
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 40.h),
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 15),
-                                                          child: Align(
-                                                            alignment: Alignment
-                                                                .topCenter,
-                                                            child: Text(
-                                                              'Transfer your Secured Funds',
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                color: brandOne,
-                                                                fontSize: 16.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 10),
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(3),
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    (userController.userModel!.userDetails![0].wallet.mainBalance >
-                                                                            0)
-                                                                        ?
-                                                                        //  Get.to(
-                                                                        //     TransactionReceipt())
-                                                                        Get.to(
-                                                                            const WalletWithdrawal())
-                                                                        : customErrorDialog(
-                                                                            context,
-                                                                            'Wallet Empty! :)',
-                                                                            'You need to fund your wallet first!',
-                                                                          );
-                                                                  },
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    minimumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    maximumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    backgroundColor:
-                                                                        brandOne,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                    ),
-                                                                    textStyle: const TextStyle(
-                                                                        color:
-                                                                            brandFour,
-                                                                        fontSize:
-                                                                            13),
-                                                                  ),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      const Icon(
-                                                                          Iconsax
-                                                                              .card),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        "Proceed To Transfer",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize:
-                                                                              12.sp,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                              (userController.userModel!.userDetails![0].wallet
+                                          .mainBalance >
+                                      0)
+                                  ?
+                                  //  Get.to(
+                                  //     TransactionReceipt())
+                                  Get.to(const WalletWithdrawal())
+                                  : customErrorDialog(
+                                      context,
+                                      'Wallet Empty! :)',
+                                      'You need to fund your wallet first!',
                                     );
-                                  });
+                              // showDialog(
+                              //     context: context,
+                              //     barrierDismissible: true,
+                              //     builder: (BuildContext context) {
+                              //       return Column(
+                              //         mainAxisAlignment: MainAxisAlignment.end,
+                              //         children: [
+                              //           AlertDialog(
+                              //             contentPadding:
+                              //                 const EdgeInsets.fromLTRB(
+                              //                     30, 30, 30, 20),
+                              //             elevation: 0,
+                              //             alignment: Alignment.bottomCenter,
+                              //             insetPadding: const EdgeInsets.all(0),
+                              //             scrollable: true,
+                              //             title: null,
+                              //             shape: const RoundedRectangleBorder(
+                              //               borderRadius: BorderRadius.only(
+                              //                 topLeft: Radius.circular(30),
+                              //                 topRight: Radius.circular(30),
+                              //               ),
+                              //             ),
+                              //             content: SizedBox(
+                              //               child: SizedBox(
+                              //                 width: MediaQuery.of(context)
+                              //                     .size
+                              //                     .width,
+                              //                 child: Column(
+                              //                   children: [
+                              //                     Padding(
+                              //                       padding:
+                              //                           EdgeInsets.symmetric(
+                              //                               vertical: 40.h),
+                              //                       child: Column(
+                              //                         children: [
+                              //                           Padding(
+                              //                             padding:
+                              //                                 const EdgeInsets
+                              //                                     .symmetric(
+                              //                                     vertical: 15),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .topCenter,
+                              //                               child: Text(
+                              //                                 'Transfer your Secured Funds',
+                              //                                 style: GoogleFonts
+                              //                                     .nunito(
+                              //                                   color: brandOne,
+                              //                                   fontSize: 16.sp,
+                              //                                   fontWeight:
+                              //                                       FontWeight
+                              //                                           .w500,
+                              //                                 ),
+                              //                               ),
+                              //                             ),
+                              //                           ),
+                              //                           Padding(
+                              //                             padding:
+                              //                                 const EdgeInsets
+                              //                                     .symmetric(
+                              //                                     vertical: 10),
+                              //                             child: Column(
+                              //                               children: [
+                              //                                 Padding(
+                              //                                   padding:
+                              //                                       const EdgeInsets
+                              //                                           .all(3),
+                              //                                   child:
+                              //                                       ElevatedButton(
+                              //                                     onPressed:
+                              //                                         () {
+                              //                                       (userController.userModel!.userDetails![0].wallet.mainBalance >
+                              //                                               0)
+                              //                                           ?
+                              //                                           //  Get.to(
+                              //                                           //     TransactionReceipt())
+                              //                                           Get.to(
+                              //                                               const WalletWithdrawal())
+                              //                                           : customErrorDialog(
+                              //                                               context,
+                              //                                               'Wallet Empty! :)',
+                              //                                               'You need to fund your wallet first!',
+                              //                                             );
+                              //                                     },
+                              //                                     style: ElevatedButton
+                              //                                         .styleFrom(
+                              //                                       minimumSize:
+                              //                                           const Size(
+                              //                                               300,
+                              //                                               50),
+                              //                                       maximumSize:
+                              //                                           const Size(
+                              //                                               300,
+                              //                                               50),
+                              //                                       backgroundColor:
+                              //                                           brandOne,
+                              //                                       shape:
+                              //                                           RoundedRectangleBorder(
+                              //                                         borderRadius:
+                              //                                             BorderRadius.circular(
+                              //                                                 8),
+                              //                                       ),
+                              //                                       textStyle: const TextStyle(
+                              //                                           color:
+                              //                                               brandFour,
+                              //                                           fontSize:
+                              //                                               13),
+                              //                                     ),
+                              //                                     child: Row(
+                              //                                       mainAxisAlignment:
+                              //                                           MainAxisAlignment
+                              //                                               .center,
+                              //                                       children: [
+                              //                                         const Icon(
+                              //                                             Iconsax
+                              //                                                 .card),
+                              //                                         const SizedBox(
+                              //                                           width:
+                              //                                               10,
+                              //                                         ),
+                              //                                         Text(
+                              //                                           "Proceed To Transfer",
+                              //                                           style:
+                              //                                               TextStyle(
+                              //                                             color:
+                              //                                                 Colors.white,
+                              //                                             fontWeight:
+                              //                                                 FontWeight.w500,
+                              //                                             fontSize:
+                              //                                                 12.sp,
+                              //                                           ),
+                              //                                         ),
+                              //                                       ],
+                              //                                     ),
+                              //                                   ),
+                              //                                 ),
+                              //                                 const SizedBox(
+                              //                                   height: 10,
+                              //                                 ),
+                              //                               ],
+                              //                             ),
+                              //                           ),
+                              //                         ],
+                              //                       ),
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           )
+                              //         ],
+                              //       );
+                              //     });
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -1543,147 +1550,149 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        AlertDialog(
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  30, 30, 30, 20),
-                                          elevation: 0,
-                                          alignment: Alignment.bottomCenter,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          scrollable: true,
-                                          title: null,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              topRight: Radius.circular(30),
-                                            ),
-                                          ),
-                                          content: SizedBox(
-                                            child: SizedBox(
-                                              width: 400.w,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 40.h),
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      15.h),
-                                                          child: Align(
-                                                            alignment: Alignment
-                                                                .topCenter,
-                                                            child: Text(
-                                                              'Securely top up your wallet',
-                                                              style: GoogleFonts
-                                                                  .nunito(
-                                                                color: brandOne,
-                                                                fontSize: 16.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 10),
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(3),
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Get.to(
-                                                                        const FundWallet());
-                                                                  },
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    minimumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    maximumSize:
-                                                                        const Size(
-                                                                            300,
-                                                                            50),
-                                                                    backgroundColor:
-                                                                        brandOne,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                    ),
-                                                                    textStyle: const TextStyle(
-                                                                        color:
-                                                                            brandFour,
-                                                                        fontSize:
-                                                                            13),
-                                                                  ),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      const Icon(
-                                                                          Iconsax
-                                                                              .card),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        "Proceed To Top Up",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize:
-                                                                              12.sp,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  });
+                              Get.to(const FundWallet());
+
+                              // showDialog(
+                              //     context: context,
+                              //     barrierDismissible: true,
+                              //     builder: (BuildContext context) {
+                              //       return Column(
+                              //         mainAxisAlignment: MainAxisAlignment.end,
+                              //         children: [
+                              //           AlertDialog(
+                              //             contentPadding:
+                              //                 const EdgeInsets.fromLTRB(
+                              //                     30, 30, 30, 20),
+                              //             elevation: 0,
+                              //             alignment: Alignment.bottomCenter,
+                              //             insetPadding: const EdgeInsets.all(0),
+                              //             scrollable: true,
+                              //             title: null,
+                              //             shape: const RoundedRectangleBorder(
+                              //               borderRadius: BorderRadius.only(
+                              //                 topLeft: Radius.circular(30),
+                              //                 topRight: Radius.circular(30),
+                              //               ),
+                              //             ),
+                              //             content: SizedBox(
+                              //               child: SizedBox(
+                              //                 width: 400.w,
+                              //                 child: Column(
+                              //                   children: [
+                              //                     Padding(
+                              //                       padding:
+                              //                           EdgeInsets.symmetric(
+                              //                               vertical: 40.h),
+                              //                       child: Column(
+                              //                         children: [
+                              //                           Padding(
+                              //                             padding: EdgeInsets
+                              //                                 .symmetric(
+                              //                                     vertical:
+                              //                                         15.h),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .topCenter,
+                              //                               child: Text(
+                              //                                 'Securely top up your wallet',
+                              //                                 style: GoogleFonts
+                              //                                     .nunito(
+                              //                                   color: brandOne,
+                              //                                   fontSize: 16.sp,
+                              //                                   fontWeight:
+                              //                                       FontWeight
+                              //                                           .w500,
+                              //                                 ),
+                              //                               ),
+                              //                             ),
+                              //                           ),
+                              //                           Padding(
+                              //                             padding:
+                              //                                 const EdgeInsets
+                              //                                     .symmetric(
+                              //                                     vertical: 10),
+                              //                             child: Column(
+                              //                               children: [
+                              //                                 Padding(
+                              //                                   padding:
+                              //                                       const EdgeInsets
+                              //                                           .all(3),
+                              //                                   child:
+                              //                                       ElevatedButton(
+                              //                                     onPressed:
+                              //                                         () {
+                              //                                       Get.to(
+                              //                                           const FundWallet());
+                              //                                     },
+                              //                                     style: ElevatedButton
+                              //                                         .styleFrom(
+                              //                                       minimumSize:
+                              //                                           const Size(
+                              //                                               300,
+                              //                                               50),
+                              //                                       maximumSize:
+                              //                                           const Size(
+                              //                                               300,
+                              //                                               50),
+                              //                                       backgroundColor:
+                              //                                           brandOne,
+                              //                                       shape:
+                              //                                           RoundedRectangleBorder(
+                              //                                         borderRadius:
+                              //                                             BorderRadius.circular(
+                              //                                                 8),
+                              //                                       ),
+                              //                                       textStyle: const TextStyle(
+                              //                                           color:
+                              //                                               brandFour,
+                              //                                           fontSize:
+                              //                                               13),
+                              //                                     ),
+                              //                                     child: Row(
+                              //                                       mainAxisAlignment:
+                              //                                           MainAxisAlignment
+                              //                                               .center,
+                              //                                       children: [
+                              //                                         const Icon(
+                              //                                             Iconsax
+                              //                                                 .card),
+                              //                                         const SizedBox(
+                              //                                           width:
+                              //                                               10,
+                              //                                         ),
+                              //                                         Text(
+                              //                                           "Proceed To Top Up",
+                              //                                           style:
+                              //                                               TextStyle(
+                              //                                             color:
+                              //                                                 Colors.white,
+                              //                                             fontWeight:
+                              //                                                 FontWeight.w500,
+                              //                                             fontSize:
+                              //                                                 12.sp,
+                              //                                           ),
+                              //                                         ),
+                              //                                       ],
+                              //                                     ),
+                              //                                   ),
+                              //                                 ),
+                              //                                 const SizedBox(
+                              //                                   height: 10,
+                              //                                 ),
+                              //                               ],
+                              //                             ),
+                              //                           ),
+                              //                         ],
+                              //                       ),
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           )
+                              //         ],
+                              //       );
+                              //     });
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -2063,7 +2072,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   String formatDateTime(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString);
+    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');

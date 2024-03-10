@@ -1,29 +1,29 @@
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/actions/change_pin.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
-import '../../controller/auth/auth_controller.dart';
+import '../../constants/widgets/custom_loader.dart';
 
-class ConfirmResetPinPage extends ConsumerStatefulWidget {
-  const ConfirmResetPinPage({super.key, required this.pin});
-  final String pin;
+class ChangePinIntro extends StatefulWidget {
+  const ChangePinIntro({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ConfirmResetPinPageState();
+  State<ChangePinIntro> createState() => _ChangePinIntroState();
 }
 
-class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
-  final TextEditingController _confirmPinController = TextEditingController();
-  final confirmNewPinformKey = GlobalKey<FormState>();
-
+class _ChangePinIntroState extends State<ChangePinIntro> {
+  final TextEditingController _pinController = TextEditingController();
+  final setPinformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authControllerProvider.notifier);
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
@@ -53,7 +53,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
     final pin = Pinput(
       obscureText: true,
       defaultPinTheme: defaultPinTheme,
-      controller: _confirmPinController,
+      controller: _pinController,
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
@@ -67,22 +67,28 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
         ),
       ),
       length: 4,
+      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
       onChanged: validatePinOne,
-      onCompleted: (val) {
-        if (val != widget.pin) {
-          customErrorDialog(context, 'Pin Mismatch', 'Pin does not match');
-
-          val = '';
-          _confirmPinController.clear();
+      onCompleted: (val) async {
+        if (BCrypt.checkpw(_pinController.text.trim().toString(),
+            userController.userModel!.userDetails![0].wallet.pin)) {
+          _pinController.clear();
+          // EasyLoading.show(
+          //   indicator: const CustomLoader(),
+          //   maskType: EasyLoadingMaskType.black,
+          //   dismissOnTap: false,
+          // );
+          print(val);
+          Get.to(ChangePIN(pin: val));
         } else {
-          authState.setNewPin(
-              context, widget.pin, _confirmPinController.text.trim());
-          // Navigator.pushNamed(
-          //     context, RouteList.enable_user_notification);
+          EasyLoading.dismiss();
+          _pinController.clear();
+          if (context.mounted) {
+            customErrorDialog(
+                context, "Invalid PIN", 'Enter correct PIN to proceed');
+          }
         }
-
-        // Get.to(ConfirmTransactionPinPage(pin:_confirmPinController.text.trim()));
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -92,7 +98,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
           child: Stack(
             children: [
               Padding(
@@ -102,7 +108,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Confirm New Transaction PIN',
+                        'Enter PIN to Proceed',
                         style: GoogleFonts.nunito(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
@@ -118,7 +124,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Form(
-                          key: confirmNewPinformKey,
+                          key: setPinformKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
@@ -151,26 +157,32 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      if (confirmNewPinformKey.currentState!.validate()) {
-                        if (_confirmPinController.text.trim() != widget.pin) {
-                          customErrorDialog(
-                              context, 'Pin Mismatch', 'Pin does not match');
+                    onPressed: () async {
+                      if (setPinformKey.currentState!.validate()) {
+                        if (BCrypt.checkpw(
+                            _pinController.text.trim().toString(),
+                            userController
+                                .userModel!.userDetails![0].wallet.pin)) {
+                          _pinController.clear();
 
-                          _confirmPinController.clear();
+                          // EasyLoading.show(
+                          //   indicator: const CustomLoader(),
+                          //   maskType: EasyLoadingMaskType.black,
+                          //   dismissOnTap: true,
+                          // );
+                          Get.to(ChangePIN(pin: _pinController.text.trim()));
                         } else {
-                          authState.setNewPin(
-                            context,
-                            widget.pin,
-                            _confirmPinController.text.trim(),
-                          );
-                          // Navigator.pushNamed(
-                          //     context, RouteList.enable_user_notification);
+                          EasyLoading.dismiss();
+                          _pinController.clear();
+                          if (context.mounted) {
+                            customErrorDialog(context, "Invalid PIN",
+                                'Enter correct PIN to proceed');
+                          }
                         }
-                        // _doSomething();
                       } else {
-                        customErrorDialog(context, "Invalid!",
-                            "Please Input your pin to proceed");
+                        EasyLoading.dismiss();
+                        customErrorDialog(context, "Incomplete",
+                            "Fill the field correctly to proceed");
                       }
                     },
                     child: const Text(
@@ -179,7 +191,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

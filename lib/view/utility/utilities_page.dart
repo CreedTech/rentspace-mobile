@@ -188,6 +188,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
   List<Bill> betList = [];
   final UtilityController utilityController = Get.find();
   final UserController userController = Get.find();
+
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
 //bet
 
   validateNumber(text) {
@@ -2591,7 +2599,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               children: [
                                                 (userController.isLoading.value)
                                                     ? Text(
-                                                        '${nairaFormaet.format(0)} ',
+                                                        "*****",
                                                         style:
                                                             GoogleFonts.nunito(
                                                           fontSize: 20,
@@ -2626,7 +2634,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           children: [
                                             (userController.isLoading.value)
                                                 ? Text(
-                                                    'SpacePoints: 0',
+                                                    'SpacePoints: ***',
                                                     style: GoogleFonts.nunito(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -3706,10 +3714,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                       .clear();
                                                   _pinController.clear();
                                                   Get.to(FirstPage());
+                                                  await fetchUserData(
+                                                      refresh: true);
                                                   showTopSnackBar(
                                                     Overlay.of(context),
                                                     CustomSnackBar.success(
-                                                      backgroundColor: brandOne,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                       message:
                                                           'You just earned a Space point!',
                                                       textStyle:
@@ -4025,11 +4036,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 _airtimeNumberController
                                                     .clear();
                                                 _pinController.clear();
-                                                Get.to(FirstPage());
+                                                await fetchUserData(
+                                                    refresh: true);
                                                 showTopSnackBar(
                                                   Overlay.of(context),
                                                   CustomSnackBar.success(
-                                                    backgroundColor: brandOne,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                     message:
                                                         'You just earned a Space point!',
                                                     textStyle:
@@ -4403,11 +4416,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   _airtimeNumberController
                                                       .clear();
                                                   _pinController.clear();
-                                                  Get.to(FirstPage());
+                                                  await fetchUserData(
+                                                      refresh: true);
                                                   showTopSnackBar(
                                                     Overlay.of(context),
                                                     CustomSnackBar.success(
-                                                      backgroundColor: brandOne,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                       message:
                                                           'You just earned a Space point!',
                                                       textStyle:
@@ -4724,11 +4739,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 _airtimeNumberController
                                                     .clear();
                                                 _pinController.clear();
-                                                Get.to(FirstPage());
+                                                await fetchUserData(
+                                                    refresh: true);
                                                 showTopSnackBar(
                                                   Overlay.of(context),
                                                   CustomSnackBar.success(
-                                                    backgroundColor: brandOne,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                     message:
                                                         'You just earned a Space point!',
                                                     textStyle:
@@ -5102,11 +5119,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   _airtimeNumberController
                                                       .clear();
                                                   _pinController.clear();
-                                                  Get.to(FirstPage());
+                                                  await fetchUserData(
+                                                      refresh: true);
                                                   showTopSnackBar(
                                                     Overlay.of(context),
                                                     CustomSnackBar.success(
-                                                      backgroundColor: brandOne,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                       message:
                                                           'You just earned a Space point!',
                                                       textStyle:
@@ -5423,11 +5442,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 _airtimeNumberController
                                                     .clear();
                                                 _pinController.clear();
-                                                Get.to(FirstPage());
+                                                await fetchUserData(
+                                                    refresh: true);
                                                 showTopSnackBar(
                                                   Overlay.of(context),
                                                   CustomSnackBar.success(
-                                                    backgroundColor: brandOne,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                     message:
                                                         'You just earned a Space point!',
                                                     textStyle:
@@ -5802,11 +5823,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   _airtimeNumberController
                                                       .clear();
                                                   _pinController.clear();
-                                                  Get.to(FirstPage());
+                                                  await fetchUserData(
+                                                      refresh: true);
                                                   showTopSnackBar(
                                                     Overlay.of(context),
                                                     CustomSnackBar.success(
-                                                      backgroundColor: brandOne,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                       message:
                                                           'You just earned a Space point!',
                                                       textStyle:
@@ -6123,11 +6146,13 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 _airtimeNumberController
                                                     .clear();
                                                 _pinController.clear();
-                                                Get.to(FirstPage());
+                                                await fetchUserData(
+                                                    refresh: true);
                                                 showTopSnackBar(
                                                   Overlay.of(context),
                                                   CustomSnackBar.success(
-                                                    backgroundColor: brandOne,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                     message:
                                                         'You just earned a Space point!',
                                                     textStyle:

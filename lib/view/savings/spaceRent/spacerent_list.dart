@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
@@ -13,14 +11,11 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/constants/widgets/separator.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 // import 'package:rentspace/controller/rent_controller.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_page.dart';
 
 import '../../../controller/rent/rent_controller.dart';
-import '../../dashboard/dashboard.dart';
-import '../../loan/loan_page.dart';
 
 class RentSpaceList extends StatefulWidget {
   const RentSpaceList({Key? key}) : super(key: key);
@@ -660,7 +655,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   String formatDateTime(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString);
+    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
@@ -673,7 +668,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   String formatEndDate(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString);
+    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy');

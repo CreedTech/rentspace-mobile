@@ -84,11 +84,22 @@ Future<void> main() async {
 
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
+      announcement: false,
       badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
       sound: true,
     );
 
-    print('User granted permission: ${settings.authorizationStatus}');
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
   }
 
   FirebaseMessaging.instance.getToken().then((value) {
@@ -116,18 +127,20 @@ Future<void> main() async {
       // local notification to show to users using the created channel.
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            const NotificationDetails(
-              android: AndroidNotificationDetails(
-                'high_importance_channel',
-                'Transaction Notifications',
-                channelDescription: 'Notifications for completed transactions',
-                // icon: android?.smallIcon,
-                // other properties...
-              ),
-            ));
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel',
+              'Rentspace Notifications',
+              channelDescription: 'Notifications for rentspace activities',
+              // icon: android?.smallIcon,
+              // other properties...
+            ),
+            iOS: DarwinNotificationDetails(),
+          ),
+        );
       }
       print("received in background : $message");
       // Navigator.pushNamed(
@@ -141,12 +154,33 @@ Future<void> main() async {
 // If app is closed or terminated
   FirebaseMessaging.instance.getInitialMessage().then(
     (RemoteMessage? message) async {
-      print("onMessageOpened : $message");
-      Navigator.pushNamed(
-        _navigatorKey.currentState!.context,
-        '/newNotification',
-        arguments: {"message", json.encode(message!.data)},
-      );
+      RemoteNotification? notification = message?.notification;
+      AndroidNotification? android = message?.notification!.android;
+
+      // If `onMessage` is triggered with a notification, construct our own
+      // local notification to show to users using the created channel.
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel',
+              'Rentspace Notifications',
+              channelDescription: 'Notifications for rentspace activities',
+              // icon: android?.smallIcon,
+              // other properties...
+            ),
+          ),
+        );
+      }
+      // print("onMessageOpened : $message");
+      // Navigator.pushNamed(
+      //   _navigatorKey.currentState!.context,
+      //   '/newNotification',
+      //   arguments: {"message", json.encode(message!.data)},
+      // );
     },
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -193,7 +227,13 @@ Future<void> initNotifications() async {
     switch (notificationResponse.notificationResponseType) {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
-        Get.to(const NotificationsPage());
+        // Get.to(const NotificationsPage());
+        print("onMessageOpened : $notificationResponse.payload");
+        Navigator.pushNamed(
+          _navigatorKey.currentState!.context,
+          '/newNotification',
+          arguments: {"message", json.encode(notificationResponse.payload)},
+        );
         break;
       case NotificationResponseType.selectedNotificationAction:
         if (notificationResponse.actionId == navigationActionId) {

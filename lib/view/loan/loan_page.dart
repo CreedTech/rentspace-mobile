@@ -683,7 +683,7 @@ class _LoanPageState extends State<LoanPage> {
                                                                     .split(
                                                                         " ")[0]
                                                                     .length -
-                                                                4))))
+                                                                4))).add(const Duration(hours: 1)))
                                                 .toString(),
                                             style: GoogleFonts.nunito(
                                               color: brandTwo,

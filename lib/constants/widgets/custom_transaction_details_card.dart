@@ -6,8 +6,8 @@ import '../../controller/rent/rent_controller.dart';
 import '../colors.dart';
 
 class CustomTransactionDetailsCard extends StatefulWidget {
-  int current;
-  CustomTransactionDetailsCard({super.key, required this.current});
+  final int current;
+  const CustomTransactionDetailsCard({super.key, required this.current});
 
   @override
   State<CustomTransactionDetailsCard> createState() =>

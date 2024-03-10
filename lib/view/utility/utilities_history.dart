@@ -104,7 +104,7 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
                         .utilityHistoryModel!.utilityHistories!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
+                        padding: const EdgeInsets.fromLTRB(2.0, 0, 2.0, 10),
                         child: ListTile(
                           leading: Container(
                             padding: const EdgeInsets.all(12),
@@ -123,9 +123,11 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${utilityController.utilityHistoryModel!.utilityHistories![index].biller} ",
+                                "${utilityController.utilityHistoryModel!.utilityHistories![index].description} ",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.nunito(
-                                  fontSize: 14,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w700,
                                   color: Theme.of(context).primaryColor,
                                 ),
@@ -138,17 +140,54 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
                                 .utilityHistories![index]
                                 .createdAt),
                             style: GoogleFonts.nunito(
-                              fontSize: 14,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w300,
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          trailing: Text(
-                            "- ${nairaFormaet.format(double.parse(utilityController.utilityHistoryModel!.utilityHistories![index].amount.toString()))}",
-                            style: GoogleFonts.nunito(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                          trailing: Column(
+                            children: [
+                              Text(
+                                "- ${nairaFormaet.format(double.parse(utilityController.utilityHistoryModel!.utilityHistories![index].amount.toString()))}",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              (utilityController.utilityHistoryModel!
+                                          .utilityHistories![index].status ==
+                                      'Completed')
+                                  ? Text(
+                                      'Successful',
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.green,
+                                      ),
+                                    )
+                                  : (utilityController
+                                              .utilityHistoryModel!
+                                              .utilityHistories![index]
+                                              .status ==
+                                          'failed')
+                                      ? Text(
+                                          'Failed',
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Pending',
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.yellow[800],
+                                          ),
+                                        )
+                            ],
                           ),
                         ),
                       );
@@ -162,7 +201,7 @@ class _UtilitiesHistoryState extends State<UtilitiesHistory> {
 
   String formatDateTime(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString);
+    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
