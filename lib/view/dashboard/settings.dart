@@ -101,7 +101,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     EasyLoading.show(
       indicator: const CustomLoader(),
       maskType: EasyLoadingMaskType.black,
-      dismissOnTap: true,
+      dismissOnTap: false,
     );
     var request = http.MultipartRequest(
         'POST', Uri.parse(AppConstants.BASE_URL + AppConstants.UPDATE_PHOTO));
@@ -114,7 +114,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
       print('Image uploaded successfully');
-      Get.back();
+      // Get.back();
 
       refreshController.refreshCompleted();
       if (mounted) {
@@ -146,7 +146,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
   }
 
   Future<void> _pickImage(BuildContext context, ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
       uploadImage(context, imageFile);
@@ -169,7 +170,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     // EasyLoading.show(
     //   indicator: const CustomLoader(),
     //   maskType: EasyLoadingMaskType.black,
-    //   dismissOnTap: true,
+    //   dismissOnTap: false,
     // );
     // var userPinUpdate = FirebaseFirestore.instance.collection('accounts');
 
@@ -381,7 +382,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
       });
     }
     userController.fetchData();
-
   }
 
   @override
@@ -460,106 +460,107 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             right: 0,
                             child: GestureDetector(
                               onTap: () {
+                                _pickImage(context, ImageSource.gallery);
                                 // getImage(context);
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      contentPadding: const EdgeInsets.fromLTRB(
-                                          30, 20, 30, 20),
-                                      elevation: 0.h,
-                                      alignment: Alignment.bottomCenter,
-                                      backgroundColor:
-                                          Theme.of(context).canvasColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30.h),
-                                          topRight: Radius.circular(30.h),
-                                        ),
-                                      ),
-                                      insetPadding: const EdgeInsets.all(0),
-                                      title: null,
-                                      content: SizedBox(
-                                        height: 200.h,
-                                        width: 400.h,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topCenter,
-                                              child: Container(
-                                                width: 70,
-                                                height: 10,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  color: brandThree,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          1000),
-                                                  color: brandOne),
-                                              child: Image.asset(
-                                                'assets/icons/RentSpace-icon2.png',
-                                                width: 80,
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () => _pickImage(
-                                                      context,
-                                                      ImageSource.gallery),
-                                                  child: Center(
-                                                    child: Text(
-                                                      'From Gallery',
-                                                      style: GoogleFonts.nunito(
-                                                        color: brandOne,
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () => _pickImage(
-                                                      context,
-                                                      ImageSource.camera),
-                                                  child: Center(
-                                                    child: Text(
-                                                      'From Camera',
-                                                      style: GoogleFonts.nunito(
-                                                        color: brandOne,
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            //  SizedBox(
-                                            //   height: 10.sp,
-                                            // ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                                // showDialog(
+                                //   context: context,
+                                //   barrierDismissible: true,
+                                //   builder: (BuildContext context) {
+                                //     return AlertDialog(
+                                //       contentPadding: const EdgeInsets.fromLTRB(
+                                //           30, 20, 30, 20),
+                                //       elevation: 0.h,
+                                //       alignment: Alignment.bottomCenter,
+                                //       backgroundColor:
+                                //           Theme.of(context).canvasColor,
+                                //       shape: RoundedRectangleBorder(
+                                //         borderRadius: BorderRadius.only(
+                                //           topLeft: Radius.circular(30.h),
+                                //           topRight: Radius.circular(30.h),
+                                //         ),
+                                //       ),
+                                //       insetPadding: const EdgeInsets.all(0),
+                                //       title: null,
+                                //       content: SizedBox(
+                                //         height: 200.h,
+                                //         width: 400.h,
+                                //         child: Column(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.spaceBetween,
+                                //           children: [
+                                //             Align(
+                                //               alignment: Alignment.topCenter,
+                                //               child: Container(
+                                //                 width: 70,
+                                //                 height: 10,
+                                //                 decoration: BoxDecoration(
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(30),
+                                //                   color: brandThree,
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             SizedBox(
+                                //               height: 5.h,
+                                //             ),
+                                //             Container(
+                                //               decoration: BoxDecoration(
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                           1000),
+                                //                   color: brandOne),
+                                //               child: Image.asset(
+                                //                 'assets/icons/RentSpace-icon2.png',
+                                //                 width: 80,
+                                //               ),
+                                //             ),
+                                //             Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.spaceAround,
+                                //               children: [
+                                //                 GestureDetector(
+                                //                   onTap: () => _pickImage(
+                                //                       context,
+                                //                       ImageSource.gallery),
+                                //                   child: Center(
+                                //                     child: Text(
+                                //                       'From Gallery',
+                                //                       style: GoogleFonts.nunito(
+                                //                         color: brandOne,
+                                //                         fontSize: 17.sp,
+                                //                         fontWeight:
+                                //                             FontWeight.w500,
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                 ),
+                                //                 GestureDetector(
+                                //                   onTap: () => _pickImage(
+                                //                       context,
+                                //                       ImageSource.camera),
+                                //                   child: Center(
+                                //                     child: Text(
+                                //                       'From Camera',
+                                //                       style: GoogleFonts.nunito(
+                                //                         color: brandOne,
+                                //                         fontSize: 17.sp,
+                                //                         fontWeight:
+                                //                             FontWeight.w500,
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //             //  SizedBox(
+                                //             //   height: 10.sp,
+                                //             // ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     );
+                                //   },
+                                // );
 
                                 // setProfilePictuteDialog(
                                 //     context, getImage(context));
@@ -591,7 +592,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             Text(
                               "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
                               style: GoogleFonts.nunito(
-                                fontSize: 20.0,
+                                fontSize: 18.0.sp,
                                 fontWeight: FontWeight.w700,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -624,7 +625,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                   ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
                                   : "Wallet ID: ${userController.userModel!.userDetails![0].wallet.walletId}",
                               style: GoogleFonts.nunito(
-                                fontSize: 17.0,
+                                fontSize: 15.0.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -632,11 +633,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             const SizedBox(
                               width: 4,
                             ),
-                            const Icon(
-                              Iconsax.copy,
-                              color: brandTwo,
-                              size: 15,
-                            ),
+                            // const Icon(
+                            //   Iconsax.copy,
+                            //   color: brandTwo,
+                            //   size: 15,
+                            // ),
                           ],
                         ),
                       ),
@@ -746,7 +747,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'Profile',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -779,7 +780,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'Security',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -812,7 +813,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               //       'Theme',
               //       style: GoogleFonts.nunito(
               //         color: Theme.of(context).primaryColor,
-              //         fontSize: 17,
+              //         fontSize: 15.sp,
               //         fontWeight: FontWeight.w600,
               //       ),
               //     ),
@@ -855,7 +856,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'Referral',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -888,7 +889,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               //       'Bank & Card Details',
               //       style: GoogleFonts.nunito(
               //         color: Theme.of(context).primaryColor,
-              //         fontSize: 17,
+              //         fontSize: 15.sp,
               //         fontWeight: FontWeight.w600,
               //       ),
               //     ),
@@ -906,7 +907,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               //     ),
               //   ),
               // ),
-              
+
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: ListTile(
@@ -925,7 +926,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'Contact Us',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -957,7 +958,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'FAQs',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -989,7 +990,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     'Logout',
                     style: GoogleFonts.nunito(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 17,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -1013,7 +1014,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                 Text(
                                   'Are you sure you want to logout?',
                                   style: GoogleFonts.nunito(
-                                    fontSize: 18,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Theme.of(context).primaryColor,
@@ -1051,7 +1052,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 16,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -1073,15 +1074,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle: const TextStyle(
-                                              color: brandFour, fontSize: 13),
+                                          textStyle: GoogleFonts.nunito(
+                                              color: brandFour,
+                                              fontSize: 13.sp),
                                         ),
                                         child: Text(
                                           "No",
                                           style: GoogleFonts.nunito(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 16,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),

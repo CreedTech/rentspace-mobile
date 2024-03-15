@@ -88,7 +88,7 @@
 //     EasyLoading.show(
 //       indicator: const CustomLoader(),
 //       maskType: EasyLoadingMaskType.black,
-//       dismissOnTap: true,
+//       dismissOnTap: false,
 //     );
 //     const String apiUrl = 'https://api-d.squadco.com/virtual-account';
 //     const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';

@@ -176,7 +176,7 @@ class _CardTopUpState extends State<CardTopUp> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 6, horizontal: 10),
                               child: Text(
-                                'Use Bank Transfer if amount exceeds ₦9,999.00',
+                                'Use Bank Transfer if amount exceeds ₦9,999.99',
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,

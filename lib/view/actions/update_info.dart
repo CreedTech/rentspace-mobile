@@ -53,7 +53,7 @@
 //       EasyLoading.show(
 //         indicator: const CustomLoader(),
 //         maskType: EasyLoadingMaskType.black,
-//         dismissOnTap: true,
+//         dismissOnTap: false,
 //       );
 
 //       var accountUpdate = FirebaseFirestore.instance.collection('accounts');

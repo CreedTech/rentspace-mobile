@@ -115,7 +115,7 @@
 //       EasyLoading.show(
 //         indicator: const CustomLoader(),
 //         maskType: EasyLoadingMaskType.black,
-//         dismissOnTap: true,
+//         dismissOnTap: false,
 //       );
 //       EasyLoading.dismiss();
 
@@ -228,7 +228,7 @@
 //       EasyLoading.show(
 //         indicator: const CustomLoader(),
 //         maskType: EasyLoadingMaskType.black,
-//         dismissOnTap: true,
+//         dismissOnTap: false,
 //       );
 //       await auth
 //           .signInWithEmailAndPassword(email: email, password: password)

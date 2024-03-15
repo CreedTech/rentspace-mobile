@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -223,7 +224,7 @@ class _SecurityState extends State<Security> {
           },
           child: Icon(
             Icons.arrow_back,
-            size: 30,
+            size: 30.sp,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -232,7 +233,7 @@ class _SecurityState extends State<Security> {
           'Security',
           style: GoogleFonts.nunito(
               color: Theme.of(context).primaryColor,
-              fontSize: 24,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -265,7 +266,7 @@ class _SecurityState extends State<Security> {
                           'Reset Password',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 17,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -303,7 +304,7 @@ class _SecurityState extends State<Security> {
                           'Change Payment PIN',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 17,
+                            fontSize:15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -339,7 +340,7 @@ class _SecurityState extends State<Security> {
                           'Forgot Payment PIN',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 17,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -350,70 +351,71 @@ class _SecurityState extends State<Security> {
                       ),
                     ),
                    
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: ListTile(
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                          ),
-                          child: const Icon(
-                            Iconsax.finger_scan,
-                            color: brandOne,
-                          ),
-                        ),
-                        // onTap: () {
-                        //   Get.to(ForgotPin(
-                        //     password: userController.user[0].userPassword,
-                        //     pin: userController.user[0].transactionPIN,
-                        //   ));
-                        // },
-                        title: Text(
-                          'Biometrics Login',
-                          style: GoogleFonts.nunito(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        subtitle: Text(
-                            (hasBiometricStorage.read('hasBiometric') != null &&
-                                    hasBiometricStorage.read('hasBiometric') ==
-                                        true)
-                                ? 'Disable Biometrics'
-                                : 'Enable Biometrics',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            )),
-                        trailing: Switch(
-                          activeColor: Theme.of(context).primaryColor,
-                          inactiveTrackColor: brandTwo,
-                          value:
-                              hasBiometricStorage.read('hasBiometric') ?? false,
-                          onChanged: (_hasBiometric) {
-                            print(_hasBiometric);
-                            print('hasBiometricStorage');
-                            print(hasBiometricStorage.read('hasBiometric'));
-                            if ((hasBiometricStorage.read('hasBiometric') !=
-                                    null &&
-                                hasBiometricStorage.read('hasBiometric') ==
-                                    true)) {
-                              _NotAuthenticateMe();
-                            } else {
-                              _authenticateMe();
-                            }
-                          },
-                        ),
-                        // const Icon(
-                        //   Iconsax.arrow_right_3,
-                        //   color: brandOne,
-                        // ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 0),
+                    //   child: ListTile(
+                    //     leading: Container(
+                    //       padding: const EdgeInsets.all(9),
+                    //       decoration: BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         color: Theme.of(context).cardColor,
+                    //       ),
+                    //       child: const Icon(
+                    //         Iconsax.finger_scan,
+                    //         color: brandOne,
+                    //       ),
+                    //     ),
+                    //     // onTap: () {
+                    //     //   Get.to(ForgotPin(
+                    //     //     password: userController.user[0].userPassword,
+                    //     //     pin: userController.user[0].transactionPIN,
+                    //     //   ));
+                    //     // },
+                    //     title: Text(
+                    //       'Biometrics Login',
+                    //       style: GoogleFonts.nunito(
+                    //         color: Theme.of(context).primaryColor,
+                    //         fontSize: 15.sp,
+                    //         fontWeight: FontWeight.w600,
+                    //       ),
+                    //     ),
+                    //     subtitle: Text(
+                    //         (hasBiometricStorage.read('hasBiometric') != null &&
+                    //                 hasBiometricStorage.read('hasBiometric') ==
+                    //                     true)
+                    //             ? 'Disable Biometrics'
+                    //             : 'Enable Biometrics',
+                    //         style: GoogleFonts.nunito(
+                    //           color: Theme.of(context).primaryColor,
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.w400,
+                    //         )),
+                    //     trailing: Switch(
+                    //       activeColor: Theme.of(context).primaryColor,
+                    //       inactiveTrackColor: brandTwo,
+                    //       value:
+                    //           hasBiometricStorage.read('hasBiometric') ?? false,
+                    //       onChanged: (_hasBiometric) {
+                    //         print(_hasBiometric);
+                    //         print('hasBiometricStorage');
+                    //         print(hasBiometricStorage.read('hasBiometric'));
+                    //         if ((hasBiometricStorage.read('hasBiometric') !=
+                    //                 null &&
+                    //             hasBiometricStorage.read('hasBiometric') ==
+                    //                 true)) {
+                    //           _NotAuthenticateMe();
+                    //         } else {
+                    //           _authenticateMe();
+                    //         }
+                    //       },
+                    //     ),
+                    //     // const Icon(
+                    //     //   Iconsax.arrow_right_3,
+                    //     //   color: brandOne,
+                    //     // ),
+                    //   ),
+                    // ),
+                 
                   ],
                 ),
               ),

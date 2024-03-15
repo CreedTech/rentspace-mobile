@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../controller/rent/rent_controller.dart';
+import '../../actions/transaction_receipt.dart';
+import 'spacerent_list.dart';
 
 class SpaceRentHistory extends StatefulWidget {
   int current;
@@ -42,7 +44,8 @@ doSomeThing() {
       .substring(0, paymentInfo.split(" ")[0].length - 4));
 
   try {
-    DateTime dateTime = DateTime.parse(dateString).add(const Duration(hours: 1));
+    DateTime dateTime =
+        DateTime.parse(dateString).add(const Duration(hours: 1));
     print("Parsed DateTime: $dateTime");
   } catch (e) {
     print("Error parsing date: $e");
@@ -122,43 +125,59 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: brandOne,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(TransactionReceipt(
+                              amount: _payments[index]['amount'],
+                              status: _payments[index]['status'],
+                              fees: _payments[index]['fees'],
+                              transactionType: _payments[index]['message'],
+                              description: _payments[index]['description'],
+                              transactionGroup: 'Wallet Payment',
+                              transactionDate: _payments[index]['createdAt'],
+                              transactionRef: _payments[index]['transactionReference'],
+                              merchantRef: _payments[index]['merchantReference'],
+                            ));
+                          },
+                          child: ListTile(
+                            leading: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: brandOne,
+                              ),
+                              child: Image.asset(
+                                "assets/icons/savings/spacerent.png",
+                                height: 20,
+                                width: 20,
+                                color: Colors.white,
+                              ),
                             ),
-                            child: Image.asset(
-                              "assets/icons/savings/spacerent.png",
-                              height: 20,
-                              width: 20,
-                              color: Colors.white,
+                            title: Text(
+                              _payments[index]['description'],
+                              style: GoogleFonts.nunito(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                          title: Text(
-                            _payments[index]['message'],
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w700,
+                            subtitle: Text(
+                              _formatTime(DateTime.parse(
+                                      (_payments[index]['createdAt']))
+                                  .add(const Duration(hours: 1))),
+                              style: GoogleFonts.nunito(
+                                color: brandOne,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                          subtitle: Text(
-                            _formatTime(DateTime.parse(
-                                (_payments[index]['createdAt'])).add(const Duration(hours: 1))),
-                            style: GoogleFonts.nunito(
-                              color: brandOne,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          trailing: Text(
-                            '+ ₦${_payments[index]['amount'].toString()}',
-                            style: GoogleFonts.nunito(
-                              color: Colors.green,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
+                            trailing: Text(
+                              '+ ${ch8t.format(_payments[index]['amount'])}',
+                              style: GoogleFonts.nunito(
+                                color: Colors.green,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),

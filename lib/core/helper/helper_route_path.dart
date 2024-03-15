@@ -10,3 +10,4 @@ const home = "/home";
 const airtime = "/airtime";
 const utilitytransactionReceipt = "/transactionReceipt";
 const newNotification = '/newNotification';
+const referral_record = '/referralRecord';

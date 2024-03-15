@@ -2525,7 +2525,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               "Pay for your bills and earn one SpacePoint!",
                                               // textAlign: TextAlign.center,
                                               style: GoogleFonts.nunito(
-                                                fontSize: 20,
+                                                fontSize: 18.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -2533,14 +2533,14 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 20.w,
                                             ),
                                             child: Text(
                                               "Get access to a wide range of utilities and earn a SpacePoint when you make payment from your SpaceWallet!",
                                               // textAlign: TextAlign.center,
                                               style: GoogleFonts.nunito(
-                                                fontSize: 14,
+                                                fontSize: 12.sp,
                                                 //height: 0.5,
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -2561,7 +2561,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   "Wallet balance",
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.nunito(
-                                                    fontSize: 20,
+                                                    fontSize: 14.sp,
                                                     fontWeight: FontWeight.bold,
                                                     color: Theme.of(context)
                                                         .primaryColor,
@@ -2602,7 +2602,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         "*****",
                                                         style:
                                                             GoogleFonts.nunito(
-                                                          fontSize: 20,
+                                                          fontSize: 16.sp,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           color:
@@ -2614,7 +2614,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                         '${hideBalance ? nairaFormaet.format(double.parse(userController.userModel!.userDetails![0].wallet.mainBalance.toString())) : "*****"} ',
                                                         style:
                                                             GoogleFonts.nunito(
-                                                          fontSize: 20,
+                                                          fontSize: 20.sp,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           color:
@@ -2636,7 +2636,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 ? Text(
                                                     'SpacePoints: ***',
                                                     style: GoogleFonts.nunito(
-                                                      fontSize: 16,
+                                                      fontSize: 16.sp,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: Theme.of(context)
@@ -2646,7 +2646,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 : Text(
                                                     'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.toString()}',
                                                     style: GoogleFonts.nunito(
-                                                      fontSize: 16,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: Theme.of(context)
@@ -3654,7 +3654,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                       maskType:
                                                           EasyLoadingMaskType
                                                               .black,
-                                                      dismissOnTap: true,
+                                                      dismissOnTap: false,
                                                     );
                                                     final addUtility =
                                                         await http.post(
@@ -3977,7 +3977,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     maskType:
                                                         EasyLoadingMaskType
                                                             .black,
-                                                    dismissOnTap: true,
+                                                    dismissOnTap: false,
                                                   );
                                                   final addUtility =
                                                       await http.post(
@@ -4356,7 +4356,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                       maskType:
                                                           EasyLoadingMaskType
                                                               .black,
-                                                      dismissOnTap: true,
+                                                      dismissOnTap: false,
                                                     );
                                                     final addUtility =
                                                         await http.post(
@@ -4679,7 +4679,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     maskType:
                                                         EasyLoadingMaskType
                                                             .black,
-                                                    dismissOnTap: true,
+                                                    dismissOnTap: false,
                                                   );
                                                   final addUtility =
                                                       await http.post(
@@ -5059,7 +5059,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                       maskType:
                                                           EasyLoadingMaskType
                                                               .black,
-                                                      dismissOnTap: true,
+                                                      dismissOnTap: false,
                                                     );
                                                     final addUtility =
                                                         await http.post(
@@ -5382,7 +5382,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     maskType:
                                                         EasyLoadingMaskType
                                                             .black,
-                                                    dismissOnTap: true,
+                                                    dismissOnTap: false,
                                                   );
                                                   final addUtility =
                                                       await http.post(
@@ -5763,7 +5763,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                       maskType:
                                                           EasyLoadingMaskType
                                                               .black,
-                                                      dismissOnTap: true,
+                                                      dismissOnTap: false,
                                                     );
                                                     final addUtility =
                                                         await http.post(
@@ -6086,7 +6086,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     maskType:
                                                         EasyLoadingMaskType
                                                             .black,
-                                                    dismissOnTap: true,
+                                                    dismissOnTap: false,
                                                   );
                                                   final addUtility =
                                                       await http.post(

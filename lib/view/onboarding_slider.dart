@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
@@ -151,12 +153,12 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                                   color: brandFour,
                                                   fontSize: 13),
                                             ),
-                                            child: const Text(
+                                            child: Text(
                                               "Create an account",
-                                              style: TextStyle(
+                                              style: GoogleFonts.nunito(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700,
-                                                fontSize: 16,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
                                           ),
@@ -183,12 +185,12 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                                   color: brandFour,
                                                   fontSize: 13),
                                             ),
-                                            child: const Text(
+                                            child: Text(
                                               "Sign In",
-                                              style: TextStyle(
+                                              style: GoogleFonts.nunito(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w700,
-                                                fontSize: 16,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
                                           ),
@@ -217,12 +219,12 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                           textStyle: const TextStyle(
                                               color: brandFour, fontSize: 13),
                                         ),
-                                        child: const Text(
+                                        child: Text(
                                           "Get Started",
-                                          style: TextStyle(
+                                          style: GoogleFonts.nunito(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 16,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),

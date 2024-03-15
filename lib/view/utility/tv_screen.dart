@@ -88,7 +88,7 @@ class _TvScreenState extends State<TvScreen> {
         EasyLoading.show(
           indicator: const CustomLoader(),
           maskType: EasyLoadingMaskType.black,
-          dismissOnTap: true,
+          dismissOnTap: false,
         );
         final addUtility = await http.post(
           Uri.parse(AppConstants.BASE_URL + AppConstants.ADD_UTILITY_HISTORY),
@@ -208,14 +208,14 @@ class _TvScreenState extends State<TvScreen> {
           EasyLoading.show(
             indicator: const CustomLoader(),
             maskType: EasyLoadingMaskType.black,
-            dismissOnTap: true,
+            dismissOnTap: false,
           );
           if (widget.mainBalance > ((int.tryParse(widget.tvAmount))!) &&
               (widget.tvStatus == "Open")) {
             EasyLoading.show(
               indicator: const CustomLoader(),
               maskType: EasyLoadingMaskType.black,
-              dismissOnTap: true,
+              dismissOnTap: false,
             );
             // EasyLoading.dismiss();
 
@@ -416,7 +416,7 @@ class _TvScreenState extends State<TvScreen> {
                           EasyLoading.show(
                             indicator: const CustomLoader(),
                             maskType: EasyLoadingMaskType.black,
-                            dismissOnTap: true,
+                            dismissOnTap: false,
                           );
                           if (widget.mainBalance >
                                   ((int.tryParse(widget.tvAmount))!) &&
@@ -424,7 +424,7 @@ class _TvScreenState extends State<TvScreen> {
                             EasyLoading.show(
                               indicator: const CustomLoader(),
                               maskType: EasyLoadingMaskType.black,
-                              dismissOnTap: true,
+                              dismissOnTap: false,
                             );
                             // EasyLoading.dismiss();
 

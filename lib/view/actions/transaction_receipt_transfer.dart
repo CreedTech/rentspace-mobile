@@ -15,6 +15,7 @@ class TransactionReceiptTransfer extends StatefulWidget {
       {super.key,
       required this.amount,
       required this.status,
+      required this.fees,
       required this.transactionType,
       required this.description,
       required this.transactionGroup,
@@ -24,6 +25,7 @@ class TransactionReceiptTransfer extends StatefulWidget {
       required this.merchantRef});
   final num amount;
   final String status,
+      fees,
       transactionType,
       description,
       transactionGroup,
@@ -53,7 +55,7 @@ class _TransactionReceiptTransferState
           },
           child: Icon(
             Icons.arrow_back_ios,
-            size: 30,
+            size: 30.sp,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -62,7 +64,7 @@ class _TransactionReceiptTransferState
           'Transaction Details',
           style: GoogleFonts.nunito(
             color: brandOne,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -182,7 +184,9 @@ class _TransactionReceiptTransferState
                               ),
                             ),
                             Text(
-                              currencyFormat.format(0),
+                              currencyFormat.format(
+                                double.parse(widget.fees),
+                              ),
                               style: GoogleFonts.nunito(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
@@ -541,7 +545,6 @@ class _TransactionReceiptTransferState
               //     ),
               //   ),
               // ),
-            
             ],
           ),
         ),

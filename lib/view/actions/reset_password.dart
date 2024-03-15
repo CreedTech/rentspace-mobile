@@ -176,17 +176,17 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        suffix: GestureDetector(
-          onTap: () {
-            setState(() {
-              obscureText = !obscureText;
-            });
-          },
-          child: Icon(
-            obscureText ? Iconsax.eye_slash5 : Iconsax.eye4,
-            color: brandOne,
-          ),
-        ),
+        // suffix: GestureDetector(
+        //   onTap: () {
+        //     setState(() {
+        //       obscureText = !obscureText;
+        //     });
+        //   },
+        //   child: Icon(
+        //     obscureText ? Iconsax.eye_slash5 : Iconsax.eye4,
+        //     color: brandOne,
+        //   ),
+        // ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
       ),
@@ -259,19 +259,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       vertical: 3, horizontal: 3),
-                            //   child: Text(
-                            //     'Password',
-                            //     style: GoogleFonts.nunito(
-                            //       color: Theme.of(context).primaryColor,
-                            //       fontWeight: FontWeight.w700,
-                            //       fontSize: 16,
-                            //       // fontFamily: "DefaultFontFamily",
-                            //     ),
-                            //   ),
-                            // ),
+                          
                             password,
                             Padding(
                               padding:
@@ -315,7 +303,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                   ),
                 ],
               ),
-              const Spacer(),
+              // const Spacer(),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(

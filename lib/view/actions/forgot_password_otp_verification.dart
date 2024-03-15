@@ -195,12 +195,7 @@ class _ForgotPasswordOTPVerificationPageState
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                            // TextSpan(
-                            //   text: '. Please check your mail.',
-                            //   style: GoogleFonts.nunito(
-                            //     color: brandTwo,
-                            //   ),
-                            // ),
+                           
                           ]),
                     ),
                   ),

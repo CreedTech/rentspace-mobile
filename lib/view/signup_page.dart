@@ -5,6 +5,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/constants/widgets/date_picker_bottom_sheet.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'dart:async';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -89,350 +91,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final int minimumAge = 18;
   String? selectedGender;
   late int genderValue;
-
-  // final _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  // final Random _rnd = Random();
-  // final String _payUrl = "";
-  // String getRandom(int length) => String.fromCharCodes(
-  //       Iterable.generate(
-  //         length,
-  //         (_) => _chars.codeUnitAt(
-  //           _rnd.nextInt(_chars.length),
-  //         ),
-  //       ),
-  //     );
-
-  // createNewDVA() async {
-  //   setState(() {
-  //     notLoading = false;
-  //   });
-  //   const String apiUrl = 'https://api-d.squadco.com/virtual-account';
-  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
-  //   final response = await http.post(
-  //     Uri.parse(apiUrl),
-  //     headers: {
-  //       'Authorization': 'Bearer $bearerToken',
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: jsonEncode(<String, String>{
-  //       "customer_identifier":
-  //           "SPACER/${_usernameController.text.trim().toString().toUpperCase()} ${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
-  //       "first_name":
-  //           "SPACER/ - ${_usernameController.text.trim().toString().toUpperCase()}",
-  //       "last_name": _lastnameController.text.trim(),
-  //       "mobile_num":
-  //           "0${_phoneController.text.trim().replaceFirst('+234', '')}",
-  //       "email": _emailController.text.trim(),
-  //       "bvn": _bvnController.text.trim(),
-  //       "dob": selectedDate.toString(),
-  //       "address": _addressController.text,
-  //       "gender": genderValue.toString()
-  //     }),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> parsedJson = json.decode(response.body);
-  //     var updateLiquidate = FirebaseFirestore.instance.collection('dva');
-  //     setState(() {
-  //       vNum = parsedJson['data']['virtual_account_number'];
-  //       vName = parsedJson['data']['customer_identifier'];
-  //     });
-  //     await updateLiquidate.add({
-  //       'dva_name': vName,
-  //       'dva_date': formattedDate,
-  //       'dva_number': vNum,
-  //       'dva_username':
-  //           _usernameController.text.trim().toString().toUpperCase(),
-  //     }).then((value) async {
-  //       var walletUpdate = FirebaseFirestore.instance.collection('accounts');
-  //       await walletUpdate.doc(userId).update({
-  //         'has_dva': 'true',
-  //         'dva_name': vName,
-  //         'dva_number': vNum,
-  //         'dva_username':
-  //             _usernameController.text.trim().toString().toUpperCase(),
-  //         'dva_date': formattedDate,
-  //         "activities": FieldValue.arrayUnion(
-  //           [
-  //             "$formattedDate \nDVA Created",
-  //           ],
-  //         ),
-  //       });
-  //       setState(() {
-  //         notLoading = true;
-  //       });
-  //       _usernameController.clear();
-  //       // Get.bottomSheet(
-  //       //   isDismissible: false,
-  //       //   SizedBox(
-  //       //     height: 400,
-  //       //     child: ClipRRect(
-  //       //       borderRadius: const BorderRadius.only(
-  //       //         topLeft: Radius.circular(30.0),
-  //       //         topRight: Radius.circular(30.0),
-  //       //       ),
-  //       //       child: Container(
-  //       //         color: Theme.of(context).canvasColor,
-  //       //         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-  //       //         child: Column(
-  //       //           crossAxisAlignment: CrossAxisAlignment.center,
-  //       //           children: [
-  //       //             const SizedBox(
-  //       //               height: 30,
-  //       //             ),
-  //       //             const Icon(
-  //       //               Icons.check_circle_outline,
-  //       //               color: brandOne,
-  //       //               size: 80,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 10,
-  //       //             ),
-  //       //             Text(
-  //       //               'DVA Created',
-  //       //               style: TextStyle(
-  //       //                 fontSize: 20,
-  //       //                 fontWeight: FontWeight.bold,
-  //       //                 fontFamily: "DefaultFontFamily",
-  //       //                 color: Theme.of(context).primaryColor,
-  //       //               ),
-  //       //               textAlign: TextAlign.center,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 20,
-  //       //             ),
-  //       //             Text(
-  //       //               'DVA Name: ${vName}',
-  //       //               style: TextStyle(
-  //       //                 fontSize: 16,
-  //       //                 fontWeight: FontWeight.bold,
-  //       //                 fontFamily: "DefaultFontFamily",
-  //       //                 color: Theme.of(context).primaryColor,
-  //       //               ),
-  //       //               textAlign: TextAlign.center,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 20,
-  //       //             ),
-  //       //             Text(
-  //       //               'DVA Number: ${vNum}',
-  //       //               style: TextStyle(
-  //       //                 fontSize: 16,
-  //       //                 fontWeight: FontWeight.bold,
-  //       //                 fontFamily: "DefaultFontFamily",
-  //       //                 color: Theme.of(context).primaryColor,
-  //       //               ),
-  //       //               textAlign: TextAlign.center,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 20,
-  //       //             ),
-  //       //             Text(
-  //       //               'DVA Bank: GTBank',
-  //       //               style: TextStyle(
-  //       //                 fontSize: 16,
-  //       //                 fontWeight: FontWeight.bold,
-  //       //                 fontFamily: "DefaultFontFamily",
-  //       //                 color: Theme.of(context).primaryColor,
-  //       //               ),
-  //       //               textAlign: TextAlign.center,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 30,
-  //       //             ),
-  //       //             GFButton(
-  //       //               onPressed: () {
-  //       //                 for (int i = 0; i < 2; i++) {
-  //       //                   Get.back();
-  //       //                 }
-  //       //               },
-  //       //               icon: const Icon(
-  //       //                 Icons.arrow_right_outlined,
-  //       //                 size: 30,
-  //       //                 color: Colors.white,
-  //       //               ),
-  //       //               color: brandOne,
-  //       //               text: "Done",
-  //       //               shape: GFButtonShape.pills,
-  //       //               fullWidthButton: true,
-  //       //             ),
-  //       //             const SizedBox(
-  //       //               height: 20,
-  //       //             ),
-  //       //           ],
-  //       //         ),
-  //       //       ),
-  //       //     ),
-  //       //   ),
-  //       // );
-  //     }).catchError((error) {
-  //       setState(() {
-  //         notLoading = true;
-  //       });
-  //       showDialog(
-  //           context: context,
-  //           barrierDismissible: false,
-  //           builder: (BuildContext context) {
-  //             return AlertDialog(
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               title: null,
-  //               elevation: 0,
-  //               content: SizedBox(
-  //                 height: 250,
-  //                 child: Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.of(context).pop();
-  //                       },
-  //                       child: Align(
-  //                         alignment: Alignment.topRight,
-  //                         child: Container(
-  //                           decoration: BoxDecoration(
-  //                             borderRadius: BorderRadius.circular(30),
-  //                             // color: brandOne,
-  //                           ),
-  //                           child: Icon(
-  //                             Iconsax.close_circle,
-  //                             color: Theme.of(context).primaryColor,
-  //                             size: 30,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     const Align(
-  //                       alignment: Alignment.center,
-  //                       child: Icon(
-  //                         Iconsax.warning_24,
-  //                         color: Colors.red,
-  //                         size: 75,
-  //                       ),
-  //                     ),
-  //                     const SizedBox(
-  //                       height: 12,
-  //                     ),
-  //                     Text(
-  //                       'Oops!',
-  //                       style: GoogleFonts.nunito(
-  //                         color: Colors.red,
-  //                         fontSize: 28,
-  //                         fontWeight: FontWeight.w800,
-  //                       ),
-  //                     ),
-  //                     const SizedBox(
-  //                       height: 5,
-  //                     ),
-  //                     Text(
-  //                       "Something went wrong, try again later",
-  //                       textAlign: TextAlign.center,
-  //                       style:
-  //                           GoogleFonts.nunito(color: Colors.red, fontSize: 18),
-  //                     ),
-  //                     const SizedBox(
-  //                       height: 10,
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           });
-
-  //       // Get.snackbar(
-  //       //   "Oops",
-  //       //   "Something went wrong, try again later",
-  //       //   animationDuration: const Duration(seconds: 2),
-  //       //   backgroundColor: Colors.red,
-  //       //   colorText: Colors.white,
-  //       //   snackPosition: SnackPosition.BOTTOM,
-  //       // );
-  //     });
-  //   } else {
-  //     setState(() {
-  //       notLoading = true;
-  //     });
-  //     // ignore: use_build_context_synchronously
-  //     showDialog(
-  //         context: context,
-  //         barrierDismissible: false,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(10),
-  //             ),
-  //             title: null,
-  //             elevation: 0,
-  //             content: SizedBox(
-  //               height: 250,
-  //               child: Column(
-  //                 children: [
-  //                   GestureDetector(
-  //                     onTap: () {
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: Align(
-  //                       alignment: Alignment.topRight,
-  //                       child: Container(
-  //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(30),
-  //                           // color: brandOne,
-  //                         ),
-  //                         child: const Icon(
-  //                           Iconsax.close_circle,
-  //                           color: brandOne,
-  //                           size: 30,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   const Align(
-  //                     alignment: Alignment.center,
-  //                     child: Icon(
-  //                       Iconsax.warning_24,
-  //                       color: Colors.red,
-  //                       size: 75,
-  //                     ),
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 12,
-  //                   ),
-  //                   Text(
-  //                     'Error!',
-  //                     style: GoogleFonts.nunito(
-  //                       color: Colors.red,
-  //                       fontSize: 28,
-  //                       fontWeight: FontWeight.w800,
-  //                     ),
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 5,
-  //                   ),
-  //                   Text(
-  //                     "something went wrong",
-  //                     textAlign: TextAlign.center,
-  //                     style: GoogleFonts.nunito(color: brandOne, fontSize: 18),
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         });
-
-  //     // Get.snackbar(
-  //     //   "Error!",
-  //     //   "something went wrong",
-  //     //   animationDuration: const Duration(seconds: 1),
-  //     //   backgroundColor: Colors.red,
-  //     //   colorText: Colors.white,
-  //     //   snackPosition: SnackPosition.BOTTOM,
-  //     // );
-  //     print(
-  //         'Request failed with status: ${response.statusCode}, ${response.body}');
-  //   }
-  // }
+  DateTime? _dateTime;
+  String _format = 'yyyy-MMMM-dd';
 
   void visibility() {
     if (obscurity == true) {
@@ -447,26 +107,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       });
     }
   }
-
-  // checkUserNameValidity() async {
-  //   QuerySnapshot querySnapshot =
-  //       await _firestore.collection(collectionName).get();
-
-  //   for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
-  //     Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-  //     if (data != null &&
-  //         data['dva_username'].toString().toLowerCase() ==
-  //             _usernameController.text.trim().toLowerCase()) {
-  //       setState(() {
-  //         _mssg = "username exists, choose another.";
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _mssg = "username is available.";
-  //       });
-  //     }
-  //   }
-  // }
 
   @override
   initState() {
@@ -614,30 +254,22 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _usernameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.text,
       validator: validateUsername,
-      // onChanged: (e) {
-      //   if (_usernameController.text.trim().length >= 7) {
-      //     checkUserNameValidity();
-      //   }
-      // },
-      // maxLength: 10,
       decoration: InputDecoration(
         label: Text(
           "Choose new username",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         // prefixText: "SPACER/",
         prefixStyle: GoogleFonts.nunito(
           color: Theme.of(context).primaryColor,
-          fontSize: 13,
+          fontSize: 13.sp,
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
@@ -668,7 +300,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: 'can contain letters and numbers',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -681,9 +313,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       controller: _phoneController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       maxLength: 11,
@@ -692,7 +322,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           "Enter your Phone number",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -723,7 +353,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: 'e.g 080 123 456 789 ',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -732,12 +362,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       width: 50,
       height: 50,
       textStyle: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         color: Theme.of(context).primaryColor,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: brandTwo, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(15),
       ),
     );
     //Pin
@@ -766,9 +396,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
       controller: _referalController,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         // label: Text(
@@ -802,10 +430,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
-        hintText: 'You and your referrer earn 1 point each',
+        hintText: 'You and your referrer earn 500 naira each',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -818,16 +446,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _firstnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         label: Text(
           "Enter your First name",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -857,7 +483,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: 'legal first name',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -869,16 +495,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         label: Text(
           "Enter Last name",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -908,7 +532,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: 'legal last name',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -920,9 +544,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -930,7 +552,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           "Enter your email",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -960,7 +582,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: 'e.g mymail@inbox.com',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -974,9 +596,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -1028,135 +648,257 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         ),
       ),
     );
-
-    Future<void> _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          context: context,
-          builder: (context, child) {
-            return Theme(
-              data: Theme.of(context).copyWith(
-                colorScheme: const ColorScheme.dark(
-                  primaryContainer: brandTwo,
-                  primary: brandTwo, // header background color
-                  onPrimary: Colors.white,
-                  onBackground: brandTwo,
-                  // onSecondary: brandTwo,
-
-                  outline: brandTwo,
-                  background: brandTwo,
-                  onSurface: brandTwo, // body text color
-                ),
-                textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                    foregroundColor: brandTwo, // button text color
-                  ),
-                ),
-              ),
-              child: child!,
-            );
-          },
-          initialDate: selectedDate,
-          firstDate: DateTime(1900),
-          lastDate: DateTime.now());
-      if (picked != null && picked != selectedDate) {
-        final int age = DateTime.now().year - picked.year;
-        if (age < minimumAge) {
-          // Show an error message or handle the validation as needed.
-          if (!context.mounted) return;
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  title: null,
-                  elevation: 0,
-                  content: SizedBox(
-                    height: 250,
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                // color: brandOne,
-                              ),
-                              child: Icon(
-                                Iconsax.close_circle,
-                                color: Theme.of(context).primaryColor,
-                                size: 30,
+    void _showDatePicker() {
+      DatePicker.showDatePicker(
+        context,
+        onMonthChangeStartWithFirstDate: true,
+        pickerTheme: DateTimePickerTheme(
+          backgroundColor: brandOne,
+          itemTextStyle: GoogleFonts.nunito(color: Colors.white),
+          itemHeight: 50.h,
+          pickerHeight: 300.h,
+          showTitle: true,
+          cancel: Icon(
+            Iconsax.close_circle,
+            color: Colors.white,
+            size: 30.sp,
+          ),
+          confirm: Text(
+            'Done',
+            style: GoogleFonts.nunito(color: Colors.white),
+          ),
+        ),
+        initialDateTime: selectedDate,
+        minDateTime: DateTime(1900),
+        maxDateTime: DateTime.now(),
+        dateFormat: _format,
+        locale: DateTimePickerLocale.en_us,
+        onCancel: () => print('onCancel'),
+        onChange: (dateTime, List<int> index) {
+          setState(() {
+            _dateTime = dateTime;
+          });
+          
+        },
+        onConfirm: (dateTime, List<int> index) {
+          setState(() {
+            _dateTime = dateTime;
+          });
+          print(dateTime);
+        },
+        onClose: () {
+          if (_dateTime != null && _dateTime != selectedDate) {
+            final int age = DateTime.now().year - _dateTime!.year;
+            if (age < minimumAge) {
+              // Show an error message or handle the validation as needed.
+              if (!context.mounted) return;
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      title: null,
+                      elevation: 0,
+                      content: SizedBox(
+                        height: 250,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    // color: brandOne,
+                                  ),
+                                  child: Icon(
+                                    Iconsax.close_circle,
+                                    color: Theme.of(context).primaryColor,
+                                    size: 30.sp,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Iconsax.warning_24,
+                                color: Colors.red,
+                                size: 75.sp,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            Text(
+                              'Error! :(',
+                              style: GoogleFonts.nunito(
+                                color: Colors.red,
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Text(
+                              "Age must be at least $minimumAge years.",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                  color: Colors.red, fontSize: 18.sp),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                          ],
                         ),
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Iconsax.warning_24,
-                            color: Colors.red,
-                            size: 75,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          'Error! :(',
-                          style: GoogleFonts.nunito(
-                            color: Colors.red,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Age must be at least $minimumAge years.",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
-                              color: Colors.red, fontSize: 18),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                      ),
+                    );
+                  });
+            } else {
+              setState(() {
+                selectedDate = _dateTime!;
+                dateController.text =
+                    DateFormat('dd/MM/yyyy').format(selectedDate);
               });
-
-        
-        } else {
-          setState(() {
-            selectedDate = picked;
-            dateController.text = DateFormat('dd/MM/yyyy').format(selectedDate);
-          });
-        }
-      }
+            }
+          }
+        },
+      );
     }
+
+    // Future<void> _selectDate(BuildContext context) async {
+    //   final DateTime? picked = await showDatePicker(
+    //       initialEntryMode: DatePickerEntryMode.calendarOnly,
+    //       context: context,
+    //       builder: (context, child) {
+    //         return Theme(
+    //           data: Theme.of(context).copyWith(
+    //             colorScheme: const ColorScheme.dark(
+    //               primaryContainer: brandTwo,
+    //               primary: brandTwo, // header background color
+    //               onPrimary: Colors.white,
+    //               onBackground: brandTwo,
+    //               // onSecondary: brandTwo,
+
+    //               outline: brandTwo,
+    //               background: brandTwo,
+    //               onSurface: brandTwo, // body text color
+    //             ),
+    //             textButtonTheme: TextButtonThemeData(
+    //               style: TextButton.styleFrom(
+    //                 foregroundColor: brandTwo, // button text color
+    //               ),
+    //             ),
+    //           ),
+    //           child: child!,
+    //         );
+    //       },
+    //       initialDate: selectedDate,
+    //       firstDate: DateTime(1900),
+    //       lastDate: DateTime.now());
+
+    //   if (picked != null && picked != selectedDate) {
+    //     final int age = DateTime.now().year - picked.year;
+    //     if (age < minimumAge) {
+    //       // Show an error message or handle the validation as needed.
+    //       if (!context.mounted) return;
+    //       showDialog(
+    //           context: context,
+    //           barrierDismissible: false,
+    //           builder: (BuildContext context) {
+    //             return AlertDialog(
+    //               shape: RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.circular(10),
+    //               ),
+    //               title: null,
+    //               elevation: 0,
+    //               content: SizedBox(
+    //                 height: 250,
+    //                 child: Column(
+    //                   children: [
+    //                     GestureDetector(
+    //                       onTap: () {
+    //                         Navigator.of(context).pop();
+    //                       },
+    //                       child: Align(
+    //                         alignment: Alignment.topRight,
+    //                         child: Container(
+    //                           decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.circular(30),
+    //                             // color: brandOne,
+    //                           ),
+    //                           child: Icon(
+    //                             Iconsax.close_circle,
+    //                             color: Theme.of(context).primaryColor,
+    //                             size: 30.sp,
+    //                           ),
+    //                         ),
+    //                       ),
+    //                     ),
+    //                     Align(
+    //                       alignment: Alignment.center,
+    //                       child: Icon(
+    //                         Iconsax.warning_24,
+    //                         color: Colors.red,
+    //                         size: 75.sp,
+    //                       ),
+    //                     ),
+    //                     SizedBox(
+    //                       height: 12.h,
+    //                     ),
+    //                     Text(
+    //                       'Error! :(',
+    //                       style: GoogleFonts.nunito(
+    //                         color: Colors.red,
+    //                         fontSize: 28.sp,
+    //                         fontWeight: FontWeight.w800,
+    //                       ),
+    //                     ),
+    //                     SizedBox(
+    //                       height: 5.h,
+    //                     ),
+    //                     Text(
+    //                       "Age must be at least $minimumAge years.",
+    //                       textAlign: TextAlign.center,
+    //                       style: GoogleFonts.nunito(
+    //                           color: Colors.red, fontSize: 18.sp),
+    //                     ),
+    //                     SizedBox(
+    //                       height: 10.h,
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             );
+    //           });
+    //     } else {
+    //       setState(() {
+    //         selectedDate = picked;
+    //         dateController.text = DateFormat('dd/MM/yyyy').format(selectedDate);
+    //       });
+    //     }
+    //   }
+    // }
 
     final dob = TextFormField(
       controller: dateController,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       readOnly: true,
-      onTap: () => _selectDate(context),
+      onTap: _showDatePicker,
+      // onTap: () => _selectDate(context),
       decoration: InputDecoration(
         labelText: 'Date of Birth',
         labelStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
         suffixIcon: const Icon(
@@ -1195,9 +937,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       maxLength: 11,
@@ -1249,9 +989,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
 
       // minLines: 3,
       keyboardType: TextInputType.streetAddress,
@@ -1262,14 +1000,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           "Enter your address",
           style: GoogleFonts.nunito(
             color: Colors.grey,
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: 'Enter your address...',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
@@ -1302,15 +1040,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final gender = CustomDropdown(
       selectedStyle: GoogleFonts.nunito(
-          color: Theme.of(context).primaryColor, fontSize: 14),
+          color: Theme.of(context).primaryColor, fontSize: 14.sp),
       hintText: 'Select your gender',
       hintStyle: GoogleFonts.nunito(
           // color: Theme.of(context).primaryColor,
-          fontSize: 14),
+          fontSize: 14.sp),
       excludeSelected: true,
       fillColor: Colors.transparent,
       listItemStyle: GoogleFonts.nunito(
-          color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+          color: Theme.of(context).colorScheme.secondary, fontSize: 14.sp),
       borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
       items: const ['Male', 'Female'],
       controller: _genderController,
@@ -1329,59 +1067,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       },
     );
 
-    // DropdownButtonFormField(
-    //   style: GoogleFonts.nunito(
-    //     color: Theme.of(context).primaryColor,
-    //     fontSize: 16,
-    //     fontWeight: FontWeight.w600,
-    //   ),
-    //   items: ['Male', 'Female', 'Other']
-    //       .map((value) => DropdownMenuItem(
-    //             value: value,
-    //             child: Text(value),
-    //           ))
-    //       .toList(),
-    //   value: selectedGender,
-    //   onChanged: (String? newValue) {
-    //     setState(() {
-    //       selectedGender = newValue!;
-    //       genderValue = selectedGender == 'Male' ? 1 : 2;
-    //     });
-    //     print(genderValue);
-    //   },
-    //   decoration: InputDecoration(
-    //     hintText: 'Choose Gender',
-    //     hintStyle: GoogleFonts.nunito(
-    //       color: Colors.grey,
-    //       fontSize: 12,
-    //       fontWeight: FontWeight.w400,
-    //     ),
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(15.0),
-    //       borderSide: const BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     focusedBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(15),
-    //       borderSide: const BorderSide(color: brandOne, width: 2.0),
-    //     ),
-    //     enabledBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(15),
-    //       borderSide: const BorderSide(
-    //         color: Color(0xffE0E0E0),
-    //       ),
-    //     ),
-    //     errorBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(15),
-    //       borderSide: const BorderSide(
-    //           color: Colors.red, width: 2.0), // Change color to yellow
-    //     ),
-    //     contentPadding: const EdgeInsets.all(14),
-    //   ),
-    // );
-
-  
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -1393,7 +1078,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           },
           child: Icon(
             Icons.arrow_back,
-            size: 25,
+            size: 25.sp,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -1403,7 +1088,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 12.sp,
           ),
         ),
       ),
@@ -1421,14 +1106,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'First Name',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1436,21 +1121,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         firstname,
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Last Name',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1465,14 +1150,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'User Name',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1487,14 +1172,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Email Address',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1509,14 +1194,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Phone Number',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1528,14 +1213,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Password',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1576,14 +1261,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Date Of Birth',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1598,14 +1283,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Residential Address',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1620,14 +1305,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Gender',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1642,14 +1327,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Referral Code(Optional)',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -1738,23 +1423,27 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                           ),
                         ),
                         onPressed: () {
-                          if (registerFormKey.currentState!.validate() &&
-                              isChecked == true) {
-                            print(genderValue.toString());
-                            print(dateController.text);
-                            authState.signUp(
-                                context,
-                                _firstnameController.text.trim(),
-                                _lastnameController.text.trim(),
-                                _usernameController.text.trim(),
-                                _emailController.text.trim(),
-                                _passwordController.text.trim(),
-                                _phoneController.text.trim(),
-                                dateController.text.trim(),
-                                _addressController.text.trim(),
-                                _genderController.text.trim(),
-                                 referralCode: _referalController.text.trim() ?? ''
-                                );
+                          if (registerFormKey.currentState!.validate()) {
+                            if (isChecked == true) {
+                              print(genderValue.toString());
+                              print(dateController.text);
+                              authState.signUp(
+                                  context,
+                                  _firstnameController.text.trim(),
+                                  _lastnameController.text.trim(),
+                                  _usernameController.text.trim(),
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  _phoneController.text.trim(),
+                                  dateController.text.trim(),
+                                  _addressController.text.trim(),
+                                  _genderController.text.trim(),
+                                  referralCode:
+                                      _referalController.text.trim() ?? '');
+                            } else {
+                              customErrorDialog(context, 'Error!',
+                                  "You have to agree to the terms of service");
+                            }
                           } else {
                             customErrorDialog(context, 'Error!',
                                 "Please fill the form properly to proceed");
@@ -1765,7 +1454,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.nunito(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

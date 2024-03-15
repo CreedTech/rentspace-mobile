@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/actions/new_notification_page.dart';
+import 'package:rentspace/view/actions/referral_record.dart';
 import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
@@ -29,6 +30,11 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const NewNotificationPage(),
           settings: const RouteSettings(name: newNotification),
+        );
+      case referral_record:
+        return MaterialPageRoute(
+          builder: (context) => const ReferralRecord(),
+          settings: const RouteSettings(name: referral_record),
         );
       // case onboarding:
       //   return MaterialPageRoute(

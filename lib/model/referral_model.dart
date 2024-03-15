@@ -1,39 +1,39 @@
 import 'dart:convert';
 
-class SpaceRentModel {
-  SpaceRentModel({
-    required this.rents,
+class ReferralModel {
+  ReferralModel({
+    required this.referrals,
   });
-  List<SpaceRent>? rents;
+  List<Referral>? referrals;
 
-  SpaceRentModel.fromJson(Map<String, dynamic> json) {
-    final dynamic spaceRentData = json['rent'];
-    print('spaceRentData');
-    print(spaceRentData);
-    if (spaceRentData is List<dynamic>) {
-      rents = spaceRentData.map((e) => SpaceRent.fromJson(e)).toList();
-      print('rents length');
-      print(rents!.length);
-    } else if (spaceRentData is Map<String, dynamic>) {
+  ReferralModel.fromJson(Map<String, dynamic> json) {
+    final dynamic referralData = json['referredUsers'];
+    print('referralData');
+    print(referralData);
+    if (referralData is List<dynamic>) {
+      referrals = referralData.map((e) => Referral.fromJson(e)).toList();
+      print('referrals length');
+      print(referrals!.length);
+    } else if (referralData is Map<String, dynamic>) {
       print("Here");
 
-      rents = [SpaceRent.fromJson(spaceRentData)];
-      print("rents");
-      print(rents);
+      referrals = [Referral.fromJson(referralData)];
+      print("referrals");
+      print(referrals);
     } else {
-      print('Invalid activities data: $spaceRentData');
-      rents = [];
+      print('Invalid referral data: $referralData');
+      referrals = [];
     }
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['rent'] = rents!.map((e) => e.toJson()).toList();
+    _data['referredUsers'] = referrals!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
-class SpaceRent {
+class Referral {
   final String id;
   final String rentName;
   final String rentspaceId;
@@ -53,7 +53,7 @@ class SpaceRent {
   final String updatedAt;
   final List<dynamic> rentHistories;
 
-  SpaceRent(
+  Referral(
       {required this.id,
       required this.rentName,
       required this.rentspaceId,
@@ -73,7 +73,7 @@ class SpaceRent {
       required this.updatedAt,
       required this.rentHistories});
 
-  factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
+  factory Referral.fromJson(Map<String, dynamic> json) => Referral(
       id: json['_id'],
       rentName: json['rentName'],
       rentspaceId: json['rentspace_id'],

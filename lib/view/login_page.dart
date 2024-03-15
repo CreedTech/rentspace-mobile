@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       cursorColor: Theme.of(context).primaryColor,
       style: TextStyle(
         color: Theme.of(context).primaryColor,
+         fontSize: 14.sp
       ),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -134,7 +136,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         hintText: 'Enter your email',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -164,6 +166,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       obscureText: obscurity,
       style: GoogleFonts.nunito(
         color: Theme.of(context).primaryColor,
+        fontSize: 14.sp
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -197,7 +200,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         hintText: 'Enter your password',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -236,37 +239,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Get.back();
-        //   },
-        //   child: Icon(
-        //     Icons.arrow_back,
-        //     size: 25,
-        //     color: Theme.of(context).primaryColor,
-        //   ),
-        // ),
+
         centerTitle: true,
-        // title: Text(
-        //   'Login',
-        //   style: TextStyle(
-        //     color: Theme.of(context).primaryColor,
-        //     fontWeight: FontWeight.w700,
-        //     fontSize: 16,
-        //   ),
-        // ),
+ 
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.3,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
+  
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -274,30 +253,36 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Login to your account',
+                        'Welcome Back👋!!!',
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.nunito(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18,
+                          fontSize: 20.sp,
                           // fontFamily: "DefaultFontFamily",
                         ),
                       ),
-                      Text(
-                        'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
-                        style: GoogleFonts.nunito(
-                          color: const Color(0xff828282),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          // fontFamily: "DefaultFontFamily",
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 1.w),
+                        child: Text(
+                          'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            color: const Color(0xff828282),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12.sp,
+                            // fontFamily: "DefaultFontFamily",
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 51,
+                   SizedBox(
+                    height: 51.h,
                   ),
                   Form(
                     key: loginFormKey,
@@ -307,35 +292,35 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
+                              padding:  EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Email',
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                                  fontSize: 12.sp,
                                 ),
                               ),
                             ),
                             email,
                           ],
                         ),
-                        const SizedBox(
-                          height: 30,
+                         SizedBox(
+                          height: 30.h,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 3),
+                              padding:  EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Password',
                                 style: GoogleFonts.nunito(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                                  fontSize: 12.sp,
                                   // fontFamily: "DefaultFontFamily",
                                 ),
                               ),
@@ -343,8 +328,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             password,
                           ],
                         ),
-                        const SizedBox(
-                          height: 28,
+                         SizedBox(
+                          height: 28.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,7 +382,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                           'Remember me',
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.nunito(
-                                            fontSize: 12,
+                                            fontSize: 10.sp,
                                             fontWeight: FontWeight.w700,
                                             color: const Color(0xff828282),
                                           ),
@@ -419,7 +404,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   'Forgot Password?',
                                   style: GoogleFonts.nunito(
                                     color: brandFive,
-                                    fontSize: 12,
+                                    fontSize: 10.sp,
                                     // leadingDistribution:
                                     //     TextLeadingDistribution.even,
                                     fontWeight: FontWeight.w700,
@@ -432,8 +417,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
+                   SizedBox(
+                    height: 50.h,
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -445,7 +430,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 50),
+                              minimumSize:  Size(300.w, 50.h),
                               backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
@@ -472,7 +457,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -501,8 +486,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                   // const SizedBox(
                   //   height: 15,
                   // ),
-                  const SizedBox(
-                    height: 50,
+                   SizedBox(
+                    height: 20.h,
                   ),
                   Center(
                     child: Column(
@@ -513,7 +498,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           "Don't have an account? ",
                           style: GoogleFonts.nunito(
                             fontWeight: FontWeight.w700,
-                            fontSize: 16,
+                            fontSize: 14.sp,
                           ),
                         ),
                         GestureDetector(
@@ -525,7 +510,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             style: GoogleFonts.nunito(
                               color: brandFive,
                               fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                              fontSize: 14.sp,
                             ),
                           ),
                         ),
@@ -542,8 +527,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       : Text(
                           d1,
                         ),
-                  const SizedBox(
-                    height: 15,
+                   SizedBox(
+                    height: 15.h,
                   ),
                 ],
               ),

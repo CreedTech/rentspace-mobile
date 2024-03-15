@@ -100,6 +100,7 @@ class UserDetailsModel {
   final String dvaUsername;
   //  final String Idimage;
   final int referrals;
+  final int referralPoints;
   // TODO  change to number
   final int utilityPoints;
   final dynamic financeHealth;
@@ -132,6 +133,7 @@ class UserDetailsModel {
   final String avatar;
   final List<dynamic> activities;
   final List<dynamic> walletHistories;
+  final List<dynamic> referredUsers;
   final Wallet wallet;
 
   UserDetailsModel({
@@ -186,6 +188,7 @@ class UserDetailsModel {
     // required this.otpExpireIn,
     required this.rentspaceID,
     required this.avatar,
+    required this.referralPoints,
     // required this.userWalletBalance,
     // required this.userWalletNumber,
     // required this.accountDate,
@@ -195,6 +198,7 @@ class UserDetailsModel {
     required this.wallet,
     required this.activities,
     required this.walletHistories,
+    required this.referredUsers,
   });
 
   factory UserDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -209,6 +213,7 @@ class UserDetailsModel {
         phoneNumber: json["phoneNumber"],
         password: json["password"],
         gender: json["gender"],
+        referralPoints: json["referralPoints"],
         referralCode: json["referral_code"],
         dateOfBirth: json["date_of_birth"],
         verified: json["verified"],
@@ -260,6 +265,7 @@ class UserDetailsModel {
         wallet: Wallet.fromJson(json["wallet"]),
         activities: json["activities"],
         walletHistories: json["walletHistories"],
+        referredUsers: json["referredUsers"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -276,6 +282,7 @@ class UserDetailsModel {
         "date_of_birth": dateOfBirth,
         "verified": verified,
         "role": role,
+        "referralPoints": referralPoints,
         "isPinSet": isPinSet,
         "active": active,
         // "id_card": Idimage,
@@ -321,6 +328,7 @@ class UserDetailsModel {
         // "account_number": accountNumber,
         "activities": activities,
         "walletHistories": walletHistories,
+        "referredUsers": referredUsers,
         "wallet": wallet.toJson(),
       };
 }

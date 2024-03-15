@@ -75,7 +75,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         firstName: firstName,
         lastName: lastName,
         userName: username,
-        email: email,
+        email: email.toString().toLowerCase(),
         phoneNumber: phone,
         password: password,
         dateOfBirth: dateOfBirth,
@@ -90,7 +90,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.signUp(user.toJson());
       EasyLoading.dismiss();
@@ -223,7 +223,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       final response = await authRepository.verifyOtp(body);
       EasyLoading.dismiss();
@@ -297,7 +297,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       print(response.message.toString());
       if (response.success) {
         // EasyLoading.dismiss();
-        createDva(context, email);
+        createDva(
+          context,
+          email.toString().toLowerCase(),
+        );
         // bvnDebit(context, bvn).then(
         //   (value) => createDva(context),
         // );
@@ -376,7 +379,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     //       context, 'Error', 'Please input your bvn!!');
     //   return;
     // }22283481549
-    Map<String, dynamic> params = {'email': email};
+    Map<String, dynamic> params = {
+      'email': email.toString().toLowerCase(),
+    };
     print('params');
     print(params);
     String message;
@@ -472,7 +477,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
 
-    Map<String, dynamic> mail = {'email': email};
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
     String message;
     try {
       isLoading = true;
@@ -480,7 +487,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.resendOTP(mail);
       EasyLoading.dismiss();
@@ -544,7 +551,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
-    Map<String, dynamic> user = {'email': email, 'password': password};
+    Map<String, dynamic> user = {
+      'email': email.toString().toLowerCase(),
+      'password': password
+    };
     String message;
     try {
       isLoading = true;
@@ -553,7 +563,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.signIn(user);
       EasyLoading.dismiss();
@@ -610,7 +620,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => VerifyUserPage(
-              email: email,
+              email: email.toString().toLowerCase(),
             ),
           ),
         );
@@ -632,7 +642,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => BvnPage(
-              email: email,
+              email: email.toString().toLowerCase(),
             ),
           ),
         );
@@ -679,6 +689,66 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
   }
+  Future postFcmToken(BuildContext context,fcmToken) async {
+    // isLoading = true;
+    if (fcmToken.isEmpty || fcmToken == '') {
+      return;
+    }
+    Map<String, dynamic> token = {
+      'fcm_token': fcmToken,
+
+    };
+    String message;
+    try {
+      // isLoading = true;
+      // state = const AsyncLoading();
+      print('Got here in auth contrl');
+      // EasyLoading.show(
+      //   indicator: const CustomLoader(),
+      //   maskType: EasyLoadingMaskType.black,
+      //   dismissOnTap: false,
+      // );
+      
+      var response = await authRepository.postFcmToken(token);
+      EasyLoading.dismiss();
+      // state = const AsyncData(false);
+      print('response.message');
+      print(response.message);
+      if (response.success == true) {
+        // isLoading = false;
+      
+        return;
+      } else {
+        print(response.message.toString());
+      }
+      // if (response.success == false &&
+      //     response.message.contains("Incorrect credentials")) {
+      //   // authStatus = AuthStatus.NOT_LOGGED_IN;
+      //   message = "Incorrect credentials";
+      //   customErrorDialog(context, 'Error', message);
+      //   // showTopSnackBar(
+      //   //   Overlay.of(context),
+      //   //   CustomSnackBar.error(
+      //   //     message: message,
+      //   //   ),
+      //   // );
+
+      //   return;
+      // }
+    } catch (e) {
+      // authStatus = AuthStatus.NOT_LOGGED_IN;
+      // state = AsyncData(false);
+      // EasyLoading.dismiss();
+      // state = AsyncError(e, StackTrace.current);
+      // message = "Ooops something went wrong";
+      // customErrorDialog(context, 'Error', message);
+     
+      return;
+    } finally {
+      // isLoading = false;
+      return;
+    }
+  }
 
   Future verifyForgotPasswordOtp(BuildContext context, email, otp) async {
     print("Fields");
@@ -689,7 +759,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
-    Map<String, dynamic> body = {'email': email, 'otp': otp};
+    Map<String, dynamic> body = {
+      'email': email.toString().toLowerCase(),
+      'otp': otp
+    };
     print("body");
     print(body);
     String message;
@@ -698,7 +771,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       final response = await authRepository.verifyForgotPasswordOtp(body);
       EasyLoading.dismiss();
@@ -740,7 +813,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
 
-    Map<String, dynamic> mail = {'email': email};
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
     print(mail);
     String message;
     try {
@@ -749,7 +824,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.forgotPassword(mail);
       if (response.success) {
@@ -813,9 +888,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
 
     Map<String, dynamic> params = {
-      'email': email,
+      'email': email.toString().toLowerCase(),
       "newPassword": newPassword,
-      'repeatPassword': repeatPassword
+      'repeatPassword': repeatPassword,
     };
     print('params');
     print(params);
@@ -826,7 +901,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.resetPassword(params);
       if (response.success) {
@@ -892,7 +967,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
 
-    Map<String, dynamic> mail = {'email': email};
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
     String message;
     try {
       isLoading = true;
@@ -900,7 +977,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.resendPasswordOtp(mail);
       if (response.success) {
@@ -949,7 +1026,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.getUserData();
       if (response.success) {
@@ -999,7 +1076,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.logout();
       print('response message here');
@@ -1074,7 +1151,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.createPin(params);
       if (response.success) {
@@ -1146,7 +1223,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     //   return;
     // }
 
-    Map<String, dynamic> mail = {'email': email};
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
     print(mail);
     String message;
     try {
@@ -1155,7 +1234,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.forgotPin();
       if (response.success) {
@@ -1207,7 +1286,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
 
-    Map<String, dynamic> mail = {'email': email};
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
     String message;
     try {
       isLoading = true;
@@ -1215,7 +1296,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await authRepository.resendPinOtp(mail);
       if (response.success) {
@@ -1279,8 +1360,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ResetPIN(
+                      email: email.toString().toLowerCase(),
+                    )));
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
@@ -1372,20 +1457,17 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     return;
   }
-  Future changePin(BuildContext context, newPin,currentPin) async {
+
+  Future changePin(BuildContext context, newPin, currentPin) async {
     print("Fields");
     print(newPin);
     print(currentPin);
     isLoading = true;
-    if (newPin.isEmpty ||
-        newPin == '') {
+    if (newPin.isEmpty || newPin == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
-    Map<String, dynamic> body = {
-      'newPin': newPin,
-      'currentPin': currentPin
-    };
+    Map<String, dynamic> body = {'newPin': newPin, 'currentPin': currentPin};
     print("body");
     print(body);
     String message;
@@ -1438,6 +1520,4 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     return;
   }
-
-
 }

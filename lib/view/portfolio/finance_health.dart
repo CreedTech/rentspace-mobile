@@ -196,18 +196,18 @@ class _FinanceHealthState extends State<FinanceHealth> {
             color: Color(0xffE0E0E0),
           ),
         ),
-        focusedBorder:  OutlineInputBorder(
-           borderRadius: BorderRadius.circular(15),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
-        enabledBorder:  OutlineInputBorder(
-           borderRadius: BorderRadius.circular(15),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
-        errorBorder:  OutlineInputBorder(
-           borderRadius: BorderRadius.circular(15),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
@@ -307,7 +307,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                               // EasyLoading.show(
                               //   indicator: const CustomLoader(),
                               //   maskType: EasyLoadingMaskType.black,
-                              //   dismissOnTap: true,
+                              //   dismissOnTap: false,
                               // );
                               // if (financeformKey.currentState!.validate()) {
                               //   int inflow = (totalSavings +

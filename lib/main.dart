@@ -375,7 +375,7 @@ class _MyAppState extends State<MyApp> {
       builder: (contex, child) {
         return GetMaterialApp(
           theme: Themes().lightTheme,
-          darkTheme: Themes().darkTheme,
+          // darkTheme: Themes().darkTheme,
           themeMode: ThemeServices().getThemeMode(),
           debugShowCheckedModeBanner: false,
           navigatorKey: _navigatorKey,

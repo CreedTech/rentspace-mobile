@@ -1,19 +1,16 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/db/firebase_db.dart';
 import '../../constants/utils/obscureEmail.dart';
 // import '../../controller/user_controller.dart';
 import '../../controller/auth/user_controller.dart';
 import '../actions/onboarding_page.dart';
-import '../actions/phone_verification_screen.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -35,7 +32,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
     // _user = _auth.currentUser;
     _isEmailVerified =
-        userController.userModel!.userDetails![0].hasVerifiedEmail!;
+        userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     // checkingForBioMetrics();
     print(_isEmailVerified);
@@ -107,16 +104,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'Full Name',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
-                          "${userController.userModel!.userDetails![0].lastName!.capitalize} ${userController.userModel!.userDetails![0].firstName!.capitalize}"
+                          "${userController.userModel!.userDetails![0].lastName.capitalize} ${userController.userModel!.userDetails![0].firstName.capitalize}"
                               .toUpperCase(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -141,7 +138,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'User Name',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -150,7 +147,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               .toUpperCase(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                             fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -174,7 +171,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'Email',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -183,7 +180,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 .userModel!.userDetails![0].email!),
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                               fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () async {},
@@ -215,7 +212,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'Phone',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -224,7 +221,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 .userModel!.userDetails![0].phoneNumber!,
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                               fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         // onTap: () {
@@ -275,7 +272,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'BVN',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -287,7 +284,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 : '',
                             style: GoogleFonts.nunito(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                               fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
@@ -342,7 +339,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'Address',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -355,7 +352,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           ,
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                             fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),
@@ -393,7 +390,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           'Date Of Birth',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -402,7 +399,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               .toString(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                             fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),

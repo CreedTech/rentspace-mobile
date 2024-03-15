@@ -45,9 +45,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         intervalAmount == '' ||
         amount == '' ||
         paymentCount.isEmpty ||
-        paymentCount == '' ||
-        date.isEmpty ||
-        date == '') {
+        paymentCount == '') {
       customErrorDialog(
           context, 'Error', 'Please fill in the required fields!!');
       return;
@@ -71,7 +69,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
 
       var response = await appRepository.createRent(params);
@@ -201,7 +199,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
               ),
             ),
           );
-          walletDebit(context, intervalAmount, amount, rentspaceId, date,interval);
+          walletDebit(
+              context, intervalAmount, amount, rentspaceId, date, interval);
         }
         // if (paymentType == "Debit Card") {
         //   Get.to(
@@ -262,8 +261,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future walletDebit(
-      BuildContext context, intervalAmount, amount, rentspaceId, date,interval) async {
+  Future walletDebit(BuildContext context, intervalAmount, amount, rentspaceId,
+      date, interval) async {
     isLoading = true;
     // if (bvn.isEmpty || bvn == '') {
     //   customErrorDialog(context, 'Error', 'Please input your bvn!!');
@@ -274,7 +273,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'interval_amount': intervalAmount,
       'amount': amount,
       'date': date,
-      'interval':interval
+      'interval': interval
     };
     print('params');
     print(params);
@@ -285,7 +284,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await appRepository.walletDebit(params);
       EasyLoading.dismiss();
@@ -296,17 +295,17 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         Get.back();
         Get.back();
         showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: Colors.green,
-          message: 'Space Rent Creation Successful',
-          textStyle: GoogleFonts.nunito(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: Colors.green,
+            message: 'Space Rent Creation Successful',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      );
+        );
         // Get.back();
         Get.to(const RentSpaceList());
         // calculateNextPaymentDate(context, date, interval);
@@ -392,7 +391,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.show(
         indicator: const CustomLoader(),
         maskType: EasyLoadingMaskType.black,
-        dismissOnTap: true,
+        dismissOnTap: false,
       );
       var response = await appRepository.calculateNextPaymentDate(params);
       EasyLoading.dismiss();
@@ -569,7 +568,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   //     EasyLoading.show(
   //       indicator: const CustomLoader(),
   //       maskType: EasyLoadingMaskType.black,
-  //       dismissOnTap: true,
+  //       dismissOnTap: false,
   //     );
   //     var response = await appRepository.bvnDebit(params);
   //     if (response.success) {

@@ -1,4 +1,4 @@
-package com.example.rentspace
+package com.rentspace.app.android
 
 
 import androidx.annotation.NonNull;

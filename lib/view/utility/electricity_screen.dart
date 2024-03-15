@@ -94,7 +94,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
         EasyLoading.show(
           indicator: const CustomLoader(),
           maskType: EasyLoadingMaskType.black,
-          dismissOnTap: true,
+          dismissOnTap: false,
         );
         final addUtility = await http.post(
           Uri.parse(AppConstants.BASE_URL + AppConstants.ADD_UTILITY_HISTORY),
@@ -282,13 +282,13 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
           EasyLoading.show(
             indicator: const CustomLoader(),
             maskType: EasyLoadingMaskType.black,
-            dismissOnTap: true,
+            dismissOnTap: false,
           );
           if (widget.mainBalance > ((int.tryParse(widget.electricAmount))!)) {
             EasyLoading.show(
               indicator: const CustomLoader(),
               maskType: EasyLoadingMaskType.black,
-              dismissOnTap: true,
+              dismissOnTap: false,
             );
             // EasyLoading.dismiss();
 
@@ -489,14 +489,14 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                           EasyLoading.show(
                             indicator: const CustomLoader(),
                             maskType: EasyLoadingMaskType.black,
-                            dismissOnTap: true,
+                            dismissOnTap: false,
                           );
                           if (widget.mainBalance >
                               ((int.tryParse(widget.electricAmount))!)) {
                             EasyLoading.show(
                               indicator: const CustomLoader(),
                               maskType: EasyLoadingMaskType.black,
-                              dismissOnTap: true,
+                              dismissOnTap: false,
                             );
                             // EasyLoading.dismiss();
 

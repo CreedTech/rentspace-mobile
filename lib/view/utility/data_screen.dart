@@ -116,13 +116,13 @@ class _DataScreenState extends State<DataScreen> {
           EasyLoading.show(
             indicator: const CustomLoader(),
             maskType: EasyLoadingMaskType.black,
-            dismissOnTap: true,
+            dismissOnTap: false,
           );
           if (widget.mainBalance > ((int.tryParse(widget.amount))!)) {
             EasyLoading.show(
               indicator: const CustomLoader(),
               maskType: EasyLoadingMaskType.black,
-              dismissOnTap: true,
+              dismissOnTap: false,
             );
             const String apiUrl = 'https://api.watupay.com/v1/watubill/vend';
             const String bearerToken =
@@ -154,7 +154,7 @@ class _DataScreenState extends State<DataScreen> {
                 EasyLoading.show(
                   indicator: const CustomLoader(),
                   maskType: EasyLoadingMaskType.black,
-                  dismissOnTap: true,
+                  dismissOnTap: false,
                 );
                 final addUtility = await http.post(
                   Uri.parse(
@@ -194,7 +194,7 @@ class _DataScreenState extends State<DataScreen> {
               EasyLoading.show(
                 indicator: const CustomLoader(),
                 maskType: EasyLoadingMaskType.black,
-                dismissOnTap: true,
+                dismissOnTap: false,
               );
               // Get.to(FirstPage());
               await fetchUserData(refresh: true);
@@ -411,7 +411,7 @@ class _DataScreenState extends State<DataScreen> {
                           EasyLoading.show(
                             indicator: const CustomLoader(),
                             maskType: EasyLoadingMaskType.black,
-                            dismissOnTap: true,
+                            dismissOnTap: false,
                           );
 
                           if (widget.mainBalance >
@@ -449,7 +449,7 @@ class _DataScreenState extends State<DataScreen> {
                                 EasyLoading.show(
                                   indicator: const CustomLoader(),
                                   maskType: EasyLoadingMaskType.black,
-                                  dismissOnTap: true,
+                                  dismissOnTap: false,
                                 );
                                 final addUtility = await http.post(
                                   Uri.parse(AppConstants.BASE_URL +
@@ -492,7 +492,7 @@ class _DataScreenState extends State<DataScreen> {
                               EasyLoading.show(
                                 indicator: const CustomLoader(),
                                 maskType: EasyLoadingMaskType.black,
-                                dismissOnTap: true,
+                                dismissOnTap: false,
                               );
                               showTopSnackBar(
                                 Overlay.of(context),

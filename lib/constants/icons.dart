@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class WishIcon {
-  Icon normal = Icon(Icons.favorite_border);
-  Icon bold = Icon(Icons.favorite);
+  Icon normal = const Icon(Icons.favorite_border);
+  Icon bold = const Icon(Icons.favorite);
 }
 
 class BookmarkIcon {
-  Icon normal = Icon(Icons.bookmark_border);
-  Icon bold = Icon(Icons.bookmark);
+  Icon normal = const Icon(Icons.bookmark_border);
+  Icon bold = const Icon(Icons.bookmark);
 }
 
 class LockIcon {
-  Icon close = Icon(
-    Icons.visibility_off_outlined,
-    color: Colors.grey,
-    size: 18,
-  );
-  Icon open = Icon(
-    Icons.visibility_outlined,
-    color: Colors.grey,
-    size: 18,
-  );
+  Icon close = const Icon(Iconsax.eye_slash5);
+  Icon open = const Icon(Iconsax.eye4);
 }
 
 class ThemeIcon {
-  Icon dark = Icon(
+  Icon dark = const Icon(
     Icons.dark_mode,
     color: Colors.black,
   );
-  Icon light = Icon(
+  Icon light = const Icon(
     Icons.light_mode,
     color: Colors.black,
   );

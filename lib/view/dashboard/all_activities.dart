@@ -127,6 +127,7 @@ class _AllActivitiesState extends State<AllActivities> {
                               ? TransactionReceiptTransfer(
                                   amount: history['amount'],
                                   status: history['status'],
+                                  fees:history['fees'],
                                   transactionType: history['transactionType'],
                                   description: history['description'],
                                   transactionGroup: history['transactionGroup'],
@@ -143,6 +144,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                   ? TransactionReceiptDVA(
                                       amount: history['amount'],
                                       status: history['status'],
+                                      fees: history['fees'],
                                       transactionType:
                                           history['transactionType'],
                                       description: history['description'],
@@ -157,8 +159,16 @@ class _AllActivitiesState extends State<AllActivities> {
                                   : TransactionReceipt(
                                       amount: history['amount'],
                                       status: history['status'],
+                                      fees: history['fees'],
                                       transactionType:
-                                          history['transactionType'],
+                                          history['message'],
+                                      description: history['description'],
+                                      transactionGroup:
+                                          history['transactionGroup'],
+                                      transactionDate: history['createdAt'],
+                                      transactionRef:
+                                          history['transactionReference'],
+                                      merchantRef: history['merchantReference'],
                                     ),
                         );
                       },
@@ -228,7 +238,8 @@ class _AllActivitiesState extends State<AllActivities> {
                                         color: brandOne,
                                       ),
                                     ),
-                              (history['status'] == 'completed')
+                              (history['status'].toString().toLowerCase() ==
+                                      'completed')
                                   ? Text(
                                       'Successful',
                                       style: GoogleFonts.nunito(
@@ -237,7 +248,10 @@ class _AllActivitiesState extends State<AllActivities> {
                                         color: Colors.green,
                                       ),
                                     )
-                                  : (history['status'] == 'failed')
+                                  : (history['status']
+                                              .toString()
+                                              .toLowerCase() ==
+                                          'failed')
                                       ? Text(
                                           'Failed',
                                           style: GoogleFonts.nunito(

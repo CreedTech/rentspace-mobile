@@ -7,12 +7,15 @@ class ThemeServices extends GetxController {
   final storageKey = "isDarkMode";
 
   ThemeMode getThemeMode() {
-    return isSavedDarkMode() ? ThemeMode.dark : ThemeMode.light;
+    return isSavedDarkMode() ? ThemeMode.light : ThemeMode.light;
   }
 
   bool isSavedDarkMode() {
-    return _getStorage.read(storageKey) ?? false;
+    return false;
   }
+  // bool isSavedDarkMode() {
+  //   return _getStorage.read(storageKey) ?? false;
+  // }
 
   void saveThemeMode(bool isDarkMode) {
     _getStorage.write(storageKey, isDarkMode);
@@ -22,7 +25,7 @@ class ThemeServices extends GetxController {
     if (isSavedDarkMode()) {
       Get.changeThemeMode(ThemeMode.light);
     } else {
-      Get.changeThemeMode(ThemeMode.dark);
+      Get.changeThemeMode(ThemeMode.light);
     }
 
     saveThemeMode(!isSavedDarkMode());

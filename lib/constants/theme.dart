@@ -13,7 +13,12 @@ class Themes {
     canvasColor: const Color(0xFFFFFFFF),
     cardColor: brandTwo.withOpacity(0.2),
     primaryColorLight: brandOne,
-    unselectedWidgetColor: brandOne,
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionColor: brandTwo, // Color of the selection highlight
+      // cursorColor: brandOne, // Color of the text cursor
+      selectionHandleColor: brandOne,
+    ),
+    // unselectedWidgetColor: brandOne,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandOne,
       primary: Colors.white,

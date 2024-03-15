@@ -1,14 +1,22 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
+import 'package:rentspace/constants/widgets/separator.dart';
+import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../controller/auth/user_controller.dart';
+import 'referral_record.dart';
 
 class ShareAndEarn extends StatefulWidget {
   const ShareAndEarn({Key? key}) : super(key: key);
@@ -27,159 +35,779 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).primaryColor,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: Icon(
-            Icons.close,
+          child: const Icon(
+            Icons.arrow_back_ios,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Colors.white,
           ),
         ),
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.1,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Text(
-                      userController.userModel!.userDetails![0].referrals
-                          .toString(),
-                      style: GoogleFonts.nunito(
-                        fontSize: 40.0,
-                        // letterSpacing: 1.0,
-                        fontWeight: FontWeight.w700,
-                        // fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    // Todo: work on this part ==========
-                    // Text(
-                    //   'REFERRAL CODE: ${userController.users[0].referalCode}',
-                    //   style: GoogleFonts.nunito(
-                    //     fontSize: 14.0,
-                    //     // letterSpacing: 0.5,
-                    //     fontWeight: FontWeight.w700,
-                    //     // fontFamily: "DefaultFontFamily",
-                    //     color: Theme.of(context).primaryColor,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Image.asset(
-                "assets/share.png",
-                width: MediaQuery.of(context).size.width,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "Participate in our exclusive program and seize the opportunity to earn 500 space points simply by referring friends through your unique code . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
+              Align(
+                alignment: Alignment.center,
+                child: RichText(
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontSize: 16.0,
-                    // fontFamily: "DefaultFontFamily",
-                    fontWeight: FontWeight.w600,
-                    // letterSpacing: 0.5,
-                    color: Theme.of(context).primaryColor,
+                  text: TextSpan(
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "Invite",
+                        style: GoogleFonts.nunito(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' 1 ',
+                        style: GoogleFonts.nunito(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "New User",
+                        style: GoogleFonts.nunito(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    // width: MediaQuery.of(context).size.width * 2,
-                    alignment: Alignment.center,
-                    // height: 110.h,
-                    child: Column(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(300, 50),
-                            backgroundColor: brandOne,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
+                padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 10.h),
+                child: Column(
+                  children: [
+                    Text(
+                      'Get 500 Naira',
+                      style: GoogleFonts.nunito(
+                        fontSize: 40.0.sp,
+                        // letterSpacing: 0.5,
+                        fontWeight: FontWeight.w900,
+                        // fontFamily: "DefaultFontFamily",
+                        color: Colors.white,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 10.h),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 4,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Step 1',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 12.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w900,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(9),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: const Icon(
+                                    Iconsax.share,
+                                    color: brandOne,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  'Share your referral code with your friends',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 10.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w600,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          onPressed: () {
-                            Clipboard.setData(
-                              ClipboardData(
-                                text:
-                                    "Sign up with my code: ${userController.userModel!.userDetails![0].referralCode} to earn a free point!",
-                              ),
-                            );
-                            Fluttertoast.showToast(
-                              msg:
-                                  "Your referal code has been copied to clipboard!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: brandOne,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            Share.share(
-                                "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.userModel!.userDetails![0].referralCode} to sign up and earn a point!");
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.share_outlined,
-                                size: 30,
+                          const Icon(
+                            Iconsax.arrow_right_3,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          const Icon(
+                            Iconsax.arrow_right_3,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 4,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Step 2',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 12.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w900,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(9),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: const Icon(
+                                    Iconsax.login,
+                                    color: brandOne,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  'Friends sign up with your referral code',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 10.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w600,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Iconsax.arrow_right_3,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          const Icon(
+                            Iconsax.arrow_right_3,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 4,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Step 3',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 12.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w900,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(9),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: const Icon(
+                                    Iconsax.house_25,
+                                    color: brandOne,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  'Friends start using the space rent',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 10.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w600,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
+                      child: RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20.sp,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "Total cash earned: ",
+                              style: GoogleFonts.nunito(
                                 color: Colors.white,
+                                fontWeight: FontWeight.w700,
                               ),
-                              const SizedBox(
-                                width: 10,
+                            ),
+                            TextSpan(
+                              text: ch8t.format(userController
+                                  .userModel!.userDetails![0].referralPoints),
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
                               ),
-                              Text(
-                                'Share now!',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 20.h),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'REFERRAL CODE:',
+                              style: GoogleFonts.nunito(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15.w,
+                              ),
+                              child: const MySeparator(
+                                color: brandOne,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  ' ${userController.userModel!.userDetails![0].referralCode}',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 30.0.sp,
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w700,
+                                    // fontFamily: "DefaultFontFamily",
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: userController.userModel!
+                                            .userDetails![0].referralCode,
+                                      ),
+                                    );
+                                    Fluttertoast.showToast(
+                                      msg: "Copied to clipboard!",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.white,
+                                      textColor: brandOne,
+                                      fontSize: 16.0,
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.copy,
+                                    size: 16.sp,
+                                    color: brandOne,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              'Your friends can get bonus with your code',
+                              style: GoogleFonts.nunito(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 10.h),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 2,
+                          alignment: Alignment.center,
+                          // height: 110.h,
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 50),
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Share.share(
+                                    "Hello, click this link to download RentSpace and use my referral code, ${userController.userModel!.userDetails![0].referralCode} to sign up and earn 500 naira! ${Platform.isIOS ? 'https://apps.apple.com/ng/app/rentspace-app/id6469376146' : 'https://play.google.com/store/apps/details?id=com.rentspace.app.android'}",
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.share_outlined,
+                                      size: 20.sp,
+                                      color: brandOne,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Share and earn!',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.nunito(
+                                        color: brandOne,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 10.h),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 20.h),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Referred Users (${userController.userModel!.userDetails![0].referrals})',
+                              style: GoogleFonts.nunito(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 35.w,
+                              ),
+                              child: MySeparator(
+                                color: brandOne.withOpacity(0.2),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            (userController.userModel!.userDetails![0]
+                                    .referredUsers.isNotEmpty)
+                                ? ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      int reversedIndex = userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .referredUsers
+                                              .length -
+                                          1 -
+                                          index;
+                                      final history = userController
+                                          .userModel!
+                                          .userDetails![0]
+                                          .referredUsers[reversedIndex];
+                                      return ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        minLeadingWidth: 0,
+                                        leading: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50.sp),
+                                            child: CachedNetworkImage(
+                                              imageUrl: history['avatar']
+                                                  ['url'],
+                                              height: 30.h,
+                                              width: 30.w,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) {
+                                                return Image.asset(
+                                                  'assets/icons/RentSpace-icon.png',
+                                                  height: 30.h,
+                                                  width: 30.w,
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                              errorWidget:
+                                                  (context, url, error) {
+                                                return Image.asset(
+                                                  'assets/icons/RentSpace-icon.png',
+                                                  height: 30.h,
+                                                  width: 30.w,
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                              // progressIndicatorBuilder:
+                                              //     (context, url, progress) {
+                                              //   return const CustomLoader();
+                                              // },
+                                            ),
+                                          ),
+                                        ),
+                                        title: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${history['lastName']} ${history['firstName']}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.nunito(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        subtitle: Text(
+                                          history['email'],
+                                          style: GoogleFonts.nunito(
+                                            fontSize: 10.sp,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                        trailing: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: (history[
+                                                        'has_received_referral_bonus'] ==
+                                                    true)
+                                                ? Colors.green
+                                                : Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Text(
+                                            (history['has_received_referral_bonus'] ==
+                                                    false)
+                                                ? "waiting"
+                                                : 'done',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.nunito(
+                                              fontSize: 10.0.sp,
+                                              // fontFamily: "DefaultFontFamily",
+                                              // letterSpacing: 0.5,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        // Text(
+                                        //   (history['has_received_referral_bonus'] ==
+                                        //           'false')
+                                        //       ? 'Successful'
+                                        //       : 'Pending',
+                                        //   style: GoogleFonts.nunito(
+                                        //     fontSize: 14.sp,
+                                        //     fontWeight: FontWeight.w500,
+                                        //     color: Colors.yellow[800],
+                                        //   ),
+                                        // ),
+                                      );
+                                    },
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Center(
+                                      child: Text(
+                                        "No Referred User",
+                                        style: GoogleFonts.nunito(
+                                          fontSize: 12.sp,
+                                          // fontFamily: "DefaultFontFamily",
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Container(
+                            //       width: 200,
+                            //       child: Text(
+                            //         ' ${userController.userModel!.userDetails![0].referredUsers[0]}',
+                            //         maxLines: 10,
+                            //         style: GoogleFonts.nunito(
+                            //           fontSize: 30.0.sp,
+                            //           // letterSpacing: 0.5,
+                            //           fontWeight: FontWeight.w700,
+                            //           // fontFamily: "DefaultFontFamily",
+                            //           color: Theme.of(context).primaryColor,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     InkWell(
+                            //       onTap: () {
+                            //         Clipboard.setData(
+                            //           ClipboardData(
+                            //             text: userController.userModel!
+                            //                 .userDetails![0].referralCode,
+                            //           ),
+                            //         );
+                            //         Fluttertoast.showToast(
+                            //           msg: "Copied to clipboard!",
+                            //           toastLength: Toast.LENGTH_SHORT,
+                            //           gravity: ToastGravity.CENTER,
+                            //           timeInSecForIosWeb: 1,
+                            //           backgroundColor: Colors.white,
+                            //           textColor: brandOne,
+                            //           fontSize: 16.0,
+                            //         );
+                            //       },
+                            //       child: Icon(
+                            //         Icons.copy,
+                            //         size: 16.sp,
+                            //         color: brandOne,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/referralRecord',
+                                );
+                                // Get.to(const ReferralRecord());
+                              },
+                              child: Text(
+                                'View All >>',
+                                style: GoogleFonts.nunito(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Column(
+              //     children: [
+              //       // Todo: work on this part ==========
+              //       Text(
+              //         'REFERRAL CODE: ${userController.userModel!.userDetails![0].referralCode}',
+              //         style: GoogleFonts.nunito(
+              //           fontSize: 16.0.sp,
+              //           // letterSpacing: 0.5,
+              //           fontWeight: FontWeight.w700,
+              //           // fontFamily: "DefaultFontFamily",
+              //           color: Theme.of(context).primaryColor,
+              //         ),
+              //       ),
+              //       Text(
+              //         'NO OF REFERRED USERS: ${userController.userModel!.userDetails![0].referrals}'
+              //             .toString(),
+              //         style: GoogleFonts.nunito(
+              //           fontSize: 14.0.sp,
+              //           // letterSpacing: 1.0,
+              //           fontWeight: FontWeight.w700,
+              //           // fontFamily: "DefaultFontFamily",
+              //           color: Theme.of(context).primaryColor,
+              //         ),
+              //       ),
+              //       Text(userController.userModel!.userDetails![0].referredUsers[0])
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Image.asset(
+              //   "assets/share.png",
+              //   width: MediaQuery.of(context).size.width,
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: Text(
+              //     "Participate in our exclusive program and seize the opportunity to earn 500 naira simply by referring friends through your unique code and getting them to save using the Space Rent . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
+              //     textAlign: TextAlign.center,
+              //     style: GoogleFonts.nunito(
+              //       fontSize: 16.0,
+              //       // fontFamily: "DefaultFontFamily",
+              //       fontWeight: FontWeight.w600,
+              //       // letterSpacing: 0.5,
+              //       color: Theme.of(context).primaryColor,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(40.0),
+              //   child: Align(
+              //     alignment: Alignment.bottomCenter,
+              //     child: Container(
+              //       // width: MediaQuery.of(context).size.width * 2,
+              //       alignment: Alignment.center,
+              //       // height: 110.h,
+              //       child: Column(
+              //         children: [
+              //           ElevatedButton(
+              //             style: ElevatedButton.styleFrom(
+              //               minimumSize: const Size(300, 50),
+              //               backgroundColor: brandOne,
+              //               elevation: 0,
+              //               shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(
+              //                   10,
+              //                 ),
+              //               ),
+              //             ),
+              //             onPressed: () {
+              //               Clipboard.setData(
+              //                 ClipboardData(
+              //                   text:
+              //                       "Sign up with my code: ${userController.userModel!.userDetails![0].referralCode} to earn a free point!",
+              //                 ),
+              //               );
+              //               Fluttertoast.showToast(
+              //                 msg:
+              //                     "Your referal code has been copied to clipboard!",
+              //                 toastLength: Toast.LENGTH_SHORT,
+              //                 gravity: ToastGravity.CENTER,
+              //                 timeInSecForIosWeb: 1,
+              //                 backgroundColor: brandOne,
+              //                 textColor: Colors.white,
+              //                 fontSize: 16.0,
+              //               );
+              //               Share.share(
+              //                   "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.userModel!.userDetails![0].referralCode} to sign up and earn a point!");
+              //             },
+              //             child: Row(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: [
+              //                 const Icon(
+              //                   Icons.share_outlined,
+              //                   size: 30,
+              //                   color: Colors.white,
+              //                 ),
+              //                 const SizedBox(
+              //                   width: 10,
+              //                 ),
+              //                 Text(
+              //                   'Share now!',
+              //                   textAlign: TextAlign.center,
+              //                   style: GoogleFonts.nunito(
+              //                     color: Colors.white,
+              //                     fontSize: 16,
+              //                     fontWeight: FontWeight.w700,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ],

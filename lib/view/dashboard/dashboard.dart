@@ -54,6 +54,8 @@ import '../../model/response/user_details_response.dart';
 import '../../model/wallet_model.dart';
 import '../../services/implementations/notification_service.dart';
 import '../actions/onboarding_page.dart';
+import '../actions/transaction_receipt_dva.dart';
+import '../actions/transaction_receipt_transfer.dart';
 import '../actions/view_bvn_and_kyc.dart';
 import '../chat/chat_main.dart';
 import '../kyc/kyc_intro.dart';
@@ -113,7 +115,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   final form = intl.NumberFormat.decimalPattern();
   bool isContainerVisible = true;
-  List<dynamic> _articles = [];
+  // List<dynamic> _articles = [];
   greeting() {
     var hour = DateTime.now().hour;
     if (hour < 12) {
@@ -203,7 +205,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           isDeviceConnected = await InternetConnectionChecker().hasConnection;
           if (!isDeviceConnected && isAlertSet == false) {
             // showDialogBox();
-            // noInternetConnectionScreen(context);
+            noInternetConnectionScreen(context);
             setState(() => isAlertSet = true);
           }
         },
@@ -295,7 +297,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
       });
     }
     userController.fetchData();
- }
+    walletController.fetchWallet();
+  }
 
   // void onLoading() async {
   //   final result = await getWalletData(refresh: true);
@@ -490,13 +493,13 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     .obs() ==
                                 true)
                             ? Container(
-                                width: 420.w,
-                                height: 210.sp,
+                                // width: 420.w,
+                                // height: 210.h,
                                 decoration: BoxDecoration(
                                     color: brandOne,
                                     borderRadius: BorderRadius.circular(20.sp)),
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 24.h),
+                                  padding: EdgeInsets.symmetric(vertical: 24.h),
                                   child: Column(
                                     children: [
                                       Row(
@@ -504,10 +507,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "Space Wallet$dum1${(userController.userModel!.userDetails![0].hasDva.obs() == true) ? " - DVA" : ""}",
+                                            "Space Wallet",
                                             style: GoogleFonts.nunito(
                                               color: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 18.sp,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
@@ -526,75 +529,76 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       .visibility_off_outlined
                                                   : Icons.visibility_outlined,
                                               color: Colors.white,
-                                              size: 20,
+                                              size: 18.sp,
                                             ),
                                           )
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 5.h,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            (userController.userModel!
-                                                        .userDetails![0].hasDva
-                                                        .obs() ==
-                                                    true)
-                                                ? userController.userModel!
-                                                    .userDetails![0].dvaNumber
-                                                    .toString()
-                                                : '${userController.userModel!.userDetails![0].wallet.walletId.obs.substring(0, 3)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(3, 6)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(6, 10)}',
-                                            style: GoogleFonts.nunito(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                letterSpacing: 4),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          (userController.userModel!
-                                                      .userDetails![0].hasDva
-                                                      .obs() ==
-                                                  true)
-                                              ? InkWell(
-                                                  onTap: () {
-                                                    Clipboard.setData(
-                                                      ClipboardData(
-                                                        text: userController
-                                                            .userModel!
-                                                            .userDetails![0]
-                                                            .dvaNumber
-                                                            .obs()
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Account Number copied to clipboard!",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity:
-                                                          ToastGravity.CENTER,
-                                                      timeInSecForIosWeb: 1,
-                                                      backgroundColor: brandOne,
-                                                      textColor: Colors.white,
-                                                      fontSize: 16.0,
-                                                    );
-                                                  },
-                                                  child: const Icon(
-                                                    Icons.copy,
-                                                    size: 16,
-                                                    color: Colors.white,
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ],
-                                      ),
+                                      // SizedBox(
+                                      //   height: 5.h,
+                                      // ),
+                                      // Row(
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.center,
+                                      //   children: [
+                                      //     Text(
+                                      //       (userController.userModel!
+                                      //                   .userDetails![0].hasDva
+                                      //                   .obs() ==
+                                      //               true)
+                                      //           ? userController.userModel!
+                                      //               .userDetails![0].dvaNumber
+                                      //               .toString()
+                                      //           : '${userController.userModel!.userDetails![0].wallet.walletId.obs.substring(0, 3)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(3, 6)}-${userController.userModel!.userDetails![0].wallet.walletId.obs().substring(6, 10)}',
+                                      //       style: GoogleFonts.nunito(
+                                      //           fontSize: 16.sp,
+                                      //           fontWeight: FontWeight.bold,
+                                      //           color: Colors.white,
+                                      //           letterSpacing: 4),
+                                      //       textAlign: TextAlign.center,
+                                      //     ),
+                                      //     SizedBox(
+                                      //       width: 10.w,
+                                      //     ),
+                                      //     (userController.userModel!
+                                      //                 .userDetails![0].hasDva
+                                      //                 .obs() ==
+                                      //             true)
+                                      //         ? InkWell(
+                                      //             onTap: () {
+                                      //               Clipboard.setData(
+                                      //                 ClipboardData(
+                                      //                   text: userController
+                                      //                       .userModel!
+                                      //                       .userDetails![0]
+                                      //                       .dvaNumber
+                                      //                       .obs()
+                                      //                       .toString(),
+                                      //                 ),
+                                      //               );
+                                      //               Fluttertoast.showToast(
+                                      //                 msg:
+                                      //                     "Account Number copied to clipboard!",
+                                      //                 toastLength:
+                                      //                     Toast.LENGTH_SHORT,
+                                      //                 gravity:
+                                      //                     ToastGravity.CENTER,
+                                      //                 timeInSecForIosWeb: 1,
+                                      //                 backgroundColor: brandOne,
+                                      //                 textColor: Colors.white,
+                                      //                 fontSize: 16.0,
+                                      //               );
+                                      //             },
+                                      //             child: Icon(
+                                      //               Icons.copy,
+                                      //               size: 16.sp,
+                                      //               color: Colors.white,
+                                      //             ),
+                                      //           )
+                                      //         : const SizedBox(),
+                                      //   ],
+                                      // ),
+
                                       SizedBox(
                                         height: 5.h,
                                       ),
@@ -677,15 +681,15 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           SizedBox(
                                             width: 15.w,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              walletController.fetchWallet();
-                                            },
-                                            child: const Icon(
-                                              Iconsax.refresh,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     walletController.fetchWallet();
+                                          //   },
+                                          //   child: const Icon(
+                                          //     Iconsax.refresh,
+                                          //     color: Colors.white,
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ],
@@ -971,8 +975,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   // Text(activitiesController.activitiesModel!.activities![0].description),
                   userController.userModel!.userDetails![0].walletHistories
@@ -990,76 +994,157 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 index;
                             final history = userController.userModel!
                                 .userDetails![0].walletHistories[reversedIndex];
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              minLeadingWidth: 0,
-                              leading: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                  (history['transactionGroup']
+                                              .toString()
+                                              .toLowerCase() ==
+                                          'transfer')
+                                      ? TransactionReceiptTransfer(
+                                          amount: history['amount'],
+                                          status: history['status'],
+                                          fees: history['fees'],
+                                          transactionType:
+                                              history['transactionType'],
+                                          description: history['description'],
+                                          transactionGroup:
+                                              history['transactionGroup'],
+                                          transactionDate: history['createdAt'],
+                                          transactionRef:
+                                              history['transactionReference'],
+                                          merchantRef:
+                                              history['merchantReference'],
+                                          sessionId: history['sessionId'],
+                                        )
+                                      : (history['transactionGroup']
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              'static-account-transfer')
+                                          ? TransactionReceiptDVA(
+                                              amount: history['amount'],
+                                              status: history['status'],
+                                              fees: history['fees'],
+                                              transactionType:
+                                                  history['transactionType'],
+                                              description:
+                                                  history['description'],
+                                              transactionGroup:
+                                                  history['transactionGroup'],
+                                              transactionDate:
+                                                  history['createdAt'],
+                                              transactionRef: history[
+                                                  'transactionReference'],
+                                              merchantRef:
+                                                  history['merchantReference'],
+                                              remarks: history['remarks'],
+                                            )
+                                          : TransactionReceipt(
+                                              amount: history['amount'],
+                                              status: history['status'],
+                                              fees: history['fees'],
+                                              transactionType:
+                                                  history['message'],
+                                              description:
+                                                  history['description'],
+                                              transactionGroup:
+                                                  history['transactionGroup'],
+                                              transactionDate:
+                                                  history['createdAt'],
+                                              transactionRef: history[
+                                                  'transactionReference'],
+                                              merchantRef:
+                                                  history['merchantReference'],
+                                            ),
+                                );
+                              },
+                              child: ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                minLeadingWidth: 0,
+                                leading: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color:
+                                        (history['transactionType'] == 'Credit')
+                                            ? Colors.green
+                                            : Colors.red,
+                                  ),
+                                  child:
                                       (history['transactionType'] == 'Credit')
-                                          ? Colors.green
-                                          : Colors.red,
+                                          ? Icon(Icons.call_received,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary)
+                                          : Icon(Icons.arrow_outward_sharp,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
                                 ),
-                                child: (history['transactionType'] == 'Credit')
-                                    ? Icon(Icons.call_received,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary)
-                                    : Icon(Icons.arrow_outward_sharp,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                              ),
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${history['description']}",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: Theme.of(context).primaryColor,
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${history['description']}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              subtitle: Text(
-                                formatDateTime(history['createdAt']),
-                                style: GoogleFonts.nunito(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: Theme.of(context).primaryColor,
+                                  ],
                                 ),
-                              ),
-                              trailing: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "${(history['transactionType'] == 'Credit') ? '+' : '-'} ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: brandOne,
-                                    ),
+                                subtitle: Text(
+                                  formatDateTime(history['createdAt']),
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                  Text(
-                                    '${(history['status'] == 'completed') ? 'Successful' : (history['transactionType'] == 'failed') ? 'Failed' : 'Pending'}',
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: (history['status'] == 'completed')
-                                          ? Colors.green
-                                          : (history['transactionType'] ==
+                                ),
+                                trailing: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "${(history['transactionType'] == 'Credit') ? '+' : '-'} ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                    Text(
+                                      (history['status']
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              'completed')
+                                          ? 'Successful'
+                                          : (history['transactionType']
+                                                      .toString()
+                                                      .toLowerCase() ==
                                                   'failed')
-                                              ? Colors.red
-                                              : Colors.yellow[800],
+                                              ? 'Failed'
+                                              : 'Pending',
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: (history['status']
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'completed')
+                                            ? Colors.green
+                                            : (history['transactionType']
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    'failed')
+                                                ? Colors.red
+                                                : Colors.yellow[800],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -1079,118 +1164,118 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           ),
                         ),
 
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
-                  Visibility(
-                    visible: isContainerVisible,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Account Setup',
-                                    style: GoogleFonts.nunito(
-                                      color: brandOne,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isContainerVisible = false;
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Iconsax.close_circle,
-                                      color: brandOne,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(const PersonalDetails());
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    (userController.userModel!.userDetails![0]
-                                                .hasVerifiedBvn
-                                                .obs() ==
-                                            false)
-                                        ? Iconsax.verify
-                                        : Iconsax.verify5,
-                                    color: brandOne,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'BVN Setup',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      color: brandOne,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // const MySeparator(),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Get.to(const KYCIntroPage());
-                            //   },
-                            //   child: Row(
-                            //     crossAxisAlignment: CrossAxisAlignment.center,
-                            //     children: [
-                            //       Icon(
-                            //         (userController.userModel!.userDetails![0]
-                            //                     .hasVerifiedKyc
-                            //                     .obs() ==
-                            //                 false)
-                            //             ? Iconsax.verify
-                            //             : Iconsax.verify5,
-                            //         color: brandOne,
-                            //       ),
-                            //       const SizedBox(
-                            //         width: 10,
-                            //       ),
-                            //       Text(
-                            //         'KYC Setup',
-                            //         textAlign: TextAlign.center,
-                            //         style: GoogleFonts.nunito(
-                            //           color: brandOne,
-                            //           fontSize: 14,
-                            //           fontWeight: FontWeight.w600,
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: isContainerVisible,
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).cardColor,
+                  //       borderRadius: BorderRadius.circular(15),
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.symmetric(
+                  //           vertical: 10.0, horizontal: 20.0),
+                  //       child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 Text(
+                  //                   'Account Setup',
+                  //                   style: GoogleFonts.nunito(
+                  //                     color: brandOne,
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.w700,
+                  //                   ),
+                  //                 ),
+                  //                 GestureDetector(
+                  //                   onTap: () {
+                  //                     setState(() {
+                  //                       isContainerVisible = false;
+                  //                     });
+                  //                   },
+                  //                   child: const Icon(
+                  //                     Iconsax.close_circle,
+                  //                     color: brandOne,
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           GestureDetector(
+                  //             onTap: () {
+                  //               Get.to(const PersonalDetails());
+                  //             },
+                  //             child: Row(
+                  //               crossAxisAlignment: CrossAxisAlignment.center,
+                  //               children: [
+                  //                 Icon(
+                  //                   (userController.userModel!.userDetails![0]
+                  //                               .hasVerifiedBvn
+                  //                               .obs() ==
+                  //                           false)
+                  //                       ? Iconsax.verify
+                  //                       : Iconsax.verify5,
+                  //                   color: brandOne,
+                  //                 ),
+                  //                 const SizedBox(
+                  //                   width: 10,
+                  //                 ),
+                  //                 Text(
+                  //                   'BVN Setup',
+                  //                   textAlign: TextAlign.center,
+                  //                   style: GoogleFonts.nunito(
+                  //                     color: brandOne,
+                  //                     fontSize: 14,
+                  //                     fontWeight: FontWeight.w600,
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           // const MySeparator(),
+                  //           // GestureDetector(
+                  //           //   onTap: () {
+                  //           //     Get.to(const KYCIntroPage());
+                  //           //   },
+                  //           //   child: Row(
+                  //           //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //           //     children: [
+                  //           //       Icon(
+                  //           //         (userController.userModel!.userDetails![0]
+                  //           //                     .hasVerifiedKyc
+                  //           //                     .obs() ==
+                  //           //                 false)
+                  //           //             ? Iconsax.verify
+                  //           //             : Iconsax.verify5,
+                  //           //         color: brandOne,
+                  //           //       ),
+                  //           //       const SizedBox(
+                  //           //         width: 10,
+                  //           //       ),
+                  //           //       Text(
+                  //           //         'KYC Setup',
+                  //           //         textAlign: TextAlign.center,
+                  //           //         style: GoogleFonts.nunito(
+                  //           //           color: brandOne,
+                  //           //           fontSize: 14,
+                  //           //           fontWeight: FontWeight.w600,
+                  //           //         ),
+                  //           //       ),
+                  //           //     ],
+                  //           //   ),
+                  //           // ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
 
                   // (userController.userModel!.userDetails![0].bvn.obs() != "" &&
                   //         userController.userModel!.userDetails![0].hasDva
@@ -1742,238 +1827,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                     ),
                     child: Column(
                       children: [
-                        // const SizedBox(
-                        //   height: 30,
-                        // ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.all(8.0),
-                        //       child: Text(
-                        //         "Quick Options",
-                        //         style: GoogleFonts.nunito(
-                        //           fontWeight: FontWeight.w700,
-                        //           fontSize: 24.0,
-                        //           // fontFamily: "DefaultFontFamily",
-                        //           color: Theme.of(context).primaryColor,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     InkWell(
-                        //       onTap: () {
-                        //         //Wallet top up
-                        //         Get.bottomSheet(
-                        //           SizedBox(
-                        //             height: 200,
-                        //             child: ClipRRect(
-                        //               borderRadius: const BorderRadius.only(
-                        //                 topLeft: Radius.circular(30.0),
-                        //                 topRight: Radius.circular(30.0),
-                        //               ),
-                        //               child: Container(
-                        //                 color: Theme.of(context).canvasColor,
-                        //                 padding: const EdgeInsets.fromLTRB(
-                        //                     10, 5, 10, 5),
-                        //                 child: Column(
-                        //                   children: [
-                        //                     const SizedBox(
-                        //                       height: 50,
-                        //                     ),
-                        //                     Text(
-                        //                       'Securely top up your wallet',
-                        //                       style: TextStyle(
-                        //                         fontSize: 14,
-                        //                         color: Theme.of(context)
-                        //                             .primaryColor,
-                        //                         fontFamily: "DefaultFontFamily",
-                        //                       ),
-                        //                     ),
-                        //                     const SizedBox(
-                        //                       height: 10,
-                        //                     ),
-                        //                     //card
-                        //                     InkWell(
-                        //                       onTap: () async {
-                        //                         Get.back();
-                        //                         Get.to(const FundWallet());
-                        //                       },
-                        //                       child: Container(
-                        //                         width: MediaQuery.of(context)
-                        //                                 .size
-                        //                                 .width /
-                        //                             1.8,
-                        //                         decoration: BoxDecoration(
-                        //                           color: brandOne,
-                        //                           borderRadius:
-                        //                               BorderRadius.circular(20),
-                        //                         ),
-                        //                         padding:
-                        //                             const EdgeInsets.fromLTRB(
-                        //                                 20, 5, 20, 5),
-                        //                         child: const Row(
-                        //                           mainAxisAlignment:
-                        //                               MainAxisAlignment.start,
-                        //                           children: [
-                        //                             Icon(
-                        //                               Icons
-                        //                                   .credit_card_outlined,
-                        //                               color: Colors.white,
-                        //                               size: 30,
-                        //                             ),
-                        //                             SizedBox(
-                        //                               width: 10,
-                        //                             ),
-                        //                             Text(
-                        //                               'Proceed to Top up',
-                        //                               style: TextStyle(
-                        //                                 fontSize: 12,
-                        //                                 fontFamily:
-                        //                                     "DefaultFontFamily",
-                        //                                 color: Colors.white,
-                        //                               ),
-                        //                             ),
-                        //                           ],
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         );
-                        //       },
-                        //       child: Container(
-                        //         height: 200,
-                        //         width: MediaQuery.of(context).size.width / 2.2,
-                        //         padding:
-                        //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        //         decoration: BoxDecoration(
-                        //           color: brandFour,
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //         child: Stack(
-                        //           children: [
-                        //             Positioned(
-                        //               bottom: 5,
-                        //               right: 5,
-                        //               child: Image.asset(
-                        //                 "assets/icons/iconset/fundwallet.png",
-                        //                 color: Colors.white.withOpacity(0.3),
-                        //                 width: 100,
-                        //                 height: 100,
-                        //                 fit: BoxFit.fitWidth,
-                        //                 // colorBlendMode: BlendMode.darken,
-                        //               ),
-                        //             ),
-                        //             Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Image.asset(
-                        //                   "assets/icons/iconset/fundwallet.png",
-                        //                   width: 24,
-                        //                 ),
-                        //                 const SizedBox(
-                        //                   height: 4,
-                        //                 ),
-                        //                 const Text(
-                        //                   "Fund Wallet",
-                        //                   style: TextStyle(
-                        //                     fontSize: 12.0,
-                        //                     letterSpacing: 0.5,
-                        //                     color: Colors.white,
-                        //                     fontFamily: "DefaultFontFamily",
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     InkWell(
-                        //       onTap: () {
-                        //         (int.tryParse(userController
-                        //                     .user[0].userWalletBalance)! >
-                        //                 0)
-                        //             ? Get.to(const WalletWithdrawal())
-                        //             : Get.snackbar(
-                        //                 "Wallet Empty!",
-                        //                 'You need to fund your wallet first!',
-                        //                 animationDuration:
-                        //                     const Duration(seconds: 1),
-                        //                 backgroundColor: Colors.red,
-                        //                 colorText: Colors.white,
-                        //                 snackPosition: SnackPosition.BOTTOM,
-                        //               );
-                        //       },
-                        //       child: Container(
-                        //         height: 200,
-                        //         width: MediaQuery.of(context).size.width / 2.2,
-                        //         padding:
-                        //             const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        //         decoration: BoxDecoration(
-                        //           color: brandTwo,
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //         child: Stack(
-                        //           children: [
-                        //             Positioned(
-                        //               bottom: 5,
-                        //               right: 5,
-                        //               child: Image.asset(
-                        //                 "assets/icons/iconset/uil_money-withdrawal.png",
-                        //                 // color: Colors.transparent.withOpacity(0.9),
-                        //                 // opacity: Animation<0.3>,
-                        //                 width: 100,
-                        //                 height: 100,
-                        //                 fit: BoxFit.fitWidth,
-                        //                 colorBlendMode: BlendMode.overlay,
-                        //               ),
-                        //             ),
-                        //             Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Image.asset(
-                        //                   "assets/icons/iconset/uil_money-withdrawal.png",
-                        //                   width: 35,
-                        //                 ),
-                        //                 const SizedBox(
-                        //                   height: 4,
-                        //                 ),
-                        //                 const Text(
-                        //                   "Withdraw Funds",
-                        //                   style: TextStyle(
-                        //                     fontSize: 12.0,
-                        //                     letterSpacing: 0.5,
-                        //                     fontFamily: "DefaultFontFamily",
-                        //                     color: Colors.white,
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 20.h,
                         ),
-
                         InkWell(
                           onTap: () {
                             showTopSnackBar(
@@ -1982,7 +1838,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 backgroundColor: brandOne,
                                 message: 'Coming Soon :)',
                                 textStyle: GoogleFonts.nunito(
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -2009,11 +1865,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     children: [
                                       Image.asset(
                                         'assets/community.png',
-                                        width: 28,
+                                        width: 28.w,
                                         color: Colors.white,
                                       ),
-                                      const SizedBox(
-                                        width: 10,
+                                      SizedBox(
+                                        width: 10.w,
                                       ),
                                       Column(
                                         mainAxisAlignment:
@@ -2024,18 +1880,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           Text(
                                             "RentSpace community",
                                             style: GoogleFonts.nunito(
-                                              fontSize: 18.0,
+                                              fontSize: 18.0.sp,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 15,
+                                          SizedBox(
+                                            height: 15.h,
                                           ),
                                           Text(
                                             "View the amazing community\nof other Spacers!",
                                             style: GoogleFonts.nunito(
-                                                fontSize: 12.0,
+                                                fontSize: 12.0.sp,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400),
                                           ),
@@ -2048,8 +1904,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 20.h,
                         ),
                       ],
                     ),
@@ -2072,7 +1928,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   String formatDateTime(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
+    DateTime dateTime =
+        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
@@ -2082,4 +1939,90 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
     return formattedDateTime;
   }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding:  EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.nunito(
+                          color: brandOne,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(
+                          color: brandOne,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        Navigator.pop(context, 'Cancel');
+                        setState(() => isAlertSet = false);
+                        isDeviceConnected =
+                            await InternetConnectionChecker().hasConnection;
+                        if (!isDeviceConnected && isAlertSet == false) {
+                          // showDialogBox();
+                          noInternetConnectionScreen(context);
+                          setState(() => isAlertSet = true);
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: brandOne,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(13),
+                          child: Align(
+                            child: Text(
+                              'Try Again',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 19.sp,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
 }

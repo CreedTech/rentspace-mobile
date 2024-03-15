@@ -15,6 +15,7 @@ class TransactionReceiptDVA extends StatefulWidget {
       {super.key,
       required this.amount,
       required this.status,
+      required this.fees,
       required this.transactionType,
       required this.description,
       required this.transactionGroup,
@@ -24,6 +25,7 @@ class TransactionReceiptDVA extends StatefulWidget {
       required this.remarks});
   final num amount;
   final String status,
+      fees,
       transactionType,
       description,
       transactionGroup,
@@ -60,7 +62,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
           'Transaction Details',
           style: GoogleFonts.nunito(
             color: brandOne,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -89,7 +91,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               color: brandOne,
                             ),
                           ),
-                          (widget.status == 'completed')
+                          (widget.status.toLowerCase() == 'completed')
                               ? Text(
                                   'Successful',
                                   style: GoogleFonts.nunito(
@@ -98,7 +100,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                     color: Colors.green,
                                   ),
                                 )
-                              : (widget.status == 'failed')
+                              : (widget.status.toLowerCase() == 'failed')
                                   ? Text(
                                       'Failed',
                                       style: GoogleFonts.nunito(
@@ -180,7 +182,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               ),
                             ),
                             Text(
-                              currencyFormat.format(0),
+                              currencyFormat.format(double.parse(widget.fees)),
                               style: GoogleFonts.nunito(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,

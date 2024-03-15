@@ -155,7 +155,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           Text(
                             "Portfolio Overview",
                             style: GoogleFonts.nunito(
-                              fontSize: 20.0,
+                              fontSize: 16.0.sp,
                               // letterSpacing: 0.5,
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -167,7 +167,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           Text(
                             "Manage your account portfolio",
                             style: GoogleFonts.nunito(
-                              fontSize: 16.0,
+                              fontSize: 12.0.sp,
                               // letterSpacing: 0.5,
                               fontWeight: FontWeight.w400,
                               color: Colors.white,
@@ -192,7 +192,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       "Total interests:",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
 
                                         // letterSpacing: 0.5,
@@ -202,7 +202,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       nairaFormaet.format(_totalInterest),
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         // letterSpacing: 0.5,
                                         color: Colors.black,
@@ -226,7 +226,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       "Total savings:",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
 
                                         // letterSpacing: 0.5,
@@ -236,7 +236,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       nairaFormaet.format(_totalSavings),
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         // letterSpacing: 0.5,
                                         color: Colors.black,
@@ -260,7 +260,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       "Total loans:",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
 
                                         // letterSpacing: 0.5,
@@ -271,7 +271,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                       nairaFormaet
                                           .format(double.parse(_loanAmount)),
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         // letterSpacing: 0.5,
                                         color: Colors.black,
@@ -295,7 +295,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       "Total debts:",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
 
                                         // letterSpacing: 0.5,
@@ -305,7 +305,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       nairaFormaet.format(_totalDebts),
                                       style: GoogleFonts.nunito(
-                                        fontSize: 16.0,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         // letterSpacing: 0.5,
                                         color: Colors.black,
@@ -332,7 +332,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         Text(
                           "Portfolio Actions",
                           style: GoogleFonts.nunito(
-                            fontSize: 20.0,
+                            fontSize: 20.0.sp,
                             // letterSpacing: 0.5,
 
                             color: Theme.of(context).primaryColor,
@@ -375,14 +375,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               'Loan',
                               style: GoogleFonts.nunito(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 17,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             subtitle: Text(
                               "Access Your Loan",
                               style: GoogleFonts.nunito(
-                                fontSize: 14.0,
+                                fontSize: 12.0.sp,
                                 // letterSpacing: 0.5,
 
                                 color: const Color(0xff828282),
@@ -407,7 +407,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                           scrollable: true,
                                           elevation: 0,
                                           content: SizedBox(
-                                            height: 450.h,
+                                            // height: 450.h,
                                             child: Column(
                                               children: [
                                                 GestureDetector(
@@ -440,12 +440,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   alignment: Alignment.center,
                                                   child: Image.asset(
                                                     'assets/cancel_round.png',
-                                                    width: 104,
+                                                    width: 100.w,
                                                     color: brandOne,
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height: 70.h,
+                                                  height: 50.h,
                                                 ),
                                                 Column(
                                                   children: [
@@ -465,12 +465,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   height: 5,
                                                 ),
                                                 Text(
-                                                  'You currently do not qualify for a rent loan. You would be able to need to save up to 70% of Your total rent CONSISTENTLY!!! to qualify',
+                                                  'You currently do not qualify for a rent loan. You would need to save up to 70% of your total rent CONSISTENTLY!!! to qualify',
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.nunito(
                                                       color: Theme.of(context)
                                                           .primaryColor,
-                                                      fontSize: 14,
+                                                      fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w400),
                                                 ),
@@ -556,14 +556,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           'Credit Score',
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 17,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         subtitle: Text(
                           "Build your credit score",
                           style: GoogleFonts.nunito(
-                            fontSize: 14.0,
+                            fontSize: 12.0.sp,
                             // letterSpacing: 0.5,
 
                             color: const Color(0xff828282),
@@ -576,7 +576,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               backgroundColor: brandOne,
                               message: 'Coming soon !!',
                               textStyle: GoogleFonts.nunito(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                               ),

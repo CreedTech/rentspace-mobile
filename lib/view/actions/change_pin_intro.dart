@@ -168,7 +168,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                           // EasyLoading.show(
                           //   indicator: const CustomLoader(),
                           //   maskType: EasyLoadingMaskType.black,
-                          //   dismissOnTap: true,
+                          //   dismissOnTap: false,
                           // );
                           Get.to(ChangePIN(pin: _pinController.text.trim()));
                         } else {

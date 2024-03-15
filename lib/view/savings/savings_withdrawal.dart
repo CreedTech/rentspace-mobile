@@ -779,7 +779,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     EasyLoading.show(
       indicator: const CustomLoader(),
       maskType: EasyLoadingMaskType.black,
-      dismissOnTap: true,
+      dismissOnTap: false,
     );
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
@@ -879,8 +879,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
       style: GoogleFonts.nunito(
-        color: Theme.of(context).primaryColor,
-      ),
+          color: Theme.of(context).primaryColor, fontSize: 14.sp),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -920,7 +919,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         hintText: 'Enter your account number...',
         hintStyle: GoogleFonts.nunito(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -945,9 +944,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: GoogleFonts.nunito(
+          color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
@@ -1031,19 +1029,19 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       const SizedBox(
                         height: 30,
                       ),
-                      // Text(
-                      //   "Note that the transfer process will be according to our Terms of use",
-                      //   style: GoogleFonts.nunito(
-                      //     fontSize: 20,
-                      //     color: Theme.of(context).primaryColor,
-                      //     fontWeight: FontWeight.w700,
-                      //   ),
-                      // ),
+                      Text(
+                        "Note that the transfer process will be according to our Terms of use",
+                        style: GoogleFonts.nunito(
+                          fontSize: 18.sp,
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       SizedBox(
                         height: 10.h,
                       ),
                       Text(
-                        "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance)}",
+                        "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance - 20)}",
                         style: GoogleFonts.nunito(
                           fontSize: 16,
                           color: Theme.of(context).primaryColor,
@@ -1064,7 +1062,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 child: Text(
                                   "How much do you want to transfer?",
                                   style: GoogleFonts.nunito(
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -1321,8 +1319,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               defaultPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: const TextStyle(
-                                                  fontSize: 20,
+                                                textStyle: GoogleFonts.nunito(
+                                                  fontSize: 20.sp,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(

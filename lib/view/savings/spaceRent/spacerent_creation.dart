@@ -213,6 +213,11 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     }
 
     Future<void> selectEndDate(BuildContext context) async {
+      // final picks = await showDateRangePicker(
+      //     context: context,
+      //     firstDate: DateTime.now(),
+      //     lastDate: DateTime(2030));
+    
       final DateTime? picked = await showDatePicker(
           context: context,
           initialEntryMode: DatePickerEntryMode.calendarOnly,
@@ -220,19 +225,19 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
             return Theme(
               data: Theme.of(context).copyWith(
                 colorScheme: const ColorScheme.dark(
-                  primaryContainer: brandOne,
-                  primary: brandOne, // header background color
+                  primaryContainer: brandTwo,
+                  primary: brandTwo, // header background color
                   onPrimary: Colors.white,
-                  onBackground: brandOne,
+                  onBackground: brandTwo,
                   // onSecondary: brandTwo,
 
-                  outline: brandOne,
-                  background: brandOne,
-                  onSurface: brandOne, // body text color
+                  outline: brandTwo,
+                  background: brandTwo,
+                  onSurface: brandTwo, // body text color
                 ),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(
-                    foregroundColor: brandOne, // button text color
+                    foregroundColor: brandTwo, // button text color
                   ),
                 ),
               ),
@@ -902,6 +907,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                         );
                                                       });
                                                 } else {
+                                                  print(DateFormat('dd/MM/yyyy')
+                                                      .format(DateTime.now()));
                                                   rentState.createRent(
                                                     context,
                                                     _rentNameController.text,

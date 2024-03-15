@@ -196,7 +196,7 @@ class _SavingsPageState extends State<SavingsPage> {
           'Save',
           style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
-            fontSize: 22,
+            fontSize: 22.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -229,10 +229,10 @@ class _SavingsPageState extends State<SavingsPage> {
                       children: [
                         Row(
                           children: [
-                            const Icon(
+                             Icon(
                               Icons.verified_user,
                               color: Colors.green,
-                              size: 17,
+                              size: 17.sp,
                             ),
                             const SizedBox(
                               width: 5,
@@ -241,7 +241,7 @@ class _SavingsPageState extends State<SavingsPage> {
                               "Total Assets",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
-                                fontSize: 15.0,
+                                fontSize: 15.0.sp,
                                 // fontFamily: "DefaultFontFamily",
                                 // letterSpacing: 0.5,
                                 fontWeight: FontWeight.w700,
@@ -341,7 +341,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                             'SpaceRent',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.nunito(
-                                              fontSize: 15.0,
+                                              fontSize: 15.0.sp,
                                               fontWeight: FontWeight.w600,
                                               // fontFamily: "DefaultFontFamily",
                                               // letterSpacing: 0.5,
@@ -517,7 +517,7 @@ class _SavingsPageState extends State<SavingsPage> {
                       'Savings Plan',
                       style: GoogleFonts.nunito(
                         color: Theme.of(context).primaryColor,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -564,20 +564,20 @@ class _SavingsPageState extends State<SavingsPage> {
                               ),
                             ),
                             title: Text(
-                              'SpaceRent',
+                              'Space Rent',
                               style: GoogleFonts.nunito(
                                 color: brandOne,
-                                fontSize: 17,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             subtitle: Text(
-                              'Save 70% of your rent and get 30% loan.',
+                              'Save 70% of your rent and get up to 30% loan.',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.nunito(
                                 color: navigationcolorText,
-                                fontSize: 12,
+                                fontSize: 10.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -595,7 +595,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                 "Save",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
-                                  fontSize: 15.0,
+                                  fontSize: 12.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
                                   fontWeight: FontWeight.w700,

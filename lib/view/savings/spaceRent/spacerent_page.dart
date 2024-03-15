@@ -8,6 +8,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../../../constants/colors.dart';
 import '../../../controller/rent/rent_controller.dart';
 import '../../dashboard/dashboard.dart';
+import '../../kyc/kyc_intro.dart';
 import '../../loan/loan_page.dart';
 import 'spacerent_history.dart';
 
@@ -63,41 +64,42 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
     return DateFormat('dd/MM/yyyy').format(date);
   }
 
-  DateTime calculateNextPaymentDateUpdate(
-      DateTime lastPaymentDate, String interval) {
-    // Calculate the next payment date based on the interval
-    DateTime nextPaymentDate;
-    if (interval == 'weekly') {
-      nextPaymentDate = lastPaymentDate.add(const Duration(days: 7));
-    } else {
-      // Assuming monthly intervals, you can adjust this logic as needed
-      nextPaymentDate = lastPaymentDate.add(const Duration(days: 30));
-    }
-    return nextPaymentDate;
-  }
+  // DateTime calculateNextPaymentDateUpdate(
+  //     DateTime lastPaymentDate, String interval) {
+  //   // Calculate the next payment date based on the interval
+  //   DateTime nextPaymentDate;
+  //   if (interval == 'weekly') {
+  //     nextPaymentDate = lastPaymentDate.add(const Duration(days: 7));
+  //   } else {
+  //     // Assuming monthly intervals, you can adjust this logic as needed
+  //     nextPaymentDate = lastPaymentDate.add(const Duration(days: 30));
+  //   }
+  //   return nextPaymentDate;
+  // }
 
-  DateTime calculateNextPaymentDate(
-      String chosenDateString, String interval, int numberOfIntervals) {
-    DateTime chosenDate = parseDate(chosenDateString);
-    DateTime nextPaymentDate;
+  // DateTime calculateNextPaymentDate(
+  //     String chosenDateString, String interval, int numberOfIntervals) {
+  //   DateTime chosenDate = parseDate(chosenDateString);
+  //   print('chosen date: $chosenDate' );
+  //   DateTime nextPaymentDate;
 
-    switch (interval.toLowerCase()) {
-      // case 'daily':
-      //   nextPaymentDate = chosenDate.add(const Duration(days: 1));
-      //   break;
-      case 'weekly':
-        nextPaymentDate = chosenDate.add(const Duration(days: 7));
-        break;
-      case 'monthly':
-        nextPaymentDate =
-            DateTime(chosenDate.year, chosenDate.month + 1, chosenDate.day);
-        break;
-      default:
-        throw Exception("Invalid interval: $interval");
-    }
+  //   switch (interval.toLowerCase()) {
+  //     // case 'daily':
+  //     //   nextPaymentDate = chosenDate.add(const Duration(days: 1));
+  //     //   break;
+  //     case 'weekly':
+  //       nextPaymentDate = chosenDate.add(const Duration(days: 7));
+  //       break;
+  //     case 'monthly':
+  //       nextPaymentDate =
+  //           DateTime(chosenDate.year, chosenDate.month + 1, chosenDate.day);
+  //       break;
+  //     default:
+  //       throw Exception("Invalid interval: $interval");
+  //   }
 
-    return nextPaymentDate;
-  }
+  //   return nextPaymentDate;
+  // }
 
   @override
   initState() {
@@ -112,12 +114,14 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
     String chosenDateString =
         rentController.rentModel!.rents![widget.current].date;
     print(chosenDateString);
+    print(chosenDateString);
     String interval = rentController.rentModel!.rents![widget.current].interval;
     int numberOfIntervals = int.parse(
         rentController.rentModel!.rents![widget.current].paymentCount);
-    DateTime nextPaymentDate =
-        calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
-    String formattedNextDate = formatDate(nextPaymentDate);
+    // DateTime nextPaymentDate =
+    //     calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
+    //     print(nextPaymentDate);
+    // String formattedNextDate = formatDate(nextPaymentDate);
     print(((rentController.rentModel!.rents![widget.current].paidAmount
             .abs()) ==
         (rentController.rentModel!.rents![widget.current].amount * 0.7).abs()));
@@ -132,7 +136,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       appBar: AppBar(
         // toolbarHeight: 105.0,
         backgroundColor: ((rentController
-                    .rentModel!.rents![widget.current].paidAmount)  <=
+                    .rentModel!.rents![widget.current].paidAmount) <=
                 (rentController.rentModel!.rents![widget.current].amount * 0.7))
             ? Theme.of(context).primaryColorLight
             : Theme.of(context).canvasColor,
@@ -145,7 +149,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
             Icons.arrow_back,
             size: 30,
             color: ((rentController
-                        .rentModel!.rents![widget.current].paidAmount)  <=
+                        .rentModel!.rents![widget.current].paidAmount) <=
                     (rentController.rentModel!.rents![widget.current].amount *
                         0.7))
                 ? Colors.white
@@ -157,7 +161,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           'Space Rent',
           style: GoogleFonts.nunito(
             color: ((rentController
-                        .rentModel!.rents![widget.current].paidAmount)  <=
+                        .rentModel!.rents![widget.current].paidAmount) <=
                     (rentController.rentModel!.rents![widget.current].amount *
                         0.7))
                 ? Colors.white
@@ -169,7 +173,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       ),
       //
       body: Obx(
-        () => ((rentController.rentModel!.rents![widget.current].paidAmount)  <=
+        () => ((rentController.rentModel!.rents![widget.current].paidAmount) <=
                 (rentController.rentModel!.rents![widget.current].amount.obs *
                     0.7))
             ? SingleChildScrollView(
@@ -321,120 +325,119 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Container(
-                                      width: 152,
-                                      height: 56,
-                                      // padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: (themeChange.isSavedDarkMode())
-                                            ? Colors.white
-                                            : Colors.white.withOpacity(0.13),
-                                        borderRadius: BorderRadius.circular(43),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Loan Amount:',
-                                              style: GoogleFonts.nunito(
-                                                color: (themeChange
-                                                        .isSavedDarkMode())
-                                                    ? brandTwo
-                                                    : Colors.white
-                                                        .withOpacity(0.75),
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 15,
-                                              ),
-                                              child: Text(
-                                                nairaFormaet
-                                                    .format(rentController
-                                                            .rentModel!
-                                                            .rents![
-                                                                widget.current]
-                                                            .amount -
-                                                        (rentController
-                                                                .rentModel!
-                                                                .rents![widget
-                                                                    .current]
-                                                                .amount *
-                                                            0.7))
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .background,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Container(
-                                      width: 152,
-                                      height: 56,
-                                      // padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: (themeChange.isSavedDarkMode())
-                                            ? Colors.white
-                                            : Colors.white.withOpacity(0.13),
-                                        borderRadius: BorderRadius.circular(43),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Interest Rate:',
-                                              style: GoogleFonts.nunito(
-                                                color: (themeChange
-                                                        .isSavedDarkMode())
-                                                    ? brandTwo
-                                                    : Colors.white
-                                                        .withOpacity(0.75),
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Text(
-                                              '10%',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .background,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                               
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 5),
+                                  //   child: Container(
+                                  //     width: 152,
+                                  //     height: 56,
+                                  //     // padding: const EdgeInsets.all(12),
+                                  //     decoration: BoxDecoration(
+                                  //       color: (themeChange.isSavedDarkMode())
+                                  //           ? Colors.white
+                                  //           : Colors.white.withOpacity(0.13),
+                                  //       borderRadius: BorderRadius.circular(43),
+                                  //     ),
+                                  //     child: Center(
+                                  //       child: Column(
+                                  //         crossAxisAlignment:
+                                  //             CrossAxisAlignment.center,
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.center,
+                                  //         children: [
+                                  //           Text(
+                                  //             'Loan Amount:',
+                                  //             style: GoogleFonts.nunito(
+                                  //               color: (themeChange
+                                  //                       .isSavedDarkMode())
+                                  //                   ? brandTwo
+                                  //                   : Colors.white
+                                  //                       .withOpacity(0.75),
+                                  //               fontWeight: FontWeight.w400,
+                                  //               fontSize: 12,
+                                  //             ),
+                                  //           ),
+                                  //           Padding(
+                                  //             padding:
+                                  //                 const EdgeInsets.symmetric(
+                                  //               horizontal: 15,
+                                  //             ),
+                                  //             child: Text(
+                                  //               nairaFormaet
+                                  //                   .format(rentController
+                                  //                           .rentModel!
+                                  //                           .rents![
+                                  //                               widget.current]
+                                  //                           .amount -
+                                  //                       (rentController
+                                  //                               .rentModel!
+                                  //                               .rents![widget
+                                  //                                   .current]
+                                  //                               .amount *
+                                  //                           0.7))
+                                  //                   .toString(),
+                                  //               overflow: TextOverflow.ellipsis,
+                                  //               style: GoogleFonts.nunito(
+                                  //                 color: Theme.of(context)
+                                  //                     .colorScheme
+                                  //                     .background,
+                                  //                 fontWeight: FontWeight.w700,
+                                  //                 fontSize: 16,
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 5),
+                                  //   child: Container(
+                                  //     width: 152,
+                                  //     height: 56,
+                                  //     // padding: const EdgeInsets.all(12),
+                                  //     decoration: BoxDecoration(
+                                  //       color: (themeChange.isSavedDarkMode())
+                                  //           ? Colors.white
+                                  //           : Colors.white.withOpacity(0.13),
+                                  //       borderRadius: BorderRadius.circular(43),
+                                  //     ),
+                                  //     child: Center(
+                                  //       child: Column(
+                                  //         crossAxisAlignment:
+                                  //             CrossAxisAlignment.center,
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.center,
+                                  //         children: [
+                                  //           Text(
+                                  //             'Interest Rate:',
+                                  //             style: GoogleFonts.nunito(
+                                  //               color: (themeChange
+                                  //                       .isSavedDarkMode())
+                                  //                   ? brandTwo
+                                  //                   : Colors.white
+                                  //                       .withOpacity(0.75),
+                                  //               fontWeight: FontWeight.w400,
+                                  //               fontSize: 12,
+                                  //             ),
+                                  //           ),
+                                  //           Text(
+                                  //             '10%',
+                                  //             style: GoogleFonts.nunito(
+                                  //               color: Theme.of(context)
+                                  //                   .colorScheme
+                                  //                   .background,
+                                  //               fontWeight: FontWeight.w700,
+                                  //               fontSize: 16,
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -597,20 +600,33 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               ),
                                               subtitle: Text(
                                                 _formatTime(DateTime.parse(
-                                                    history['createdAt']).add(const Duration(hours: 1))),
+                                                        (history['createdAt']))
+                                                    .add(const Duration(
+                                                        hours: 1))),
                                                 style: GoogleFonts.nunito(
                                                   color: brandOne,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),
+                                              // subtitle: Text(
+                                              //   _formatTime(DateTime.parse(
+                                              //           history['createdAt'])
+                                              //       .add(const Duration(
+                                              //           hours: 1))),
+                                              //   style: GoogleFonts.nunito(
+                                              //     color: brandOne,
+                                              //     fontSize: 12.sp,
+                                              //     fontWeight: FontWeight.w400,
+                                              //   ),
+                                              // ),
                                               // onTap: () {
                                               //   Get.to(
                                               //       CustomTransactionDetailsCard(current: index));
                                               //   // Navigator.pushNamed(context, RouteList.profile);
                                               // },
                                               trailing: Text(
-                                                '+ ₦${history['amount'].toString()}',
+                                                '+ ${ch8t.format(history['amount'])}',
                                                 style: GoogleFonts.nunito(
                                                   color: Colors.green,
                                                   fontSize: 12.sp,
@@ -676,7 +692,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                       fontSize: 31.sp,
                     ),
                   ),
-                  
+
                   SizedBox(
                     height: 70.h,
                   ),
@@ -689,7 +705,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             minimumSize: const Size(300, 50),
                             backgroundColor: Colors.white,
                             elevation: 0,
-                          
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: brandOne),
                               borderRadius: BorderRadius.circular(
@@ -711,7 +726,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           ),
                         ),
                       ),
-                  SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -725,7 +742,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Get.to(const KycP());
+                            (userController.userModel!.userDetails![0]
+                                        .hasVerifiedKyc ==
+                                    false)
+                                ? Get.to(const KYCIntroPage())
+                                : Get.to(const LoanPage());
                           },
                           child: Text(
                             'Take Loan',
@@ -738,7 +759,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           ),
                         ),
                       ),
-                  
                     ],
                   )
                   // Spacer(),
@@ -747,7 +767,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
       ),
 
       backgroundColor: ((rentController
-                  .rentModel!.rents![widget.current].paidAmount)  <=
+                  .rentModel!.rents![widget.current].paidAmount) <=
               (rentController.rentModel!.rents![widget.current].amount * 0.7))
           ? Theme.of(context).primaryColorLight
           : Theme.of(context).canvasColor,
