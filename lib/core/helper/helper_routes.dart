@@ -26,11 +26,11 @@ class RouterGenerator {
           builder: (context) => const FirstPage(),
           settings: const RouteSettings(name: home),
         );
-      case newNotification:
-        return MaterialPageRoute(
-          builder: (context) => const NewNotificationPage(),
-          settings: const RouteSettings(name: newNotification),
-        );
+      // case newNotification:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const NewNotificationPage(),
+      //     settings: const RouteSettings(name: newNotification),
+      //   );
       case referral_record:
         return MaterialPageRoute(
           builder: (context) => const ReferralRecord(),

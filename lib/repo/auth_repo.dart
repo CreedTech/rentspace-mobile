@@ -167,11 +167,14 @@ class AuthRepository {
     //  print("Here in repo" + response.reasonPhrase.toString());
     return responseModel = ResponseModel(error, false);
   }
+
   Future<ResponseModel> postFcmToken(body) async {
-    print('Got here in auth repo');
+    print('Got here in auth fcm token repo');
     ResponseModel responseModel;
     Response response =
         await _apiClient.postData(AppConstants.FCM_TOKEN, jsonEncode(body));
+    print('response in repo');
+    print(response);
 
     if (response.statusCode == 200) {
       String token = jsonDecode(response.body)['token'];
@@ -181,16 +184,8 @@ class AuthRepository {
       _apiClient.updateHeaders(token);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    print("Here in fcm repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
-    if (jsonDecode(response.body)['error'] ==
-        'User not verified, please verify your account') {
-      error = 'User not verified, please verify your account';
-    }
-    if (jsonDecode(response.body)['error'] ==
-        'BVN not verified, please verify your bvn to continue') {
-      error = 'BVN not verified, please verify your bvn to continue';
-    }
 
 //  Here in repo{error: User not verified, please verify your account}
     //  print("Here in repo" + response.reasonPhrase.toString());

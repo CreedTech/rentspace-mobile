@@ -45,6 +45,6 @@ class AppConstants {
   static const WALLET_HISTORY = '/api/wallet/wallet-histories';
 
   static const TOKEN = '';
-  static const FCM_TOKEN = 'api/user/postToken';
+  static const FCM_TOKEN = '/api/user/postToken';
   static const PROFILE_PICTURE = '';
 }

@@ -19,15 +19,19 @@ import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/notifications.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:provider/provider.dart';
+import 'package:rentspace/view/home_page.dart';
 import 'package:sizer/sizer.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
 import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
 import 'services/implementations/notification_service.dart';
+import 'view/actions/new_notification_page.dart';
 import 'view/splash_screen.dart';
 
 // @pragma('vm:entry-point')
@@ -104,22 +108,35 @@ Future<void> main() async {
 
   FirebaseMessaging.instance.getToken().then((value) {
     print('get token : $value');
+    GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
   });
   requestNotificationPermission();
 
 // if application is in background
   FirebaseMessaging.onMessageOpenedApp.listen(
     (RemoteMessage message) async {
-      print("onMessageOpened : $message");
-      Navigator.pushNamed(
-        _navigatorKey.currentState!.context,
-        '/newNotification',
-        arguments: {"message", json.encode(message.data)},
-      );
+      print(
+          "onMessageOpened again : ${json.encode(message.notification!.body)}");
+      Navigator.push(
+          _navigatorKey.currentState!.context,
+          MaterialPageRoute(
+            builder: (context) => FirstPage(),
+            // NewNotificationPage(
+            //   message: message.notification!.body!,
+            // ),
+            // settings: const RouteSettings(name: newNotification),
+          ));
+      // Navigator.pushNamed(
+      //   _navigatorKey.currentState!.context,
+      //   '/newNotification',
+      //   arguments: {"message", json.encode(message.notification!.body)},
+      // );
     },
   );
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
+      print('message.data');
+      print(message.notification!.body);
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification!.android;
 
@@ -130,10 +147,13 @@ Future<void> main() async {
           notification.hashCode,
           notification.title,
           notification.body,
+          payload: message.notification!.body,
           const NotificationDetails(
             android: AndroidNotificationDetails(
               'high_importance_channel',
               'Rentspace Notifications',
+              priority: Priority.max,
+              importance: Importance.max,
               channelDescription: 'Notifications for rentspace activities',
               // icon: android?.smallIcon,
               // other properties...
@@ -142,7 +162,8 @@ Future<void> main() async {
           ),
         );
       }
-      print("received in background : $message");
+      print(
+          "received in background : ${json.encode(message.notification!.body)}");
       // Navigator.pushNamed(
       //   _navigatorKey.currentState!.context,
       //   '/newNotification',
@@ -164,15 +185,20 @@ Future<void> main() async {
           notification.hashCode,
           notification.title,
           notification.body,
+          payload: message!.notification!.body,
           const NotificationDetails(
             android: AndroidNotificationDetails(
               'high_importance_channel',
               'Rentspace Notifications',
+              priority: Priority.max,
+              importance: Importance.max,
               channelDescription: 'Notifications for rentspace activities',
+
               // icon: android?.smallIcon,
               // other properties...
             ),
           ),
+          // payload: message!.data['body'],
         );
       }
       // print("onMessageOpened : $message");
@@ -201,10 +227,10 @@ Future<void> main() async {
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
-  print('_firebaseMessagingBackgroundHandler: $message');
-  print('Handling Background message ${message.messageId}');
+  print('_firebaseMessagingBackgroundHandler: $message.notification!.body');
+  print('Handling Background message ${message.notification!.body}');
 }
 
 Future<void> initNotifications() async {
@@ -228,12 +254,23 @@ Future<void> initNotifications() async {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
         // Get.to(const NotificationsPage());
-        print("onMessageOpened : $notificationResponse.payload");
-        Navigator.pushNamed(
-          _navigatorKey.currentState!.context,
-          '/newNotification',
-          arguments: {"message", json.encode(notificationResponse.payload)},
-        );
+        print("onMessageOpened here: ${notificationResponse.payload}");
+        print('payload before routing');
+        print(notificationResponse.payload);
+        Navigator.push(
+            _navigatorKey.currentState!.context,
+            MaterialPageRoute(
+              builder: (context) => FirstPage(),
+              //  NewNotificationPage(
+              //   message: notificationResponse.payload!,
+              // ),
+              // settings: const RouteSettings(name: newNotification),
+            ));
+        // Navigator.pushNamed(
+        //   _navigatorKey.currentState!.context,
+        //   '/newNotification',
+        //   arguments: {"message", notificationResponse.payload},
+        // );
         break;
       case NotificationResponseType.selectedNotificationAction:
         if (notificationResponse.actionId == navigationActionId) {

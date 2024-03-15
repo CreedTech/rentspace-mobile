@@ -572,6 +572,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       print(response.message);
       if (response.success == true) {
         isLoading = false;
+        final fcmToken =
+            await GlobalService.sharedPreferencesManager.getFCMToken();
+        print('fcmToken');
+        print(fcmToken);
+         postFcmToken(context, fcmToken);
         await GlobalService.sharedPreferencesManager.saveLoginInfo(
           email,
           password,
@@ -689,34 +694,38 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     }
   }
-  Future postFcmToken(BuildContext context,fcmToken) async {
+
+  Future postFcmToken(BuildContext context, fcmToken) async {
+    print('fcmToken here');
+    print(fcmToken);
     // isLoading = true;
     if (fcmToken.isEmpty || fcmToken == '') {
       return;
     }
     Map<String, dynamic> token = {
       'fcm_token': fcmToken,
-
     };
-    String message;
+    // String message;
     try {
       // isLoading = true;
-      // state = const AsyncLoading();
-      print('Got here in auth contrl');
+      state = const AsyncLoading();
+      print('Got here in fcm token contrl');
       // EasyLoading.show(
       //   indicator: const CustomLoader(),
       //   maskType: EasyLoadingMaskType.black,
       //   dismissOnTap: false,
       // );
-      
+
       var response = await authRepository.postFcmToken(token);
-      EasyLoading.dismiss();
-      // state = const AsyncData(false);
+      // EasyLoading.dismiss();
+      state = const AsyncData(false);
       print('response.message');
+      print(response);
       print(response.message);
-      if (response.success == true) {
+      if (response.success) {
+        print('posted');
         // isLoading = false;
-      
+
         return;
       } else {
         print(response.message.toString());
@@ -737,12 +746,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       // }
     } catch (e) {
       // authStatus = AuthStatus.NOT_LOGGED_IN;
-      // state = AsyncData(false);
+      state = const AsyncData(false);
       // EasyLoading.dismiss();
-      // state = AsyncError(e, StackTrace.current);
+      state = AsyncError(e, StackTrace.current);
       // message = "Ooops something went wrong";
       // customErrorDialog(context, 'Error', message);
-     
+      print('e');
+      print(e);
+
       return;
     } finally {
       // isLoading = false;

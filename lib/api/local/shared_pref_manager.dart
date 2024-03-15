@@ -56,6 +56,12 @@ class SharedPreferencesManager {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setString(TOKEN, value);
   }
+  Future<bool> setFCMToken({required String value}) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.setString('fcm_token', value);
+  }
+
+
 
   // Function to save login credentials and remember me status to shared preferences
   Future<void> saveLoginInfo(
@@ -76,6 +82,10 @@ class SharedPreferencesManager {
   Future<String> getAuthToken() async {
     // final prefs = await SharedPreferences.getInstance();
     return _prefs.getString(TOKEN) ?? '';
+  }
+  Future<String> getFCMToken() async {
+    // final prefs = await SharedPreferences.getInstance();
+    return _prefs.getString('fcm_token') ?? '';
   }
 
   Future<void> savePin(String newPin) async {
