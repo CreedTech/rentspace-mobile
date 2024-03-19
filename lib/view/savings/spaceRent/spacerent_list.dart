@@ -137,13 +137,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                 child: CustomLoader(),
               )
             : LiquidPullToRefresh(
-        height: 100,
-        animSpeedFactor: 2,
-        color: brandOne,
-        backgroundColor: Colors.white,
-        showChildOpacityTransition: false,
-        onRefresh: onRefresh,
-              child: SafeArea(
+                height: 100,
+                animSpeedFactor: 2,
+                color: brandOne,
+                backgroundColor: Colors.white,
+                showChildOpacityTransition: false,
+                onRefresh: onRefresh,
+                child: SafeArea(
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.h),
@@ -176,7 +176,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                     });
                                   },
                                   child: Icon(
-                                    hideBalance ? Iconsax.eye : Iconsax.eye_slash,
+                                    hideBalance
+                                        ? Iconsax.eye
+                                        : Iconsax.eye_slash,
                                     color: brandOne,
                                     size: 20.h,
                                   ),
@@ -202,7 +204,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                           child: (rentController.rentModel!.rents!.isEmpty)
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Image.asset(
                                       'assets/card_empty.png',
@@ -260,9 +263,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                               .rentModel!
                                                               .rents![index]
                                                               .rentName,
-                                                          style:
-                                                              GoogleFonts.nunito(
-                                                                  fontSize: 15.sp,
+                                                          style: GoogleFonts
+                                                              .nunito(
+                                                                  fontSize:
+                                                                      15.sp,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
@@ -274,7 +278,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                         ),
                                                         (rentController
                                                                     .rentModel!
-                                                                    .rents![index]
+                                                                    .rents![
+                                                                        index]
                                                                     .hasPaid ==
                                                                 true)
                                                             ? Tooltip(
@@ -292,8 +297,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                           .circular(
                                                                               20),
                                                                 ),
-                                                                child: const Icon(
-                                                                  Iconsax.verify5,
+                                                                child:
+                                                                    const Icon(
+                                                                  Iconsax
+                                                                      .verify5,
                                                                   color: Colors
                                                                       .green,
                                                                   size: 20,
@@ -314,11 +321,12 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                           .circular(
                                                                               20),
                                                                 ),
-                                                                child: const Icon(
+                                                                child:
+                                                                    const Icon(
                                                                   Iconsax
                                                                       .info_circle5,
-                                                                  color:
-                                                                      Colors.red,
+                                                                  color: Colors
+                                                                      .red,
                                                                   size: 20,
                                                                 ),
                                                               ),
@@ -532,27 +540,31 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                       backgroundColor:
                                                           Colors.white,
                                                       trailing: Container(
-                                                        padding: const EdgeInsets
-                                                            .symmetric(
-                                                            horizontal: 20,
-                                                            vertical: 5),
-                                                        decoration: BoxDecoration(
-                                                          color: Theme.of(context)
-                                                              .colorScheme
-                                                              .secondary,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 20,
+                                                                vertical: 5),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .secondary,
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(100),
+                                                                  .circular(
+                                                                      100),
                                                         ),
                                                         child: Text(
                                                           ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
-                                                          style:
-                                                              GoogleFonts.nunito(
+                                                          style: GoogleFonts
+                                                              .nunito(
                                                             color: Colors.white,
                                                           ),
                                                         ),
                                                       ),
-              
+
                                                       // Text(
                                                       //   ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
                                                       //   style: GoogleFonts.nunito(
@@ -565,7 +577,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                       //     color: brandOne,
                                                       //   ),
                                                       // ),
-              
+
                                                       percent: ((rentController
                                                                   .rentModel!
                                                                   .rents![index]
@@ -639,7 +651,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 'Create New Space rent',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.nunito(
-                                    fontSize: 16.sp, fontWeight: FontWeight.w600),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -648,14 +661,15 @@ class _RentSpaceListState extends State<RentSpaceList> {
                     ),
                   ),
                 ),
-            ),
+              ),
       ),
     );
   }
 
   String formatDateTime(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
+    DateTime dateTime =
+        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
@@ -668,7 +682,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   String formatEndDate(String dateTimeString) {
     // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString).add(const Duration(hours: 1));
+    DateTime dateTime =
+        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
 
     // Define the date format you want
     final DateFormat formatter = DateFormat('MMMM dd, yyyy');

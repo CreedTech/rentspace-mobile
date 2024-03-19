@@ -182,6 +182,7 @@ final dataFormKey = GlobalKey<FormState>();
 class _UtilitiesPageState extends State<UtilitiesPage> {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  bool canShowButton = false;
   bool isRefresh = false;
   List<DataList> dataList = [];
   List<TvList> tvList = [];
@@ -3536,7 +3537,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             isDismissible: true,
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 350,
+                              height: 350.h,
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
@@ -3549,21 +3550,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 50,
+                                      // ),
                                       Text(
                                         'Enter PIN to Proceed',
                                         style: GoogleFonts.nunito(
-                                            fontSize: 18,
+                                            fontSize: 22.h,
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.w800),
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(
-                                        height: 20,
+                                        height: 30,
                                       ),
                                       Pinput(
                                         obscureText: true,
@@ -3597,340 +3599,6 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                               canLoad = false;
                                             });
 
-                                            if (userController
-                                                    .userModel!
-                                                    .userDetails![0]
-                                                    .wallet
-                                                    .mainBalance >
-                                                ((int.tryParse(
-                                                    _airtimeAmountController
-                                                        .text
-                                                        .trim()))!)) {
-                                              if (airtimeFormKey.currentState!
-                                                  .validate()) {
-                                                const String apiUrl =
-                                                    'https://api.watupay.com/v1/watubill/vend';
-                                                const String bearerToken =
-                                                    'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                final response =
-                                                    await http.post(
-                                                  Uri.parse(apiUrl),
-                                                  headers: {
-                                                    'Authorization':
-                                                        'Bearer $bearerToken',
-                                                    "Content-Type":
-                                                        "application/json"
-                                                  },
-                                                  body: jsonEncode(<String,
-                                                      String>{
-                                                    "amount":
-                                                        _airtimeAmountController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "channel": "bill-27",
-                                                    "business_signature":
-                                                        "a390960dfa37469d824ffe6cb80472f6",
-                                                    "phone_number":
-                                                        _airtimeNumberController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "ignore_duplicate": "1"
-                                                  }),
-                                                );
-
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  String authToken =
-                                                      await GlobalService
-                                                          .sharedPreferencesManager
-                                                          .getAuthToken();
-                                                  print(authToken);
-                                                  try {
-                                                    EasyLoading.show(
-                                                      indicator:
-                                                          const CustomLoader(),
-                                                      maskType:
-                                                          EasyLoadingMaskType
-                                                              .black,
-                                                      dismissOnTap: false,
-                                                    );
-                                                    final addUtility =
-                                                        await http.post(
-                                                      Uri.parse(AppConstants
-                                                              .BASE_URL +
-                                                          AppConstants
-                                                              .ADD_UTILITY_HISTORY),
-                                                      headers: {
-                                                        'Authorization':
-                                                            'Bearer $authToken',
-                                                        "Content-Type":
-                                                            "application/json"
-                                                      },
-                                                      body: jsonEncode(<String,
-                                                          dynamic>{
-                                                        "amount":
-                                                            _airtimeAmountController
-                                                                .text
-                                                                .trim()
-                                                                .toString(),
-                                                        'biller': "GLO AIRTIME",
-                                                        "transactionType":
-                                                            "Airtime",
-                                                        "description":
-                                                            'Airtime Payment to ${_airtimeNumberController.text.trim().toString()}',
-                                                      }),
-                                                    );
-                                                    print(addUtility);
-                                                    print(addUtility.body);
-                                                    EasyLoading.dismiss();
-                                                  } on TimeoutException {
-                                                    throw http.Response(
-                                                        'Network Timeout', 500);
-                                                  } on http
-                                                  .ClientException catch (e) {
-                                                    print(
-                                                        'Error while getting data is $e');
-                                                    throw http.Response(
-                                                        'HTTP Client Exception: $e',
-                                                        500);
-                                                  } catch (e) {
-                                                    print(e);
-                                                    EasyLoading.dismiss();
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Oops",
-                                                        'Something Went wrong. Try Again Later!');
-                                                  } finally {
-                                                    EasyLoading.dismiss();
-                                                  }
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-                                                  Get.to(FirstPage());
-                                                  await fetchUserData(
-                                                      refresh: true);
-                                                  showTopSnackBar(
-                                                    Overlay.of(context),
-                                                    CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      message:
-                                                          'You just earned a Space point!',
-                                                      textStyle:
-                                                          GoogleFonts.nunito(
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  print(response.body);
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  // Error handling
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-
-                                                  customErrorDialog(
-                                                      context,
-                                                      "Error",
-                                                      "Try again later");
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  canLoad = true;
-                                                });
-                                                customErrorDialog(
-                                                    context,
-                                                    "Incomplete",
-                                                    "Fill the field correctly to proceed");
-                                              }
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        AlertDialog(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(30,
-                                                                  30, 30, 20),
-                                                          elevation: 0,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          insetPadding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          scrollable: true,
-                                                          title: null,
-                                                          shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(30),
-                                                              topRight: Radius
-                                                                  .circular(30),
-                                                            ),
-                                                          ),
-                                                          content: SizedBox(
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            child: Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          40),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                15),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment:
-                                                                              Alignment.topCenter,
-                                                                          child:
-                                                                              Text(
-                                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                GoogleFonts.nunito(
-                                                                              color: brandOne,
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                10),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(3),
-                                                                              child: ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Get.back();
-                                                                                  Get.to(const FundWallet());
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(8),
-                                                                                  ),
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                  textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                ),
-                                                                                child: const Text(
-                                                                                  "Fund Wallet",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.w700,
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            }
-                                          } else {
-                                            _pinController.clear();
-                                            if (context.mounted) {
-                                              customErrorDialog(
-                                                  context,
-                                                  "Invalid PIN",
-                                                  'Enter correct PIN to proceed');
-                                            }
-                                          }
-                                        },
-                                        validator: validatePin,
-                                        onChanged: validatePin,
-                                        controller: _pinController,
-                                        length: 4,
-                                        closeKeyboardWhenCompleted: true,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      const SizedBox(
-                                        height: 40,
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(300, 50),
-                                          backgroundColor: brandOne,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (BCrypt.checkpw(
-                                            _pinController.text
-                                                .trim()
-                                                .toString(),
-                                            userController.userModel!
-                                                .userDetails![0].wallet.pin,
-                                          )) {
-                                            _pinController.clear();
-                                            Get.back();
-                                            // _doWallet();
-                                            Get.back();
-                                            setState(() {
-                                              loadMssg = "Processing...";
-                                              canLoad = false;
-                                            });
-
                                             if (airtimeFormKey.currentState!
                                                 .validate()) {
                                               const String apiUrl =
@@ -3945,8 +3613,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   "Content-Type":
                                                       "application/json"
                                                 },
-                                                body: jsonEncode(<String,
-                                                    dynamic>{
+                                                body:
+                                                    jsonEncode(<String, String>{
                                                   "amount":
                                                       _airtimeAmountController
                                                           .text
@@ -3960,7 +3628,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                           .text
                                                           .trim()
                                                           .toString(),
-                                                  "ignore_duplicate": 1
+                                                  "ignore_duplicate": "1"
                                                 }),
                                               );
 
@@ -4036,6 +3704,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                 _airtimeNumberController
                                                     .clear();
                                                 _pinController.clear();
+                                                Get.to(FirstPage());
                                                 await fetchUserData(
                                                     refresh: true);
                                                 showTopSnackBar(
@@ -4088,15 +3757,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             }
                                           }
                                         },
-                                        child: Text(
-                                          'Proceed to Payment',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
                                       ),
                                     ],
                                   ),
@@ -4239,7 +3911,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             isDismissible: true,
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 350,
+                              height: 350.h,
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
@@ -4252,21 +3924,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 50,
+                                      // ),
                                       Text(
                                         'Enter PIN to Proceed',
                                         style: GoogleFonts.nunito(
-                                            fontSize: 18,
+                                            fontSize: 22.h,
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.w800),
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(
-                                        height: 20,
+                                        height: 30,
                                       ),
                                       Pinput(
                                         obscureText: true,
@@ -4294,339 +3967,6 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           )) {
                                             _pinController.clear();
                                             Get.back();
-                                            Get.back();
-                                            setState(() {
-                                              loadMssg = "Processing...";
-                                              canLoad = false;
-                                            });
-                                            if (userController
-                                                    .userModel!
-                                                    .userDetails![0]
-                                                    .wallet
-                                                    .mainBalance >
-                                                ((int.tryParse(
-                                                    _airtimeAmountController
-                                                        .text
-                                                        .trim()))!)) {
-                                              if (airtimeFormKey.currentState!
-                                                  .validate()) {
-                                                const String apiUrl =
-                                                    'https://api.watupay.com/v1/watubill/vend';
-                                                const String bearerToken =
-                                                    'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                final response =
-                                                    await http.post(
-                                                  Uri.parse(apiUrl),
-                                                  headers: {
-                                                    'Authorization':
-                                                        'Bearer $bearerToken',
-                                                    "Content-Type":
-                                                        "application/json"
-                                                  },
-                                                  body: jsonEncode(<String,
-                                                      dynamic>{
-                                                    "amount":
-                                                        _airtimeAmountController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "channel": "bill-28",
-                                                    "business_signature":
-                                                        "a390960dfa37469d824ffe6cb80472f6",
-                                                    "phone_number":
-                                                        _airtimeNumberController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "ignore_duplicate": "1"
-                                                  }),
-                                                );
-
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  String authToken =
-                                                      await GlobalService
-                                                          .sharedPreferencesManager
-                                                          .getAuthToken();
-                                                  print(authToken);
-                                                  try {
-                                                    EasyLoading.show(
-                                                      indicator:
-                                                          const CustomLoader(),
-                                                      maskType:
-                                                          EasyLoadingMaskType
-                                                              .black,
-                                                      dismissOnTap: false,
-                                                    );
-                                                    final addUtility =
-                                                        await http.post(
-                                                      Uri.parse(AppConstants
-                                                              .BASE_URL +
-                                                          AppConstants
-                                                              .ADD_UTILITY_HISTORY),
-                                                      headers: {
-                                                        'Authorization':
-                                                            'Bearer $authToken',
-                                                        "Content-Type":
-                                                            "application/json"
-                                                      },
-                                                      body: jsonEncode(<String,
-                                                          dynamic>{
-                                                        "amount":
-                                                            _airtimeAmountController
-                                                                .text
-                                                                .trim()
-                                                                .toString(),
-                                                        'biller':
-                                                            "AIRTEL AIRTIME",
-                                                        "transactionType":
-                                                            "Airtime",
-                                                        "description":
-                                                            'Airtime Payment to ${_airtimeNumberController.text.trim().toString()}',
-                                                      }),
-                                                    );
-                                                    print(addUtility);
-                                                    print(addUtility.body);
-                                                    EasyLoading.dismiss();
-                                                  } on TimeoutException {
-                                                    throw http.Response(
-                                                        'Network Timeout', 500);
-                                                  } on http
-                                                  .ClientException catch (e) {
-                                                    print(
-                                                        'Error while getting data is $e');
-                                                    throw http.Response(
-                                                        'HTTP Client Exception: $e',
-                                                        500);
-                                                  } catch (e) {
-                                                    print(e);
-                                                    EasyLoading.dismiss();
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Oops",
-                                                        'Something Went wrong. Try Again Later!');
-                                                  } finally {
-                                                    EasyLoading.dismiss();
-                                                  }
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-                                                  await fetchUserData(
-                                                      refresh: true);
-                                                  showTopSnackBar(
-                                                    Overlay.of(context),
-                                                    CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      message:
-                                                          'You just earned a Space point!',
-                                                      textStyle:
-                                                          GoogleFonts.nunito(
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  print(response.body);
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  // Error handling
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-
-                                                  customErrorDialog(
-                                                      context,
-                                                      "Error",
-                                                      "Try again later");
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  canLoad = true;
-                                                });
-                                                customErrorDialog(
-                                                    context,
-                                                    "Incomplete",
-                                                    "Fill the field correctly to proceed");
-                                              }
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        AlertDialog(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(30,
-                                                                  30, 30, 20),
-                                                          elevation: 0,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          insetPadding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          scrollable: true,
-                                                          title: null,
-                                                          shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(30),
-                                                              topRight: Radius
-                                                                  .circular(30),
-                                                            ),
-                                                          ),
-                                                          content: SizedBox(
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            child: Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          40),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                15),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment:
-                                                                              Alignment.topCenter,
-                                                                          child:
-                                                                              Text(
-                                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                GoogleFonts.nunito(
-                                                                              color: brandOne,
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                10),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(3),
-                                                                              child: ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Get.back();
-                                                                                  Get.to(const FundWallet());
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(8),
-                                                                                  ),
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                  textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                ),
-                                                                                child: const Text(
-                                                                                  "Fund Wallet",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.w700,
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            }
-                                          } else {
-                                            _pinController.clear();
-                                            if (context.mounted) {
-                                              customErrorDialog(
-                                                  context,
-                                                  "Invalid PIN",
-                                                  'Enter correct PIN to proceed');
-                                            }
-                                          }
-                                        },
-                                        validator: validatePin,
-                                        onChanged: validatePin,
-                                        controller: _pinController,
-                                        length: 4,
-                                        closeKeyboardWhenCompleted: true,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      const SizedBox(
-                                        height: 40,
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(300, 50),
-                                          backgroundColor: brandOne,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (BCrypt.checkpw(
-                                            _pinController.text
-                                                .trim()
-                                                .toString(),
-                                            userController.userModel!
-                                                .userDetails![0].wallet.pin,
-                                          )) {
-                                            _pinController.clear();
-                                            Get.back();
-                                            // _doWallet();
                                             Get.back();
                                             setState(() {
                                               loadMssg = "Processing...";
@@ -4662,7 +4002,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                           .text
                                                           .trim()
                                                           .toString(),
-                                                  "ignore_duplicate": 1
+                                                  "ignore_duplicate": "1"
                                                 }),
                                               );
 
@@ -4791,15 +4131,18 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             }
                                           }
                                         },
-                                        child: Text(
-                                          'Proceed to Payment',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
                                       ),
                                     ],
                                   ),
@@ -4942,7 +4285,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             isDismissible: true,
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 350,
+                              height: 350.h,
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
@@ -4955,21 +4298,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 50,
+                                      // ),
                                       Text(
                                         'Enter PIN to Proceed',
                                         style: GoogleFonts.nunito(
-                                            fontSize: 18,
+                                            fontSize: 22.h,
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.w800),
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(
-                                        height: 20,
+                                        height: 30,
                                       ),
                                       Pinput(
                                         obscureText: true,
@@ -4997,339 +4341,6 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           )) {
                                             _pinController.clear();
                                             Get.back();
-                                            Get.back();
-                                            setState(() {
-                                              loadMssg = "Processing...";
-                                              canLoad = false;
-                                            });
-                                            if (userController
-                                                    .userModel!
-                                                    .userDetails![0]
-                                                    .wallet
-                                                    .mainBalance >
-                                                ((int.tryParse(
-                                                    _airtimeAmountController
-                                                        .text
-                                                        .trim()))!)) {
-                                              if (airtimeFormKey.currentState!
-                                                  .validate()) {
-                                                const String apiUrl =
-                                                    'https://api.watupay.com/v1/watubill/vend';
-                                                const String bearerToken =
-                                                    'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                final response =
-                                                    await http.post(
-                                                  Uri.parse(apiUrl),
-                                                  headers: {
-                                                    'Authorization':
-                                                        'Bearer $bearerToken',
-                                                    "Content-Type":
-                                                        "application/json"
-                                                  },
-                                                  body: jsonEncode(<String,
-                                                      dynamic>{
-                                                    "amount":
-                                                        _airtimeAmountController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "channel": "bill-26",
-                                                    "business_signature":
-                                                        "a390960dfa37469d824ffe6cb80472f6",
-                                                    "phone_number":
-                                                        _airtimeNumberController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "ignore_duplicate": 1
-                                                  }),
-                                                );
-
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  String authToken =
-                                                      await GlobalService
-                                                          .sharedPreferencesManager
-                                                          .getAuthToken();
-                                                  print(authToken);
-                                                  try {
-                                                    EasyLoading.show(
-                                                      indicator:
-                                                          const CustomLoader(),
-                                                      maskType:
-                                                          EasyLoadingMaskType
-                                                              .black,
-                                                      dismissOnTap: false,
-                                                    );
-                                                    final addUtility =
-                                                        await http.post(
-                                                      Uri.parse(AppConstants
-                                                              .BASE_URL +
-                                                          AppConstants
-                                                              .ADD_UTILITY_HISTORY),
-                                                      headers: {
-                                                        'Authorization':
-                                                            'Bearer $authToken',
-                                                        "Content-Type":
-                                                            "application/json"
-                                                      },
-                                                      body: jsonEncode(<String,
-                                                          dynamic>{
-                                                        "amount":
-                                                            _airtimeAmountController
-                                                                .text
-                                                                .trim()
-                                                                .toString(),
-                                                        'biller':
-                                                            "9MOBILE AIRTIME",
-                                                        "transactionType":
-                                                            "Airtime",
-                                                        "description":
-                                                            'Airtime Payment to ${_airtimeNumberController.text.trim().toString()}',
-                                                      }),
-                                                    );
-                                                    print(addUtility);
-                                                    print(addUtility.body);
-                                                    EasyLoading.dismiss();
-                                                  } on TimeoutException {
-                                                    throw http.Response(
-                                                        'Network Timeout', 500);
-                                                  } on http
-                                                  .ClientException catch (e) {
-                                                    print(
-                                                        'Error while getting data is $e');
-                                                    throw http.Response(
-                                                        'HTTP Client Exception: $e',
-                                                        500);
-                                                  } catch (e) {
-                                                    print(e);
-                                                    EasyLoading.dismiss();
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Oops",
-                                                        'Something Went wrong. Try Again Later!');
-                                                  } finally {
-                                                    EasyLoading.dismiss();
-                                                  }
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-                                                  await fetchUserData(
-                                                      refresh: true);
-                                                  showTopSnackBar(
-                                                    Overlay.of(context),
-                                                    CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      message:
-                                                          'You just earned a Space point!',
-                                                      textStyle:
-                                                          GoogleFonts.nunito(
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  print(response.body);
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  // Error handling
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-
-                                                  customErrorDialog(
-                                                      context,
-                                                      "Error",
-                                                      "Try again later");
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  canLoad = true;
-                                                });
-                                                customErrorDialog(
-                                                    context,
-                                                    "Incomplete",
-                                                    "Fill the field correctly to proceed");
-                                              }
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        AlertDialog(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(30,
-                                                                  30, 30, 20),
-                                                          elevation: 0,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          insetPadding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          scrollable: true,
-                                                          title: null,
-                                                          shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(30),
-                                                              topRight: Radius
-                                                                  .circular(30),
-                                                            ),
-                                                          ),
-                                                          content: SizedBox(
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            child: Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          40),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                15),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment:
-                                                                              Alignment.topCenter,
-                                                                          child:
-                                                                              Text(
-                                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                GoogleFonts.nunito(
-                                                                              color: brandOne,
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                10),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(3),
-                                                                              child: ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Get.back();
-                                                                                  Get.to(const FundWallet());
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(8),
-                                                                                  ),
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                  textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                ),
-                                                                                child: const Text(
-                                                                                  "Fund Wallet",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.w700,
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            }
-                                          } else {
-                                            _pinController.clear();
-                                            if (context.mounted) {
-                                              customErrorDialog(
-                                                  context,
-                                                  "Invalid PIN",
-                                                  'Enter correct PIN to proceed');
-                                            }
-                                          }
-                                        },
-                                        validator: validatePin,
-                                        onChanged: validatePin,
-                                        controller: _pinController,
-                                        length: 4,
-                                        closeKeyboardWhenCompleted: true,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      const SizedBox(
-                                        height: 40,
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(300, 50),
-                                          backgroundColor: brandOne,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (BCrypt.checkpw(
-                                            _pinController.text
-                                                .trim()
-                                                .toString(),
-                                            userController.userModel!
-                                                .userDetails![0].wallet.pin,
-                                          )) {
-                                            _pinController.clear();
-                                            Get.back();
-                                            // _doWallet();
                                             Get.back();
                                             setState(() {
                                               loadMssg = "Processing...";
@@ -5494,15 +4505,12 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             }
                                           }
                                         },
-                                        child: Text(
-                                          'Proceed to Payment',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
                                       ),
                                     ],
                                   ),
@@ -5645,7 +4653,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                             isDismissible: true,
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 350,
+                              height: 350.h,
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
@@ -5658,21 +4666,22 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 50,
+                                      // ),
                                       Text(
                                         'Enter PIN to Proceed',
                                         style: GoogleFonts.nunito(
-                                            fontSize: 18,
+                                            fontSize: 22.h,
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.w800),
                                         textAlign: TextAlign.center,
                                       ),
                                       const SizedBox(
-                                        height: 20,
+                                        height: 30,
                                       ),
                                       Pinput(
                                         obscureText: true,
@@ -5700,346 +4709,21 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           )) {
                                             _pinController.clear();
                                             Get.back();
-                                            Get.back();
+                                            // Get.back();
                                             setState(() {
                                               loadMssg = "Processing...";
                                               canLoad = false;
                                             });
 
-                                            if (userController
-                                                    .userModel!
-                                                    .userDetails![0]
-                                                    .wallet
-                                                    .mainBalance >
-                                                ((int.tryParse(
-                                                    _airtimeAmountController
-                                                        .text
-                                                        .trim()))!)) {
-                                              if (airtimeFormKey.currentState!
-                                                  .validate()) {
-                                                const String apiUrl =
-                                                    'https://api.watupay.com/v1/watubill/vend';
-                                                const String bearerToken =
-                                                    'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
-                                                final response =
-                                                    await http.post(
-                                                  Uri.parse(apiUrl),
-                                                  headers: {
-                                                    'Authorization':
-                                                        'Bearer $bearerToken',
-                                                    "Content-Type":
-                                                        "application/json"
-                                                  },
-                                                  body: jsonEncode(<String,
-                                                      dynamic>{
-                                                    "amount":
-                                                        _airtimeAmountController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "channel": "bill-25",
-                                                    "business_signature":
-                                                        "a390960dfa37469d824ffe6cb80472f6",
-                                                    "phone_number":
-                                                        _airtimeNumberController
-                                                            .text
-                                                            .trim()
-                                                            .toString(),
-                                                    "ignore_duplicate": 1
-                                                  }),
-                                                );
-
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  String authToken =
-                                                      await GlobalService
-                                                          .sharedPreferencesManager
-                                                          .getAuthToken();
-                                                  print(authToken);
-                                                  try {
-                                                    EasyLoading.show(
-                                                      indicator:
-                                                          const CustomLoader(),
-                                                      maskType:
-                                                          EasyLoadingMaskType
-                                                              .black,
-                                                      dismissOnTap: false,
-                                                    );
-                                                    final addUtility =
-                                                        await http.post(
-                                                      Uri.parse(AppConstants
-                                                              .BASE_URL +
-                                                          AppConstants
-                                                              .ADD_UTILITY_HISTORY),
-                                                      headers: {
-                                                        'Authorization':
-                                                            'Bearer $authToken',
-                                                        "Content-Type":
-                                                            "application/json"
-                                                      },
-                                                      body: jsonEncode(<String,
-                                                          dynamic>{
-                                                        "amount":
-                                                            _airtimeAmountController
-                                                                .text
-                                                                .trim()
-                                                                .toString(),
-                                                        'biller': "MTN AIRTIME",
-                                                        "transactionType":
-                                                            "Airtime",
-                                                        "description":
-                                                            'Airtime Payment to ${_airtimeNumberController.text.trim().toString()}',
-                                                      }),
-                                                    );
-                                                    print(addUtility);
-                                                    print(addUtility.body);
-                                                    EasyLoading.dismiss();
-                                                  } on TimeoutException {
-                                                    throw http.Response(
-                                                        'Network Timeout', 500);
-                                                  } on http
-                                                  .ClientException catch (e) {
-                                                    print(
-                                                        'Error while getting data is $e');
-                                                    throw http.Response(
-                                                        'HTTP Client Exception: $e',
-                                                        500);
-                                                  } catch (e) {
-                                                    print(e);
-                                                    EasyLoading.dismiss();
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Oops",
-                                                        'Something Went wrong. Try Again Later!');
-                                                  } finally {
-                                                    EasyLoading.dismiss();
-                                                  }
-
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-                                                  await fetchUserData(
-                                                      refresh: true);
-                                                  showTopSnackBar(
-                                                    Overlay.of(context),
-                                                    CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      message:
-                                                          'You just earned a Space point!',
-                                                      textStyle:
-                                                          GoogleFonts.nunito(
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  print(response.body);
-                                                  setState(() {
-                                                    canLoad = true;
-                                                  });
-                                                  // Error handling
-                                                  _airtimeAmountController
-                                                      .clear();
-                                                  _airtimeNumberController
-                                                      .clear();
-                                                  _pinController.clear();
-
-                                                  customErrorDialog(
-                                                      context,
-                                                      "Error",
-                                                      "Try again later");
-                                                }
-                                              } else {
-                                                setState(() {
-                                                  canLoad = true;
-                                                });
-                                                customErrorDialog(
-                                                    context,
-                                                    "Incomplete",
-                                                    "Fill the field correctly to proceed");
-                                              }
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        AlertDialog(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(30,
-                                                                  30, 30, 20),
-                                                          elevation: 0,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          insetPadding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          scrollable: true,
-                                                          title: null,
-                                                          shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(30),
-                                                              topRight: Radius
-                                                                  .circular(30),
-                                                            ),
-                                                          ),
-                                                          content: SizedBox(
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            child: Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          40),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                15),
-                                                                        child:
-                                                                            Align(
-                                                                          alignment:
-                                                                              Alignment.topCenter,
-                                                                          child:
-                                                                              Text(
-                                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                GoogleFonts.nunito(
-                                                                              color: brandOne,
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                10),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(3),
-                                                                              child: ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Get.back();
-                                                                                  Get.to(const FundWallet());
-                                                                                },
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(8),
-                                                                                  ),
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                  textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                ),
-                                                                                child: const Text(
-                                                                                  "Fund Wallet",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.w700,
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            }
-                                          } else {
-                                            _pinController.clear();
-                                            if (context.mounted) {
-                                              customErrorDialog(
-                                                  context,
-                                                  "Invalid PIN",
-                                                  'Enter correct PIN to proceed');
-                                            }
-                                          }
-                                        },
-                                        validator: validatePin,
-                                        onChanged: validatePin,
-                                        controller: _pinController,
-                                        length: 4,
-                                        closeKeyboardWhenCompleted: true,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      const SizedBox(
-                                        height: 40,
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(300, 50),
-                                          backgroundColor: brandOne,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (BCrypt.checkpw(
-                                            _pinController.text
-                                                .trim()
-                                                .toString(),
-                                            userController.userModel!
-                                                .userDetails![0].wallet.pin,
-                                          )) {
-                                            _pinController.clear();
-                                            Get.back();
-                                            // _doWallet();
-                                            Get.back();
-                                            setState(() {
-                                              loadMssg = "Processing...";
-                                              canLoad = false;
-                                            });
-
+                                            // if (userController
+                                            //         .userModel!
+                                            //         .userDetails![0]
+                                            //         .wallet
+                                            //         .mainBalance >
+                                            //     ((int.tryParse(
+                                            //         _airtimeAmountController
+                                            //             .text
+                                            //             .trim()))!)) {
                                             if (airtimeFormKey.currentState!
                                                 .validate()) {
                                               const String apiUrl =
@@ -6188,6 +4872,128 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                   "Incomplete",
                                                   "Fill the field correctly to proceed");
                                             }
+                                            // } else {
+                                            //   showDialog(
+                                            //       context: context,
+                                            //       barrierDismissible: true,
+                                            //       builder:
+                                            //           (BuildContext context) {
+                                            //         return Column(
+                                            //           mainAxisAlignment:
+                                            //               MainAxisAlignment.end,
+                                            //           children: [
+                                            //             AlertDialog(
+                                            //               contentPadding:
+                                            //                   const EdgeInsets
+                                            //                       .fromLTRB(30,
+                                            //                       30, 30, 20),
+                                            //               elevation: 0,
+                                            //               alignment: Alignment
+                                            //                   .bottomCenter,
+                                            //               insetPadding:
+                                            //                   const EdgeInsets
+                                            //                       .all(0),
+                                            //               scrollable: true,
+                                            //               title: null,
+                                            //               shape:
+                                            //                   const RoundedRectangleBorder(
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .only(
+                                            //                   topLeft: Radius
+                                            //                       .circular(30),
+                                            //                   topRight: Radius
+                                            //                       .circular(30),
+                                            //                 ),
+                                            //               ),
+                                            //               content: SizedBox(
+                                            //                 width:
+                                            //                     MediaQuery.of(
+                                            //                             context)
+                                            //                         .size
+                                            //                         .width,
+                                            //                 child: Column(
+                                            //                   children: [
+                                            //                     Padding(
+                                            //                       padding: const EdgeInsets
+                                            //                           .symmetric(
+                                            //                           vertical:
+                                            //                               40),
+                                            //                       child: Column(
+                                            //                         children: [
+                                            //                           Padding(
+                                            //                             padding: const EdgeInsets
+                                            //                                 .symmetric(
+                                            //                                 vertical:
+                                            //                                     15),
+                                            //                             child:
+                                            //                                 Align(
+                                            //                               alignment:
+                                            //                                   Alignment.topCenter,
+                                            //                               child:
+                                            //                                   Text(
+                                            //                                 'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                            //                                 textAlign:
+                                            //                                     TextAlign.center,
+                                            //                                 style:
+                                            //                                     GoogleFonts.nunito(
+                                            //                                   color: brandOne,
+                                            //                                   fontSize: 16,
+                                            //                                   fontWeight: FontWeight.w600,
+                                            //                                 ),
+                                            //                               ),
+                                            //                             ),
+                                            //                           ),
+                                            //                           Padding(
+                                            //                             padding: const EdgeInsets
+                                            //                                 .symmetric(
+                                            //                                 vertical:
+                                            //                                     10),
+                                            //                             child:
+                                            //                                 Column(
+                                            //                               children: [
+                                            //                                 Padding(
+                                            //                                   padding: const EdgeInsets.all(3),
+                                            //                                   child: ElevatedButton(
+                                            //                                     onPressed: () {
+                                            //                                       Get.back();
+                                            //                                       Get.to(const FundWallet());
+                                            //                                     },
+                                            //                                     style: ElevatedButton.styleFrom(
+                                            //                                       backgroundColor: Theme.of(context).colorScheme.secondary,
+                                            //                                       shape: RoundedRectangleBorder(
+                                            //                                         borderRadius: BorderRadius.circular(8),
+                                            //                                       ),
+                                            //                                       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                                            //                                       textStyle: const TextStyle(color: brandFour, fontSize: 13),
+                                            //                                     ),
+                                            //                                     child: const Text(
+                                            //                                       "Fund Wallet",
+                                            //                                       style: TextStyle(
+                                            //                                         color: Colors.white,
+                                            //                                         fontWeight: FontWeight.w700,
+                                            //                                         fontSize: 16,
+                                            //                                       ),
+                                            //                                     ),
+                                            //                                   ),
+                                            //                                 ),
+                                            //                                 const SizedBox(
+                                            //                                   height: 10,
+                                            //                                 ),
+                                            //                               ],
+                                            //                             ),
+                                            //                           ),
+                                            //                         ],
+                                            //                       ),
+                                            //                     ),
+                                            //                   ],
+                                            //                 ),
+                                            //               ),
+                                            //             )
+                                            //           ],
+                                            //         );
+                                            //       });
+                                            // }
                                           } else {
                                             _pinController.clear();
                                             if (context.mounted) {
@@ -6198,16 +5004,215 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                             }
                                           }
                                         },
-                                        child: Text(
-                                          'Proceed to Payment',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                        validator: validatePin,
+                                        onChanged: validatePin,
+                                        controller: _pinController,
+                                        length: 4,
+                                        closeKeyboardWhenCompleted: true,
+                                        keyboardType: TextInputType.number,
                                       ),
+                                      // const SizedBox(
+                                      //   height: 20,
+                                      // ),
+                                      // const SizedBox(
+                                      //   height: 40,
+                                      // ),
+                                      // ElevatedButton(
+                                      //   style: ElevatedButton.styleFrom(
+                                      //     minimumSize: const Size(300, 50),
+                                      //     backgroundColor: brandOne,
+                                      //     elevation: 0,
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius: BorderRadius.circular(
+                                      //         10,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      //   onPressed: () async {
+                                      //     if (BCrypt.checkpw(
+                                      //       _pinController.text
+                                      //           .trim()
+                                      //           .toString(),
+                                      //       userController.userModel!
+                                      //           .userDetails![0].wallet.pin,
+                                      //     )) {
+                                      //       _pinController.clear();
+                                      //       Get.back();
+                                      //       // _doWallet();
+                                      //       Get.back();
+                                      //       setState(() {
+                                      //         loadMssg = "Processing...";
+                                      //         canLoad = false;
+                                      //       });
+
+                                      //       if (airtimeFormKey.currentState!
+                                      //           .validate()) {
+                                      //         const String apiUrl =
+                                      //             'https://api.watupay.com/v1/watubill/vend';
+                                      //         const String bearerToken =
+                                      //             'WTP-L-SK-1b434faeb3b8492bbc34b03973ff3683';
+                                      //         final response = await http.post(
+                                      //           Uri.parse(apiUrl),
+                                      //           headers: {
+                                      //             'Authorization':
+                                      //                 'Bearer $bearerToken',
+                                      //             "Content-Type":
+                                      //                 "application/json"
+                                      //           },
+                                      //           body: jsonEncode(<String,
+                                      //               dynamic>{
+                                      //             "amount":
+                                      //                 _airtimeAmountController
+                                      //                     .text
+                                      //                     .trim()
+                                      //                     .toString(),
+                                      //             "channel": "bill-25",
+                                      //             "business_signature":
+                                      //                 "a390960dfa37469d824ffe6cb80472f6",
+                                      //             "phone_number":
+                                      //                 _airtimeNumberController
+                                      //                     .text
+                                      //                     .trim()
+                                      //                     .toString(),
+                                      //             "ignore_duplicate": 1
+                                      //           }),
+                                      //         );
+
+                                      //         if (response.statusCode == 200) {
+                                      //           String authToken =
+                                      //               await GlobalService
+                                      //                   .sharedPreferencesManager
+                                      //                   .getAuthToken();
+                                      //           print(authToken);
+                                      //           try {
+                                      //             EasyLoading.show(
+                                      //               indicator:
+                                      //                   const CustomLoader(),
+                                      //               maskType:
+                                      //                   EasyLoadingMaskType
+                                      //                       .black,
+                                      //               dismissOnTap: false,
+                                      //             );
+                                      //             final addUtility =
+                                      //                 await http.post(
+                                      //               Uri.parse(AppConstants
+                                      //                       .BASE_URL +
+                                      //                   AppConstants
+                                      //                       .ADD_UTILITY_HISTORY),
+                                      //               headers: {
+                                      //                 'Authorization':
+                                      //                     'Bearer $authToken',
+                                      //                 "Content-Type":
+                                      //                     "application/json"
+                                      //               },
+                                      //               body: jsonEncode(<String,
+                                      //                   dynamic>{
+                                      //                 "amount":
+                                      //                     _airtimeAmountController
+                                      //                         .text
+                                      //                         .trim()
+                                      //                         .toString(),
+                                      //                 'biller': "MTN AIRTIME",
+                                      //                 "transactionType":
+                                      //                     "Airtime",
+                                      //                 "description":
+                                      //                     'Airtime Payment to ${_airtimeNumberController.text.trim().toString()}',
+                                      //               }),
+                                      //             );
+                                      //             print(addUtility);
+                                      //             print(addUtility.body);
+                                      //             EasyLoading.dismiss();
+                                      //           } on TimeoutException {
+                                      //             throw http.Response(
+                                      //                 'Network Timeout', 500);
+                                      //           } on http
+                                      //           .ClientException catch (e) {
+                                      //             print(
+                                      //                 'Error while getting data is $e');
+                                      //             throw http.Response(
+                                      //                 'HTTP Client Exception: $e',
+                                      //                 500);
+                                      //           } catch (e) {
+                                      //             print(e);
+                                      //             EasyLoading.dismiss();
+                                      //             customErrorDialog(
+                                      //                 context,
+                                      //                 "Oops",
+                                      //                 'Something Went wrong. Try Again Later!');
+                                      //           } finally {
+                                      //             EasyLoading.dismiss();
+                                      //           }
+
+                                      //           setState(() {
+                                      //             canLoad = true;
+                                      //           });
+                                      //           _airtimeAmountController
+                                      //               .clear();
+                                      //           _airtimeNumberController
+                                      //               .clear();
+                                      //           _pinController.clear();
+                                      //           await fetchUserData(
+                                      //               refresh: true);
+                                      //           showTopSnackBar(
+                                      //             Overlay.of(context),
+                                      //             CustomSnackBar.success(
+                                      //               backgroundColor:
+                                      //                   Colors.green,
+                                      //               message:
+                                      //                   'You just earned a Space point!',
+                                      //               textStyle:
+                                      //                   GoogleFonts.nunito(
+                                      //                 fontSize: 14,
+                                      //                 color: Colors.white,
+                                      //                 fontWeight:
+                                      //                     FontWeight.w700,
+                                      //               ),
+                                      //             ),
+                                      //           );
+                                      //         } else {
+                                      //           print(response.body);
+                                      //           setState(() {
+                                      //             canLoad = true;
+                                      //           });
+                                      //           // Error handling
+                                      //           _airtimeAmountController
+                                      //               .clear();
+                                      //           _airtimeNumberController
+                                      //               .clear();
+                                      //           _pinController.clear();
+
+                                      //           customErrorDialog(context,
+                                      //               "Error", "Try again later");
+                                      //         }
+                                      //       } else {
+                                      //         setState(() {
+                                      //           canLoad = true;
+                                      //         });
+                                      //         customErrorDialog(
+                                      //             context,
+                                      //             "Incomplete",
+                                      //             "Fill the field correctly to proceed");
+                                      //       }
+                                      //     } else {
+                                      //       _pinController.clear();
+                                      //       if (context.mounted) {
+                                      //         customErrorDialog(
+                                      //             context,
+                                      //             "Invalid PIN",
+                                      //             'Enter correct PIN to proceed');
+                                      //       }
+                                      //     }
+                                      //   },
+                                      //   child: Text(
+                                      //     'Proceed to Payment',
+                                      //     textAlign: TextAlign.center,
+                                      //     style: GoogleFonts.nunito(
+                                      //       color: Colors.white,
+                                      //       fontSize: 16,
+                                      //       fontWeight: FontWeight.w700,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),

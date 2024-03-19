@@ -634,6 +634,7 @@ class _HomePageState extends State<HomePage> {
           showIgnore: false,
           durationUntilAlertAgain: const Duration(seconds: 5),
           debugLogging: true,
+          debugDisplayAlways:true,
           dialogStyle: UpgradeDialogStyle.cupertino,
           showLater: false,
           canDismissDialog: false,
@@ -662,8 +663,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 0
-                      ? const Icon(Iconsax.home5)
-                      : const Icon(Iconsax.home),
+                      ?  Icon(Iconsax.home5,size: 20.sp)
+                      :  Icon(Iconsax.home,size: 20.sp),
                   // Image.asset(
                   //   "assets/icons/home_icon.png",
                   //   height: 30,
@@ -686,8 +687,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 1
-                      ? const Icon(Iconsax.activity5)
-                      : const Icon(Iconsax.activity),
+                      ?  Icon(Iconsax.activity5,size: 20.sp)
+                      :  Icon(Iconsax.activity,size: 20.sp),
                 ),
                 label: "Savings",
               ),
@@ -707,13 +708,13 @@ class _HomePageState extends State<HomePage> {
                       ? Image.asset(
                           "assets/icons/carbon_portfolio.png",
                           // height: 28,
-                          width: 29.w,
+                          width: 20.sp,
                           color: Theme.of(context).colorScheme.secondary,
                         )
                       : Image.asset(
                           "assets/icons/carbon_portfolio.png",
                           // height: 28,
-                          width: 29.w,
+                          width: 20.sp,
                           color: navigationcolorText,
                         ),
                 ),
@@ -735,13 +736,13 @@ class _HomePageState extends State<HomePage> {
                       ? Image.asset(
                           "assets/icons/utility_icon.png",
                           // height: 28,
-                          width: 29.w,
+                          width: 20.sp,
                           color: Theme.of(context).colorScheme.secondary,
                         )
                       : Image.asset(
                           "assets/icons/utility_icon.png",
-                          height: 30,
-                          width: 30,
+                          height: 20.sp,
+                          width: 20.sp,
                           color: navigationcolorText,
                         ),
                 ),
@@ -759,8 +760,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 4
-                      ? const Icon(Icons.person)
-                      : const Icon(Icons.person_outline),
+                      ?  Icon(Icons.person,size: 20.sp,)
+                      :  Icon(Icons.person_outline,size: 20.sp),
                 ),
                 label: "Profile",
               ),
@@ -783,6 +784,7 @@ class _HomePageState extends State<HomePage> {
             ),
             selectedLabelStyle: GoogleFonts.nunito(
               color: Theme.of(context).colorScheme.secondary,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w700,
             ),
             onTap: _onItemTapped,

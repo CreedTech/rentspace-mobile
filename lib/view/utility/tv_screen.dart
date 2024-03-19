@@ -42,7 +42,7 @@ class TvScreen extends StatefulWidget {
       tvProductCode,
       tvPlanName,
       tvStatus;
-  final int mainBalance;
+  final num mainBalance;
 
   @override
   State<TvScreen> createState() => _TvScreenState();
@@ -225,7 +225,7 @@ class _TvScreenState extends State<TvScreen> {
             EasyLoading.dismiss();
             showDialog(
                 context: context,
-                barrierDismissible: true,
+                barrierDismissible: false,
                 builder: (BuildContext context) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -434,7 +434,7 @@ class _TvScreenState extends State<TvScreen> {
                             EasyLoading.dismiss();
                             showDialog(
                                 context: context,
-                                barrierDismissible: true,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.end,

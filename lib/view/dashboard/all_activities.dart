@@ -127,15 +127,15 @@ class _AllActivitiesState extends State<AllActivities> {
                               ? TransactionReceiptTransfer(
                                   amount: history['amount'],
                                   status: history['status'],
-                                  fees:history['fees'],
+                                  fees:history['fees'] ?? 0,
                                   transactionType: history['transactionType'],
                                   description: history['description'],
                                   transactionGroup: history['transactionGroup'],
                                   transactionDate: history['createdAt'],
                                   transactionRef:
-                                      history['transactionReference'],
+                                      history['transactionReference'] ?? '',
                                   merchantRef: history['merchantReference'],
-                                  sessionId: history['sessionId'],
+                                  sessionId: history['sessionId'] ?? '',
                                 )
                               : (history['transactionGroup']
                                           .toString()
@@ -144,7 +144,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                   ? TransactionReceiptDVA(
                                       amount: history['amount'],
                                       status: history['status'],
-                                      fees: history['fees'],
+                                      fees: history['fees'] ?? 0,
                                       transactionType:
                                           history['transactionType'],
                                       description: history['description'],
@@ -152,22 +152,22 @@ class _AllActivitiesState extends State<AllActivities> {
                                           history['transactionGroup'],
                                       transactionDate: history['createdAt'],
                                       transactionRef:
-                                          history['transactionReference'],
+                                          history['transactionReference'] ?? '',
                                       merchantRef: history['merchantReference'],
                                       remarks: history['remarks'],
                                     )
                                   : TransactionReceipt(
                                       amount: history['amount'],
                                       status: history['status'],
-                                      fees: history['fees'],
+                                      fees: history['fees'] ?? 0,
                                       transactionType:
-                                          history['message'],
+                                          history['transactionType'],
                                       description: history['description'],
                                       transactionGroup:
                                           history['transactionGroup'],
                                       transactionDate: history['createdAt'],
                                       transactionRef:
-                                          history['transactionReference'],
+                                          history['transactionReference'] ?? '',
                                       merchantRef: history['merchantReference'],
                                     ),
                         );

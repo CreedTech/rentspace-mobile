@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/constants/widgets/shimmer_widget.dart';
 import 'package:rentspace/controller/activities_controller.dart';
@@ -88,6 +90,9 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  bool isRefresh = false;
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
   bool isInternetConnected = true;
   // final UserController userController = Get.find();
@@ -157,6 +162,19 @@ class _FirstPageState extends State<FirstPage> {
     checkUserInfo();
   }
 
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
+    if (mounted) {
+      setState(() {
+        isRefresh = true;
+      });
+    }
+    userController.fetchData();
+    walletController.fetchWallet();
+    rentController.fetchRent();
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.put(UserController());
@@ -174,7 +192,14 @@ class _FirstPageState extends State<FirstPage> {
                   20.0.w,
                   0.0.h,
                 ),
-                child: shimmerLoader(),
+                child: LiquidPullToRefresh(
+                    height: 100,
+                    animSpeedFactor: 2,
+                    color: brandOne,
+                    backgroundColor: Colors.white,
+                    showChildOpacityTransition: false,
+                    onRefresh: onRefresh,
+                    child: shimmerLoader()),
               ),
             ),
           )

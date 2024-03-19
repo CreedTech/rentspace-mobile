@@ -1240,23 +1240,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       const SizedBox(
                         height: 50,
                       ),
-                      // ListView.builder(
-                      //   physics: BouncingScrollPhysics(),
-                      //   shrinkWrap: true,
-                      //   itemCount: _filteredBanks.length,
-                      //   itemBuilder: (context, index) {
-                      //     return ListTile(
-                      //       title: Text(_filteredBanks[index]),
-                      //       onTap: () {
-                      //         String bankCode =
-                      //             _getBankCode(_filteredBanks[index]);
-                      //         print('Selected Bank Code: $bankCode');
-                      //         // Do something with the selected bank code
-                      //       },
-                      //     );
-                      //   },
-                      // ),
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1273,13 +1256,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                               ),
                             ),
                             onPressed: () {
-                              if (validateAmount(
-                                          _amountController.text.trim()) ==
-                                      null &&
-                                  validateName(_bankAccountName) == null &&
-                                  validateNumber(_accountNumberController.text
-                                          .trim()) ==
-                                      null) {
+                              if (withdrawFormKey.currentState!.validate()) {
                                 // print('yo');
                                 Get.bottomSheet(
                                   isDismissible: true,
@@ -1341,7 +1318,22 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 )) {
                                                   _aPinController.clear();
                                                   Get.back();
-                                                  _doWallet();
+                                                  if (double.tryParse(
+                                                          _amountController.text
+                                                              .trim()
+                                                              .replaceAll(
+                                                                  ',', ''))! >
+                                                      walletController
+                                                          .walletModel!
+                                                          .wallet![0]
+                                                          .mainBalance) {
+                                                    customErrorDialog(
+                                                        context,
+                                                        "Insufficient Fund",
+                                                        'Fund your wallet to continue');
+                                                  } else {
+                                                    _doWallet();
+                                                  }
                                                 } else {
                                                   _aPinController.clear();
                                                   if (context.mounted) {
@@ -1363,17 +1355,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                             SizedBox(
                                               height: 20.sp,
                                             ),
-                                            // Text(
-                                            //   '(₦20 charges applied)',
-                                            //   style: GoogleFonts.nunito(
-                                            //     fontSize: 14,
-                                            //     color: Theme.of(context)
-                                            //         .primaryColor,
-                                            //     fontWeight:
-                                            //         FontWeight.w700,
-                                            //   ),
-                                            //   textAlign: TextAlign.center,
-                                            // ),
                                             SizedBox(
                                               height: 40.sp,
                                             ),
@@ -1400,7 +1381,22 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 )) {
                                                   _aPinController.clear();
                                                   Get.back();
-                                                  _doWallet();
+                                                  if (double.tryParse(
+                                                          _amountController.text
+                                                              .trim()
+                                                              .replaceAll(
+                                                                  ',', ''))! >
+                                                      walletController
+                                                          .walletModel!
+                                                          .wallet![0]
+                                                          .mainBalance) {
+                                                    customErrorDialog(
+                                                        context,
+                                                        "Insufficient Fund",
+                                                        'Fund your wallet to continue');
+                                                  } else {
+                                                    _doWallet();
+                                                  }
                                                 } else {
                                                   _aPinController.clear();
                                                   if (context.mounted) {
@@ -1524,37 +1520,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                     ],
                   ),
                 )
-
-                // : SizedBox(
-                //     height: double.infinity,
-                //     width: double.infinity,
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       crossAxisAlignment: CrossAxisAlignment.center,
-                //       children: [
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: [
-                //             Text(
-                //               "Processing...",
-                //               style: GoogleFonts.nunito(
-                //                 fontSize: 20,
-                //                 fontWeight: FontWeight.w700,
-                //                 color: Theme.of(context).primaryColor,
-                //               ),
-                //             ),
-                //             const SizedBox(
-                //               height: 30,
-                //             ),
-                //           ],
-                //         ),
-                //         const SizedBox(
-                //           height: 50,
-                //         ),
-                //         const CustomLoader(),
-                //       ],
-                //     ),
-                //   ),
               ],
             )
           : Container(

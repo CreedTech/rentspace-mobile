@@ -11,37 +11,32 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/firebase_auth_constants.dart';
-import 'package:rentspace/controller/announcement_controller.dart';
-import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/controller/auth_controller.dart';
 import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/FirstPage.dart';
-import 'package:rentspace/view/dashboard/dashboard.dart';
-import 'package:rentspace/view/dashboard/notifications.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
-import 'package:provider/provider.dart';
-import 'package:rentspace/view/home_page.dart';
-import 'package:sizer/sizer.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
+import 'constants/widgets/notification_dialog.dart';
 import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
-import 'services/implementations/notification_service.dart';
 import 'view/actions/new_notification_page.dart';
-import 'view/splash_screen.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   print('Handling Background message ${message.messageId}');
+// final notificationProvider =
+//     StateNotifierProvider<NotificationNotifier, List<String>>((ref) {
+//   return NotificationNotifier();
+// });
+
+// class NotificationNotifier extends StateNotifier<List<String>> {
+//   NotificationNotifier() : super([]);
+
+//   void addNotification(String notification) {
+//     state = [...state, notification];
+//   }
 // }
 
-// const String logoUrl =
-//     "https://firebasestorage.googleapis.com/v0/b/rentspace-351c8.appspot.com/o/assets%2Flogo.png?alt=media&token=333339fd-1183-4855-ad79-b8da6fad818b";
 int id = 0;
 final StreamController<String?> selectNotificationStream =
     StreamController<String?>.broadcast();
@@ -64,11 +59,6 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
         'notification action tapped with input: ${notificationResponse.input}');
   }
 }
-
-// class FCMService {
-//   static Future<void> initializeFirebase() async =>
-//       await Firebase.initializeApp();
-// }
 
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 //app entry point
@@ -115,60 +105,176 @@ Future<void> main() async {
 // if application is in background
   FirebaseMessaging.onMessageOpenedApp.listen(
     (RemoteMessage message) async {
+      print("App opened from background or terminated state");
+
+      // Print notification information
       print(
-          "onMessageOpened again : ${json.encode(message.notification!.body)}");
-      Navigator.push(
-          _navigatorKey.currentState!.context,
-          MaterialPageRoute(
-            builder: (context) => FirstPage(),
-            // NewNotificationPage(
-            //   message: message.notification!.body!,
-            // ),
-            // settings: const RouteSettings(name: newNotification),
-          ));
-      // Navigator.pushNamed(
-      //   _navigatorKey.currentState!.context,
-      //   '/newNotification',
-      //   arguments: {"message", json.encode(message.notification!.body)},
+          "Notification: ${message.notification?.title}/${message.notification?.body}/${message.data['notificationType']}");
+
+      // Display notification dialog
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return NotificationDialog(notificationData: message.data);
+      //   },
       // );
+
+      // Navigate to appropriate screen based on notification type
+      String notificationType = message.data['notificationType'];
+      // switch (notificationType) {
+      //   case 'news':
+
+      //     // Navigate to NewsScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 'payment':
+
+      //     // Navigate to EventScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 'fail':
+
+      //     // Navigate to EventScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   // Add more cases for other notification types as needed
+      //   default:
+      //     // Handle unknown notification types
+      //     Get.to(FirstPage());
+      //     break;
+      // }
+
+      // try {
+      //   if (message.notification?.titleLocKey != null &&
+      //       message.notification?.titleLocKey != null) {
+      //     // Navigate to NewNotificationPage
+      //     Get.to(NewNotificationPage(message: message.notification!.title!));
+      //   } else {
+      //     // Navigate to FirstPage
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => FirstPage(),
+      //       ),
+      //     );
+      //   }
+      // } catch (e) {
+      //   print("Error navigating to screen: $e");
+      // }
     },
   );
+
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
+      print("............onMessage..............");
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}/${message.data['notificationType']}");
       print('message.data');
       print(message.notification!.body);
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification!.android;
+      String notificationType = message.data['notificationType'];
+      // switch (notificationType) {
+      //   case 'news':
 
+      //     // Navigate to NewsScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 'payment':
+
+      //     // Navigate to EventScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 'fail':
+
+      //     // Navigate to EventScreen
+      //     Navigator.push(
+      //       _navigatorKey.currentState!.context,
+      //       MaterialPageRoute(
+      //         builder: (context) => NewNotificationPage(
+      //           message: message.data,
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   // Add more cases for other notification types as needed
+      //   default:
+      //     // Handle unknown notification types
+      //     Get.to(FirstPage());
+      //     break;
+      // }
+
+      displayNotification(notification, message.data);
+      // showDialog(
+      //   context: _navigatorKey.currentState!.context,
+      //   builder: (BuildContext context) {
+      //     return NotificationDialog(notificationData: message.data);
+      //   },
+      // );
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          payload: message.notification!.body,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'high_importance_channel',
-              'Rentspace Notifications',
-              priority: Priority.max,
-              importance: Importance.max,
-              channelDescription: 'Notifications for rentspace activities',
-              // icon: android?.smallIcon,
-              // other properties...
-            ),
-            iOS: DarwinNotificationDetails(),
-          ),
-        );
-      }
+      // if (notification != null && android != null) {
+      //   flutterLocalNotificationsPlugin.show(
+      //     notification.hashCode,
+      //     notification.title,
+      //     notification.body,
+      //     payload: message.notification!.body,
+      //     const NotificationDetails(
+      //       android: AndroidNotificationDetails(
+      //         'high_importance_channel',
+      //         'Rentspace Notifications',
+      //         priority: Priority.max,
+      //         importance: Importance.max,
+      //         channelDescription: 'Notifications for rentspace activities',
+      //         // icon: android?.smallIcon,
+      //         // other properties...
+      //       ),
+      //       iOS: DarwinNotificationDetails(
+      //           presentAlert: true,
+      //           presentBanner: true,
+      //           presentSound: true,
+      //           presentBadge: true,
+      //           interruptionLevel: InterruptionLevel.critical),
+      //     ),
+      //   );
+      // }
       print(
           "received in background : ${json.encode(message.notification!.body)}");
-      // Navigator.pushNamed(
-      //   _navigatorKey.currentState!.context,
-      //   '/newNotification',
-      //   arguments: {"message", json.encode(message.data)},
-      // );
     },
   );
 
@@ -177,49 +283,39 @@ Future<void> main() async {
     (RemoteMessage? message) async {
       RemoteNotification? notification = message?.notification;
       AndroidNotification? android = message?.notification!.android;
+      displayNotification(notification, message!.data);
+      // if (notification != null && android != null) {
+      //   flutterLocalNotificationsPlugin.show(
+      //     notification.hashCode,
+      //     notification.title,
+      //     notification.body,
+      //     payload: message!.notification!.body,
+      //     const NotificationDetails(
+      //       android: AndroidNotificationDetails(
+      //         'high_importance_channel',
+      //         'Rentspace Notifications',
+      //         priority: Priority.max,
+      //         importance: Importance.max,
+      //         channelDescription: 'Notifications for rentspace activities',
 
-      // If `onMessage` is triggered with a notification, construct our own
-      // local notification to show to users using the created channel.
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          payload: message!.notification!.body,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'high_importance_channel',
-              'Rentspace Notifications',
-              priority: Priority.max,
-              importance: Importance.max,
-              channelDescription: 'Notifications for rentspace activities',
-
-              // icon: android?.smallIcon,
-              // other properties...
-            ),
-          ),
-          // payload: message!.data['body'],
-        );
-      }
-      // print("onMessageOpened : $message");
-      // Navigator.pushNamed(
-      //   _navigatorKey.currentState!.context,
-      //   '/newNotification',
-      //   arguments: {"message", json.encode(message!.data)},
-      // );
+      //         // icon: android?.smallIcon,
+      //         // other properties...
+      //       ),
+      //       iOS: DarwinNotificationDetails(
+      //           presentAlert: true,
+      //           presentBanner: true,
+      //           presentSound: true,
+      //           presentBadge: true,
+      //           interruptionLevel: InterruptionLevel.critical),
+      //     ),
+      //     // payload: message!.data['body'],
+      //   );
+      // }
     },
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // final fcmToken = await FirebaseMessaging.instance.getToken();
-  // print(fcmToken);
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // await FCMService.initializeFirebase();
-  // await firebaseInitialization.then((value) async {
-  //   // Get.put(AuthController());
-  // });
   await initNotifications();
-  // _showAnnouncementNotification('yo', 'test');
 
   // configLoading();
   runApp(const ProviderScope(child: MyApp()));
@@ -229,7 +325,7 @@ Future<void> main() async {
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // await Firebase.initializeApp();
 
-  print('_firebaseMessagingBackgroundHandler: $message.notification!.body');
+  print('_firebaseMessagingBackgroundHandler: ${message.notification!.body}');
   print('Handling Background message ${message.notification!.body}');
 }
 
@@ -246,6 +342,7 @@ Future<void> initNotifications() async {
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onDidReceiveNotificationResponse:
@@ -257,20 +354,19 @@ Future<void> initNotifications() async {
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
         print(notificationResponse.payload);
-        Navigator.push(
-            _navigatorKey.currentState!.context,
-            MaterialPageRoute(
-              builder: (context) => FirstPage(),
-              //  NewNotificationPage(
-              //   message: notificationResponse.payload!,
-              // ),
-              // settings: const RouteSettings(name: newNotification),
-            ));
-        // Navigator.pushNamed(
-        //   _navigatorKey.currentState!.context,
-        //   '/newNotification',
-        //   arguments: {"message", notificationResponse.payload},
-        // );
+        Get.to(NewNotificationPage(
+            message: notificationResponse.payload));
+        // Get.to(SettingsPage());
+        // Navigator.push(
+        //     _navigatorKey.currentState!.context,
+        //     MaterialPageRoute(
+        //       builder: (context) => FirstPage(),
+        //       //  NewNotificationPage(
+        //       //   message: notificationResponse.payload!,
+        //       // ),
+        //       // settings: const RouteSettings(name: newNotification),
+        //     ));
+
         break;
       case NotificationResponseType.selectedNotificationAction:
         if (notificationResponse.actionId == navigationActionId) {
@@ -279,18 +375,46 @@ Future<void> initNotifications() async {
         break;
     }
   });
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, badge: true, sound: true);
 }
 
-// void onDidReceiveLocalNotification(
-//     int id, String title, String? body, String? payload) async {
-//   // display a dialog with the notification details, tap ok to go to another page
-//   await Navigator.push(
-//     context,
-//     MaterialPageRoute(
-//       builder: (context) => SettingsPage(),
-//     ),
-//   );
-// }
+void displayNotification(
+    RemoteNotification? notification, Map<String, dynamic> data) {
+  if (notification != null) {
+    // Construct local notification
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'high_importance_channel',
+      'Rentspace Notifications',
+      priority: Priority.max,
+      importance: Importance.max,
+      channelDescription: 'Notifications for rentspace activities',
+
+      // icon: android?.smallIcon,
+      // other properties...
+    );
+    const DarwinNotificationDetails darwinNotificationDetails =
+        DarwinNotificationDetails(
+            presentAlert: true,
+            presentBanner: true,
+            presentSound: true,
+            presentBadge: true,
+            interruptionLevel: InterruptionLevel.critical);
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: darwinNotificationDetails);
+    // Display the notification
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        // notification.
+        platformChannelSpecifics,
+        payload: data.toString());
+  }
+}
 
 // Show transaction notification
 Future<void> _showTransactionNotification(String title, String body) async {
@@ -372,33 +496,6 @@ class _MyAppState extends State<MyApp> {
   dispose() {
     super.dispose();
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   setUpScreenUtils(context);
-  //   setStatusBar();
-  //   // ToastContext().init(context);
-  //   return ChangeNotifierProvider(
-  //     create: (_) => NotificationService(),
-  //     child: ScreenUtilInit(
-  //       designSize: const Size(390, 844),
-  //       minTextAdapt: true,
-  //       splitScreenMode: false,
-  //       builder: (contex, child) {
-  //         return GetMaterialApp(
-  //           theme: Themes().lightTheme,
-  //           darkTheme: Themes().darkTheme,
-  //           themeMode: ThemeServices().getThemeMode(),
-  //           debugShowCheckedModeBanner: false,
-  //           title: 'RentSpace',
-  //           home: const SplashScreen(),
-  //           builder: EasyLoading.init(),
-
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

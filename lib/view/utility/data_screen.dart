@@ -34,7 +34,7 @@ class DataScreen extends StatefulWidget {
       required this.mainBalance,
       required this.dataName});
   final String validity, name, amount, userPin, number, billId, dataName;
-  final int mainBalance;
+  final num mainBalance;
 
   @override
   State<DataScreen> createState() => _DataScreenState();
@@ -225,7 +225,7 @@ class _DataScreenState extends State<DataScreen> {
             EasyLoading.dismiss();
             showDialog(
                 context: context,
-                barrierDismissible: true,
+                barrierDismissible: false,
                 builder: (BuildContext context) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -522,7 +522,7 @@ class _DataScreenState extends State<DataScreen> {
                             EasyLoading.dismiss();
                             showDialog(
                                 context: context,
-                                barrierDismissible: true,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.end,

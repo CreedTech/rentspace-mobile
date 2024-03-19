@@ -267,7 +267,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                             Flexible(
                               flex: 3,
                               child: Text(
-                                widget.transactionType.capitalize!,
+                                'Wallet Funding Through ${widget.transactionGroup}',
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
                                 style: GoogleFonts.nunito(

@@ -3,16 +3,11 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:provider/provider.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +17,6 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/core/helper/helper_route_path.dart';
 import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
 import 'package:rentspace/view/actions/transaction_receipt.dart';
@@ -30,36 +24,20 @@ import 'package:rentspace/view/actions/transaction_receipt.dart';
 import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
-import 'package:rentspace/view/dva/create_dva.dart';
 import 'package:rentspace/view/savings/savings_withdrawal.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'dart:convert';
 
 import '../../api/global_services.dart';
-import '../../constants/app_constants.dart';
 import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/icon_container.dart';
-import '../../constants/widgets/separator.dart';
 // import '../../controller/settings_controller.dart';
-import '../../model/response/user_details_response.dart';
-import '../../model/wallet_model.dart';
-import '../../services/implementations/notification_service.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/transaction_receipt_dva.dart';
 import '../actions/transaction_receipt_transfer.dart';
-import '../actions/view_bvn_and_kyc.dart';
-import '../chat/chat_main.dart';
-import '../kyc/kyc_intro.dart';
-import 'notifications.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
@@ -157,10 +135,37 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   // final CollectionReference notifications =
   //     FirebaseFirestore.instance.collection('notifications');
   // late ValueNotifier<double> valueNotifier;
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   @override
   initState() {
     super.initState();
     // ref.read(userSettingsProvider.notifier).getUserProfileDetails();
+    // _firebaseMessaging.requestPermission(
+    //   alert: true,
+    //   badge: true,
+    //   provisional: false,
+    //   sound: true,
+    // );
+
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   final notification = message.notification?.title ?? 'No Title';
+    //   context.read().addNotification(notification);
+    // });
+
+    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //   final notification = message.notification?.title ?? 'No Title';
+    //   context.read().addNotification(notification);
+    // });
+
+    // FirebaseMessaging.instance
+    //     .getInitialMessage()
+    //     .then((RemoteMessage? message) {
+    //   if (message != null) {
+    //     final notification = message.notification?.title ?? 'No Title';
+    //     context.read().addNotification(notification);
+    //   }
+    // });
+
     getConnectivity();
     print("isLoading");
     hideBalance = false;
@@ -448,6 +453,35 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               )
                             ],
                           ),
+
+                          // riverpod.Consumer(
+                          //   builder: (context, watch, _) {
+                          //     final count =
+                          //         ref.watch(notificationCountProvider);
+                          //     return Stack(
+                          //       children: [
+                          //         Icon(
+                          //           Icons.notifications_outlined,
+                          //           color: Theme.of(context).primaryColor,
+                          //           size: 22.sp,
+                          //         ),
+                          //         if (count > 0)
+                          //           Positioned(
+                          //             top: 0.sp,
+                          //             right: 0.0.sp,
+                          //             child: Container(
+                          //               padding: EdgeInsets.all(4.0.sp),
+                          //               decoration: const BoxDecoration(
+                          //                 shape: BoxShape.circle,
+                          //                 color: Colors.red,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
+
                           // <NotificationService>(
                           //     builder: (context, notificationService, _) {
                           //   return Padding(
@@ -1004,7 +1038,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       ? TransactionReceiptTransfer(
                                           amount: history['amount'],
                                           status: history['status'],
-                                          fees: history['fees'],
+                                          fees: history['fees'] ?? 0,
                                           transactionType:
                                               history['transactionType'],
                                           description: history['description'],
@@ -1012,7 +1046,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               history['transactionGroup'],
                                           transactionDate: history['createdAt'],
                                           transactionRef:
-                                              history['transactionReference'],
+                                              history['transactionReference'] ?? '',
                                           merchantRef:
                                               history['merchantReference'],
                                           sessionId: history['sessionId'],
@@ -1024,7 +1058,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ? TransactionReceiptDVA(
                                               amount: history['amount'],
                                               status: history['status'],
-                                              fees: history['fees'],
+                                              fees: history['fees'] ?? 0,
                                               transactionType:
                                                   history['transactionType'],
                                               description:
@@ -1034,7 +1068,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               transactionDate:
                                                   history['createdAt'],
                                               transactionRef: history[
-                                                  'transactionReference'],
+                                                  'transactionReference'] ?? '',
                                               merchantRef:
                                                   history['merchantReference'],
                                               remarks: history['remarks'],
@@ -1042,9 +1076,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           : TransactionReceipt(
                                               amount: history['amount'],
                                               status: history['status'],
-                                              fees: history['fees'],
+                                              fees: history['fees'] ?? 0,
                                               transactionType:
-                                                  history['message'],
+                                                  history['transactionType'],
                                               description:
                                                   history['description'],
                                               transactionGroup:
@@ -1052,7 +1086,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               transactionDate:
                                                   history['createdAt'],
                                               transactionRef: history[
-                                                  'transactionReference'],
+                                                  'transactionReference'] ?? '',
                                               merchantRef:
                                                   history['merchantReference'],
                                             ),
@@ -1946,7 +1980,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding:  EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -2024,5 +2058,4 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           );
         });
   }
-
 }

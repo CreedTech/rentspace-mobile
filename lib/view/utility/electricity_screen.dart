@@ -45,7 +45,7 @@ class ElectricityScreen extends StatefulWidget {
       electricName,
       userElectricName,
       formattedDate;
-  final int mainBalance;
+  final num mainBalance;
 
   @override
   State<ElectricityScreen> createState() => _ElectricityScreenState();
@@ -298,7 +298,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             EasyLoading.dismiss();
             showDialog(
                 context: context,
-                barrierDismissible: true,
+                barrierDismissible: false,
                 builder: (BuildContext context) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -506,7 +506,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                             EasyLoading.dismiss();
                             showDialog(
                                 context: context,
-                                barrierDismissible: true,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
