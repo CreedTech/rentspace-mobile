@@ -448,68 +448,69 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                         SizedBox(
                           height: 10.sp,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                'Session ID',
-                                style: GoogleFonts.nunito(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                  color: brandTwo,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Wrap(
-                                alignment: WrapAlignment.end,
-                                crossAxisAlignment: WrapCrossAlignment.end,
-                                children: [
-                                  Text(
-                                    widget.remarks.split('/').last,
-                                    textAlign: TextAlign.end,
-                                    // maxLines: 2,
-                                    style: GoogleFonts.nunito(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                      color: brandOne,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.sp,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text: widget.remarks.split('/').last,
-                                        ),
-                                      );
-                                      Fluttertoast.showToast(
-                                        msg: "Copied to clipboard!",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: brandOne,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.copy,
-                                      size: 16,
-                                      color: brandOne,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Flexible(
+                        //       flex: 1,
+                        //       child: Text(
+                        //         'Session ID',
+                        //         style: GoogleFonts.nunito(
+                        //           fontWeight: FontWeight.w600,
+                        //           fontSize: 14.sp,
+                        //           color: brandTwo,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     Flexible(
+                        //       flex: 3,
+                        //       child: Wrap(
+                        //         alignment: WrapAlignment.end,
+                        //         crossAxisAlignment: WrapCrossAlignment.end,
+                        //         children: [
+                        //           Text(
+                        //             widget.remarks.split('/').last,
+                        //             textAlign: TextAlign.end,
+                        //             // maxLines: 2,
+                        //             style: GoogleFonts.nunito(
+                        //               fontWeight: FontWeight.w600,
+                        //               fontSize: 14.sp,
+                        //               color: brandOne,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             width: 5.sp,
+                        //           ),
+                        //           InkWell(
+                        //             onTap: () {
+                        //               Clipboard.setData(
+                        //                 ClipboardData(
+                        //                   text: widget.remarks.split('/').last,
+                        //                 ),
+                        //               );
+                        //               Fluttertoast.showToast(
+                        //                 msg: "Copied to clipboard!",
+                        //                 toastLength: Toast.LENGTH_SHORT,
+                        //                 gravity: ToastGravity.CENTER,
+                        //                 timeInSecForIosWeb: 1,
+                        //                 backgroundColor: brandOne,
+                        //                 textColor: Colors.white,
+                        //                 fontSize: 16.0,
+                        //               );
+                        //             },
+                        //             child: const Icon(
+                        //               Icons.copy,
+                        //               size: 16,
+                        //               color: brandOne,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                     
                       ],
                     )
                   ],

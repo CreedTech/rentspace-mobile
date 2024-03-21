@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
@@ -27,8 +26,6 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -84,8 +81,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       isChecking = true;
       _bankAccountName = "";
     });
-    // const String apiUrl = 'https://api-d.squadco.com/payout/account/lookup';
-    // const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
     final response = await http.post(
         Uri.parse(AppConstants.BASE_URL + AppConstants.VERFIY_ACCOUNT_DETAILS),
         headers: {
@@ -95,13 +90,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         body: json.encode({
           "financial_institution": currentCode,
           "account_id": _accountNumberController.text.trim().toString()
-        })
-
-        //   jsonEncode(<String, String>{
-        //     "financial_institution": _currentBankName,
-        //     "account_id": _accountNumberController.text.trim().toString(),
-        //   }),
-        );
+        }));
     print(currentCode);
     print(_accountNumberController.text.trim().toString());
 
@@ -683,18 +672,12 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
           tempCode.add(localCode);
         }
       }
+      if (!mounted) return;
       setState(() {
         _bankName = tempName;
         _bankCode = tempCode;
         canShowOption = true;
       });
-
-      // print(_bankName);
-      // print('_bankCode');
-      // print(_bankCode);
-      // setState(() {
-      //   canShowOption = true;
-      // });
     } else {
       print('Failed to load data from the server');
     }
@@ -712,20 +695,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
       );
 
-  // getCurrentUser() async {
-  //   var collection = FirebaseFirestore.instance.collection('accounts');
-  //   var docSnapshot = await collection.doc(userId).get();
-  //   if (docSnapshot.exists) {
-  //     Map<String, dynamic>? data = docSnapshot.data();
-  //     setState(() {
-  //       walletID = data?['wallet_id'];
-  //       userID = data?['rentspace_id'];
-  //       walletBalance = data?['wallet_balance'];
-  //       uId = data?['id'];
-  //     });
-  //   }
-  // }
-
   final TextEditingController _bankAccountController = TextEditingController();
   final TextEditingController _accountNumberController =
       TextEditingController();
@@ -736,8 +705,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   initState() {
     super.initState();
     notLoading = true;
-    // getCurrentUser();
-    // _bankListController.addListener(_onTextChanged);
     getBanksList();
   }
 
@@ -769,6 +736,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   Future<bool> fetchUserData({bool refresh = true}) async {
     if (refresh) {
       await userController.fetchData();
+      await walletController.fetchWallet();
+      await rentController.fetchRent();
       setState(() {}); // Move setState inside fetchData
     }
     return true;
@@ -806,7 +775,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         // "account_name": _bankAccountName,
       }),
     );
-    EasyLoading.dismiss();
 
     if (response.statusCode == 200) {
       showTopSnackBar(
@@ -822,6 +790,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
       );
       await fetchUserData(refresh: true);
+      EasyLoading.dismiss();
       Get.offAll(const FirstPage());
     } else {
       if (context.mounted) {
@@ -1074,57 +1043,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             const SizedBox(
                               height: 40,
                             ),
-                            // TextFormField(
-                            //   enableSuggestions: true,
-                            //   cursorColor: Theme.of(context).primaryColor,
-                            //   style: GoogleFonts.nunito(
-                            //     color: Theme.of(context).primaryColor,
-                            //   ),
-                            //   autovalidateMode:
-                            //       AutovalidateMode.onUserInteraction,
-                            //   controller: _bankListController,
-                            //   keyboardType: TextInputType.text,
-                            //   decoration: InputDecoration(
-                            //     //prefix: Icon(Icons.email),
-                            //     border: OutlineInputBorder(
-                            //       borderRadius:
-                            //           BorderRadius.circular(15.0),
-                            //       borderSide: const BorderSide(
-                            //         color: Color(0xffE0E0E0),
-                            //       ),
-                            //     ),
-                            //     focusedBorder: OutlineInputBorder(
-                            //       borderRadius:
-                            //           BorderRadius.circular(15.0),
-                            //       borderSide: const BorderSide(
-                            //           color: brandOne, width: 2.0),
-                            //     ),
-                            //     enabledBorder: OutlineInputBorder(
-                            //       borderRadius:
-                            //           BorderRadius.circular(15.0),
-                            //       borderSide: const BorderSide(
-                            //         color: Color(0xffE0E0E0),
-                            //       ),
-                            //     ),
-                            //     errorBorder: OutlineInputBorder(
-                            //       borderRadius:
-                            //           BorderRadius.circular(15.0),
-                            //       borderSide: const BorderSide(
-                            //           color: Colors.red,
-                            //           width:
-                            //               2.0), // Change color to yellow
-                            //     ),
-                            //     contentPadding: const EdgeInsets.all(14),
-                            //     filled: false,
-                            //     hintText: 'Enter your account number...',
-                            //     hintStyle: GoogleFonts.nunito(
-                            //       color: Colors.grey,
-                            //       fontSize: 12,
-                            //       fontWeight: FontWeight.w400,
-                            //     ),
-                            //   ),
-                            // ),
-
                             Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(0.0, 5, 0.0, 5),
@@ -1262,7 +1180,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   isDismissible: true,
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 400,
+                                    height: 300.h,
                                     child: ClipRRect(
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(30.0),
@@ -1275,10 +1193,12 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            const SizedBox(
-                                              height: 50,
-                                            ),
+                                            // const SizedBox(
+                                            //   height: 50,
+                                            // ),
                                             Text(
                                               'Enter PIN to Proceed',
                                               style: GoogleFonts.nunito(
@@ -1316,7 +1236,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                   walletController.walletModel!
                                                       .wallet![0].pin,
                                                 )) {
-                                                  _aPinController.clear();
+                                                  // _aPinController.clear();
                                                   Get.back();
                                                   if (double.tryParse(
                                                           _amountController.text
@@ -1335,7 +1255,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                     _doWallet();
                                                   }
                                                 } else {
-                                                  _aPinController.clear();
+                                                  // _aPinController.clear();
                                                   if (context.mounted) {
                                                     customErrorDialog(
                                                         context,
@@ -1352,74 +1272,75 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               keyboardType:
                                                   TextInputType.number,
                                             ),
-                                            SizedBox(
-                                              height: 20.sp,
-                                            ),
-                                            SizedBox(
-                                              height: 40.sp,
-                                            ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                minimumSize:
-                                                    const Size(300, 50),
-                                                backgroundColor: brandOne,
-                                                elevation: 0,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                if (BCrypt.checkpw(
-                                                  _aPinController.text
-                                                      .trim()
-                                                      .toString(),
-                                                  walletController.walletModel!
-                                                      .wallet![0].pin,
-                                                )) {
-                                                  _aPinController.clear();
-                                                  Get.back();
-                                                  if (double.tryParse(
-                                                          _amountController.text
-                                                              .trim()
-                                                              .replaceAll(
-                                                                  ',', ''))! >
-                                                      walletController
-                                                          .walletModel!
-                                                          .wallet![0]
-                                                          .mainBalance) {
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Insufficient Fund",
-                                                        'Fund your wallet to continue');
-                                                  } else {
-                                                    _doWallet();
-                                                  }
-                                                } else {
-                                                  _aPinController.clear();
-                                                  if (context.mounted) {
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Invalid PIN",
-                                                        'Enter correct PIN to proceed');
-                                                  }
-                                                }
-                                              },
-                                              child: Text(
-                                                'Proceed to Transfer',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.nunito(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
+                                            // SizedBox(
+                                            //   height: 20.sp,
+                                            // ),
+                                            // SizedBox(
+                                            //   height: 40.sp,
+                                            // ),
+                                            // ElevatedButton(
+                                            //   style: ElevatedButton.styleFrom(
+                                            //     minimumSize:
+                                            //         const Size(300, 50),
+                                            //     backgroundColor: brandOne,
+                                            //     elevation: 0,
+                                            //     shape: RoundedRectangleBorder(
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(
+                                            //         10,
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            //   onPressed: () {
+                                            //     if (BCrypt.checkpw(
+                                            //       _aPinController.text
+                                            //           .trim()
+                                            //           .toString(),
+                                            //       walletController.walletModel!
+                                            //           .wallet![0].pin,
+                                            //     )) {
+                                            //       _aPinController.clear();
+                                            //       Get.back();
+                                            //       if (double.tryParse(
+                                            //               _amountController.text
+                                            //                   .trim()
+                                            //                   .replaceAll(
+                                            //                       ',', ''))! >
+                                            //           walletController
+                                            //               .walletModel!
+                                            //               .wallet![0]
+                                            //               .mainBalance) {
+                                            //         customErrorDialog(
+                                            //             context,
+                                            //             "Insufficient Fund",
+                                            //             'Fund your wallet to continue');
+                                            //       } else {
+                                            //         _doWallet();
+                                            //       }
+                                            //     } else {
+                                            //       _aPinController.clear();
+                                            //       if (context.mounted) {
+                                            //         customErrorDialog(
+                                            //             context,
+                                            //             "Invalid PIN",
+                                            //             'Enter correct PIN to proceed');
+                                            //       }
+                                            //     }
+                                            //   },
+                                            //   child: Text(
+                                            //     'Proceed to Transfer',
+                                            //     textAlign: TextAlign.center,
+                                            //     style: GoogleFonts.nunito(
+                                            //       color: Colors.white,
+                                            //       fontSize: 16,
+                                            //       fontWeight: FontWeight.w700,
+                                            //     ),
+                                            //   ),
+                                            // ),
+
+                                            // const SizedBox(
+                                            //   height: 20,
+                                            // ),
                                           ],
                                         ),
                                       ),
@@ -1427,79 +1348,81 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   ),
                                 );
                               } else {
-                                showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        title: null,
-                                        elevation: 0,
-                                        content: SizedBox(
-                                          height: 250,
-                                          child: Column(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30),
-                                                      // color: brandOne,
-                                                    ),
-                                                    child: const Icon(
-                                                      Iconsax.close_circle,
-                                                      color: brandOne,
-                                                      size: 30,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              const Align(
-                                                alignment: Alignment.center,
-                                                child: Icon(
-                                                  Iconsax.warning_24,
-                                                  color: Colors.red,
-                                                  size: 75,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 12,
-                                              ),
-                                              Text(
-                                                'Invalid',
-                                                style: GoogleFonts.nunito(
-                                                  color: Colors.red,
-                                                  fontSize: 28,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "Please fill the form properly to proceed",
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.nunito(
-                                                    color: brandOne,
-                                                    fontSize: 18),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    });
+                                customErrorDialog(context, 'Invalid',
+                                    'Please fill the form properly to proceed');
+                                // showDialog(
+                                //     context: context,
+                                //     barrierDismissible: false,
+                                //     builder: (BuildContext context) {
+                                //       return AlertDialog(
+                                //         shape: RoundedRectangleBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(10),
+                                //         ),
+                                //         title: null,
+                                //         elevation: 0,
+                                //         content: SizedBox(
+                                //           height: 250,
+                                //           child: Column(
+                                //             children: [
+                                //               GestureDetector(
+                                //                 onTap: () {
+                                //                   Navigator.of(context).pop();
+                                //                 },
+                                //                 child: Align(
+                                //                   alignment: Alignment.topRight,
+                                //                   child: Container(
+                                //                     decoration: BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               30),
+                                //                       // color: brandOne,
+                                //                     ),
+                                //                     child: const Icon(
+                                //                       Iconsax.close_circle,
+                                //                       color: brandOne,
+                                //                       size: 30,
+                                //                     ),
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //               const Align(
+                                //                 alignment: Alignment.center,
+                                //                 child: Icon(
+                                //                   Iconsax.warning_24,
+                                //                   color: Colors.red,
+                                //                   size: 75,
+                                //                 ),
+                                //               ),
+                                //               const SizedBox(
+                                //                 height: 12,
+                                //               ),
+                                //               Text(
+                                //                 'Invalid',
+                                //                 style: GoogleFonts.nunito(
+                                //                   color: Colors.red,
+                                //                   fontSize: 28,
+                                //                   fontWeight: FontWeight.w800,
+                                //                 ),
+                                //               ),
+                                //               const SizedBox(
+                                //                 height: 5,
+                                //               ),
+                                //               Text(
+                                //                 "Please fill the form properly to proceed",
+                                //                 textAlign: TextAlign.center,
+                                //                 style: GoogleFonts.nunito(
+                                //                     color: brandOne,
+                                //                     fontSize: 18),
+                                //               ),
+                                //               const SizedBox(
+                                //                 height: 10,
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       );
+                                //     });
                               }
                             },
                             child: Text(

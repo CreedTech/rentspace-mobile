@@ -262,7 +262,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
                                 color: Colors.white,
-                                size: 15.sp,
+                                size: 20.sp,
                               ),
                             ),
                           ],

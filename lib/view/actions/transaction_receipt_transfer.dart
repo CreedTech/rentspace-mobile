@@ -20,7 +20,7 @@ class TransactionReceiptTransfer extends StatefulWidget {
       required this.description,
       required this.transactionGroup,
       required this.transactionDate,
-      required this.sessionId,
+      // required this.sessionId,
       required this.transactionRef,
       required this.merchantRef});
   final num amount;
@@ -30,7 +30,7 @@ class TransactionReceiptTransfer extends StatefulWidget {
       description,
       transactionGroup,
       transactionDate,
-      sessionId,
+      // sessionId,
       transactionRef,
       merchantRef;
 
@@ -452,68 +452,69 @@ class _TransactionReceiptTransferState
                         SizedBox(
                           height: 10.sp,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                'Session ID',
-                                style: GoogleFonts.nunito(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                  color: brandTwo,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Wrap(
-                                alignment: WrapAlignment.end,
-                                crossAxisAlignment: WrapCrossAlignment.end,
-                                children: [
-                                  Text(
-                                    widget.sessionId,
-                                    textAlign: TextAlign.end,
-                                    // maxLines: 2,
-                                    style: GoogleFonts.nunito(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                      color: brandOne,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.sp,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text: widget.sessionId,
-                                        ),
-                                      );
-                                      Fluttertoast.showToast(
-                                        msg: "Copied to clipboard!",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: brandOne,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.copy,
-                                      size: 16,
-                                      color: brandOne,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Flexible(
+                        //       flex: 1,
+                        //       child: Text(
+                        //         'Session ID',
+                        //         style: GoogleFonts.nunito(
+                        //           fontWeight: FontWeight.w600,
+                        //           fontSize: 14.sp,
+                        //           color: brandTwo,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     Flexible(
+                        //       flex: 3,
+                        //       child: Wrap(
+                        //         alignment: WrapAlignment.end,
+                        //         crossAxisAlignment: WrapCrossAlignment.end,
+                        //         children: [
+                        //           Text(
+                        //             widget.sessionId,
+                        //             textAlign: TextAlign.end,
+                        //             // maxLines: 2,
+                        //             style: GoogleFonts.nunito(
+                        //               fontWeight: FontWeight.w600,
+                        //               fontSize: 14.sp,
+                        //               color: brandOne,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             width: 5.sp,
+                        //           ),
+                        //           InkWell(
+                        //             onTap: () {
+                        //               Clipboard.setData(
+                        //                 ClipboardData(
+                        //                   text: widget.sessionId,
+                        //                 ),
+                        //               );
+                        //               Fluttertoast.showToast(
+                        //                 msg: "Copied to clipboard!",
+                        //                 toastLength: Toast.LENGTH_SHORT,
+                        //                 gravity: ToastGravity.CENTER,
+                        //                 timeInSecForIosWeb: 1,
+                        //                 backgroundColor: brandOne,
+                        //                 textColor: Colors.white,
+                        //                 fontSize: 16.0,
+                        //               );
+                        //             },
+                        //             child: const Icon(
+                        //               Icons.copy,
+                        //               size: 16,
+                        //               color: brandOne,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                     
                       ],
                     )
                   ],

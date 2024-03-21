@@ -16,6 +16,7 @@ import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
@@ -354,8 +355,9 @@ Future<void> initNotifications() async {
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
         print(notificationResponse.payload);
-        Get.to(NewNotificationPage(
-            message: notificationResponse.payload));
+        Get.to(FirstPage());
+        // Get.to(NewNotificationPage(
+        //     message: notificationResponse.payload));
         // Get.to(SettingsPage());
         // Navigator.push(
         //     _navigatorKey.currentState!.context,

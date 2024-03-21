@@ -205,7 +205,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           paymentCount = _calculateWeeksDifference().toString();
           _savingValue = ((rent * 0.7) / _calculateWeeksDifference());
         } else {
-          paymentCount = _calculateMonthsDifference.toString();
+          paymentCount = _calculateMonthsDifference().toString();
           _savingValue = ((rent * 0.7) / _calculateMonthsDifference());
         }
         _dailyValue = ((rent * 0.7) / _calculateDaysDifference());

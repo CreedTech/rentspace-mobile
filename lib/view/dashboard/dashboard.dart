@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -18,6 +20,7 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
+import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
 import 'package:rentspace/view/actions/transaction_receipt.dart';
 
@@ -147,24 +150,33 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     //   sound: true,
     // );
 
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   final notification = message.notification?.title ?? 'No Title';
-    //   context.read().addNotification(notification);
-    // });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // final notification = message.notification?.title ?? 'No Title';
+      userController.fetchData();
+      walletController.fetchWallet();
+      rentController.fetchRent();
+      // context.read().addNotification(notification);
+    });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   final notification = message.notification?.title ?? 'No Title';
-    //   context.read().addNotification(notification);
-    // });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      final notification = message.notification?.title ?? 'No Title';
+      // context.read().addNotification(notification);
+      userController.fetchData();
+      walletController.fetchWallet();
+      rentController.fetchRent();
+    });
 
-    // FirebaseMessaging.instance
-    //     .getInitialMessage()
-    //     .then((RemoteMessage? message) {
-    //   if (message != null) {
-    //     final notification = message.notification?.title ?? 'No Title';
-    //     context.read().addNotification(notification);
-    //   }
-    // });
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        userController.fetchData();
+        walletController.fetchWallet();
+        rentController.fetchRent();
+        // final notification = message.notification?.title ?? 'No Title';
+        // context.read().addNotification(notification);
+      }
+    });
 
     getConnectivity();
     print("isLoading");
@@ -345,10 +357,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
             //       )
             //     :
             LiquidPullToRefresh(
-          height: 100,
+          height: 70,
           animSpeedFactor: 2,
-          color: brandOne,
-          backgroundColor: Colors.white,
+          color: Colors.white,
+          backgroundColor: brandOne,
           showChildOpacityTransition: false,
           onRefresh: onRefresh,
           child: SafeArea(
@@ -715,15 +727,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           SizedBox(
                                             width: 15.w,
                                           ),
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     walletController.fetchWallet();
-                                          //   },
-                                          //   child: const Icon(
-                                          //     Iconsax.refresh,
-                                          //     color: Colors.white,
-                                          //   ),
-                                          // ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              userController.fetchData();
+                                              walletController.fetchWallet();
+                                              setState(() {
+                                              });
+                                            },
+                                            child: const Icon(
+                                              Iconsax.refresh,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -1046,10 +1061,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               history['transactionGroup'],
                                           transactionDate: history['createdAt'],
                                           transactionRef:
-                                              history['transactionReference'] ?? '',
+                                              history['transactionReference'] ??
+                                                  '',
                                           merchantRef:
                                               history['merchantReference'],
-                                          sessionId: history['sessionId'],
+                                          // sessionId: history['sessionId'],
                                         )
                                       : (history['transactionGroup']
                                                   .toString()
@@ -1068,7 +1084,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               transactionDate:
                                                   history['createdAt'],
                                               transactionRef: history[
-                                                  'transactionReference'] ?? '',
+                                                      'transactionReference'] ??
+                                                  '',
                                               merchantRef:
                                                   history['merchantReference'],
                                               remarks: history['remarks'],
@@ -1086,7 +1103,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               transactionDate:
                                                   history['createdAt'],
                                               transactionRef: history[
-                                                  'transactionReference'] ?? '',
+                                                      'transactionReference'] ??
+                                                  '',
                                               merchantRef:
                                                   history['merchantReference'],
                                             ),

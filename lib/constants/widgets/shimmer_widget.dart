@@ -9,8 +9,8 @@ Widget shimmerLoader() {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Shimmer.fromColors(
-            baseColor: brandOne.withOpacity(0.8),
-            highlightColor: brandTwo.withOpacity(0.9),
+            baseColor: brandOne.withOpacity(0.2),
+            highlightColor: brandTwo.withOpacity(0.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -52,21 +52,21 @@ Widget shimmerLoader() {
               ],
             ),
           ),
-          Shimmer.fromColors(
-            baseColor: brandOne.withOpacity(0.8),
-            highlightColor: brandTwo.withOpacity(0.9),
-            child: Container(
-              width: 30,
-              height: 30,
-              color: Colors.white,
-            ),
-          ),
+          // Shimmer.fromColors(
+          //   baseColor: brandOne.withOpacity(0.2),
+          //   highlightColor: brandTwo.withOpacity(0.5),
+          //   child: Container(
+          //     width: 30,
+          //     height: 30,
+          //     color: Colors.white,
+          //   ),
+          // ),
         ],
       ),
       const SizedBox(height: 30),
       Shimmer.fromColors(
-        baseColor: brandOne.withOpacity(0.8),
-        highlightColor: brandTwo.withOpacity(0.9),
+        baseColor: brandOne.withOpacity(0.2),
+        highlightColor: brandTwo.withOpacity(0.5),
         child: Padding(
           padding: const EdgeInsets.only(top: 0),
           child: Container(
@@ -103,8 +103,8 @@ Widget shimmerLoader() {
       ),
       const SizedBox(height: 30),
       Shimmer.fromColors(
-        baseColor: brandOne.withOpacity(0.8),
-        highlightColor: brandTwo.withOpacity(0.9),
+        baseColor: brandOne.withOpacity(0.2),
+        highlightColor: brandTwo.withOpacity(0.5),
         child: Container(
           width: 420,
           height: 100,
@@ -116,8 +116,8 @@ Widget shimmerLoader() {
       ),
       const SizedBox(height: 30),
       Shimmer.fromColors(
-        baseColor: brandOne.withOpacity(0.8),
-        highlightColor: brandTwo.withOpacity(0.9),
+        baseColor: brandOne.withOpacity(0.2),
+        highlightColor: brandTwo.withOpacity(0.5),
         child: Container(
           width: 400,
           height: 225,
@@ -187,8 +187,8 @@ Widget shimmerLoader() {
     
       const SizedBox(height: 30),
       Shimmer.fromColors(
-        baseColor: brandOne.withOpacity(0.8),
-        highlightColor: brandTwo.withOpacity(0.9),
+        baseColor: brandOne.withOpacity(0.2),
+        highlightColor: brandTwo.withOpacity(0.5),
         child: Container(
           width: 400,
           height: 225,

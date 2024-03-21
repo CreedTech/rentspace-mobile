@@ -193,10 +193,10 @@ class _FirstPageState extends State<FirstPage> {
                   0.0.h,
                 ),
                 child: LiquidPullToRefresh(
-                    height: 100,
+                    height: 70,
                     animSpeedFactor: 2,
-                    color: brandOne,
-                    backgroundColor: Colors.white,
+                    color: Colors.white,
+                    backgroundColor: brandOne,
                     showChildOpacityTransition: false,
                     onRefresh: onRefresh,
                     child: shimmerLoader()),

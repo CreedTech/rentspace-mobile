@@ -634,7 +634,7 @@ class _HomePageState extends State<HomePage> {
           showIgnore: false,
           durationUntilAlertAgain: const Duration(seconds: 5),
           debugLogging: true,
-          debugDisplayAlways:true,
+          // debugDisplayAlways:true,
           dialogStyle: UpgradeDialogStyle.cupertino,
           showLater: false,
           canDismissDialog: false,

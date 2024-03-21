@@ -94,7 +94,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
           authState.changePin(
               context, _changePinController.text.trim(), widget.pin);
         }
-        _changePinController.clear();
+        // _changePinController.clear();
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,

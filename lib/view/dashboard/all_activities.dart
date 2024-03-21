@@ -44,6 +44,7 @@ class _AllActivitiesState extends State<AllActivities> {
       });
     }
     userController.fetchData();
+    walletController.fetchWallet();
   }
 
   @override
@@ -59,7 +60,7 @@ class _AllActivitiesState extends State<AllActivities> {
           },
           child: Icon(
             Icons.close,
-            size: 30,
+            size: 25.sp,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -68,7 +69,7 @@ class _AllActivitiesState extends State<AllActivities> {
           'Wallet Histories',
           style: GoogleFonts.nunito(
             color: brandOne,
-            fontSize: 22,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -98,10 +99,10 @@ class _AllActivitiesState extends State<AllActivities> {
                 ],
               )
             : LiquidPullToRefresh(
-                height: 100,
+                height: 70,
                 animSpeedFactor: 2,
-                color: brandOne,
-                backgroundColor: Colors.white,
+                color: Colors.white,
+                backgroundColor: brandOne,
                 showChildOpacityTransition: false,
                 onRefresh: onRefresh,
                 child: ListView.builder(
@@ -127,7 +128,7 @@ class _AllActivitiesState extends State<AllActivities> {
                               ? TransactionReceiptTransfer(
                                   amount: history['amount'],
                                   status: history['status'],
-                                  fees:history['fees'] ?? 0,
+                                  fees: history['fees'] ?? 0,
                                   transactionType: history['transactionType'],
                                   description: history['description'],
                                   transactionGroup: history['transactionGroup'],
@@ -135,7 +136,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                   transactionRef:
                                       history['transactionReference'] ?? '',
                                   merchantRef: history['merchantReference'],
-                                  sessionId: history['sessionId'] ?? '',
+                                  // sessionId: history['sessionId'] ?? '',
                                 )
                               : (history['transactionGroup']
                                           .toString()

@@ -41,28 +41,28 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
   //   List<int> parts = dateString.split('-').map(int.parse).toList();
   //   return DateTime(parts[0], parts[1], parts[2]);
   // }
-  DateTime parseDate(String dateString) {
-    // Split the dateString by 'T' to get only the date part
-    String datePart = dateString.split('T')[0];
+  // DateTime parseDate(String dateString) {
+  //   // Split the dateString by 'T' to get only the date part
+  //   String datePart = dateString.split('T')[0];
 
-    // Split the datePart by '-' to extract year, month, and day
-    List<int> parts = datePart.split('-').map(int.parse).toList();
+  //   // Split the datePart by '-' to extract year, month, and day
+  //   List<int> parts = datePart.split('-').map(int.parse).toList();
 
-    // Create a DateTime object using the extracted parts
-    return DateTime(parts[0], parts[1], parts[2]);
-  }
+  //   // Create a DateTime object using the extracted parts
+  //   return DateTime(parts[0], parts[1], parts[2]);
+  // }
 
-  void main() {
-    String dateString = '2024-02-16T16:14:29.466Z';
-    DateTime parsedDate = parseDate(dateString);
-    print(parsedDate); // Output: 2024-02-16 00:00:00.000
-  }
+  // void main() {
+  //   String dateString = '2024-02-16T16:14:29.466Z';
+  //   DateTime parsedDate = parseDate(dateString);
+  //   print(parsedDate); // Output: 2024-02-16 00:00:00.000
+  // }
 
-  String formatDate(DateTime date) {
-    print(date);
-    print(DateFormat('dd/MM/yyyy').format(date));
-    return DateFormat('dd/MM/yyyy').format(date);
-  }
+  // String formatDate(DateTime date) {
+  //   print(date);
+  //   print(DateFormat('dd/MM/yyyy').format(date));
+  //   return DateFormat('dd/MM/yyyy').format(date);
+  // }
 
   // DateTime calculateNextPaymentDateUpdate(
   //     DateTime lastPaymentDate, String interval) {
@@ -111,22 +111,22 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
 
   @override
   Widget build(BuildContext context) {
-    String chosenDateString =
-        rentController.rentModel!.rents![widget.current].date;
-    print(chosenDateString);
-    print(chosenDateString);
-    String interval = rentController.rentModel!.rents![widget.current].interval;
-    int numberOfIntervals = int.parse(
-        rentController.rentModel!.rents![widget.current].paymentCount);
-    // DateTime nextPaymentDate =
-    //     calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
-    //     print(nextPaymentDate);
-    // String formattedNextDate = formatDate(nextPaymentDate);
-    print(((rentController.rentModel!.rents![widget.current].paidAmount
-            .abs()) ==
-        (rentController.rentModel!.rents![widget.current].amount * 0.7).abs()));
-    print(((rentController.rentModel!.rents![widget.current].paidAmount)));
-    print(((rentController.rentModel!.rents![widget.current].amount * 0.7)));
+    // String chosenDateString =
+    //     rentController.rentModel!.rents![widget.current].date;
+    // print(chosenDateString);
+    // print(chosenDateString);
+    // String interval = rentController.rentModel!.rents![widget.current].interval;
+    // int numberOfIntervals = int.parse(
+    //     rentController.rentModel!.rents![widget.current].paymentCount);
+    // // DateTime nextPaymentDate =
+    // //     calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
+    // //     print(nextPaymentDate);
+    // // String formattedNextDate = formatDate(nextPaymentDate);
+    // print(((rentController.rentModel!.rents![widget.current].paidAmount
+    //         .abs()) ==
+    //     (rentController.rentModel!.rents![widget.current].amount * 0.7).abs()));
+    // print(((rentController.rentModel!.rents![widget.current].paidAmount)));
+    // print(((rentController.rentModel!.rents![widget.current].amount * 0.7)));
 
     // return Text(
     //   formattedTimeAgo,

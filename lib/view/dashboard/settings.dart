@@ -44,6 +44,7 @@ import '../../controller/auth/auth_controller.dart';
 import '../actions/bank_and_card.dart';
 import '../actions/share_and_earn.dart';
 import '../faqs.dart';
+import '../savings/spaceRent/spacerent_list.dart';
 import 'dashboard.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -146,8 +147,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
   }
 
   Future<void> _pickImage(BuildContext context, ImageSource source) async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 100, // Ensure only images are picked
+    );
+
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
       uploadImage(context, imageFile);
@@ -656,6 +660,91 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               horizontal: 10, vertical: 10),
                           child: Column(
                             children: [
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceAround,
+                              //   children: [
+                              //     Column(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.start,
+                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         Text(
+                              //           ch8t.format(
+                              //             userController.userModel!
+                              //                 .userDetails![0].referralPoints,
+                              //           ),
+                              //           style: GoogleFonts.nunito(
+                              //             color: brandOne,
+                              //             fontSize: 20.sp,
+                              //             fontWeight: FontWeight.w700,
+                              //           ),
+                              //         ),
+                              //         // SizedBox(
+                              //         //   height: 10.h,
+                              //         // ),
+                              //         Text(
+                              //           'SpacePoints',
+                              //           style: GoogleFonts.nunito(
+                              //             color: brandOne,
+                              //             fontSize: 14.sp,
+                              //             fontWeight: FontWeight.w500,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   Column(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.start,
+                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         Text(
+                              //           ch8t.format(
+                              //             userController.userModel!
+                              //                 .userDetails![0].referralPoints,
+                              //           ),
+                              //           style: GoogleFonts.nunito(
+                              //             color: brandOne,
+                              //             fontSize: 20.sp,
+                              //             fontWeight: FontWeight.w700,
+                              //           ),
+                              //         ),
+                              //         // SizedBox(
+                              //         //   height: 10.h,
+                              //         // ),
+                              //         Text(
+                              //           'Referral Bonus',
+                              //           style: GoogleFonts.nunito(
+                              //             color: brandOne,
+                              //             fontSize: 14.sp,
+                              //             fontWeight: FontWeight.w500,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     ],
+                              // ),
+
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Text(
+                              //       'Referral Points',
+                              //       style: GoogleFonts.nunito(
+                              //         color: brandOne,
+                              //       ),
+                              //     ),
+                              //     Text(
+                              //       "${valueNotifier.toInt()}%",
+                              //       style: GoogleFonts.nunito(
+                              //         color: brandOne,
+                              //         fontWeight: FontWeight.w700,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -670,49 +759,23 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                       borderRadius: BorderRadius.circular(100),
                                     ),
                                     child: Text(
-                                      'Financial Health',
+                                      'SpacePoints',
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
                                   Text(
-                                    "${valueNotifier.toInt()}%",
+                                    ch8t.format(
+                                      userController.userModel!.userDetails![0]
+                                          .utilityPoints,
+                                    ),
                                     style: GoogleFonts.nunito(
                                       color: brandOne,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              FAProgressBar(
-                                currentValue: valueNotifier,
-                                size: 5,
-                                maxValue: 100,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                                changeColorValue: 100,
-                                changeProgressColor: (valueNotifier < 70)
-                                    ? (valueNotifier < 30
-                                        ? Colors.red
-                                        : Colors.cyan)
-                                    : Colors.greenAccent,
-                                backgroundColor: const Color(0xffE8E8E8),
-                                progressColor: (valueNotifier < 70)
-                                    ? (valueNotifier < 30
-                                        ? Colors.red
-                                        : Colors.cyan)
-                                    : Colors.greenAccent,
-                                animatedDuration:
-                                    const Duration(milliseconds: 1000),
-                                direction: Axis.horizontal,
-                                // verticalDirection: VerticalDirection.up,
-                                // displayText: 'mph',
-                                formatValueFixed: 2,
                               ),
                             ],
                           ),
