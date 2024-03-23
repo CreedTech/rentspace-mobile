@@ -544,7 +544,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future signIn(BuildContext context, email, password,
+  Future signIn(
+      BuildContext context, email, password, fcmToken, deviceType, deviceModel,
       {rememberMe = false}) async {
     isLoading = true;
     if (email.isEmpty || email == '' || password.isEmpty || password == '') {
@@ -553,7 +554,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> user = {
       'email': email.toString().toLowerCase(),
-      'password': password
+      'password': password,
+      'fcm_token': fcmToken,
+      'deviceType': deviceType,
+      "deviceName": deviceModel
     };
     String message;
     try {
@@ -576,7 +580,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             await GlobalService.sharedPreferencesManager.getFCMToken();
         print('fcmToken');
         print(fcmToken);
-         postFcmToken(context, fcmToken);
+        // postFcmToken(context, fcmToken);
         await GlobalService.sharedPreferencesManager.saveLoginInfo(
           email,
           password,
@@ -643,6 +647,23 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
               "BVN not verified, please verify your bvn to continue")) {
         // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "BVN not verified, please verify your bvn to continue";
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BvnPage(
+              email: email.toString().toLowerCase(),
+            ),
+          ),
+        );
+        customErrorDialog(context, 'Error', message);
+
+        // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("User already logged in on another device")) {
+        // authStatus = AuthStatus.NOT_LOGGED_IN;
+        message = "User already logged in on another device";
 
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -1028,55 +1049,55 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future getUserData(BuildContext context) async {
-    isLoading = true;
-    String message;
-    try {
-      isLoading = true;
-      state = const AsyncLoading();
-      EasyLoading.show(
-        indicator: const CustomLoader(),
-        maskType: EasyLoadingMaskType.black,
-        dismissOnTap: false,
-      );
-      var response = await authRepository.getUserData();
-      if (response.success) {
-        EasyLoading.dismiss();
-        isLoading = false;
-        // notifyListeners();
-        state = const AsyncValue.data(true);
-        return;
-      } else {
-        print(response.message.toString());
-      }
+  // Future getUserData(BuildContext context) async {
+  //   isLoading = true;
+  //   String message;
+  //   try {
+  //     isLoading = true;
+  //     state = const AsyncLoading();
+  //     EasyLoading.show(
+  //       indicator: const CustomLoader(),
+  //       maskType: EasyLoadingMaskType.black,
+  //       dismissOnTap: false,
+  //     );
+  //     var response = await authRepository.getUserData();
+  //     if (response.success) {
+  //       EasyLoading.dismiss();
+  //       isLoading = false;
+  //       // notifyListeners();
+  //       state = const AsyncValue.data(true);
+  //       return;
+  //     } else {
+  //       print(response.message.toString());
+  //     }
 
-      // check for different reasons to enhance users experience
-      if (response.success == false &&
-          response.message.contains("invalid signature")) {
-        message = "User info could not be retrieved , Try again later.";
-        customErrorDialog(context, 'Error', message);
+  //     // check for different reasons to enhance users experience
+  //     if (response.success == false &&
+  //         response.message.contains("invalid signature")) {
+  //       message = "User info could not be retrieved , Try again later.";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      } else {
-        // to capture other errors later
-        message = "Something went wrong";
-        customErrorDialog(context, 'Error', message);
+  //       return;
+  //     } else {
+  //       // to capture other errors later
+  //       message = "Something went wrong";
+  //       customErrorDialog(context, 'Error', message);
 
-        return;
-      }
-    } catch (e) {
-      EasyLoading.dismiss();
-      state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
-      customErrorDialog(context, 'Error', message);
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     EasyLoading.dismiss();
+  //     state = AsyncError(e, StackTrace.current);
+  //     message = "Ooops something went wrong";
+  //     customErrorDialog(context, 'Error', message);
 
-      return;
-    } finally {
-      isLoading = false;
-      EasyLoading.dismiss();
-      return;
-    }
-  }
+  //     return;
+  //   } finally {
+  //     isLoading = false;
+  //     EasyLoading.dismiss();
+  //     return;
+  //   }
+  // }
 
   Future logout(BuildContext context) async {
     isLoading = true;
@@ -1099,6 +1120,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         state = const AsyncValue.data(true);
         await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();
+        await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('hasSeenOnboarding', false);
         print(prefs.get('hasSeenOnboarding'));

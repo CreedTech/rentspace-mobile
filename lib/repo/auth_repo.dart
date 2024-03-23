@@ -162,6 +162,10 @@ class AuthRepository {
         'BVN not verified, please verify your bvn to continue') {
       error = 'BVN not verified, please verify your bvn to continue';
     }
+    if (jsonDecode(response.body)['error'] ==
+        'User already logged in on another device') {
+      error = 'User already logged in on another device';
+    }
 
 //  Here in repo{error: User not verified, please verify your account}
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -298,34 +302,34 @@ class AuthRepository {
     return responseModel = ResponseModel(error, false);
   }
 
-  Future<ResponseModel> getUserData() async {
-    print('Got here in user repo');
-    ResponseModel responseModel;
+  // Future<ResponseModel> getUserData() async {
+  //   print('Got here in user repo');
+  //   ResponseModel responseModel;
 
-    String authToken =
-        await GlobalService.sharedPreferencesManager.getAuthToken();
-    // print('authToken');
-    // print(authToken);
+  //   String authToken =
+  //       await GlobalService.sharedPreferencesManager.getAuthToken();
+  //   // print('authToken');
+  //   // print(authToken);
 
-    // Update the headers in ApiClient with the obtained token
-    _apiClient.updateHeaders(authToken);
-    Response response = await _apiClient.getData(AppConstants.GET_USER);
+  //   // Update the headers in ApiClient with the obtained token
+  //   _apiClient.updateHeaders(authToken);
+  //   Response response = await _apiClient.getData(AppConstants.GET_USER);
 
-    if (response.statusCode == 200) {
-      UserProfileDetailsResponse responseBody =
-          UserProfileDetailsResponse.fromJson(jsonDecode(response.body));
+  //   if (response.statusCode == 200) {
+  //     UserProfileDetailsResponse responseBody =
+  //         UserProfileDetailsResponse.fromJson(jsonDecode(response.body));
 
-      await GlobalService.sharedPreferencesManager
-          .saveUserDetails(responseBody);
-      responseModel = ResponseModel('User info retrieved successfully', true);
-      return responseModel;
-    }
-    print("Here in verify get user repo${jsonDecode(response.body)}");
-    var error = jsonDecode(response.body)['errors'].toString();
+  //     await GlobalService.sharedPreferencesManager
+  //         .saveUserDetails(responseBody);
+  //     responseModel = ResponseModel('User info retrieved successfully', true);
+  //     return responseModel;
+  //   }
+  //   print("Here in verify get user repo${jsonDecode(response.body)}");
+  //   var error = jsonDecode(response.body)['errors'].toString();
 
-    //  print("Here in repo" + response.reasonPhrase.toString());
-    return responseModel = ResponseModel(error, false);
-  }
+  //   //  print("Here in repo" + response.reasonPhrase.toString());
+  //   return responseModel = ResponseModel(error, false);
+  // }
 
   Future<ResponseModel> logout() async {
     print('Got here in user repo');

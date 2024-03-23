@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/global_services.dart';
 import '../controller/auth/auth_controller.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -36,6 +37,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
+  String deviceType = "";
+  String deviceModel = "";
+  String token = "";
   // final RoundedLoadingButtonController _btnController =
   //     RoundedLoadingButtonController();
   final loginFormKey = GlobalKey<FormState>();
@@ -78,6 +82,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     // setHasSeenOnboardingPreference(true);
     super.initState();
     _getSavedLoginInfo();
+    _getDeviceInfo();
   }
 
   // Function to retrieve saved login credentials and remember me status
@@ -95,6 +100,23 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     }
   }
 
+  Future<void> _getDeviceInfo() async {
+    final fcmToken = await GlobalService.sharedPreferencesManager.getFCMToken();
+    final prefs = await SharedPreferences.getInstance();
+    final savedDeviceType = prefs.getString('device_type');
+    final savedDeviceModel = prefs.getString('device_model');
+    print('device info');
+    print(savedDeviceType);
+    print(savedDeviceModel);
+    if (savedDeviceType != null && savedDeviceModel != null && fcmToken != '') {
+      setState(() {
+        deviceType = savedDeviceType;
+        deviceModel = savedDeviceModel;
+        token = fcmToken;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
@@ -103,10 +125,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-         fontSize: 14.sp
-      ),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -165,9 +184,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       controller: _passwordController,
       obscureText: obscurity,
       style: GoogleFonts.nunito(
-        color: Theme.of(context).primaryColor,
-        fontSize: 14.sp
-      ),
+          color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         suffix: InkWell(
@@ -241,11 +258,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         automaticallyImplyLeading: false,
 
         centerTitle: true,
- 
       ),
       body: Stack(
         children: [
-  
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -267,7 +282,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 1.w),
+                        padding: EdgeInsets.symmetric(horizontal: 1.w),
                         child: Text(
                           'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
                           textAlign: TextAlign.center,
@@ -281,7 +296,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       ),
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 51.h,
                   ),
                   Form(
@@ -292,7 +307,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:  EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Email',
@@ -306,14 +321,14 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             email,
                           ],
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 30.h,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:  EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Password',
@@ -328,7 +343,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             password,
                           ],
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 28.h,
                         ),
                         Row(
@@ -417,7 +432,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       ],
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 50.h,
                   ),
                   Align(
@@ -430,7 +445,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize:  Size(300.w, 50.h),
+                              minimumSize: Size(300.w, 50.h),
                               backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
@@ -440,11 +455,15 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                               ),
                             ),
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               if (loginFormKey.currentState!.validate()) {
                                 authState.signIn(
                                   context,
                                   _emailController.text.trim(),
                                   _passwordController.text.trim(),
+                                  token,
+                                  deviceType,
+                                  deviceModel,
                                   rememberMe: _rememberMe,
                                   // usernameController.text.trim(),
                                 );
@@ -486,7 +505,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                   // const SizedBox(
                   //   height: 15,
                   // ),
-                   SizedBox(
+                  SizedBox(
                     height: 20.h,
                   ),
                   Center(
@@ -527,7 +546,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       : Text(
                           d1,
                         ),
-                   SizedBox(
+                  SizedBox(
                     height: 15.h,
                   ),
                 ],

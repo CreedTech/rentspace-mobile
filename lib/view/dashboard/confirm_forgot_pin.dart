@@ -234,6 +234,7 @@ class _ConfirmForgotPinState extends State<ConfirmForgotPin> {
                                       ),
                                     ),
                                     onPressed: () {
+                                      FocusScope.of(context).unfocus();
                                       if (confirmPinformKey.currentState!
                                           .validate()) {
                                         // _doSomething();

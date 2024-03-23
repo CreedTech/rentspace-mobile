@@ -78,6 +78,7 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
                             ),
                           ),
                           onPressed: () {
+                            FocusScope.of(context).unfocus();
                             Get.to(const KYCFormPage());
                             // Navigator.of(context).pushNamedAndRemoveUntil(
                             //     route, (route) => false);

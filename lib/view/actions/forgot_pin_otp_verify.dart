@@ -128,6 +128,7 @@ class _ForgotPinOTPVerificationPageState
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) {
+        FocusScope.of(context).unfocus();
         authState.verifyForgotPinOtp(
           context,
           widget.email,
@@ -292,6 +293,7 @@ class _ForgotPinOTPVerificationPageState
                     ),
                   ),
                   onPressed: () {
+                    FocusScope.of(context).unfocus();
                     if (otprestpinFormKey.currentState!.validate()) {
                       authState.verifyForgotPinOtp(
                         context,

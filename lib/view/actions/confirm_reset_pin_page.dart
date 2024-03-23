@@ -70,6 +70,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) {
+        FocusScope.of(context).unfocus();
         if (val != widget.pin) {
           customErrorDialog(context, 'Pin Mismatch', 'Pin does not match');
 
@@ -152,6 +153,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (confirmNewPinformKey.currentState!.validate()) {
                         if (_confirmPinController.text.trim() != widget.pin) {
                           customErrorDialog(

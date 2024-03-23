@@ -129,6 +129,7 @@ class _ForgotPasswordOTPVerificationPageState
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) {
+        FocusScope.of(context).unfocus();
         authState.verifyForgotPasswordOtp(
           context,
           widget.email,
@@ -313,6 +314,7 @@ class _ForgotPasswordOTPVerificationPageState
                     ),
                   ),
                   onPressed: () {
+                    FocusScope.of(context).unfocus();
                     if (otprestpwdFormKey.currentState!.validate()) {
                       authState.verifyForgotPasswordOtp(
                         context,

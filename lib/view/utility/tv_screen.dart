@@ -407,6 +407,7 @@ class _TvScreenState extends State<TvScreen> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (setPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),

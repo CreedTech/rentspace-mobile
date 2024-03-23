@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/FirstPage.dart';
@@ -28,6 +29,7 @@ import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
+import 'package:rentspace/view/dashboard/transfer.dart';
 import 'package:rentspace/view/savings/savings_withdrawal.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,6 +60,7 @@ final UserController userController = Get.put(UserController());
 // final ActivitiesController activitiesController =
 //     Get.put(ActivitiesController());
 final WalletController walletController = Get.put(WalletController());
+final RentController rentController = Get.put(RentController());
 
 final hasFeedsStorage = GetStorage();
 int id = 0;
@@ -227,34 +230,34 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           }
         },
       );
-  Future<void> _getUserDetailsFromPrefs() async {
-    try {
-      // final prefs = SharedPreferencesManager();
-      final userDetails =
-          await GlobalService.sharedPreferencesManager.getUserDetails();
-      print('====================');
-      print('userDetails');
-      print(userDetails);
+  // Future<void> _getUserDetailsFromPrefs() async {
+  //   try {
+  //     // final prefs = SharedPreferencesManager();
+  //     final userDetails =
+  //         await GlobalService.sharedPreferencesManager.getUserDetails();
+  //     print('====================');
+  //     print('userDetails');
+  //     print(userDetails);
 
-      if (userDetails.userDetails.isNotEmpty) {
-        // List? userInfo = userDetails.userDetails;
-        String? firstName = userDetails.userDetails[0].firstName;
-        String? lastName = userDetails.userDetails[0].lastName;
-        // final userName = userDetails['userName'] ?? '';
-        print('fullname:');
-        print('fullname: $firstName $lastName');
-        // print('userInfo: $userInfo');
+  //     if (userDetails.userDetails.isNotEmpty) {
+  //       // List? userInfo = userDetails.userDetails;
+  //       String? firstName = userDetails.userDetails[0].firstName;
+  //       String? lastName = userDetails.userDetails[0].lastName;
+  //       // final userName = userDetails['userName'] ?? '';
+  //       print('fullname:');
+  //       print('fullname: $firstName $lastName');
+  //       // print('userInfo: $userInfo');
 
-        setState(() {
-          fullName = fullName; // Update the user name
-        });
-      } else {
-        print('Invalid user details format');
-      }
-    } catch (e) {
-      print('Error fetching user details from SharedPreferences: $e');
-    }
-  }
+  //       setState(() {
+  //         fullName = fullName; // Update the user name
+  //       });
+  //     } else {
+  //       print('Invalid user details format');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching user details from SharedPreferences: $e');
+  //   }
+  // }
 
   // Future<bool> getWalletData({bool refresh = true}) async {
   //   String token = await GlobalService.sharedPreferencesManager.getAuthToken();
@@ -731,8 +734,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             onTap: () {
                                               userController.fetchData();
                                               walletController.fetchWallet();
-                                              setState(() {
-                                              });
+                                              setState(() {});
                                             },
                                             child: const Icon(
                                               Iconsax.refresh,
@@ -1437,7 +1439,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   ?
                                   //  Get.to(
                                   //     TransactionReceipt())
-                                  Get.to(const WalletWithdrawal())
+                                  Get.to(const TransferPage())
                                   : customErrorDialog(
                                       context,
                                       'Wallet Empty! :)',

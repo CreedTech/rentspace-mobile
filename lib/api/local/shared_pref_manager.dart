@@ -46,6 +46,10 @@ class SharedPreferencesManager {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setBool(HAS_SEEN_ONBOARDING, value);
   }
+  Future<bool> userAllowedNotifications({required bool value}) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.setBool('USER_ALLOWED_NOTIFICATIONS', value);
+  }
 
   Future<bool> removeHasSeenOnboarding({required bool value}) async {
     // final _prefs = await SharedPreferences.getInstance();
@@ -56,12 +60,23 @@ class SharedPreferencesManager {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setString(TOKEN, value);
   }
+
   Future<bool> setFCMToken({required String value}) async {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setString('fcm_token', value);
   }
 
+  Future<void> setDevieInfo(String deviceType, String deviceModel) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('device_type', deviceType);
+    _prefs.setString('device_model', deviceModel);
+  }
 
+  Future<void> deleteDeviceInfo() async {
+    // final prefs = await SharedPreferences.getInstance();
+    _prefs.remove('device_type');
+    _prefs.remove('device_model');
+  }
 
   // Function to save login credentials and remember me status to shared preferences
   Future<void> saveLoginInfo(
@@ -71,7 +86,6 @@ class SharedPreferencesManager {
     _prefs.setString('password', password);
     _prefs.setBool('rememberMe', rememberMe);
   }
-
   Future<void> deleteLoginInfo() async {
     // final prefs = await SharedPreferences.getInstance();
     _prefs.remove('email');
@@ -83,6 +97,7 @@ class SharedPreferencesManager {
     // final prefs = await SharedPreferences.getInstance();
     return _prefs.getString(TOKEN) ?? '';
   }
+
   Future<String> getFCMToken() async {
     // final prefs = await SharedPreferences.getInstance();
     return _prefs.getString('fcm_token') ?? '';
@@ -106,37 +121,38 @@ class SharedPreferencesManager {
     // Call your update PIN endpoint here
   }
 
-  Future<bool> saveUserDetails(UserProfileDetailsResponse userDetails) async {
-    try {
-      String userDetailsJson = jsonEncode(userDetails.toJson());
-      _prefs.setString(USER_DETAILS, userDetailsJson);
-      print('printing ------');
-      print(USER_DETAILS);
-      getUserDetails();
-      return true;
-    } catch (e) {
-      print('Error saving user details: $e');
-      return false;
-    }
-  }
+  // Future<bool> saveUserDetails(UserProfileDetailsResponse userDetails) async {
+  //   try {
+  //     String userDetailsJson = jsonEncode(userDetails.toJson());
+  //     _prefs.setString(USER_DETAILS, userDetailsJson);
+  //     print('printing ------');
+  //     print(USER_DETAILS);
+  //     getUserDetails();
+  //     return true;
+  //   } catch (e) {
+  //     print('Error saving user details: $e');
+  //     return false;
+  //   }
+  // }
 
-  Future<UserProfileDetailsResponse> getUserDetails() async {
-    try {
-      String userDetailsString = _prefs.getString(USER_DETAILS) ?? '';
+  // Future<UserProfileDetailsResponse> getUserDetails() async {
+  //   try {
+  //     String userDetailsString = _prefs.getString(USER_DETAILS) ?? '';
 
-      if (userDetailsString.isNotEmpty) {
-        Map<String, dynamic> userDetailsMap = json.decode(userDetailsString);
-        print('userDetailsMap');
-        print(userDetailsMap);
-        return UserProfileDetailsResponse.fromJson(userDetailsMap);
-      } else {
-        // Return a default or empty UserProfileDetailsResponse when no data is found
-        return UserProfileDetailsResponse(msg: '', userDetails: []);
-      }
-    } catch (e) {
-      print('Error getting user details: $e');
+  //     if (userDetailsString.isNotEmpty) {
+  //       Map<String, dynamic> userDetailsMap = json.decode(userDetailsString);
+  //       print('userDetailsMap');
+  //       print(userDetailsMap);
+  //       return UserProfileDetailsResponse.fromJson(userDetailsMap);
+  //     } else {
+  //       // Return a default or empty UserProfileDetailsResponse when no data is found
+  //       return UserProfileDetailsResponse(msg: '', userDetails: []);
+  //     }
+  //   } catch (e) {
+  //     print('Error getting user details: $e');
 
-      return UserProfileDetailsResponse(msg: '', userDetails: []);
-    }
-  }
+  //     return UserProfileDetailsResponse(msg: '', userDetails: []);
+  //   }
+  // }
+
 }

@@ -187,6 +187,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    FocusScope.of(context).unfocus();
                                     if (passwordformKey.currentState!
                                         .validate()) {
                                      

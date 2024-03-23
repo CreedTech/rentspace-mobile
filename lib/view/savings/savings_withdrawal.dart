@@ -1174,6 +1174,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                               ),
                             ),
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               if (withdrawFormKey.currentState!.validate()) {
                                 // print('yo');
                                 Get.bottomSheet(

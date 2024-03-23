@@ -138,6 +138,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                                             padding: const EdgeInsets.all(3),
                                             child: ElevatedButton(
                                               onPressed: () {
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 Get.back();
                                                 Get.to(const FundWallet());
                                               },
@@ -808,6 +810,115 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       print(e);
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
+      customErrorDialog(context, 'Error', message);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     message: message,
+      //   ),
+      // );
+
+      return;
+    } finally {
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future transferMoney(BuildContext context, bankCode, amount, accountNumber,
+      pin, accountName, bankName) async {
+    isLoading = true;
+    print("Fields");
+    print(amount);
+    print(bankCode);
+    print(accountNumber);
+    print(pin);
+    isLoading = true;
+    if (bankCode.isEmpty ||
+        bankCode == '' ||
+        accountNumber.isEmpty ||
+        accountNumber == '' ||
+        pin.isEmpty ||
+        pin == '' ||
+        accountName.isEmpty ||
+        accountName == '' ||
+        bankName.isEmpty ||
+        bankName == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+
+      return;
+    }
+    Map<String, dynamic> body = {
+      'bank_code': bankCode,
+      'amount': amount,
+      'accountNumber': accountNumber,
+      'pin': pin
+    };
+    print("body");
+    print(body);
+    String message;
+
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await appRepository.transferMoney(body);
+      if (response.success) {
+        EasyLoading.dismiss();
+        state = const AsyncData(false);
+        userController.fetchData();
+        walletController.fetchWallet();
+        Get.back();
+
+        SucessfulReciept(context, accountName, (amount + 20), bankName);
+        // Navigator.pushNamed(context, RouteList.login);
+        // SucessfulReciept();
+        // Navi
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Incorrect PIN")) {
+        EasyLoading.dismiss();
+        message = "Incorrect PIN";
+
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Insufficient Balance")) {
+        EasyLoading.dismiss();
+        message = "Insufficient Balance";
+        // custTomDialog(context, message);
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else {
+        // to capture other errors later
+        EasyLoading.dismiss();
+        message = "Something went wrong";
+        print('This is the error $message');
+
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      print(e);
+      message = "Ooops something went wrong";
+      // custTomDialog(context, message);
+      Get.back();
       customErrorDialog(context, 'Error', message);
       // showTopSnackBar(
       //   Overlay.of(context),

@@ -280,6 +280,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  FocusScope.of(context).unfocus();
                                   if (isFilled == true) {
                                     authState.verifyOtp(
                                       context,

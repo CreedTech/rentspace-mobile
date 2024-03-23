@@ -649,6 +649,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (rentFormKey.currentState!.validate()) {
                         calculateRent(double.tryParse(_rentAmountController.text
                             .trim()
@@ -773,6 +774,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 ),
                                               ),
                                               onPressed: () async {
+                                                FocusScope.of(context).unfocus();
                                                 Get.back();
                                                 print(_endDateController.text);
                                                 print(durationType);
@@ -868,6 +870,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                                                     padding: const EdgeInsets.all(3),
                                                                                     child: ElevatedButton(
                                                                                       onPressed: () {
+                                                                                        FocusScope.of(context).unfocus();
                                                                                         Get.back();
                                                                                         Get.to(const FundWallet());
                                                                                       },

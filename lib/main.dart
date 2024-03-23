@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,6 +75,21 @@ Future<void> main() async {
   await Firebase.initializeApp(
       // options: DefaultFirebaseOptions.currentPlatform,
       );
+  final deviceInfoPlugin = DeviceInfoPlugin();
+  // final deviceInfo = await deviceInfoPlugin.androidInfo;
+  // final allInfo = deviceInfo.type +  deviceInfo.product + deviceInfo.id  + deviceInfo.device;
+  // print(allInfo);
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+    print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+    GlobalService.sharedPreferencesManager
+        .setDevieInfo('Android', androidInfo.model);
+  } else if (Platform.isIOS) {
+    IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+    print('Running on ${iosInfo.utsname.machine}');
+    GlobalService.sharedPreferencesManager
+        .setDevieInfo('IOS', iosInfo.utsname.machine);
+  }
   // Inside a function or during app initialization
   void requestNotificationPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -89,11 +106,17 @@ Future<void> main() async {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
+      await GlobalService.sharedPreferencesManager
+          .userAllowedNotifications(value: true);
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       print('User granted provisional permission');
+      await GlobalService.sharedPreferencesManager
+          .userAllowedNotifications(value: true);
     } else {
       print('User declined or has not accepted permission');
+      await GlobalService.sharedPreferencesManager
+          .userAllowedNotifications(value: false);
     }
   }
 
@@ -282,9 +305,11 @@ Future<void> main() async {
 // If app is closed or terminated
   FirebaseMessaging.instance.getInitialMessage().then(
     (RemoteMessage? message) async {
-      RemoteNotification? notification = message?.notification;
-      AndroidNotification? android = message?.notification!.android;
-      displayNotification(notification, message!.data);
+      // RemoteNotification? notification = message?.notification;
+      // AndroidNotification? android = message?.notification!.android;
+      if (message != null) {
+        displayNotification(message.notification, message.data);
+      }
       // if (notification != null && android != null) {
       //   flutterLocalNotificationsPlugin.show(
       //     notification.hashCode,
@@ -471,7 +496,7 @@ class MyApp extends StatefulWidget {
 
 void configLoading() {
   EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
+    // ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.chasingDots
     ..loadingStyle = EasyLoadingStyle.custom
     ..indicatorSize = 45.0
@@ -481,7 +506,7 @@ void configLoading() {
     ..indicatorColor = brandOne
     ..textColor = brandTwo
     ..maskColor = Colors.transparent
-    ..userInteractions = true
+    ..userInteractions = false
     ..dismissOnTap = false;
 
   // ..customAnimation = CustomAnimation();

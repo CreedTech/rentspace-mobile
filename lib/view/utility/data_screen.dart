@@ -278,6 +278,7 @@ class _DataScreenState extends State<DataScreen> {
                                             padding: const EdgeInsets.all(3),
                                             child: ElevatedButton(
                                               onPressed: () {
+                                                FocusScope.of(context).unfocus();
                                                 Get.back();
                                                 Get.to(const FundWallet());
                                               },
@@ -402,6 +403,7 @@ class _DataScreenState extends State<DataScreen> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (setPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),
@@ -587,6 +589,7 @@ class _DataScreenState extends State<DataScreen> {
                                                             child:
                                                                 ElevatedButton(
                                                               onPressed: () {
+                                                                FocusScope.of(context).unfocus();
                                                                 Get.back();
                                                                 Get.to(
                                                                     const FundWallet());

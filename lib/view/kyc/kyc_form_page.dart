@@ -949,6 +949,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (kycFormKey1.currentState!.validate()) {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
@@ -1124,6 +1125,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (kycFormKey2.currentState!.validate()) {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
@@ -1284,6 +1286,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (kycFormKey3.currentState!.validate()) {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
@@ -1408,6 +1411,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (kycFormKey4.currentState!.validate()) {
                             // pageController.nextPage(
                             //   duration: const Duration(milliseconds: 300),
@@ -1504,6 +1508,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                               ),
                                             ),
                                             onPressed: () {
+                                              FocusScope.of(context).unfocus();
                                               Get.to(KYCPayment());
                                             },
                                             child: Text(

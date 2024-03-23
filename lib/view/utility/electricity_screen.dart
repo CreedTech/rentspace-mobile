@@ -186,6 +186,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                         ),
                       ),
                       onPressed: () async {
+                        FocusScope.of(context).unfocus();
                         Get.back();
                         Share.share("Token: $electricToken");
                       },
@@ -352,6 +353,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                                               padding: const EdgeInsets.all(3),
                                               child: ElevatedButton(
                                                 onPressed: () {
+                                                  FocusScope.of(context).unfocus();
                                                   Get.back();
                                                   Get.to(const FundWallet());
                                                 },
@@ -480,6 +482,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (setPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),
@@ -575,6 +578,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
+                                                                  FocusScope.of(context).unfocus();
                                                                   Get.back();
                                                                   Get.to(
                                                                       const FundWallet());

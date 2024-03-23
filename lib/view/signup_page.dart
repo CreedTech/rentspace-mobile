@@ -1423,6 +1423,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (registerFormKey.currentState!.validate()) {
                             if (isChecked == true) {
                               print(genderValue.toString());

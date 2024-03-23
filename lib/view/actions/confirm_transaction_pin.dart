@@ -93,6 +93,7 @@ class _ConfirmTransactionPinPageState
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) {
+        FocusScope.of(context).unfocus();
         if (val != widget.pin) {
           customErrorDialog(context, 'Pin Mismatch', 'Pin does not match');
 
@@ -173,6 +174,7 @@ class _ConfirmTransactionPinPageState
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (confirmPinformKey.currentState!.validate()) {
                         if (_confirmPinController.text.trim() !=
                             widget.pin) {

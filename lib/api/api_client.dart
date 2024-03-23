@@ -48,7 +48,7 @@ class ApiClient {
       );
       // .timeout(const Duration(seconds: 30));
 
-      print(AppConstants.BASE_URL + url);
+      // print(AppConstants.BASE_URL + url);
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Request was successful, return the response
         print('response');

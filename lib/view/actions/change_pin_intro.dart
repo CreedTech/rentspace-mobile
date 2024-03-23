@@ -71,6 +71,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) async {
+        FocusScope.of(context).unfocus();
         if (BCrypt.checkpw(_pinController.text.trim().toString(),
             userController.userModel!.userDetails![0].wallet.pin)) {
           _pinController.clear();
@@ -158,6 +159,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (setPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),

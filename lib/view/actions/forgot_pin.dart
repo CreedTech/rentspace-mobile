@@ -144,6 +144,7 @@ class _ForgotPinConsumerState extends ConsumerState<ForgotPin> {
       // onCompleted: _doSomething,
       closeKeyboardWhenCompleted: true,
       onCompleted: (val) {
+        FocusScope.of(context).unfocus();
         Get.to(ConfirmForgotPin(pin: _pinController.text.trim()));
       },
       keyboardType: TextInputType.number,
@@ -215,6 +216,7 @@ class _ForgotPinConsumerState extends ConsumerState<ForgotPin> {
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (changePinformKey.currentState!.validate()) {
                         // _doSomething();
                         Get.to(

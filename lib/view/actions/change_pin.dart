@@ -85,6 +85,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) async {
+        FocusScope.of(context).unfocus();
         if (BCrypt.checkpw(_changePinController.text.trim().toString(),
             userController.userModel!.userDetails![0].wallet.pin)) {
           customErrorDialog(
@@ -164,6 +165,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (changePinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _changePinController.text.trim().toString(),

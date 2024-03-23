@@ -246,6 +246,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                           ),
                         ),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (forgotPassFormKey.currentState!.validate()) {
                             authState.forgotPassword(
                               context,

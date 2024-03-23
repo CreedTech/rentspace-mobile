@@ -354,6 +354,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                   ),
                   GFButton(
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (((userController
                               .userModel!.userDetails![0].wallet.mainBalance) <
                           ((int.tryParse(_betAmountController.text
@@ -759,6 +760,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     ),
                     GFButton(
                       onPressed: () async {
+                        FocusScope.of(context).unfocus();
                         Get.back();
                         Share.share("Token: $electricToken");
                       },
@@ -1478,6 +1480,8 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ),
                                         GFButton(
                                           onPressed: () async {
+                                            
+                                            FocusScope.of(context).unfocus();
                                             if (((userController
                                                     .userModel!
                                                     .userDetails![0]
@@ -3351,6 +3355,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       ),
                                       GFButton(
                                         onPressed: () async {
+                                          FocusScope.of(context).unfocus();
                                           Get.to(nt.BvnPage(
                                               email: userController.userModel!
                                                   .userDetails![0].email));

@@ -4,7 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/view/FirstPage.dart';
+// import 'package:rentspace/view/dashboard/dashboard.dart';
+import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/login_page.dart';
+
+import 'paint/custom_paint.dart';
 
 void resendVerification(
     BuildContext context, String message, String subText) async {
@@ -56,6 +61,7 @@ void resendVerification(
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
@@ -86,7 +92,6 @@ void resendVerification(
           ),
         );
       });
-
 }
 
 void verification(BuildContext context, String message, String subText,
@@ -139,6 +144,7 @@ void verification(BuildContext context, String message, String subText,
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -232,6 +238,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) => const LoginPage(),
@@ -389,7 +396,7 @@ void customErrorDialog(
                     ),
                   ),
                 ),
-                 Align(
+                Align(
                   alignment: Alignment.center,
                   child: Icon(
                     Iconsax.warning_24,
@@ -397,7 +404,7 @@ void customErrorDialog(
                     size: 75.sp,
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 12.h,
                 ),
                 Text(
@@ -408,7 +415,7 @@ void customErrorDialog(
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 5.h,
                 ),
                 Text(
@@ -419,7 +426,7 @@ void customErrorDialog(
                     fontSize: 16.sp,
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 10.h,
                 ),
               ],
@@ -501,4 +508,129 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
       );
     },
   );
+}
+
+Future<void> SucessfulReciept(
+    BuildContext context, accountName, amount, bank) async {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: null,
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          insetPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.h),
+          alignment: Alignment.bottomCenter,
+          contentPadding: EdgeInsets.zero,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r)),
+          content: SizedBox(
+            height: 474.h,
+            width: 380.h,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 21.h, vertical: 13.h),
+              child: Column(
+                children: [
+                  ClipPath(
+                    clipper: ZigzagClip(
+                      width: 13,
+                    ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: brandOne,
+                      ),
+                      height: 374.h,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 21.h, vertical: 23.h),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Icon(
+                                Icons.verified,
+                                color: Colors.greenAccent,
+                                size: 68.sp,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Text(
+                              // '₦ 10,000',
+                              ch8t.format(amount),
+
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              'Transfer To $accountName',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              bank,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.nunito(
+                                color: Colors.white,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(250, 50),
+                          backgroundColor: brandOne,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              50,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          userController.fetchData();
+                          walletController.fetchWallet();
+                          rentController.fetchRent();
+                          Get.to(const FirstPage());
+                        },
+                        child: Text(
+                          'Back Home',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

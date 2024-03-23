@@ -202,6 +202,7 @@ class _CardTopUpState extends State<CardTopUp> {
                             ),
                           ),
                           onPressed: () async {
+                            FocusScope.of(context).unfocus();
                             if (fundWalletFormKey.currentState!.validate()) {
                               Get.to(WalletFunding(
                                 amount: int.tryParse(_amountController.text

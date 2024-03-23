@@ -241,6 +241,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    FocusScope.of(context).unfocus();
                                     if (bvnformKey.currentState!.validate()) {
                                       // verifyBVN();
                                       appState.verifyBVN(

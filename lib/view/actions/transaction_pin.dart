@@ -159,6 +159,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                       ),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       if (setPinformKey.currentState!.validate()) {
                         // _doSomething();
                         Get.to(ConfirmTransactionPinPage(
