@@ -774,9 +774,43 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       );
       final response = await appRepository.buyAirtime(body);
       if (response.success) {
+        userController.fetchData();
+        walletController.fetchWallet();
         EasyLoading.dismiss();
         // Navigator.pushNamed(context, RouteList.login);
         // SucessfulReciept();
+        // double earnedAmountNaira = 0.005 * amount;
+
+        // // Convert the earned amount in naira to space points (1 space point = 2 naira)
+        // double spacePoints = earnedAmountNaira / 2;
+
+        // Calculate 0.5% of the recharge amount in naira
+        double earnedAmountNaira = 0.005 * amount;
+
+        // Convert the earned amount in naira to space points (1 space point = 2 naira)
+        double spacePoints = earnedAmountNaira / 2;
+
+        // Check if spacePoints is a whole number
+        bool isWholeNumber = spacePoints % 1 == 0;
+
+        // Format spacePoints based on whether it's a whole number or not
+        String formattedSpacePoints = isWholeNumber
+            ? spacePoints.toStringAsFixed(0)
+            : spacePoints.toStringAsFixed(2);
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: Colors.green,
+            message: 'You just earned $formattedSpacePoints Space point!',
+            textStyle: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
+
+        SucessfulReciept(context, phoneNumber, amount, biller, 'Transfer to ');
         // Navi
         return;
       } else if (response.success == false &&
@@ -784,7 +818,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
               .contains("String must contain at least 10 character(s)")) {
         EasyLoading.dismiss();
         message = "Phone Number must be up to 10 characters long!!";
-
+        Get.back();
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -794,6 +828,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         message = "Amount must be greate than or equal to 50 naira";
         // custTomDialog(context, message);
+        Get.back();
         customErrorDialog(context, 'Error', message);
         // showTopSnackBar(
         //   Overlay.of(context),
@@ -803,11 +838,36 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // );
 
         return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again")) {
+        EasyLoading.dismiss();
+        message =
+            "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
       }
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       print(e);
+      Get.back();
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
       customErrorDialog(context, 'Error', message);
@@ -820,6 +880,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
 
       return;
     } finally {
+      EasyLoading.dismiss();
       isLoading = false;
       return;
     }
@@ -874,7 +935,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         walletController.fetchWallet();
         Get.back();
 
-        SucessfulReciept(context, accountName, (amount + 20), bankName);
+        SucessfulReciept(
+            context, accountName, (amount + 20), bankName, 'Transfer to ');
         // Navigator.pushNamed(context, RouteList.login);
         // SucessfulReciept();
         // Navi

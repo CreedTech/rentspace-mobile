@@ -151,7 +151,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               physics: const ClampingScrollPhysics(),
-                              itemCount: 1,
+                              itemCount: userController.userModel!
+                                  .userDetails![0].referredUsers.length,
                               itemBuilder: (BuildContext context, int index) {
                                 int reversedIndex = userController.userModel!
                                         .userDetails![0].referredUsers.length -
@@ -197,7 +198,6 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                       ),
                                     ),
                                   ),
-                               
                                   title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -248,7 +248,6 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                       ),
                                     ),
                                   ),
-                                
                                 );
                               },
                             )

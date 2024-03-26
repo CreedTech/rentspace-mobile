@@ -726,7 +726,7 @@ class _HomePageState extends State<HomePage> {
                   title: 'Utility',
                   textColor: Colors.white,
                   description:
-                      'Pay your bills directly from your wallet and earn 1 SpacePoint!',
+                      'Pay your bills directly from your wallet and earn SpacePoint!',
                   disableAnimation: false,
                   showcaseBackgroundColor: brandOne,
                   showArrow: true,

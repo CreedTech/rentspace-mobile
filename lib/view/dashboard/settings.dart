@@ -765,14 +765,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    ch8t.format(
+                                  Padding(
+                                    padding:  EdgeInsets.only(right: 20.sp),
+                                    child: Text(
                                       userController.userModel!.userDetails![0]
-                                          .utilityPoints,
-                                    ),
-                                    style: GoogleFonts.nunito(
-                                      color: brandOne,
-                                      fontWeight: FontWeight.w700,
+                                          .utilityPoints
+                                          .toString(),
+                                      style: GoogleFonts.nunito(
+                                        color: brandOne,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ],

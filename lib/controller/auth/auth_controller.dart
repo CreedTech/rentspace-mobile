@@ -896,7 +896,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       EasyLoading.dismiss();
       isLoading = false;
-      isLoading = false;
     }
   }
 

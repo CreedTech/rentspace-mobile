@@ -31,14 +31,16 @@ class TransferPaymentPage extends ConsumerStatefulWidget {
       _TransferPaymentPageState();
 }
 
+final withdrawPaymentFormKey = GlobalKey<FormState>();
+String _amountQuery = '';
+
 class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
-  String _amountQuery = '';
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _aPinController = TextEditingController();
-  final withdrawPaymentFormKey = GlobalKey<FormState>();
   bool _isTyping = false;
+  bool isTextFieldEmpty = false;
 
   void validateUsersInput() {
     if (withdrawPaymentFormKey.currentState!.validate()) {
@@ -62,11 +64,11 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
     // _amountController.addListener(_onAmountChanged);
   }
 
-  @override
-  void dispose() {
-    _amountController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _amountController.dispose();
+  //   super.dispose();
+  // }
 
   void _onAmountChanged() {
     setState(() {
@@ -96,11 +98,14 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       if (amountValue.isEmpty) {
         return 'amount cannot be empty';
       }
-      if (int.tryParse(amountValue) == null) {
+      if (int.tryParse(amountValue.trim().replaceAll(',', '')) == null) {
         return 'enter valid number';
       }
       if (int.tryParse(amountValue)!.isNegative) {
         return 'enter valid number';
+      }
+      if (int.tryParse(amountValue.trim().replaceAll(',', '')) == 0) {
+        return 'number cannot be zero';
       }
       if (int.tryParse(amountValue)! < 10) {
         return 'minimum amount is ₦10.00';
@@ -124,6 +129,17 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         fontWeight: FontWeight.w600,
       ),
       keyboardType: TextInputType.number,
+      onChanged: (value) {
+        setState(() {
+          print("Entered Amount: $value");
+          // Check if the text field is empty
+          isTextFieldEmpty = value.isNotEmpty &&
+              int.tryParse(value) != null &&
+              int.parse(value) >= 10 &&
+              !(int.tryParse(value)!.isNegative) &&
+              int.tryParse(value.trim().replaceAll(',', '')) != 0;
+        });
+      },
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
@@ -324,11 +340,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(250, 50),
-                  backgroundColor:
-                      (withdrawPaymentFormKey.currentState != null &&
-                              withdrawPaymentFormKey.currentState!.validate())
-                          ? brandOne
-                          : Colors.grey,
+                  backgroundColor: (isTextFieldEmpty) ? brandOne : Colors.grey,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -336,21 +348,35 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                     ),
                   ),
                 ),
-                onPressed: withdrawPaymentFormKey.currentState != null &&
-                        withdrawPaymentFormKey.currentState!.validate()
-                    ? () async {
-                        FocusScope.of(context).unfocus();
-                        // validateUsersInput();
-                        await fetchUserData()
-                            .then((value) => validateUsersInput())
-                            .catchError(
-                              (error) => {
-                                customErrorDialog(context, 'Oops',
-                                    'Something went wrong. Try again later'),
-                              },
-                            );
-                      }
-                    : null,
+                onPressed: () async {
+                  if (withdrawPaymentFormKey.currentState!.validate()) {
+                    FocusScope.of(context).unfocus();
+                    await fetchUserData()
+                        .then((value) => validateUsersInput())
+                        .catchError(
+                          (error) => {
+                            customErrorDialog(context, 'Oops',
+                                'Something went wrong. Try again later'),
+                          },
+                        );
+                  }
+                }
+                //  withdrawPaymentFormKey.currentState != null &&
+                //         withdrawPaymentFormKey.currentState!.validate()
+                //     ? () async {
+                //         FocusScope.of(context).unfocus();
+                //         // validateUsersInput();
+                //         await fetchUserData()
+                //             .then((value) => validateUsersInput())
+                //             .catchError(
+                //               (error) => {
+                //                 customErrorDialog(context, 'Oops',
+                //                     'Something went wrong. Try again later'),
+                //               },
+                //             );
+                //       }
+                // : null
+                ,
                 child: Text(
                   'Confirm',
                   textAlign: TextAlign.center,
@@ -1075,4 +1101,5 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       ),
     );
   }
+
 }

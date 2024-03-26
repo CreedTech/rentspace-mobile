@@ -511,7 +511,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
 }
 
 Future<void> SucessfulReciept(
-    BuildContext context, accountName, amount, bank) async {
+    BuildContext context, accountName, amount, bank, subject) async {
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -570,7 +570,7 @@ Future<void> SucessfulReciept(
                               ),
                             ),
                             Text(
-                              'Transfer To $accountName',
+                              '$subject $accountName',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(
                                 color: Colors.white,

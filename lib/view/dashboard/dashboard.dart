@@ -40,6 +40,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../api/global_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
 // import '../../controller/settings_controller.dart';
+import '../../constants/widgets/icon_container.dart';
+import '../../core/helper/helper_route_path.dart';
 import '../actions/onboarding_page.dart';
 import '../actions/transaction_receipt_dva.dart';
 import '../actions/transaction_receipt_transfer.dart';
@@ -468,7 +470,16 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               )
                             ],
                           ),
-
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(AllActivities());
+                            },
+                            child: Icon(
+                              Icons.history_sharp,
+                              color: Theme.of(context).primaryColor,
+                              size: 24.sp,
+                            ),
+                          ),
                           // riverpod.Consumer(
                           //   builder: (context, watch, _) {
                           //     final count =
@@ -939,288 +950,290 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // ),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: brandTwo.withOpacity(0.2),
-                  //     borderRadius: BorderRadius.circular(15.r),
-                  //   ),
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(
-                  //         vertical: 20.0.h, horizontal: 20.0.h),
-                  //     child: Column(
-                  //       children: [
-                  //          Row(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           children: [
-                  //             IconsContainer(
-                  //               IconsName: 'Airtime',
-                  //               icon: Iconsax.mobile5,
-                  //               iconColor: brandOne,
-                  //               onTap: () {
-                  //                 // Navigator.push(context, route)
-                  //                 Navigator.pushNamed(context, airtime);
-                  //               },
-                  //             ),
-                  //             IconsContainer(
-                  //               IconsName: 'Data',
-                  //               icon: Icons.wifi,
-                  //               iconColor: brandOne,
-                  //               onTap: () {
-                  //                 // Navigator.pushNamed(context, RouteList.airtime);
-                  //               },
-                  //             ),
-                  //             IconsContainer(
-                  //               IconsName: 'Cable',
-                  //               icon: Icons.tv_rounded,
-                  //               iconColor: brandOne,
-                  //               onTap: () {},
-                  //             ),
-                  //             IconsContainer(
-                  //               IconsName: 'More',
-                  //               icon: Iconsax.more5,
-                  //               iconColor: brandOne,
-                  //               onTap: () {
-                  //                 // Navigator.pushNamed(context, RouteList.electricity);
-                  //                 // Navigator.pushNamed(context, RouteList.pay_bills);
-                  //               },
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: brandTwo.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0.h, horizontal: 20.0.h),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconsContainer(
+                                IconsName: 'Airtime',
+                                icon: Iconsax.mobile5,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.push(context, route)
+                                  
+                                  Navigator.pushNamed(context, airtime);
+                                },
+                              ),
+                              IconsContainer(
+                                IconsName: 'Data',
+                                icon: Icons.wifi,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.pushNamed(context, RouteList.airtime);
+                                },
+                              ),
+                              IconsContainer(
+                                IconsName: 'Cable',
+                                icon: Icons.tv_rounded,
+                                iconColor: brandOne,
+                                onTap: () {},
+                              ),
+                              IconsContainer(
+                                IconsName: 'More',
+                                icon: Iconsax.more5,
+                                iconColor: brandOne,
+                                onTap: () {
+                                  // Navigator.pushNamed(context, RouteList.electricity);
+                                  // Navigator.pushNamed(context, RouteList.pay_bills);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                   SizedBox(
                     height: 20.h,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Transaction Histories",
-                        style: GoogleFonts.nunito(
-                          fontSize: 16.0.sp,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(AllActivities());
-                        },
-                        child: Text(
-                          "See all",
-                          style: GoogleFonts.nunito(
-                            fontSize: 14.0.sp,
-                            // letterSpacing: 1.0,
-                            // fontFamily: "DefaultFontFamily",
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  // Text(activitiesController.activitiesModel!.activities![0].description),
-                  userController.userModel!.userDetails![0].walletHistories
-                          .obs()
-                          .isNotEmpty
-                      ? ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            int reversedIndex = userController.userModel!
-                                    .userDetails![0].walletHistories.length -
-                                1 -
-                                index;
-                            final history = userController.userModel!
-                                .userDetails![0].walletHistories[reversedIndex];
-                            return GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                  (history['transactionGroup']
-                                              .toString()
-                                              .toLowerCase() ==
-                                          'transfer')
-                                      ? TransactionReceiptTransfer(
-                                          amount: history['amount'],
-                                          status: history['status'],
-                                          fees: history['fees'] ?? 0,
-                                          transactionType:
-                                              history['transactionType'],
-                                          description: history['description'],
-                                          transactionGroup:
-                                              history['transactionGroup'],
-                                          transactionDate: history['createdAt'],
-                                          transactionRef:
-                                              history['transactionReference'] ??
-                                                  '',
-                                          merchantRef:
-                                              history['merchantReference'],
-                                          // sessionId: history['sessionId'],
-                                        )
-                                      : (history['transactionGroup']
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              'static-account-transfer')
-                                          ? TransactionReceiptDVA(
-                                              amount: history['amount'],
-                                              status: history['status'],
-                                              fees: history['fees'] ?? 0,
-                                              transactionType:
-                                                  history['transactionType'],
-                                              description:
-                                                  history['description'],
-                                              transactionGroup:
-                                                  history['transactionGroup'],
-                                              transactionDate:
-                                                  history['createdAt'],
-                                              transactionRef: history[
-                                                      'transactionReference'] ??
-                                                  '',
-                                              merchantRef:
-                                                  history['merchantReference'],
-                                              remarks: history['remarks'],
-                                            )
-                                          : TransactionReceipt(
-                                              amount: history['amount'],
-                                              status: history['status'],
-                                              fees: history['fees'] ?? 0,
-                                              transactionType:
-                                                  history['transactionType'],
-                                              description:
-                                                  history['description'],
-                                              transactionGroup:
-                                                  history['transactionGroup'],
-                                              transactionDate:
-                                                  history['createdAt'],
-                                              transactionRef: history[
-                                                      'transactionReference'] ??
-                                                  '',
-                                              merchantRef:
-                                                  history['merchantReference'],
-                                            ),
-                                );
-                              },
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                minLeadingWidth: 0,
-                                leading: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:
-                                        (history['transactionType'] == 'Credit')
-                                            ? Colors.green
-                                            : Colors.red,
-                                  ),
-                                  child:
-                                      (history['transactionType'] == 'Credit')
-                                          ? Icon(Icons.call_received,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary)
-                                          : Icon(Icons.arrow_outward_sharp,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary),
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${history['description']}",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                subtitle: Text(
-                                  formatDateTime(history['createdAt']),
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                trailing: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${(history['transactionType'] == 'Credit') ? '+' : '-'} ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    Text(
-                                      (history['status']
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              'completed')
-                                          ? 'Successful'
-                                          : (history['transactionType']
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  'failed')
-                                              ? 'Failed'
-                                              : 'Pending',
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: (history['status']
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                'completed')
-                                            ? Colors.green
-                                            : (history['transactionType']
-                                                        .toString()
-                                                        .toLowerCase() ==
-                                                    'failed')
-                                                ? Colors.red
-                                                : Colors.yellow[800],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Center(
-                            child: Text(
-                              "No Wallet Transactions Yet",
-                              style: GoogleFonts.nunito(
-                                fontSize: 16.sp,
-                                // fontFamily: "DefaultFontFamily",
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Transaction Histories",
+                  //       style: GoogleFonts.nunito(
+                  //         fontSize: 16.0.sp,
+                  //         fontWeight: FontWeight.w700,
+                  //         color: Theme.of(context).primaryColor,
+                  //       ),
+                  //     ),
+                  //     InkWell(
+                  //       onTap: () {
+                  //         Get.to(AllActivities());
+                  //       },
+                  //       child: Text(
+                  //         "See all",
+                  //         style: GoogleFonts.nunito(
+                  //           fontSize: 14.0.sp,
+                  //           // letterSpacing: 1.0,
+                  //           // fontFamily: "DefaultFontFamily",
+                  //           fontWeight: FontWeight.w700,
+                  //           color: Theme.of(context).primaryColor,
+                  //           decoration: TextDecoration.underline,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
 
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  // SizedBox(
+                  //   height: 10.h,
+                  // ),
+                  // // Text(activitiesController.activitiesModel!.activities![0].description),
+                  // userController.userModel!.userDetails![0].walletHistories
+                  //         .obs()
+                  //         .isNotEmpty
+                  //     ? ListView.builder(
+                  //         scrollDirection: Axis.vertical,
+                  //         shrinkWrap: true,
+                  //         physics: const ClampingScrollPhysics(),
+                  //         itemCount: 1,
+                  //         itemBuilder: (BuildContext context, int index) {
+                  //           int reversedIndex = userController.userModel!
+                  //                   .userDetails![0].walletHistories.length -
+                  //               1 -
+                  //               index;
+                  //           final history = userController.userModel!
+                  //               .userDetails![0].walletHistories[reversedIndex];
+                  //           return GestureDetector(
+                  //             onTap: () {
+                  //               Get.to(
+                  //                 (history['transactionGroup']
+                  //                             .toString()
+                  //                             .toLowerCase() ==
+                  //                         'transfer')
+                  //                     ? TransactionReceiptTransfer(
+                  //                         amount: history['amount'],
+                  //                         status: history['status'],
+                  //                         fees: history['fees'] ?? 0,
+                  //                         transactionType:
+                  //                             history['transactionType'],
+                  //                         description: history['description'],
+                  //                         transactionGroup:
+                  //                             history['transactionGroup'],
+                  //                         transactionDate: history['createdAt'],
+                  //                         transactionRef:
+                  //                             history['transactionReference'] ??
+                  //                                 '',
+                  //                         merchantRef:
+                  //                             history['merchantReference'],
+                  //                         // sessionId: history['sessionId'],
+                  //                       )
+                  //                     : (history['transactionGroup']
+                  //                                 .toString()
+                  //                                 .toLowerCase() ==
+                  //                             'static-account-transfer')
+                  //                         ? TransactionReceiptDVA(
+                  //                             amount: history['amount'],
+                  //                             status: history['status'],
+                  //                             fees: history['fees'] ?? 0,
+                  //                             transactionType:
+                  //                                 history['transactionType'],
+                  //                             description:
+                  //                                 history['description'],
+                  //                             transactionGroup:
+                  //                                 history['transactionGroup'],
+                  //                             transactionDate:
+                  //                                 history['createdAt'],
+                  //                             transactionRef: history[
+                  //                                     'transactionReference'] ??
+                  //                                 '',
+                  //                             merchantRef:
+                  //                                 history['merchantReference'],
+                  //                             remarks: history['remarks'],
+                  //                           )
+                  //                         : TransactionReceipt(
+                  //                             amount: history['amount'],
+                  //                             status: history['status'],
+                  //                             fees: history['fees'] ?? 0,
+                  //                             transactionType:
+                  //                                 history['transactionType'],
+                  //                             description:
+                  //                                 history['description'],
+                  //                             transactionGroup:
+                  //                                 history['transactionGroup'],
+                  //                             transactionDate:
+                  //                                 history['createdAt'],
+                  //                             transactionRef: history[
+                  //                                     'transactionReference'] ??
+                  //                                 '',
+                  //                             merchantRef:
+                  //                                 history['merchantReference'],
+                  //                           ),
+                  //               );
+                  //             },
+                  //             child: ListTile(
+                  //               contentPadding: EdgeInsets.zero,
+                  //               minLeadingWidth: 0,
+                  //               leading: Container(
+                  //                 padding: const EdgeInsets.all(8),
+                  //                 decoration: BoxDecoration(
+                  //                   shape: BoxShape.circle,
+                  //                   color:
+                  //                       (history['transactionType'] == 'Credit')
+                  //                           ? Colors.green
+                  //                           : Colors.red,
+                  //                 ),
+                  //                 child:
+                  //                     (history['transactionType'] == 'Credit')
+                  //                         ? Icon(Icons.call_received,
+                  //                             color: Theme.of(context)
+                  //                                 .colorScheme
+                  //                                 .primary)
+                  //                         : Icon(Icons.arrow_outward_sharp,
+                  //                             color: Theme.of(context)
+                  //                                 .colorScheme
+                  //                                 .primary),
+                  //               ),
+                  //               title: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: [
+                  //                   Text(
+                  //                     "${history['description']}",
+                  //                     maxLines: 1,
+                  //                     overflow: TextOverflow.ellipsis,
+                  //                     style: GoogleFonts.nunito(
+                  //                       fontSize: 12.sp,
+                  //                       fontWeight: FontWeight.w700,
+                  //                       color: Theme.of(context).primaryColor,
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //               subtitle: Text(
+                  //                 formatDateTime(history['createdAt']),
+                  //                 style: GoogleFonts.nunito(
+                  //                   fontSize: 10.sp,
+                  //                   fontWeight: FontWeight.w300,
+                  //                   color: Theme.of(context).primaryColor,
+                  //                 ),
+                  //               ),
+                  //               trailing: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.end,
+                  //                 children: [
+                  //                   Text(
+                  //                     "${(history['transactionType'] == 'Credit') ? '+' : '-'} ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                  //                     style: GoogleFonts.nunito(
+                  //                       fontSize: 16.sp,
+                  //                       fontWeight: FontWeight.w700,
+                  //                       color: brandOne,
+                  //                     ),
+                  //                   ),
+                  //                   Text(
+                  //                     (history['status']
+                  //                                 .toString()
+                  //                                 .toLowerCase() ==
+                  //                             'completed')
+                  //                         ? 'Successful'
+                  //                         : (history['transactionType']
+                  //                                     .toString()
+                  //                                     .toLowerCase() ==
+                  //                                 'failed')
+                  //                             ? 'Failed'
+                  //                             : 'Pending',
+                  //                     style: GoogleFonts.nunito(
+                  //                       fontSize: 14.sp,
+                  //                       fontWeight: FontWeight.w500,
+                  //                       color: (history['status']
+                  //                                   .toString()
+                  //                                   .toLowerCase() ==
+                  //                               'completed')
+                  //                           ? Colors.green
+                  //                           : (history['transactionType']
+                  //                                       .toString()
+                  //                                       .toLowerCase() ==
+                  //                                   'failed')
+                  //                               ? Colors.red
+                  //                               : Colors.yellow[800],
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           );
+                  //         },
+                  //       )
+                  //     : Padding(
+                  //         padding: const EdgeInsets.all(15.0),
+                  //         child: Center(
+                  //           child: Text(
+                  //             "No Wallet Transactions Yet",
+                  //             style: GoogleFonts.nunito(
+                  //               fontSize: 16.sp,
+                  //               // fontFamily: "DefaultFontFamily",
+                  //               color: Theme.of(context).primaryColor,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+
+                  // SizedBox(
+                  //   height: 10.h,
+                  // ),
                   // Visibility(
                   //   visible: isContainerVisible,
                   //   child: Container(
@@ -1381,7 +1394,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                   //       ),
 
                   SizedBox(
-                    height: 20.h,
+                    height: 10.h,
                   ),
                   Container(
                     width: 400.w,

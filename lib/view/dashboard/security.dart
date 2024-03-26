@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -77,7 +78,9 @@ class _SecurityState extends State<Security> {
         return;
       }
     } else {
-      print(hasBiometricStorage.read('hasBiometric').toString());
+      if (kDebugMode) {
+        print(hasBiometricStorage.read('hasBiometric').toString());
+      }
     }
     //print()
   }

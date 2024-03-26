@@ -100,9 +100,9 @@ class UserDetailsModel {
   final String dvaUsername;
   //  final String Idimage;
   final int referrals;
-  final int referralPoints;
+  final num referralPoints;
   // TODO  change to number
-  final int utilityPoints;
+  final num utilityPoints;
   final dynamic financeHealth;
   final String status;
   final dynamic totalAssets;
