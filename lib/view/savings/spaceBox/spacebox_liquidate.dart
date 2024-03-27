@@ -10,7 +10,6 @@ import 'package:rentspace/controller/box_controller.dart';
 import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
@@ -89,8 +88,6 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
 
   final TextEditingController _accountNumberController =
       TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
 
   List<String> _bankName = [];
   String _currentBankName = 'Select bank';
@@ -607,10 +604,12 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
           ),
           focusColor: brandOne,
           items: [
-            const DropdownMenuItem(child: Text('Select bank'), value: 'Select bank'),
+            const DropdownMenuItem(
+                child: Text('Select bank'), value: 'Select bank'),
             const DropdownMenuItem(child: Text('GTB'), value: '000013'),
             const DropdownMenuItem(child: Text('Access Bank'), value: '000014'),
-            const DropdownMenuItem(child: Text('Providus Bank'), value: '000023'),
+            const DropdownMenuItem(
+                child: Text('Providus Bank'), value: '000023'),
             const DropdownMenuItem(child: Text('OPay'), value: '100004'),
           ],
           onChanged: (newValue) {
@@ -1523,7 +1522,6 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       //           ],
       //         ),
       //       ),
-    
     );
   }
 }

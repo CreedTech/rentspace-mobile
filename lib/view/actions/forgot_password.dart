@@ -7,7 +7,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/confirm_reset_page.dart';
 import 'package:rentspace/view/login_page.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'dart:async';
 import 'package:get/get.dart';
 

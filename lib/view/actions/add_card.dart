@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
@@ -49,8 +49,6 @@ class _AddCardState extends State<AddCard> {
       TextEditingController();
   final TextEditingController bankNameController = TextEditingController();
   // final TextEditingController _bankListController = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
 
   List<String> _bankName = [];
   String _currentBankName = 'Select bank';
@@ -906,7 +904,6 @@ class _AddCardState extends State<AddCard> {
                         ),
                       ),
 
-                    
                       const SizedBox(
                         height: 50,
                       ),

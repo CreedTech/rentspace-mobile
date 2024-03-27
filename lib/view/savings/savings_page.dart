@@ -267,8 +267,8 @@ class _SavingsPageState extends State<SavingsPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
+                         SizedBox(
+                          height: 10.sp,
                         ),
                         (walletController.isLoading.value)
                             ? Text(
@@ -296,14 +296,14 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 90.h,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, bottom: 15),
+                          padding:  EdgeInsets.only(left: 10.w, bottom: 15.h),
                           child: Container(
-                            width: 200,
+                            width: 170.w,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),

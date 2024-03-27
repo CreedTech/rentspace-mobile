@@ -20,7 +20,7 @@ import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/FirstPage.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'dart:async';
 import 'dart:math';
 import 'package:http/http.dart' as http;
@@ -698,8 +698,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   final TextEditingController _bankAccountController = TextEditingController();
   final TextEditingController _accountNumberController =
       TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+  // final RoundedLoadingButtonController _btnController =
+  //     RoundedLoadingButtonController();
 
   @override
   initState() {

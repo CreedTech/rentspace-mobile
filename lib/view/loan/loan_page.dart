@@ -9,7 +9,7 @@ import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/user_controller.dart';
 
 import 'package:rentspace/view/actions/onboarding_page.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
@@ -96,8 +96,6 @@ class _LoanPageState extends State<LoanPage> {
   String duration = "Days";
   final form = intl.NumberFormat.decimalPattern();
 
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
@@ -127,7 +125,8 @@ class _LoanPageState extends State<LoanPage> {
   Widget build(BuildContext context) {
     String chosenDateString = rentController.rentModel!.rents![0].date;
     String interval = rentController.rentModel!.rents![0].interval;
-    int numberOfIntervals = int.parse(rentController.rentModel!.rents![0].paymentCount);
+    int numberOfIntervals =
+        int.parse(rentController.rentModel!.rents![0].paymentCount);
     DateTime nextPaymentDate =
         calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
     String formattedNextDate = formatDate(nextPaymentDate);
@@ -379,7 +378,8 @@ class _LoanPageState extends State<LoanPage> {
                         ),
                         Text(
                           nairaFormaet
-                              .format(userController.userModel!.userDetails![0].loanAmount)
+                              .format(userController
+                                  .userModel!.userDetails![0].loanAmount)
                               .toString(),
                           style: GoogleFonts.nunito(
                             color: Theme.of(context).colorScheme.background,
@@ -400,7 +400,8 @@ class _LoanPageState extends State<LoanPage> {
                             ),
                             Text(
                               nairaFormaet
-                                  .format(rentController.rentModel!.rents![0].amount)
+                                  .format(rentController
+                                      .rentModel!.rents![0].amount)
                                   .toString(),
                               style: GoogleFonts.nunito(
                                 color: Theme.of(context).colorScheme.background,
@@ -448,10 +449,10 @@ class _LoanPageState extends State<LoanPage> {
                                         ),
                                         child: Text(
                                           nairaFormaet
-                                              .format(rentController
-                                                      .rentModel!.rents![0].amount -
-                                                  (rentController.rentModel!.rents![0]
-                                                          .amount *
+                                              .format(rentController.rentModel!
+                                                      .rents![0].amount -
+                                                  (rentController.rentModel!
+                                                          .rents![0].amount *
                                                       0.7))
                                               .toString(),
                                           overflow: TextOverflow.ellipsis,
@@ -606,7 +607,8 @@ class _LoanPageState extends State<LoanPage> {
                               ],
                             ),
                           ),
-                          rentController.rentModel!.rents![0].rentHistories.isEmpty
+                          rentController
+                                  .rentModel!.rents![0].rentHistories.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment:
@@ -633,8 +635,8 @@ class _LoanPageState extends State<LoanPage> {
                                     scrollDirection: Axis.vertical,
                                     shrinkWrap: true,
                                     physics: const ClampingScrollPhysics(),
-                                    itemCount: rentController
-                                        .rentModel!.rents![0].rentHistories.reversed
+                                    itemCount: rentController.rentModel!
+                                        .rents![0].rentHistories.reversed
                                         .toList()
                                         .length,
                                     itemBuilder:
@@ -667,15 +669,18 @@ class _LoanPageState extends State<LoanPage> {
                                             ),
                                           ),
                                           subtitle: Text(
-                                            _formatTime(DateTime.parse(
-                                                    (rentController.rentModel!.rents![0]
-                                                        .rentHistories.reversed
+                                            _formatTime(DateTime.parse((rentController
+                                                        .rentModel!
+                                                        .rents![0]
+                                                        .rentHistories
+                                                        .reversed
                                                         .toList()[index]
                                                         .split(" ")[0]
                                                         .substring(
                                                             0,
                                                             rentController
-                                                                    .rentModel!.rents![0]
+                                                                    .rentModel!
+                                                                    .rents![0]
                                                                     .rentHistories
                                                                     .reversed
                                                                     .toList()[
@@ -683,7 +688,9 @@ class _LoanPageState extends State<LoanPage> {
                                                                     .split(
                                                                         " ")[0]
                                                                     .length -
-                                                                4))).add(const Duration(hours: 1)))
+                                                                4)))
+                                                    .add(const Duration(
+                                                        hours: 1)))
                                                 .toString(),
                                             style: GoogleFonts.nunito(
                                               color: brandTwo,

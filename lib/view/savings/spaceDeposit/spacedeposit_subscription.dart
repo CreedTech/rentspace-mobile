@@ -9,7 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_payment.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -62,8 +62,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
   final TextEditingController _planNameController = TextEditingController();
   final TextEditingController _planDurationController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
-  final RoundedLoadingButtonController _depositController =
-      RoundedLoadingButtonController();
+
   List<String> durationSelect = ['Days', 'Weeks', 'Months'];
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
@@ -1100,7 +1099,6 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //     ),
       //   ],
       // ),
-    
     );
   }
 }

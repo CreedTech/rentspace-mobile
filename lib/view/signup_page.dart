@@ -18,7 +18,7 @@ import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/constants/widgets/date_picker_bottom_sheet.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'dart:async';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'package:get/get.dart';
 import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:flutter/material.dart';
@@ -678,7 +678,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           setState(() {
             _dateTime = dateTime;
           });
-          
         },
         onConfirm: (dateTime, List<int> index) {
           setState(() {

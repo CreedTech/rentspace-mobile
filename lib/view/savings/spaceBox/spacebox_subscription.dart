@@ -4,7 +4,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceBox/spacebox_payment.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -51,8 +51,6 @@ String durationType = "Days";
 final TextEditingController _boxAmountController = TextEditingController();
 final TextEditingController _planNameController = TextEditingController();
 final TextEditingController _planDurationController = TextEditingController();
-final RoundedLoadingButtonController _boxController =
-    RoundedLoadingButtonController();
 
 class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
   String getRandom(int length) => String.fromCharCodes(
@@ -832,7 +830,6 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //     ),
       //   ],
       // ),
-   
     );
   }
 }

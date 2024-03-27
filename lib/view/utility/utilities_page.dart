@@ -31,7 +31,7 @@ import 'package:rentspace/view/utility/data_screen.dart';
 import 'package:rentspace/view/utility/electricity_screen.dart';
 import 'package:rentspace/view/utility/tv_screen.dart';
 import 'package:rentspace/view/utility/utilities_history.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'dart:math';
@@ -161,8 +161,6 @@ String getRandom(int length) => String.fromCharCodes(
       ),
     );
 
-final RoundedLoadingButtonController _airtimeController =
-    RoundedLoadingButtonController();
 final TextEditingController _airtimeAmountController = TextEditingController();
 final TextEditingController _airtimeNumberController = TextEditingController();
 final TextEditingController _pinController = TextEditingController();
@@ -1480,7 +1478,6 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                         ),
                                         GFButton(
                                           onPressed: () async {
-                                            
                                             FocusScope.of(context).unfocus();
                                             if (((userController
                                                     .userModel!

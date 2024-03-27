@@ -62,7 +62,7 @@ dependencies:
   # firebase_storage: 
   webview_flutter: ^3.0.4
   delayed_display:
-  rounded_loading_button:
+  # rounded_loading_button:
   circular_countdown_timer:
   dio:
   pretty_dio_logger:
