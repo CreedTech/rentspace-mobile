@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/separator.dart';
-import '../FirstPage.dart';
-import '../savings/spaceRent/spacerent_list.dart';
+import '../../controller/auth/user_controller.dart';
+// import '../FirstPage.dart';
+// import '../savings/spaceRent/spacerent_list.dart';
 
 class ReferralRecord extends StatefulWidget {
   const ReferralRecord({super.key});
@@ -17,6 +19,8 @@ class ReferralRecord extends StatefulWidget {
 }
 
 class _ReferralRecordState extends State<ReferralRecord> {
+  final UserController userController = Get.find();
+  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,6 +2,7 @@
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -59,11 +60,14 @@ List<String> fundingSource = ['DVA Wallet', 'Debit Card'];
 class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   final TextEditingController _intervalController = TextEditingController();
   final UserController userController = Get.find();
+  DateTime selectedDate = DateTime.now().add(Duration(days: 6 * 30));
   DateTime _endDate = DateTime.now();
   List<String> intervalLabels = ['Weekly', 'Monthly'];
 
   bool idSelected = false;
   String durationType = "";
+  DateTime? _dateTime;
+  String _format = 'yyyy-MMMM-dd';
 
   int _calculateMonthsDifference() {
     final differenceMonths = _endDate
@@ -93,8 +97,14 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   }
 
   int _calculateDaysDifference() {
-    final differenceDays =
-        _endDate.add(const Duration(days: 1)).difference(DateTime.now()).inDays;
+    // final differenceDays = selectedDate
+    //     .add(const Duration(days: 1))
+    //     .difference(DateTime.now())
+    //     .inDays;
+    final differenceDays = _endDate
+        .add(const Duration(days: 1))
+        .difference(DateTime.now())
+        .inDays;
 
     return differenceDays.abs();
   }
@@ -203,13 +213,82 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         // } else
         if (durationType == "Weekly") {
           paymentCount = _calculateWeeksDifference().toString();
-          _savingValue = ((rent * 0.7) / _calculateWeeksDifference());
+          _savingValue = ((rent) / _calculateWeeksDifference());
         } else {
           paymentCount = _calculateMonthsDifference().toString();
-          _savingValue = ((rent * 0.7) / _calculateMonthsDifference());
+          _savingValue = ((rent) / _calculateMonthsDifference());
         }
-        _dailyValue = ((rent * 0.7) / _calculateDaysDifference());
+        _dailyValue = ((rent) / _calculateDaysDifference());
       });
+    }
+
+    void _showDatePicker() {
+      DatePicker.showDatePicker(
+        context,
+        onMonthChangeStartWithFirstDate: true,
+        pickerTheme: DateTimePickerTheme(
+          backgroundColor: brandOne,
+          itemTextStyle: GoogleFonts.nunito(color: Colors.white),
+          itemHeight: 50.h,
+          pickerHeight: 300.h,
+          showTitle: true,
+          cancel: Icon(
+            Iconsax.close_circle,
+            color: Colors.white,
+            size: 30.sp,
+          ),
+          confirm: Text(
+            'Done',
+            style: GoogleFonts.nunito(color: Colors.white),
+          ),
+        ),
+        initialDateTime: selectedDate,
+        minDateTime: DateTime.now().add(const Duration(days: 6 * 30)),
+        maxDateTime: DateTime.now().add(
+          const Duration(days: 8 * 30),
+        ),
+        dateFormat: _format,
+        locale: DateTimePickerLocale.en_us,
+        onCancel: () => print('onCancel'),
+        onChange: (dateTime, List<int> index) {
+          setState(() {
+            _dateTime = dateTime;
+          });
+        },
+        onConfirm: (dateTime, List<int> index) {
+          setState(() {
+            _dateTime = dateTime;
+          });
+          print(dateTime);
+        },
+        onClose: () {
+          if (_dateTime != null && _dateTime != selectedDate) {
+            // final int age = DateTime.now().year - _dateTime!.year;
+            setState(() {
+              selectedDate = _dateTime!;
+              Duration difference = _dateTime!.difference(DateTime.now());
+              print(difference.inDays);
+              numberInDays = difference.inDays;
+              if (validateFunc(
+                      _rentAmountController.text.trim().replaceAll(',', '')) ==
+                  null) {
+                setState(() {
+                  showSaveButton = true;
+                  selectedDate = _dateTime!;
+                  _endDateController.text =
+                      DateFormat('dd/MM/yyyy').format(selectedDate);
+                  _canShowRent = 'true';
+                });
+              } else {
+                if (context.mounted) {
+                  customErrorDialog(context, 'Invalid',
+                      "Please enter valid amount to proceed.");
+                }
+              }
+            });
+          }
+        },
+      );
     }
 
     Future<void> selectEndDate(BuildContext context) async {
@@ -217,36 +296,43 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       //     context: context,
       //     firstDate: DateTime.now(),
       //     lastDate: DateTime(2030));
-    
-      final DateTime? picked = await showDatePicker(
-          context: context,
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          builder: (context, child) {
-            return Theme(
-              data: Theme.of(context).copyWith(
-                colorScheme: const ColorScheme.dark(
-                  primaryContainer: brandTwo,
-                  primary: brandTwo, // header background color
-                  onPrimary: Colors.white,
-                  onBackground: brandTwo,
-                  // onSecondary: brandTwo,
 
-                  outline: brandTwo,
-                  background: brandTwo,
-                  onSurface: brandTwo, // body text color
-                ),
-                textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                    foregroundColor: brandTwo, // button text color
-                  ),
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.dark(
+                primaryContainer: brandTwo,
+                primary: brandTwo, // header background color
+                onPrimary: Colors.white,
+                onBackground: brandTwo,
+                // onSecondary: brandTwo,
+
+                outline: brandTwo,
+                background: brandTwo,
+                onSurface: brandTwo, // body text color
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: brandTwo, // button text color
                 ),
               ),
-              child: child!,
-            );
-          },
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2030));
+            ),
+            child: child!,
+          );
+        },
+        initialDate: DateTime.now().add(
+          const Duration(days: 6 * 30),
+        ),
+        firstDate: DateTime.now().add(
+          const Duration(days: 6 * 30),
+        ),
+        lastDate: DateTime.now().add(
+          const Duration(days: 8 * 30),
+        ),
+      );
       if (picked != null &&
           picked != DateTime.now() &&
           !picked.difference(DateTime.now()).inDays.isNaN) {
@@ -416,6 +502,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         color: Theme.of(context).primaryColor,
       ),
       readOnly: true,
+      // onTap: _showDatePicker,
       onTap: () => selectEndDate(context),
       decoration: InputDecoration(
         labelText: 'End Date',
@@ -582,7 +669,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                           print(val);
                         },
                       ),
-                      (idSelected == true) ? SizedBox() : SizedBox(),
+                      (idSelected == true)
+                          ? const SizedBox()
+                          : const SizedBox(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -774,7 +863,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 Get.back();
                                                 print(_endDateController.text);
                                                 print(durationType);

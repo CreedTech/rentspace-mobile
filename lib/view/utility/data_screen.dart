@@ -45,7 +45,7 @@ String loadMssg = "Loading services...";
 
 class _DataScreenState extends State<DataScreen> {
   final TextEditingController _pinController = TextEditingController();
-  final setPinformKey = GlobalKey<FormState>();
+  final setDataPinformKey = GlobalKey<FormState>();
 
   Future<bool> fetchUserData({bool refresh = true}) async {
     if (refresh) {
@@ -84,21 +84,57 @@ class _DataScreenState extends State<DataScreen> {
 
     //Pin
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: _pinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -278,7 +314,8 @@ class _DataScreenState extends State<DataScreen> {
                                             padding: const EdgeInsets.all(3),
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 Get.back();
                                                 Get.to(const FundWallet());
                                               },
@@ -369,7 +406,7 @@ class _DataScreenState extends State<DataScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Form(
-                          key: setPinformKey,
+                          key: setDataPinformKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
@@ -404,7 +441,7 @@ class _DataScreenState extends State<DataScreen> {
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      if (setPinformKey.currentState!.validate()) {
+                      if (setDataPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),
                             widget.userPin)) {
@@ -589,7 +626,9 @@ class _DataScreenState extends State<DataScreen> {
                                                             child:
                                                                 ElevatedButton(
                                                               onPressed: () {
-                                                                FocusScope.of(context).unfocus();
+                                                                FocusScope.of(
+                                                                        context)
+                                                                    .unfocus();
                                                                 Get.back();
                                                                 Get.to(
                                                                     const FundWallet());

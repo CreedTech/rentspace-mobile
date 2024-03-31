@@ -3,10 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/FirstPage.dart';
-// import 'package:rentspace/view/dashboard/dashboard.dart';
-import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/login_page.dart';
 
 import 'paint/custom_paint.dart';
@@ -560,7 +559,8 @@ Future<void> SucessfulReciept(
                             ),
                             Text(
                               // '₦ 10,000',
-                              ch8t.format(amount),
+                              NumberFormat.simpleCurrency(name: 'NGN')
+                                  .format(amount),
 
                               textAlign: TextAlign.center,
                               style: GoogleFonts.nunito(

@@ -1,89 +1,67 @@
+import 'dart:convert';
+
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/view/actions/fund_wallet.dart';
+import 'package:rentspace/constants/widgets/separator.dart';
 
+import '../../api/global_services.dart';
+import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
+import 'package:http/http.dart' as http;
+
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
-import '../savings/spaceRent/spacerent_list.dart';
+import '../actions/fund_wallet.dart';
 
-class TransferPaymentPage extends ConsumerStatefulWidget {
-  const TransferPaymentPage(
+class DataListScreen extends ConsumerStatefulWidget {
+  const DataListScreen(
       {super.key,
-      required this.bankName,
-      required this.accountNumber,
-      required this.bankCode,
-      required this.accountName});
-  final String bankName, accountNumber, bankCode, accountName;
+      required this.number,
+      required this.network,
+      required this.image});
+  final String number, network, image;
 
   @override
-  ConsumerState<TransferPaymentPage> createState() =>
-      _TransferPaymentPageState();
+  ConsumerState<DataListScreen> createState() => _DataListScreenState();
 }
 
-final withdrawPaymentFormKey = GlobalKey<FormState>();
-String _amountQuery = '';
-
-class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
+class _DataListScreenState extends ConsumerState<DataListScreen> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  final TextEditingController _amountController = TextEditingController();
   final TextEditingController _aPinController = TextEditingController();
-  bool _isTyping = false;
-  bool isTextFieldEmpty = false;
+  String? selectedItem;
+  String? selectedItemAmount;
+  String? selectedItemValidity;
+  bool isSelected = false;
+  List<String> _amount = [];
+  List<String> _dataName = [];
+  List<String> _dataValidity = [];
+  bool _canShowOptions = false;
 
   void validateUsersInput() {
-    if (withdrawPaymentFormKey.currentState!.validate()) {
-      double amount =
-          double.parse(_amountController.text.trim().replaceAll(',', ''));
-      String bankName = widget.bankName;
-      String accountNumber = widget.accountNumber;
-      String accountName = widget.accountName;
-      String bankCode = widget.bankCode;
-      double transactionFee = 20;
+    // if (airtimeformKey.currentState!.validate()) {
+    int amount = int.parse(selectedItemAmount!);
+    String number = widget.number;
+    String selectedDataPlan = selectedItem!;
+    String network = widget.network;
+    String validity = selectedItemValidity!;
 
-      confirmPayment(context, amount, bankName, accountNumber, accountName,
-          bankCode, transactionFee);
-    }
-  }
-
-  @override
-  initState() {
-    super.initState();
-    // _amountController = TextEditingController();
-    // _amountController.addListener(_onAmountChanged);
-  }
-
-  onKeyboardTap(String value) {
-    setState(() {
-      _aPinController.text = _aPinController.text + value;
-    });
-    print(value);
-    print(_aPinController.text);
-  }
-
-  // @override
-  // void dispose() {
-  //   _amountController.dispose();
-  //   super.dispose();
-  // }
-
-  void _onAmountChanged() {
-    setState(() {
-      _amountQuery = _amountController.text;
-      _isTyping = _amountQuery.isNotEmpty;
-    });
+    confirmPayment(
+        context, amount, number, selectedDataPlan, network, validity);
+    // }
   }
 
   Future<bool> fetchUserData({bool refresh = true}) async {
@@ -101,116 +79,84 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
     return true;
   }
 
+  getDataBundles() async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    print('authToken here');
+    print(authToken);
+    final response = await http.post(
+      Uri.parse(AppConstants.BASE_URL + AppConstants.GET_DATA_VARIATION_CODES),
+      headers: {
+        'Authorization': 'Bearer $authToken',
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode(<String, String>{
+        "selectedNetwork": widget.network,
+      }),
+    );
+    EasyLoading.dismiss();
+    print('response');
+    // print(response);
+
+    if (response.statusCode == 200) {
+      EasyLoading.dismiss();
+      var jsonResponse = jsonDecode(response.body);
+      print('jsonResponse');
+      print(jsonResponse);
+      List<String> dataAmount = [];
+      List<String> dataName = [];
+      List<String> dataValidity = [];
+      // tempName.add("Select bank");
+      for (var item in jsonResponse['amount_options']) {
+        String amount = item['amount'];
+        String name = item['name'];
+        String validity = item['validity'];
+        print(amount);
+        print(name);
+        print(validity);
+        // String name = item['name'];
+        if (name != "") {
+          dataAmount.add(amount);
+          dataName.add(name);
+          dataValidity.add(validity);
+        }
+      }
+      if (!mounted) return;
+      setState(() {
+        _amount = dataAmount;
+        _dataName = dataName;
+        _dataValidity = dataValidity;
+        // _bankCode = tempCode;
+
+        _canShowOptions = true;
+      });
+    } else {
+      EasyLoading.dismiss();
+      print('Failed to load data from the server');
+    }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    getDataBundles();
+    fetchUserData();
+    // _searchController = TextEditingController();
+    // _searchController.addListener(_onSearchChanged);
+    isSelected = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    validateAmount(amountValue) {
-      if (amountValue.isEmpty) {
-        return 'amount cannot be empty';
-      }
-      if (int.tryParse(amountValue.trim().replaceAll(',', '')) == null) {
-        return 'enter valid number';
-      }
-      if (int.tryParse(amountValue)!.isNegative) {
-        return 'enter valid number';
-      }
-      if (int.tryParse(amountValue.trim().replaceAll(',', '')) == 0) {
-        return 'number cannot be zero';
-      }
-      if (int.tryParse(amountValue)! < 10) {
-        return 'minimum amount is ₦10.00';
-      }
-      // if (double.tryParse(amountValue + 20)! >
-      //     walletController.walletModel!.wallet![0].mainBalance) {
-      //   return 'you cannot transfer more than your balance';
-      // }
-      return null;
-    }
-
-    final amount = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
-      controller: _amountController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: validateAmount,
-      style: GoogleFonts.nunito(
-        color: Theme.of(context).primaryColor,
-        fontSize: 14.sp,
-        fontWeight: FontWeight.w600,
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (value) {
-        setState(() {
-          print("Entered Amount: $value");
-          // Check if the text field is empty
-          isTextFieldEmpty = value.isNotEmpty &&
-              int.tryParse(value) != null &&
-              int.parse(value) >= 10 &&
-              !(int.tryParse(value)!.isNegative) &&
-              int.tryParse(value.trim().replaceAll(',', '')) != 0;
-        });
-      },
-      decoration: InputDecoration(
-        label: Text(
-          "Enter amount",
-          style: GoogleFonts.nunito(
-            color: Colors.grey,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        prefixText: "₦ ",
-        prefixStyle: GoogleFonts.nunito(
-          color: Theme.of(context).primaryColor,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
-        ),
-        // suffixIcon: _isTyping // Show clear button only when typing
-        //     ? IconButton(
-        //         icon: Icon(
-        //           Iconsax.close_circle5,
-        //           size: 18.sp,
-        //           color: brandOne,
-        //         ),
-        //         onPressed: () {
-        //           _amountController.clear(); // Clear the text field
-        //         },
-        //       )
-        //     : null,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.nunito(
-          color: Colors.grey,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
-
     return Scaffold(
+      backgroundColor: Colors.grey.withOpacity(0.2),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
@@ -224,7 +170,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         ),
         centerTitle: true,
         title: Text(
-          'Transfer to Bank Account',
+          'Choose Data Bundle',
           style: GoogleFonts.nunito(
             color: brandOne,
             fontSize: 16.sp,
@@ -232,190 +178,290 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 10.h,
-          horizontal: 20.w,
-        ),
-        child: ListView(
+      body: SafeArea(
+        // bottom: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                color: brandTwo.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'Please note that charging of ₦20.00 on all  transfers will be according to our Terms of use',
-                style: GoogleFonts.nunito(
-                  color: brandOne.withOpacity(0.7),
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 30.h, bottom: 20.h
-                      // horizontal: 20.w,
-                      ),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 0.1),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      // padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        // border: Border.all(color: brandOne,width: 2),
-                        // color: brandOne,
-                        // shape: BoxShape.circle,
-                        borderRadius: BorderRadius.circular(100),
-                        image: const DecorationImage(
-                          // colorFilter: ColorFilter.mode(
-                          //   brandThree,
-                          //   BlendMode.darken,
-                          // ),
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/icons/RentSpace-icon.jpg'),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 30.h, bottom: 20.h
+                                  // horizontal: 20.w,
+                                  ),
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey, width: 0.1),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  // padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(widget.image),
+                                    ),
+                                  ),
+                                  // ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              widget.network,
+                              style: GoogleFonts.nunito(
+                                fontSize: 14.sp,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              widget.number,
+                              style: GoogleFonts.nunito(
+                                fontSize: 12.sp,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      // ),
-                    ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Choose Bundle',
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.nunito(
+                            color: brandOne,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      (_canShowOptions)
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 15,
+                              ),
+                              decoration: BoxDecoration(
+                                color: brandOne,
+                                border: Border.all(width: 2, color: brandOne),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _dataName.length,
+                                  itemBuilder: (context, index) {
+                                    final amountInfo = _amount[index];
+                                    final nameInfo = _dataName[index];
+                                    final validityInfo = _dataValidity[index];
+                                    return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedItem = nameInfo;
+                                            selectedItemAmount = amountInfo;
+                                            selectedItemValidity = validityInfo;
+                                            isSelected = true;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: selectedItem == nameInfo
+                                                ? Colors.white
+                                                : null,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: ListTile(
+                                            minLeadingWidth: 0,
+                                            leading: (selectedItem == nameInfo)
+                                                ? const Icon(Icons.check)
+                                                : null,
+                                            title: Text(
+                                              nameInfo,
+                                              style: GoogleFonts.nunito(
+                                                color: selectedItem == nameInfo
+                                                    ? brandOne
+                                                    : Colors.white,
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            trailing: Text(
+                                              NumberFormat.simpleCurrency(
+                                                      name: 'NGN',
+                                                      decimalDigits: 0)
+                                                  .format(
+                                                      double.parse(amountInfo)),
+                                              style: GoogleFonts.nunito(
+                                                color: selectedItem == nameInfo
+                                                    ? brandOne
+                                                    : Colors.white,
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            selected: selectedItem == nameInfo,
+                                            selectedColor: brandOne,
+                                          ),
+                                        ));
+                                  }),
+                            )
+                          : Column(
+                              children: [
+                                SizedBox(height:30.h),
+                                Text(
+                                  'Loading Data...',
+                                  style: GoogleFonts.nunito(
+                                    color: brandOne,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const CustomLoader(),
+                              ],
+                            ),
+                    ],
                   ),
                 ),
-                Text(
-                  widget.accountName,
-                  style: GoogleFonts.nunito(
-                    fontSize: 14.sp,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  widget.bankName,
-                  style: GoogleFonts.nunito(
-                    fontSize: 12.sp,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  widget.accountNumber,
-                  style: GoogleFonts.nunito(
-                    fontSize: 12.sp,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+              ),
             ),
-            Form(
-              key: withdrawPaymentFormKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 0.0, 0),
-                    child: Text(
-                      "Amount",
-                      style: GoogleFonts.nunito(
-                        fontSize: 14.sp,
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700,
+            (isSelected)
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 150.sp,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                        color: brandOne,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 5.h),
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10.sp,
+                            ),
+                            Text(
+                              'Selected',
+                              style: GoogleFonts.nunito(
+                                color: brandTwo,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                selectedItem!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              trailing: Text(
+                                NumberFormat.simpleCurrency(
+                                        name: 'NGN', decimalDigits: 0)
+                                    .format(double.parse(selectedItemAmount!)),
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            const MySeparator(),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(200, 50),
+                                  backgroundColor: Colors.white,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      50,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  if (isSelected) {
+                                    FocusScope.of(context).unfocus();
+                                    await fetchUserData()
+                                        .then((value) => validateUsersInput())
+                                        .catchError(
+                                          (error) => {
+                                            customErrorDialog(context, 'Oops',
+                                                'Something went wrong. Try again later'),
+                                          },
+                                        );
+                                    // validateUsersInput();
+                                  }
+                                },
+                                child: Text(
+                                  'Submit',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.nunito(
+                                    // fontFamily: 'Milliard',
+                                    color: brandOne,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 5, 0.0, 5),
-                    child: amount,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 60.h,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(250, 50),
-                  backgroundColor: (isTextFieldEmpty) ? brandOne : Colors.grey,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      50,
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  if (withdrawPaymentFormKey.currentState!.validate()) {
-                    FocusScope.of(context).unfocus();
-                    await fetchUserData()
-                        .then((value) => validateUsersInput())
-                        .catchError(
-                          (error) => {
-                            customErrorDialog(context, 'Oops',
-                                'Something went wrong. Try again later'),
-                          },
-                        );
-                  }
-                }
-                //  withdrawPaymentFormKey.currentState != null &&
-                //         withdrawPaymentFormKey.currentState!.validate()
-                //     ? () async {
-                //         FocusScope.of(context).unfocus();
-                //         // validateUsersInput();
-                //         await fetchUserData()
-                //             .then((value) => validateUsersInput())
-                //             .catchError(
-                //               (error) => {
-                //                 customErrorDialog(context, 'Oops',
-                //                     'Something went wrong. Try again later'),
-                //               },
-                //             );
-                //       }
-                // : null
-                ,
-                child: Text(
-                  'Confirm',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
+                  )
+                : const SizedBox()
           ],
         ),
       ),
     );
   }
 
-  Future<void> confirmPayment(
-      BuildContext context,
-      double amount,
-      String bankName,
-      String accountNumber,
-      String accountName,
-      String bankCode,
-      double transactionFee) async {
+  Future<void> confirmPayment(BuildContext context, int amount, String number,
+      String selectDataPlan, String network, String validity) async {
     final appState = ref.watch(appControllerProvider.notifier);
     validatePinOne(pinOneValue) {
-      // if (pinOneValue.isEmpty) {
-      //   return 'pin cannot be empty';
-      // }
+      if (pinOneValue.isEmpty) {
+        return 'pin cannot be empty';
+      }
       if (pinOneValue.length < 4) {
         return 'pin is incomplete';
       }
@@ -425,8 +471,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       return null;
     }
 
-    final totalAmount = amount + transactionFee;
-    // print(bill);
+    print(selectDataPlan);
+    print(validity);
 
     showDialog(
       context: context,
@@ -444,7 +490,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               children: [
                 const SizedBox(),
                 Text(
-                  ch8t.format(totalAmount),
+                  NumberFormat.simpleCurrency(name: 'NGN').format(amount),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
                     fontWeight: FontWeight.w800,
@@ -453,18 +499,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                   ),
                 ),
                 alert(context),
-                // GestureDetector(
-                //   onTap: () {
-                //     //  resendVerification(context, '', subText)
-                //     print('pop');
-                //     alert(context);
-                //   },
-                //   child: Icon(
-                //     Icons.close,
-                //     color: brandOne,
-                //     size: 20.sp,
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -496,7 +530,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Bank',
+                                  'Provider Network',
                                   style: GoogleFonts.nunito(
                                     color: brandTwo,
                                     fontSize: 12.sp,
@@ -511,16 +545,16 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                       borderRadius:
                                           BorderRadius.circular(100.0),
                                       child: Image.asset(
-                                        'assets/icons/RentSpace-icon.jpg',
+                                        widget.image,
                                         height: 20.h,
-                                        width: 20.w,
+                                        width: 20.h,
                                       ),
                                     ),
                                     SizedBox(
                                       width: 9.w,
                                     ),
                                     Text(
-                                      bankName,
+                                      widget.network,
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
                                         color: brandOne,
@@ -539,7 +573,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Account Number',
+                                  'Reicpient Number',
                                   style: GoogleFonts.nunito(
                                     color: brandTwo,
                                     fontSize: 12.sp,
@@ -547,7 +581,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                   ),
                                 ),
                                 Text(
-                                  accountNumber,
+                                  number,
                                   style: GoogleFonts.nunito(
                                     color: brandOne,
                                     fontSize: 12.sp,
@@ -571,7 +605,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                   ),
                                 ),
                                 Text(
-                                  ch8t.format(amount),
+                                  NumberFormat.simpleCurrency(name: 'NGN')
+                                      .format(amount),
                                   style: GoogleFonts.nunito(
                                     color: brandOne,
                                     fontSize: 12.sp,
@@ -595,7 +630,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                   ),
                                 ),
                                 Text(
-                                  ch8t.format(transactionFee),
+                                  NumberFormat.simpleCurrency(name: 'NGN')
+                                      .format(0),
                                   style: GoogleFonts.nunito(
                                     color: brandOne,
                                     fontSize: 12.sp,
@@ -630,7 +666,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 //       ),
                                 //     ),
                                 //     Text(
-                                //       ch8t.format(userController.userModel!
+                                //       NumberFormat.simpleCurrency(name: 'NGN').format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
                                 //       style: GoogleFonts.nunito(
                                 //         color: brandOne,
@@ -655,7 +691,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               child: ListTile(
                                 leading: Icon(
                                   Icons.wallet,
-                                  color: ((amount + transactionFee) >
+                                  color: ((amount) >
                                           walletController.walletModel!
                                               .wallet![0].mainBalance)
                                       ? Colors.grey
@@ -673,7 +709,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                       TextSpan(
                                         text: "Balance",
                                         style: GoogleFonts.nunito(
-                                          color: ((amount + transactionFee) >
+                                          color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
@@ -684,9 +720,9 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                       ),
                                       TextSpan(
                                         text:
-                                            '(${ch8t.format(walletController.walletModel!.wallet![0].mainBalance)})',
+                                            '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
                                         style: GoogleFonts.nunito(
-                                          color: ((amount + transactionFee) >
+                                          color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
@@ -698,7 +734,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                     ],
                                   ),
                                 ),
-                                subtitle: ((amount + transactionFee) >
+                                subtitle: ((amount) >
                                         walletController.walletModel!.wallet![0]
                                             .mainBalance)
                                     ? Text(
@@ -710,7 +746,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                         ),
                                       )
                                     : null,
-                                trailing: ((amount + transactionFee) >
+                                trailing: ((amount) >
                                         walletController.walletModel!.wallet![0]
                                             .mainBalance)
                                     ? GestureDetector(
@@ -752,7 +788,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(250, 50),
-                                backgroundColor: (((amount + transactionFee) >
+                                backgroundColor: (((amount) >
                                         walletController.walletModel!.wallet![0]
                                             .mainBalance))
                                     ? Colors.grey
@@ -764,7 +800,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                   ),
                                 ),
                               ),
-                              onPressed: ((amount + transactionFee) >
+                              onPressed: ((amount) >
                                       walletController
                                           .walletModel!.wallet![0].mainBalance)
                                   ? null
@@ -794,19 +830,23 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
+                                                  // const SizedBox(
+                                                  //   height: 50,
+                                                  // ),
+
                                                   SizedBox(
                                                     height: 20.h,
                                                   ),
                                                   Pinput(
-                                                    // obscuringCharacter: '*',
                                                     useNativeKeyboard: false,
                                                     obscureText: true,
                                                     defaultPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                      textStyle:
+                                                          GoogleFonts.nunito(
                                                         color: brandOne,
+                                                        fontSize: 28.sp,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
@@ -865,6 +905,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                                 .circular(5),
                                                       ),
                                                     ),
+
                                                     onCompleted: (String val) {
                                                       if (BCrypt.checkpw(
                                                         _aPinController.text
@@ -883,17 +924,13 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                             .trim()
                                                             .toString());
                                                         // _doWallet();
-                                                        appState.transferMoney(
+                                                        appState.buyData(
                                                             context,
-                                                            bankCode,
                                                             amount,
-                                                            accountNumber
-                                                                .toString(),
-                                                            _aPinController.text
-                                                                .trim()
-                                                                .toString(),
-                                                            accountName,
-                                                            bankName);
+                                                            number.toString(),
+                                                            selectDataPlan,
+                                                            network,
+                                                            validity);
                                                       } else {
                                                         _aPinController.clear();
                                                         if (context.mounted) {
@@ -915,7 +952,17 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                   ),
                                                   NumericKeyboard(
                                                     onKeyboardTap:
-                                                        onKeyboardTap,
+                                                        (String value) {
+                                                      setState(() {
+                                                        _aPinController.text =
+                                                            _aPinController
+                                                                    .text +
+                                                                value;
+                                                      });
+                                                      print(value);
+                                                      print(
+                                                          _aPinController.text);
+                                                    },
                                                     textStyle:
                                                         GoogleFonts.nunito(
                                                       color: brandOne,
@@ -951,70 +998,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                   ),
-                                                  // const SizedBox(
-                                                  //   height: 20,
-                                                  // ),
-                                                  // const SizedBox(
-                                                  //   height: 40,
-                                                  // ),
-                                                  // ElevatedButton(
-                                                  //   style: ElevatedButton
-                                                  //       .styleFrom(
-                                                  //     minimumSize:
-                                                  //         const Size(300, 50),
-                                                  //     backgroundColor: brandOne,
-                                                  //     elevation: 0,
-                                                  //     shape:
-                                                  //         RoundedRectangleBorder(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(
-                                                  //         10,
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  //   onPressed: () {
-                                                  //     // if (BCrypt.checkpw(
-                                                  //     //   _aPinController.text
-                                                  //     //       .trim()
-                                                  //     //       .toString(),
-                                                  //     //   userController
-                                                  //     //       .userModel!
-                                                  //     //       .userDetails![0]
-                                                  //     //       .wallet
-                                                  //     //       .pin,
-                                                  //     // )) {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   Get.back();
-                                                  //     //   // _doWallet();
-                                                  //     //   appState.buyAirtime(
-                                                  //     //       context,
-                                                  //     //       amount,
-                                                  //     //       number.toString(),
-                                                  //     //       bill,
-                                                  //     //       biller);
-                                                  //     // } else {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   if (context.mounted) {
-                                                  //     //     customErrorDialog(
-                                                  //     //         context,
-                                                  //     //         "Invalid PIN",
-                                                  //     //         'Enter correct PIN to proceed');
-                                                  //     //   }
-                                                  //     // }
-                                                  //   },
-                                                  //   child: Text(
-                                                  //     'Proceed to Payment',
-                                                  //     textAlign:
-                                                  //         TextAlign.center,
-                                                  //     style: GoogleFonts.nunito(
-                                                  //       color: Colors.white,
-                                                  //       fontSize: 16,
-                                                  //       fontWeight:
-                                                  //           FontWeight.w700,
-                                                  //     ),
-                                                  //   ),
-                                                  // ),
                                                 ],
                                               ),
                                             ),
@@ -1032,6 +1015,182 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                               ),
                             ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Get.bottomSheet(
+                            //       isDismissible: true,
+                            //       SizedBox(
+                            //         width: MediaQuery.of(context).size.width,
+                            //         height: 350,
+                            //         child: ClipRRect(
+                            //           borderRadius: const BorderRadius.only(
+                            //             topLeft: Radius.circular(30.0),
+                            //             topRight: Radius.circular(30.0),
+                            //           ),
+                            //           child: Container(
+                            //             color: Theme.of(context).canvasColor,
+                            //             padding: const EdgeInsets.fromLTRB(
+                            //                 10, 5, 10, 5),
+                            //             child: Column(
+                            //               crossAxisAlignment:
+                            //                   CrossAxisAlignment.center,
+                            //               children: [
+                            //                 const SizedBox(
+                            //                   height: 50,
+                            //                 ),
+                            //                 Text(
+                            //                   'Enter PIN to Proceed',
+                            //                   style: GoogleFonts.nunito(
+                            //                       fontSize: 18,
+                            //                       color: Theme.of(context)
+                            //                           .primaryColor,
+                            //                       fontWeight: FontWeight.w800),
+                            //                   textAlign: TextAlign.center,
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 20,
+                            //                 ),
+                            //                 Pinput(
+                            //                   obscureText: true,
+                            //                   defaultPinTheme: PinTheme(
+                            //                     width: 50,
+                            //                     height: 50,
+                            //                     textStyle: const TextStyle(
+                            //                       fontSize: 20,
+                            //                       color: brandOne,
+                            //                     ),
+                            //                     decoration: BoxDecoration(
+                            //                       border: Border.all(
+                            //                           color: brandTwo,
+                            //                           width: 1.0),
+                            //                       borderRadius:
+                            //                           BorderRadius.circular(5),
+                            //                     ),
+                            //                   ),
+                            //                   onCompleted: (String val) {
+                            //                     if (BCrypt.checkpw(
+                            //                       _aPinController.text
+                            //                           .trim()
+                            //                           .toString(),
+                            //                       userController
+                            //                           .userModel!
+                            //                           .userDetails![0]
+                            //                           .wallet
+                            //                           .pin,
+                            //                     )) {
+                            //                       _aPinController.clear();
+                            //                       Get.back();
+                            //                       // _doWallet();
+                            //                       appState.buyAirtime(
+                            //                           context,
+                            //                           amount,
+                            //                           number.toString(),
+                            //                           bill,
+                            //                           biller);
+                            //                     } else {
+                            //                       _aPinController.clear();
+                            //                       if (context.mounted) {
+                            //                         customErrorDialog(
+                            //                             context,
+                            //                             "Invalid PIN",
+                            //                             'Enter correct PIN to proceed');
+                            //                       }
+                            //                     }
+                            //                   },
+                            //                   validator: validatePinOne,
+                            //                   onChanged: validatePinOne,
+                            //                   controller: _aPinController,
+                            //                   length: 4,
+                            //                   closeKeyboardWhenCompleted: true,
+                            //                   keyboardType:
+                            //                       TextInputType.number,
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 20,
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 40,
+                            //                 ),
+                            //                 ElevatedButton(
+                            //                   style: ElevatedButton.styleFrom(
+                            //                     minimumSize:
+                            //                         const Size(300, 50),
+                            //                     backgroundColor: brandOne,
+                            //                     elevation: 0,
+                            //                     shape: RoundedRectangleBorder(
+                            //                       borderRadius:
+                            //                           BorderRadius.circular(
+                            //                         10,
+                            //                       ),
+                            //                     ),
+                            //                   ),
+                            //                   onPressed: () {
+                            //                     if (BCrypt.checkpw(
+                            //                       _aPinController.text
+                            //                           .trim()
+                            //                           .toString(),
+                            //                       userController
+                            //                           .userModel!
+                            //                           .userDetails![0]
+                            //                           .wallet
+                            //                           .pin,
+                            //                     )) {
+                            //                       _aPinController.clear();
+                            //                       Get.back();
+                            //                       // _doWallet();
+                            //                       appState.buyAirtime(
+                            //                           context,
+                            //                           amount,
+                            //                           number.toString(),
+                            //                           bill,
+                            //                           biller);
+                            //                     } else {
+                            //                       _aPinController.clear();
+                            //                       if (context.mounted) {
+                            //                         customErrorDialog(
+                            //                             context,
+                            //                             "Invalid PIN",
+                            //                             'Enter correct PIN to proceed');
+                            //                       }
+                            //                     }
+                            //                   },
+                            //                   child: Text(
+                            //                     'Proceed to Payment',
+                            //                     textAlign: TextAlign.center,
+                            //                     style: GoogleFonts.nunito(
+                            //                       color: Colors.white,
+                            //                       fontSize: 16,
+                            //                       fontWeight: FontWeight.w700,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: Container(
+                            //     decoration: BoxDecoration(
+                            //         color: brandOne,
+                            //         borderRadius: BorderRadius.circular(15)),
+                            //     child: Padding(
+                            //       padding: const EdgeInsets.all(13),
+                            //       child: Align(
+                            //         child: Text(
+                            //           'Pay',
+                            //           textAlign: TextAlign.center,
+                            //           style: GoogleFonts.nunito(
+                            //             color: Colors.white,
+                            //             fontSize: 19.sp,
+                            //             fontWeight: FontWeight.w600,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

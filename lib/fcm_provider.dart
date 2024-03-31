@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:rentspace/view/actions/new_notification_page.dart';
 
 import 'firebase_service.dart';
 
@@ -31,11 +30,12 @@ class FCMProvider with ChangeNotifier {
   static convertPayload(String payload) {
     final String _payload = payload.substring(1, payload.length - 1);
     List<String> _split = [];
-    _payload.split(",")..forEach((String s) => _split.addAll(s.split(":")));
+    _payload.split(",").forEach((String s) => _split.addAll(s.split(":")));
     var _mapped = {};
     for (int i = 0; i < _split.length + 1; i++) {
-      if (i % 2 == 1)
+      if (i % 2 == 1) {
         _mapped.addAll({_split[i - 1].trim().toString(): _split[i].trim()});
+      }
     }
     return _mapped;
   }

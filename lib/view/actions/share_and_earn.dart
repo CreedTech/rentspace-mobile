@@ -4,22 +4,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:rentspace/constants/widgets/separator.dart';
-import 'package:rentspace/view/loan/loan_page.dart';
+// import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../controller/auth/user_controller.dart';
-import 'referral_record.dart';
 
 class ShareAndEarn extends StatefulWidget {
-  const ShareAndEarn({Key? key}) : super(key: key);
+  const ShareAndEarn({super.key});
 
   @override
   _ShareAndEarnState createState() => _ShareAndEarnState();
@@ -27,6 +26,7 @@ class ShareAndEarn extends StatefulWidget {
 
 class _ShareAndEarnState extends State<ShareAndEarn> {
   final UserController userController = Get.find();
+  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
   @override
   initState() {
     super.initState();
@@ -250,7 +250,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   height: 5.h,
                                 ),
                                 Text(
-                                  'Friends start using the space rent',
+                                  'Friends start using the space rent and you both earn 500 naira',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.nunito(
                                     fontSize: 10.0.sp,
@@ -373,7 +373,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               height: 10.h,
                             ),
                             Text(
-                              'Your friends can get bonus with your code',
+                              'You and Your friends can get bonus with your code',
                               style: GoogleFonts.nunito(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,

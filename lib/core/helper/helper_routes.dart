@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rentspace/view/actions/new_notification_page.dart';
 import 'package:rentspace/view/actions/referral_record.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/splash_screen.dart';
 import 'package:rentspace/view/utility/airtime.dart';
+import 'package:rentspace/view/utility/data.dart';
 
 import '../../view/FirstPage.dart';
 import '../../view/utility/utility_transaction_receipt.dart';
@@ -174,6 +173,11 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const AirtimePage(),
           settings: const RouteSettings(name: airtime),
+        );
+      case dataBundle:
+        return MaterialPageRoute(
+          builder: (context) => const DataBundleScreen(),
+          settings: const RouteSettings(name: dataBundle),
         );
       case utilitytransactionReceipt:
         return MaterialPageRoute(

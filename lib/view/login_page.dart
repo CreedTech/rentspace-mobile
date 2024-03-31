@@ -349,8 +349,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            (_rememberMe == false)
-                                ? Row(
+                            // (_rememberMe == false)
+                            //     ? 
+                                Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
@@ -404,10 +405,10 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                         ),
                                       ),
                                     ],
-                                  )
-                                : const Row(
-                                    children: [],
                                   ),
+                                // : const Row(
+                                //     children: [],
+                                //   ),
                             GestureDetector(
                               onTap: () {
                                 Get.to(const ForgotPassword());

@@ -8,12 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/utility/utilities_page.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
@@ -198,21 +196,6 @@ class _HomePageState extends State<HomePage> {
   //   }
   // }
 
-  // Future<void> checkInitialPinStatus(BuildContext context) async {
-  //   if (walletController.walletModel!.wallet![0].isPinSet == false) {
-  //     // If PIN is not set, navigate to PIN screen
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => TransactionPin()),
-  //     );
-  //   } else {
-  //     // If PIN is set, navigate to the home screen or any other screen
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => HomeScreen()),
-  //     );
-  //   }
-  // }
 
   checkIsOpenedApp() {
     if (openedAppStorage.read('hasOpenedApp') == null) {

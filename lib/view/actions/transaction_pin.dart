@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/actions/confirm_transaction_pin.dart';
 
@@ -41,6 +42,14 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
     super.initState();
   }
 
+  onKeyboardTap(String value) {
+    setState(() {
+      _pinController.text = _pinController.text + value;
+    });
+    print(value);
+    print(_pinController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -70,21 +79,57 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
 
     //Pin
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: _pinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -97,7 +142,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
     );
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-  
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
@@ -135,44 +179,44 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                             child: pin,
                           ),
                         ),
-                         const SizedBox(
-                        height: 30,
-                      ),
+                        const SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(250, 50),
-                      backgroundColor: brandOne,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NumericKeyboard(
+                    onKeyboardTap: onKeyboardTap,
+                    textStyle: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 28.sp,
                     ),
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      if (setPinformKey.currentState!.validate()) {
-                        // _doSomething();
-                        Get.to(ConfirmTransactionPinPage(
-                            pin: _pinController.text.trim()));
-                      } else {
-                        customErrorDialog(context, "Invalid!",
-                            "Please Input your pin to proceed");
-                      }
+                    rightButtonFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = _pinController.text
+                            .substring(0, _pinController.text.length - 1);
+                      });
                     },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
+                    rightButtonLongPressFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = '';
+                      });
+                    },
+                    rightIcon: const Icon(
+                      Icons.backspace_outlined,
+                      color: Colors.red,
                     ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   ),
                 ),
               ),

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/app_constants.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
 

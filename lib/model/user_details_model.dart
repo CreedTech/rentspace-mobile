@@ -1,19 +1,3 @@
-// To parse this JSON data, do
-//
-//     final userModel = userModelFromJson(jsonString);
-
-//   final dynamic userDetailsData = json['userDetails'];
-//   if (userDetailsData is List) {
-//     // If userDetailsData is a List, map over it to create UserDetailsModel objects.
-//     userDetails = userDetailsData.map((e) => UserDetailsModel.fromJson(e)).toList();
-//   } else {
-//     // Handle the case where userDetailsData is not a List (e.g., it's a Map).
-//     // You might want to log an error or handle this case differently based on your requirements.
-//     print('userDetailsData is not a List: $userDetailsData');
-//     // Set userDetails to an empty list or null, depending on your needs.
-//     userDetails = [UserDetailsModel.fromJson(userDetailsData)];
-//   }
-// }
 
 import 'wallet_model.dart';
 
@@ -46,27 +30,6 @@ class UserModel {
   }
 }
 
-// List<UserDetailsModel> userDetailModelFromJson(String? str) {
-//   if (str == null) {
-//     throw const FormatException('Input string is null');
-//   }
-
-//   final decoded = json.decode(str);
-
-//   if (decoded is List) {
-//     return List<UserDetailsModel>.from(
-//         decoded.map((x) => UserDetailsModel.fromJson(x)));
-//   } else if (decoded is Map<String, dynamic>) {
-//     // Adjust this part based on your actual JSON structure
-//     // If it's a map, you might want to handle it differently
-//     return [UserDetailsModel.fromJson(decoded)];
-//   } else {
-//     throw const FormatException('Invalid JSON format');
-//   }
-// }
-
-// String userDetailModelToJson(List<UserDetailsModel> data) =>
-//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserDetailsModel {
   final String id;
@@ -332,23 +295,6 @@ class UserDetailsModel {
         "wallet": wallet.toJson(),
       };
 }
-
-// class Avatar {
-//   final String publicId;
-//   final String url;
-
-//   Avatar({
-//     required this.publicId,
-//     required this.url,
-//   });
-
-//   factory Avatar.fromJson(Map<String, dynamic> json) {
-//     return Avatar(
-//       publicId: json['public_id'],
-//       url: json['url'],
-//     );
-//   }
-// }
 
 
 

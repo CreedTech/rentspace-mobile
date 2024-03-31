@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/colors.dart';
 
 class ConfirmResetPage extends StatefulWidget {
-  const ConfirmResetPage({Key? key}) : super(key: key);
+  const ConfirmResetPage({super.key});
 
   @override
   State<ConfirmResetPage> createState() => _ConfirmResetPageState();

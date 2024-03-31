@@ -11,13 +11,10 @@ import 'package:path/path.dart' as p;
 import 'package:rentspace/constants/icons.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:rentspace/view/actions/add_card.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'dart:async';
 
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 

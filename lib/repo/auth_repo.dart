@@ -5,7 +5,6 @@ import 'package:http/http.dart';
 import '../api/api_client.dart';
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
-import '../model/response/user_details_response.dart';
 import '../model/response_model.dart';
 
 final authRepositoryProvider = Provider((ref) {
@@ -302,34 +301,6 @@ class AuthRepository {
     return responseModel = ResponseModel(error, false);
   }
 
-  // Future<ResponseModel> getUserData() async {
-  //   print('Got here in user repo');
-  //   ResponseModel responseModel;
-
-  //   String authToken =
-  //       await GlobalService.sharedPreferencesManager.getAuthToken();
-  //   // print('authToken');
-  //   // print(authToken);
-
-  //   // Update the headers in ApiClient with the obtained token
-  //   _apiClient.updateHeaders(authToken);
-  //   Response response = await _apiClient.getData(AppConstants.GET_USER);
-
-  //   if (response.statusCode == 200) {
-  //     UserProfileDetailsResponse responseBody =
-  //         UserProfileDetailsResponse.fromJson(jsonDecode(response.body));
-
-  //     await GlobalService.sharedPreferencesManager
-  //         .saveUserDetails(responseBody);
-  //     responseModel = ResponseModel('User info retrieved successfully', true);
-  //     return responseModel;
-  //   }
-  //   print("Here in verify get user repo${jsonDecode(response.body)}");
-  //   var error = jsonDecode(response.body)['errors'].toString();
-
-  //   //  print("Here in repo" + response.reasonPhrase.toString());
-  //   return responseModel = ResponseModel(error, false);
-  // }
 
   Future<ResponseModel> logout() async {
     print('Got here in user repo');

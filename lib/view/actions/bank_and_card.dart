@@ -1,17 +1,8 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/colors.dart';
 
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:rentspace/view/actions/add_card.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:rentspace/constants/db/firebase_db.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
 
 class BankAndCard extends StatefulWidget {
@@ -62,8 +53,8 @@ class _BankAndCardState extends State<BankAndCard> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        body: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,

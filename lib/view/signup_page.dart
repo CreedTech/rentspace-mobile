@@ -12,15 +12,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/constants/widgets/date_picker_bottom_sheet.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/constants/icons.dart';
@@ -30,7 +27,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 // import '../constants/db/firebase_db.dart';
 import '../controller/auth/auth_controller.dart';
-import '../controller/user_controller.dart';
 import 'package:http/http.dart' as http;
 
 String dropdownValue = 'User';
@@ -358,39 +354,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         ),
       ),
     );
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: TextStyle(
-        fontSize: 20.sp,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: brandTwo, width: 1.0),
-        borderRadius: BorderRadius.circular(15),
-      ),
-    );
-    //Pin
-    final pin_one = Pinput(
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinOneController,
-      length: 4,
-      validator: validatePinOne,
-      onChanged: validatePinOne,
-      closeKeyboardWhenCompleted: true,
-      keyboardType: TextInputType.number,
-    );
-    //Pin
-    final pin_two = Pinput(
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinTwoController,
-      length: 4,
-      validator: validatePinTwo,
-      onChanged: validatePinTwo,
-      // onCompleted: _doSomething,
-      closeKeyboardWhenCompleted: true,
-      keyboardType: TextInputType.number,
-    );
+
 //Address
     final referal = TextFormField(
       enableSuggestions: true,

@@ -2,19 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:upgrader/upgrader.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';

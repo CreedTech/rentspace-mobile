@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/actions/forgot_pin.dart';

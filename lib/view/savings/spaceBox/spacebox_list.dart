@@ -1,17 +1,8 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:rentspace/controller/box_controller.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/savings/spaceBox/spacebox_history.dart';
-import 'package:rentspace/view/savings/spaceBox/spacebox_liquidate.dart';
-import 'package:rentspace/view/savings/spaceBox/spacebox_payment.dart';
-import 'package:rentspace/view/savings/spaceBox/spacebox_subscription.dart';
 
 class SpaceBoxList extends StatefulWidget {
   const SpaceBoxList({Key? key}) : super(key: key);

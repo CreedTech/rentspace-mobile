@@ -85,10 +85,10 @@ dependencies:
   flutter_camera_overlay: 
   overlay_tooltip: 
   showcaseview: ^1.1.6
-  flutter_neumorphic: 
-    git:
-      url: https://github.com/den0206/Flutter-Neumorphic.git
-      ref: feature/remoce_accentcolor 
+  # flutter_neumorphic: 
+  #   git:
+  #     url: https://github.com/den0206/Flutter-Neumorphic.git
+  #     ref: feature/remoce_accentcolor 
   wave: 
   #awesome_notifications: ^0.7.4+1
   once: 
@@ -138,6 +138,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_cupertino_datetime_picker: ^3.0.0
   device_info_plus: ^9.1.2
+  onscreen_num_keyboard: ^1.0.4
   #path_provider: ^2.0.15
   
 

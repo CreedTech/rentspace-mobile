@@ -1213,18 +1213,64 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               height: 20,
                                             ),
                                             Pinput(
+                                              useNativeKeyboard: false,
                                               obscureText: true,
                                               defaultPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: GoogleFonts.nunito(
-                                                  fontSize: 20.sp,
+                                                textStyle: TextStyle(
+                                                  fontSize: 25.sp,
+                                                  color: brandOne,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey,
+                                                      width: 1.0),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                              ),
+                                              focusedPinTheme: PinTheme(
+                                                width: 50,
+                                                height: 50,
+                                                textStyle: TextStyle(
+                                                  fontSize: 25.sp,
+                                                  color: brandOne,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: brandOne,
+                                                      width: 2.0),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                              ),
+                                              submittedPinTheme: PinTheme(
+                                                width: 50,
+                                                height: 50,
+                                                textStyle: TextStyle(
+                                                  fontSize: 25.sp,
+                                                  color: brandOne,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: brandOne,
+                                                      width: 2.0),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                              ),
+                                              followingPinTheme: PinTheme(
+                                                width: 50,
+                                                height: 50,
+                                                textStyle: TextStyle(
+                                                  fontSize: 25.sp,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: brandTwo,
-                                                      width: 1.0),
+                                                      width: 2.0),
                                                   borderRadius:
                                                       BorderRadius.circular(5),
                                                 ),

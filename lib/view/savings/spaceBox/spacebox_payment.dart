@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -7,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';

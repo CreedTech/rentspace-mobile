@@ -55,7 +55,7 @@ String electricToken = "";
 
 class _ElectricityScreenState extends State<ElectricityScreen> {
   final TextEditingController _pinController = TextEditingController();
-  final setPinformKey = GlobalKey<FormState>();
+  final setElectricityPinformKey = GlobalKey<FormState>();
   Future<bool> fetchUserData({bool refresh = true}) async {
     if (refresh) {
       await userController.fetchData();
@@ -250,21 +250,57 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
 
     //Pin
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: _pinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -293,7 +329,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             );
             // EasyLoading.dismiss();
 
-            // if (setPinformKey.currentState!.validate()) {
+            // if (setElectricityPinformKey.currentState!.validate()) {
             vendElectric(widget.billId);
           } else {
             EasyLoading.dismiss();
@@ -353,7 +389,8 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                                               padding: const EdgeInsets.all(3),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  FocusScope.of(context).unfocus();
+                                                  FocusScope.of(context)
+                                                      .unfocus();
                                                   Get.back();
                                                   Get.to(const FundWallet());
                                                 },
@@ -448,7 +485,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Form(
-                          key: setPinformKey,
+                          key: setElectricityPinformKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
@@ -483,7 +520,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      if (setPinformKey.currentState!.validate()) {
+                      if (setElectricityPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),
                             widget.userPin)) {
@@ -503,7 +540,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                             );
                             // EasyLoading.dismiss();
 
-                            // if (setPinformKey.currentState!.validate()) {
+                            // if (setElectricityPinformKey.currentState!.validate()) {
                             vendElectric(widget.billId);
                           } else {
                             EasyLoading.dismiss();
@@ -578,7 +615,9 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  FocusScope.of(context).unfocus();
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus();
                                                                   Get.back();
                                                                   Get.to(
                                                                       const FundWallet());

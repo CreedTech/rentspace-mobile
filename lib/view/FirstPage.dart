@@ -30,7 +30,6 @@ import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:intl/intl.dart';
@@ -96,7 +95,7 @@ class _FirstPageState extends State<FirstPage> {
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
   bool isInternetConnected = true;
   // final UserController userController = Get.find();
-  bool _hasPutController = false;
+  // bool _hasPutController = false;
 
   void checkConnectivity() async {
     final hasConnection = await InternetConnectionChecker().hasConnection;
@@ -133,9 +132,9 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(UtilityController());
     Future.delayed(const Duration(seconds: 3), () {
       // fetchUserAndSetState();
-      setState(() {
-        _hasPutController = true;
-      });
+      // setState(() {
+      //   _hasPutController = true;
+      // });
     });
   }
 
@@ -181,143 +180,148 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(RentController());
     Get.put(UtilityController());
     Get.put(WalletController());
-    return (userController.isHomePageLoading.value == true)
-        ? Scaffold(
-            backgroundColor: Theme.of(context).canvasColor,
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  20.0.w,
-                  0.0.h,
-                  20.0.w,
-                  0.0.h,
+    return Obx(
+      () => (userController.isHomePageLoading.value.obs() == true)
+          ? Scaffold(
+              backgroundColor: Theme.of(context).canvasColor,
+              body: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    20.0.w,
+                    0.0.h,
+                    20.0.w,
+                    0.0.h,
+                  ),
+                  child: LiquidPullToRefresh(
+                      height: 70,
+                      animSpeedFactor: 2,
+                      color: Colors.white,
+                      backgroundColor: brandOne,
+                      showChildOpacityTransition: false,
+                      onRefresh: onRefresh,
+                      child: shimmerLoader()),
                 ),
-                child: LiquidPullToRefresh(
-                    height: 70,
-                    animSpeedFactor: 2,
-                    color: Colors.white,
-                    backgroundColor: brandOne,
-                    showChildOpacityTransition: false,
-                    onRefresh: onRefresh,
-                    child: shimmerLoader()),
               ),
-            ),
-          )
-        : Scaffold(
-            body: ShowCaseWidget(
-              autoPlay: false,
-              onFinish: () {
-                showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Discover',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
-                            fontSize: 20.0,
-                            color: brandOne,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        content: SizedBox(
-                          height: MediaQuery.of(context).size.height / 2,
-                          child: SingleChildScrollView(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  "assets/discover.png",
-                                  fit: BoxFit.cover,
-                                  height: 200,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 13.0,
-                                    color: brandOne,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 13.0,
-                                    color: brandOne,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 13.0,
-                                    color: brandOne,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: brandOne,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    elevation: 0,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 15),
-                                    textStyle: const TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                  child: Text(
-                                    "That's Nice",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      // letterSpacing: 0.3,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                )
-                              ],
+            )
+          : Scaffold(
+              body: ShowCaseWidget(
+                autoPlay: false,
+                onFinish: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Discover',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              fontSize: 20.0,
+                              color: brandOne,
+                              fontWeight: FontWeight.w700,
                             ),
-                          )),
-                        ),
-                      );
-                    });
-              },
-              builder: Builder(
-                builder: (context) => (isInternetConnected)
-                    ? (userController.userModel == null)
-                        ? SomethingWentWrong(onTap: onReloadAgain)
-                        : (userController.userModel!.userDetails![0].isPinSet
-                                    .obs() ==
-                                false)
-                            ? const TransactionPin()
-                            : const HomePage()
-                    : No_internetScreen(onTap: onTryAgain),
+                          ),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: SingleChildScrollView(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 2,
+                              child: SingleChildScrollView(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    // Image.asset(
+                                    //   "assets/discover.png",
+                                    //   fit: BoxFit.cover,
+                                    //   height: 200,
+                                    // ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 13.0,
+                                        color: brandOne,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 13.0,
+                                        color: brandOne,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 13.0,
+                                        color: brandOne,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: brandOne,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        elevation: 0,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40, vertical: 15),
+                                        textStyle: const TextStyle(
+                                            color: Colors.white, fontSize: 17),
+                                      ),
+                                      child: Text(
+                                        "That's Nice",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.nunito(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          // letterSpacing: 0.3,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                            ),
+                          ),
+                        );
+                      });
+                },
+                builder: Builder(
+                  builder: (context) => (isInternetConnected)
+                      ? (userController.userModel == null)
+                          ? SomethingWentWrong(onTap: onReloadAgain)
+                          : (userController.userModel!.userDetails![0].isPinSet
+                                      .obs() ==
+                                  false)
+                              ? const TransactionPin()
+                              : const HomePage()
+                      : No_internetScreen(onTap: onTryAgain),
+                ),
               ),
             ),
-          );
+    );
   }
 }

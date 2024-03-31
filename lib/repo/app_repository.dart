@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rentspace/api/global_services.dart';
@@ -105,90 +104,6 @@ class AppRepository {
     }
   }
 
-  // Future<ResponseModel> verifyBVN(body) async {
-  //   ResponseModel responseModel;
-
-  //   // String authToken =
-  //   //     await GlobalService.sharedPreferencesManager.getAuthToken();
-
-  //   // _apiClient.updateHeaders(authToken);
-  //   Response response =
-  //       await _apiClient.postData(AppConstants.VERFIY_BVN, jsonEncode(body));
-  //   print("response");
-  //   print(response);
-  //   if (response.statusCode == 200) {
-  //     responseModel = ResponseModel("BVN Verification successful", true);
-  //     return responseModel;
-  //   }
-
-  //   print("Here in repo${jsonDecode(response.body)}");
-
-  //   if (response.body.contains('errors')) {
-  //     var error = jsonDecode(response.body)['errors'].toString();
-  //     return responseModel = ResponseModel(error, false);
-  //   } else {
-  //     var error = jsonDecode(response.body)['error'].toString();
-  //     print("Here in error$error");
-  //     return responseModel = ResponseModel(error, false);
-  //   }
-  // }
-
-  // Future<ResponseModel> bvnDebit(body) async {
-  //   ResponseModel responseModel;
-
-  //   String authToken =
-  //       await GlobalService.sharedPreferencesManager.getAuthToken();
-
-  //   _apiClient.updateHeaders(authToken);
-  //   Response response =
-  //       await _apiClient.postData(AppConstants.BVN_DEBIT, jsonEncode(body));
-  //   print("response");
-  //   print(response.body);
-  //   if (response.statusCode == 200) {
-  //     responseModel = ResponseModel("BVN Debit successful", true);
-  //     return responseModel;
-  //   }
-
-  //   print("Here in repo${jsonDecode(response.body)}");
-
-  //   if (response.body.contains('errors')) {
-  //     var error = jsonDecode(response.body)['errors'].toString();
-  //     return responseModel = ResponseModel(error, false);
-  //   } else {
-  //     var error = jsonDecode(response.body)['error'].toString();
-  //     print("Here in error$error");
-  //     return responseModel = ResponseModel(error, false);
-  //   }
-  // }
-
-  // Future<ResponseModel> createDva(body) async {
-  //   ResponseModel responseModel;
-
-  //   // String authToken =
-  //   //     await GlobalService.sharedPreferencesManager.getAuthToken();
-
-  //   // _apiClient.updateHeaders(authToken);
-  //   Response response =
-  //       await _apiClient.postData(AppConstants.CREATE_DVA, jsonEncode(body));
-  //   print("response");
-  //   print(response.body);
-  //   if (response.statusCode == 200) {
-  //     responseModel = ResponseModel("DVA Creation successful", true);
-  //     return responseModel;
-  //   }
-
-  //   print("Here in repo${jsonDecode(response.body)}");
-
-  //   if (response.body.contains('errors')) {
-  //     var error = jsonDecode(response.body)['errors'].toString();
-  //     return responseModel = ResponseModel(error, false);
-  //   } else {
-  //     var error = jsonDecode(response.body)['error'].toString();
-  //     print("Here in error$error");
-  //     return responseModel = ResponseModel(error, false);
-  //   }
-  // }
-
   Future<ResponseModel> buyAirtime(body) async {
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token
@@ -213,7 +128,8 @@ class AppRepository {
       return responseModel = ResponseModel(error, false);
     }
   }
-  Future<ResponseModel> transferMoney(body) async {
+
+  Future<ResponseModel> buyData(body) async {
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token
     String authToken =
@@ -222,7 +138,32 @@ class AppRepository {
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response =
-        await _apiClient.postData(AppConstants.WALLET_TRANSFER, jsonEncode(body));
+        await _apiClient.postData(AppConstants.BUY_DATA, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Data Bought', true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
+  Future<ResponseModel> transferMoney(body) async {
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.WALLET_TRANSFER, jsonEncode(body));
 
     if (response.statusCode == 200) {
       responseModel = ResponseModel('Money Transfered', true);

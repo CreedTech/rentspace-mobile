@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 import 'dart:async';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 class SpaceBoxSubscription extends StatefulWidget {

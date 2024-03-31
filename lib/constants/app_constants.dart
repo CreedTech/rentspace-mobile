@@ -39,7 +39,9 @@ class AppConstants {
   static const CREATE_DVA = '/api/dva/create-dva';
 
   static const BUY_AIRTIME = '/api/buy-airtime';
+  static const BUY_DATA = '/api/buy-data';
   static const GET_AIRTIMES = '/api/get-airtimes';
+  static const GET_DATA_VARIATION_CODES = '/api/variation-codes';
   static const ADD_UTILITY_HISTORY = '/api/utilities/add-utility';
   static const UTILITY_HISTORY = '/api/utilities/utility-history';
   static const WALLET_HISTORY = '/api/wallet/wallet-histories';

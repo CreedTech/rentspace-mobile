@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
@@ -307,19 +308,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
             fontSize: 20,
           ),
         ),
-        // actions: [
-        //   Padding(
-        //     padding: EdgeInsets.only(right: 15.w),
-        //     child: Text(
-        //       'History',
-        //       style: GoogleFonts.nunito(
-        //         color: Theme.of(context).primaryColor,
-        //         fontWeight: FontWeight.w500,
-        //         fontSize: 14,
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: SafeArea(
         child: Padding(
@@ -649,9 +637,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                           },
                                         );
                                     // validateUsersInput();
-                                  } else {
-                                    customErrorDialog(context, "Invalid!",
-                                        "Please Input your pin to proceed");
                                   }
                                 },
                                 child: const Text(
@@ -1062,7 +1047,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         SizedBox(
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          height: 300,
+                                          height: 400.h,
                                           child: ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -1084,37 +1069,79 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                   // const SizedBox(
                                                   //   height: 50,
                                                   // ),
-                                                  Text(
-                                                    'Enter PIN to Proceed',
-                                                    style: GoogleFonts.nunito(
-                                                        fontSize: 16.sp,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w800),
-                                                    textAlign: TextAlign.center,
-                                                  ),
+
                                                   SizedBox(
                                                     height: 20.h,
                                                   ),
                                                   Pinput(
+                                                    useNativeKeyboard: false,
                                                     obscureText: true,
                                                     defaultPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
-                                                        fontSize: 20.sp,
+                                                      textStyle:
+                                                          GoogleFonts.nunito(
                                                         color: brandOne,
+                                                        fontSize: 28.sp,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
-                                                            color: brandTwo,
+                                                            color: Colors.grey,
                                                             width: 1.0),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
                                                       ),
                                                     ),
+                                                    focusedPinTheme: PinTheme(
+                                                      width: 50,
+                                                      height: 50,
+                                                      textStyle: TextStyle(
+                                                        fontSize: 25.sp,
+                                                        color: brandOne,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: brandOne,
+                                                            width: 2.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                    ),
+                                                    submittedPinTheme: PinTheme(
+                                                      width: 50,
+                                                      height: 50,
+                                                      textStyle: TextStyle(
+                                                        fontSize: 25.sp,
+                                                        color: brandOne,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: brandOne,
+                                                            width: 2.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                    ),
+                                                    followingPinTheme: PinTheme(
+                                                      width: 50,
+                                                      height: 50,
+                                                      textStyle: TextStyle(
+                                                        fontSize: 25.sp,
+                                                        color: brandOne,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: brandTwo,
+                                                            width: 2.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                    ),
+
                                                     onCompleted: (String val) {
                                                       if (BCrypt.checkpw(
                                                         _aPinController.text
@@ -1158,6 +1185,55 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                     keyboardType:
                                                         TextInputType.number,
                                                   ),
+                                                  NumericKeyboard(
+                                                    onKeyboardTap:
+                                                        (String value) {
+                                                      setState(() {
+                                                        _aPinController.text =
+                                                            _aPinController
+                                                                    .text +
+                                                                value;
+                                                      });
+                                                      print(value);
+                                                      print(
+                                                          _aPinController.text);
+                                                    },
+                                                    textStyle:
+                                                        GoogleFonts.nunito(
+                                                      color: brandOne,
+                                                      fontSize: 24.sp,
+                                                    ),
+                                                    rightButtonFn: () {
+                                                      if (_aPinController
+                                                          .text.isEmpty) return;
+                                                      setState(() {
+                                                        _aPinController.text =
+                                                            _aPinController.text
+                                                                .substring(
+                                                                    0,
+                                                                    _aPinController
+                                                                            .text
+                                                                            .length -
+                                                                        1);
+                                                      });
+                                                    },
+                                                    rightButtonLongPressFn: () {
+                                                      if (_aPinController
+                                                          .text.isEmpty) return;
+                                                      setState(() {
+                                                        _aPinController.text =
+                                                            '';
+                                                      });
+                                                    },
+                                                    rightIcon: const Icon(
+                                                      Icons.backspace_outlined,
+                                                      color: Colors.red,
+                                                    ),
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                  ),
+
                                                   // const SizedBox(
                                                   //   height: 20,
                                                   // ),
@@ -1415,7 +1491,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             //     ),
                             //   ),
                             // ),
-                        
                           ],
                         ),
                       ),
@@ -1569,4 +1644,5 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       ),
     );
   }
+
 }

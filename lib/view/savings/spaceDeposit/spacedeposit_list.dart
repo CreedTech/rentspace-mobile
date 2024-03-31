@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:rentspace/controller/deposit_controller.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';

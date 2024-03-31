@@ -6,9 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 
-import 'package:settings_ui/settings_ui.dart';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:clipboard/clipboard.dart';
@@ -16,7 +14,7 @@ import 'package:clipboard/clipboard.dart';
 import '../../constants/widgets/custom_dialog.dart';
 
 class ContactUsPage extends StatefulWidget {
-  const ContactUsPage({Key? key}) : super(key: key);
+  const ContactUsPage({super.key});
 
   @override
   _ContactUsPageState createState() => _ContactUsPageState();
@@ -126,113 +124,114 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     ),
                     Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Container(
-                            width: 350,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: brandTwo.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Phone Number",
-                                    style: GoogleFonts.nunito(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).canvasColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              launchUrl(
-                                                Uri.parse("tel://+23413444012"),
-                                              );
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: Text(
-                                                '+234 (1) 344 4012',
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context).colorScheme.secondary,
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              FlutterClipboard.copy(
-                                                      '+23413444012')
-                                                  .then((result) {
-                                                Fluttertoast.showToast(
-                                                    msg: "Copied to clipboard!",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity:
-                                                        ToastGravity.BOTTOM,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: brandOne,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0);
-                                              });
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    Theme.of(context).primaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 10),
-                                                child: Text(
-                                                  'Copy',
-                                                  style: GoogleFonts.nunito(
-                                                      color: Theme.of(context)
-                                                          .colorScheme.primary,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 15),
+                        //   child: Container(
+                        //     width: 350,
+                        //     padding: const EdgeInsets.all(5),
+                        //     decoration: BoxDecoration(
+                        //       color: brandTwo.withOpacity(0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 10, vertical: 10),
+                        //       child: Column(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: [
+                        //           Text(
+                        //             "Phone Number",
+                        //             style: GoogleFonts.nunito(
+                        //               color: Theme.of(context).primaryColor,
+                        //               fontSize: 17,
+                        //               fontWeight: FontWeight.w700,
+                        //             ),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10,
+                        //           ),
+                        //           Container(
+                        //             decoration: BoxDecoration(
+                        //               color: Theme.of(context).canvasColor,
+                        //               borderRadius: BorderRadius.circular(5),
+                        //             ),
+                        //             child: Padding(
+                        //               padding: const EdgeInsets.all(0),
+                        //               child: Row(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.spaceBetween,
+                        //                 children: [
+                        //                   GestureDetector(
+                        //                     onTap: () {
+                        //                       launchUrl(
+                        //                         Uri.parse("tel://+23413444012"),
+                        //                       );
+                        //                     },
+                        //                     child: Padding(
+                        //                       padding:
+                        //                           const EdgeInsets.symmetric(
+                        //                               horizontal: 10),
+                        //                       child: Text(
+                        //                         '+234 (1) 344 4012',
+                        //                         style: GoogleFonts.nunito(
+                        //                           color: Theme.of(context).colorScheme.secondary,
+                        //                           fontSize: 17,
+                        //                           fontWeight: FontWeight.w700,
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                   GestureDetector(
+                        //                     onTap: () {
+                        //                       FlutterClipboard.copy(
+                        //                               '+23413444012')
+                        //                           .then((result) {
+                        //                         Fluttertoast.showToast(
+                        //                             msg: "Copied to clipboard!",
+                        //                             toastLength:
+                        //                                 Toast.LENGTH_SHORT,
+                        //                             gravity:
+                        //                                 ToastGravity.BOTTOM,
+                        //                             timeInSecForIosWeb: 1,
+                        //                             backgroundColor: brandOne,
+                        //                             textColor: Colors.white,
+                        //                             fontSize: 16.0);
+                        //                       });
+                        //                     },
+                        //                     child: Container(
+                        //                       decoration: BoxDecoration(
+                        //                         color:
+                        //                             Theme.of(context).primaryColor,
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(5),
+                        //                       ),
+                        //                       child: Padding(
+                        //                         padding:
+                        //                             const EdgeInsets.symmetric(
+                        //                                 horizontal: 15,
+                        //                                 vertical: 10),
+                        //                         child: Text(
+                        //                           'Copy',
+                        //                           style: GoogleFonts.nunito(
+                        //                               color: Theme.of(context)
+                        //                                   .colorScheme.primary,
+                        //                               fontSize: 12,
+                        //                               fontWeight:
+                        //                                   FontWeight.w700),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                       
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           child: Container(

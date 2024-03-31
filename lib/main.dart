@@ -22,7 +22,6 @@ import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
-import 'constants/widgets/notification_dialog.dart';
 import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
 import 'view/actions/new_notification_page.dart';
@@ -63,7 +62,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
   }
 }
 
-final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+// final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 //app entry point
 Future<void> main() async {
   await GlobalService.init();
@@ -539,7 +538,7 @@ class _MyAppState extends State<MyApp> {
           // darkTheme: Themes().darkTheme,
           themeMode: ThemeServices().getThemeMode(),
           debugShowCheckedModeBanner: false,
-          navigatorKey: _navigatorKey,
+          // navigatorKey: _navigatorKey,
           title: 'RentSpace',
           initialRoute: root,
           // home: const SplashScreen(),

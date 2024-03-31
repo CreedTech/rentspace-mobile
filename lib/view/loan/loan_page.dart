@@ -6,11 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/controller/user_controller.dart';
 
 import 'package:rentspace/view/actions/onboarding_page.dart';
 
-import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
@@ -23,7 +21,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../controller/auth/user_controller.dart';
 import '../../controller/rent/rent_controller.dart';
-import '../../controller/rent_controller.dart';
 import '../dashboard/dashboard.dart';
 import '../savings/spaceRent/spacerent_history.dart';
 

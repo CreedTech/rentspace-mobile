@@ -4,13 +4,13 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/actions/change_pin.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
 
 class ChangePinIntro extends StatefulWidget {
   const ChangePinIntro({super.key});
@@ -22,20 +22,17 @@ class ChangePinIntro extends StatefulWidget {
 class _ChangePinIntroState extends State<ChangePinIntro> {
   final TextEditingController _pinController = TextEditingController();
   final setPinformKey = GlobalKey<FormState>();
+
+  onKeyboardTap(String value) {
+    setState(() {
+      _pinController.text = _pinController.text + value;
+    });
+    print(value);
+    print(_pinController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -51,21 +48,58 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
 
     //Pin
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      // defaultPinTheme: defaultPinTheme,
+      controller: _pinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -75,11 +109,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
         if (BCrypt.checkpw(_pinController.text.trim().toString(),
             userController.userModel!.userDetails![0].wallet.pin)) {
           _pinController.clear();
-          // EasyLoading.show(
-          //   indicator: const CustomLoader(),
-          //   maskType: EasyLoadingMaskType.black,
-          //   dismissOnTap: false,
-          // );
+
           print(val);
           Get.to(ChangePIN(pin: val));
         } else {
@@ -142,55 +172,42 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(250, 50),
-                      backgroundColor: brandOne,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (setPinformKey.currentState!.validate()) {
-                        if (BCrypt.checkpw(
-                            _pinController.text.trim().toString(),
-                            userController
-                                .userModel!.userDetails![0].wallet.pin)) {
-                          _pinController.clear();
-
-                          // EasyLoading.show(
-                          //   indicator: const CustomLoader(),
-                          //   maskType: EasyLoadingMaskType.black,
-                          //   dismissOnTap: false,
-                          // );
-                          Get.to(ChangePIN(pin: _pinController.text.trim()));
-                        } else {
-                          EasyLoading.dismiss();
-                          _pinController.clear();
-                          if (context.mounted) {
-                            customErrorDialog(context, "Invalid PIN",
-                                'Enter correct PIN to proceed');
-                          }
-                        }
-                      } else {
-                        EasyLoading.dismiss();
-                        customErrorDialog(context, "Incomplete",
-                            "Fill the field correctly to proceed");
-                      }
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NumericKeyboard(
+                    onKeyboardTap: (String value) {
+                      setState(() {
+                        _pinController.text = _pinController.text + value;
+                      });
+                      print(value);
+                      print(_pinController.text);
                     },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
+                    textStyle: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 28.sp,
                     ),
+                    rightButtonFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = _pinController.text
+                            .substring(0, _pinController.text.length - 1);
+                      });
+                    },
+                    rightButtonLongPressFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = '';
+                      });
+                    },
+                    rightIcon: const Icon(
+                      Icons.backspace_outlined,
+                      color: Colors.red,
+                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   ),
                 ),
               ),

@@ -11,13 +11,10 @@ import 'package:get/get.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 
-import 'dart:async';
 
 import 'package:http/http.dart' as http;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'dart:convert';
 
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -44,7 +41,7 @@ class _AddCardState extends State<AddCard> {
   bool useGlassMorphism = false;
   bool useBackgroundImage = false;
   OutlineInputBorder? border;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> addCardformKey = GlobalKey<FormState>();
   final TextEditingController _accountNumberController =
       TextEditingController();
   final TextEditingController bankNameController = TextEditingController();
@@ -604,7 +601,7 @@ class _AddCardState extends State<AddCard> {
                   child: Column(
                     children: <Widget>[
                       CreditCardForm(
-                        formKey: formKey,
+                        formKey: addCardformKey,
                         obscureCvv: false,
                         obscureNumber: false,
                         cardNumber: cardNumber,
@@ -919,7 +916,7 @@ class _AddCardState extends State<AddCard> {
   }
 
   void _onValidate() {
-    if (formKey.currentState!.validate()) {
+    if (addCardformKey.currentState!.validate()) {
       print('valid!');
     } else {
       print('invalid!');

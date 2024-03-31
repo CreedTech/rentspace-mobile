@@ -15,7 +15,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
 import '../view/actions/fund_wallet.dart';
-import '../view/login_page.dart';
 import 'wallet_controller.dart';
 
 final appControllerProvider =
@@ -467,277 +466,6 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  // Future verifyBVN(BuildContext context, bvn) async {
-  //   isLoading = true;
-  //   if (bvn.isEmpty || bvn == '') {
-  //     customErrorDialog(context, 'Error', 'Please input your bvn!!');
-  //     return;
-  //   }
-  //   Map<String, dynamic> params = {
-  //     'bvn': bvn,
-  //   };
-  //   print('params');
-  //   print(params);
-  //   String message;
-  //   try {
-  //     isLoading = true;
-  //     state = const AsyncLoading();
-  //     EasyLoading.show(
-  //       indicator: const CustomLoader(),
-  //       maskType: EasyLoadingMaskType.black,
-  //       dismissOnTap: false,
-  //     );
-  //     var response = await appRepository.verifyBVN(params);
-  //     print(response.message.toString());
-  //     if (response.success) {
-  //       // EasyLoading.dismiss();
-  //       createDva(context);
-  //       // bvnDebit(context, bvn).then(
-  //       //   (value) => createDva(context),
-  //       // );
-  //       // Get.offAll(const FirstPage());
-  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
-  //       //     'Your pin has been successfully set.');
-  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-  //       // Navigator.pushNamedAndRemoveUntil(
-  //       //   context,
-  //       //   RouteList.enable_user_notification,
-  //       //   (route) => false,
-  //       // );
-  //       return;
-  //     } else {
-  //       print('response.message.toString()');
-  //     }
-  //     print(response.message.toString());
-
-  //     // check for different reasons to enhance users experience
-  //     if (response.success == false &&
-  //         response.message.contains("User already has bvn verified")) {
-  //       EasyLoading.dismiss();
-  //       message = "User already has bvn verified";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else if (response.success == false &&
-  //         response.message.contains("User with this BVN already exists")) {
-  //       EasyLoading.dismiss();
-  //       print('response here');
-  //       print(response.success);
-  //       print(response);
-  //       message = "Oops! User with this BVN already exists";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else {
-  //       EasyLoading.dismiss();
-  //       // to capture other errors later
-  //       print('response again');
-  //       print(response.success);
-  //       print(response.message);
-  //       message = "Something went wrong. Try Again later";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     EasyLoading.dismiss();
-  //     state = AsyncError(e, StackTrace.current);
-  //     message = "Ooops something went wrong";
-  //     customErrorDialog(context, 'Error', message);
-
-  //     return;
-  //   } finally {
-  //     isLoading = false;
-  //     return;
-  //   }
-  // }
-
-  // Future bvnDebit(BuildContext context, bvn) async {
-  //   isLoading = true;
-  //   if (bvn.isEmpty || bvn == '') {
-  //     customErrorDialog(context, 'Error', 'Please input your bvn!!');
-  //     return;
-  //   }
-  //   Map<String, dynamic> params = {
-  //     'bvn': bvn,
-  //   };
-  //   print('params');
-  //   print(params);
-  //   String message;
-  //   try {
-  //     isLoading = true;
-  //     state = const AsyncLoading();
-  //     EasyLoading.show(
-  //       indicator: const CustomLoader(),
-  //       maskType: EasyLoadingMaskType.black,
-  //       dismissOnTap: false,
-  //     );
-  //     var response = await appRepository.bvnDebit(params);
-  //     if (response.success) {
-  //       EasyLoading.dismiss();
-
-  //       // Get.offAll(const FirstPage());
-  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
-  //       //     'Your pin has been successfully set.');
-  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-  //       // Navigator.pushNamedAndRemoveUntil(
-  //       //   context,
-  //       //   RouteList.enable_user_notification,
-  //       //   (route) => false,
-  //       // );
-  //       return;
-  //     } else {
-  //       print('response.message.toString()');
-  //     }
-  //     print(response.message.toString());
-
-  //     // check for different reasons to enhance users experience
-  //     if (response.success == false &&
-  //         response.message.contains("User already has bvn verified")) {
-  //       EasyLoading.dismiss();
-  //       message = "User already has bvn verified";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else if (response.success == false &&
-  //         response.message.contains("User with this BVN already exists")) {
-  //       EasyLoading.dismiss();
-  //       print('response here');
-  //       print(response.success);
-  //       print(response);
-  //       message = "Oops! User with this BVN already exists";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else {
-  //       EasyLoading.dismiss();
-  //       // to capture other errors later
-  //       print('response again');
-  //       print(response.success);
-  //       print(response.message);
-  //       message = "Something went wrong";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     EasyLoading.dismiss();
-  //     state = AsyncError(e, StackTrace.current);
-  //     message = "Ooops something went wrong";
-  //     customErrorDialog(context, 'Error', message);
-
-  //     return;
-  //   } finally {
-  //     isLoading = false;
-  //     return;
-  //   }
-  // }
-
-  // Future createDva(BuildContext context) async {
-  //   isLoading = true;
-  //   // if (
-  //   //   dvaName.isEmpty ||
-  //   //     dvaName == ''
-  //   //   customerEmail.isEmpty ||
-  //   //     customerEmail == ''
-  //   //   dvaName.isEmpty ||
-  //   //     dvaName == ''
-  //   //   dvaName.isEmpty ||
-  //   //     dvaName == ''
-  //   //   dvaName.isEmpty ||
-  //   //     dvaName == ''
-  //   //     ) {
-  //   //   customErrorDialog(
-  //   //       context, 'Error', 'Please input your bvn!!');
-  //   //   return;
-  //   // }22283481549
-  //   Map<String, dynamic> params = {};
-  //   print('params');
-  //   print(params);
-  //   String message;
-  //   try {
-  //     isLoading = true;
-  //     state = const AsyncLoading();
-  //     EasyLoading.show(
-  //       indicator: const CustomLoader(),
-  //       maskType: EasyLoadingMaskType.black,
-  //       dismissOnTap: false,
-  //     );
-  //     var response = await appRepository.createDva(params);
-  //     print(response.message.toString());
-  //     if (response.success) {
-  //       // await userController.fetchData();
-  //       Get.offAll(const LoginPage());
-  //       EasyLoading.dismiss();
-  //       showTopSnackBar(
-  //         Overlay.of(context),
-  //         CustomSnackBar.success(
-  //           backgroundColor: brandOne,
-  //           message: 'BVN Verified Successfully!!',
-  //           textStyle: GoogleFonts.nunito(
-  //             fontSize: 14,
-  //             color: Colors.white,
-  //             fontWeight: FontWeight.w700,
-  //           ),
-  //         ),
-  //       );
-
-  //       // redirectingAlert(context, '🎉 Congratulations! 🎉',
-  //       //     'Your pin has been successfully set.');
-  //       // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-  //       // Navigator.pushNamedAndRemoveUntil(
-  //       //   context,
-  //       //   RouteList.enable_user_notification,
-  //       //   (route) => false,
-  //       // );
-  //       return;
-  //     } else {
-  //       print('response.message.toString()');
-  //     }
-  //     print(response.message.toString());
-
-  //     // check for different reasons to enhance users experience
-  //     if (response.success == false &&
-  //         response.message.contains("User already has DVA")) {
-  //       EasyLoading.dismiss();
-  //       message = "User already has a Virtual Account";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else if (response.success == false &&
-  //         response.message.contains("User with this BVN already exists")) {
-  //       EasyLoading.dismiss();
-  //       print('response here');
-  //       print(response.success);
-  //       print(response);
-  //       message = "Oops! User with this BVN already exists";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else {
-  //       EasyLoading.dismiss();
-  //       // to capture other errors later
-  //       print('response again');
-  //       print(response.success);
-  //       print(response.message);
-  //       message = "Something went wrong";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     EasyLoading.dismiss();
-  //     state = AsyncError(e, StackTrace.current);
-  //     message = "Ooops something went wrong";
-  //     customErrorDialog(context, 'Error', message);
-
-  //     return;
-  //   } finally {
-  //     isLoading = false;
-  //     return;
-  //   }
-  // }
-
   Future buyAirtime(
       BuildContext context, amount, phoneNumber, network, biller) async {
     isLoading = true;
@@ -785,10 +513,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // double spacePoints = earnedAmountNaira / 2;
 
         // Calculate 0.5% of the recharge amount in naira
-        double earnedAmountNaira = 0.005 * amount;
+        double spacePoints = 0.005 * amount;
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
-        double spacePoints = earnedAmountNaira / 2;
+        double earnedAmountNaira = spacePoints * 2;
 
         // Check if spacePoints is a whole number
         bool isWholeNumber = spacePoints % 1 == 0;
@@ -797,20 +525,167 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         String formattedSpacePoints = isWholeNumber
             ? spacePoints.toStringAsFixed(0)
             : spacePoints.toStringAsFixed(2);
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: Colors.green,
-            message: 'You just earned $formattedSpacePoints Space point!',
-            textStyle: GoogleFonts.nunito(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+        if (amount >= 400) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: Colors.green,
+              message: 'You just earned $formattedSpacePoints Space point!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        );
+          );
+        }
 
-        SucessfulReciept(context, phoneNumber, amount, biller, 'Transfer to ');
+        SucessfulReciept(context, phoneNumber, amount, biller, 'Data to ');
+        // Navi
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("String must contain at least 10 character(s)")) {
+        EasyLoading.dismiss();
+        message = "Phone Number must be up to 10 characters long!!";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("Number must be greater than or equal to 50")) {
+        EasyLoading.dismiss();
+        message = "Amount must be greate than or equal to 50 naira";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again")) {
+        EasyLoading.dismiss();
+        message =
+            "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      print(e);
+      Get.back();
+      message = "Ooops something went wrong";
+      // custTomDialog(context, message);
+      customErrorDialog(context, 'Error', message);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     message: message,
+      //   ),
+      // );
+
+      return;
+    } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future buyData(BuildContext context, amount, phoneNumber, selectDataPlan,
+      network, validity) async {
+    isLoading = true;
+    print("Fields");
+    print(amount);
+    print(phoneNumber);
+    print(network);
+    print(selectDataPlan);
+    print(validity);
+    isLoading = true;
+    if (phoneNumber.isEmpty ||
+        phoneNumber == '' ||
+        network.isEmpty ||
+        network == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+
+      return;
+    }
+    Map<String, dynamic> body = {
+      'amount': amount,
+      'phoneNumber': phoneNumber,
+      'network': network,
+      'selectDataPlan': selectDataPlan,
+      'validity': validity,
+    };
+    print("body");
+    print(body);
+    String message;
+
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await appRepository.buyData(body);
+      if (response.success) {
+        userController.fetchData();
+        walletController.fetchWallet();
+        EasyLoading.dismiss();
+        double spacePoints = 0.005 * amount;
+
+        // Convert the earned amount in naira to space points (1 space point = 2 naira)
+        double earnedAmountNaira = spacePoints * 2;
+
+        // Check if spacePoints is a whole number
+        bool isWholeNumber = spacePoints % 1 == 0;
+
+        // Format spacePoints based on whether it's a whole number or not
+        String formattedSpacePoints = isWholeNumber
+            ? spacePoints.toStringAsFixed(0)
+            : spacePoints.toStringAsFixed(2);
+        if (amount >= 400) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: Colors.green,
+              message: 'You just earned $formattedSpacePoints Space point!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          );
+        }
+
+        SucessfulReciept(context, phoneNumber, amount, network, 'Data to ');
         // Navi
         return;
       } else if (response.success == false &&

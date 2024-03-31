@@ -4,10 +4,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/controller/box_controller.dart';
-import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 
 import 'dart:async';

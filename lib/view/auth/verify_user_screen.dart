@@ -99,21 +99,57 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
     //Pin
     final otp = Pinput(
+      useNativeKeyboard: false,
       obscureText: false,
-      defaultPinTheme: defaultOTPTheme,
-      controller: otpController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: otpController,
       length: 4,
       validator: validateOTP,
       onChanged: validateOTP,

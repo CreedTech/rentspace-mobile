@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rentspace/constants/colors.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:rentspace/constants/colors.dart';
 
 class BankTransfer extends StatefulWidget {
   String userId;
-  BankTransfer({Key? key, required this.userId}) : super(key: key);
+  BankTransfer({
+    super.key,
+    required this.userId,
+  });
 
   @override
   _BankTransferState createState() => _BankTransferState();

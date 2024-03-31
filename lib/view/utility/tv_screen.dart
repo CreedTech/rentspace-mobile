@@ -50,7 +50,7 @@ class TvScreen extends StatefulWidget {
 
 class _TvScreenState extends State<TvScreen> {
   final TextEditingController _pinController = TextEditingController();
-  final setPinformKey = GlobalKey<FormState>();
+  final setTvPinformKey = GlobalKey<FormState>();
   Future<bool> fetchUserData({bool refresh = true}) async {
     if (refresh) {
       await userController.fetchData();
@@ -173,21 +173,57 @@ class _TvScreenState extends State<TvScreen> {
 
     //Pin
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _pinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: _pinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -219,7 +255,7 @@ class _TvScreenState extends State<TvScreen> {
             );
             // EasyLoading.dismiss();
 
-            // if (setPinformKey.currentState!.validate()) {
+            // if (setTvPinformKey.currentState!.validate()) {
             vendTv(widget.billId);
           } else {
             EasyLoading.dismiss();
@@ -373,7 +409,7 @@ class _TvScreenState extends State<TvScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Form(
-                          key: setPinformKey,
+                          key: setTvPinformKey,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8.0,
@@ -408,7 +444,7 @@ class _TvScreenState extends State<TvScreen> {
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      if (setPinformKey.currentState!.validate()) {
+                      if (setTvPinformKey.currentState!.validate()) {
                         if (BCrypt.checkpw(
                             _pinController.text.trim().toString(),
                             widget.userPin)) {
@@ -429,7 +465,7 @@ class _TvScreenState extends State<TvScreen> {
                             );
                             // EasyLoading.dismiss();
 
-                            // if (setPinformKey.currentState!.validate()) {
+                            // if (setTvPinformKey.currentState!.validate()) {
                             vendTv(widget.billId);
                           } else {
                             EasyLoading.dismiss();

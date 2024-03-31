@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final walletModel = walletModelFromJson(jsonString);
 
 class WalletModel {
     WalletModel({
@@ -30,27 +27,6 @@ class WalletModel {
   }
 }
 
-// List<Wallet> walletModelFromJson(String? str) {
-//   if (str == null) {
-//     throw const FormatException('Input string is null');
-//   }
-
-//   final decoded = json.decode(str);
-
-//   if (decoded is List) {
-//     return List<Wallet>.from(
-//         decoded.map((x) => Wallet.fromJson(x)));
-//   } else if (decoded is Map<String, dynamic>) {
-//     // Adjust this part based on your actual JSON structure
-//     // If it's a map, you might want to handle it differently
-//     return [Wallet.fromJson(decoded)];
-//   } else {
-//     throw const FormatException('Invalid JSON format');
-//   }
-// }
-
-// String walletModelToJson(List<Wallet> data) =>
-//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Wallet {
   final String id;

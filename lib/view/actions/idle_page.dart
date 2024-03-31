@@ -2,13 +2,14 @@ import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'dart:io';
 
+import '../../constants/colors.dart';
 import '../../controller/auth/user_controller.dart';
 
 class IdlePage extends StatefulWidget {
@@ -73,7 +74,55 @@ class _IdlePageState extends State<IdlePage> {
 
     //Pin
     final pinInput = Pinput(
-      defaultPinTheme: defaultPinTheme,
+      useNativeKeyboard: false,
+      defaultPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 1.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
       controller: _pinController,
       length: 4,
       validator: validatePin,

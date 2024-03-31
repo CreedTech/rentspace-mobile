@@ -330,16 +330,54 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                     height: 10,
                   ),
                   Pinput(
+                    useNativeKeyboard: false,
+                    obscureText: true,
                     defaultPinTheme: PinTheme(
-                      width: 30,
-                      height: 30,
+                      width: 50,
+                      height: 50,
                       textStyle: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).primaryColor,
+                        fontSize: 25.sp,
+                        color: brandOne,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    focusedPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle: TextStyle(
+                        fontSize: 25.sp,
+                        color: brandOne,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(color: brandOne, width: 2.0),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    submittedPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle: TextStyle(
+                        fontSize: 25.sp,
+                        color: brandOne,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: brandOne, width: 2.0),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    followingPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle: TextStyle(
+                        fontSize: 25.sp,
+                        color: brandOne,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: brandTwo, width: 2.0),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                     controller: _betPinController,
@@ -2666,64 +2704,65 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        child: ExpansionTile(
-                                          initiallyExpanded: true,
-                                          title: Text(
-                                            'Airtime Top Up',
-                                            style: GoogleFonts.nunito(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white),
-                                          ),
-                                          backgroundColor: brandOne,
-                                          collapsedBackgroundColor: brandOne,
-                                          iconColor: Colors.white,
-                                          collapsedIconColor: Colors.white,
-                                          tilePadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20, vertical: 10),
-                                          childrenPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20, vertical: 10),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          collapsedShape:
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          children: [
-                                            mtnAirtimeMethod(
-                                                context,
-                                                airtimePhone,
-                                                airtimeAmount,
-                                                validatePin),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            gloMethod(context, airtimePhone,
-                                                airtimeAmount, validatePin),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            airtelMethod(context, airtimePhone,
-                                                airtimeAmount, validatePin),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            etisalatMethod(
-                                                context,
-                                                airtimePhone,
-                                                airtimeAmount,
-                                                validatePin),
-                                          ],
-                                        ),
-                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 10, vertical: 10),
+                                      //   child: ExpansionTile(
+                                      //     initiallyExpanded: true,
+                                      //     title: Text(
+                                      //       'Airtime Top Up',
+                                      //       style: GoogleFonts.nunito(
+                                      //           fontSize: 16,
+                                      //           fontWeight: FontWeight.w500,
+                                      //           color: Colors.white),
+                                      //     ),
+                                      //     backgroundColor: brandOne,
+                                      //     collapsedBackgroundColor: brandOne,
+                                      //     iconColor: Colors.white,
+                                      //     collapsedIconColor: Colors.white,
+                                      //     tilePadding:
+                                      //         const EdgeInsets.symmetric(
+                                      //             horizontal: 20, vertical: 10),
+                                      //     childrenPadding:
+                                      //         const EdgeInsets.symmetric(
+                                      //             horizontal: 20, vertical: 10),
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(20),
+                                      //     ),
+                                      //     collapsedShape:
+                                      //         RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(20),
+                                      //     ),
+                                      //     children: [
+                                      //       mtnAirtimeMethod(
+                                      //           context,
+                                      //           airtimePhone,
+                                      //           airtimeAmount,
+                                      //           validatePin),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       gloMethod(context, airtimePhone,
+                                      //           airtimeAmount, validatePin),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       airtelMethod(context, airtimePhone,
+                                      //           airtimeAmount, validatePin),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       etisalatMethod(
+                                      //           context,
+                                      //           airtimePhone,
+                                      //           airtimeAmount,
+                                      //           validatePin),
+                                      //     ],
+                                      //   ),
+                                      // ),
+
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 10),
@@ -3572,17 +3611,61 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           height: 30,
                                         ),
                                         Pinput(
+                                          useNativeKeyboard: false,
                                           obscureText: true,
                                           defaultPinTheme: PinTheme(
                                             width: 50,
                                             height: 50,
-                                            textStyle: const TextStyle(
-                                              fontSize: 20,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
                                               color: brandOne,
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: brandTwo, width: 1.0),
+                                                  color: Colors.grey,
+                                                  width: 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          focusedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          submittedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          followingPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandTwo, width: 2.0),
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                             ),
@@ -3956,17 +4039,61 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           height: 30,
                                         ),
                                         Pinput(
+                                          useNativeKeyboard: false,
                                           obscureText: true,
                                           defaultPinTheme: PinTheme(
                                             width: 50,
                                             height: 50,
-                                            textStyle: const TextStyle(
-                                              fontSize: 20,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
                                               color: brandOne,
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: brandTwo, width: 1.0),
+                                                  color: Colors.grey,
+                                                  width: 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          focusedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          submittedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          followingPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandTwo, width: 2.0),
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                             ),
@@ -4340,17 +4467,61 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           height: 30,
                                         ),
                                         Pinput(
+                                          useNativeKeyboard: false,
                                           obscureText: true,
                                           defaultPinTheme: PinTheme(
                                             width: 50,
                                             height: 50,
-                                            textStyle: const TextStyle(
-                                              fontSize: 20,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
                                               color: brandOne,
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: brandTwo, width: 1.0),
+                                                  color: Colors.grey,
+                                                  width: 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          focusedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          submittedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          followingPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandTwo, width: 2.0),
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                             ),
@@ -4718,17 +4889,61 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                           height: 30,
                                         ),
                                         Pinput(
+                                          // useNativeKeyboard: false,
                                           obscureText: true,
                                           defaultPinTheme: PinTheme(
                                             width: 50,
                                             height: 50,
-                                            textStyle: const TextStyle(
-                                              fontSize: 20,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
                                               color: brandOne,
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: brandTwo, width: 1.0),
+                                                  color: Colors.grey,
+                                                  width: 1.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          focusedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          submittedPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandOne, width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                          followingPinTheme: PinTheme(
+                                            width: 50,
+                                            height: 50,
+                                            textStyle: TextStyle(
+                                              fontSize: 25.sp,
+                                              color: brandOne,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: brandTwo, width: 2.0),
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                             ),
@@ -4782,7 +4997,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                             .toString(),
                                                     "channel": "bill-25",
                                                     "business_signature":
-                                                        "a390960dfa37469d824ffe6cb80472f6",
+                                                        "6f18115357ff4d79825f44966327531b",
                                                     "phone_number":
                                                         _airtimeNumberController
                                                             .text

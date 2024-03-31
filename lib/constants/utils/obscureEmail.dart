@@ -29,6 +29,6 @@ String obscureBVN(String bvn) {
   }
 
   String numberString = bvn.toString();
-  String obscuredNumber = numberString.replaceRange(5, 10, '*****');
+  String obscuredNumber = numberString.replaceRange(4, 11, '*******');
   return obscuredNumber;
 }

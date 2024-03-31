@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,10 +11,8 @@ import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/actions/reset_pin.dart';
-import 'package:rentspace/view/actions/transaction_pin.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
-import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -96,16 +93,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       state = const AsyncData(false);
       if (response.success == true) {
-        // createWallet(context).then(
-        //   (value) => Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => SuccessfulScreen(
-        //         email: email,
-        //       ),
-        //     ),
-        //   ),
-        // );
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -229,37 +216,20 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       if (response.success) {
         Get.offAll(BvnPage(email: email));
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => BvnPage(email: email),
-        //   ),
-        // );
-        // Navigator.pushNamed(context, RouteList.login);
+  
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
         message = "Invalid OTP";
         customErrorDialog(context, 'Error', message);
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     message: message,
-        //   ),
-        // );
+        
         return;
       } else if (response.success == false &&
           response.message.contains("This otp has expired")) {
         message = "This otp has expired";
         // custTomDialog(context, message);
         customErrorDialog(context, 'Error', message);
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     message: message,
-        //   ),
-        // );
-
+  
         return;
       }
     } catch (e) {
@@ -301,18 +271,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           context,
           email.toString().toLowerCase(),
         );
-        // bvnDebit(context, bvn).then(
-        //   (value) => createDva(context),
-        // );
-        // Get.offAll(const FirstPage());
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
+      
         return;
       } else {
         print('response.message.toString()');
@@ -363,22 +322,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future createDva(BuildContext context, email) async {
     isLoading = true;
-    // if (
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   customerEmail.isEmpty ||
-    //     customerEmail == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //   dvaName.isEmpty ||
-    //     dvaName == ''
-    //     ) {
-    //   customErrorDialog(
-    //       context, 'Error', 'Please input your bvn!!');
-    //   return;
-    // }22283481549
+
     Map<String, dynamic> params = {
       'email': email.toString().toLowerCase(),
     };
@@ -412,14 +356,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           ),
         );
 
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
         return;
       } else {
         print('response.message.toString()');
@@ -1048,55 +984,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  // Future getUserData(BuildContext context) async {
-  //   isLoading = true;
-  //   String message;
-  //   try {
-  //     isLoading = true;
-  //     state = const AsyncLoading();
-  //     EasyLoading.show(
-  //       indicator: const CustomLoader(),
-  //       maskType: EasyLoadingMaskType.black,
-  //       dismissOnTap: false,
-  //     );
-  //     var response = await authRepository.getUserData();
-  //     if (response.success) {
-  //       EasyLoading.dismiss();
-  //       isLoading = false;
-  //       // notifyListeners();
-  //       state = const AsyncValue.data(true);
-  //       return;
-  //     } else {
-  //       print(response.message.toString());
-  //     }
 
-  //     // check for different reasons to enhance users experience
-  //     if (response.success == false &&
-  //         response.message.contains("invalid signature")) {
-  //       message = "User info could not be retrieved , Try again later.";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     } else {
-  //       // to capture other errors later
-  //       message = "Something went wrong";
-  //       customErrorDialog(context, 'Error', message);
-
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     EasyLoading.dismiss();
-  //     state = AsyncError(e, StackTrace.current);
-  //     message = "Ooops something went wrong";
-  //     customErrorDialog(context, 'Error', message);
-
-  //     return;
-  //   } finally {
-  //     isLoading = false;
-  //     EasyLoading.dismiss();
-  //     return;
-  //   }
-  // }
 
   Future logout(BuildContext context) async {
     isLoading = true;
@@ -1449,6 +1337,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       final response = await authRepository.setNewPin(body);
       EasyLoading.dismiss();
       if (response.success) {
+        walletController.fetchWallet();
+        userController.fetchData();
         EasyLoading.dismiss();
         isLoading = false;
         showTopSnackBar(
@@ -1512,6 +1402,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       final response = await authRepository.changePin(body);
       EasyLoading.dismiss();
       if (response.success) {
+        userController.fetchData();
+        walletController.fetchWallet();
         EasyLoading.dismiss();
         isLoading = false;
         showTopSnackBar(

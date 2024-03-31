@@ -1,14 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/firebase_auth_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/view/actions/confirm_reset_page.dart';
-import 'package:rentspace/view/login_page.dart';
 
-import 'dart:async';
+
 import 'package:get/get.dart';
 
 import '../../controller/auth/auth_controller.dart';
@@ -16,7 +12,7 @@ import '../../controller/auth/auth_controller.dart';
 //String status = "Reset Password";
 
 class ForgotPassword extends ConsumerStatefulWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({super.key});
 
   @override
   // _ForgotPasswordState createState() => _ForgotPasswordState();

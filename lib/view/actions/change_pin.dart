@@ -1,10 +1,9 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/FirstPage.dart';
 
@@ -24,17 +23,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
   final TextEditingController _changePinController = TextEditingController();
   final changePinformKey = GlobalKey<FormState>();
 
-  // void _doSomething() async {
-  //   if (BCrypt.checkpw(_oldPinController.text.trim().toString(),
-  //       userController.userModel!.userDetails![0].wallet.pin)) {
-  //     customErrorDialog(
-  //         context, "Invalid!", "PIN cannot be the same as existing one.");
-  //   } else {
-  //     // Get.to(ConfirmForgotPin(
-  //     //     // password: _passwordController.text.trim(),
-  //     //     pin: _pinController.text.trim()));
-  //   }
-  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,21 +54,57 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
     }
 
     final pin = Pinput(
+      useNativeKeyboard: false,
       obscureText: true,
-      defaultPinTheme: defaultPinTheme,
-      controller: _changePinController,
-      focusedPinTheme: PinTheme(
+      defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
-          fontSize: 20,
-          color: Theme.of(context).primaryColor,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 1.0),
+          border: Border.all(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
+      focusedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      submittedPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      followingPinTheme: PinTheme(
+        width: 50,
+        height: 50,
+        textStyle: TextStyle(
+          fontSize: 25.sp,
+          color: brandOne,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: brandTwo, width: 2.0),
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      controller: _changePinController,
       length: 4,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: validatePinOne,
@@ -148,49 +173,43 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(250, 50),
-                      backgroundColor: brandOne,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (changePinformKey.currentState!.validate()) {
-                        if (BCrypt.checkpw(
-                            _changePinController.text.trim().toString(),
-                            widget.pin)) {
-                          customErrorDialog(context, "Invalid!",
-                              "PIN cannot be the same as existing one.");
-                          _changePinController.clear();
-                        } else {
-                          authState.changePin(
-                              context,
-                              _changePinController.text.trim(),
-                              userController
-                                  .userModel!.userDetails![0].wallet.pin);
-                        }
-                        _changePinController.clear();
-                      } else {
-                        EasyLoading.dismiss();
-                        customErrorDialog(context, "Incomplete",
-                            "Fill the field correctly to proceed");
-                      }
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NumericKeyboard(
+                    onKeyboardTap: (String value) {
+                      setState(() {
+                        _changePinController.text =
+                            _changePinController.text + value;
+                      });
+                      print(value);
+                      print(_changePinController.text);
                     },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
+                     textStyle: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 28.sp,
                     ),
+                    rightButtonFn: () {
+                      if (_changePinController.text.isEmpty) return;
+                      setState(() {
+                        _changePinController.text = _changePinController.text
+                            .substring(0, _changePinController.text.length - 1);
+                      });
+                    },
+                    rightButtonLongPressFn: () {
+                      if (_changePinController.text.isEmpty) return;
+                      setState(() {
+                        _changePinController.text = '';
+                      });
+                    },
+                    rightIcon: const Icon(
+                      Icons.backspace_outlined,
+                      color: Colors.red,
+                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   ),
                 ),
               ),

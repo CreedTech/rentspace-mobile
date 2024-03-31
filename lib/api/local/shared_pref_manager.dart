@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rentspace/constants/constants.dart';
 
-import '../../model/response/user_details_response.dart';
 
 class SharedPreferencesManager {
   late final SharedPreferences _prefs;

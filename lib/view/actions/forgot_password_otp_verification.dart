@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 
@@ -196,7 +197,6 @@ class _ForgotPasswordOTPVerificationPageState
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                           
                           ]),
                     ),
                   ),
@@ -297,41 +297,47 @@ class _ForgotPasswordOTPVerificationPageState
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(250, 50),
-                    backgroundColor: brandOne,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      ),
+            Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NumericKeyboard(
+                    onKeyboardTap: (String value) {
+                      setState(() {
+                        otpController.text =
+                            otpController.text + value;
+                      });
+                      print(value);
+                      print(otpController.text);
+                    },
+                    textStyle: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 28.sp,
                     ),
-                  ),
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    if (otprestpwdFormKey.currentState!.validate()) {
-                      authState.verifyForgotPasswordOtp(
-                        context,
-                        widget.email,
-                        otpController.text.trim(),
-                      );
-                      otpController.clear();
-                    }
-                  },
-                  child: const Text(
-                    'Proceed',
-                    textAlign: TextAlign.center,
+                    rightButtonFn: () {
+                      if (otpController.text.isEmpty) return;
+                      setState(() {
+                        otpController.text = otpController.text
+                            .substring(0, otpController.text.length - 1);
+                      });
+                    },
+                    rightButtonLongPressFn: () {
+                      if (otpController.text.isEmpty) return;
+                      setState(() {
+                        otpController.text = '';
+                      });
+                    },
+                   rightIcon: const Icon(
+                      Icons.backspace_outlined,
+                      color: Colors.red,
+                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
         ),
       ),
     );
