@@ -766,11 +766,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     ),
                                   ),
                                   Padding(
-                                    padding:  EdgeInsets.only(right: 20.sp),
+                                    padding: EdgeInsets.only(right: 20.sp),
                                     child: Text(
                                       userController.userModel!.userDetails![0]
-                                          .utilityPoints
-                                          .toString(),
+                                          .utilityPoints.floor().toString(),
                                       style: GoogleFonts.nunito(
                                         color: brandOne,
                                         fontSize: 16.sp,

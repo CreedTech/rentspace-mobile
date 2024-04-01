@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           'Contact Us',
           style: GoogleFonts.nunito(
             color: Theme.of(context).primaryColor,
-            fontSize: 24,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -114,7 +115,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                       child: Text(
                         "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
                         style: GoogleFonts.nunito(
-                          fontSize: 16.0,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           // fontFamily: "DefaultFontFamily",
                           // letterSpacing: 1.0,
@@ -251,7 +252,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                     "Email address",
                                     style: GoogleFonts.nunito(
                                       color: Theme.of(context).primaryColor,
-                                      fontSize: 17,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -288,7 +289,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                 'support@rentspace.tech',
                                                 style: GoogleFonts.nunito(
                                                   color: Theme.of(context).colorScheme.secondary,
-                                                  fontSize: 17,
+                                                  fontSize: 15.sp,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                               ),
@@ -328,7 +329,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                   style: GoogleFonts.nunito(
                                                       color: Theme.of(context)
                                                           .colorScheme.primary,
-                                                      fontSize: 12,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w700),
                                                 ),

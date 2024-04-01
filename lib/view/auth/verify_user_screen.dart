@@ -99,7 +99,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
     //Pin
     final otp = Pinput(
-      useNativeKeyboard: false,
+      useNativeKeyboard: true,
       obscureText: false,
       defaultPinTheme: PinTheme(
         width: 50,

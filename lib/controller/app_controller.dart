@@ -3,12 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -513,7 +515,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // double spacePoints = earnedAmountNaira / 2;
 
         // Calculate 0.5% of the recharge amount in naira
-        double spacePoints = 0.005 * amount;
+        int spacePoints = (0.0025 * amount).floor();
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
         double earnedAmountNaira = spacePoints * 2;
@@ -530,7 +532,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             Overlay.of(context),
             CustomSnackBar.success(
               backgroundColor: Colors.green,
-              message: 'You just earned $formattedSpacePoints Space point!',
+              message: 'You just earned $spacePoints Space point!',
               textStyle: GoogleFonts.nunito(
                 fontSize: 14,
                 color: Colors.white,
@@ -658,7 +660,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         userController.fetchData();
         walletController.fetchWallet();
         EasyLoading.dismiss();
-        double spacePoints = 0.005 * amount;
+        int spacePoints = (0.0025 * amount).floor();
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
         double earnedAmountNaira = spacePoints * 2;
@@ -675,7 +677,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             Overlay.of(context),
             CustomSnackBar.success(
               backgroundColor: Colors.green,
-              message: 'You just earned $formattedSpacePoints Space point!',
+              message: 'You just earned $spacePoints Space point!',
               textStyle: GoogleFonts.nunito(
                 fontSize: 14,
                 color: Colors.white,
@@ -702,6 +704,356 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
               .contains("Number must be greater than or equal to 50")) {
         EasyLoading.dismiss();
         message = "Amount must be greate than or equal to 50 naira";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again")) {
+        EasyLoading.dismiss();
+        message =
+            "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      print(e);
+      Get.back();
+      message = "Ooops something went wrong";
+      // custTomDialog(context, message);
+      customErrorDialog(context, 'Error', message);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     message: message,
+      //   ),
+      // );
+
+      return;
+    } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future buyElectricity(BuildContext context, amount, phoneNumber, meterNumber,
+      billingServiceID, email, electricityName) async {
+    isLoading = true;
+    print("Fields");
+    print(amount);
+    print(phoneNumber);
+    print(meterNumber);
+    print(billingServiceID);
+    print(email);
+    isLoading = true;
+    if (phoneNumber.isEmpty ||
+        phoneNumber == '' ||
+        email.isEmpty ||
+        email == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+
+      return;
+    }
+    Map<String, dynamic> body = {
+      'amount': amount,
+      'phoneNumber': phoneNumber,
+      'meterNumber': meterNumber,
+      'billingServiceID': billingServiceID,
+      'email': email,
+    };
+    print("body");
+    print(body);
+    String message;
+
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await appRepository.buyElectricity(body);
+      if (response.success) {
+        userController.fetchData();
+        walletController.fetchWallet();
+        EasyLoading.dismiss();
+        var electricToken = response.message;
+        int spacePoints = (0.0025 * amount).floor();
+        Get.bottomSheet(
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                height: 300.h,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      Text(
+                        "Here is your Token: $electricToken",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          backgroundColor: brandOne,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              30,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          Get.back();
+                          Share.share("Token: $electricToken");
+                        },
+                        child: Text(
+                          'Copy to clipboard',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          elevation: 2,
+          backgroundColor: Theme.of(context).canvasColor,
+        );
+
+        // Convert the earned amount in naira to space points (1 space point = 2 naira)
+        double earnedAmountNaira = spacePoints * 2;
+
+        // Check if spacePoints is a whole number
+        bool isWholeNumber = spacePoints % 1 == 0;
+
+        // Format spacePoints based on whether it's a whole number or not
+        String formattedSpacePoints = isWholeNumber
+            ? spacePoints.toStringAsFixed(0)
+            : spacePoints.toStringAsFixed(2);
+        if (amount >= 400) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: Colors.green,
+              message: 'You just earned $spacePoints Space point!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          );
+        }
+
+        // SucessfulReciept(
+        //     context, meterNumber, amount, electricityName, 'Electricity to ');
+        // Navi
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("String must contain at least 10 character(s)")) {
+        EasyLoading.dismiss();
+        message = "Phone Number must be up to 10 characters long!!";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("Number must be greater than or equal to 500")) {
+        EasyLoading.dismiss();
+        message = "Amount must be greate than or equal to 500 naira";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains(
+              "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again")) {
+        EasyLoading.dismiss();
+        message =
+            "Duplicate Transaction. Please try again after 10 minutes if you want to perform the transaction again";
+        // custTomDialog(context, message);
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.error(
+        //     message: message,
+        //   ),
+        // );
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      print(e);
+      Get.back();
+      message = "Ooops something went wrong";
+      // custTomDialog(context, message);
+      customErrorDialog(context, 'Error', message);
+      // showTopSnackBar(
+      //   Overlay.of(context),
+      //   CustomSnackBar.error(
+      //     message: message,
+      //   ),
+      // );
+
+      return;
+    } finally {
+      EasyLoading.dismiss();
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future buyCable(BuildContext context, amount, phoneNumber, smartCardNumber,
+      billingServiceID, productCode, invoicePeriod, tvName) async {
+    isLoading = true;
+    print("Fields");
+    print(amount);
+    print(phoneNumber);
+    print(productCode);
+    print(invoicePeriod);
+    print(billingServiceID);
+    print(smartCardNumber);
+    isLoading = true;
+    if (phoneNumber.isEmpty || phoneNumber == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+
+      return;
+    }
+    Map<String, dynamic> body = {
+      'amount': amount,
+      'phoneNumber': phoneNumber,
+      'smartCardNumber': smartCardNumber,
+      'billingServiceID': billingServiceID,
+      'productCode': productCode,
+      'invoicePeriod': invoicePeriod,
+    };
+    print("body");
+    print(body);
+    String message;
+
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      final response = await appRepository.buyCable(body);
+      if (response.success) {
+        userController.fetchData();
+        walletController.fetchWallet();
+        EasyLoading.dismiss();
+        int spacePoints = (0.0025 * amount).floor();
+
+        // Convert the earned amount in naira to space points (1 space point = 2 naira)
+        double earnedAmountNaira = spacePoints * 2;
+
+        // Check if spacePoints is a whole number
+        bool isWholeNumber = spacePoints % 1 == 0;
+
+        // Format spacePoints based on whether it's a whole number or not
+        String formattedSpacePoints = isWholeNumber
+            ? spacePoints.toStringAsFixed(0)
+            : spacePoints.toStringAsFixed(2);
+        if (amount >= 400) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.success(
+              backgroundColor: Colors.green,
+              message: 'You just earned $spacePoints Space point!',
+              textStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          );
+        }
+
+        SucessfulReciept(context, smartCardNumber, amount, tvName, 'Data to ');
+        // Navi
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("String must contain at least 10 character(s)")) {
+        EasyLoading.dismiss();
+        message = "Phone Number must be up to 10 characters long!!";
+        Get.back();
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message
+              .contains("Number must be greater than or equal to 500")) {
+        EasyLoading.dismiss();
+        message = "Amount must be greate than or equal to 500 naira";
         // custTomDialog(context, message);
         Get.back();
         customErrorDialog(context, 'Error', message);

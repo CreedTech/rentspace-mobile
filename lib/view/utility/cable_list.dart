@@ -2,66 +2,73 @@ import 'dart:convert';
 
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/constants/widgets/separator.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/utility/utilities_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
-import 'package:http/http.dart' as http;
-
-import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
+import '../../constants/widgets/separator.dart';
 import '../../controller/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
+import 'package:http/http.dart' as http;
+
 import '../actions/fund_wallet.dart';
 
-class DataListScreen extends ConsumerStatefulWidget {
-  const DataListScreen(
+class CableListScreen extends ConsumerStatefulWidget {
+  const CableListScreen(
       {super.key,
-      required this.number,
-      required this.network,
-      required this.image});
-  final String number, network, image;
+      required this.name,
+      required this.cardNumber,
+      required this.image,
+      required this.code,
+      required this.tvName});
+  final String name, cardNumber, image, code, tvName;
 
   @override
-  ConsumerState<DataListScreen> createState() => _DataListScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CableListScreenState();
 }
 
-class _DataListScreenState extends ConsumerState<DataListScreen> {
+class _CableListScreenState extends ConsumerState<CableListScreen> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
   final TextEditingController _aPinController = TextEditingController();
   String? selectedItem;
   String? selectedItemAmount;
   String? selectedItemValidity;
+  String? selectedProductCode;
+  String? selectedInvoicePeriod;
   bool isSelected = false;
   List<String> _amount = [];
   List<String> _dataName = [];
   List<String> _dataValidity = [];
+  List<String> _productCode = [];
+  List<String> _invoicePeriod = [];
   bool _canShowOptions = false;
 
   void validateUsersInput() {
     // if (airtimeformKey.currentState!.validate()) {
     int amount = int.parse(selectedItemAmount!);
-    String number = widget.number;
+    String number = widget.cardNumber;
     String selectedDataPlan = selectedItem!;
-    String network = widget.network;
+    String network = widget.tvName;
     String validity = selectedItemValidity!;
+    String productCode = selectedProductCode!;
+    String invoicePeriod = selectedInvoicePeriod!;
 
-    confirmPayment(
-        context, amount, number, selectedDataPlan, network, validity);
-    // }
+    confirmPayment(context, amount, number, selectedDataPlan, network, validity,
+        productCode, invoicePeriod);
   }
 
   Future<bool> fetchUserData({bool refresh = true}) async {
@@ -79,7 +86,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
     return true;
   }
 
-  getDataBundles() async {
+  getTV() async {
     EasyLoading.show(
       indicator: const CustomLoader(),
       maskType: EasyLoadingMaskType.black,
@@ -90,13 +97,13 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
     print('authToken here');
     print(authToken);
     final response = await http.post(
-      Uri.parse(AppConstants.BASE_URL + AppConstants.GET_DATA_VARIATION_CODES),
+      Uri.parse(AppConstants.BASE_URL + AppConstants.GET_TV),
       headers: {
         'Authorization': 'Bearer $authToken',
         "Content-Type": "application/json"
       },
       body: jsonEncode(<String, String>{
-        "selectedNetwork": widget.network,
+        "billingServiceID": widget.code,
       }),
     );
     EasyLoading.dismiss();
@@ -111,19 +118,25 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       List<String> dataAmount = [];
       List<String> dataName = [];
       List<String> dataValidity = [];
+      List<String> dataProductCode = [];
+      List<String> dataInvoicePeriod = [];
       // tempName.add("Select bank");
-      for (var item in jsonResponse['amount_options']) {
-        String amount = item['amount'];
+      for (var item in jsonResponse['tvSubs']) {
+        num amount = item['amount'];
         String name = item['name'];
-        String validity = item['validity'];
+        num validity = item['validity'];
+        String productCode = item['product_code'];
+        num invoicePeriod = item['invoice_period'];
         print(amount);
         print(name);
         print(validity);
         // String name = item['name'];
         if (name != "") {
-          dataAmount.add(amount);
+          dataAmount.add(amount.toString());
           dataName.add(name);
-          dataValidity.add(validity);
+          dataValidity.add(validity.toString());
+          dataProductCode.add(productCode);
+          dataInvoicePeriod.add(invoicePeriod.toString());
         }
       }
       if (!mounted) return;
@@ -131,6 +144,8 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
         _amount = dataAmount;
         _dataName = dataName;
         _dataValidity = dataValidity;
+        _productCode = dataProductCode;
+        _invoicePeriod = dataInvoicePeriod;
         // _bankCode = tempCode;
 
         _canShowOptions = true;
@@ -144,7 +159,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
   @override
   initState() {
     super.initState();
-    getDataBundles();
+    getTV();
     fetchUserData();
     // _searchController = TextEditingController();
     // _searchController.addListener(_onSearchChanged);
@@ -170,7 +185,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
         ),
         centerTitle: true,
         title: Text(
-          'Choose Data Bundle',
+          'Choose TV Package',
           style: GoogleFonts.nunito(
             color: brandOne,
             fontSize: 16.sp,
@@ -179,7 +194,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
         ),
       ),
       body: SafeArea(
-        // bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +204,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.h),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Column(
@@ -224,7 +237,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               ),
                             ),
                             Text(
-                              widget.network,
+                              widget.tvName,
                               style: GoogleFonts.nunito(
                                 fontSize: 14.sp,
                                 color: Theme.of(context).primaryColor,
@@ -232,7 +245,15 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               ),
                             ),
                             Text(
-                              widget.number,
+                              widget.name,
+                              style: GoogleFonts.nunito(
+                                fontSize: 12.sp,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              widget.cardNumber,
                               style: GoogleFonts.nunito(
                                 fontSize: 12.sp,
                                 color: Theme.of(context).primaryColor,
@@ -248,7 +269,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Choose Bundle',
+                          'Choose Package',
                           textAlign: TextAlign.left,
                           style: GoogleFonts.nunito(
                             color: brandOne,
@@ -279,14 +300,23 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                     final amountInfo = _amount[index];
                                     final nameInfo = _dataName[index];
                                     final validityInfo = _dataValidity[index];
+                                    final productCodeInfo = _productCode[index];
+                                    final invoicePeriodInfo =
+                                        _invoicePeriod[index];
                                     return GestureDetector(
                                         onTap: () {
                                           setState(() {
                                             selectedItem = nameInfo;
                                             selectedItemAmount = amountInfo;
                                             selectedItemValidity = validityInfo;
+                                            selectedProductCode =
+                                                productCodeInfo;
+                                            selectedInvoicePeriod =
+                                                invoicePeriodInfo;
                                             isSelected = true;
                                           });
+                                          print(selectedProductCode);
+                                          print(selectedInvoicePeriod);
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -333,7 +363,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             )
                           : Column(
                               children: [
-                                SizedBox(height:30.h),
+                                SizedBox(height: 30.h),
                                 Text(
                                   'Loading Data...',
                                   style: GoogleFonts.nunito(
@@ -455,8 +485,15 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
     );
   }
 
-  Future<void> confirmPayment(BuildContext context, int amount, String number,
-      String selectDataPlan, String network, String validity) async {
+  Future<void> confirmPayment(
+      BuildContext context,
+      int amount,
+      String number,
+      String selectDataPlan,
+      String network,
+      String validity,
+      String productCode,
+      String invoicePeriod) async {
     final appState = ref.watch(appControllerProvider.notifier);
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
@@ -554,7 +591,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                       width: 9.w,
                                     ),
                                     Text(
-                                      widget.network,
+                                      widget.tvName,
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.nunito(
                                         color: brandOne,
@@ -573,7 +610,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Recipient Number',
+                                  'Smart Card Number',
                                   style: GoogleFonts.nunito(
                                     color: brandTwo,
                                     fontSize: 12.sp,
@@ -924,13 +961,17 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                             .trim()
                                                             .toString());
                                                         // _doWallet();
-                                                        appState.buyData(
+                                                        appState.buyCable(
                                                             context,
                                                             amount,
-                                                            number.toString(),
-                                                            selectDataPlan,
-                                                            network,
-                                                            validity);
+                                                            userController
+                                                                .userModel!
+                                                                .userDetails![0]
+                                                                .phoneNumber,
+                                                            number,
+                                                            widget.code,
+                                                            productCode,
+                                                            invoicePeriod,widget.tvName);
                                                       } else {
                                                         _aPinController.clear();
                                                         if (context.mounted) {
@@ -1015,182 +1056,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 ),
                               ),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Get.bottomSheet(
-                            //       isDismissible: true,
-                            //       SizedBox(
-                            //         width: MediaQuery.of(context).size.width,
-                            //         height: 350,
-                            //         child: ClipRRect(
-                            //           borderRadius: const BorderRadius.only(
-                            //             topLeft: Radius.circular(30.0),
-                            //             topRight: Radius.circular(30.0),
-                            //           ),
-                            //           child: Container(
-                            //             color: Theme.of(context).canvasColor,
-                            //             padding: const EdgeInsets.fromLTRB(
-                            //                 10, 5, 10, 5),
-                            //             child: Column(
-                            //               crossAxisAlignment:
-                            //                   CrossAxisAlignment.center,
-                            //               children: [
-                            //                 const SizedBox(
-                            //                   height: 50,
-                            //                 ),
-                            //                 Text(
-                            //                   'Enter PIN to Proceed',
-                            //                   style: GoogleFonts.nunito(
-                            //                       fontSize: 18,
-                            //                       color: Theme.of(context)
-                            //                           .primaryColor,
-                            //                       fontWeight: FontWeight.w800),
-                            //                   textAlign: TextAlign.center,
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 20,
-                            //                 ),
-                            //                 Pinput(
-                            //                   obscureText: true,
-                            //                   defaultPinTheme: PinTheme(
-                            //                     width: 50,
-                            //                     height: 50,
-                            //                     textStyle: const TextStyle(
-                            //                       fontSize: 20,
-                            //                       color: brandOne,
-                            //                     ),
-                            //                     decoration: BoxDecoration(
-                            //                       border: Border.all(
-                            //                           color: brandTwo,
-                            //                           width: 1.0),
-                            //                       borderRadius:
-                            //                           BorderRadius.circular(5),
-                            //                     ),
-                            //                   ),
-                            //                   onCompleted: (String val) {
-                            //                     if (BCrypt.checkpw(
-                            //                       _aPinController.text
-                            //                           .trim()
-                            //                           .toString(),
-                            //                       userController
-                            //                           .userModel!
-                            //                           .userDetails![0]
-                            //                           .wallet
-                            //                           .pin,
-                            //                     )) {
-                            //                       _aPinController.clear();
-                            //                       Get.back();
-                            //                       // _doWallet();
-                            //                       appState.buyAirtime(
-                            //                           context,
-                            //                           amount,
-                            //                           number.toString(),
-                            //                           bill,
-                            //                           biller);
-                            //                     } else {
-                            //                       _aPinController.clear();
-                            //                       if (context.mounted) {
-                            //                         customErrorDialog(
-                            //                             context,
-                            //                             "Invalid PIN",
-                            //                             'Enter correct PIN to proceed');
-                            //                       }
-                            //                     }
-                            //                   },
-                            //                   validator: validatePinOne,
-                            //                   onChanged: validatePinOne,
-                            //                   controller: _aPinController,
-                            //                   length: 4,
-                            //                   closeKeyboardWhenCompleted: true,
-                            //                   keyboardType:
-                            //                       TextInputType.number,
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 20,
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   height: 40,
-                            //                 ),
-                            //                 ElevatedButton(
-                            //                   style: ElevatedButton.styleFrom(
-                            //                     minimumSize:
-                            //                         const Size(300, 50),
-                            //                     backgroundColor: brandOne,
-                            //                     elevation: 0,
-                            //                     shape: RoundedRectangleBorder(
-                            //                       borderRadius:
-                            //                           BorderRadius.circular(
-                            //                         10,
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                   onPressed: () {
-                            //                     if (BCrypt.checkpw(
-                            //                       _aPinController.text
-                            //                           .trim()
-                            //                           .toString(),
-                            //                       userController
-                            //                           .userModel!
-                            //                           .userDetails![0]
-                            //                           .wallet
-                            //                           .pin,
-                            //                     )) {
-                            //                       _aPinController.clear();
-                            //                       Get.back();
-                            //                       // _doWallet();
-                            //                       appState.buyAirtime(
-                            //                           context,
-                            //                           amount,
-                            //                           number.toString(),
-                            //                           bill,
-                            //                           biller);
-                            //                     } else {
-                            //                       _aPinController.clear();
-                            //                       if (context.mounted) {
-                            //                         customErrorDialog(
-                            //                             context,
-                            //                             "Invalid PIN",
-                            //                             'Enter correct PIN to proceed');
-                            //                       }
-                            //                     }
-                            //                   },
-                            //                   child: Text(
-                            //                     'Proceed to Payment',
-                            //                     textAlign: TextAlign.center,
-                            //                     style: GoogleFonts.nunito(
-                            //                       color: Colors.white,
-                            //                       fontSize: 16,
-                            //                       fontWeight: FontWeight.w700,
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: Container(
-                            //     decoration: BoxDecoration(
-                            //         color: brandOne,
-                            //         borderRadius: BorderRadius.circular(15)),
-                            //     child: Padding(
-                            //       padding: const EdgeInsets.all(13),
-                            //       child: Align(
-                            //         child: Text(
-                            //           'Pay',
-                            //           textAlign: TextAlign.center,
-                            //           style: GoogleFonts.nunito(
-                            //             color: Colors.white,
-                            //             fontSize: 19.sp,
-                            //             fontWeight: FontWeight.w600,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -1344,5 +1209,4 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       ),
     );
   }
-
 }

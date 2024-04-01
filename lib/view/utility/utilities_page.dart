@@ -1128,7 +1128,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                         const String apiUrl =
                             'https://api.watupay.com/v1/watubill/validate';
                         const String bearerToken =
-                            'WTP-L-PK-6a559c833bc54b2698e6a833f107f1e7';
+                            'WTP-T-PK-41506a19a9a8440ab54493c504159661';
                         final response = await http.post(
                           Uri.parse(apiUrl),
                           headers: {
@@ -1148,11 +1148,11 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                           print(apiResponse);
                           setState(() {
                             userElectricName =
-                                apiResponse['data']['customer_name'];
+                                apiResponse['data']['name'];
                             userElectricAddress =
-                                apiResponse['data']['customer_address'];
-                            userElectricStatus =
-                                apiResponse['data']['can_vend'].toString();
+                                apiResponse['data']['address'];
+                            // userElectricStatus =
+                            //     apiResponse['data']['customer_dt_number'].toString();
                             canLoad = true;
                           });
                           Get.bottomSheet(
@@ -2684,7 +2684,7 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                                     ),
                                                   )
                                                 : Text(
-                                                    'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.toString()}',
+                                                    'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.floor().toString()}',
                                                     style: GoogleFonts.nunito(
                                                       fontSize: 14.sp,
                                                       fontWeight:
@@ -2763,172 +2763,172 @@ class _UtilitiesPageState extends State<UtilitiesPage> {
                                       //   ),
                                       // ),
 
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        child: ExpansionTile(
-                                          initiallyExpanded: true,
-                                          title: Text(
-                                            'Data Subscription',
-                                            style: GoogleFonts.nunito(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white),
-                                          ),
-                                          backgroundColor: brandOne,
-                                          collapsedBackgroundColor: brandOne,
-                                          iconColor: Colors.white,
-                                          collapsedIconColor: Colors.white,
-                                          tilePadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20, vertical: 10),
-                                          childrenPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 20, vertical: 10),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          collapsedShape:
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          children: [
-                                            ListTile(
-                                              onTap: () {
-                                                setState(() {
-                                                  showLoading = true;
-                                                });
-                                                dataList.clear();
-                                                getData("bill-18", 'MTN');
-                                              },
-                                              tileColor: Colors.white,
-                                              trailing: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                                child: Image.asset(
-                                                  "assets/utility/mtn.jpg",
-                                                  height: 40,
-                                                  width: 40,
-                                                ),
-                                              ),
-                                              leading: Text(
-                                                'MTN Data Plans',
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ListTile(
-                                              onTap: () {
-                                                setState(() {
-                                                  showLoading = true;
-                                                });
-                                                dataList.clear();
-                                                getData("bill-07", 'GLO');
-                                              },
-                                              tileColor: brandSix,
-                                              trailing: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                                child: Image.asset(
-                                                  "assets/utility/glo.jpg",
-                                                  height: 40,
-                                                  width: 40,
-                                                ),
-                                              ),
-                                              leading: Text(
-                                                'GLO Data Plans',
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ListTile(
-                                              onTap: () {
-                                                setState(() {
-                                                  showLoading = true;
-                                                });
-                                                dataList.clear();
-                                                getData("bill-16", 'AIRTEL');
-                                              },
-                                              tileColor: brandSix,
-                                              trailing: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                                child: Image.asset(
-                                                  "assets/utility/airtel.jpg",
-                                                  height: 40,
-                                                  width: 40,
-                                                ),
-                                              ),
-                                              leading: Text(
-                                                'Airtel Data Plans',
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ListTile(
-                                              onTap: () {
-                                                setState(() {
-                                                  showLoading = true;
-                                                });
-                                                dataList.clear();
+                                      // Padding(
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 10, vertical: 10),
+                                      //   child: ExpansionTile(
+                                      //     initiallyExpanded: true,
+                                      //     title: Text(
+                                      //       'Data Subscription',
+                                      //       style: GoogleFonts.nunito(
+                                      //           fontSize: 16,
+                                      //           fontWeight: FontWeight.w500,
+                                      //           color: Colors.white),
+                                      //     ),
+                                      //     backgroundColor: brandOne,
+                                      //     collapsedBackgroundColor: brandOne,
+                                      //     iconColor: Colors.white,
+                                      //     collapsedIconColor: Colors.white,
+                                      //     tilePadding:
+                                      //         const EdgeInsets.symmetric(
+                                      //             horizontal: 20, vertical: 10),
+                                      //     childrenPadding:
+                                      //         const EdgeInsets.symmetric(
+                                      //             horizontal: 20, vertical: 10),
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(20),
+                                      //     ),
+                                      //     collapsedShape:
+                                      //         RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(20),
+                                      //     ),
+                                      //     children: [
+                                      //       ListTile(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             showLoading = true;
+                                      //           });
+                                      //           dataList.clear();
+                                      //           getData("bill-18", 'MTN');
+                                      //         },
+                                      //         tileColor: Colors.white,
+                                      //         trailing: ClipRRect(
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(
+                                      //                   100.0),
+                                      //           child: Image.asset(
+                                      //             "assets/utility/mtn.jpg",
+                                      //             height: 40,
+                                      //             width: 40,
+                                      //           ),
+                                      //         ),
+                                      //         leading: Text(
+                                      //           'MTN Data Plans',
+                                      //           style: GoogleFonts.nunito(
+                                      //             color: Theme.of(context)
+                                      //                 .canvasColor,
+                                      //             fontSize: 15,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       ListTile(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             showLoading = true;
+                                      //           });
+                                      //           dataList.clear();
+                                      //           getData("bill-07", 'GLO');
+                                      //         },
+                                      //         tileColor: brandSix,
+                                      //         trailing: ClipRRect(
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(
+                                      //                   100.0),
+                                      //           child: Image.asset(
+                                      //             "assets/utility/glo.jpg",
+                                      //             height: 40,
+                                      //             width: 40,
+                                      //           ),
+                                      //         ),
+                                      //         leading: Text(
+                                      //           'GLO Data Plans',
+                                      //           style: GoogleFonts.nunito(
+                                      //             color: Theme.of(context)
+                                      //                 .canvasColor,
+                                      //             fontSize: 15,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       ListTile(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             showLoading = true;
+                                      //           });
+                                      //           dataList.clear();
+                                      //           getData("bill-16", 'AIRTEL');
+                                      //         },
+                                      //         tileColor: brandSix,
+                                      //         trailing: ClipRRect(
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(
+                                      //                   100.0),
+                                      //           child: Image.asset(
+                                      //             "assets/utility/airtel.jpg",
+                                      //             height: 40,
+                                      //             width: 40,
+                                      //           ),
+                                      //         ),
+                                      //         leading: Text(
+                                      //           'Airtel Data Plans',
+                                      //           style: GoogleFonts.nunito(
+                                      //             color: Theme.of(context)
+                                      //                 .canvasColor,
+                                      //             fontSize: 15,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       const SizedBox(
+                                      //         height: 10,
+                                      //       ),
+                                      //       ListTile(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             showLoading = true;
+                                      //           });
+                                      //           dataList.clear();
 
-                                                getData("bill-19", '9MOBILE');
-                                              },
-                                              tileColor: brandSix,
-                                              trailing: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                                child: Image.asset(
-                                                  "assets/utility/9mobile.jpg",
-                                                  height: 40,
-                                                  width: 40,
-                                                ),
-                                              ),
-                                              leading: Text(
-                                                '9Mobile Data Plans',
-                                                style: GoogleFonts.nunito(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      //           getData("bill-19", '9MOBILE');
+                                      //         },
+                                      //         tileColor: brandSix,
+                                      //         trailing: ClipRRect(
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(
+                                      //                   100.0),
+                                      //           child: Image.asset(
+                                      //             "assets/utility/9mobile.jpg",
+                                      //             height: 40,
+                                      //             width: 40,
+                                      //           ),
+                                      //         ),
+                                      //         leading: Text(
+                                      //           '9Mobile Data Plans',
+                                      //           style: GoogleFonts.nunito(
+                                      //             color: Theme.of(context)
+                                      //                 .canvasColor,
+                                      //             fontSize: 15,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
 
-                                      (showLoading)
-                                          ? const Padding(
-                                              padding: EdgeInsets.all(10.0),
-                                              child: Center(
-                                                child: CustomLoader(),
-                                              ),
-                                            )
-                                          : const SizedBox(),
+                                      // (showLoading)
+                                      //     ? const Padding(
+                                      //         padding: EdgeInsets.all(10.0),
+                                      //         child: Center(
+                                      //           child: CustomLoader(),
+                                      //         ),
+                                      //       )
+                                      //     : const SizedBox(),
 
                                       Padding(
                                         padding: const EdgeInsets.symmetric(

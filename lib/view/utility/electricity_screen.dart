@@ -9,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/app_constants.dart';
@@ -80,11 +81,12 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
         "phone_number": widget.phoneNumber,
         "request_time": widget.formattedDate,
         "contact_type": "phone",
-        "business_signature": "a390960dfa37469d824ffe6cb80472f6",
+        "business_signature": "6f18115357ff4d79825f44966327531b",
         "meter_number": widget.electricNumber,
         "ignore_duplicate": "1"
       }),
     );
+    print(response);
 
     if (response.statusCode == 200) {
       String authToken =
@@ -502,205 +504,245 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(250, 50),
-                      backgroundColor: brandOne,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (setElectricityPinformKey.currentState!.validate()) {
-                        if (BCrypt.checkpw(
-                            _pinController.text.trim().toString(),
-                            widget.userPin)) {
-                          _pinController.clear();
-
-                          EasyLoading.show(
-                            indicator: const CustomLoader(),
-                            maskType: EasyLoadingMaskType.black,
-                            dismissOnTap: false,
-                          );
-                          if (widget.mainBalance >
-                              ((int.tryParse(widget.electricAmount))!)) {
-                            EasyLoading.show(
-                              indicator: const CustomLoader(),
-                              maskType: EasyLoadingMaskType.black,
-                              dismissOnTap: false,
-                            );
-                            // EasyLoading.dismiss();
-
-                            // if (setElectricityPinformKey.currentState!.validate()) {
-                            vendElectric(widget.billId);
-                          } else {
-                            EasyLoading.dismiss();
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      AlertDialog(
-                                        contentPadding:
-                                            const EdgeInsets.fromLTRB(
-                                                30, 30, 30, 20),
-                                        elevation: 0,
-                                        alignment: Alignment.bottomCenter,
-                                        insetPadding: const EdgeInsets.all(0),
-                                        scrollable: true,
-                                        title: null,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30),
-                                            topRight: Radius.circular(30),
-                                          ),
-                                        ),
-                                        content: SizedBox(
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 40),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                vertical: 15),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .topCenter,
-                                                          child: Text(
-                                                            'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: GoogleFonts
-                                                                .nunito(
-                                                              color: brandOne,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                vertical: 10),
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(3),
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus();
-                                                                  Get.back();
-                                                                  Get.to(
-                                                                      const FundWallet());
-                                                                },
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  backgroundColor: Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .secondary,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(8),
-                                                                  ),
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          60,
-                                                                      vertical:
-                                                                          15),
-                                                                  textStyle: const TextStyle(
-                                                                      color:
-                                                                          brandFour,
-                                                                      fontSize:
-                                                                          13),
-                                                                ),
-                                                                child:
-                                                                    const Text(
-                                                                  "Fund Wallet",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                    fontSize:
-                                                                        16,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                });
-                          }
-                        } else {
-                          EasyLoading.dismiss();
-                          _pinController.clear();
-                          if (context.mounted) {
-                            customErrorDialog(context, "Invalid PIN",
-                                'Enter correct PIN to proceed');
-                          }
-                        }
-                      } else {
-                        EasyLoading.dismiss();
-                        customErrorDialog(context, "Incomplete",
-                            "Fill the field correctly to proceed");
-                      }
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NumericKeyboard(
+                    onKeyboardTap: (String value) {
+                      setState(() {
+                        _pinController.text = _pinController.text + value;
+                      });
+                      print(value);
+                      print(_pinController.text);
                     },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
+                    textStyle: GoogleFonts.nunito(
+                      color: brandOne,
+                      fontSize: 28.sp,
                     ),
+                    rightButtonFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = _pinController.text
+                            .substring(0, _pinController.text.length - 1);
+                      });
+                    },
+                    rightButtonLongPressFn: () {
+                      if (_pinController.text.isEmpty) return;
+                      setState(() {
+                        _pinController.text = '';
+                      });
+                    },
+                    rightIcon: const Icon(
+                      Icons.backspace_outlined,
+                      color: Colors.red,
+                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   ),
                 ),
               ),
+
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: Padding(
+              //     padding:
+              //         const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              //     child: ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //         minimumSize: const Size(250, 50),
+              //         backgroundColor: brandOne,
+              //         elevation: 0,
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(
+              //             10,
+              //           ),
+              //         ),
+              //       ),
+              //       onPressed: () async {
+              //         FocusScope.of(context).unfocus();
+              //         if (setElectricityPinformKey.currentState!.validate()) {
+              //           if (BCrypt.checkpw(
+              //               _pinController.text.trim().toString(),
+              //               widget.userPin)) {
+              //             _pinController.clear();
+
+              //             EasyLoading.show(
+              //               indicator: const CustomLoader(),
+              //               maskType: EasyLoadingMaskType.black,
+              //               dismissOnTap: false,
+              //             );
+              //             if (widget.mainBalance >
+              //                 ((int.tryParse(widget.electricAmount))!)) {
+              //               EasyLoading.show(
+              //                 indicator: const CustomLoader(),
+              //                 maskType: EasyLoadingMaskType.black,
+              //                 dismissOnTap: false,
+              //               );
+              //               // EasyLoading.dismiss();
+
+              //               // if (setElectricityPinformKey.currentState!.validate()) {
+              //               vendElectric(widget.billId);
+              //             } else {
+              //               EasyLoading.dismiss();
+              //               showDialog(
+              //                   context: context,
+              //                   barrierDismissible: false,
+              //                   builder: (BuildContext context) {
+              //                     return Column(
+              //                       mainAxisAlignment: MainAxisAlignment.end,
+              //                       children: [
+              //                         AlertDialog(
+              //                           contentPadding:
+              //                               const EdgeInsets.fromLTRB(
+              //                                   30, 30, 30, 20),
+              //                           elevation: 0,
+              //                           alignment: Alignment.bottomCenter,
+              //                           insetPadding: const EdgeInsets.all(0),
+              //                           scrollable: true,
+              //                           title: null,
+              //                           shape: const RoundedRectangleBorder(
+              //                             borderRadius: BorderRadius.only(
+              //                               topLeft: Radius.circular(30),
+              //                               topRight: Radius.circular(30),
+              //                             ),
+              //                           ),
+              //                           content: SizedBox(
+              //                             child: SizedBox(
+              //                               width: MediaQuery.of(context)
+              //                                   .size
+              //                                   .width,
+              //                               child: Column(
+              //                                 children: [
+              //                                   Padding(
+              //                                     padding: const EdgeInsets
+              //                                         .symmetric(vertical: 40),
+              //                                     child: Column(
+              //                                       children: [
+              //                                         Padding(
+              //                                           padding:
+              //                                               const EdgeInsets
+              //                                                   .symmetric(
+              //                                                   vertical: 15),
+              //                                           child: Align(
+              //                                             alignment: Alignment
+              //                                                 .topCenter,
+              //                                             child: Text(
+              //                                               'Insufficient fund. You need to fund your wallet to perform this transaction.',
+              //                                               textAlign: TextAlign
+              //                                                   .center,
+              //                                               style: GoogleFonts
+              //                                                   .nunito(
+              //                                                 color: brandOne,
+              //                                                 fontSize: 16,
+              //                                                 fontWeight:
+              //                                                     FontWeight
+              //                                                         .w600,
+              //                                               ),
+              //                                             ),
+              //                                           ),
+              //                                         ),
+              //                                         Padding(
+              //                                           padding:
+              //                                               const EdgeInsets
+              //                                                   .symmetric(
+              //                                                   vertical: 10),
+              //                                           child: Column(
+              //                                             children: [
+              //                                               Padding(
+              //                                                 padding:
+              //                                                     const EdgeInsets
+              //                                                         .all(3),
+              //                                                 child:
+              //                                                     ElevatedButton(
+              //                                                   onPressed: () {
+              //                                                     FocusScope.of(
+              //                                                             context)
+              //                                                         .unfocus();
+              //                                                     Get.back();
+              //                                                     Get.to(
+              //                                                         const FundWallet());
+              //                                                   },
+              //                                                   style: ElevatedButton
+              //                                                       .styleFrom(
+              //                                                     backgroundColor: Theme.of(
+              //                                                             context)
+              //                                                         .colorScheme
+              //                                                         .secondary,
+              //                                                     shape:
+              //                                                         RoundedRectangleBorder(
+              //                                                       borderRadius:
+              //                                                           BorderRadius
+              //                                                               .circular(8),
+              //                                                     ),
+              //                                                     padding: const EdgeInsets
+              //                                                         .symmetric(
+              //                                                         horizontal:
+              //                                                             60,
+              //                                                         vertical:
+              //                                                             15),
+              //                                                     textStyle: const TextStyle(
+              //                                                         color:
+              //                                                             brandFour,
+              //                                                         fontSize:
+              //                                                             13),
+              //                                                   ),
+              //                                                   child:
+              //                                                       const Text(
+              //                                                     "Fund Wallet",
+              //                                                     style:
+              //                                                         TextStyle(
+              //                                                       color: Colors
+              //                                                           .white,
+              //                                                       fontWeight:
+              //                                                           FontWeight
+              //                                                               .w700,
+              //                                                       fontSize:
+              //                                                           16,
+              //                                                     ),
+              //                                                   ),
+              //                                                 ),
+              //                                               ),
+              //                                               const SizedBox(
+              //                                                 height: 10,
+              //                                               ),
+              //                                             ],
+              //                                           ),
+              //                                         ),
+              //                                       ],
+              //                                     ),
+              //                                   ),
+              //                                 ],
+              //                               ),
+              //                             ),
+              //                           ),
+              //                         )
+              //                       ],
+              //                     );
+              //                   });
+              //             }
+              //           } else {
+              //             EasyLoading.dismiss();
+              //             _pinController.clear();
+              //             if (context.mounted) {
+              //               customErrorDialog(context, "Invalid PIN",
+              //                   'Enter correct PIN to proceed');
+              //             }
+              //           }
+              //         } else {
+              //           EasyLoading.dismiss();
+              //           customErrorDialog(context, "Incomplete",
+              //               "Fill the field correctly to proceed");
+              //         }
+              //       },
+              //       child: const Text(
+              //         'Proceed',
+              //         textAlign: TextAlign.center,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

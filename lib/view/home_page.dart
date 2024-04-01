@@ -628,6 +628,7 @@ class _HomePageState extends State<HomePage> {
             child: _buildPage(_selectedIndex),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon:
@@ -646,8 +647,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 0
-                      ?  Icon(Iconsax.home5,size: 20.sp)
-                      :  Icon(Iconsax.home,size: 20.sp),
+                      ?  Icon(Iconsax.home5,size: 25.sp)
+                      :  Icon(Iconsax.home,size: 25.sp),
                   // Image.asset(
                   //   "assets/icons/home_icon.png",
                   //   height: 30,
@@ -670,8 +671,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 1
-                      ?  Icon(Iconsax.activity5,size: 20.sp)
-                      :  Icon(Iconsax.activity,size: 20.sp),
+                      ?  Icon(Iconsax.activity5,size: 25.sp)
+                      :  Icon(Iconsax.activity,size: 25.sp),
                 ),
                 label: "Savings",
               ),
@@ -691,46 +692,47 @@ class _HomePageState extends State<HomePage> {
                       ? Image.asset(
                           "assets/icons/carbon_portfolio.png",
                           // height: 28,
-                          width: 20.sp,
+                          width: 25.sp,
                           color: Theme.of(context).colorScheme.secondary,
                         )
                       : Image.asset(
                           "assets/icons/carbon_portfolio.png",
                           // height: 28,
-                          width: 20.sp,
+                          width: 25.sp,
                           color: navigationcolorText,
                         ),
                 ),
                 label: "Portfolio",
               ),
-              BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._four,
-                  title: 'Utility',
-                  textColor: Colors.white,
-                  description:
-                      'Pay your bills directly from your wallet and earn SpacePoint!',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: _selectedIndex == 3
-                      ? Image.asset(
-                          "assets/icons/utility_icon.png",
-                          // height: 28,
-                          width: 20.sp,
-                          color: Theme.of(context).colorScheme.secondary,
-                        )
-                      : Image.asset(
-                          "assets/icons/utility_icon.png",
-                          height: 20.sp,
-                          width: 20.sp,
-                          color: navigationcolorText,
-                        ),
-                ),
-                label: "Utility",
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Showcase(
+              //     key: counter._four,
+              //     title: 'Utility',
+              //     textColor: Colors.white,
+              //     description:
+              //         'Pay your bills directly from your wallet and earn SpacePoint!',
+              //     disableAnimation: false,
+              //     showcaseBackgroundColor: brandOne,
+              //     showArrow: true,
+              //     overlayPadding: const EdgeInsets.all(5),
+              //     animationDuration: const Duration(seconds: 2),
+              //     child: _selectedIndex == 3
+              //         ? Image.asset(
+              //             "assets/icons/utility_icon.png",
+              //             // height: 28,
+              //             width: 20.sp,
+              //             color: Theme.of(context).colorScheme.secondary,
+              //           )
+              //         : Image.asset(
+              //             "assets/icons/utility_icon.png",
+              //             height: 20.sp,
+              //             width: 20.sp,
+              //             color: navigationcolorText,
+              //           ),
+              //   ),
+              //   label: "Utility",
+              // ),
+              
               BottomNavigationBarItem(
                 icon: Showcase(
                   key: counter._five,
@@ -743,8 +745,8 @@ class _HomePageState extends State<HomePage> {
                   overlayPadding: const EdgeInsets.all(5),
                   animationDuration: const Duration(seconds: 2),
                   child: _selectedIndex == 4
-                      ?  Icon(Icons.person,size: 20.sp,)
-                      :  Icon(Icons.person_outline,size: 20.sp),
+                      ?  Icon(Icons.person,size: 25.sp,)
+                      :  Icon(Icons.person_outline,size: 25.sp),
                 ),
                 label: "Profile",
               ),
@@ -755,7 +757,7 @@ class _HomePageState extends State<HomePage> {
 
             selectedItemColor: brandOne,
             backgroundColor: navigationcolorText,
-            showUnselectedLabels: true,
+            showUnselectedLabels: false,
             unselectedIconTheme: const IconThemeData(
               color: navigationcolorText,
             ),
@@ -787,9 +789,9 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return const PortfolioPage();
       case 3:
-        return UtilitiesPage();
-      case 4:
-        return const SettingsPage();
+        return SettingsPage();
+      // case 4:
+      //   return const SettingsPage();
       default:
         return Dashboard();
     }

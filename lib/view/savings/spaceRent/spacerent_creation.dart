@@ -2,7 +2,7 @@
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,9 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+import 'package:rentspace/controller/wallet_controller.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/widgets/custom_dialog.dart';
+import '../../../constants/widgets/custom_loader.dart';
 import '../../../controller/app_controller.dart';
 import '../../../controller/auth/user_controller.dart';
 import '../../actions/fund_wallet.dart';
@@ -60,36 +62,126 @@ List<String> fundingSource = ['DVA Wallet', 'Debit Card'];
 class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   final TextEditingController _intervalController = TextEditingController();
   final UserController userController = Get.find();
-  DateTime selectedDate = DateTime.now().add(Duration(days: 6 * 30));
+  final WalletController walletController = Get.find();
+  // DateTime selectedDate = DateTime.now().add(Duration(days: 6 * 30));
   DateTime _endDate = DateTime.now();
   List<String> intervalLabels = ['Weekly', 'Monthly'];
 
   bool idSelected = false;
   String durationType = "";
-  DateTime? _dateTime;
-  String _format = 'yyyy-MMMM-dd';
 
+  int _daysInMonth(int month, int year) {
+    switch (month) {
+      case 2: // February
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+          return 29; // Leap year
+        } else {
+          return 28;
+        }
+      case 4: // April
+      case 6: // June
+      case 9: // September
+      case 11: // November
+        return 30;
+      default:
+        return 31;
+    }
+  }
+
+  // int _daysInMonth(int month) {
+  //   switch (month) {
+  //     case 2: // February
+  //       return 28;
+  //     case 4: // April
+  //     case 6: // June
+  //     case 9: // September
+  //     case 11: // November
+  //       return 30;
+  //     default:
+  //       return 31;
+  //   }
+  // }
+
+  int _calculateDaysInSixMonths(DateTime today) {
+    // Calculate the number of days in the next 6 months
+    int daysInSixMonths = 0;
+    for (int i = 0; i < 6; i++) {
+      // Calculate days in each month and add to total
+      daysInSixMonths += _daysInMonth(today.month + i, today.year);
+    }
+    // print('here');
+    // print(daysInSixMonths);
+    // print('daysInSixMonths');
+    // print(_daysInMonth(today.month + 6, today.year));
+    return daysInSixMonths;
+  }
+
+  int _calculateDaysInEightMonths(DateTime today) {
+    int daysInEightMonths = 0;
+    for (int i = 0; i < 8; i++) {
+      daysInEightMonths += _daysInMonth(today.month + i, today.year);
+    }
+    // print(daysInEightMonths);
+    // print('daysInEightMonths');
+    // print(_daysInMonth(today.month + 8, today.year));
+    return daysInEightMonths;
+  }
+
+  // int _calculateMonthsDifference() {
+  //   final differenceMonths = _endDate
+  //           .add(const Duration(days: 1))
+  //           .difference(DateTime.now())
+  //           .inDays ~/
+  //       30; // Calculate difference in months
+  //   print('differenceMonths');
+  //   print(differenceMonths);
+
+  //   return differenceMonths.abs();
+  // }
   int _calculateMonthsDifference() {
-    final differenceMonths = _endDate
-            .add(const Duration(days: 1))
-            .difference(DateTime.now())
-            .inDays ~/
-        30; // Calculate difference in months
+    final startDate = DateTime.now();
+    final endDate = _endDate;
 
-    return differenceMonths.abs();
+    final startYear = startDate.year;
+    final startMonth = startDate.month;
+    final endYear = endDate.year;
+    final endMonth = endDate.month;
+
+    final monthsDifference =
+        ((endYear - startYear) * 12) + (endMonth - startMonth);
+
+    // print('monthsDifference: $monthsDifference');
+
+    return monthsDifference.abs();
   }
 
-  int _calculateWeeksDifference() {
-    final differenceMonths = _calculateMonthsDifference();
-    final differenceWeeks = differenceMonths * 4; // Assuming 4 weeks in a month
+  // int _calculateWeeksDifference() {
+  //   final differenceMonths = _calculateMonthsDifference();
+  //   final differenceWeeks = differenceMonths * 4; // Assuming 4 weeks in a month
+  //   print('differenceWeeks');
+  //   print(differenceWeeks);
 
-    return differenceWeeks.abs();
-  }
+  //   return differenceWeeks.abs();
+  // }
+  // import 'dart:math';
 
-  String _formatWeeksDifference() {
-    final weeksDifference = _calculateWeeksDifference();
-    return '$weeksDifference weeks';
-  }
+int _calculateWeeksDifference() {
+  final startDate = DateTime.now();
+  final endDate = _endDate;
+
+  final differenceInDays = endDate.difference(startDate).inDays;
+  final weeksDifference = (differenceInDays / 7).ceil();
+
+  // print('weeksDifference: $weeksDifference');
+
+  return weeksDifference.abs();
+}
+
+
+  // String _formatWeeksDifference() {
+  //   final weeksDifference = _calculateWeeksDifference();
+  //   return '$weeksDifference weeks';
+  // }
 
   bool isWithinRange() {
     int monthsDifference = _calculateMonthsDifference();
@@ -101,10 +193,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     //     .add(const Duration(days: 1))
     //     .difference(DateTime.now())
     //     .inDays;
-    final differenceDays = _endDate
-        .add(const Duration(days: 1))
-        .difference(DateTime.now())
-        .inDays;
+    final differenceDays =
+        _endDate.add(const Duration(days: 1)).difference(DateTime.now()).inDays;
 
     return differenceDays.abs();
   }
@@ -113,13 +203,29 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     setState(() {
       _id = userController.userModel!.userDetails![0].id;
     });
-    print(_id);
+    // print(_id);
     // print(_rentSpaceID);
+  }
+
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    if (refresh) {
+      await userController.fetchData();
+      await walletController.fetchWallet();
+      // setState(() {}); // Move setState inside fetchData
+    }
+    EasyLoading.dismiss();
+    return true;
   }
 
   @override
   initState() {
     super.initState();
+    fetchUserData();
     numberInDays = 0;
     showSaveButton = false;
     selectedId = '';
@@ -134,7 +240,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     setState(() {
       durationType = _intervalController.text;
     });
-    print(durationType);
+    // print(durationType);
   }
 
   @override
@@ -149,6 +255,19 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime today = DateTime.now();
+
+    // Calculate the date 6 months from today
+    // DateTime sixMonthsLater =
+    //     today.add(Duration(days: _calculateDaysInSixMonths(today)));
+
+    // print('6 months from today is: $sixMonthsLater');
+    int daysInSixMonths = _calculateDaysInSixMonths(today);
+    int daysInEightMonths = _calculateDaysInEightMonths(today);
+
+    // DateTime sixMonthsLater = today.add(Duration(days: daysInSixMonths));
+    // print('6 months from today is: $daysInSixMonths');
+    // print('8 months from today is: $daysInEightMonths');
     final rentState = ref.watch(appControllerProvider.notifier);
 
     validateFunc(text) {
@@ -195,10 +314,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
 ///////calculate rent
     calculateRent(rent) {
-      print('_calculateDaysDifference()');
-      print(_calculateDaysDifference());
-      print(_calculateMonthsDifference());
-      print(_calculateWeeksDifference());
+      // print('_calculateDaysDifference()');
+      // print(_calculateDaysDifference());
+      // print(_calculateMonthsDifference());
+      // print(_calculateWeeksDifference());
       setState(() {
         _rentThirty = (rent - (rent * 0.7));
         _rentSeventy = (rent * 0.7);
@@ -207,10 +326,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         _holdingFee = 0.01 * _rentSeventy;
         _rentValue = rent;
         _hasCalculate = 'true';
-        // if (durationType == "Daily") {
-        //   paymentCount = _calculateDaysDifference().toString();
-        //   _savingValue = ((rent * 0.7) / _calculateDaysDifference());
-        // } else
         if (durationType == "Weekly") {
           paymentCount = _calculateWeeksDifference().toString();
           _savingValue = ((rent) / _calculateWeeksDifference());
@@ -222,76 +337,90 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       });
     }
 
-    void _showDatePicker() {
-      DatePicker.showDatePicker(
-        context,
-        onMonthChangeStartWithFirstDate: true,
-        pickerTheme: DateTimePickerTheme(
-          backgroundColor: brandOne,
-          itemTextStyle: GoogleFonts.nunito(color: Colors.white),
-          itemHeight: 50.h,
-          pickerHeight: 300.h,
-          showTitle: true,
-          cancel: Icon(
-            Iconsax.close_circle,
-            color: Colors.white,
-            size: 30.sp,
-          ),
-          confirm: Text(
-            'Done',
-            style: GoogleFonts.nunito(color: Colors.white),
-          ),
-        ),
-        initialDateTime: selectedDate,
-        minDateTime: DateTime.now().add(const Duration(days: 6 * 30)),
-        maxDateTime: DateTime.now().add(
-          const Duration(days: 8 * 30),
-        ),
-        dateFormat: _format,
-        locale: DateTimePickerLocale.en_us,
-        onCancel: () => print('onCancel'),
-        onChange: (dateTime, List<int> index) {
-          setState(() {
-            _dateTime = dateTime;
-          });
-        },
-        onConfirm: (dateTime, List<int> index) {
-          setState(() {
-            _dateTime = dateTime;
-          });
-          print(dateTime);
-        },
-        onClose: () {
-          if (_dateTime != null && _dateTime != selectedDate) {
-            // final int age = DateTime.now().year - _dateTime!.year;
-            setState(() {
-              selectedDate = _dateTime!;
-              Duration difference = _dateTime!.difference(DateTime.now());
-              print(difference.inDays);
-              numberInDays = difference.inDays;
-              if (validateFunc(
-                      _rentAmountController.text.trim().replaceAll(',', '')) ==
-                  null) {
-                setState(() {
-                  showSaveButton = true;
-                  selectedDate = _dateTime!;
-                  _endDateController.text =
-                      DateFormat('dd/MM/yyyy').format(selectedDate);
-                  _canShowRent = 'true';
-                });
-              } else {
-                if (context.mounted) {
-                  customErrorDialog(context, 'Invalid',
-                      "Please enter valid amount to proceed.");
-                }
-              }
-            });
-          }
-        },
-      );
+    // void _showDatePicker() {
+    //   DatePicker.showDatePicker(
+    //     context,
+    //     onMonthChangeStartWithFirstDate: true,
+    //     pickerTheme: DateTimePickerTheme(
+    //       backgroundColor: brandOne,
+    //       itemTextStyle: GoogleFonts.nunito(color: Colors.white),
+    //       itemHeight: 50.h,
+    //       pickerHeight: 300.h,
+    //       showTitle: true,
+    //       cancel: Icon(
+    //         Iconsax.close_circle,
+    //         color: Colors.white,
+    //         size: 30.sp,
+    //       ),
+    //       confirm: Text(
+    //         'Done',
+    //         style: GoogleFonts.nunito(color: Colors.white),
+    //       ),
+    //     ),
+    //     initialDateTime: selectedDate,
+    //     minDateTime: DateTime.now().add(Duration(days: 6 * daysInSixMonths)),
+    //     maxDateTime: DateTime.now().add(
+    //       Duration(days: 8 * daysInEightMonths),
+    //     ),
+    //     dateFormat: _format,
+    //     locale: DateTimePickerLocale.en_us,
+    //     onCancel: () => print('onCancel'),
+    //     onChange: (dateTime, List<int> index) {
+    //       setState(() {
+    //         _dateTime = dateTime;
+    //       });
+    //     },
+    //     onConfirm: (dateTime, List<int> index) {
+    //       setState(() {
+    //         _dateTime = dateTime;
+    //       });
+    //       print(dateTime);
+    //     },
+    //     onClose: () {
+    //       if (_dateTime != null && _dateTime != selectedDate) {
+    //         // final int age = DateTime.now().year - _dateTime!.year;
+    //         setState(() {
+    //           selectedDate = _dateTime!;
+    //           Duration difference = _dateTime!.difference(DateTime.now());
+    //           print(difference.inDays);
+    //           numberInDays = difference.inDays;
+    //           if (validateFunc(
+    //                   _rentAmountController.text.trim().replaceAll(',', '')) ==
+    //               null) {
+    //             setState(() {
+    //               showSaveButton = true;
+    //               selectedDate = _dateTime!;
+    //               _endDateController.text =
+    //                   DateFormat('dd/MM/yyyy').format(selectedDate);
+    //               _canShowRent = 'true';
+    //             });
+    //           } else {
+    //             if (context.mounted) {
+    //               customErrorDialog(context, 'Invalid',
+    //                   "Please enter valid amount to proceed.");
+    //             }
+    //           }
+    //         });
+    //       }
+    //     },
+    //   );
+    // }
+
+    int calculateDaysInMonths(DateTime startDate, int months) {
+      int daysInMonths = 0;
+      for (int i = 0; i < months; i++) {
+        daysInMonths += _daysInMonth(startDate.month + i, startDate.year);
+      }
+      return daysInMonths;
     }
 
     Future<void> selectEndDate(BuildContext context) async {
+      final DateTime now = DateTime.now();
+      final DateTime sixMonthsLater =
+          now.add(Duration(days: calculateDaysInMonths(now, 6)));
+      final DateTime eightMonthsLater =
+          now.add(Duration(days: calculateDaysInMonths(now, 8)));
+
       // final picks = await showDateRangePicker(
       //     context: context,
       //     firstDate: DateTime.now(),
@@ -323,32 +452,29 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
             child: child!,
           );
         },
-        initialDate: DateTime.now().add(
-          const Duration(days: 6 * 30),
-        ),
-        firstDate: DateTime.now().add(
-          const Duration(days: 6 * 30),
-        ),
-        lastDate: DateTime.now().add(
-          const Duration(days: 8 * 30),
-        ),
+        initialDate: sixMonthsLater,
+        firstDate: sixMonthsLater,
+        lastDate: eightMonthsLater,
       );
       if (picked != null &&
-          picked != DateTime.now() &&
-          !picked.difference(DateTime.now()).inDays.isNaN) {
+          picked != now &&
+          !picked.difference(now).inDays.isNaN) {
         setState(() {
           _endDate = picked;
-          Duration difference = picked.difference(DateTime.now());
-          print(difference.inDays);
-          numberInDays = difference.inDays;
+          Duration difference = picked.difference(now);
+          // Duration difference = picked.difference(DateTime.now());
+          // print(difference.inDays + 1);
+          numberInDays = difference.inDays + 1;
+          // print('numberInDays');
+          // print(numberInDays);
           if (validateFunc(
                   _rentAmountController.text.trim().replaceAll(',', '')) ==
               null) {
-            if (numberInDays < 182) {
+            if (numberInDays < daysInSixMonths) {
               showSaveButton = false;
               customErrorDialog(
                   context, 'Invalid date', 'Minimum duration is 6 months');
-            } else if (numberInDays > 244) {
+            } else if (numberInDays > daysInEightMonths) {
               showSaveButton = false;
               customErrorDialog(
                   context, 'Invalid date', 'Maximum duration is 8 months');
@@ -666,7 +792,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                             // durationType = _intervalController.text;
                           });
 
-                          print(val);
+                          // print(val);
                         },
                       ),
                       (idSelected == true)
@@ -692,7 +818,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                             ),
                           ),
                           endDate,
-                          (numberInDays < 182)
+                          (numberInDays < daysInSixMonths)
                               ? const Text("")
                               : Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -866,155 +992,172 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                 FocusScope.of(context)
                                                     .unfocus();
                                                 Get.back();
-                                                print(_endDateController.text);
-                                                print(durationType);
-                                                print(_savingValue);
-                                                print(paymentCount);
-                                                print(DateFormat('dd/MM/yyyy')
-                                                    .format(DateTime.now()));
+                                                // print(_endDateController.text);
+                                                // print(durationType);
+                                                // print(_savingValue);
+                                                // print(paymentCount);
+                                                // print(DateFormat('dd/MM/yyyy')
+                                                //     .format(DateTime.now()));
                                                 // print(fundingController.text);
-                                                print(_rentValue);
-                                                print(durationType);
-                                                if (userController
-                                                        .userModel!
-                                                        .userDetails![0]
-                                                        .wallet
-                                                        .mainBalance <
-                                                    _savingValue) {
-                                                  Get.back();
-                                                  showDialog(
-                                                      context: context,
-                                                      barrierDismissible: true,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            AlertDialog(
-                                                              contentPadding:
-                                                                  const EdgeInsets
-                                                                      .fromLTRB(
-                                                                      30,
-                                                                      30,
-                                                                      30,
-                                                                      20),
-                                                              elevation: 0,
-                                                              alignment: Alignment
-                                                                  .bottomCenter,
-                                                              insetPadding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
-                                                              scrollable: true,
-                                                              title: null,
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          30),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          30),
+                                                // print(_rentValue);
+                                                // print(durationType);
+                                                await fetchUserData()
+                                                    .then((value) {
+                                                  if (userController
+                                                          .userModel!
+                                                          .userDetails![0]
+                                                          .wallet
+                                                          .mainBalance <
+                                                      _savingValue) {
+                                                    Get.back();
+                                                    showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            true,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              AlertDialog(
+                                                                contentPadding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        30,
+                                                                        30,
+                                                                        30,
+                                                                        20),
+                                                                elevation: 0,
+                                                                alignment: Alignment
+                                                                    .bottomCenter,
+                                                                insetPadding:
+                                                                    const EdgeInsets
+                                                                        .all(0),
+                                                                scrollable:
+                                                                    true,
+                                                                title: null,
+                                                                shape:
+                                                                    const RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            30),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            30),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              content: SizedBox(
-                                                                child: SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                40),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.symmetric(vertical: 15),
-                                                                              child: Align(
-                                                                                alignment: Alignment.topCenter,
-                                                                                child: Text(
-                                                                                  'Insufficient fund. You need to fund your wallet to perform this transaction.',
-                                                                                  textAlign: TextAlign.center,
-                                                                                  style: GoogleFonts.nunito(
-                                                                                    color: brandOne,
-                                                                                    fontSize: 16,
-                                                                                    fontWeight: FontWeight.w600,
+                                                                content:
+                                                                    SizedBox(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                              vertical: 40),
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                                                                child: Align(
+                                                                                  alignment: Alignment.topCenter,
+                                                                                  child: Text(
+                                                                                    'Insufficient fund. You need to fund your wallet to perform this transaction.',
+                                                                                    textAlign: TextAlign.center,
+                                                                                    style: GoogleFonts.nunito(
+                                                                                      color: brandOne,
+                                                                                      fontSize: 16,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.symmetric(vertical: 10),
-                                                                              child: Column(
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsets.all(3),
-                                                                                    child: ElevatedButton(
-                                                                                      onPressed: () {
-                                                                                        FocusScope.of(context).unfocus();
-                                                                                        Get.back();
-                                                                                        Get.to(const FundWallet());
-                                                                                      },
-                                                                                      style: ElevatedButton.styleFrom(
-                                                                                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                                                                                        shape: RoundedRectangleBorder(
-                                                                                          borderRadius: BorderRadius.circular(8),
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.all(3),
+                                                                                      child: ElevatedButton(
+                                                                                        onPressed: () {
+                                                                                          FocusScope.of(context).unfocus();
+                                                                                          Get.back();
+                                                                                          Get.to(const FundWallet());
+                                                                                        },
+                                                                                        style: ElevatedButton.styleFrom(
+                                                                                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                                                                                          shape: RoundedRectangleBorder(
+                                                                                            borderRadius: BorderRadius.circular(8),
+                                                                                          ),
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                                                                                          textStyle: const TextStyle(color: brandFour, fontSize: 13),
                                                                                         ),
-                                                                                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                                                                                        textStyle: const TextStyle(color: brandFour, fontSize: 13),
-                                                                                      ),
-                                                                                      child: const Text(
-                                                                                        "Fund Wallet",
-                                                                                        style: TextStyle(
-                                                                                          color: Colors.white,
-                                                                                          fontWeight: FontWeight.w700,
-                                                                                          fontSize: 16,
+                                                                                        child: const Text(
+                                                                                          "Fund Wallet",
+                                                                                          style: TextStyle(
+                                                                                            color: Colors.white,
+                                                                                            fontWeight: FontWeight.w700,
+                                                                                            fontSize: 16,
+                                                                                          ),
                                                                                         ),
                                                                                       ),
                                                                                     ),
-                                                                                  ),
-                                                                                  const SizedBox(
-                                                                                    height: 10,
-                                                                                  ),
-                                                                                ],
+                                                                                    const SizedBox(
+                                                                                      height: 10,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                          ],
+                                                                            ],
+                                                                          ),
                                                                         ),
-                                                                      ),
-                                                                    ],
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        );
-                                                      });
-                                                } else {
-                                                  print(DateFormat('dd/MM/yyyy')
-                                                      .format(DateTime.now()));
-                                                  rentState.createRent(
-                                                    context,
-                                                    _rentNameController.text,
-                                                    _endDateController.text,
-                                                    durationType,
-                                                    _savingValue,
-                                                    _rentValue,
-                                                    paymentCount,
-                                                    DateFormat('dd/MM/yyyy')
-                                                        .format(DateTime.now()),
-                                                    // fundingController.text,
-                                                  );
-                                                }
+                                                              )
+                                                            ],
+                                                          );
+                                                        });
+                                                  } else {
+                                                    // print(DateFormat(
+                                                    //         'dd/MM/yyyy')
+                                                    //     .format(
+                                                    //         DateTime.now()));
+                                                    rentState.createRent(
+                                                      context,
+                                                      _rentNameController.text,
+                                                      _endDateController.text,
+                                                      durationType,
+                                                      _savingValue,
+                                                      _rentValue,
+                                                      paymentCount,
+                                                      DateFormat('dd/MM/yyyy')
+                                                          .format(
+                                                              DateTime.now()),
+                                                      // fundingController.text,
+                                                    );
+                                                  }
+                                                }).catchError(
+                                                  (error) {
+                                                    customErrorDialog(
+                                                        context,
+                                                        'Oops',
+                                                        'Something went wrong. Try again later');
+                                                  },
+                                                );
                                               },
                                               child: Text(
                                                 'Create Space Rent',

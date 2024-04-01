@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
@@ -453,18 +452,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                   ),
                 ),
                 alert(context),
-                // GestureDetector(
-                //   onTap: () {
-                //     //  resendVerification(context, '', subText)
-                //     print('pop');
-                //     alert(context);
-                //   },
-                //   child: Icon(
-                //     Icons.close,
-                //     color: brandOne,
-                //     size: 20.sp,
-                //   ),
-                // ),
+           
               ],
             ),
           ),
@@ -1185,4 +1173,5 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       ),
     );
   }
+
 }

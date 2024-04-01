@@ -41,6 +41,7 @@ class _TransferPageState extends State<TransferPage> {
   bool hasError = false;
   String verifyAccountError = "";
   String _message = '';
+  bool isChecking = false;
 
   void _openBankSelectorOverlay() async {
     final List<dynamic>? selectedBank = await Navigator.push(

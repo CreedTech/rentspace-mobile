@@ -811,7 +811,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Reicpient Number',
+                                  'Recipient Number',
                                   style: GoogleFonts.nunito(
                                     color: brandTwo,
                                     fontSize: 12.sp,

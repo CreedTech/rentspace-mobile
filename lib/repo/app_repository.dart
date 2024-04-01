@@ -154,6 +154,54 @@ class AppRepository {
     }
   }
 
+  Future<ResponseModel> buyElectricity(body) async {
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.BUY_ELECTRICITY, jsonEncode(body));
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel(jsonDecode(response.body)['message'], true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
+  Future<ResponseModel> buyCable(body) async {
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // Update the headers in ApiClient with the obtained token
+    _apiClient.updateHeaders(authToken);
+    Response response =
+        await _apiClient.postData(AppConstants.VEND_TV, jsonEncode(body));
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel(jsonDecode(response.body)['message'], true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
   Future<ResponseModel> transferMoney(body) async {
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token

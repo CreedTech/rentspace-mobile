@@ -40,8 +40,13 @@ class AppConstants {
 
   static const BUY_AIRTIME = '/api/buy-airtime';
   static const BUY_DATA = '/api/buy-data';
+  static const BUY_ELECTRICITY = '/api/buy-electricity';
   static const GET_AIRTIMES = '/api/get-airtimes';
   static const GET_DATA_VARIATION_CODES = '/api/variation-codes';
+  static const GET_TV = '/api/get-tv';
+  static const VERIFY_METER = '/api/verify-meter';
+  static const VERIFY_TV = '/api/validate-tv';
+  static const VEND_TV = '/api/vend-tv';
   static const ADD_UTILITY_HISTORY = '/api/utilities/add-utility';
   static const UTILITY_HISTORY = '/api/utilities/utility-history';
   static const WALLET_HISTORY = '/api/wallet/wallet-histories';

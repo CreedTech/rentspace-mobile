@@ -44,22 +44,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       TextEditingController();
   final DataBundleFormKey = GlobalKey<FormState>();
   String? _selectedData;
-//  void _openDataSelectorOverlay() async {
-//     final List<dynamic>? selectedBank = await Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => const BankSelectorOverlay()),
-//     );
-//     if (selectedBank != null && selectedBank.length == 2) {
-//       setState(() {
-//         _selectedData = selectedBank[0];
-//         // _currentBankCode = selectedBank[1];
-//         dataController.text = _selectedData!;
-//       });
-//       // print("_currentBankCode here");
-//       // print(_currentBankCode);
-//     }
-//     // _checkFieldsAndHitApi();
-//   }
+
 
   List<String> SelectSubscription = const <String>[
     'Data Bundle',

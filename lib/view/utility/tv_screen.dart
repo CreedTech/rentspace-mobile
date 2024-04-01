@@ -173,7 +173,7 @@ class _TvScreenState extends State<TvScreen> {
 
     //Pin
     final pin = Pinput(
-      useNativeKeyboard: false,
+      useNativeKeyboard: true,
       obscureText: true,
       defaultPinTheme: PinTheme(
         width: 50,

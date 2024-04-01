@@ -972,7 +972,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 iconColor: brandOne,
                                 onTap: () {
                                   // Navigator.push(context, route)
-                                  
+
                                   Navigator.pushNamed(context, airtime);
                                 },
                               ),
@@ -988,14 +988,16 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 IconsName: 'Cable',
                                 icon: Icons.tv_rounded,
                                 iconColor: brandOne,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(context, cable);
+                                },
                               ),
                               IconsContainer(
-                                IconsName: 'More',
-                                icon: Iconsax.more5,
+                                IconsName: 'Electricity',
+                                icon: Iconsax.electricity,
                                 iconColor: brandOne,
                                 onTap: () {
-                                  // Navigator.pushNamed(context, RouteList.electricity);
+                                  Navigator.pushNamed(context, electricity);
                                   // Navigator.pushNamed(context, RouteList.pay_bills);
                                 },
                               ),

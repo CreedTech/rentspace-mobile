@@ -125,7 +125,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14.sp),
+      style: GoogleFonts.nunito(
+          color: Theme.of(context).primaryColor, fontSize: 14.sp),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -350,65 +351,64 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // (_rememberMe == false)
-                            //     ? 
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.zero,
-                                        // alignment: Alignment.centerLeft,
-                                        child: Checkbox.adaptive(
-                                            visualDensity: VisualDensity
-                                                .adaptivePlatformDensity,
-                                            value: _rememberMe,
-                                            onChanged: (bool? value) {
-                                              setState(() {
-                                                _rememberMe = value!;
-                                              });
-                                            },
-                                            overlayColor:
-                                                MaterialStateColor.resolveWith(
-                                              (states) => brandFour,
-                                            ),
-                                            fillColor: MaterialStateProperty
-                                                .resolveWith<Color>(
-                                                    (Set<MaterialState>
-                                                        states) {
-                                              if (states.contains(
-                                                  MaterialState.selected)) {
-                                                return brandFour;
-                                              }
-                                              return const Color(0xffF2F2F2);
-                                            }),
-                                            focusColor:
-                                                MaterialStateColor.resolveWith(
-                                              (states) => brandFour,
-                                            ),
-                                            activeColor:
-                                                MaterialStateColor.resolveWith(
-                                              (states) => brandFour,
-                                            ),
-                                            side: const BorderSide(
-                                              color: Color(0xffBDBDBD),
-                                            )),
+                            //     ?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.zero,
+                                  // alignment: Alignment.centerLeft,
+                                  child: Checkbox.adaptive(
+                                      visualDensity:
+                                          VisualDensity.adaptivePlatformDensity,
+                                      value: _rememberMe,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          _rememberMe = value!;
+                                        });
+                                      },
+                                      overlayColor:
+                                          MaterialStateColor.resolveWith(
+                                        (states) => brandFour,
                                       ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Remember me',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xff828282),
-                                          ),
-                                        ),
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                        if (states
+                                            .contains(MaterialState.selected)) {
+                                          return brandFour;
+                                        }
+                                        return const Color(0xffF2F2F2);
+                                      }),
+                                      focusColor:
+                                          MaterialStateColor.resolveWith(
+                                        (states) => brandFour,
                                       ),
-                                    ],
+                                      activeColor:
+                                          MaterialStateColor.resolveWith(
+                                        (states) => brandFour,
+                                      ),
+                                      side: const BorderSide(
+                                        color: Color(0xffBDBDBD),
+                                      )),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Remember me',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color(0xff828282),
+                                    ),
                                   ),
-                                // : const Row(
-                                //     children: [],
-                                //   ),
+                                ),
+                              ],
+                            ),
+                            // : const Row(
+                            //     children: [],
+                            //   ),
                             GestureDetector(
                               onTap: () {
                                 Get.to(const ForgotPassword());

@@ -4,7 +4,9 @@ import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/splash_screen.dart';
 import 'package:rentspace/view/utility/airtime.dart';
+import 'package:rentspace/view/utility/cable.dart';
 import 'package:rentspace/view/utility/data.dart';
+import 'package:rentspace/view/utility/electricity.dart';
 
 import '../../view/FirstPage.dart';
 import '../../view/utility/utility_transaction_receipt.dart';
@@ -178,6 +180,16 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const DataBundleScreen(),
           settings: const RouteSettings(name: dataBundle),
+        );
+      case electricity:
+        return MaterialPageRoute(
+          builder: (context) => const Electricity(),
+          settings: const RouteSettings(name: electricity),
+        );
+      case cable:
+        return MaterialPageRoute(
+          builder: (context) => const CableScreen(),
+          settings: const RouteSettings(name: cable),
         );
       case utilitytransactionReceipt:
         return MaterialPageRoute(
