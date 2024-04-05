@@ -68,8 +68,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
     setState(() {
       _aPinController.text = _aPinController.text + value;
     });
-    print(value);
-    print(_aPinController.text);
+
   }
 
   // @override
@@ -139,7 +138,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       keyboardType: TextInputType.number,
       onChanged: (value) {
         setState(() {
-          print("Entered Amount: $value");
           // Check if the text field is empty
           isTextFieldEmpty = value.isNotEmpty &&
               int.tryParse(value) != null &&
@@ -369,21 +367,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                         );
                   }
                 }
-                //  withdrawPaymentFormKey.currentState != null &&
-                //         withdrawPaymentFormKey.currentState!.validate()
-                //     ? () async {
-                //         FocusScope.of(context).unfocus();
-                //         // validateUsersInput();
-                //         await fetchUserData()
-                //             .then((value) => validateUsersInput())
-                //             .catchError(
-                //               (error) => {
-                //                 customErrorDialog(context, 'Oops',
-                //                     'Something went wrong. Try again later'),
-                //               },
-                //             );
-                //       }
-                // : null
+             
                 ,
                 child: Text(
                   'Confirm',
@@ -866,10 +850,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                       )) {
                                                         // _aPinController.clear();
                                                         Get.back();
-                                                        print(_aPinController
-                                                            .text
-                                                            .trim()
-                                                            .toString());
                                                         // _doWallet();
                                                         appState.transferMoney(
                                                             context,

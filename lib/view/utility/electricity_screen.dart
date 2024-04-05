@@ -91,7 +91,6 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
     if (response.statusCode == 200) {
       String authToken =
           await GlobalService.sharedPreferencesManager.getAuthToken();
-      print(authToken);
       try {
         EasyLoading.show(
           indicator: const CustomLoader(),
@@ -111,8 +110,6 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             "description": 'Electricity Payment to ${widget.electricNumber}',
           }),
         );
-        print(addUtility);
-        print(addUtility.body);
         EasyLoading.dismiss();
       } on TimeoutException {
         throw http.Response('Network Timeout', 500);
@@ -308,13 +305,6 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) async {
-        print(widget.billId);
-        print(widget.userPin);
-        print(widget.electricAmount);
-        print(widget.electricNumber);
-        print(widget.email);
-        print(widget.phoneNumber);
-        print(widget.formattedDate);
         if (BCrypt.checkpw(
             _pinController.text.trim().toString(), widget.userPin)) {
           _pinController.clear();
@@ -515,8 +505,6 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                       setState(() {
                         _pinController.text = _pinController.text + value;
                       });
-                      print(value);
-                      print(_pinController.text);
                     },
                     textStyle: GoogleFonts.nunito(
                       color: brandOne,

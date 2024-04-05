@@ -1,42 +1,29 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-import 'dart:io';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/constants/widgets/shimmer_widget.dart';
-import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/utility_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/controller/wallet_histories_controller.dart';
-import 'package:rentspace/view/actions/in_active_page.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/portfolio/portfolio_page.dart';
 import 'package:rentspace/view/savings/savings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:intl/intl.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:upgrader/upgrader.dart';
 
 import 'actions/transaction_pin.dart';
 import 'home_page.dart';

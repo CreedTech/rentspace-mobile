@@ -72,18 +72,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultOTPTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
+
     validateOTP(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'otp cannot be empty';
@@ -179,14 +168,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        // centerTitle: true,
-        // title: Text(
-        //   'Change PIN',
-        //   style: GoogleFonts.nunito(
-        //       color: Theme.of(context).primaryColor,
-        //       fontSize: 24,
-        //       fontWeight: FontWeight.w700),
-        // ),
+       
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -272,7 +254,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           Text(
                             formattedTime,
                             style: GoogleFonts.nunito(
@@ -307,7 +289,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   minimumSize: const Size(350, 50),
                                   backgroundColor: (isFilled == true)
                                       ? brandOne
-                                      : Color.fromARGB(255, 150, 156, 172),
+                                      : const Color.fromARGB(255, 150, 156, 172),
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(

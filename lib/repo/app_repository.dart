@@ -28,14 +28,14 @@ class AppRepository {
     Response response =
         await _apiClient.postData(AppConstants.CREATE_RENT, jsonEncode(body));
     print("response here");
-    print(jsonDecode(response.body)['createSpaceRent']);
+    // print(jsonDecode(response.body)['createSpaceRent']);
     if (response.statusCode == 200) {
       responseModel = ResponseModel(
           jsonDecode(response.body)['createSpaceRent']['rentspace_id'], true);
       return responseModel;
     }
 
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
@@ -57,13 +57,13 @@ class AppRepository {
     Response response = await _apiClient.postData(
         AppConstants.FUND_RENT_WITH_WALLET, jsonEncode(body));
     print("response");
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Wallet Debit successful", true);
       return responseModel;
     }
 
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
@@ -85,14 +85,14 @@ class AppRepository {
     Response response = await _apiClient.postData(
         AppConstants.CALCULATE_NEXT_PAYMENT_DATE, jsonEncode(body));
     print("response");
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel =
           ResponseModel("Next Payment Date Calculated successful", true);
       return responseModel;
     }
 
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();

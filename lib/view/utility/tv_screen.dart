@@ -103,16 +103,12 @@ class _TvScreenState extends State<TvScreen> {
             "description": 'TV Subscription Payment to ${widget.tvNumber}',
           }),
         );
-        print(addUtility);
-        print(addUtility.body);
         EasyLoading.dismiss();
       } on TimeoutException {
         throw http.Response('Network Timeout', 500);
       } on http.ClientException catch (e) {
-        print('Error while getting data is $e');
         throw http.Response('HTTP Client Exception: $e', 500);
       } catch (e) {
-        print(e);
         EasyLoading.dismiss();
         customErrorDialog(
             context, "Oops", 'Something Went wrong. Try Again Later!');
@@ -229,14 +225,7 @@ class _TvScreenState extends State<TvScreen> {
       validator: validatePinOne,
       onChanged: validatePinOne,
       onCompleted: (val) async {
-        print(widget.billId);
-        print(widget.userPin);
-        print(widget.tvAmount);
-        print(widget.tvInvoicePeriod);
-        print(widget.tvNumber);
-        print(widget.tvStatus);
-        print(widget.tvProductCode);
-        print(widget.mainBalance);
+
 
         if (BCrypt.checkpw(
             _pinController.text.trim().toString(), widget.userPin)) {

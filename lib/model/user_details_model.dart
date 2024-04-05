@@ -13,11 +13,11 @@ class UserModel {
     if (userDetailsData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       userDetails = [UserDetailsModel.fromJson(userDetailsData)];
-      print(userDetails);
+      // print(userDetails);
     } else {
       // Handle the case where userDetailsData is not a Map (e.g., it's a List).
       // You might want to log an error or handle this case differently based on your requirements.
-      print('userDetailsData is not a Map: $userDetailsData');
+      // print('userDetailsData is not a Map: $userDetailsData');
       // Set userDetails to an empty list or null, depending on your needs.
       userDetails = [];
     }

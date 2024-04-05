@@ -31,13 +31,11 @@ class _ForgotPasswordOTPVerificationPageState
 
   final TextEditingController otpController = TextEditingController();
   final GlobalKey<FormState> otprestpwdFormKey = GlobalKey<FormState>();
-  // StreamController<ErrorAnimationType>? errorController;
 
   @override
   void initState() {
     super.initState();
     startCountDown();
-    // errorController = StreamController<ErrorAnimationType>();
   }
 
   void startCountDown() {
@@ -137,7 +135,6 @@ class _ForgotPasswordOTPVerificationPageState
           otpController.text.trim(),
         );
         otpController.clear();
-        // Get.to(ConfirmTransactionPinPage(pin: _pinController.text.trim()));
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -267,31 +264,6 @@ class _ForgotPasswordOTPVerificationPageState
                             ),
                         ],
                       ),
-                      // Align(
-                      //   alignment: Alignment.center,
-                      //   child: RichText(
-                      //     textAlign: TextAlign.left,
-                      //     text: TextSpan(
-                      //         style: GoogleFonts.nunito(
-                      //           fontWeight: FontWeight.w700,
-                      //           fontSize: 18,
-                      //         ),
-                      //         children: <TextSpan>[
-                      //           TextSpan(
-                      //             text: "Resend Code ",
-                      //             style: GoogleFonts.nunito(
-                      //                 color: brandOne, fontSize: 14.sp),
-                      //           ),
-                      //           TextSpan(
-                      //             text: formattedTime,
-                      //             style: GoogleFonts.nunito(
-                      //                 color: brandTwo,
-                      //                 fontWeight: FontWeight.w800,
-                      //                 fontSize: 14.sp),
-                      //           ),
-                      //         ]),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ],
@@ -309,8 +281,6 @@ class _ForgotPasswordOTPVerificationPageState
                         otpController.text =
                             otpController.text + value;
                       });
-                      print(value);
-                      print(otpController.text);
                     },
                     textStyle: GoogleFonts.nunito(
                       color: brandOne,

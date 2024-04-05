@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
-const String sliderDone =
-    'https://firebasestorage.googleapis.com/v0/b/fewsure-351c8.appspot.com/o/assets%2Fintro%2Fwelcome_page.jpg?alt=media&token=26319f24-9658-4a0a-af56-00f10170e2c4';
 
 class SliderDone extends StatefulWidget {
-  const SliderDone({Key? key}) : super(key: key);
+  const SliderDone({super.key});
 
   @override
   State<SliderDone> createState() => _SliderDoneState();

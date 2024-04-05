@@ -10,11 +10,11 @@ class WalletModel {
     if (walletData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       wallet = [Wallet.fromJson(walletData)];
-      print(wallet);
+      // print(wallet);
     } else {
       // Handle the case where userDetailsData is not a Map (e.g., it's a List).
       // You might want to log an error or handle this case differently based on your requirements.
-      print('userDetailsData is not a Map: $walletData');
+      // print('userDetailsData is not a Map: $walletData');
       // Set userDetails to an empty list or null, depending on your needs.
       wallet = [];
     }

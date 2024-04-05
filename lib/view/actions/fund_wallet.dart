@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-import 'package:rentspace/constants/utils/snackbar.dart';
 import 'package:rentspace/constants/widgets/separator.dart';
-// import 'package:rentspace/controller/user_controller.dart';
-// import 'package:rentspace/constants/theme_services.dart';
-// import 'package:get_storage/get_storage.dart';
-// import 'dart:io';
-// import 'package:getwidget/getwidget.dart';
+
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/actions/card_topup.dart';
-import 'package:rentspace/view/actions/wallet_funding.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/widgets/custom_dialog.dart';
 
 class FundWallet extends StatefulWidget {
-  const FundWallet({Key? key}) : super(key: key);
+  const FundWallet({super.key});
 
   @override
   _FundWalletState createState() => _FundWalletState();
@@ -35,12 +24,8 @@ var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-String _isSet = "false";
 var dum1 = "".obs;
 
-// CollectionReference users = FirebaseFirestore.instance.collection('accounts');
-// CollectionReference allUsers =
-//     FirebaseFirestore.instance.collection('accounts');
 
 class _FundWalletState extends State<FundWallet> {
   final UserController userController = Get.find();
@@ -109,13 +94,7 @@ class _FundWalletState extends State<FundWallet> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  // onTap: () {
-                  //       Get.to(const FinanceHealth());
-                  //     },
-                  // trailing: Icon(
-                  //   Iconsax.arrow_right_3,
-                  //   color: Theme.of(context).primaryColor,
-                  // ),
+               
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

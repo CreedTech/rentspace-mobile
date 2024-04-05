@@ -27,8 +27,6 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
     setState(() {
       _pinController.text = _pinController.text + value;
     });
-    print(value);
-    print(_pinController.text);
   }
 
   @override
@@ -110,7 +108,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
             userController.userModel!.userDetails![0].wallet.pin)) {
           _pinController.clear();
 
-          print(val);
+         
           Get.to(ChangePIN(pin: val));
         } else {
           EasyLoading.dismiss();
@@ -183,8 +181,6 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                       setState(() {
                         _pinController.text = _pinController.text + value;
                       });
-                      print(value);
-                      print(_pinController.text);
                     },
                     textStyle: GoogleFonts.nunito(
                       color: brandOne,

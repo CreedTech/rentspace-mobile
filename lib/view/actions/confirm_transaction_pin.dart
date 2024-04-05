@@ -48,25 +48,12 @@ class _ConfirmTransactionPinPageState
     setState(() {
       _confirmPinController.text = _confirmPinController.text + value;
     });
-    print(value);
-    print(_confirmPinController.text);
   }
 
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
+
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -149,7 +136,6 @@ class _ConfirmTransactionPinPageState
           //     context, RouteList.enable_user_notification);
         }
 
-        // Get.to(ConfirmTransactionPinPage(pin:_confirmPinController.text.trim()));
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -210,7 +196,7 @@ class _ConfirmTransactionPinPageState
                   alignment: Alignment.bottomCenter,
                   child: NumericKeyboard(
                     onKeyboardTap: onKeyboardTap,
-                     textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.nunito(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),
@@ -236,144 +222,6 @@ class _ConfirmTransactionPinPageState
                   ),
                 ),
               ),
-              // Align(
-              //   alignment: Alignment.bottomCenter,
-              //   child: Padding(
-              //       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              //     child: ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //         minimumSize: const Size(250, 50),
-              //         backgroundColor: brandOne,
-              //         elevation: 0,
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(
-              //             10,
-              //           ),
-              //         ),
-              //       ),
-              //       onPressed: () {
-              //         FocusScope.of(context).unfocus();
-              //         if (confirmPinformKey.currentState!.validate()) {
-              //           if (_confirmPinController.text.trim() !=
-              //               widget.pin) {
-              //             customErrorDialog(context, 'Pin Mismatch',
-              //                 'Pin does not match');
-
-              //             _confirmPinController.clear();
-              //           } else {
-              //             authState.createPin(
-              //                 context, _confirmPinController.text.trim());
-              //             // Navigator.pushNamed(
-              //             //     context, RouteList.enable_user_notification);
-              //           }
-              //           // _doSomething();
-              //         } else {
-              //           customErrorDialog(context, "Invalid!",
-              //               "Please Input your pin to proceed");
-              //         }
-              //       },
-              //       child: const Text(
-              //         'Proceed',
-              //         textAlign: TextAlign.center,
-              //       ),
-              //     ),
-              //   ),
-              // )
-
-              // Center(
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Padding(
-              //         padding: EdgeInsets.fromLTRB(30, 20.h, 30, 10),
-              //         child: Form(
-              //           key: confirmPinformKey,
-              //           child: Column(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               Padding(
-              //                 padding:
-              //                     const EdgeInsets.only(top: 10, bottom: 20),
-              //                 child: Text(
-              //                   'Confirm Transaction PIN',
-              //                   style: GoogleFonts.nunito(
-              //                     color: Theme.of(context).primaryColor,
-              //                     fontWeight: FontWeight.w700,
-              //                     fontSize: 20,
-              //                     // fontFamily: "DefaultFontFamily",
-              //                   ),
-              //                 ),
-              //               ),
-              //               SizedBox(
-              //                 height: 25.h,
-              //               ),
-              //               pin,
-              //               SizedBox(
-              //                 height: 100.h,
-              //               ),
-              //               Align(
-              //                 alignment: Alignment.bottomCenter,
-              //                 child: Container(
-              //                   // width: MediaQuery.of(context).size.width * 2,
-              //                   alignment: Alignment.center,
-              //                   // height: 110.h,
-              //                   child: Column(
-              //                     children: [
-              //                       ElevatedButton(
-              //                         style: ElevatedButton.styleFrom(
-              //                           minimumSize: const Size(250, 50),
-              //                           backgroundColor: brandOne,
-              //                           elevation: 0,
-              //                           shape: RoundedRectangleBorder(
-              //                             borderRadius: BorderRadius.circular(
-              //                               10,
-              //                             ),
-              //                           ),
-              //                         ),
-              //                         onPressed: () {
-              //                           if (confirmPinformKey.currentState!
-              //                               .validate()) {
-              //                             if (_confirmPinController.text
-              //                                     .trim() !=
-              //                                 widget.pin) {
-              //                               customErrorDialog(
-              //                                   context,
-              //                                   'Pin Mismatch',
-              //                                   'Pin does not match');
-
-              //                               _confirmPinController.clear();
-              //                             } else {
-              //                               authState.createPin(
-              //                                   context,
-              //                                   _confirmPinController.text
-              //                                       .trim());
-              //                               // Navigator.pushNamed(
-              //                               //     context, RouteList.enable_user_notification);
-              //                             }
-              //                             // _doSomething();
-              //                           } else {
-              //                             customErrorDialog(
-              //                                 context,
-              //                                 "Invalid!",
-              //                                 "Please Input your pin to proceed");
-              //                           }
-              //                         },
-              //                         child: const Text(
-              //                           'Proceed',
-              //                           textAlign: TextAlign.center,
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),

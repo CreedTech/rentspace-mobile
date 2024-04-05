@@ -87,8 +87,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
     );
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    print('authToken here');
-    print(authToken);
     final response = await http.post(
       Uri.parse(AppConstants.BASE_URL + AppConstants.GET_DATA_VARIATION_CODES),
       headers: {
@@ -100,14 +98,12 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       }),
     );
     EasyLoading.dismiss();
-    print('response');
     // print(response);
 
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
       var jsonResponse = jsonDecode(response.body);
       print('jsonResponse');
-      print(jsonResponse);
       List<String> dataAmount = [];
       List<String> dataName = [];
       List<String> dataValidity = [];
@@ -116,9 +112,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
         String amount = item['amount'];
         String name = item['name'];
         String validity = item['validity'];
-        print(amount);
-        print(name);
-        print(validity);
         // String name = item['name'];
         if (name != "") {
           dataAmount.add(amount);
@@ -471,8 +464,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       return null;
     }
 
-    print(selectDataPlan);
-    print(validity);
+
 
     showDialog(
       context: context,
@@ -919,11 +911,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       )) {
                                                         // _aPinController.clear();
                                                         Get.back();
-                                                        print(_aPinController
-                                                            .text
-                                                            .trim()
-                                                            .toString());
-                                                        // _doWallet();
                                                         appState.buyData(
                                                             context,
                                                             amount,
@@ -959,9 +946,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                                     .text +
                                                                 value;
                                                       });
-                                                      print(value);
-                                                      print(
-                                                          _aPinController.text);
+                                                     
                                                     },
                                                     textStyle:
                                                         GoogleFonts.nunito(

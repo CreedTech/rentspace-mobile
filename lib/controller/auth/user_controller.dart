@@ -41,12 +41,12 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        print(result);
+        // print(result);
 
         userModel = UserModel.fromJson(result);
         isLoading(false);
       } else {
-        print(response.body);
+        // print(response.body);
         print('error fetching data');
       }
     } on TimeoutException {
@@ -80,12 +80,12 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        print(result);
+        // print(result);
 
         userModel = UserModel.fromJson(result);
         isHomePageLoading(false);
       } else {
-        print(response.body);
+        // print(response.body);
         print('error fetching data');
       }
     } on TimeoutException {

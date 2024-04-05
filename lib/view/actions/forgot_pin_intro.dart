@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/actions/forgot_pin.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
@@ -199,9 +198,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                         customErrorDialog(context, "Invalid!",
                                             "Password is incorrect");
                                       } else {
-                                        print('email');
-                                        print(userController
-                                            .userModel!.userDetails![0].email);
+                                    
                                         authState.forgotPin(
                                           context,
                                           userController

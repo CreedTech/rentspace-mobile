@@ -20,10 +20,10 @@ class AnouncementRepository   extends GetxController {
 
 
     Response response = await _apiClient.getData(AppConstants.GET_ANNOUNCEMENT);
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
-      print(responseBody);
+      // print(responseBody);
       // List<dynamic> userDetails = responseBody['userDetails'];
       // await GlobalService.sharedPreferencesManager.saveUserDetails(userDetails);
       responseModel =

@@ -174,8 +174,6 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                         _confirmPinController.text =
                             _confirmPinController.text + value;
                       });
-                      print(value);
-                      print(_confirmPinController.text);
                     },
                     textStyle: GoogleFonts.nunito(
                       color: brandOne,

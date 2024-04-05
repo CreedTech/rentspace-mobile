@@ -37,7 +37,7 @@ class UtilityController extends GetxController {
         ///data successfully
         var result = jsonDecode(response.body);
         print('result');
-        print(result);
+        // print(result);
         print(UtilityHistoryModel.fromJson(result));
 
         utilityHistoryModel = UtilityHistoryModel.fromJson(result);
@@ -53,7 +53,7 @@ class UtilityController extends GetxController {
         // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
         //   rentModel = ;
         // }
-        print(response.body);
+        // print(response.body);
         print('error fetching data');
       }
     } on TimeoutException {

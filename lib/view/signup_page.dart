@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,9 +19,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/constants/icons.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 // import '../constants/db/firebase_db.dart';
 import '../controller/auth/auth_controller.dart';
@@ -77,8 +72,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _pinOneController = TextEditingController();
-  final TextEditingController _pinTwoController = TextEditingController();
   final TextEditingController _referalController = TextEditingController();
   final TextEditingController _bvnController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -152,31 +145,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       return null;
     }
 
-    validatePinOne(pinOneValue) {
-      if (pinOneValue.isEmpty) {
-        return 'pin cannot be empty';
-      }
-      if (pinOneValue.length < 4) {
-        return 'pin is incomplete';
-      }
-      if (int.tryParse(pinOneValue) == null) {
-        return 'enter valid number';
-      }
-      return null;
-    }
 
-    validatePinTwo(pinTwoValue) {
-      if (pinTwoValue.isEmpty) {
-        return 'pin cannot be empty';
-      }
-      if (pinTwoValue.length < 4) {
-        return 'pin is incomplete';
-      }
-      if (int.tryParse(pinTwoValue) == null) {
-        return 'enter valid number';
-      }
-      return null;
-    }
 
     validateLast(lastValue) {
       if (lastValue.isEmpty) {

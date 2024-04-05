@@ -19,7 +19,7 @@ class AuthRepository {
 
   Future<ResponseModel> signUp(body) async {
     print('Got here in auth repo');
-    print(body);
+    // print(body);
     ResponseModel responseModel;
     Response response = await _apiClient.postData(AppConstants.SIGN_UP, body);
 
@@ -27,7 +27,7 @@ class AuthRepository {
       responseModel = ResponseModel('account created', true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -52,7 +52,7 @@ class AuthRepository {
       responseModel = ResponseModel('User Verified', true);
       return responseModel;
     }
-    print("Here in verify otp repo${jsonDecode(response.body)}");
+    // print("Here in verify otp repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -69,13 +69,13 @@ class AuthRepository {
     Response response =
         await _apiClient.postData(AppConstants.VERFIY_BVN, jsonEncode(body));
     print("response");
-    print(response);
+    // print(response);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("BVN Verification successful", true);
       return responseModel;
     }
 
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
@@ -97,13 +97,13 @@ class AuthRepository {
     Response response =
         await _apiClient.postData(AppConstants.CREATE_DVA, jsonEncode(body));
     print("response");
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("DVA Creation successful", true);
       return responseModel;
     }
 
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
 
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
@@ -151,7 +151,7 @@ class AuthRepository {
       _apiClient.updateHeaders(token);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
     if (jsonDecode(response.body)['error'] ==
         'User not verified, please verify your account') {
@@ -177,7 +177,7 @@ class AuthRepository {
     Response response =
         await _apiClient.postData(AppConstants.FCM_TOKEN, jsonEncode(body));
     print('response in repo');
-    print(response);
+    // print(response);
 
     if (response.statusCode == 200) {
       String token = jsonDecode(response.body)['token'];
@@ -187,7 +187,7 @@ class AuthRepository {
       _apiClient.updateHeaders(token);
       return responseModel;
     }
-    print("Here in fcm repo${jsonDecode(response.body)}");
+    // print("Here in fcm repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
 //  Here in repo{error: User not verified, please verify your account}
@@ -202,20 +202,20 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
         AppConstants.FORGOTPASSWORD, jsonEncode(email));
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Code sent to your email", true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -224,26 +224,26 @@ class AuthRepository {
 
   Future<ResponseModel> resetPassword(body) async {
     print('Got here in auth repo');
-    print(body);
+    // print(body);
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
         AppConstants.RESET_PASSWORD, jsonEncode(body));
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Password Reset Successful", true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -257,20 +257,20 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
         AppConstants.RESEND_PASSWORD_OTP, jsonEncode(email));
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Code sent to your email", true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     return responseModel = ResponseModel(error, false);
@@ -283,7 +283,7 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
@@ -294,7 +294,7 @@ class AuthRepository {
       responseModel = ResponseModel('Otp Verified', true);
       return responseModel;
     }
-    print("Here in verify otp repo${jsonDecode(response.body)}");
+    // print("Here in verify otp repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -319,11 +319,11 @@ class AuthRepository {
       // responseModel = ResponseModel("Code sent to your email", true);
       // return responseModel;
       print('response on logout');
-      print(response.body);
+      // print(response.body);
       responseModel = ResponseModel('User logged out successfully', true);
       return responseModel;
     }
-    print("Here in verify logout repo${jsonDecode(response.body)}");
+    // print("Here in verify logout repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -332,26 +332,26 @@ class AuthRepository {
 
   Future<ResponseModel> createPin(body) async {
     print('Got here in auth repo');
-    print(body);
+    // print(body);
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response =
         await _apiClient.postData(AppConstants.CREATE_PIN, jsonEncode(body));
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Pin Creation Successful", true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     // var error = jsonDecode(response.body)['errors'].toString();
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
@@ -374,14 +374,14 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(AppConstants.FORGOT_PIN, '');
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Code sent to your email", true);
       return responseModel;
@@ -400,20 +400,20 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
     Response response = await _apiClient.postData(
         AppConstants.RESEND_PIN_OTP, jsonEncode(email));
     print('response');
-    print(response);
-    print(response.body);
+    // print(response);
+    // print(response.body);
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Code sent to your email", true);
       return responseModel;
     }
-    print("Here in repo${jsonDecode(response.body)}");
+    // print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     return responseModel = ResponseModel(error, false);
@@ -426,7 +426,7 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
@@ -437,7 +437,7 @@ class AuthRepository {
       responseModel = ResponseModel('Otp Verified', true);
       return responseModel;
     }
-    print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
+    // print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -451,7 +451,7 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
@@ -462,7 +462,7 @@ class AuthRepository {
       responseModel = ResponseModel('Otp Verified', true);
       return responseModel;
     }
-    print("Here in set new pin otp repo${jsonDecode(response.body)}");
+    // print("Here in set new pin otp repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -476,7 +476,7 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
+    // print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
@@ -487,7 +487,7 @@ class AuthRepository {
       responseModel = ResponseModel('Otp Verified', true);
       return responseModel;
     }
-    print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
+    // print("Here in verify forgot pin otp repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());
@@ -501,7 +501,6 @@ class AuthRepository {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
     print('authToken');
-    print(authToken);
 
     // Update the headers in ApiClient with the obtained token
     _apiClient.updateHeaders(authToken);
@@ -512,7 +511,7 @@ class AuthRepository {
       responseModel = ResponseModel('Changing Pin', true);
       return responseModel;
     }
-    print("Here in change  pin  repo${jsonDecode(response.body)}");
+    // print("Here in change  pin  repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
 
     //  print("Here in repo" + response.reasonPhrase.toString());

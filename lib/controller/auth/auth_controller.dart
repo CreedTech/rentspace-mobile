@@ -186,8 +186,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future verifyOtp(BuildContext context, email, otp) async {
     print("Fields");
-    print(email);
-    print(otp);
+    // print(email);
+    // print(otp);
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -201,7 +201,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> body = {'email': email, 'otp': otp};
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -245,7 +245,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifyBVN(BuildContext context, bvn, email) async {
-    print(email);
+    // print(email);
     isLoading = true;
     if (bvn.isEmpty || bvn == '') {
       customErrorDialog(context, 'Error', 'Please input your bvn!!');
@@ -253,7 +253,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> params = {'bvn': bvn, 'email': email};
     print('params');
-    print(params);
+    // print(params);
     String message;
     try {
       isLoading = true;
@@ -290,8 +290,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           response.message.contains("User with this BVN already exists")) {
         EasyLoading.dismiss();
         print('response here');
-        print(response.success);
-        print(response);
+        // print(response.success);
+        // print(response);
         message = "Oops! User with this BVN already exists";
         customErrorDialog(context, 'Error', message);
 
@@ -300,8 +300,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         // to capture other errors later
         print('response again');
-        print(response.success);
-        print(response.message);
+        // print(response.success);
+        // print(response.message);
         message = "Something went wrong. Try Again later";
         customErrorDialog(context, 'Error', message);
 
@@ -327,7 +327,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'email': email.toString().toLowerCase(),
     };
     print('params');
-    print(params);
+    // print(params);
     String message;
     try {
       isLoading = true;
@@ -338,7 +338,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: false,
       );
       var response = await authRepository.createDva(params);
-      print(response.message.toString());
+      // print(response.message.toString());
       if (response.success) {
         // await userController.fetchData();
         Get.offAll(const LoginPage());
@@ -374,8 +374,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           response.message.contains("User with this BVN already exists")) {
         EasyLoading.dismiss();
         print('response here');
-        print(response.success);
-        print(response);
+        // print(response.success);
+        // print(response);
         message = "Oops! User with this BVN already exists";
         customErrorDialog(context, 'Error', message);
 
@@ -384,8 +384,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         // to capture other errors later
         print('response again');
-        print(response.success);
-        print(response.message);
+        // print(response.success);
+        // print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
@@ -405,7 +405,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendOtp(BuildContext context, email) async {
-    print(email);
+    // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -509,13 +509,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       state = const AsyncData(false);
       print('response.message');
-      print(response.message);
+      // print(response.message);
       if (response.success == true) {
         isLoading = false;
         final fcmToken =
             await GlobalService.sharedPreferencesManager.getFCMToken();
         print('fcmToken');
-        print(fcmToken);
+        // print(fcmToken);
         // postFcmToken(context, fcmToken);
         await GlobalService.sharedPreferencesManager.saveLoginInfo(
           email,
@@ -677,8 +677,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       // EasyLoading.dismiss();
       state = const AsyncData(false);
       print('response.message');
-      print(response);
-      print(response.message);
+      // print(response);
+      // print(response.message);
       if (response.success) {
         print('posted');
         // isLoading = false;
@@ -720,8 +720,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future verifyForgotPasswordOtp(BuildContext context, email, otp) async {
     print("Fields");
-    print(email);
-    print(otp);
+    // print(email);
+    // print(otp);
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -732,7 +732,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'otp': otp
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -838,11 +838,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   Future resetPassword(
       BuildContext context, email, newPassword, repeatPassword) async {
     print("email");
-    print(email);
+    // print(email);
     print("newPassword");
-    print(newPassword);
+    // print(newPassword);
     print("repeatPassword");
-    print(repeatPassword);
+    // print(repeatPassword);
     isLoading = true;
     if (email.isEmpty ||
         email == '' ||
@@ -860,7 +860,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'repeatPassword': repeatPassword,
     };
     print('params');
-    print(params);
+    // print(params);
     String message;
     try {
       isLoading = true;
@@ -927,7 +927,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendPasswordOtp(BuildContext context, email) async {
-    print(email);
+    // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -999,7 +999,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.logout();
       print('response message here');
-      print(response.message);
+      // print(response.message);
       if (response.message.contains("User logged out successfully")) {
         EasyLoading.dismiss();
         isLoading = false;
@@ -1010,7 +1010,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('hasSeenOnboarding', false);
-        print(prefs.get('hasSeenOnboarding'));
+        // print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
         Get.offAll(const LoginPage());
@@ -1052,7 +1052,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future createPin(BuildContext context, pin) async {
     print("pin");
-    print(pin);
+    // print(pin);
     isLoading = true;
     if (pin.isEmpty || pin == '') {
       customErrorDialog(context, 'Error', 'Pin is required');
@@ -1063,7 +1063,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'pin': pin,
     };
     print('params');
-    print(params);
+    // print(params);
     String message;
     try {
       isLoading = true;
@@ -1075,7 +1075,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.createPin(params);
       if (response.success) {
-        await userController.fetchData();
+        // await userController.fetchData();
         print(userController.userModel!.userDetails![0].isPinSet);
         // await GlobalService.sharedPreferencesManager.savePin(pin);
         Get.offAll(const FirstPage());
@@ -1106,8 +1106,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           response.message.contains("Pin was already set")) {
         EasyLoading.dismiss();
         print('response here');
-        print(response.success);
-        print(response);
+        // print(response.success);
+        // print(response);
         message = "Oops! Pin has already been set for this account";
         customErrorDialog(context, 'Error', message);
 
@@ -1116,8 +1116,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         // to capture other errors later
         print('response again');
-        print(response.success);
-        print(response.message);
+        // print(response.success);
+        // print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
@@ -1136,7 +1136,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future forgotPin(BuildContext context, email) async {
-    print(email);
+    // print(email);
     isLoading = true;
     // if (email.isEmpty || email == '') {
     //   customErrorDialog(context, 'Error', 'All fields are required');
@@ -1146,7 +1146,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     Map<String, dynamic> mail = {
       'email': email.toString().toLowerCase(),
     };
-    print(mail);
+    // print(mail);
     String message;
     try {
       isLoading = true;
@@ -1167,7 +1167,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
                     ForgotPinOTPVerificationPage(email: email)));
         return;
       } else {
-        print(response.message.toString());
+        // print(response.message.toString());
       }
 
       // check for different reasons to enhance users experience
@@ -1199,7 +1199,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendPinOtp(BuildContext context, email) async {
-    print(email);
+    // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -1227,7 +1227,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
         return;
       } else {
-        print(response.message.toString());
+        // print(response.message.toString());
       }
 
       // check for different reasons to enhance users experience
@@ -1258,8 +1258,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future verifyForgotPinOtp(BuildContext context, email, otp) async {
     print("Fields");
-    print(email);
-    print(otp);
+    // print(email);
+    // print(otp);
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -1267,7 +1267,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> body = {'otp': otp};
     print("body");
-    print(body);
+    // print(body);
     String message;
     try {
       EasyLoading.show(
@@ -1311,8 +1311,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future setNewPin(BuildContext context, newPin, confirmNewPin) async {
     print("Fields");
-    print(newPin);
-    print(confirmNewPin);
+    // print(newPin);
+    // print(confirmNewPin);
     isLoading = true;
     if (newPin.isEmpty ||
         newPin == '' ||
@@ -1326,7 +1326,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'confirmNewPin': confirmNewPin
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
     try {
       EasyLoading.show(
@@ -1382,8 +1382,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future changePin(BuildContext context, newPin, currentPin) async {
     print("Fields");
-    print(newPin);
-    print(currentPin);
+    // print(newPin);
+    // print(currentPin);
     isLoading = true;
     if (newPin.isEmpty || newPin == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -1391,7 +1391,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> body = {'newPin': newPin, 'currentPin': currentPin};
     print("body");
-    print(body);
+    // print(body);
     String message;
     try {
       EasyLoading.show(

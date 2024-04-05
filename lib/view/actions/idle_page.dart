@@ -1,7 +1,6 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
@@ -13,7 +12,7 @@ import '../../constants/colors.dart';
 import '../../controller/auth/user_controller.dart';
 
 class IdlePage extends StatefulWidget {
-  const IdlePage({Key? key}) : super(key: key);
+  const IdlePage({super.key});
 
   @override
   _IdlePageState createState() => _IdlePageState();
@@ -57,20 +56,7 @@ class _IdlePageState extends State<IdlePage> {
     }
 
     //pin theme
-    final defaultPinTheme = PinTheme(
-      width: 30,
-      height: 30,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-        ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
+
 
     //Pin
     final pinInput = Pinput(
@@ -141,7 +127,7 @@ class _IdlePageState extends State<IdlePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             SizedBox(
@@ -149,7 +135,7 @@ class _IdlePageState extends State<IdlePage> {
               width: 90,
               child: Container(
                 height: 30,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/idle.gif"),
                     fit: BoxFit.cover,
@@ -158,7 +144,7 @@ class _IdlePageState extends State<IdlePage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Padding(
@@ -167,17 +153,16 @@ class _IdlePageState extends State<IdlePage> {
                 "Enter your transaction PIN to return to RentSpace App",
                 style: TextStyle(
                   fontSize: 20,
-                  fontFamily: "DefaultFontFamily",
                   color: Theme.of(context).primaryColor,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             pinInput,
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             GFButton(
@@ -191,7 +176,7 @@ class _IdlePageState extends State<IdlePage> {
               text: "   Return to App    ",
               shape: GFButtonShape.pills,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
           ],

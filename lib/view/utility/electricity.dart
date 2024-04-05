@@ -75,8 +75,6 @@ class _ElectricityState extends State<Electricity> {
   verifyMeter(String currentCode) async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    print('authToken here');
-    print(authToken);
     setState(() {
       isChecking = true;
       electricityName = "";
@@ -94,16 +92,12 @@ class _ElectricityState extends State<Electricity> {
           "billingServiceID": _selectedElectricCode,
           "meterNumber": meterController.text.trim().toString()
         }));
-    print(currentCode);
-    print(meterController.text.trim().toString());
 
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
       final meterInfo = jsonResponse['customerName'];
       final amount = jsonResponse['minimum_amount'];
-      print(meterInfo);
       if (meterInfo != null && meterInfo != 'NA') {
         setState(() {
           electricityName = meterInfo;
@@ -380,10 +374,7 @@ class _ElectricityState extends State<Electricity> {
                                                   electricityDescription =
                                                       description[idx];
                                                   canProceed = true;
-                                                  print(electricityName);
                                                 });
-                                                print(_selectedElectricCode);
-                                                print(electricityName);
                                               },
                                             ),
                                             selected: electricity == name[idx],

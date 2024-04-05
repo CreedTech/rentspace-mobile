@@ -22,21 +22,8 @@ class ForgotPassword extends ConsumerStatefulWidget {
 class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
 
-  // final RoundedLoadingButtonController _btnController =
-  //     RoundedLoadingButtonController();
   final forgotPassFormKey = GlobalKey<FormState>();
-  // void _doSomething() async {
-  //   // Timer(const Duration(seconds: 1), () {
-  //   //   _btnController.stop();
-  //   // });
-
-  //   if (forgotPassFormKey.currentState!.validate()) {
-  //     authController.reset(context, _emailController.text.trim());
-  //     setState(() {
-  //       _emailController.clear();
-  //     });
-  //   }
-  // }
+ 
 
   @override
   initState() {
@@ -52,17 +39,6 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
     //Validator
-    validateMail(emailValue) {
-      if (emailValue.isEmpty) {
-        return 'email cannot be empty';
-      }
-      if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-          .hasMatch(emailValue)) {
-        return 'Please enter a valid email';
-      }
-
-      return '';
-    }
 
     //email field
     final email = TextFormField(
@@ -151,15 +127,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.3,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
+        
           ListView(
             children: [
               // SizedBox(
@@ -170,21 +138,11 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
+                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Text(
-                        //   'Forgot Password',
-                        //   style: GoogleFonts.nunito(
-                        //     color: Theme.of(context).primaryColor,
-                        //     fontWeight: FontWeight.w700,
-                        //     fontSize: 18,
-                        //     // fontFamily: "DefaultFontFamily",
-                        //   ),
-                        // ),
+                     
                         Text(
                           'Regain access with password recovery.',
                           style: GoogleFonts.nunito(

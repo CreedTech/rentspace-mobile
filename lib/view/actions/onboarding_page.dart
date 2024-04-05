@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
 import 'package:path/path.dart' as p;
-// import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:rentspace/controller/app_controller.dart';
 
 import 'dart:math';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/auth/auth_controller.dart';
-import 'dart:async';
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -25,7 +19,6 @@ var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 
-String _IDImage = "";
 String _mssg = "";
 bool isChecking = false;
 bool canProceed = false;

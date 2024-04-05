@@ -61,7 +61,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'date': date,
     };
     print('params');
-    print(params);
+    // print(params);
     String message;
 
     try {
@@ -233,7 +233,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           response.message.contains(
               "Due date must be between 6 and 8 months from the current date")) {
         EasyLoading.dismiss();
-        print(response);
+        // print(response);
         message =
             "Oops! Due date must be between 6 and 8 months from the current date";
         customErrorDialog(context, 'Error', message);
@@ -279,7 +279,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'interval': interval
     };
     print('params');
-    print(params);
+    // print(params);
     String message;
     try {
       isLoading = true;
@@ -446,8 +446,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         // to capture other errors later
         print('response again');
-        print(response.success);
-        print(response.message);
+        // print(response.success);
+        // print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
@@ -471,10 +471,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   Future buyAirtime(
       BuildContext context, amount, phoneNumber, network, biller) async {
     isLoading = true;
-    print("Fields");
-    print(amount);
-    print(phoneNumber);
-    print(network);
+
     isLoading = true;
     if (phoneNumber.isEmpty ||
         phoneNumber == '' ||
@@ -491,7 +488,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'biller': biller
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -622,11 +619,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       network, validity) async {
     isLoading = true;
     print("Fields");
-    print(amount);
-    print(phoneNumber);
-    print(network);
-    print(selectDataPlan);
-    print(validity);
+ 
     isLoading = true;
     if (phoneNumber.isEmpty ||
         phoneNumber == '' ||
@@ -644,7 +637,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'validity': validity,
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -767,11 +760,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       billingServiceID, email, electricityName) async {
     isLoading = true;
     print("Fields");
-    print(amount);
-    print(phoneNumber);
-    print(meterNumber);
-    print(billingServiceID);
-    print(email);
+
     isLoading = true;
     if (phoneNumber.isEmpty ||
         phoneNumber == '' ||
@@ -789,7 +778,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'email': email,
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -973,12 +962,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       billingServiceID, productCode, invoicePeriod, tvName) async {
     isLoading = true;
     print("Fields");
-    print(amount);
-    print(phoneNumber);
-    print(productCode);
-    print(invoicePeriod);
-    print(billingServiceID);
-    print(smartCardNumber);
+
     isLoading = true;
     if (phoneNumber.isEmpty || phoneNumber == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -994,7 +978,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'invoicePeriod': invoicePeriod,
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {
@@ -1117,9 +1101,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       pin, accountName, bankName) async {
     isLoading = true;
     print("Fields");
-    print(amount);
-    print(bankCode);
-    print(accountNumber);
+    // print(amount);
+    // print(bankCode);
+    // print(accountNumber);
     print(pin);
     isLoading = true;
     if (bankCode.isEmpty ||
@@ -1143,7 +1127,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'pin': pin
     };
     print("body");
-    print(body);
+    // print(body);
     String message;
 
     try {

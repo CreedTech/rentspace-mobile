@@ -12,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/utility/utilities_page.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -79,121 +78,6 @@ class _HomePageState extends State<HomePage> {
   //       print("All good!!!");
   //     }
   //   });
-  // }
-
-  // mustRefer() async {
-  //   //get the referal code in the users collection
-  //   if (userController.user[0].referalId != "") {
-  //     CollectionReference allUsersR =
-  //         FirebaseFirestore.instance.collection('accounts');
-
-  //     var snapshot = await allUsersR
-  //         .where('referal_code',
-  //             isEqualTo: userController.user[0].referalId.toUpperCase())
-  //         .get();
-  //     var collection = FirebaseFirestore.instance.collection('accounts');
-
-  //     var docSnapshot = await collection.doc(userId).get();
-  //     for (var doc in snapshot.docs) {
-  //       var data = snapshot.docs.first.data() as Map;
-  //       var value = data["referals"];
-  //       var newValue = value! + 1;
-
-  //       await doc.reference.update({
-  //         'referals': newValue,
-  //       }).then((value) {
-  //         docSnapshot.reference.update({
-  //           'referals': 1,
-  //           'referar_id': "@${userController.user[0].referalId}@"
-  //         });
-  //         //R09K673ELR
-  //         showTopSnackBar(
-  //           Overlay.of(context),
-  //           CustomSnackBar.success(
-  //             backgroundColor: brandOne,
-  //             message: 'Your account has been setup successfully!',
-  //             textStyle: GoogleFonts.nunito(
-  //               fontSize: 14.sp,
-  //               color: Colors.white,
-  //               fontWeight: FontWeight.w700,
-  //             ),
-  //           ),
-  //         );
-  //       }).catchError((error) {
-  //         showDialog(
-  //             context: context,
-  //             barrierDismissible: false,
-  //             builder: (BuildContext context) {
-  //               return AlertDialog(
-  //                 shape: RoundedRectangleBorder(
-  //                   borderRadius: BorderRadius.circular(10.sp),
-  //                 ),
-  //                 title: null,
-  //                 elevation: 0,
-  //                 content: SizedBox(
-  //                   height: 250.h,
-  //                   child: Column(
-  //                     children: [
-  //                       GestureDetector(
-  //                         onTap: () {
-  //                           Navigator.of(context).pop();
-  //                         },
-  //                         child: Align(
-  //                           alignment: Alignment.topRight,
-  //                           child: Container(
-  //                             decoration: BoxDecoration(
-  //                               borderRadius: BorderRadius.circular(30.sp),
-  //                               // color: brandOne,
-  //                             ),
-  //                             child: Icon(
-  //                               Iconsax.close_circle,
-  //                               color: Theme.of(context).primaryColor,
-  //                               size: 30.sp,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                       Align(
-  //                         alignment: Alignment.center,
-  //                         child: Icon(
-  //                           Iconsax.warning_24,
-  //                           color: Colors.red,
-  //                           size: 75.sp,
-  //                         ),
-  //                       ),
-  //                       SizedBox(
-  //                         height: 12.h,
-  //                       ),
-  //                       Text(
-  //                         "Oops...",
-  //                         style: GoogleFonts.nunito(
-  //                           color: Colors.red,
-  //                           fontSize: 28.sp,
-  //                           fontWeight: FontWeight.w800,
-  //                         ),
-  //                       ),
-  //                       SizedBox(
-  //                         height: 5.h,
-  //                       ),
-  //                       Text(
-  //                         "Something went wrong",
-  //                         textAlign: TextAlign.center,
-  //                         style: GoogleFonts.nunito(
-  //                             color: Colors.red, fontSize: 18.sp),
-  //                       ),
-  //                       SizedBox(
-  //                         height: 10.h,
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               );
-  //             });
-  //       });
-  //     }
-  //   } else {
-  //     print("No referal");
-  //   }
   // }
 
 
@@ -296,7 +180,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   startShowCase() {
-    print('started');
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ShowCaseWidget.of(context).startShowCase([
@@ -757,7 +640,7 @@ class _HomePageState extends State<HomePage> {
 
             selectedItemColor: brandOne,
             backgroundColor: navigationcolorText,
-            showUnselectedLabels: false,
+            showUnselectedLabels: true,
             unselectedIconTheme: const IconThemeData(
               color: navigationcolorText,
             ),

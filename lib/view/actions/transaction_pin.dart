@@ -46,8 +46,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
     setState(() {
       _pinController.text = _pinController.text + value;
     });
-    print(value);
-    print(_pinController.text);
   }
 
   @override

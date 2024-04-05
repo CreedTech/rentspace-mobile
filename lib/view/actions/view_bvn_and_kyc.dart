@@ -7,13 +7,12 @@ import 'package:rentspace/constants/colors.dart';
 class ViewBvnAndKyc extends StatefulWidget {
   String idImage, bvn, kyc, hasVerifiedBvn, hasVerifiedKyc;
   ViewBvnAndKyc(
-      {Key? key,
+      {super.key,
       required this.idImage,
       required this.bvn,
       required this.kyc,
       required this.hasVerifiedBvn,
-      required this.hasVerifiedKyc})
-      : super(key: key);
+      required this.hasVerifiedKyc});
 
   @override
   _ViewBvnAndKycState createState() => _ViewBvnAndKycState();

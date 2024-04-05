@@ -185,8 +185,6 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                         _changePinController.text =
                             _changePinController.text + value;
                       });
-                      print(value);
-                      print(_changePinController.text);
                     },
                      textStyle: GoogleFonts.nunito(
                       color: brandOne,

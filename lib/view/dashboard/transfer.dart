@@ -54,8 +54,6 @@ class _TransferPageState extends State<TransferPage> {
         _currentBankCode = selectedBank[1];
         _bankController.text = _selectedBank!;
       });
-      print("_currentBankCode here");
-      print(_currentBankCode);
     }
     _checkFieldsAndHitApi();
   }
@@ -88,8 +86,7 @@ class _TransferPageState extends State<TransferPage> {
   getAccountDetails(String currentCode) async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    print('authToken here');
-    print(authToken);
+
     setState(() {
       isChecking = true;
       _bankAccountName = "";
@@ -106,15 +103,13 @@ class _TransferPageState extends State<TransferPage> {
           "financial_institution": currentCode,
           "account_id": _accountNumberController.text.trim().toString()
         }));
-    print(currentCode);
-    print(_accountNumberController.text.trim().toString());
-
+ 
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse['account'][0]['bank']);
+     
       final userBankName = jsonResponse['account'][0]["account_name"];
-      print(userBankName);
+   
       if (userBankName != null && userBankName != 'NA') {
         setState(() {
           _bankAccountName = userBankName;
@@ -615,10 +610,7 @@ class _TransferPageState extends State<TransferPage> {
                               withdrawFormKey.currentState!.validate()
                           ? () async {
                               FocusScope.of(context).unfocus();
-                              print(_bankController.text);
-                              print(_accountNumberController.text);
-                              print(_currentBankCode);
-                              print(_bankAccountName);
+                            
                               await fetchUserData()
                                   .then(
                                     (value) => Navigator.push(

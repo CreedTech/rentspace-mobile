@@ -8,7 +8,6 @@ import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/actions/confirm_reset_pin_page.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
 
 class ResetPIN extends ConsumerStatefulWidget {
   const ResetPIN({super.key, required this.email});

@@ -33,8 +33,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
   getBanksList() async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    print('authToken here');
-    print(authToken);
+ 
     final response = await http.get(
       Uri.parse(AppConstants.BASE_URL + AppConstants.GET_BANKS_LIST),
       headers: {
@@ -227,9 +226,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                                   int index = _bankName.indexOf(selectedItem!);
                                   _currentBankCode = _bankCode[index];
                                 });
-                                print("_currentBankCode");
-                                print(bankName);
-                                print(_currentBankCode);
+                                
                                 Navigator.pop(context, [
                                   bankName,
                                   _currentBankCode

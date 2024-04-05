@@ -38,12 +38,12 @@ class RentController extends GetxController {
         ///data successfully
         var result = jsonDecode(response.body);
         print('result');
-        print(result);
-        print(SpaceRentModel.fromJson(result));
+        // print(result);
+        // print(SpaceRentModel.fromJson(result));
 
         rentModel = SpaceRentModel.fromJson(result);
         print('Rent data successfully fetched');
-        print(rentModel!.rents!);
+        // print(rentModel!.rents!);
         if (rentModel!.rents!.isEmpty) {
           // Show a message or handle the case where no space rent is found
           // For example, you can set a default value or display a message to the user
@@ -54,7 +54,7 @@ class RentController extends GetxController {
         // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
         //   rentModel = ;
         // }
-        print(response.body);
+        // print(response.body);
         print('error fetching data');
       }
     } on TimeoutException {

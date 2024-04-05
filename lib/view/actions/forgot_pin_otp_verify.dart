@@ -82,18 +82,6 @@ class _ForgotPinOTPVerificationPageState
     final authState = ref.read(authControllerProvider.notifier);
     String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
 
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -232,12 +220,7 @@ class _ForgotPinOTPVerificationPageState
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                            // TextSpan(
-                            //   text: '. Please check your mail.',
-                            //   style: GoogleFonts.nunito(
-                            //     color: brandTwo,
-                            //   ),
-                            // ),
+                           
                           ]),
                     ),
                   ),
@@ -324,8 +307,7 @@ class _ForgotPinOTPVerificationPageState
                     setState(() {
                       otpController.text = otpController.text + value;
                     });
-                    print(value);
-                    print(otpController.text);
+                    
                   },
                    textStyle: GoogleFonts.nunito(
                       color: brandOne,

@@ -52,11 +52,11 @@ class ApiClient {
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Request was successful, return the response
         print('response');
-        print(jsonDecode(response.body).toString());
+        // print(jsonDecode(response.body).toString());
         return response;
       } else {
         // Request failed with a non-2XX status code
-        print(response.body);
+        // print(response.body);
         http.Response('Error: ${response.reasonPhrase} ', response.statusCode);
         print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
 
@@ -79,7 +79,7 @@ class ApiClient {
 /*  Method to update data to backend  **/
   Future putData(url, body) async {
     //print("This is body" + body);
-    print('This is token$token');
+    // print('This is token$token');
     http.Response response;
     try {
       response = await http
@@ -107,7 +107,7 @@ class ApiClient {
       if (response.statusCode == 200) {
         // Request was successful, return the response
         print('jsonDecode(response.body).toString()');
-        print(jsonDecode(response.body));
+        // print(jsonDecode(response.body));
         return response;
       } else {
         // Request failed with a non-2XX status code

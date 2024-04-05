@@ -191,11 +191,11 @@ class RouterGenerator {
           builder: (context) => const CableScreen(),
           settings: const RouteSettings(name: cable),
         );
-      case utilitytransactionReceipt:
-        return MaterialPageRoute(
-          builder: (context) => const UtilityTransactionReceipt(),
-          settings: const RouteSettings(name: utilitytransactionReceipt),
-        );
+      // case utilitytransactionReceipt:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const UtilityTransactionReceipt(),
+      //     settings: const RouteSettings(name: utilitytransactionReceipt),
+      //   );
       // case my_information:
       //   return MaterialPageRoute(
       //     builder: (context) => const MyInformationView(),

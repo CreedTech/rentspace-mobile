@@ -86,15 +86,6 @@ class _ContactUsPageState extends State<ContactUsPage> {
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Opacity(
-          //     opacity: 0.05,
-          //     child: Image.asset(
-          //       'assets/icons/RentSpace-icon.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
             child: ListView(
@@ -232,7 +223,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         //     ),
                         //   ),
                         // ),
-                       
+
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           child: Container(
@@ -288,7 +279,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                               child: Text(
                                                 'support@rentspace.tech',
                                                 style: GoogleFonts.nunito(
-                                                  color: Theme.of(context).colorScheme.secondary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary,
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -314,8 +307,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color:
-                                                    Theme.of(context).primaryColor,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
@@ -328,7 +321,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                   'Copy',
                                                   style: GoogleFonts.nunito(
                                                       color: Theme.of(context)
-                                                          .colorScheme.primary,
+                                                          .colorScheme
+                                                          .primary,
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w700),
@@ -471,7 +465,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
 ////Social webview
 class SocialPagesWeb extends StatefulWidget {
   String initialUrl;
-  SocialPagesWeb({Key? key, required this.initialUrl}) : super(key: key);
+  SocialPagesWeb({super.key, required this.initialUrl});
 
   @override
   _SocialPagesWebState createState() => _SocialPagesWebState();
@@ -515,7 +509,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
       ),
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: WebView(
               userAgent: "random",

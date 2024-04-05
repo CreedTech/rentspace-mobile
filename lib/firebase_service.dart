@@ -35,18 +35,14 @@ class FirebaseService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
     } else {
-      print('User declined or has not accepted permission');
     }
   }
 
   Future<String?> getDeviceToken() async =>
       await FirebaseMessaging.instance.getToken().then((value) {
-        print('get token : $value');
         GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
         return value;
       });
@@ -56,7 +52,7 @@ class FirebaseService {
       FlutterLocalNotificationsPlugin();
 
   static Future<void> initializeLocalNotifications() async {
-    final InitializationSettings _initSettings = const InitializationSettings(
+    const InitializationSettings _initSettings = InitializationSettings(
         android: AndroidInitializationSettings("@mipmap/ic_launcher"),
         iOS: DarwinInitializationSettings());
 

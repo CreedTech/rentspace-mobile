@@ -107,8 +107,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       setState(() {
         _selectedCarrier = detectedCarrier;
       });
-      print(_selectedCarrier);
-      print(detectedCarrier);
+     
       if (detectedCarrier == 'MTN') {
         setState(() {
           _selectedImage = 'assets/utility/mtn.jpg';
@@ -385,7 +384,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                               _userInput = text;
                               _selectedCarrier = getCarrier(text);
                               selectnetworkController.text = _selectedCarrier;
-                              print("Selected network: $_selectedCarrier");
                               isTextFieldEmpty =
                                   text.isNotEmpty && text.length == 11;
                             });

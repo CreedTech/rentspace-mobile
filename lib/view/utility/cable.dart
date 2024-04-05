@@ -73,8 +73,7 @@ class _CableScreenState extends State<CableScreen> {
   verifyTV(String currentCode) async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    print('authToken here');
-    print(authToken);
+
     setState(() {
       isChecking = true;
       tvName = "";
@@ -92,18 +91,14 @@ class _CableScreenState extends State<CableScreen> {
           "billingServiceID": _selectedTVCode,
           "smartCardNumber": smartcardController.text.trim().toString()
         }));
-    print(currentCode);
-    print(smartcardController.text.trim().toString());
 
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
       final smartCardFirstName = jsonResponse['firstName'];
       final smartCardLastName = jsonResponse['lastName'];
       final smartCardStatus = jsonResponse['accountStatus'];
       tvName = '$smartCardFirstName $smartCardLastName';
-      print(tvName);
       if (tvName != '' && tvName != 'N/A') {
         setState(() {
           tvName = tvName;
@@ -352,10 +347,7 @@ class _CableScreenState extends State<CableScreen> {
                                                   tvCable = name[idx];
                                                   tvImage = image[idx];
                                                   canProceed = true;
-                                                  print(tvName);
                                                 });
-                                                print(_selectedTVCode);
-                                                print(tvName);
                                               },
                                             ),
                                             selected: tvCable == name[idx],

@@ -9,12 +9,6 @@ import 'package:rentspace/view/signup_page.dart';
 import 'onboarding_contents.dart';
 import 'slider_done.dart';
 
-const String slide1 =
-    'https://firebasestorage.googleapis.com/v0/b/fewsure-351c8.appspot.com/o/assets%2Fintro%2Fintro1.jpg?alt=media&token=61817591-a969-4766-b6c2-f08fec27a2d4';
-const String slide2 =
-    'https://firebasestorage.googleapis.com/v0/b/fewsure-351c8.appspot.com/o/assets%2Fintro%2Fintro2.png?alt=media&token=bd1379f9-333c-4934-85e7-2eec4c2e4266';
-const String slide3 =
-    'https://firebasestorage.googleapis.com/v0/b/fewsure-351c8.appspot.com/o/assets%2Fintro%2Fintro3.jpg?alt=media&token=63b60821-c32c-4253-8723-5afa633ba2a8';
 
 class OnboardingSlider extends StatefulWidget {
   const OnboardingSlider({super.key});
@@ -60,7 +54,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
   void _onIntroEnd(context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => SliderDone(),
+        builder: (context) => const SliderDone(),
       ),
       (route) => false,
     );

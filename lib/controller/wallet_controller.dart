@@ -40,12 +40,12 @@ class WalletController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        print(result);
+        // print(result);
 
         walletModel = WalletModel.fromJson(result);
         isLoading(false);
       } else {
-        print(response.body);
+        // print(response.body);
         print('error fetching data');
       }
     } on TimeoutException {

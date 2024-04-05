@@ -6,7 +6,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/extensions.dart';
-import 'package:rentspace/view/actions/biometrics_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/onboarding_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

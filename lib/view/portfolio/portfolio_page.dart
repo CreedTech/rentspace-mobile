@@ -47,18 +47,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final UserController userController = Get.find();
   final RentController rentController = Get.find();
   getUser() async {
-    // var collection = FirebaseFirestore.instance.collection('accounts');
-    // var docSnapshot = await collection.doc(userId).get();
-    // if (docSnapshot.exists) {
-    //   Map<String, dynamic>? data = docSnapshot.data();
-    //   setState(() {
-    //     _totalInterest = data?['total_interest'];
-    //     _loanAmount = data?['loan_amount'];
-    //     _totalSavings = data?['total_savings'];
-    //     _totalDebts = data?['total_debts'];
-    //     _totalInvestments = data?['total_investments'];
-    //   });
-    // }
+
 
     setState(() {
       // _totalInterest =

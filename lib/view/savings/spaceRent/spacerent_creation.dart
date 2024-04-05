@@ -278,8 +278,8 @@ int _calculateWeeksDifference() {
         return 'Too short';
       }
       if ((int.tryParse(text.trim().replaceAll(',', ''))! >= 1) &&
-          (int.tryParse(text.trim().replaceAll(',', ''))! < 5000)) {
-        return 'minimum amount is ₦5,000';
+          (int.tryParse(text.trim().replaceAll(',', ''))! < 150000)) {
+        return 'minimum amount is ₦150,000';
       }
       if (int.tryParse(text.trim().replaceAll(',', '')) == null) {
         return 'enter valid number';

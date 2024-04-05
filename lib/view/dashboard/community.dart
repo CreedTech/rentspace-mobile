@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:rentspace/constants/colors.dart';
 
 class RentSpaceCommunity extends StatefulWidget {
   const RentSpaceCommunity({Key? key}) : super(key: key);

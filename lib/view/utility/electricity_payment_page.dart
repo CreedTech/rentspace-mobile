@@ -84,8 +84,6 @@ class _ElectricityPaymentPageState
     setState(() {
       _aPinController.text = _aPinController.text + value;
     });
-    print(value);
-    print(_aPinController.text);
   }
 
   @override
@@ -127,7 +125,6 @@ class _ElectricityPaymentPageState
       keyboardType: TextInputType.number,
       onChanged: (value) {
         setState(() {
-          print("Entered Amount: $value");
           // Check if the text field is empty
           isTextFieldEmpty = value.isNotEmpty &&
               int.tryParse(value) != null &&
@@ -842,10 +839,7 @@ class _ElectricityPaymentPageState
                                                       )) {
                                                         // _aPinController.clear();
                                                         Get.back();
-                                                        print(_aPinController
-                                                            .text
-                                                            .trim()
-                                                            .toString());
+                                                      
                                                         // _doWallet(;
                                                         appState.buyElectricity(
                                                           context,

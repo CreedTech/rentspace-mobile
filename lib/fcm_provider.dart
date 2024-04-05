@@ -16,8 +16,6 @@ class FCMProvider with ChangeNotifier {
 
   /// when app is in the foreground
   static Future<void> onTapNotification(NotificationResponse? response) async {
-    print("response");
-    print(response?.payload);
     if (FCMProvider._context == null || response?.payload == null) return;
     final _data = FCMProvider.convertPayload(response!.payload!);
     // if (_data.containsKey(...)){

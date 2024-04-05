@@ -18,26 +18,12 @@ import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/view/FirstPage.dart';
-import 'package:rentspace/view/dashboard/all_activities.dart';
-import 'package:rentspace/view/dashboard/settings.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
 import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
-import 'view/actions/new_notification_page.dart';
 
-// final notificationProvider =
-//     StateNotifierProvider<NotificationNotifier, List<String>>((ref) {
-//   return NotificationNotifier();
-// });
 
-// class NotificationNotifier extends StateNotifier<List<String>> {
-//   NotificationNotifier() : super([]);
-
-//   void addNotification(String notification) {
-//     state = [...state, notification];
-//   }
-// }
 
 int id = 0;
 final StreamController<String?> selectNotificationStream =
@@ -51,14 +37,9 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
-  // ignore: avoid_print
-  print('notification(${notificationResponse.id}) action tapped: '
-      '${notificationResponse.actionId} with'
-      ' payload: ${notificationResponse.payload}');
+
   if (notificationResponse.input?.isNotEmpty ?? false) {
-    // ignore: avoid_print
-    print(
-        'notification action tapped with input: ${notificationResponse.input}');
+
   }
 }
 
@@ -77,15 +58,12 @@ Future<void> main() async {
   final deviceInfoPlugin = DeviceInfoPlugin();
   // final deviceInfo = await deviceInfoPlugin.androidInfo;
   // final allInfo = deviceInfo.type +  deviceInfo.product + deviceInfo.id  + deviceInfo.device;
-  // print(allInfo);
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-    print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
     GlobalService.sharedPreferencesManager
         .setDevieInfo('Android', androidInfo.model);
   } else if (Platform.isIOS) {
     IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
-    print('Running on ${iosInfo.utsname.machine}');
     GlobalService.sharedPreferencesManager
         .setDevieInfo('IOS', iosInfo.utsname.machine);
   }
@@ -104,23 +82,19 @@ Future<void> main() async {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
       await GlobalService.sharedPreferencesManager
           .userAllowedNotifications(value: true);
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
       await GlobalService.sharedPreferencesManager
           .userAllowedNotifications(value: true);
     } else {
-      print('User declined or has not accepted permission');
       await GlobalService.sharedPreferencesManager
           .userAllowedNotifications(value: false);
     }
   }
 
   FirebaseMessaging.instance.getToken().then((value) {
-    print('get token : $value');
     GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
   });
   requestNotificationPermission();
@@ -128,19 +102,7 @@ Future<void> main() async {
 // if application is in background
   FirebaseMessaging.onMessageOpenedApp.listen(
     (RemoteMessage message) async {
-      print("App opened from background or terminated state");
 
-      // Print notification information
-      print(
-          "Notification: ${message.notification?.title}/${message.notification?.body}/${message.data['notificationType']}");
-
-      // Display notification dialog
-      // showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) {
-      //     return NotificationDialog(notificationData: message.data);
-      //   },
-      // );
 
       // Navigate to appropriate screen based on notification type
       String notificationType = message.data['notificationType'];
@@ -203,18 +165,13 @@ Future<void> main() async {
       //     );
       //   }
       // } catch (e) {
-      //   print("Error navigating to screen: $e");
       // }
     },
   );
 
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
-      print("............onMessage..............");
-      print(
-          "onMessage: ${message.notification?.title}/${message.notification?.body}/${message.data['notificationType']}");
-      print('message.data');
-      print(message.notification!.body);
+
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification!.android;
       String notificationType = message.data['notificationType'];
@@ -296,9 +253,7 @@ Future<void> main() async {
       //     ),
       //   );
       // }
-      print(
-          "received in background : ${json.encode(message.notification!.body)}");
-    },
+     },
   );
 
 // If app is closed or terminated
@@ -349,9 +304,6 @@ Future<void> main() async {
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // await Firebase.initializeApp();
-
-  print('_firebaseMessagingBackgroundHandler: ${message.notification!.body}');
-  print('Handling Background message ${message.notification!.body}');
 }
 
 Future<void> initNotifications() async {
@@ -378,7 +330,7 @@ Future<void> initNotifications() async {
         // Get.to(const NotificationsPage());
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
-        print(notificationResponse.payload);
+        // print(notificationResponse.payload);
         Get.to(FirstPage());
         // Get.to(NewNotificationPage(
         //     message: notificationResponse.payload));
@@ -442,49 +394,8 @@ void displayNotification(
   }
 }
 
-// Show transaction notification
-Future<void> _showTransactionNotification(String title, String body) async {
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
-    'high_importance_channel',
-    'Transaction Notifications',
-    channelDescription: 'Notifications for completed transactions',
-    importance: Importance.max,
-    priority: Priority.high,
-  );
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
 
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    title,
-    body,
-    platformChannelSpecifics,
-    payload: 'item x',
-  );
-}
 
-// Show announcement notification
-Future<void> _showAnnouncementNotification(String title, String body) async {
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(
-    'high_importance_channel',
-    'Announcement Notifications',
-    channelDescription: 'Notifications for announcements',
-    importance: Importance.max,
-    priority: Priority.high,
-  );
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
-
-  await flutterLocalNotificationsPlugin.show(
-    id++,
-    title,
-    body,
-    platformChannelSpecifics,
-    payload: 'item x',
-  );
-}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

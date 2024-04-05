@@ -15,7 +15,7 @@ import 'dashboard.dart';
 class AllActivities extends StatefulWidget {
   // List activities;
   // int activitiesLength;
-  AllActivities({
+  const AllActivities({
     super.key,
     // required this.activitiesModel!.activities!,
     // required this.activitiesModel!.activities!Length,

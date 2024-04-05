@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:linear_step_indicator/linear_step_indicator.dart';
-import 'package:flutter_stepindicator/flutter_stepindicator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/view/kyc/kyc_payment.dart';

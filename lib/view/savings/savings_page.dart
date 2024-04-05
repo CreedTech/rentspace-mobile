@@ -119,8 +119,6 @@ class _SavingsPageState extends State<SavingsPage> {
       for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
         rentBalance += rentController.rentModel!.rents![j].paidAmount;
         targetBalance += rentController.rentModel!.rents![j].amount;
-        print('paid');
-        print(rentController.rentModel!.rents![j].paidAmount);
       }
     }
     // }
@@ -158,8 +156,7 @@ class _SavingsPageState extends State<SavingsPage> {
           // depositBalance
           );
     });
-    print(totalSavings);
-    print(totalAssets);
+
   }
 
   @override
