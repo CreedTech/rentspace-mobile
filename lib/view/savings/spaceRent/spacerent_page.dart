@@ -111,27 +111,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
 
   @override
   Widget build(BuildContext context) {
-    // String chosenDateString =
-    //     rentController.rentModel!.rents![widget.current].date;
-    // print(chosenDateString);
-    // print(chosenDateString);
-    // String interval = rentController.rentModel!.rents![widget.current].interval;
-    // int numberOfIntervals = int.parse(
-    //     rentController.rentModel!.rents![widget.current].paymentCount);
-    // // DateTime nextPaymentDate =
-    // //     calculateNextPaymentDate(chosenDateString, interval, numberOfIntervals);
-    // //     print(nextPaymentDate);
-    // // String formattedNextDate = formatDate(nextPaymentDate);
-    // print(((rentController.rentModel!.rents![widget.current].paidAmount
-    //         .abs()) ==
-    //     (rentController.rentModel!.rents![widget.current].amount * 0.7).abs()));
-    // print(((rentController.rentModel!.rents![widget.current].paidAmount)));
-    // print(((rentController.rentModel!.rents![widget.current].amount * 0.7)));
-
-    // return Text(
-    //   formattedTimeAgo,
-    //   style: TextStyle(fontSize: 18.0),
-    // );
     return Scaffold(
       appBar: AppBar(
         // toolbarHeight: 105.0,
@@ -159,7 +138,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         // centerTitle: true,
         title: Text(
           'Space Rent',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: ((rentController
                         .rentModel!.rents![widget.current].paidAmount) <=
                     (rentController.rentModel!.rents![widget.current].amount *
@@ -167,7 +146,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 ? Colors.white
                 : Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -189,7 +168,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           children: [
                             Text(
                               'You have saved',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white.withOpacity(0.75),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -197,9 +176,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             ),
                             Text(
                               "${nairaFormaet.format(rentController.rentModel!.rents![widget.current].paidAmount).toString()} $testdum",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).colorScheme.background,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 31,
                               ),
                             ),
@@ -208,7 +187,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                               children: [
                                 Text(
                                   'of your ',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white.withOpacity(0.75),
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
@@ -219,17 +198,17 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       .format(rentController.rentModel!
                                           .rents![widget.current].amount)
                                       .toString(),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
                                   ' Target',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white.withOpacity(0.75),
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
@@ -244,9 +223,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 backgroundColor: Colors.white,
                                 // trailing: Text(
                                 //   ' ${((rentController.rentModel!.rents![widget.current].paidAmount / rentController.rentModel!.rents![widget.current].amount) * 100).toInt()}%',
-                                //   style: GoogleFonts.nunito(
+                                //   style: GoogleFonts.poppins(
                                 //     fontSize: MediaQuery.of(context).size.width / 30,
-                                //     fontWeight: FontWeight.w700,
+                                //     fontWeight: FontWeight.w600,
                                 //     color: brandOne,
                                 //   ),
                                 // ),
@@ -265,7 +244,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             ),
                             Text(
                               'Your savings schedule is',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white.withOpacity(0.75),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -281,11 +260,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                           .rents![widget.current]
                                           .intervalAmount)
                                       .toString(),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -309,135 +288,21 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                           .rents![widget.current].interval
                                           .substring(1),
                                   // intl.capitalizedFirst(rentController.rentModel!.rents![widget.current].interval),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 48),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 48),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 5),
-                                  //   child: Container(
-                                  //     width: 152,
-                                  //     height: 56,
-                                  //     // padding: const EdgeInsets.all(12),
-                                  //     decoration: BoxDecoration(
-                                  //       color: (themeChange.isSavedDarkMode())
-                                  //           ? Colors.white
-                                  //           : Colors.white.withOpacity(0.13),
-                                  //       borderRadius: BorderRadius.circular(43),
-                                  //     ),
-                                  //     child: Center(
-                                  //       child: Column(
-                                  //         crossAxisAlignment:
-                                  //             CrossAxisAlignment.center,
-                                  //         mainAxisAlignment:
-                                  //             MainAxisAlignment.center,
-                                  //         children: [
-                                  //           Text(
-                                  //             'Loan Amount:',
-                                  //             style: GoogleFonts.nunito(
-                                  //               color: (themeChange
-                                  //                       .isSavedDarkMode())
-                                  //                   ? brandTwo
-                                  //                   : Colors.white
-                                  //                       .withOpacity(0.75),
-                                  //               fontWeight: FontWeight.w400,
-                                  //               fontSize: 12,
-                                  //             ),
-                                  //           ),
-                                  //           Padding(
-                                  //             padding:
-                                  //                 const EdgeInsets.symmetric(
-                                  //               horizontal: 15,
-                                  //             ),
-                                  //             child: Text(
-                                  //               nairaFormaet
-                                  //                   .format(rentController
-                                  //                           .rentModel!
-                                  //                           .rents![
-                                  //                               widget.current]
-                                  //                           .amount -
-                                  //                       (rentController
-                                  //                               .rentModel!
-                                  //                               .rents![widget
-                                  //                                   .current]
-                                  //                               .amount *
-                                  //                           0.7))
-                                  //                   .toString(),
-                                  //               overflow: TextOverflow.ellipsis,
-                                  //               style: GoogleFonts.nunito(
-                                  //                 color: Theme.of(context)
-                                  //                     .colorScheme
-                                  //                     .background,
-                                  //                 fontWeight: FontWeight.w700,
-                                  //                 fontSize: 16,
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 5),
-                                  //   child: Container(
-                                  //     width: 152,
-                                  //     height: 56,
-                                  //     // padding: const EdgeInsets.all(12),
-                                  //     decoration: BoxDecoration(
-                                  //       color: (themeChange.isSavedDarkMode())
-                                  //           ? Colors.white
-                                  //           : Colors.white.withOpacity(0.13),
-                                  //       borderRadius: BorderRadius.circular(43),
-                                  //     ),
-                                  //     child: Center(
-                                  //       child: Column(
-                                  //         crossAxisAlignment:
-                                  //             CrossAxisAlignment.center,
-                                  //         mainAxisAlignment:
-                                  //             MainAxisAlignment.center,
-                                  //         children: [
-                                  //           Text(
-                                  //             'Interest Rate:',
-                                  //             style: GoogleFonts.nunito(
-                                  //               color: (themeChange
-                                  //                       .isSavedDarkMode())
-                                  //                   ? brandTwo
-                                  //                   : Colors.white
-                                  //                       .withOpacity(0.75),
-                                  //               fontWeight: FontWeight.w400,
-                                  //               fontSize: 12,
-                                  //             ),
-                                  //           ),
-                                  //           Text(
-                                  //             '10%',
-                                  //             style: GoogleFonts.nunito(
-                                  //               color: Theme.of(context)
-                                  //                   .colorScheme
-                                  //                   .background,
-                                  //               fontWeight: FontWeight.w700,
-                                  //               fontSize: 16,
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -446,21 +311,21 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                               children: [
                                 Text(
                                   'Next payement date: ',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white.withOpacity(0.75),
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                   ),
                                 ),
                                 Text(
                                   rentController.rentModel!
                                       .rents![widget.current].nextDate,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                               ],
@@ -503,9 +368,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     Text(
                                       'Savings History',
                                       textAlign: TextAlign.left,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.0.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: Theme.of(context).primaryColor,
                                       ),
                                     ),
@@ -518,9 +383,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       },
                                       child: Text(
                                         "See All",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 12.0.sp,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: Theme.of(context).primaryColor,
                                           // decoration: TextDecoration.underline,
                                         ),
@@ -544,7 +409,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                         Center(
                                           child: Text(
                                             "Nothing to show",
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 20,
                                               color: Theme.of(context)
                                                   .primaryColor,
@@ -591,11 +456,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               ),
                                               title: Text(
                                                 history['message'],
-                                                style: GoogleFonts.nunito(
+                                                style: GoogleFonts.poppins(
                                                   color: Theme.of(context)
                                                       .primaryColor,
                                                   fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                               subtitle: Text(
@@ -603,7 +468,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                         (history['createdAt']))
                                                     .add(const Duration(
                                                         hours: 1))),
-                                                style: GoogleFonts.nunito(
+                                                style: GoogleFonts.poppins(
                                                   color: brandOne,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w400,
@@ -614,7 +479,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               //           history['createdAt'])
                                               //       .add(const Duration(
                                               //           hours: 1))),
-                                              //   style: GoogleFonts.nunito(
+                                              //   style: GoogleFonts.poppins(
                                               //     color: brandOne,
                                               //     fontSize: 12.sp,
                                               //     fontWeight: FontWeight.w400,
@@ -627,7 +492,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               // },
                                               trailing: Text(
                                                 '+ ${ch8t.format(history['amount'])}',
-                                                style: GoogleFonts.nunito(
+                                                style: GoogleFonts.poppins(
                                                   color: Colors.green,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w600,
@@ -659,9 +524,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                   Text(
                     'Congrats, you are eligile for a loan',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
@@ -671,7 +536,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                   Text(
                     'Total Loanable amount',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).primaryColor,
@@ -686,9 +551,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 0.7))
                         .toString(),
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                       fontSize: 31.sp,
                     ),
                   ),
@@ -706,7 +571,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             backgroundColor: Colors.white,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(color: brandOne),
+                              side: const BorderSide(color: brandOne),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -718,10 +583,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           child: Text(
                             'Continue Saving',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandOne,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -751,10 +616,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           child: Text(
                             'Take Loan',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),

@@ -67,9 +67,9 @@ class _AllActivitiesState extends State<AllActivities> {
         centerTitle: true,
         title: Text(
           'Wallet Histories',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -89,7 +89,7 @@ class _AllActivitiesState extends State<AllActivities> {
                   Center(
                     child: Text(
                       "No Transaction history",
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
@@ -174,10 +174,10 @@ class _AllActivitiesState extends State<AllActivities> {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(2.0, 0, 2.0, 5),
+                        padding:  EdgeInsets.fromLTRB(2.sp, 0, 2.sp, 5.sp),
                         child: ListTile(
                           leading: Container(
-                            padding: const EdgeInsets.all(12),
+                            padding:  EdgeInsets.all(12.sp),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: (history['transactionType'] == 'Credit')
@@ -203,9 +203,9 @@ class _AllActivitiesState extends State<AllActivities> {
                                 "${history['description']} ",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 12.sp,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -213,7 +213,7 @@ class _AllActivitiesState extends State<AllActivities> {
                           ),
                           subtitle: Text(
                             formatDateTime(history['createdAt']),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w300,
                               color: Theme.of(context).primaryColor,
@@ -225,17 +225,17 @@ class _AllActivitiesState extends State<AllActivities> {
                               (history['transactionType'] == 'Credit')
                                   ? Text(
                                       "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: brandOne,
                                       ),
                                     )
                                   : Text(
                                       "- ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: brandOne,
                                       ),
                                     ),
@@ -243,8 +243,8 @@ class _AllActivitiesState extends State<AllActivities> {
                                       'completed')
                                   ? Text(
                                       'Successful',
-                                      style: GoogleFonts.nunito(
-                                        fontSize: 14,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 10.sp,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.green,
                                       ),
@@ -255,16 +255,16 @@ class _AllActivitiesState extends State<AllActivities> {
                                           'failed')
                                       ? Text(
                                           'Failed',
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 14,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10.sp,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.red,
                                           ),
                                         )
                                       : Text(
                                           'Pending',
-                                          style: GoogleFonts.nunito(
-                                            fontSize: 14,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10.sp,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.yellow[800],
                                           ),

@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
@@ -13,6 +16,7 @@ import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/actions/reset_pin.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
+import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -35,6 +39,7 @@ final authControllerProvider =
 });
 
 class AuthController extends StateNotifier<AsyncValue<bool>> {
+  final sessionStateStream = StreamController<SessionState>();
   AuthRepository authRepository;
   bool isLoading = false;
   // bool get loading => _isLoading;
@@ -216,20 +221,20 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       if (response.success) {
         Get.offAll(BvnPage(email: email));
-  
+
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
         message = "Invalid OTP";
         customErrorDialog(context, 'Error', message);
-        
+
         return;
       } else if (response.success == false &&
           response.message.contains("This otp has expired")) {
         message = "This otp has expired";
         // custTomDialog(context, message);
         customErrorDialog(context, 'Error', message);
-  
+
         return;
       }
     } catch (e) {
@@ -271,7 +276,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           context,
           email.toString().toLowerCase(),
         );
-      
+
         return;
       } else {
         print('response.message.toString()');
@@ -341,14 +346,19 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       // print(response.message.toString());
       if (response.success) {
         // await userController.fetchData();
-        Get.offAll(const LoginPage());
+        Get.offAll(
+          LoginPage(
+            sessionStateStream: sessionStateStream,
+            // loggedOutReason: "Logged out because of user inactivity",
+          ),
+        );
         EasyLoading.dismiss();
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'BVN Verified Successfully!!',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -480,8 +490,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future signIn(
-      BuildContext context, email, password, fcmToken, deviceType, deviceModel,
+  Future signIn(BuildContext context, email, password, fcmToken, deviceType,
+      deviceModel, loggedOutReason, sessionStateStream,
       {rememberMe = false}) async {
     isLoading = true;
     if (email.isEmpty || email == '' || password.isEmpty || password == '') {
@@ -524,10 +534,19 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         );
         await GlobalService.sharedPreferencesManager
             .setHasSeenOnboarding(value: true);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          home,
-          (route) => true,
-        );
+        sessionStateStream.add(SessionState.startListening);
+        // print('session started');
+        // print('loggedOutReason');
+        print(sessionStateStream);
+        loggedOutReason = await Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (_) => FirstPage(
+                sessionStateStream: sessionStateStream,
+              ),
+            ),
+            (route) => false);
+        // print('loggedOutReason here');
+        // print(loggedOutReason);
         // Navigator.pushReplacementNamed(context, home);
         // Get.offAll(const FirstPage());
 
@@ -542,7 +561,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           response.message.contains("Incorrect credentials")) {
         // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "Incorrect credentials";
-        customErrorDialog(context, 'Error', message);
+        customErrorDialog(context, 'Oops ):', message);
         // showTopSnackBar(
         //   Overlay.of(context),
         //   CustomSnackBar.error(
@@ -569,6 +588,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
+        resendOtp(context, email);
         // );
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(
@@ -984,8 +1004,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-
-
   Future logout(BuildContext context) async {
     isLoading = true;
     String message;
@@ -1013,7 +1031,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
-        Get.offAll(const LoginPage());
+        Get.offAll(
+          LoginPage(
+            sessionStateStream: sessionStateStream,
+            // loggedOutReason: "Logged out because of user inactivity",
+          ),
+        );
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(builder: (context) => const LoginPage()),
         //     (route) => false);
@@ -1078,7 +1101,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // await userController.fetchData();
         print(userController.userModel!.userDetails![0].isPinSet);
         // await GlobalService.sharedPreferencesManager.savePin(pin);
-        Get.offAll(const FirstPage());
+        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
         EasyLoading.dismiss();
         // redirectingAlert(context, '🎉 Congratulations! 🎉',
         //     'Your pin has been successfully set.','Login');
@@ -1346,14 +1369,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Payment Pin Reset Successful!!',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14.sp,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
         );
-        Get.offAll(const FirstPage());
+        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
@@ -1411,14 +1434,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Payment Pin Changed Successfully!!',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14.sp,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
         );
-        Get.offAll(const FirstPage());
+        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;

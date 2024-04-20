@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as p;
 import 'package:http/http.dart' as http;
-
 
 import 'dart:math';
 import 'package:intl/intl.dart' as intl;
@@ -29,7 +29,7 @@ String vNum = "";
 bool notLoading = true;
 
 class BvnPage extends ConsumerStatefulWidget {
-  const BvnPage({super.key,required this.email});
+  const BvnPage({super.key, required this.email});
   final String email;
 
   @override
@@ -93,7 +93,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
@@ -102,7 +102,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
       decoration: InputDecoration(
         label: Text(
           "11 digits BVN",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -132,7 +132,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
         // fillColor: brandThree,
         hintText: 'e.g 12345678900',
         contentPadding: const EdgeInsets.all(14),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -158,9 +158,9 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
         centerTitle: true,
         title: Text(
           'BVN Details',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 24,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -192,7 +192,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                           padding: const EdgeInsets.symmetric(vertical: 3),
                           child: Text(
                             'Enter BVN',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
@@ -203,7 +203,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                         bvn,
                         Text(
                           _mssg,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,

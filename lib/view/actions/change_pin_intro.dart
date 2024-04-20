@@ -108,7 +108,6 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
             userController.userModel!.userDetails![0].wallet.pin)) {
           _pinController.clear();
 
-         
           Get.to(ChangePIN(pin: val));
         } else {
           EasyLoading.dismiss();
@@ -138,7 +137,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                       alignment: Alignment.center,
                       child: Text(
                         'Enter PIN to Proceed',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -182,7 +181,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                         _pinController.text = _pinController.text + value;
                       });
                     },
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

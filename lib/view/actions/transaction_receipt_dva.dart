@@ -60,9 +60,9 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
         centerTitle: true,
         title: Text(
           'Transaction Details',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 20.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -84,8 +84,8 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                         children: [
                           Text(
                             '+ ${currencyFormat.format(widget.amount)}',
-                            style: GoogleFonts.nunito(
-                              fontWeight: FontWeight.w800,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w700,
                               fontSize: 28.sp,
                               // letterSpacing: 2,
                               color: brandOne,
@@ -94,7 +94,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                           (widget.status.toLowerCase() == 'completed')
                               ? Text(
                                   'Successful',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16.sp,
                                     color: Colors.green,
@@ -103,7 +103,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               : (widget.status.toLowerCase() == 'failed')
                                   ? Text(
                                       'Failed',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16.sp,
                                         color: Colors.red,
@@ -111,7 +111,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                     )
                                   : Text(
                                       'Pending',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16.sp,
                                         color: Colors.yellow[800],
@@ -132,7 +132,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                       ),
                       child: Text(
                         'The Recipient Account is to be credited within 5 minutes, subject to notification by the bank.',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: brandOne.withOpacity(0.7),
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
@@ -154,7 +154,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                           children: [
                             Text(
                               'Amount',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -162,7 +162,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                             ),
                             Text(
                               currencyFormat.format(widget.amount),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -175,7 +175,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                           children: [
                             Text(
                               'Fee',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -183,7 +183,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                             ),
                             Text(
                               currencyFormat.format(double.parse(widget.fees)),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -206,7 +206,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                           children: [
                             Text(
                               'Transaction Details',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
                                 color: brandOne,
@@ -225,7 +225,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 2,
                               child: Text(
                                 'Description',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -238,7 +238,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                 widget.remarks,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13.sp,
                                   color: brandOne,
@@ -258,7 +258,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 2,
                               child: Text(
                                 'Transaction Type',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -272,7 +272,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                     .capitalize!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -292,7 +292,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 2,
                               child: Text(
                                 'Payment Method',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -305,7 +305,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                 'Space Wallet'.capitalizeFirst!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -325,7 +325,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 3,
                               child: Text(
                                 'Transaction Reference',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -342,7 +342,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                     widget.transactionRef,
                                     textAlign: TextAlign.end,
                                     // maxLines: 2,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14.sp,
                                       color: brandOne,
@@ -390,7 +390,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 2,
                               child: Text(
                                 'Merchant Reference',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -403,7 +403,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                 widget.merchantRef,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -423,7 +423,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                               flex: 2,
                               child: Text(
                                 'Transaction Date',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -436,7 +436,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                                 formatDateTime(widget.transactionDate),
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -456,7 +456,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                         //       flex: 1,
                         //       child: Text(
                         //         'Session ID',
-                        //         style: GoogleFonts.nunito(
+                        //         style: GoogleFonts.poppins(
                         //           fontWeight: FontWeight.w600,
                         //           fontSize: 14.sp,
                         //           color: brandTwo,
@@ -473,7 +473,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                         //             widget.remarks.split('/').last,
                         //             textAlign: TextAlign.end,
                         //             // maxLines: 2,
-                        //             style: GoogleFonts.nunito(
+                        //             style: GoogleFonts.poppins(
                         //               fontWeight: FontWeight.w600,
                         //               fontSize: 14.sp,
                         //               color: brandOne,
@@ -510,7 +510,6 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
                         //     ),
                         //   ],
                         // ),
-                     
                       ],
                     )
                   ],
@@ -536,7 +535,7 @@ class _TransactionReceiptDVAState extends State<TransactionReceiptDVA> {
               //       child: Text(
               //         'Share Receipt',
               //         textAlign: TextAlign.center,
-              //         style: GoogleFonts.nunito(
+              //         style: GoogleFonts.poppins(
               //             fontSize: 16.sp, fontWeight: FontWeight.w600),
               //       ),
               //     ),

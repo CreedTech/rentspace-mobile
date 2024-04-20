@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,6 +14,7 @@ import 'dart:io';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../core/helper/helper_route_path.dart';
+import '../FirstPage.dart';
 
 class BiometricsPage extends StatefulWidget {
   BiometricsPage({
@@ -28,6 +30,7 @@ String _message = "Not Authorized";
 bool _hasBiometric = false;
 bool _canShowAuth = false;
 final hasBiometricStorage = GetStorage();
+final sessionStateStream = StreamController<SessionState>();
 String screenInfo = "";
 
 class _BiometricsPageState extends State<BiometricsPage> {
@@ -68,11 +71,18 @@ class _BiometricsPageState extends State<BiometricsPage> {
         });
         Get.put(UserController());
         // Get.to(const FirstPage());
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          // RouteList.pin_code,
-          home,
-          (route) => false,
-        );
+        await Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (_) => FirstPage(
+                sessionStateStream: sessionStateStream,
+              ),
+            ),
+            (route) => false);
+        // Navigator.of(context).pushNamedAndRemoveUntil(
+        //   // RouteList.pin_code,
+        //   home,
+        //   (route) => false,
+        // );
         // await registerControllers().then(Get.to(const FirstPage()));
         //  Get.put(UserController());
         // Get.to(const FirstPage());
@@ -118,11 +128,13 @@ class _BiometricsPageState extends State<BiometricsPage> {
       (hasBiometricStorage.read('hasBiometric') != null &&
               hasBiometricStorage.read('hasBiometric') == true)
           ? checkingForBioMetrics()
-          : Navigator.of(context).pushNamedAndRemoveUntil(
-              // RouteList.pin_code,
-              home,
-              (route) => false,
-            );
+          : Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (_) => FirstPage(
+                  sessionStateStream: sessionStateStream,
+                ),
+              ),
+              (route) => false);
       //  Get.to(const FirstPage()
     });
   }
@@ -167,7 +179,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: Text(
                         screenInfo,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor,
@@ -206,7 +218,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                               ),
                               child: Text(
                                 "Authenticate",
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,

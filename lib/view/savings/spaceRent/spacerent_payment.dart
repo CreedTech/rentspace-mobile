@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/colors.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -118,48 +117,6 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
     }
   }
 
-  // createPayment() async {
-  //   const String apiUrl = 'https://api-d.squadco.com/transaction/initiate';
-  //   const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
-
-  //   final response = await http.post(
-  //     Uri.parse(apiUrl),
-  //     headers: {
-  //       'Authorization': 'Bearer $bearerToken',
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: jsonEncode(<String, String>{
-  //       "amount": (widget.amount * 100).toString(),
-  //       // "email": userController.user[0].email.toString(),
-  //       "currency": "NGN",
-  //       "initiate_type": "inline",
-  //       "transaction_ref": "REN${widget.refId}",
-  //       "callback_url": "https://rentspace.tech/payment-notice/",
-  //       "is_recurring": "true"
-  //     }),
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     // Request successful, handle the response data
-  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
-  //     final checkoutUrl = jsonResponse['data']["checkout_url"];
-  //     print(checkoutUrl);
-  //     setState(() {
-  //       _payUrl = checkoutUrl;
-  //       hasCreatedPayment = true;
-  //       _mssg = "Loading payment modal...";
-  //     });
-  //   } else {
-  //     // Error handling
-  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
-  //     setState(() {
-  //       _mssg = "Payment failed!";
-  //       _mssgBody = jsonResponse["message"].toString();
-  //     });
-  //     print(
-  //         'Request failed with status: ${response.statusCode}, ${response.body}');
-  //   }
-  // }
 
   @override
   void initState() {
@@ -208,7 +165,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),
@@ -219,7 +176,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
                     _mssgBody,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       fontSize: 15,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -244,7 +201,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   CustomSnackBar.error(
                     // backgroundColor: brandOne,
                     message: e.toString(),
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

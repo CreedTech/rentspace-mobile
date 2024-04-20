@@ -188,7 +188,7 @@ class _ForgotPinOTPVerificationPageState
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -204,23 +204,22 @@ class _ForgotPinOTPVerificationPageState
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text: "We've sent a verification code to ",
-                              style: GoogleFonts.nunito(color: brandOne),
+                              style: GoogleFonts.poppins(color: brandOne),
                             ),
                             TextSpan(
                               text: obscureEmail(widget.email),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                           
                           ]),
                     ),
                   ),
@@ -250,7 +249,7 @@ class _ForgotPinOTPVerificationPageState
                             children: [
                               Text(
                                 'Didn\'t receive the mail?',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: brandOne,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -271,7 +270,7 @@ class _ForgotPinOTPVerificationPageState
                                   },
                                   child: Text(
                                     ' Click here',
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: brandTwo,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
@@ -283,7 +282,7 @@ class _ForgotPinOTPVerificationPageState
                           if (isClicked == true)
                             Text(
                               formattedTime,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -307,12 +306,11 @@ class _ForgotPinOTPVerificationPageState
                     setState(() {
                       otpController.text = otpController.text + value;
                     });
-                    
                   },
-                   textStyle: GoogleFonts.nunito(
-                      color: brandOne,
-                      fontSize: 28.sp,
-                    ),
+                  textStyle: GoogleFonts.poppins(
+                    color: brandOne,
+                    fontSize: 28.sp,
+                  ),
                   rightButtonFn: () {
                     if (otpController.text.isEmpty) return;
                     setState(() {

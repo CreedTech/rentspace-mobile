@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/widgets/shimmer_widget.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
@@ -69,7 +70,12 @@ class CounterNew extends GetxController {}
 final counter = Get.put(CounterNew());
 
 class FirstPage extends StatefulWidget {
-  const FirstPage({super.key});
+  final StreamController<SessionState> sessionStateStream;
+  const FirstPage({
+    super.key,
+    required this.sessionStateStream,
+  });
+  //  final sessionStateStream = StreamController<SessionState>();
 
   @override
   _FirstPageState createState() => _FirstPageState();
@@ -78,6 +84,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+
   bool isRefresh = false;
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
   bool isInternetConnected = true;
@@ -202,7 +209,7 @@ class _FirstPageState extends State<FirstPage> {
                           title: Text(
                             'Discover',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 20.0,
                               color: brandOne,
                               fontWeight: FontWeight.w700,
@@ -230,7 +237,7 @@ class _FirstPageState extends State<FirstPage> {
                                     ),
                                     Text(
                                       "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 13.0,
                                         color: brandOne,
                                         fontWeight: FontWeight.w700,
@@ -241,7 +248,7 @@ class _FirstPageState extends State<FirstPage> {
                                     ),
                                     Text(
                                       "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 13.0,
                                         color: brandOne,
                                         fontWeight: FontWeight.w700,
@@ -252,7 +259,7 @@ class _FirstPageState extends State<FirstPage> {
                                     ),
                                     Text(
                                       "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 13.0,
                                         color: brandOne,
                                         fontWeight: FontWeight.w700,
@@ -280,7 +287,7 @@ class _FirstPageState extends State<FirstPage> {
                                       child: Text(
                                         "That's Nice",
                                         textAlign: TextAlign.center,
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.white,
                                           fontSize: 14,
                                           // letterSpacing: 0.3,
@@ -304,7 +311,7 @@ class _FirstPageState extends State<FirstPage> {
                                       .obs() ==
                                   false)
                               ? const TransactionPin()
-                              : const HomePage()
+                              : HomePage()
                       : No_internetScreen(onTap: onTryAgain),
                 ),
               ),

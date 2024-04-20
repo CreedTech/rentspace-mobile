@@ -40,10 +40,10 @@ class IconsContainer extends StatelessWidget {
           ),
           Text(
             IconsName,
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.poppins(
               color: brandOne,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w800,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

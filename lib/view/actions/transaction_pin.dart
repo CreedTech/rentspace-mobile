@@ -50,18 +50,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.nunito(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
+
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -138,6 +127,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
+  
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
@@ -153,7 +143,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                       alignment: Alignment.center,
                       child: Text(
                         'Set Transaction PIN',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -193,7 +183,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                   alignment: Alignment.bottomCenter,
                   child: NumericKeyboard(
                     onKeyboardTap: onKeyboardTap,
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

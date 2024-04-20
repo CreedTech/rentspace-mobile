@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,10 +11,8 @@ import 'package:path/path.dart' as p;
 import 'package:rentspace/constants/icons.dart';
 import 'package:http/http.dart' as http;
 
-
 import 'package:intl/intl.dart' as intl;
 import 'dart:async';
-
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -86,7 +84,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
     //     CustomSnackBar.success(
     //       backgroundColor: brandOne,
     //       message: 'BVN & KYC updated !!.',
-    //       textStyle: GoogleFonts.nunito(
+    //       textStyle: GoogleFonts.poppins(
     //         fontSize: 14,
     //         color: Colors.white,
     //         fontWeight: FontWeight.w700,
@@ -131,7 +129,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
     //                                 child: Text(
     //                                   'Your BVN & KYC has been updated successfully.\n Proceed to add Card',
     //                                   textAlign: TextAlign.center,
-    //                                   style: GoogleFonts.nunito(
+    //                                   style: GoogleFonts.poppins(
     //                                     color: Theme.of(context).primaryColor,
     //                                     fontSize: 20,
     //                                     fontWeight: FontWeight.w500,
@@ -245,7 +243,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -278,7 +276,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter Password to Submit',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -310,10 +308,10 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
         centerTitle: true,
         title: Text(
           'Confirm Details',
-          style: GoogleFonts.nunito(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
+          style: GoogleFonts.poppins(
+              color: Theme.of(context).primaryColor,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700),
         ),
       ),
       body: Stack(
@@ -359,7 +357,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                         children: [
                           Text(
                             "BVN: ${widget.bvnValue}",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 18.0,
                               color: Colors.white,
                             ),
@@ -369,7 +367,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                           ),
                           Text(
                             "KYC: ${widget.kycValue}",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 18.0,
                               color: Colors.white,
                             ),
@@ -384,7 +382,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5, 0, 5),
                       child: Text(
                         "ID card:",
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 18,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -422,7 +420,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'Enter Password to Submit',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,

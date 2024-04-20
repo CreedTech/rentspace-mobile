@@ -190,7 +190,7 @@ class _ElectricityState extends State<Electricity> {
         centerTitle: true,
         title: Text(
           'Electricity - Prepaid',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16.sp,
@@ -210,7 +210,7 @@ class _ElectricityState extends State<Electricity> {
                 child: Column(
                   children: [
                     // CustomDropdown(
-                    //   selectedStyle: GoogleFonts.nunito(
+                    //   selectedStyle: GoogleFonts.poppins(
                     //       color: Theme.of(context).primaryColor,
                     //       fontSize: 14,
                     //       fontWeight: FontWeight.w500),
@@ -253,7 +253,7 @@ class _ElectricityState extends State<Electricity> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Service Provider',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14.sp,
@@ -413,7 +413,7 @@ class _ElectricityState extends State<Electricity> {
                                 AutovalidateMode.onUserInteraction,
                             enableSuggestions: true,
                             cursorColor: Theme.of(context).primaryColor,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14.sp),
 
@@ -473,7 +473,7 @@ class _ElectricityState extends State<Electricity> {
                               filled: false,
                               fillColor: Colors.transparent,
                               contentPadding: EdgeInsets.all(14.sp),
-                              hintStyle: GoogleFonts.nunito(
+                              hintStyle: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w700,
@@ -502,7 +502,7 @@ class _ElectricityState extends State<Electricity> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Meter Number',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14.sp,
@@ -583,7 +583,7 @@ class _ElectricityState extends State<Electricity> {
                               contentPadding: const EdgeInsets.all(14),
                               fillColor: brandThree,
                               hintText: 'Enter Meter Number',
-                              hintStyle: GoogleFonts.nunito(
+                              hintStyle: GoogleFonts.poppins(
                                 color: Colors.grey,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
@@ -627,7 +627,7 @@ class _ElectricityState extends State<Electricity> {
                                     Text(
                                       'Verifying Meter Details',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -638,7 +638,6 @@ class _ElectricityState extends State<Electricity> {
                               ),
                             ),
                           )
-
                         : const SizedBox(),
                     (hasError == true || verifyAccountError != '')
                         ? Padding(
@@ -668,7 +667,7 @@ class _ElectricityState extends State<Electricity> {
                                     flex: 6,
                                     child: Text(
                                       verifyAccountError,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: Colors.red,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -708,7 +707,7 @@ class _ElectricityState extends State<Electricity> {
                                     flex: 6,
                                     child: Text(
                                       electricityName,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,

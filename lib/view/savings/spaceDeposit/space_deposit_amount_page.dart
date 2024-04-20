@@ -95,7 +95,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
       controller: _depositAmountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
@@ -103,7 +103,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
       decoration: InputDecoration(
         label: Text(
           "Target Amount",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -133,14 +133,14 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
         prefix: Text(
           "₦ ",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             fontSize: 15,
             color: Theme.of(context).primaryColor,
           ),
@@ -186,7 +186,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
                         maxLines: 2,
                         minFontSize: 2.0,
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -204,7 +204,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
                               maxLines: 2,
                               minFontSize: 2.0,
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor,
@@ -227,7 +227,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
                               maxLines: 2,
                               minFontSize: 2.0,
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor,
@@ -278,7 +278,7 @@ class _SpaceDepositAmountPageState extends State<SpaceDepositAmountPage> {
                                 child: Text(
                                   "Next",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,

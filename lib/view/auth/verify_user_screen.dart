@@ -72,7 +72,6 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
   @override
   Widget build(BuildContext context) {
-
     validateOTP(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'otp cannot be empty';
@@ -168,7 +167,6 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-       
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -187,6 +185,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 20),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
                                   'assets/icons/verify_mail.png',
@@ -197,7 +196,8 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                 ),
                                 Text(
                                   'Verify your email',
-                                  style: GoogleFonts.nunito(
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22,
@@ -207,10 +207,10 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                 Text(
                                   'Enter a four-digit OTP sent to the provided email address',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 16,
+                                    fontSize: 14.sp,
                                     // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
@@ -238,14 +238,14 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                       text: TextSpan(children: <TextSpan>[
                                         TextSpan(
                                           text: "Didn’t receive code? ",
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                               color: brandOne,
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w400),
                                         ),
                                         TextSpan(
                                           text: 'Resend OTP',
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                               color: brandOne,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 12.sp),
@@ -257,7 +257,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                               : const SizedBox(),
                           Text(
                             formattedTime,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.sp),
@@ -268,10 +268,10 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                           Text(
                             'If you did not get the OTP please go back to re-confirm you entered the correct email address',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: const Color(0xff828282),
                               fontWeight: FontWeight.w400,
-                              fontSize: 12,
+                              fontSize: 10.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
@@ -289,7 +289,8 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   minimumSize: const Size(350, 50),
                                   backgroundColor: (isFilled == true)
                                       ? brandOne
-                                      : const Color.fromARGB(255, 150, 156, 172),
+                                      : const Color.fromARGB(
+                                          255, 150, 156, 172),
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
@@ -311,7 +312,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   'Proceed',
                                   textAlign: TextAlign.center,
                                   style:
-                                      GoogleFonts.nunito(color: Colors.white),
+                                      GoogleFonts.poppins(color: Colors.white),
                                 ),
                               ),
                             ),

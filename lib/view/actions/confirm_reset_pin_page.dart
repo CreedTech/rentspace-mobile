@@ -130,7 +130,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                       alignment: Alignment.center,
                       child: Text(
                         'Confirm New Transaction PIN',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -175,7 +175,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
                             _confirmPinController.text + value;
                       });
                     },
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

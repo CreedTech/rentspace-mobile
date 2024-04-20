@@ -12,7 +12,6 @@ import 'package:rentspace/view/actions/card_topup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 
-
 class FundWallet extends StatefulWidget {
   const FundWallet({super.key});
 
@@ -25,7 +24,6 @@ var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 var dum1 = "".obs;
-
 
 class _FundWalletState extends State<FundWallet> {
   final UserController userController = Get.find();
@@ -54,9 +52,9 @@ class _FundWalletState extends State<FundWallet> {
         ),
         title: Text(
           'Fund Wallet',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 20.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -80,7 +78,7 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   title: Text(
                     'Bank Transfer',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w700,
@@ -88,13 +86,12 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   subtitle: Text(
                     'Add money via your banking platforms',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-               
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -114,7 +111,7 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Rentspace Account Number',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandTwo,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -125,11 +122,11 @@ class _FundWalletState extends State<FundWallet> {
                               Text(
                                 userController
                                     .userModel!.userDetails![0].dvaNumber,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: brandOne,
-                                  fontSize: 30.sp,
+                                  fontSize: 25.sp,
                                   letterSpacing: 4,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               const SizedBox(
@@ -174,7 +171,7 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Bank',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandTwo,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -182,10 +179,10 @@ class _FundWalletState extends State<FundWallet> {
                           ),
                           Text(
                             'Providus Bank',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandOne,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -198,7 +195,7 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Account Name',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandTwo,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -206,10 +203,10 @@ class _FundWalletState extends State<FundWallet> {
                           ),
                           Text(
                             userController.userModel!.userDetails![0].dvaName,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandOne,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -238,7 +235,7 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   title: Text(
                     'Top-up with Card',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w700,
@@ -246,7 +243,7 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   subtitle: Text(
                     'Add money via your bank card',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,

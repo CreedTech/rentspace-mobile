@@ -124,10 +124,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
         centerTitle: true,
         title: Text(
           'Your Space Rents',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -160,10 +160,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               children: [
                                 Text(
                                   'Total Rent Balance',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 16.sp,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 const SizedBox(
@@ -190,8 +190,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                             ),
                             Text(
                               " ${hideBalance ? ch8t.format(totalSavings) : "****"}",
-                              style: GoogleFonts.nunito(
-                                  fontWeight: FontWeight.w900,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 24.sp,
                                   color: brandOne),
                             ),
@@ -214,7 +214,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                     Center(
                                       child: Text(
                                         "Nothing to show",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 20,
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -256,81 +256,24 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          rentController
-                                                              .rentModel!
-                                                              .rents![index]
-                                                              .rentName,
-                                                          style: GoogleFonts
-                                                              .nunito(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color:
-                                                                      brandOne),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5.w,
-                                                        ),
-                                                        (rentController
-                                                                    .rentModel!
-                                                                    .rents![
-                                                                        index]
-                                                                    .hasPaid ==
-                                                                true)
-                                                            ? Tooltip(
-                                                                preferBelow:
-                                                                    false,
-                                                                message:
-                                                                    'Active Payment',
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: brandOne
-                                                                      .withOpacity(
-                                                                          0.9),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20),
-                                                                ),
-                                                                child:
-                                                                    const Icon(
-                                                                  Iconsax
-                                                                      .verify5,
-                                                                  color: Colors
-                                                                      .green,
-                                                                  size: 20,
-                                                                ),
-                                                              )
-                                                            : Tooltip(
-                                                                preferBelow:
-                                                                    false,
-                                                                message:
-                                                                    'Inactive Payment',
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: brandOne
-                                                                      .withOpacity(
-                                                                          0.9),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20),
-                                                                ),
-                                                                child:
-                                                                    const Icon(
-                                                                  Iconsax
-                                                                      .info_circle5,
-                                                                  color: Colors
-                                                                      .red,
-                                                                  size: 20,
-                                                                ),
-                                                              ),
-                                                      ],
+                                                    AutoSizeText(
+                                                      rentController
+                                                          .rentModel!
+                                                          .rents![index]
+                                                          .rentName,
+                                                      maxLines: 2,
+                                                      minFontSize: 2.0,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts
+                                                          .poppins(
+                                                              fontSize:
+                                                                  15.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  brandOne),
                                                     ),
                                                     SizedBox(
                                                       height: 10.h,
@@ -364,14 +307,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w800,
+                                                                            .w600,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -385,9 +327,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -426,14 +367,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w800,
+                                                                            .w600,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -447,9 +387,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -487,14 +426,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w700,
+                                                                            .w600,
                                                                     color: Theme.of(
                                                                             context)
                                                                         .primaryColor,
@@ -508,9 +446,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .nunito(
+                                                                  style: GoogleFonts
+                                                                      .poppins(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -559,7 +496,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                         child: Text(
                                                           ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
                                                           style: GoogleFonts
-                                                              .nunito(
+                                                              .poppins(
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -567,13 +504,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
                                                       // Text(
                                                       //   ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
-                                                      //   style: GoogleFonts.nunito(
+                                                      //   style: GoogleFonts.poppins(
                                                       //     fontSize:
                                                       //         MediaQuery.of(context)
                                                       //                 .size
                                                       //                 .width /
                                                       //             30,
-                                                      //     fontWeight: FontWeight.w700,
+                                                      //     fontWeight: FontWeight.w600,
                                                       //     color: brandOne,
                                                       //   ),
                                                       // ),
@@ -614,7 +551,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                             //     Text(
                                             //       formatDateTime(rentController
                                             //           .rentModel!.rents![index].date),
-                                            //       style: GoogleFonts.nunito(
+                                            //       style: GoogleFonts.poppins(
                                             //         color: brandOne,
                                             //       ),
                                             //     ),
@@ -650,7 +587,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                               child: Text(
                                 'Create New Space rent',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600),
                               ),

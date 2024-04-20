@@ -36,9 +36,9 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
         centerTitle: true,
         title: Text(
           'Transaction Details',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 20,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -64,7 +64,7 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                     //       width: 50,
                     //     ),
                     //     Text('Transaction Receipt',
-                    //     style: GoogleFonts.nunito(
+                    //     style: GoogleFonts.poppins(
                     //       fontWeight: FontWeight.w700,
                     //       fontSize: 14.sp,
                     //       color: brandOne,
@@ -76,8 +76,8 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                         children: [
                           Text(
                             '- ${currencyFormat.format(10000)}',
-                            style: GoogleFonts.nunito(
-                              fontWeight: FontWeight.w800,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w700,
                               fontSize: 28.sp,
                               // letterSpacing: 2,
                               color: brandOne,
@@ -85,7 +85,7 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                           ),
                           Text(
                             'Successful',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               fontSize: 16.sp,
                               color: const Color.fromARGB(255, 1, 197, 8),
@@ -117,7 +117,7 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                     child: Text(
                       'Share Receipt',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
                   ),

@@ -34,9 +34,11 @@ class _No_internetScreenState extends State<No_internetScreen> {
                   Column(
                     children: [
                       Container(
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Theme.of(context).primaryColor.withOpacity(0.2)),
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.2)),
                         child: Padding(
                           padding: EdgeInsets.all(15.h),
                           child: Icon(
@@ -51,9 +53,9 @@ class _No_internetScreenState extends State<No_internetScreen> {
                       ),
                       Text(
                         'No Internet Connection',
-                        style: GoogleFonts.nunito(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w800,
+                        style: GoogleFonts.poppins(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -63,8 +65,8 @@ class _No_internetScreenState extends State<No_internetScreen> {
                       Text(
                         'Internet connection required, please connect to the the internet and try again. Thank you!',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
-                          fontSize: 17.sp,
+                        style: GoogleFonts.poppins(
+                          fontSize: 14.sp,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -95,9 +97,9 @@ class _No_internetScreenState extends State<No_internetScreen> {
                 child: Text(
                   "Try Again",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     color: Colors.white,
-                    fontSize: 14.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

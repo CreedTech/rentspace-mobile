@@ -334,7 +334,7 @@
 //           CustomSnackBar.success(
 //             backgroundColor: brandOne,
 //             message: 'Wallet withdrawal successful.',
-//             textStyle: GoogleFonts.nunito(
+//             textStyle: GoogleFonts.poppins(
 //               fontSize: 14,
 //               color: Colors.white,
 //               fontWeight: FontWeight.w700,
@@ -897,7 +897,7 @@
 //                           (widget.isWallet)
 //                               ? Text(
 //                                   "Note that the withdrawal process will be according to our Terms of use",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 20,
 //                                     letterSpacing: 2.0,
 //                                     color: Theme.of(context).primaryColor,
@@ -905,7 +905,7 @@
 //                                 )
 //                               : Text(
 //                                   "Note that the liquidation process will be according to our Terms of use",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 20,
 //                                     letterSpacing: 0.5,
 //                                     color: Theme.of(context).primaryColor,
@@ -916,7 +916,7 @@
 //                           ),
 //                           Text(
 //                             "Available balance: ${nairaFormaet.format((rentController.rent[widget.index].savedAmount.toInt()) - ((0.025 * rentController.rent[widget.index].savedAmount.toInt()) + 20))}",
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               fontSize: 16,
 //                               color: Theme.of(context).primaryColor,
 //                             ),
@@ -930,7 +930,7 @@
 //                             child: (widget.isWallet)
 //                                 ? Text(
 //                                     "Why do you want to withdraw?",
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       fontSize: 14,
 //                                       //letterSpacing: 2.0,
 //                                       color: Theme.of(context).primaryColor,
@@ -938,7 +938,7 @@
 //                                   )
 //                                 : Text(
 //                                     "Why do you want to liquidate?",
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       fontSize: 14,
 //                                       //letterSpacing: 2.0,
 //                                       color: Theme.of(context).primaryColor,
@@ -955,7 +955,7 @@
 //                                       15.0, 2, 15.0, 2),
 //                                   child: Text(
 //                                     "Where should we send your withdrawal?",
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       fontSize: 14,
 //                                       //letterSpacing: 2.0,
 //                                       color: Theme.of(context).primaryColor,
@@ -990,7 +990,7 @@
 //                                                 20.0, 10, 20.0, 10),
 //                                             child: Text(
 //                                               "Loading banks...",
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 fontSize: 16,
 //                                                 //letterSpacing: 2.0,
 //                                                 color: Theme.of(context)
@@ -1013,7 +1013,7 @@
 //                                           20.0, 10, 20.0, 10),
 //                                       child: Text(
 //                                         _bankAccountName,
-//                                         style: GoogleFonts.nunito(
+//                                         style: GoogleFonts.poppins(
 //                                           fontSize: 16.0,
 //                                           letterSpacing: 0.5,
 //                                           fontWeight: FontWeight.bold,
@@ -1033,7 +1033,7 @@
 //                             child: (widget.isWallet)
 //                                 ? Text(
 //                                     "How much do you want to withdraw?",
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       fontSize: 14,
 //                                       //letterSpacing: 2.0,
 //                                       color: Theme.of(context).primaryColor,
@@ -1041,7 +1041,7 @@
 //                                   )
 //                                 : Text(
 //                                     "How much do you want to liquidate?",
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       fontSize: 14,
 //                                       //letterSpacing: 2.0,
 //                                       color: Theme.of(context).primaryColor,
@@ -1504,13 +1504,13 @@
 //                             child: (widget.isWallet)
 //                                 ?  Text(
 //                                     'Withdraw',
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       color: Colors.white,
 //                                     ),
 //                                   )
 //                                 :  Text(
 //                                     'Liquidate',
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       color: Colors.white,
 //                                     ),
 //                                   ),
@@ -1543,7 +1543,7 @@
 //                             children: [
 //                               Text(
 //                                 "Processing...",
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   fontSize: 20,
 //                                   color: Theme.of(context).primaryColor,
 //                                 ),
@@ -1585,7 +1585,7 @@
 //                         child: Flexible(
 //                           child: Text(
 //                             "kindly confirm your BVN to perform this action.",
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               fontSize: 16.0,
 //                               letterSpacing: 0.5,
 //                               color: Theme.of(context).primaryColor,

@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -51,6 +52,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _aPinController = TextEditingController();
   final TextEditingController _bankListController = TextEditingController();
+  final sessionStateStream = StreamController<SessionState>();
   final withdrawFormKey = GlobalKey<FormState>();
   List<String> _filteredBanks = [];
 
@@ -169,10 +171,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         'Error!',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.red,
                           fontSize: 28,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(
@@ -182,7 +184,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                         "Something went wrong",
                         textAlign: TextAlign.center,
                         style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                            GoogleFonts.poppins(color: brandOne, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -782,7 +784,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         CustomSnackBar.success(
           backgroundColor: Colors.green,
           message: 'Wallet Transfer Successful',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -791,7 +793,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       );
       await fetchUserData(refresh: true);
       EasyLoading.dismiss();
-      Get.offAll(const FirstPage());
+      Get.offAll(FirstPage(
+        sessionStateStream: sessionStateStream,
+      ));
     } else {
       if (context.mounted) {
         customErrorDialog(context, 'Error', 'Something went wrong');
@@ -847,7 +851,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14.sp),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
@@ -886,7 +890,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         contentPadding: const EdgeInsets.all(14),
         filled: false,
         hintText: 'Enter your account number...',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -913,20 +917,20 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.nunito(
+        prefixStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -955,7 +959,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -979,9 +983,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
         title: Text(
           'Transfer Funds',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 20,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -1000,7 +1004,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         "Note that the transfer process will be according to our Terms of use",
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 18.sp,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
@@ -1011,7 +1015,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance - 20)}",
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
@@ -1030,7 +1034,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                                 child: Text(
                                   "How much do you want to transfer?",
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14.sp,
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w600,
@@ -1048,7 +1052,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   const EdgeInsets.fromLTRB(0.0, 5, 0.0, 5),
                               child: Text(
                                 "Where should we send your transfer?",
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   //letterSpacing: 2.0,
                                   color: Theme.of(context).primaryColor,
@@ -1060,16 +1064,16 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 ? Column(
                                     children: [
                                       CustomDropdown(
-                                        selectedStyle: GoogleFonts.nunito(
+                                        selectedStyle: GoogleFonts.poppins(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontSize: 12),
                                         hintText: 'Select Bank',
                                         hintStyle:
-                                            GoogleFonts.nunito(fontSize: 12),
+                                            GoogleFonts.poppins(fontSize: 12),
                                         excludeSelected: true,
                                         fillColor: Colors.transparent,
-                                        listItemStyle: GoogleFonts.nunito(
+                                        listItemStyle: GoogleFonts.poppins(
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .secondary,
@@ -1115,7 +1119,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                       children: [
                                         Text(
                                           "Loading banks...",
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 16,
                                             //letterSpacing: 2.0,
                                             color:
@@ -1145,7 +1149,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   const EdgeInsets.fromLTRB(0.0, 0, 20.0, 10),
                               child: Text(
                                 _bankAccountName,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w700,
                                   color: Theme.of(context).primaryColor,
@@ -1202,11 +1206,11 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                             // ),
                                             Text(
                                               'Enter PIN to Proceed',
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                   fontSize: 18,
                                                   color: Theme.of(context)
                                                       .primaryColor,
-                                                  fontWeight: FontWeight.w800),
+                                                  fontWeight: FontWeight.w700),
                                               textAlign: TextAlign.center,
                                             ),
                                             const SizedBox(
@@ -1377,7 +1381,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                             //   child: Text(
                                             //     'Proceed to Transfer',
                                             //     textAlign: TextAlign.center,
-                                            //     style: GoogleFonts.nunito(
+                                            //     style: GoogleFonts.poppins(
                                             //       color: Colors.white,
                                             //       fontSize: 16,
                                             //       fontWeight: FontWeight.w700,
@@ -1446,10 +1450,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 //               ),
                                 //               Text(
                                 //                 'Invalid',
-                                //                 style: GoogleFonts.nunito(
+                                //                 style: GoogleFonts.poppins(
                                 //                   color: Colors.red,
                                 //                   fontSize: 28,
-                                //                   fontWeight: FontWeight.w800,
+                                //                   fontWeight: FontWeight.w700,
                                 //                 ),
                                 //               ),
                                 //               const SizedBox(
@@ -1458,7 +1462,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 //               Text(
                                 //                 "Please fill the form properly to proceed",
                                 //                 textAlign: TextAlign.center,
-                                //                 style: GoogleFonts.nunito(
+                                //                 style: GoogleFonts.poppins(
                                 //                     color: brandOne,
                                 //                     fontSize: 18),
                                 //               ),
@@ -1475,7 +1479,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             child: Text(
                               'Transfer',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1507,7 +1511,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                         child: Text(
                           "kindly confirm your BVN to perform this action.",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
@@ -1538,7 +1542,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                     child: Text(
                       'Begin Verification',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           fontSize: 14.sp, fontWeight: FontWeight.w600),
                     ),
                   ),

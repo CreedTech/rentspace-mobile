@@ -202,7 +202,7 @@ class _CableScreenState extends State<CableScreen> {
         centerTitle: true,
         title: Text(
           'TV',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16.sp,
@@ -236,7 +236,7 @@ class _CableScreenState extends State<CableScreen> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Service Provider',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14.sp,
@@ -383,7 +383,7 @@ class _CableScreenState extends State<CableScreen> {
                                 AutovalidateMode.onUserInteraction,
                             enableSuggestions: true,
                             cursorColor: Theme.of(context).primaryColor,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14.sp),
 
@@ -443,7 +443,7 @@ class _CableScreenState extends State<CableScreen> {
                               filled: false,
                               fillColor: Colors.transparent,
                               contentPadding: EdgeInsets.all(14.sp),
-                              hintStyle: GoogleFonts.nunito(
+                              hintStyle: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w700,
@@ -472,7 +472,7 @@ class _CableScreenState extends State<CableScreen> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Smart Card Number',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14.sp,
@@ -556,7 +556,7 @@ class _CableScreenState extends State<CableScreen> {
                               contentPadding: const EdgeInsets.all(14),
                               fillColor: brandThree,
                               hintText: 'Enter Smart Card Number',
-                              hintStyle: GoogleFonts.nunito(
+                              hintStyle: GoogleFonts.poppins(
                                 color: Colors.grey,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
@@ -600,7 +600,7 @@ class _CableScreenState extends State<CableScreen> {
                                     Text(
                                       'Verifying Smart Card Details',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -640,7 +640,7 @@ class _CableScreenState extends State<CableScreen> {
                                     flex: 6,
                                     child: Text(
                                       verifyAccountError,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: Colors.red,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -680,7 +680,7 @@ class _CableScreenState extends State<CableScreen> {
                                     flex: 6,
                                     child: Text(
                                       tvName,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -710,7 +710,7 @@ class _CableScreenState extends State<CableScreen> {
                     //             vertical: 3.h, horizontal: 3.w),
                     //         child: Text(
                     //           'Choose Package',
-                    //           style: GoogleFonts.nunito(
+                    //           style: GoogleFonts.poppins(
                     //             color: Theme.of(context).primaryColor,
                     //             fontWeight: FontWeight.w700,
                     //             fontSize: 14.sp,
@@ -860,7 +860,7 @@ class _CableScreenState extends State<CableScreen> {
                     //             AutovalidateMode.onUserInteraction,
                     //         enableSuggestions: true,
                     //         cursorColor: Theme.of(context).primaryColor,
-                    //         style: GoogleFonts.nunito(
+                    //         style: GoogleFonts.poppins(
                     //             color: Theme.of(context).primaryColor,
                     //             fontSize: 14.sp),
 
@@ -920,7 +920,7 @@ class _CableScreenState extends State<CableScreen> {
                     //           filled: false,
                     //           fillColor: Colors.transparent,
                     //           contentPadding: EdgeInsets.all(14.sp),
-                    //           hintStyle: GoogleFonts.nunito(
+                    //           hintStyle: GoogleFonts.poppins(
                     //             color: brandOne,
                     //             fontSize: 12.sp,
                     //             fontWeight: FontWeight.w700,

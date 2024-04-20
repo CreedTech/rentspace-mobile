@@ -211,7 +211,7 @@ class _SpaceDepositConfirmationPageState
                           maxLines: 2,
                           minFontSize: 2.0,
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 16.sp,
                             // letterSpacing: 0.5,
                             color: Colors.white,
@@ -236,7 +236,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Target Amount",
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -247,7 +247,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(int.parse(widget.amount)),
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -271,7 +271,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "${widget.interval} Savings:",
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -282,7 +282,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(double.parse(interestValue)),
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -306,7 +306,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Interest Rate:",
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -316,7 +316,7 @@ class _SpaceDepositConfirmationPageState
                                   ),
                                   Text(
                                     '$interestRate% per annum',
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -340,7 +340,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Frequency:",
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -350,7 +350,7 @@ class _SpaceDepositConfirmationPageState
                                   ),
                                   Text(
                                     widget.interval,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -365,35 +365,37 @@ class _SpaceDepositConfirmationPageState
                       ],
                     ),
                   ),
-                  SizedBox(height: 30.h,),
+                  SizedBox(
+                    height: 30.h,
+                  ),
                   Column(
                     children: [
                       Padding(
-                              padding: const EdgeInsets.only(
-                                top: 12,
-                                bottom: 12,
-                              ),
-                              child: Container(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  'Select Funding Source',
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
+                        padding: const EdgeInsets.only(
+                          top: 12,
+                          bottom: 12,
+                        ),
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Select Funding Source',
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                        ),
+                      ),
                       CustomDropdown(
-                        selectedStyle: GoogleFonts.nunito(
+                        selectedStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12),
                         hintText: 'Select Source?',
-                        hintStyle: GoogleFonts.nunito(fontSize: 12),
+                        hintStyle: GoogleFonts.poppins(fontSize: 12),
                         excludeSelected: true,
                         fillColor: Colors.transparent,
-                        listItemStyle: GoogleFonts.nunito(
+                        listItemStyle: GoogleFonts.poppins(
                             color: Theme.of(context).colorScheme.secondary,
                             fontSize: 12),
                         items: const ['DVA Wallet ', 'Debit Card'],
@@ -454,14 +456,14 @@ class _SpaceDepositConfirmationPageState
                         text: TextSpan(children: <TextSpan>[
                           TextSpan(
                             text: "Accept ",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400),
                           ),
                           TextSpan(
                             text: 'Terms & Conditions',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.sp),
@@ -476,7 +478,7 @@ class _SpaceDepositConfirmationPageState
                       children: [
                         Text(
                           'I acknowledge that if I do not reach my set Target amount by the end date, I will forfeit all interest accrued on this Target Savings',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w400, fontSize: 10),
                         ),
                         SizedBox(
@@ -484,7 +486,7 @@ class _SpaceDepositConfirmationPageState
                         ),
                         Text(
                           'case I break this Target before its end date, I acknowledge that I will forfeit all accrued interest and pay a 1% early withdrawal fee, which is aimed to encourage commitment to the savings goal and cover processing costs.',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w400, fontSize: 10),
                         ),
                       ],
@@ -515,7 +517,7 @@ class _SpaceDepositConfirmationPageState
                   child: Text(
                     "Create Space Deposit",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,

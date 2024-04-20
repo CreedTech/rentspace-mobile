@@ -122,7 +122,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                                         child: Text(
                                           'Insufficient fund. You need to fund your wallet to perform this transaction.',
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             color: brandOne,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -195,7 +195,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'Space Rent Successfully!!',
-              textStyle: GoogleFonts.nunito(
+              textStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -302,7 +302,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Space Rent Creation Successful',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -319,7 +319,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //       CustomSnackBar.success(
         //         backgroundColor: brandOne,
         //         message: 'Space Rent Successfully!!',
-        //         textStyle: GoogleFonts.nunito(
+        //         textStyle: GoogleFonts.poppins(
         //           fontSize: 14,
         //           color: Colors.white,
         //           fontWeight: FontWeight.w700,
@@ -412,7 +412,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //       CustomSnackBar.success(
         //         backgroundColor: brandOne,
         //         message: 'Space Rent Successfully!!',
-        //         textStyle: GoogleFonts.nunito(
+        //         textStyle: GoogleFonts.poppins(
         //           fontSize: 14,
         //           color: Colors.white,
         //           fontWeight: FontWeight.w700,
@@ -530,7 +530,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.nunito(
+              textStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -619,7 +619,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       network, validity) async {
     isLoading = true;
     print("Fields");
- 
+
     isLoading = true;
     if (phoneNumber.isEmpty ||
         phoneNumber == '' ||
@@ -671,7 +671,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.nunito(
+              textStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -836,7 +836,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                         child: Text(
                           'Copy to clipboard',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w700,
@@ -872,7 +872,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.nunito(
+              textStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -1012,7 +1012,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.nunito(
+              textStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

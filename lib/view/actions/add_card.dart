@@ -11,10 +11,8 @@ import 'package:get/get.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 import '../../constants/widgets/custom_dialog.dart';
 
@@ -231,7 +229,7 @@ class _AddCardState extends State<AddCard> {
       //       CustomSnackBar.success(
       //         backgroundColor: brandOne,
       //         message: 'Your details have been updated successfully. !!',
-      //         textStyle: GoogleFonts.nunito(
+      //         textStyle: GoogleFonts.poppins(
       //           fontSize: 14,
       //           color: Colors.white,
       //           fontWeight: FontWeight.w700,
@@ -254,12 +252,12 @@ class _AddCardState extends State<AddCard> {
     }
 
     // final banksList = CustomDropdown(
-    //   selectedStyle: GoogleFonts.nunito(
+    //   selectedStyle: GoogleFonts.poppins(
     //       color: Theme.of(context).primaryColor, fontSize: 14),
     //   hintText: 'Select an option?',
     //   excludeSelected: true,
     //   fillColor: Colors.transparent,
-    //   listItemStyle: GoogleFonts.nunito(
+    //   listItemStyle: GoogleFonts.poppins(
     //       color: Theme.of(context).colorScheme.secondary, fontSize: 14),
     //   items: _bankName,
     //   controller: bankNameController,
@@ -279,7 +277,7 @@ class _AddCardState extends State<AddCard> {
     //   },
     // );
     // final bankOption = DropdownButtonFormField(
-    //   style: GoogleFonts.nunito(
+    //   style: GoogleFonts.poppins(
     //     color: Theme.of(context).primaryColor,
     //     fontSize: 16,
     //     fontWeight: FontWeight.w600,
@@ -300,7 +298,7 @@ class _AddCardState extends State<AddCard> {
     //   },
     //   decoration: InputDecoration(
     //     hintText: 'Choose Bank',
-    //     hintStyle: GoogleFonts.nunito(
+    //     hintStyle: GoogleFonts.poppins(
     //       color: Colors.grey,
     //       fontSize: 12,
     //       fontWeight: FontWeight.w400,
@@ -386,7 +384,7 @@ class _AddCardState extends State<AddCard> {
     //       .toList(),
     //   hintText: 'Choose Bank',
     //   inputDecorationTheme: InputDecorationTheme(
-    //     hintStyle: GoogleFonts.nunito(
+    //     hintStyle: GoogleFonts.poppins(
     //       color: Colors.grey,
     //       fontSize: 12,
     //       fontWeight: FontWeight.w400,
@@ -488,7 +486,7 @@ class _AddCardState extends State<AddCard> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
@@ -530,7 +528,7 @@ class _AddCardState extends State<AddCard> {
         contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -553,9 +551,9 @@ class _AddCardState extends State<AddCard> {
         ),
         title: Text(
           'Add Bank & Card Details',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 20,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -639,10 +637,10 @@ class _AddCardState extends State<AddCard> {
                           ),
                           labelText: 'Number',
                           hintText: 'XXXX XXXX XXXX XXXX',
-                          hintStyle: GoogleFonts.nunito(
+                          hintStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.nunito(
+                          labelStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
                           contentPadding: const EdgeInsets.all(14),
@@ -671,20 +669,20 @@ class _AddCardState extends State<AddCard> {
                                   color: Colors.red,
                                   width: 2.0), // Change color to yellow
                             ),
-                            hintStyle: GoogleFonts.nunito(
+                            hintStyle: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
                             ),
-                            labelStyle: GoogleFonts.nunito(
+                            labelStyle: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
                             ),
                             labelText: 'Expiry Date',
                             hintText: 'XX/XX',
                             contentPadding: const EdgeInsets.all(14)),
                         cvvCodeDecoration: InputDecoration(
-                          hintStyle: GoogleFonts.nunito(
+                          hintStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.nunito(
+                          labelStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
@@ -715,10 +713,10 @@ class _AddCardState extends State<AddCard> {
                           contentPadding: const EdgeInsets.all(14),
                         ),
                         cardHolderDecoration: InputDecoration(
-                          hintStyle: GoogleFonts.nunito(
+                          hintStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.nunito(
+                          labelStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
@@ -756,7 +754,7 @@ class _AddCardState extends State<AddCard> {
                           (cardValidity == "Valid Card" || cardValidity == "")
                               ? ""
                               : "Invalid Card",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 18,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -771,7 +769,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
                         child: Text(
                           (cardExpiry == "Expired Card") ? "Expired Card" : "",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 18,
                             color: (cardValidity == "Expired Card")
                                 ? Colors.greenAccent
@@ -784,7 +782,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 10),
                         child: Text(
                           "Add your bank details",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 16,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -804,13 +802,13 @@ class _AddCardState extends State<AddCard> {
                                   padding: const EdgeInsets.fromLTRB(
                                       15.0, 2, 15.0, 2),
                                   child: CustomDropdown(
-                                    selectedStyle: GoogleFonts.nunito(
+                                    selectedStyle: GoogleFonts.poppins(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 14),
                                     hintText: 'Select an option?',
                                     excludeSelected: true,
                                     fillColor: Colors.transparent,
-                                    listItemStyle: GoogleFonts.nunito(
+                                    listItemStyle: GoogleFonts.poppins(
                                         color: Theme.of(context)
                                             .colorScheme
                                             .secondary,
@@ -850,7 +848,7 @@ class _AddCardState extends State<AddCard> {
                                   const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                               child: Text(
                                 "Loading banks...",
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   // fontFamily: "DefaultFontFamily",
                                   //letterSpacing: 2.0,
@@ -868,7 +866,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                         child: Text(
                           _bankAccountName,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 16.0,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -897,7 +895,7 @@ class _AddCardState extends State<AddCard> {
                         child: Text(
                           'Submit',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(color: Colors.white),
+                          style: GoogleFonts.poppins(color: Colors.white),
                         ),
                       ),
 

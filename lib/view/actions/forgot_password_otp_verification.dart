@@ -84,7 +84,7 @@ class _ForgotPasswordOTPVerificationPageState
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: GoogleFonts.nunito(
+      textStyle: GoogleFonts.poppins(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),
@@ -114,7 +114,7 @@ class _ForgotPasswordOTPVerificationPageState
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.nunito(
+        textStyle: GoogleFonts.poppins(
           fontSize: 20,
           color: Theme.of(context).primaryColor,
         ),
@@ -162,7 +162,7 @@ class _ForgotPasswordOTPVerificationPageState
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -178,20 +178,20 @@ class _ForgotPasswordOTPVerificationPageState
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text: "We've sent a verification code to ",
-                              style: GoogleFonts.nunito(color: brandOne),
+                              style: GoogleFonts.poppins(color: brandOne),
                             ),
                             TextSpan(
                               text: obscureEmail(widget.email),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ]),
@@ -223,7 +223,7 @@ class _ForgotPasswordOTPVerificationPageState
                             children: [
                               Text(
                                 'Didn\'t receive the mail?',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: brandOne,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -244,7 +244,7 @@ class _ForgotPasswordOTPVerificationPageState
                                   },
                                   child: Text(
                                     ' Click here',
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: brandTwo,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
@@ -256,7 +256,7 @@ class _ForgotPasswordOTPVerificationPageState
                           if (isClicked == true)
                             Text(
                               formattedTime,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -270,44 +270,43 @@ class _ForgotPasswordOTPVerificationPageState
               ),
             ),
             Positioned(
-                bottom: 20,
-                left: 0,
-                right: 0,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: NumericKeyboard(
-                    onKeyboardTap: (String value) {
-                      setState(() {
-                        otpController.text =
-                            otpController.text + value;
-                      });
-                    },
-                    textStyle: GoogleFonts.nunito(
-                      color: brandOne,
-                      fontSize: 28.sp,
-                    ),
-                    rightButtonFn: () {
-                      if (otpController.text.isEmpty) return;
-                      setState(() {
-                        otpController.text = otpController.text
-                            .substring(0, otpController.text.length - 1);
-                      });
-                    },
-                    rightButtonLongPressFn: () {
-                      if (otpController.text.isEmpty) return;
-                      setState(() {
-                        otpController.text = '';
-                      });
-                    },
-                   rightIcon: const Icon(
-                      Icons.backspace_outlined,
-                      color: Colors.red,
-                    ),
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: NumericKeyboard(
+                  onKeyboardTap: (String value) {
+                    setState(() {
+                      otpController.text = otpController.text + value;
+                    });
+                  },
+                  textStyle: GoogleFonts.poppins(
+                    color: brandOne,
+                    fontSize: 28.sp,
                   ),
+                  rightButtonFn: () {
+                    if (otpController.text.isEmpty) return;
+                    setState(() {
+                      otpController.text = otpController.text
+                          .substring(0, otpController.text.length - 1);
+                    });
+                  },
+                  rightButtonLongPressFn: () {
+                    if (otpController.text.isEmpty) return;
+                    setState(() {
+                      otpController.text = '';
+                    });
+                  },
+                  rightIcon: const Icon(
+                    Icons.backspace_outlined,
+                    color: Colors.red,
+                  ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
               ),
-            ],
+            ),
+          ],
         ),
       ),
     );

@@ -129,10 +129,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: Colors.green,
           message: 'Your profile picture has been updated successfully. !!',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
       );
@@ -195,10 +195,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     //     CustomSnackBar.success(
     //       backgroundColor: brandOne,
     //       message: 'Your profile picture has been updated successfully. !!',
-    //       textStyle: GoogleFonts.nunito(
+    //       textStyle: GoogleFonts.poppins(
     //         fontSize: 14,
     //         color: Colors.white,
-    //         fontWeight: FontWeight.w700,
+    //         fontWeight: FontWeight.w600,
     //       ),
     //     ),
     //   );
@@ -242,10 +242,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics enabled',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
       );
@@ -263,10 +263,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics enabled',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
           ),
         );
@@ -289,10 +289,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics disabled',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
       );
@@ -310,10 +310,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics disabled',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
           ),
         );
@@ -465,7 +465,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             child: GestureDetector(
                               onTap: () {
                                 _pickImage(context, ImageSource.gallery);
-                             },
+                              },
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
@@ -492,9 +492,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           children: [
                             Text(
                               "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 18.0.sp,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
@@ -525,7 +525,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                       true)
                                   ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
                                   : "Wallet ID: ${userController.userModel!.userDetails![0].wallet.walletId}",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 15.0.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Theme.of(context).primaryColor,
@@ -571,10 +571,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //             userController.userModel!
                               //                 .userDetails![0].referralPoints,
                               //           ),
-                              //           style: GoogleFonts.nunito(
+                              //           style: GoogleFonts.poppins(
                               //             color: brandOne,
                               //             fontSize: 20.sp,
-                              //             fontWeight: FontWeight.w700,
+                              //             fontWeight: FontWeight.w600,
                               //           ),
                               //         ),
                               //         // SizedBox(
@@ -582,7 +582,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //         // ),
                               //         Text(
                               //           'SpacePoints',
-                              //           style: GoogleFonts.nunito(
+                              //           style: GoogleFonts.poppins(
                               //             color: brandOne,
                               //             fontSize: 14.sp,
                               //             fontWeight: FontWeight.w500,
@@ -600,10 +600,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //             userController.userModel!
                               //                 .userDetails![0].referralPoints,
                               //           ),
-                              //           style: GoogleFonts.nunito(
+                              //           style: GoogleFonts.poppins(
                               //             color: brandOne,
                               //             fontSize: 20.sp,
-                              //             fontWeight: FontWeight.w700,
+                              //             fontWeight: FontWeight.w600,
                               //           ),
                               //         ),
                               //         // SizedBox(
@@ -611,7 +611,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //         // ),
                               //         Text(
                               //           'Referral Bonus',
-                              //           style: GoogleFonts.nunito(
+                              //           style: GoogleFonts.poppins(
                               //             color: brandOne,
                               //             fontSize: 14.sp,
                               //             fontWeight: FontWeight.w500,
@@ -628,15 +628,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //   children: [
                               //     Text(
                               //       'Referral Points',
-                              //       style: GoogleFonts.nunito(
+                              //       style: GoogleFonts.poppins(
                               //         color: brandOne,
                               //       ),
                               //     ),
                               //     Text(
                               //       "${valueNotifier.toInt()}%",
-                              //       style: GoogleFonts.nunito(
+                              //       style: GoogleFonts.poppins(
                               //         color: brandOne,
-                              //         fontWeight: FontWeight.w700,
+                              //         fontWeight: FontWeight.w600,
                               //       ),
                               //     ),
                               //   ],
@@ -657,7 +657,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     ),
                                     child: Text(
                                       'SpacePoints',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: Colors.white,
                                       ),
                                     ),
@@ -666,11 +666,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     padding: EdgeInsets.only(right: 20.sp),
                                     child: Text(
                                       userController.userModel!.userDetails![0]
-                                          .utilityPoints.floor().toString(),
-                                      style: GoogleFonts.nunito(
+                                          .utilityPoints
+                                          .floor()
+                                          .toString(),
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
@@ -707,10 +709,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Profile',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () {
@@ -740,10 +742,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Security',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () {
@@ -756,7 +758,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                 ),
               ),
-            
+
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: ListTile(
@@ -773,10 +775,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Referral',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () {
@@ -790,7 +792,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                 ),
               ),
 
-            Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: ListTile(
                   leading: Container(
@@ -806,10 +808,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Contact Us',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () {
@@ -838,10 +840,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'FAQs',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () {
@@ -870,10 +872,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Logout',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   onTap: () async {
@@ -895,7 +897,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                 ),
                                 Text(
                                   'Are you sure you want to logout?',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -931,9 +933,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                         ),
                                         child: Text(
                                           "Yes",
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 14.sp,
                                           ),
                                         ),
@@ -956,15 +958,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle: GoogleFonts.nunito(
+                                          textStyle: GoogleFonts.poppins(
                                               color: brandFour,
                                               fontSize: 13.sp),
                                         ),
                                         child: Text(
                                           "No",
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 14.sp,
                                           ),
                                         ),

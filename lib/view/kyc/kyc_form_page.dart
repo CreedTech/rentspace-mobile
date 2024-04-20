@@ -51,8 +51,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       TextEditingController();
   final TextEditingController _identificatonNumberController =
       TextEditingController();
-  final TextEditingController ninController =
-      TextEditingController();
+  final TextEditingController ninController = TextEditingController();
   final TextEditingController _salaryRangeController = TextEditingController();
   final kycFormKey1 = GlobalKey<FormState>();
   final kycFormKey2 = GlobalKey<FormState>();
@@ -179,6 +178,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       }
       return null;
     }
+
     validateNIN(IdValue) {
       if (IdValue.isEmpty) {
         return 'NIN cannot be empty';
@@ -204,7 +204,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your Full Name",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -234,7 +234,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'legal first name',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -255,7 +255,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your Employer",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -285,7 +285,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'e.g RentSpace',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -307,7 +307,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your email",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -337,7 +337,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'e.g mymail@inbox.com',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -362,14 +362,14 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your previous address",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: 'Enter your previous address...',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -416,14 +416,14 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your current address",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: 'Enter your current address...',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -470,7 +470,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your Phone number",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -501,7 +501,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'e.g 080 123 456 789 ',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -524,7 +524,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your Landlord's Phone number",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -555,7 +555,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'e.g 080 123 456 789',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -569,7 +569,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       controller: _identificatonNumberController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateID,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -578,7 +578,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Your Valid Identification Number",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -611,20 +611,20 @@ class _KYCFormPageState extends State<KYCFormPage> {
         // fillColor: brandThree,
         hintText: 'e.g 12345678900',
         contentPadding: const EdgeInsets.all(14),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     );
-     final ninNumber = TextFormField(
+    final ninNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
       controller: ninController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNIN,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
@@ -633,7 +633,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Your Valid NIN",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -666,21 +666,21 @@ class _KYCFormPageState extends State<KYCFormPage> {
         // fillColor: brandThree,
         hintText: 'e.g 12345678900',
         contentPadding: const EdgeInsets.all(14),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     );
-    
+
     final landlordName = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
       controller: _landlordNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateLandlordFullName,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.name,
@@ -689,7 +689,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       decoration: InputDecoration(
         label: Text(
           "Landord Full Name",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -722,7 +722,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
         // fillColor: brandThree,
         hintText: 'Enter your landlord full name',
         contentPadding: const EdgeInsets.all(14),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -749,9 +749,9 @@ class _KYCFormPageState extends State<KYCFormPage> {
           ),
           title: Text(
             'KYC Verification',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 22,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -785,16 +785,16 @@ class _KYCFormPageState extends State<KYCFormPage> {
                     children: [
                       Text(
                         'Start Your KYC Verifications',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 20,
                           // fontFamily: "DefaultFontFamily",
                         ),
                       ),
                       Text(
                         'Start Your KYC Verification to get access to exclusive 30% loans on your rent.',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: const Color(0xff828282),
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
@@ -823,7 +823,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Full Name',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -845,7 +845,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Email',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -867,7 +867,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Current Address',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -889,7 +889,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Previous Address(Optional)',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -911,7 +911,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Phone Number',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -963,7 +963,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                         child: Text(
                           'Proceed',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(color: Colors.white),
+                          style: GoogleFonts.poppins(color: Colors.white),
                         ),
                       ),
                     ),
@@ -981,16 +981,16 @@ class _KYCFormPageState extends State<KYCFormPage> {
                     children: [
                       Text(
                         'Enter Your Identity Informations',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 20,
                           // fontFamily: "DefaultFontFamily",
                         ),
                       ),
                       Text(
                         'Start Your KYC Verification to get access to exclusive 30% loans on your rent.',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: const Color(0xff828282),
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
@@ -1015,40 +1015,38 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                   height: 20,
                                 ),
                                 Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 3),
-                                            child: Text(
-                                              'Enter your NIN Number',
-                                              style: GoogleFonts.nunito(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16,
-                                                // fontFamily: "DefaultFontFamily",
-                                              ),
-                                            ),
-                                          ),
-                                          ninNumber,
-                                        ],
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 3),
+                                      child: Text(
+                                        'Enter your NIN Number',
+                                        style: GoogleFonts.poppins(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                          // fontFamily: "DefaultFontFamily",
+                                        ),
                                       ),
-                                      const SizedBox(
+                                    ),
+                                    ninNumber,
+                                  ],
+                                ),
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 CustomDropdown(
-                                  selectedStyle: GoogleFonts.nunito(
+                                  selectedStyle: GoogleFonts.poppins(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 14),
                                   hintText: 'Select your valid identity type',
-                                  hintStyle: GoogleFonts.nunito(
+                                  hintStyle: GoogleFonts.poppins(
                                       // color: Theme.of(context).primaryColor,
                                       fontSize: 14),
                                   excludeSelected: true,
                                   fillColor: Colors.transparent,
-                                  listItemStyle: GoogleFonts.nunito(
+                                  listItemStyle: GoogleFonts.poppins(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary,
@@ -1085,7 +1083,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                                 vertical: 3, horizontal: 3),
                                             child: Text(
                                               'Enter your $selectedId Number',
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                                 fontWeight: FontWeight.w700,
@@ -1139,7 +1137,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                         child: Text(
                           'Proceed',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(color: Colors.white),
+                          style: GoogleFonts.poppins(color: Colors.white),
                         ),
                       ),
                     ),
@@ -1158,16 +1156,16 @@ class _KYCFormPageState extends State<KYCFormPage> {
                       Text(
                         'Employment Informations',
                         textAlign: TextAlign.start,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 20,
                         ),
                       ),
                       Text(
                         'Fill in your employment informations.',
                         textAlign: TextAlign.start,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: const Color(0xff828282),
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
@@ -1195,7 +1193,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Employer',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -1217,7 +1215,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Salary Range',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -1226,16 +1224,16 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                       ),
                                     ),
                                     CustomDropdown(
-                                      selectedStyle: GoogleFonts.nunito(
+                                      selectedStyle: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 14),
                                       hintText: 'Select your salary range',
-                                      hintStyle: GoogleFonts.nunito(
+                                      hintStyle: GoogleFonts.poppins(
                                           // color: Theme.of(context).primaryColor,
                                           fontSize: 14),
                                       excludeSelected: true,
                                       fillColor: Colors.transparent,
-                                      listItemStyle: GoogleFonts.nunito(
+                                      listItemStyle: GoogleFonts.poppins(
                                           color: Theme.of(context)
                                               .colorScheme
                                               .secondary,
@@ -1300,7 +1298,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                         child: Text(
                           'Proceed',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(color: Colors.white),
+                          style: GoogleFonts.poppins(color: Colors.white),
                         ),
                       ),
                     ),
@@ -1319,16 +1317,16 @@ class _KYCFormPageState extends State<KYCFormPage> {
                       Text(
                         'Employment Informations',
                         textAlign: TextAlign.start,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 20,
                         ),
                       ),
                       Text(
                         'Fill in your employment informations.',
                         textAlign: TextAlign.start,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: const Color(0xff828282),
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
@@ -1356,7 +1354,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Lanlord\'s Full Name',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -1377,7 +1375,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           vertical: 3, horizontal: 3),
                                       child: Text(
                                         'Lanlord\'s Phone Number',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -1469,11 +1467,11 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                             children: [
                                               Text(
                                                 'KYC Payment',
-                                                style: GoogleFonts.nunito(
+                                                style: GoogleFonts.poppins(
                                                   color: Theme.of(context)
                                                       .primaryColor,
                                                   fontSize: 22.sp,
-                                                  fontWeight: FontWeight.w800,
+                                                  fontWeight: FontWeight.w700,
                                                 ),
                                               ),
                                             ],
@@ -1484,7 +1482,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                           Text(
                                             'By Clicking CONTINUE, You agree to pay the sum ofN 10,000 only, for your KYC verification in order to be qualified for a loan',
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                                 fontSize: 14,
@@ -1513,7 +1511,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                                             child: Text(
                                               'Continue',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: Colors.white,
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500,
@@ -1537,7 +1535,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
                         child: Text(
                           'Submit',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(color: Colors.white),
+                          style: GoogleFonts.poppins(color: Colors.white),
                         ),
                       ),
                     ),

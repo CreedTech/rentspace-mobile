@@ -23,7 +23,6 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
 
   @override
   Widget build(BuildContext context) {
-  
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -116,7 +115,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
                       alignment: Alignment.center,
                       child: Text(
                         'Set New Transaction PIN',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -148,7 +147,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
                   ],
                 ),
               ),
-             Positioned(
+              Positioned(
                 bottom: 20,
                 left: 0,
                 right: 0,
@@ -157,13 +156,12 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
                   child: NumericKeyboard(
                     onKeyboardTap: (String value) {
                       setState(() {
-                        _pinController.text =
-                            _pinController.text + value;
+                        _pinController.text = _pinController.text + value;
                       });
                       print(value);
                       print(_pinController.text);
                     },
-                     textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

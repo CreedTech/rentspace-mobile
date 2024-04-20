@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 //Second page
+import 'dart:async';
 import 'dart:io';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -80,7 +82,6 @@ class _HomePageState extends State<HomePage> {
   //   });
   // }
 
-
   checkIsOpenedApp() {
     if (openedAppStorage.read('hasOpenedApp') == null) {
       openedAppStorage.write('hasOpenedApp', false);
@@ -100,10 +101,10 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   'Welcome Spacer!',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontSize: 20.0,
+                  style: GoogleFonts.poppins(
+                    fontSize: 20.sp,
                     color: brandOne,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 elevation: 0,
@@ -128,10 +129,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
-                          style: GoogleFonts.nunito(
-                            fontSize: 13.0,
+                          style: GoogleFonts.poppins(
+                            fontSize: 11.sp,
                             color: brandOne,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(
@@ -148,17 +149,17 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             elevation: 0,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 15),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40.w, vertical: 15.h),
                             textStyle: const TextStyle(
                                 color: Colors.white, fontSize: 17),
                           ),
                           child: Text(
                             "Start",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 12.sp,
                               // letterSpacing: 0.3,
                               fontWeight: FontWeight.w400,
                             ),
@@ -180,7 +181,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   startShowCase() {
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ShowCaseWidget.of(context).startShowCase([
         counter._one,
@@ -209,174 +209,176 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<bool> checkingForBioMetrics() async {
-    bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-    print(canCheckBiometrics);
-    _authenticateMe();
-    return canCheckBiometrics;
-  }
+  // Future<bool> checkingForBioMetrics() async {
+  //   bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
+  //   print(canCheckBiometrics);
+  //   _authenticateMe();
+  //   return canCheckBiometrics;
+  // }
 
-  Future<void> _authenticateMe() async {
-    bool authenticated = false;
-    try {
-      authenticated = await _localAuthentication.authenticate(
-        localizedReason: "Authentication required",
-      );
-      setState(() {
-        _message = authenticated ? "Authorized" : "Not Authorized";
-      });
-      if (_message == "Authorized") {
-        Get.to(const HomePage());
-      } else {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                title: null,
-                elevation: 0,
-                content: SizedBox(
-                  height: 250.h,
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.sp),
-                              // color: brandOne,
-                            ),
-                            child: Icon(
-                              Iconsax.close_circle,
-                              color: Theme.of(context).primaryColor,
-                              size: 30.sp,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Iconsax.warning_24,
-                          color: Colors.red,
-                          size: 75.sp,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12.sp,
-                      ),
-                      Text(
-                        'Error',
-                        style: GoogleFonts.nunito(
-                          color: Colors.red,
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Text(
-                        "Biometrics failed",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
-                            color: Colors.red, fontSize: 18.sp),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
-      }
-    } catch (e) {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.sp),
-              ),
-              title: null,
-              elevation: 0,
-              content: SizedBox(
-                height: 250.h,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.sp),
-                            // color: brandOne,
-                          ),
-                          child: Icon(
-                            Iconsax.close_circle,
-                            color: Theme.of(context).primaryColor,
-                            size: 30.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Iconsax.warning_24,
-                        color: Colors.red,
-                        size: 75.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12.h,
-                    ),
-                    Text(
-                      'Error',
-                      style: GoogleFonts.nunito(
-                        color: Colors.red,
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Text(
-                      "Biometrics failed",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
-                        color: Colors.red,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    }
-    if (!mounted) return;
-  }
+  // Future<void> _authenticateMe() async {
+  //   bool authenticated = false;
+  //   try {
+  //     authenticated = await _localAuthentication.authenticate(
+  //       localizedReason: "Authentication required",
+  //     );
+  //     setState(() {
+  //       _message = authenticated ? "Authorized" : "Not Authorized";
+  //     });
+  //     if (_message == "Authorized") {
+  //       Get.to(const HomePage());
+  //     } else {
+  //       showDialog(
+  //           context: context,
+  //           barrierDismissible: false,
+  //           builder: (BuildContext context) {
+  //             return AlertDialog(
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(10.sp),
+  //               ),
+  //               title: null,
+  //               elevation: 0,
+  //               content: SizedBox(
+  //                 height: 250.h,
+  //                 child: Column(
+  //                   children: [
+  //                     GestureDetector(
+  //                       onTap: () {
+  //                         Navigator.of(context).pop();
+  //                       },
+  //                       child: Align(
+  //                         alignment: Alignment.topRight,
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                             borderRadius: BorderRadius.circular(30.sp),
+  //                             // color: brandOne,
+  //                           ),
+  //                           child: Icon(
+  //                             Iconsax.close_circle,
+  //                             color: Theme.of(context).primaryColor,
+  //                             size: 30.sp,
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Align(
+  //                       alignment: Alignment.center,
+  //                       child: Icon(
+  //                         Iconsax.warning_24,
+  //                         color: Colors.red,
+  //                         size: 75.sp,
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 12.sp,
+  //                     ),
+  //                     Text(
+  //                       'Error',
+  //                       style: GoogleFonts.poppins(
+  //                         color: Colors.red,
+  //                         fontSize: 28.sp,
+  //                         fontWeight: FontWeight.w600,
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 5.h,
+  //                     ),
+  //                     Text(
+  //                       "Biometrics failed",
+  //                       textAlign: TextAlign.center,
+  //                       style: GoogleFonts.poppins(
+  //                           color: Colors.red, fontSize: 18.sp),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 10.h,
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           });
+  //     }
+  //   } catch (e) {
+  //     showDialog(
+  //         context: context,
+  //         barrierDismissible: false,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(10.sp),
+  //             ),
+  //             title: null,
+  //             elevation: 0,
+  //             content: SizedBox(
+  //               height: 250.h,
+  //               child: Column(
+  //                 children: [
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       Navigator.of(context).pop();
+  //                     },
+  //                     child: Align(
+  //                       alignment: Alignment.topRight,
+  //                       child: Container(
+  //                         decoration: BoxDecoration(
+  //                           borderRadius: BorderRadius.circular(30.sp),
+  //                           // color: brandOne,
+  //                         ),
+  //                         child: Icon(
+  //                           Iconsax.close_circle,
+  //                           color: Theme.of(context).primaryColor,
+  //                           size: 30.sp,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Align(
+  //                     alignment: Alignment.center,
+  //                     child: Icon(
+  //                       Iconsax.warning_24,
+  //                       color: Colors.red,
+  //                       size: 75.sp,
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 12.h,
+  //                   ),
+  //                   Text(
+  //                     'Error',
+  //                     style: GoogleFonts.poppins(
+  //                       color: Colors.red,
+  //                       fontSize: 28.sp,
+  //                       fontWeight: FontWeight.w600,
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 5.h,
+  //                   ),
+  //                   Text(
+  //                     "Biometrics failed",
+  //                     textAlign: TextAlign.center,
+  //                     style: GoogleFonts.poppins(
+  //                       color: Colors.red,
+  //                       fontSize: 18.sp,
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 10.h,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           );
+  //         });
+  //   }
+  //   if (!mounted) return;
+  // }
 
-  void _onItemTapped(int index) {
+  var currentIndex = 0;
+
+  void _onItemTapped(String index) {
     setState(() {
-      _selectedIndex = index;
+      currentIndex = int.parse(index);
     });
   }
 
@@ -407,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text(
                       'Are you sure you want to exit?',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         // fontFamily: "DefaultFontFamily",
@@ -436,16 +438,16 @@ class _HomePageState extends State<HomePage> {
                                 horizontal: 40.w,
                                 vertical: 15.h,
                               ),
-                              textStyle: GoogleFonts.nunito(
+                              textStyle: GoogleFonts.poppins(
                                 color: brandFour,
                                 fontSize: 13.sp,
                               ),
                             ),
                             child: Text(
                               "Yes",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16.sp,
                               ),
                             ),
@@ -469,14 +471,14 @@ class _HomePageState extends State<HomePage> {
                                 horizontal: 40.w,
                                 vertical: 15.h,
                               ),
-                              textStyle: GoogleFonts.nunito(
+                              textStyle: GoogleFonts.poppins(
                                   color: brandFour, fontSize: 13.sp),
                             ),
                             child: Text(
                               "No",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16.sp,
                               ),
                             ),
@@ -508,175 +510,300 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Scaffold(
           body: Center(
-            child: _buildPage(_selectedIndex),
+            child: _buildPage(currentIndex),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon:
-                    // _selectedIndex == 0
-                    //     ? const Icon(Iconsax.home5)
-                    //     : const Icon(Iconsax.home),
-                    Showcase(
-                  key: counter._one,
-                  // titleTextStyle: TextStyle(),
-                  title: 'Home',
-                  description: 'All your dashboard in one place.',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  textColor: Colors.white,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: _selectedIndex == 0
-                      ?  Icon(Iconsax.home5,size: 25.sp)
-                      :  Icon(Iconsax.home,size: 25.sp),
-                  // Image.asset(
-                  //   "assets/icons/home_icon.png",
-                  //   height: 30,
-                  //   width: 30,
-                  //   color: _selectedIndex == 0 ? brandOne : navigationcolorText,
-                  // )
-                  // ,
+          bottomNavigationBar: Container(
+            margin: const EdgeInsets.all(20),
+            height: MediaQuery.of(context).size.width * .155,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: brandOne.withOpacity(.15),
+                  blurRadius: 30,
+                  offset: const Offset(0, 10),
                 ),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._two,
-                  title: 'Savings',
-                  textColor: Colors.white,
-                  description: 'Create, manange and grow your savings',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: _selectedIndex == 1
-                      ?  Icon(Iconsax.activity5,size: 25.sp)
-                      :  Icon(Iconsax.activity,size: 25.sp),
-                ),
-                label: "Savings",
-              ),
-              BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._three,
-                  title: 'Portfolio',
-                  textColor: Colors.white,
-                  description:
-                      'Build your portfolio, improve your finance health',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: _selectedIndex == 2
-                      ? Image.asset(
-                          "assets/icons/carbon_portfolio.png",
-                          // height: 28,
-                          width: 25.sp,
-                          color: Theme.of(context).colorScheme.secondary,
-                        )
-                      : Image.asset(
-                          "assets/icons/carbon_portfolio.png",
-                          // height: 28,
-                          width: 25.sp,
-                          color: navigationcolorText,
+              ],
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: ListView.builder(
+              itemCount: 4,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * .024),
+              itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  setState(
+                    () {
+                      currentIndex = index;
+                    },
+                  );
+                },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 1500),
+                      curve: Curves.fastLinearToSlowEaseIn,
+                      margin: EdgeInsets.only(
+                        bottom: index == currentIndex
+                            ? 0
+                            : MediaQuery.of(context).size.width * .029,
+                        right: MediaQuery.of(context).size.width * .0422,
+                        left: MediaQuery.of(context).size.width * .0422,
+                      ),
+                      width: MediaQuery.of(context).size.width * .128,
+                      height: index == currentIndex
+                          ? MediaQuery.of(context).size.width * .014
+                          : 0,
+                      decoration: const BoxDecoration(
+                        color: brandOne,
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(10),
                         ),
+                      ),
+                    ),
+                    Showcase(
+                      key: showCaseCounter[index],
+                      // titleTextStyle: TextStyle(),
+                      title: showCaseTitle[index],
+                      description: showCaseDesc[index],
+                      disableAnimation: false,
+                      showcaseBackgroundColor: brandOne,
+                      showArrow: true,
+                      textColor: Colors.white,
+                      overlayPadding: const EdgeInsets.all(5),
+                      animationDuration: const Duration(seconds: 2),
+                      child: Icon(
+                        index == currentIndex
+                            ? listOfIcons[index]
+                            : listOfUnselectedIcons[index],
+                        size: MediaQuery.of(context).size.width * .05,
+                        color: index == currentIndex
+                            ? brandOne
+                            : navigationcolorText,
+                      ),
+                    ),
+                    Text(navText[index],style: GoogleFonts.nunito(
+                      fontSize: 12.sp,
+                      color: index == currentIndex? brandOne: Colors.grey,
+                      fontWeight: FontWeight.w600
+                    ),),
+                    SizedBox(height: MediaQuery.of(context).size.width * .03),
+                  ],
                 ),
-                label: "Portfolio",
               ),
-              // BottomNavigationBarItem(
-              //   icon: Showcase(
-              //     key: counter._four,
-              //     title: 'Utility',
-              //     textColor: Colors.white,
-              //     description:
-              //         'Pay your bills directly from your wallet and earn SpacePoint!',
-              //     disableAnimation: false,
-              //     showcaseBackgroundColor: brandOne,
-              //     showArrow: true,
-              //     overlayPadding: const EdgeInsets.all(5),
-              //     animationDuration: const Duration(seconds: 2),
-              //     child: _selectedIndex == 3
-              //         ? Image.asset(
-              //             "assets/icons/utility_icon.png",
-              //             // height: 28,
-              //             width: 20.sp,
-              //             color: Theme.of(context).colorScheme.secondary,
-              //           )
-              //         : Image.asset(
-              //             "assets/icons/utility_icon.png",
-              //             height: 20.sp,
-              //             width: 20.sp,
-              //             color: navigationcolorText,
-              //           ),
-              //   ),
-              //   label: "Utility",
-              // ),
-              
-              BottomNavigationBarItem(
-                icon: Showcase(
-                  key: counter._five,
-                  title: 'Profile',
-                  textColor: Colors.white,
-                  description: 'Manage your account information',
-                  disableAnimation: false,
-                  showcaseBackgroundColor: brandOne,
-                  showArrow: true,
-                  overlayPadding: const EdgeInsets.all(5),
-                  animationDuration: const Duration(seconds: 2),
-                  child: _selectedIndex == 4
-                      ?  Icon(Icons.person,size: 25.sp,)
-                      :  Icon(Icons.person_outline,size: 25.sp),
-                ),
-                label: "Profile",
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            // showUnselectedLabels: true,
-            showSelectedLabels: true,
-
-            selectedItemColor: brandOne,
-            backgroundColor: navigationcolorText,
-            showUnselectedLabels: true,
-            unselectedIconTheme: const IconThemeData(
-              color: navigationcolorText,
             ),
-            unselectedItemColor: navigationcolorText,
-            unselectedLabelStyle:
-                GoogleFonts.nunito(color: navigationcolorText),
-            selectedIconTheme: IconThemeData(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            selectedLabelStyle: GoogleFonts.nunito(
-              color: Theme.of(context).colorScheme.secondary,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w700,
-            ),
-            onTap: _onItemTapped,
-            key: _bottomNavigationKey,
           ),
+          // bottomNavigationBar: BottomNavigationBar(
+          //   items: <BottomNavigationBarItem>[
+          //     BottomNavigationBarItem(
+          //       icon:
+          //           // _selectedIndex == 0
+          //           //     ? const Icon(Iconsax.home5)
+          //           //     : const Icon(Iconsax.home),
+          //           Showcase(
+          //         key: counter._one,
+          //         // titleTextStyle: TextStyle(),
+          //         title: 'Home',
+          //         description: 'All your dashboard in one place.',
+          //         disableAnimation: false,
+          //         showcaseBackgroundColor: brandOne,
+          //         showArrow: true,
+          //         textColor: Colors.white,
+          //         overlayPadding: const EdgeInsets.all(5),
+          //         animationDuration: const Duration(seconds: 2),
+          //         child: _selectedIndex == 0
+          //             ? Icon(Iconsax.home5, size: 25.sp)
+          //             : Icon(Iconsax.home, size: 25.sp),
+          //         // Image.asset(
+          //         //   "assets/icons/home_icon.png",
+          //         //   height: 30,
+          //         //   width: 30,
+          //         //   color: _selectedIndex == 0 ? brandOne : navigationcolorText,
+          //         // )
+          //         // ,
+          //       ),
+          //       label: "Home",
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Showcase(
+          //         key: counter._two,
+          //         title: 'Savings',
+          //         textColor: Colors.white,
+          //         description: 'Create, manange and grow your savings',
+          //         disableAnimation: false,
+          //         showcaseBackgroundColor: brandOne,
+          //         showArrow: true,
+          //         overlayPadding: const EdgeInsets.all(5),
+          //         animationDuration: const Duration(seconds: 2),
+          //         child: _selectedIndex == 1
+          //             ? Icon(Iconsax.activity5, size: 25.sp)
+          //             : Icon(Iconsax.activity, size: 25.sp),
+          //       ),
+          //       label: "Savings",
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Showcase(
+          //         key: counter._three,
+          //         title: 'Portfolio',
+          //         textColor: Colors.white,
+          //         description:
+          //             'Build your portfolio, improve your finance health',
+          //         disableAnimation: false,
+          //         showcaseBackgroundColor: brandOne,
+          //         showArrow: true,
+          //         overlayPadding: const EdgeInsets.all(5),
+          //         animationDuration: const Duration(seconds: 2),
+          //         child: _selectedIndex == 2
+          //             ? Image.asset(
+          //                 "assets/icons/carbon_portfolio.png",
+          //                 // height: 28,
+          //                 width: 25.sp,
+          //                 color: Theme.of(context).colorScheme.secondary,
+          //               )
+          //             : Image.asset(
+          //                 "assets/icons/carbon_portfolio.png",
+          //                 // height: 28,
+          //                 width: 25.sp,
+          //                 color: navigationcolorText,
+          //               ),
+          //       ),
+          //       label: "Portfolio",
+          //     ),
+          //     // BottomNavigationBarItem(
+          //     //   icon: Showcase(
+          //     //     key: counter._four,
+          //     //     title: 'Utility',
+          //     //     textColor: Colors.white,
+          //     //     description:
+          //     //         'Pay your bills directly from your wallet and earn SpacePoint!',
+          //     //     disableAnimation: false,
+          //     //     showcaseBackgroundColor: brandOne,
+          //     //     showArrow: true,
+          //     //     overlayPadding: const EdgeInsets.all(5),
+          //     //     animationDuration: const Duration(seconds: 2),
+          //     //     child: _selectedIndex == 3
+          //     //         ? Image.asset(
+          //     //             "assets/icons/utility_icon.png",
+          //     //             // height: 28,
+          //     //             width: 20.sp,
+          //     //             color: Theme.of(context).colorScheme.secondary,
+          //     //           )
+          //     //         : Image.asset(
+          //     //             "assets/icons/utility_icon.png",
+          //     //             height: 20.sp,
+          //     //             width: 20.sp,
+          //     //             color: navigationcolorText,
+          //     //           ),
+          //     //   ),
+          //     //   label: "Utility",
+          //     // ),
+
+          //     BottomNavigationBarItem(
+          //       icon: Showcase(
+          //         key: counter._five,
+          //         title: 'Profile',
+          //         textColor: Colors.white,
+          //         description: 'Manage your account information',
+          //         disableAnimation: false,
+          //         showcaseBackgroundColor: brandOne,
+          //         showArrow: true,
+          //         overlayPadding: const EdgeInsets.all(5),
+          //         animationDuration: const Duration(seconds: 2),
+          //         child: _selectedIndex == 4
+          //             ? Icon(
+          //                 Icons.person,
+          //                 size: 25.sp,
+          //               )
+          //             : Icon(Icons.person_outline, size: 25.sp),
+          //       ),
+          //       label: "Profile",
+          //     ),
+          //   ],
+          //   currentIndex: _selectedIndex,
+          //   // showUnselectedLabels: true,
+          //   showSelectedLabels: true,
+
+          //   selectedItemColor: brandOne,
+          //   backgroundColor: navigationcolorText,
+          //   showUnselectedLabels: true,
+          //   unselectedIconTheme: const IconThemeData(
+          //     color: navigationcolorText,
+          //   ),
+          //   unselectedItemColor: navigationcolorText,
+          //   unselectedLabelStyle:
+          //       GoogleFonts.poppins(color: navigationcolorText),
+          //   selectedIconTheme: IconThemeData(
+          //     color: Theme.of(context).colorScheme.secondary,
+          //   ),
+          //   selectedLabelStyle: GoogleFonts.poppins(
+          //     color: Theme.of(context).colorScheme.secondary,
+          //     fontSize: 10.sp,
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          //   onTap: _onItemTapped,
+          //   key: _bottomNavigationKey,
+          // ),
         ),
       ),
     );
   }
 
+  List<String> showCaseDesc = [
+    'All your dashboard in one place.',
+    'Create, manange and grow your savings',
+    'Build your portfolio, improve your finance health',
+    'Manage your account information',
+  ];
+
+  List<String> showCaseTitle = [
+    'Home',
+    'Savings',
+    'Portfolio',
+    'Profile',
+  ];
+  List<String> navText = [
+    'Home',
+    'Savings',
+    'Portfolio',
+    'Profile',
+  ];
+  List showCaseCounter = [
+    counter._one,
+    counter._two,
+    counter._three,
+    counter._four,
+  ];
+  List<IconData> listOfIcons = [
+    Iconsax.home5,
+    Iconsax.activity5,
+    Icons.assessment,
+    Icons.person,
+  ];
+  List<IconData> listOfUnselectedIcons = [
+    Iconsax.home,
+    Iconsax.activity,
+    Icons.assessment_outlined,
+    Icons.person_outline,
+  ];
+
   Widget _buildPage(int index) {
     switch (index) {
       case 0:
-        return Dashboard();
+        return const Dashboard();
       case 1:
         return SavingsPage();
       case 2:
         return const PortfolioPage();
       case 3:
-        return SettingsPage();
+        return const SettingsPage();
       // case 4:
       //   return const SettingsPage();
       default:
-        return Dashboard();
+        return const Dashboard();
     }
   }
 }

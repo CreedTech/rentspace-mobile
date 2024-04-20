@@ -103,13 +103,13 @@ class _TransferPageState extends State<TransferPage> {
           "financial_institution": currentCode,
           "account_id": _accountNumberController.text.trim().toString()
         }));
- 
+
     if (response.statusCode == 200) {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-     
+
       final userBankName = jsonResponse['account'][0]["account_name"];
-   
+
       if (userBankName != null && userBankName != 'NA') {
         setState(() {
           _bankAccountName = userBankName;
@@ -190,10 +190,10 @@ class _TransferPageState extends State<TransferPage> {
                       ),
                       Text(
                         'Error!',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.red,
                           fontSize: 28,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(
@@ -203,7 +203,7 @@ class _TransferPageState extends State<TransferPage> {
                         "Something went wrong",
                         textAlign: TextAlign.center,
                         style:
-                            GoogleFonts.nunito(color: brandOne, fontSize: 18),
+                            GoogleFonts.poppins(color: brandOne, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -265,7 +265,7 @@ class _TransferPageState extends State<TransferPage> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
         fontSize: 14.sp,
         fontWeight: FontWeight.w600,
@@ -307,7 +307,7 @@ class _TransferPageState extends State<TransferPage> {
         contentPadding: const EdgeInsets.all(14),
         filled: false,
         hintText: 'Enter 10 digits Account Number',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -317,7 +317,7 @@ class _TransferPageState extends State<TransferPage> {
     final bank = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
         fontSize: 14.sp,
         fontWeight: FontWeight.w600,
@@ -364,7 +364,7 @@ class _TransferPageState extends State<TransferPage> {
         contentPadding: const EdgeInsets.all(14),
         filled: false,
         hintText: _selectedBank ?? 'Tap to select bank',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: _selectedBank == null ? Colors.grey : brandOne,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -389,7 +389,7 @@ class _TransferPageState extends State<TransferPage> {
         centerTitle: true,
         title: Text(
           'Transfer to Bank Account',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
@@ -413,7 +413,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                     child: Text(
                       'Please note that charging of ₦20.00 on all  transfers will be according to our Terms of use',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: brandOne.withOpacity(0.7),
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
@@ -433,7 +433,7 @@ class _TransferPageState extends State<TransferPage> {
                           padding: const EdgeInsets.fromLTRB(10, 5, 0.0, 0),
                           child: Text(
                             "Recipient Account",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 14.sp,
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
@@ -491,7 +491,7 @@ class _TransferPageState extends State<TransferPage> {
                                   Text(
                                     'Verifying Account Details',
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: brandOne,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
@@ -533,7 +533,7 @@ class _TransferPageState extends State<TransferPage> {
                                   flex: 6,
                                   child: Text(
                                     verifyAccountError,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: Colors.red,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
@@ -573,7 +573,7 @@ class _TransferPageState extends State<TransferPage> {
                                   flex: 6,
                                   child: Text(
                                     _bankAccountName,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: brandOne,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
@@ -610,7 +610,7 @@ class _TransferPageState extends State<TransferPage> {
                               withdrawFormKey.currentState!.validate()
                           ? () async {
                               FocusScope.of(context).unfocus();
-                            
+
                               await fetchUserData()
                                   .then(
                                     (value) => Navigator.push(
@@ -639,7 +639,7 @@ class _TransferPageState extends State<TransferPage> {
                       child: Text(
                         'Next',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -665,7 +665,7 @@ class _TransferPageState extends State<TransferPage> {
                         child: Text(
                           "kindly confirm your BVN to perform this action.",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
@@ -697,7 +697,7 @@ class _TransferPageState extends State<TransferPage> {
                     child: Text(
                       'Begin Verification',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           fontSize: 14.sp, fontWeight: FontWeight.w600),
                     ),
                   ),

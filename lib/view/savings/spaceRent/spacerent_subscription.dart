@@ -299,7 +299,7 @@
 //         });
 //         setState(() => _amountValue = text);
 //       },
-//       style: GoogleFonts.nunito(
+//       style: GoogleFonts.poppins(
 //         color: Theme.of(context).primaryColor,
 //       ),
 //       keyboardType: TextInputType.number,
@@ -307,7 +307,7 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "How much is your rent per year?",
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
@@ -334,7 +334,7 @@
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
 //         hintText: 'Rent amount in Naira',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -349,7 +349,7 @@
 //     //   validator: validateOldFunc,
 //     //   // update the state variable when the text changes
 //     //   onChanged: (text) => setState(() => _amountValue = text),
-//     //   style: GoogleFonts.nunito(
+//     //   style: GoogleFonts.poppins(
 //     //     color: Theme.of(context).primaryColor,
 //     //   ),
 //     //   inputFormatters: [ThousandsFormatter()],
@@ -357,7 +357,7 @@
 //     //   decoration: InputDecoration(
 //     //     label: Text(
 //     //       "How much of your rent is left?",
-//     //       style: GoogleFonts.nunito(
+//     //       style: GoogleFonts.poppins(
 //     //         color: Colors.grey,
 //     //         fontSize: 12,
 //     //         fontWeight: FontWeight.w400,
@@ -384,7 +384,7 @@
 //     //     filled: false,
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //     hintText: 'Rent amount in Naira',
-//     //     hintStyle: GoogleFonts.nunito(
+//     //     hintStyle: GoogleFonts.poppins(
 //     //       color: Colors.grey,
 //     //       fontSize: 12,
 //     //       fontWeight: FontWeight.w400,
@@ -477,7 +477,7 @@
 //                   Center(
 //                     child: Text(
 //                       "We Simplified the process for you$varValue",
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                         fontSize: 20.sp,
 //                         fontWeight: FontWeight.bold,
 //                         // letterSpacing: 0.5,
@@ -491,7 +491,7 @@
 //                   (_hasCalculate == 'true')
 //                       ? Text(
 //                           "$varValue",
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             fontSize: 14,
 //                             color: Theme.of(context).primaryColor,
 //                           ),
@@ -522,7 +522,7 @@
 //                             Text(
 //                               'Your rent will be due in ${_calculateDaysDifference()} days',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 fontSize: 14.sp,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
@@ -534,7 +534,7 @@
 //                             Text(
 //                               'Your rent will be due in approximately ${_formatWeeksDifference()}',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 fontSize: 14.sp,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
@@ -546,7 +546,7 @@
 //                             Text(
 //                               'Your rent will be due in approximately ${_calculateMonthsDifference()} months',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 fontSize: 14.sp,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
@@ -592,7 +592,7 @@
 //                               Text(
 //                                 'Select on calendar',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.white,
 //                                   fontSize: 14.sp,
 //                                   fontWeight: FontWeight.w500,
@@ -636,7 +636,7 @@
 //                                 child: Text(
 //                                   "Invalid date. Pick a different date (minimum of 6 months and maximum of 8 months).",
 //                                   textAlign: TextAlign.center,
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 12.sp,
 //                                     color: Colors.red,
 //                                   ),
@@ -657,7 +657,7 @@
 //                                     children: [
 //                                       Text(
 //                                         "",
-//                                         style: GoogleFonts.nunito(
+//                                         style: GoogleFonts.poppins(
 //                                           fontSize: 16,
 //                                           color: Theme.of(context).primaryColor,
 //                                         ),
@@ -753,7 +753,7 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .nunito(
+//                                                               .poppins(
 //                                                             fontSize: 16.sp,
 //                                                             color: Theme.of(
 //                                                                     context)
@@ -771,7 +771,7 @@
 //                                                                   'Total Rent: ',
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .nunito(
+//                                                                           .poppins(
 //                                                                     fontSize:
 //                                                                         16.sp,
 //                                                                     color: Theme.of(
@@ -790,7 +790,7 @@
 //                                                                           .clip,
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .nunito(
+//                                                                           .poppins(
 //                                                                     fontSize:
 //                                                                         16.sp,
 //                                                                     color: Theme.of(
@@ -809,7 +809,7 @@
 //                                                                   'Holding Fee: ',
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .nunito(
+//                                                                           .poppins(
 //                                                                     fontSize:
 //                                                                         16.sp,
 //                                                                     color: Theme.of(
@@ -828,7 +828,7 @@
 //                                                                           .clip,
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .nunito(
+//                                                                           .poppins(
 //                                                                     fontSize:
 //                                                                         16.sp,
 //                                                                     color: Theme.of(
@@ -899,7 +899,7 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .nunito(
+//                                                                         .poppins(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
@@ -990,12 +990,12 @@
 //                                                           Text(
 //                                                             'Oops!!',
 //                                                             style: GoogleFonts
-//                                                                 .nunito(
+//                                                                 .poppins(
 //                                                               color: Colors.red,
 //                                                               fontSize: 28,
 //                                                               fontWeight:
 //                                                                   FontWeight
-//                                                                       .w800,
+//                                                                       .w700,
 //                                                             ),
 //                                                           ),
 //                                                           const SizedBox(
@@ -1006,7 +1006,7 @@
 //                                                             textAlign: TextAlign
 //                                                                 .center,
 //                                                             style: GoogleFonts
-//                                                                 .nunito(
+//                                                                 .poppins(
 //                                                                     color:
 //                                                                         brandOne,
 //                                                                     fontSize:
@@ -1026,7 +1026,7 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for ${_calculateDaysDifference()} days',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             color: Colors.white,
 //                                             fontSize: 14.sp,
 //                                             fontWeight: FontWeight.w500,
@@ -1123,7 +1123,7 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .nunito(
+//                                                               .poppins(
 //                                                             fontSize: 16.sp,
 //                                                             color: Theme.of(
 //                                                                     context)
@@ -1189,7 +1189,7 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .nunito(
+//                                                                         .poppins(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
@@ -1272,11 +1272,11 @@
 //                                             //               Text(
 //                                             //                 'Oops!!',
 //                                             //                 style:
-//                                             //                     GoogleFonts.nunito(
+//                                             //                     GoogleFonts.poppins(
 //                                             //                   color: Colors.red,
 //                                             //                   fontSize: 28,
 //                                             //                   fontWeight:
-//                                             //                       FontWeight.w800,
+//                                             //                       FontWeight.w700,
 //                                             //                 ),
 //                                             //               ),
 //                                             //               const SizedBox(
@@ -1287,7 +1287,7 @@
 //                                             //                 textAlign:
 //                                             //                     TextAlign.center,
 //                                             //                 style:
-//                                             //                     GoogleFonts.nunito(
+//                                             //                     GoogleFonts.poppins(
 //                                             //                         color: brandOne,
 //                                             //                         fontSize: 18),
 //                                             //               ),
@@ -1304,7 +1304,7 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for ${_calculateWeeksDifference()} weeks',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             color: Colors.white,
 //                                             fontSize: 14.sp,
 //                                             fontWeight: FontWeight.w500,
@@ -1401,7 +1401,7 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .nunito(
+//                                                               .poppins(
 //                                                             fontSize: 16.sp,
 //                                                             color: Theme.of(
 //                                                                     context)
@@ -1467,7 +1467,7 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .nunito(
+//                                                                         .poppins(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
@@ -1499,7 +1499,7 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for ${_calculateMonthsDifference()} months',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             color: Colors.white,
 //                                             fontSize: 14.sp,
 //                                             fontWeight: FontWeight.w500,
@@ -1515,7 +1515,7 @@
 //                                         },
 //                                         child: Text(
 //                                           "By proceeding, you agree with our terms and conditions",
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             decoration:
 //                                                 TextDecoration.underline,
 //                                             color: Colors.red,

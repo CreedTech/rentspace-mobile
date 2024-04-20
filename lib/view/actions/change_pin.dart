@@ -23,15 +23,13 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
   final TextEditingController _changePinController = TextEditingController();
   final changePinformKey = GlobalKey<FormState>();
 
-
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.read(authControllerProvider.notifier);
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: GoogleFonts.nunito(
+      textStyle: GoogleFonts.poppins(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),
@@ -141,7 +139,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                       alignment: Alignment.center,
                       child: Text(
                         'Change Transaction PIN',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -186,7 +184,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                             _changePinController.text + value;
                       });
                     },
-                     textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

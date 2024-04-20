@@ -1,6 +1,7 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/icons.dart';
@@ -68,7 +69,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -103,7 +104,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your password',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -131,9 +132,9 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
         centerTitle: true,
         title: Text(
           'Forgot PIN',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 24,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -153,7 +154,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             'Enter your Password',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
@@ -188,7 +189,6 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                     FocusScope.of(context).unfocus();
                                     if (passwordformKey.currentState!
                                         .validate()) {
-                                     
                                       if (!BCrypt.checkpw(
                                         _passwordController.text.trim(),
                                         userController.userModel!
@@ -198,7 +198,6 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                                         customErrorDialog(context, "Invalid!",
                                             "Password is incorrect");
                                       } else {
-                                    
                                         authState.forgotPin(
                                           context,
                                           userController

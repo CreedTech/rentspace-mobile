@@ -47,7 +47,7 @@ class _KYCPaymentState extends State<KYCPayment> {
           ),
         ),
       );
-    createPayment() async {
+  createPayment() async {
     const String apiUrl = 'https://api-d.squadco.com/transaction/initiate';
     const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
 
@@ -108,7 +108,7 @@ class _KYCPaymentState extends State<KYCPayment> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         elevation: 0.0,
@@ -137,7 +137,7 @@ class _KYCPaymentState extends State<KYCPayment> {
                   children: [
                     Text(
                       _mssg,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),
@@ -148,7 +148,7 @@ class _KYCPaymentState extends State<KYCPayment> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
                     _mssgBody,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       fontSize: 15,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -173,7 +173,7 @@ class _KYCPaymentState extends State<KYCPayment> {
                   CustomSnackBar.error(
                     // backgroundColor: brandOne,
                     message: e.toString(),
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -199,6 +199,5 @@ class _KYCPaymentState extends State<KYCPayment> {
               initialUrl: _payUrl,
             ),
     );
-  
   }
 }

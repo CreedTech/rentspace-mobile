@@ -50,9 +50,9 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Center(
                         child: Text(
                           'Something Went Wrong',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 22.sp,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -63,7 +63,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Please check your connection and try again',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 14.sp,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
@@ -72,7 +72,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Confirm that your celluar data or Wi-Fi is on',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 14.sp,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
@@ -81,7 +81,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Confirm that your Rentspace App is given network access',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 14.sp,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
@@ -113,7 +113,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                 child: Text(
                   "Retry",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

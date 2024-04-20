@@ -165,18 +165,17 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   // }
   // import 'dart:math';
 
-int _calculateWeeksDifference() {
-  final startDate = DateTime.now();
-  final endDate = _endDate;
+  int _calculateWeeksDifference() {
+    final startDate = DateTime.now();
+    final endDate = _endDate;
 
-  final differenceInDays = endDate.difference(startDate).inDays;
-  final weeksDifference = (differenceInDays / 7).ceil();
+    final differenceInDays = endDate.difference(startDate).inDays;
+    final weeksDifference = (differenceInDays / 7).ceil();
 
-  // print('weeksDifference: $weeksDifference');
+    // print('weeksDifference: $weeksDifference');
 
-  return weeksDifference.abs();
-}
-
+    return weeksDifference.abs();
+  }
 
   // String _formatWeeksDifference() {
   //   final weeksDifference = _calculateWeeksDifference();
@@ -343,7 +342,7 @@ int _calculateWeeksDifference() {
     //     onMonthChangeStartWithFirstDate: true,
     //     pickerTheme: DateTimePickerTheme(
     //       backgroundColor: brandOne,
-    //       itemTextStyle: GoogleFonts.nunito(color: Colors.white),
+    //       itemTextStyle: GoogleFonts.poppins(color: Colors.white),
     //       itemHeight: 50.h,
     //       pickerHeight: 300.h,
     //       showTitle: true,
@@ -354,7 +353,7 @@ int _calculateWeeksDifference() {
     //       ),
     //       confirm: Text(
     //         'Done',
-    //         style: GoogleFonts.nunito(color: Colors.white),
+    //         style: GoogleFonts.poppins(color: Colors.white),
     //       ),
     //     ),
     //     initialDateTime: selectedDate,
@@ -503,7 +502,7 @@ int _calculateWeeksDifference() {
       validator: validateName,
       // update the state variable when the text changes
       // onChanged: (text) => setState(() => _nameValue = text),
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -511,7 +510,7 @@ int _calculateWeeksDifference() {
       decoration: InputDecoration(
         label: Text(
           "Enter Rent name",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -541,7 +540,7 @@ int _calculateWeeksDifference() {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: '',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -569,7 +568,7 @@ int _calculateWeeksDifference() {
         });
         setState(() => _amountValue = text);
       },
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
@@ -577,7 +576,7 @@ int _calculateWeeksDifference() {
       decoration: InputDecoration(
         label: Text(
           "How much is your rent per year?",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -605,15 +604,15 @@ int _calculateWeeksDifference() {
               color: Colors.red, width: 2.0), // Change color to yellow
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.nunito(
+        prefixStyle: GoogleFonts.poppins(
           color: Colors.black,
           fontSize: 13,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Rent amount in Naira',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -632,7 +631,7 @@ int _calculateWeeksDifference() {
       onTap: () => selectEndDate(context),
       decoration: InputDecoration(
         labelText: 'End Date',
-        labelStyle: GoogleFonts.nunito(
+        labelStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -685,9 +684,9 @@ int _calculateWeeksDifference() {
         ),
         title: Text(
           'Create Spacerent Savings',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -711,9 +710,9 @@ int _calculateWeeksDifference() {
                                 vertical: 4, horizontal: 3),
                             child: Text(
                               'Space Rent Name',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 // fontFamily: "DefaultFontFamily",
                               ),
@@ -733,9 +732,9 @@ int _calculateWeeksDifference() {
                                 vertical: 4, horizontal: 3),
                             child: Text(
                               'Target Amount',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 // fontFamily: "DefaultFontFamily",
                               ),
@@ -755,9 +754,9 @@ int _calculateWeeksDifference() {
                                 vertical: 4, horizontal: 3),
                             child: Text(
                               'Select Frequency',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 // fontFamily: "DefaultFontFamily",
                               ),
@@ -766,14 +765,14 @@ int _calculateWeeksDifference() {
                         ],
                       ),
                       CustomDropdown(
-                        selectedStyle: GoogleFonts.nunito(
+                        selectedStyle: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12),
                         hintText: 'Select frequency',
-                        hintStyle: GoogleFonts.nunito(fontSize: 12),
+                        hintStyle: GoogleFonts.poppins(fontSize: 12),
                         excludeSelected: true,
                         fillColor: Colors.transparent,
-                        listItemStyle: GoogleFonts.nunito(
+                        listItemStyle: GoogleFonts.poppins(
                             color: Theme.of(context).colorScheme.secondary,
                             fontSize: 12),
                         items: intervalLabels,
@@ -809,9 +808,9 @@ int _calculateWeeksDifference() {
                                 vertical: 4, horizontal: 3),
                             child: Text(
                               'End Date',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 // fontFamily: "DefaultFontFamily",
                               ),
@@ -826,7 +825,7 @@ int _calculateWeeksDifference() {
                                   child: Text(
                                     'Due in ${_calculateDaysDifference()} days',
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                       color: Theme.of(context).primaryColor,
@@ -898,10 +897,10 @@ int _calculateWeeksDifference() {
                                     ),
                                     Text(
                                       'Setting up your Savings plan',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                           fontSize: 18.sp,
                                           color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.w800),
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -914,11 +913,11 @@ int _calculateWeeksDifference() {
                                           children: [
                                             Text(
                                               'Total Rent: ',
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,
-                                                  fontWeight: FontWeight.w700),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                             Text(
                                               currencyFormat
@@ -928,11 +927,11 @@ int _calculateWeeksDifference() {
                                                           .replaceAll(',', '')))
                                                   .toString(),
                                               overflow: TextOverflow.clip,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,
-                                                  fontWeight: FontWeight.w700),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                           ],
                                         ),
@@ -942,11 +941,11 @@ int _calculateWeeksDifference() {
                                           children: [
                                             Text(
                                               '$durationType Savings: ',
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,
-                                                  fontWeight: FontWeight.w700),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                             Text(
                                               currencyFormat
@@ -954,11 +953,11 @@ int _calculateWeeksDifference() {
                                                       _savingValue.toString()))
                                                   .toString(),
                                               overflow: TextOverflow.clip,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,
-                                                  fontWeight: FontWeight.w700),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                           ],
                                         ),
@@ -1076,7 +1075,7 @@ int _calculateWeeksDifference() {
                                                                                   child: Text(
                                                                                     'Insufficient fund. You need to fund your wallet to perform this transaction.',
                                                                                     textAlign: TextAlign.center,
-                                                                                    style: GoogleFonts.nunito(
+                                                                                    style: GoogleFonts.poppins(
                                                                                       color: brandOne,
                                                                                       fontSize: 16,
                                                                                       fontWeight: FontWeight.w600,
@@ -1108,7 +1107,7 @@ int _calculateWeeksDifference() {
                                                                                           "Fund Wallet",
                                                                                           style: TextStyle(
                                                                                             color: Colors.white,
-                                                                                            fontWeight: FontWeight.w700,
+                                                                                            fontWeight: FontWeight.w600,
                                                                                             fontSize: 16,
                                                                                           ),
                                                                                         ),
@@ -1162,7 +1161,7 @@ int _calculateWeeksDifference() {
                                               child: Text(
                                                 'Create Space Rent',
                                                 textAlign: TextAlign.center,
-                                                style: GoogleFonts.nunito(
+                                                style: GoogleFonts.poppins(
                                                   color: Colors.white,
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w500,

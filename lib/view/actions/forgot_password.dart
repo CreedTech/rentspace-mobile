@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
 
-
 import 'package:get/get.dart';
 
 import '../../controller/auth/auth_controller.dart';
@@ -23,7 +22,6 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
 
   final forgotPassFormKey = GlobalKey<FormState>();
- 
 
   @override
   initState() {
@@ -45,7 +43,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
@@ -75,7 +73,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your email',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -121,13 +119,12 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ),
       ),
       body: Stack(
         children: [
-        
           ListView(
             children: [
               // SizedBox(
@@ -138,14 +135,12 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                     
                         Text(
                           'Regain access with password recovery.',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: const Color(0xff828282),
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
@@ -169,7 +164,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
                                   'Enter Email',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
@@ -215,7 +210,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                             Text(
                               'Send OTP',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -225,7 +220,6 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                         ),
                       ),
                     ),
-
                     const SizedBox(
                       height: 20,
                     ),

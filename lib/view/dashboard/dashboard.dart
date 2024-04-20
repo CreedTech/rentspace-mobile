@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/parser.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -34,6 +38,8 @@ import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../api/wp-api.dart';
+import '../../constants/utils/responsive_height.dart';
 import '../../constants/widgets/custom_dialog.dart';
 // import '../../controller/settings_controller.dart';
 import '../../constants/widgets/icon_container.dart';
@@ -73,6 +79,7 @@ String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
 bool hideBalance = false;
+int currentPos = 0;
 
 class _DashboardConsumerState extends ConsumerState<Dashboard> {
   final RefreshController refreshController =
@@ -105,6 +112,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
       });
     }
   }
+
   @override
   initState() {
     super.initState();
@@ -144,7 +152,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     // _fetchNews();
   }
 
-
   getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
@@ -169,21 +176,20 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     walletController.fetchWallet();
   }
 
-
   @override
   Widget build(BuildContext context) {
     // final data = ref.watch(userProfileDetailsProvider);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double sliderHeight = sliderDynamicScreen(screenHeight);
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-
       body: Obx(
-        () =>
-           
-            LiquidPullToRefresh(
-          height: 70,
+        () => LiquidPullToRefresh(
+          height: 100,
           animSpeedFactor: 2,
-          color: Colors.white,
-          backgroundColor: brandOne,
+          color: brandOne,
+          backgroundColor: Colors.white,
           showChildOpacityTransition: false,
           onRefresh: onRefresh,
           child: SafeArea(
@@ -218,8 +224,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     borderRadius: BorderRadius.circular(50.sp),
                                     child: CachedNetworkImage(
                                       imageUrl: userController
-                                          .userModel!.userDetails![0].avatar
-                                          .obs(),
+                                          .userModel!.userDetails![0].avatar,
                                       height: 40.h,
                                       width: 40.w,
                                       fit: BoxFit.cover,
@@ -234,8 +239,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       errorWidget: (context, url, error) {
                                         return Image.asset(
                                           'assets/icons/RentSpace-icon.png',
-                                          height: 40.h,
-                                          width: 40.w,
+                                          height: 30.h,
+                                          width: 30.w,
                                           fit: BoxFit.cover,
                                         );
                                       },
@@ -261,19 +266,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 children: [
                                   Text(
                                     "Hi, ${userController.userModel!.userDetails![0].firstName.obs}👋 $dum1",
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 20.0.sp,
-                                      fontWeight: FontWeight.w700,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16.0.sp,
+                                      fontWeight: FontWeight.w500,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
-                                
                                   Text(
                                     _greeting,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 16.0.sp,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14.0.sp,
                                       // letterSpacing: 1.0,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w500,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
@@ -291,11 +295,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               size: 24.sp,
                             ),
                           ),
-                      
                         ],
                       ),
                       SizedBox(
-                        height: 30.h,
+                        height: 15.h,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 0),
@@ -307,7 +310,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     color: brandOne,
                                     borderRadius: BorderRadius.circular(20.sp)),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 24.h),
+                                  padding: EdgeInsets.symmetric(vertical: 26.h),
                                   child: Column(
                                     children: [
                                       Row(
@@ -316,10 +319,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         children: [
                                           Text(
                                             "Space Wallet",
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                               color: Colors.white,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                           SizedBox(
@@ -342,15 +345,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           )
                                         ],
                                       ),
-                                     
                                       SizedBox(
-                                        height: 5.h,
+                                        height: 3.h,
                                       ),
                                       Center(
                                         child: Container(
                                           // width: 280,
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 10.h),
+                                              horizontal: 20.w, vertical: 5.h),
 
                                           child: (walletController
                                                   .isLoading.value)
@@ -365,10 +367,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                               0)
                                                           .toString()
                                                       : "******",
-                                                  style: GoogleFonts.nunito(
+                                                  style: GoogleFonts.poppins(
                                                       fontWeight:
-                                                          FontWeight.w800,
-                                                      fontSize: 25.sp,
+                                                          FontWeight.w600,
+                                                      fontSize: 22.sp,
                                                       color: Colors.white),
                                                 ),
                                         ),
@@ -412,9 +414,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                   ),
                                                   Text(
                                                     'Add Money',
-                                                    style: GoogleFonts.nunito(
+                                                    style: GoogleFonts.poppins(
                                                         fontWeight:
-                                                            FontWeight.w700,
+                                                            FontWeight.w500,
                                                         color: Colors.white,
                                                         fontSize: 14.sp),
                                                   ),
@@ -423,7 +425,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 15.w,
+                                            width: 10.w,
                                           ),
                                           GestureDetector(
                                             onTap: () {
@@ -431,9 +433,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               walletController.fetchWallet();
                                               setState(() {});
                                             },
-                                            child: const Icon(
+                                            child: Icon(
                                               Iconsax.refresh,
                                               color: Colors.white,
+                                              size: 18.sp,
                                             ),
                                           ),
                                         ],
@@ -469,7 +472,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         children: [
                                           Text(
                                             'Space Wallet',
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                               color: Colors.white,
                                               fontSize: 20.sp,
                                               fontWeight: FontWeight.w500,
@@ -510,8 +513,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                           child: Text(
                                             " ${hideBalance ? nairaFormaet.format(userController.userModel!.userDetails![0].wallet.mainBalance).toString() : "********"}",
-                                            style: GoogleFonts.nunito(
-                                                fontWeight: FontWeight.w800,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
                                                 fontSize: 25.sp,
                                                 color: Colors.white),
                                           ),
@@ -528,9 +531,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             Get.to(BvnPage(
                                                 email: userController.userModel!
                                                     .userDetails![0].email));
-                                          } else {
-                                          
-                                          }
+                                          } else {}
                                         },
                                         child: Container(
                                           height: 61.h,
@@ -548,8 +549,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             children: [
                                               Text(
                                                 'Setup Wallet',
-                                                style: GoogleFonts.nunito(
-                                                    fontWeight: FontWeight.w700,
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w500,
                                                     color: Colors.white,
                                                     fontSize: 20.sp),
                                               ),
@@ -569,12 +570,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   ),
                                 ),
                               ),
-
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 25,
+                  // SizedBox(
+                  //   height: 20.h,
+                  // ),
+                  SizedBox(
+                    height: 15.h,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -630,205 +633,183 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       ),
                     ),
                   ),
-
                   SizedBox(
-                    height: 20.h,
+                    height: 15.h,
                   ),
-             
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Container(
-                    width: 400.w,
-                    height: 225.sp,
-                    decoration: BoxDecoration(
-                      color: brandOne,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 24.h, horizontal: 24.w),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/iconset/uil_money-withdrawal.png',
-                                width: 30.w,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                'Transfer Your Funds',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
-                                  color: Colors.white,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(const FundWallet());
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: brandOne,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 120.h, // Adjust height as needed
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  right: -30,
+                                  bottom: -30,
+                                  child: Opacity(
+                                    opacity: 0.2,
+                                    child: Icon(
+                                      Icons.add_circle,
+                                      color: brandTwo,
+                                      size: 120.sp,
+                                    ),
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          Text(
-                            'Your security matters. Transfer with confidence knowing your transactions are encrypted and secure.',
-                            style: GoogleFonts.nunito(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 14.sp,
+                                      top: 13.sp,
+                                      bottom: 20.sp,
+                                      right: 10.sp),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15.sp,
+                                                vertical: 7.sp),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                            ),
+                                            child: Text(
+                                              'Add Money',
+                                              style: GoogleFonts.poppins(
+                                                color: brandOne,
+                                                fontSize: 13.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Top up your wallet for seamless transactions!',
+                                            // overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              (userController.userModel!.userDetails![0].wallet
-                                          .mainBalance >
-                                      0)
-                                  ?
-                                  //  Get.to(
-                                  //     TransactionReceipt())
-                                  Get.to(const TransferPage())
-                                  : customErrorDialog(
-                                      context,
-                                      'Wallet Empty! :)',
-                                      'You need to fund your wallet first!',
-                                    );
-                            },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                height: 49.h,
-                                width: 180.w,
+                        ),
+                      ),
+                      const SizedBox(width: 10), // Adjust spacing between boxes
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(const TransferPage());
+                          },
+                          child: Stack(
+                            children: [
+                              Container(
                                 decoration: BoxDecoration(
                                   color: brandTwo,
-                                  borderRadius: BorderRadius.circular(30.sp),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/iconset/uil_money-withdrawal.png',
-                                      width: 24.w,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Text(
-                                      'Transfer Now',
-                                      style: GoogleFonts.nunito(
-                                        color: Colors.white,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
+                                height: 120.h, // Adjust height as needed
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 14, top: 13, bottom: 20, right: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15.sp,
+                                                vertical: 7.sp),
+                                            decoration: BoxDecoration(
+                                              color: brandOne,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                            ),
+                                            child: Text(
+                                              'Transfer Now',
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                                fontSize: 13.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    )
-                                  ],
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Transfer your funds with ease and security.',
+                                            maxLines: 2,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Container(
-                    width: 400.w,
-                    height: 225.sp,
-                    decoration: BoxDecoration(
-                      color: brandTwo,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 24.h, horizontal: 24.w),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/iconset/fundwallet.png',
-                                width: 30.sp,
-                                color: brandOne,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                'Top Up Your Wallet',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
-                                  color: Colors.white,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
+                              Positioned(
+                                right: -25,
+                                bottom: -25,
+                                child: Opacity(
+                                  opacity: 0.2,
+                                  child: Icon(
+                                    Iconsax.empty_wallet_remove,
+                                    color: brandOne,
+                                    size: 120.sp,
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          Text(
-                            'Top up your wallet for seamless transactions! Add funds now and enjoy a hassle-free experience.',
-                            style: GoogleFonts.nunito(
-                              color: brandOne,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(const FundWallet());
-
-                             },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                height: 49.h,
-                                width: 150.w,
-                                decoration: BoxDecoration(
-                                  color: brandOne,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/iconset/fundwallet.png',
-                                      width: 20.sp,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Text(
-                                      'Fund Now',
-                                      style: GoogleFonts.nunito(
-                                        color: Colors.white,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
 
                   Container(
@@ -843,7 +824,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
                         ),
                         InkWell(
                           onTap: () {
@@ -852,22 +833,37 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               CustomSnackBar.error(
                                 backgroundColor: brandOne,
                                 message: 'Coming Soon :)',
-                                textStyle: GoogleFonts.nunito(
+                                textStyle: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             );
                           },
                           child: Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                            padding:
+                                EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 20.sp),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: brandTwo,
                             ),
-                            child: Column(
+                            child: 
+                            // const Row(
+                            //   children: [
+                            //     Flexible(
+                            //       flex: 2,
+                            //       child: Icon(Icons.share),
+                            //     ),
+                            //     Flexible(
+                            //       flex: 10,
+                            //       child: Text(
+                            //           'Refer Your Friends and Earnjfjsdjgbfdfsjgdfkndfsvkjvfbgfnkdbsvskfbgfnkdsvkfjbgfndlsvfdlgfnbdlbklgfndlkblkgdklfbklgf'),
+                            //     ),
+                            //   ],
+                            // ),
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -894,10 +890,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         children: [
                                           Text(
                                             "RentSpace community",
-                                            style: GoogleFonts.nunito(
-                                              fontSize: 18.0.sp,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16.0.sp,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.w700,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                           SizedBox(
@@ -905,7 +901,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                           Text(
                                             "View the amazing community\nof other Spacers!",
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                                 fontSize: 12.0.sp,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400),
@@ -917,11 +913,149 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 ),
                               ],
                             ),
+                         
                           ),
                         ),
+                      
                         SizedBox(
                           height: 20.h,
                         ),
+                        // Align(
+                        //   alignment: Alignment.centerLeft,
+                        //   child: Text(
+                        //     "Blog Section",
+                        //     textAlign: TextAlign.left,
+                        //     style: GoogleFonts.poppins(
+                        //         color: brandOne, fontSize: 15.sp),
+                        //   ),
+                        // ),
+                        // Container(
+                        //   height: 250.h,
+                        //   child: FutureBuilder(
+                        //     future: fetchWpPosts(),
+                        //     builder: (context, AsyncSnapshot snapshot) {
+                        //       if (snapshot.hasData) {
+                        //         return CarouselSlider.builder(
+                        //           itemCount: snapshot.data.length,
+                        //           itemBuilder: (context, index, realIndex) {
+                        //             Map wppost = snapshot.data[index];
+                        //             var imageurl = wppost['_embedded']
+                        //                 ['wp:featuredmedia'][0]['source_url'];
+                        //             return Padding(
+                        //               padding: const EdgeInsets.only(
+                        //                   top: 10, left: 0, right: 0),
+                        //               child: InkWell(
+                        //                 onTap: () {},
+                        //                 child: Column(
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.start,
+                        //                   crossAxisAlignment:
+                        //                       CrossAxisAlignment.start,
+                        //                   children: [
+                        //                     Stack(
+                        //                       children: [
+                        //                         ClipRRect(
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(
+                        //                                   10.0),
+                        //                           child: CachedNetworkImage(
+                        //                             width: 160
+                        //                                 .w, // Adjust the width as needed
+                        //                             height: 160
+                        //                                 .h, // Adjust the height as needed
+                        //                             imageUrl: imageurl ?? '',
+                        //                             fit: BoxFit.cover,
+                        //                             placeholder:
+                        //                                 (context, url) {
+                        //                               return Container(
+                        //                                 width:
+                        //                                     100, // Adjust the width as needed
+                        //                                 height:
+                        //                                     100, // Adjust the height as needed
+                        //                                 child: CustomLoader(),
+                        //                               );
+                        //                             },
+                        //                             errorWidget:
+                        //                                 (context, url, error) =>
+                        //                                     Container(
+                        //                               width:
+                        //                                   100, // Adjust the width as needed
+                        //                               height:
+                        //                                   100, // Adjust the height as needed
+                        //                               child: Image.asset(
+                        //                                   'assets/images/logo_full.png'),
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                       ],
+                        //                     ),
+                        //                     Padding(
+                        //                       padding:
+                        //                           const EdgeInsets.symmetric(
+                        //                         horizontal: 0.0,
+                        //                       ),
+                        //                       child: Column(
+                        //                         children: [
+                        //                           Padding(
+                        //                             padding:
+                        //                                 const EdgeInsets.only(
+                        //                               right: 10,
+                        //                             ),
+                        //                             child: Html(
+                        //                                 style: {
+                        //                                   "body": Style(
+                        //                                       padding:
+                        //                                           HtmlPaddings
+                        //                                               .zero,
+                        //                                       margin:
+                        //                                           Margins.zero,
+                        //                                       textOverflow:
+                        //                                           TextOverflow
+                        //                                               .clip,
+                        //                                       maxLines: 2,
+                        //                                       fontFamily:
+                        //                                           "Poppins",
+                        //                                       fontSize: screenWidth >
+                        //                                               400
+                        //                                           ? FontSize
+                        //                                               .small
+                        //                                           : FontSize
+                        //                                               .smaller,
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .w500,
+                        //                                       color: brandOne),
+                        //                                 },
+                        //                                 data: wppost['title']
+                        //                                     ['rendered']),
+                        //                           ),
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           },
+                        //           options: CarouselOptions(
+                        //             onPageChanged: ((index, reason) {
+                        //               setState(() {
+                        //                 currentPos = index;
+                        //               });
+                        //             }),
+                        //             autoPlay: true,
+                        //             height: sliderHeight + 50,
+                        //             enlargeCenterPage: false,
+                        //             viewportFraction: 0.5,
+                        //           ),
+                        //         );
+
+                        //       }
+                        //       return CustomLoader();
+                        //     },
+                        //   ),
+                        // ),
+                     
                       ],
                     ),
                   ),
@@ -981,10 +1115,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                   children: [
                     Text(
                       'No internet Connection',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           color: brandOne,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w800),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 6.h,
@@ -992,42 +1126,56 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                     Text(
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           color: brandOne,
-                          fontSize: 15.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 22.h,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        Navigator.pop(context, 'Cancel');
-                        setState(() => isAlertSet = false);
-                        isDeviceConnected =
-                            await InternetConnectionChecker().hasConnection;
-                        if (!isDeviceConnected && isAlertSet == false) {
-                          // showDialogBox();
-                          noInternetConnectionScreen(context);
-                          setState(() => isAlertSet = true);
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: brandOne,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(13),
-                          child: Align(
-                            child: Text(
-                              'Try Again',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
-                                color: Colors.white,
-                                fontSize: 19.sp,
-                                fontWeight: FontWeight.w800,
-                              ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
                             ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          // Timer
+
+                          // EasyLoading.show(
+                          //   indicator: const CustomLoader(),
+                          //   maskType: EasyLoadingMaskType.black,
+                          //   dismissOnTap: false,
+                          // );
+
+                          // Navigator.pop(context, 'Cancel');
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),

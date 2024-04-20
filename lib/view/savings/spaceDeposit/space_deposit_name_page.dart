@@ -116,7 +116,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                         maxLines: 2,
                         minFontSize: 2.0,
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -134,7 +134,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                               maxLines: 2,
                               minFontSize: 2.0,
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor,
@@ -157,7 +157,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                               maxLines: 2,
                               minFontSize: 2.0,
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor,
@@ -184,7 +184,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                 validator: validateName,
                                 // update the state variable when the text changes
                                 // onChanged: (text) => setState(() => _nameValue = text),
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Theme.of(context).primaryColor,
                                 ),
                                 keyboardType: TextInputType.text,
@@ -192,7 +192,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                 decoration: InputDecoration(
                                   label: Text(
                                     "Enter name",
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: Colors.grey,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
@@ -224,7 +224,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),
                                   hintText: 'E.g First deposit',
-                                  hintStyle: GoogleFonts.nunito(
+                                  hintStyle: GoogleFonts.poppins(
                                     color: Colors.grey,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -258,7 +258,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                 child: Text(
                                   "Next",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,

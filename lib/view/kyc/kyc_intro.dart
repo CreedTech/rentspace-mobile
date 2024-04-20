@@ -39,9 +39,9 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
                     Text(
                       'KYC Verification',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: brandOne,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         fontSize: 23.sp,
                       ),
                     ),
@@ -51,7 +51,7 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
                     Text(
                       "Start Your KYC Verification to get access to exclusive 30% loans on your rent",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: brandOne,
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
                           child: Text(
                             'Get Started',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -130,9 +130,9 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
           //       alignment: Alignment.topLeft,
           //       child: Text(
           //         'Identity Verification',
-          //         style: GoogleFonts.nunito(
+          //         style: GoogleFonts.poppins(
           //           color: brandOne,
-          //           fontWeight: FontWeight.w800,
+          //           fontWeight: FontWeight.w700,
           //           fontSize: 23.sp,
           //         ),
           //       ),
@@ -142,7 +142,7 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
           //     ),
           //     Text(
           //       "Help us verify your account by choosing one of the below options below. Thank you for using swift",
-          //       style: GoogleFonts.nunito(
+          //       style: GoogleFonts.poppins(
           //         color: brandOne,
           //         fontSize: 15.sp,
           //         fontWeight: FontWeight.w600,
@@ -167,7 +167,7 @@ class _KYCIntroPageState extends State<KYCIntroPage> {
           //             child: Text(
           //               'Take Loan',
           //               textAlign: TextAlign.center,
-          //               style: GoogleFonts.nunito(
+          //               style: GoogleFonts.poppins(
           //                 color: Colors.white,
           //                 fontSize: 16,
           //                 fontWeight: FontWeight.w700,

@@ -17,16 +17,16 @@ class RouterGenerator {
   Route<dynamic> generate(RouteSettings settings) {
     final arguments = settings.arguments;
     switch (settings.name) {
-      case root:
-        return MaterialPageRoute(
-          builder: (context) => const SplashScreen(),
-          settings: const RouteSettings(name: root),
-        );
-      case home:
-        return MaterialPageRoute(
-          builder: (context) => const FirstPage(),
-          settings: const RouteSettings(name: home),
-        );
+      // case root:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const SplashScreen(),
+      //     settings: const RouteSettings(name: root),
+      //   );
+      // case home:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const FirstPage(),
+      //     settings: const RouteSettings(name: home),
+      //   );
       // case newNotification:
       //   return MaterialPageRoute(
       //     builder: (context) => const NewNotificationPage(),
@@ -81,11 +81,11 @@ class RouterGenerator {
       //     ),
       //     settings: const RouteSettings(name: finish),
       //   );
-      case login:
-        return MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-          settings: const RouteSettings(name: login),
-        );
+      // case login:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const LoginPage(),
+      //     settings: const RouteSettings(name: login),
+      //   );
       // case forgotPass:
       //   return MaterialPageRoute(
       //     builder: (context) => const ForgotPasswordView(),

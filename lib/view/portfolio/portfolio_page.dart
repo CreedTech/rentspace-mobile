@@ -47,8 +47,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final UserController userController = Get.find();
   final RentController rentController = Get.find();
   getUser() async {
-
-
     setState(() {
       // _totalInterest =
       //     userController.userModel!.userDetails![0].totalInterests;
@@ -97,10 +95,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
         centerTitle: true,
         title: Text(
           'Portfolio',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -143,11 +141,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         children: [
                           Text(
                             "Portfolio Overview",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 16.0.sp,
                               // letterSpacing: 0.5,
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           const SizedBox(
@@ -155,7 +153,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           ),
                           Text(
                             "Manage your account portfolio",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               fontSize: 12.0.sp,
                               // letterSpacing: 0.5,
                               fontWeight: FontWeight.w400,
@@ -180,21 +178,21 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   children: [
                                     Text(
                                       "Total interests:",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
 
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalInterest),
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                   ],
@@ -214,21 +212,21 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   children: [
                                     Text(
                                       "Total savings:",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
 
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalSavings),
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                   ],
@@ -248,22 +246,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   children: [
                                     Text(
                                       "Total loans:",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
 
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                     Text(
                                       nairaFormaet
                                           .format(double.parse(_loanAmount)),
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                   ],
@@ -283,21 +281,21 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   children: [
                                     Text(
                                       "Total debts:",
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
 
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalDebts),
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
-                                        color: Colors.black,
+                                        color: brandOne,
                                       ),
                                     ),
                                   ],
@@ -320,12 +318,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       children: [
                         Text(
                           "Portfolio Actions",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 20.0.sp,
                             // letterSpacing: 0.5,
 
                             color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Container(
@@ -362,7 +360,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ),
                             title: Text(
                               'Loan',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w600,
@@ -370,7 +368,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ),
                             subtitle: Text(
                               "Access Your Loan",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 12.0.sp,
                                 // letterSpacing: 0.5,
 
@@ -423,29 +421,30 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height: 45.h,
+                                                  height: 30.h,
                                                 ),
                                                 Align(
                                                   alignment: Alignment.center,
                                                   child: Image.asset(
                                                     'assets/cancel_round.png',
-                                                    width: 100.w,
+                                                    width: 70.w,
                                                     color: brandOne,
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height: 50.h,
+                                                  height: 30.h,
                                                 ),
                                                 Column(
                                                   children: [
                                                     Text(
                                                       'Loan not Available',
-                                                      style: GoogleFonts.nunito(
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                         color: Theme.of(context)
                                                             .primaryColor,
                                                         fontSize: 22.sp,
                                                         fontWeight:
-                                                            FontWeight.w800,
+                                                            FontWeight.w700,
                                                       ),
                                                     ),
                                                   ],
@@ -456,10 +455,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                 Text(
                                                   'You currently do not qualify for a rent loan. You would need to save up to 70% of your total rent CONSISTENTLY!!! to qualify',
                                                   textAlign: TextAlign.center,
-                                                  style: GoogleFonts.nunito(
+                                                  style: GoogleFonts.poppins(
                                                       color: Theme.of(context)
                                                           .primaryColor,
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w400),
                                                 ),
@@ -489,7 +488,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   child: Text(
                                                     'Go Back',
                                                     textAlign: TextAlign.center,
-                                                    style: GoogleFonts.nunito(
+                                                    style: GoogleFonts.poppins(
                                                       color: Colors.white,
                                                       fontSize: 14.sp,
                                                       fontWeight:
@@ -543,7 +542,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                         title: Text(
                           'Credit Score',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
@@ -551,7 +550,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                         subtitle: Text(
                           "Build your credit score",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontSize: 12.0.sp,
                             // letterSpacing: 0.5,
 
@@ -564,10 +563,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             CustomSnackBar.success(
                               backgroundColor: brandOne,
                               message: 'Coming soon !!',
-                              textStyle: GoogleFonts.nunito(
+                              textStyle: GoogleFonts.poppins(
                                 fontSize: 14.sp,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           );
@@ -604,7 +603,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //       ),
                   //       title: Text(
                   //         'Finance Health',
-                  //         style: GoogleFonts.nunito(
+                  //         style: GoogleFonts.poppins(
                   //           color: Theme.of(context).primaryColor,
                   //           fontSize: 17,
                   //           fontWeight: FontWeight.w600,
@@ -612,7 +611,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //       ),
                   //       subtitle: Text(
                   //         "Free finance health checker",
-                  //         style: GoogleFonts.nunito(
+                  //         style: GoogleFonts.poppins(
                   //           fontSize: 14.0,
                   //           // letterSpacing: 0.5,
 
@@ -648,10 +647,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //         CustomSnackBar.success(
                   //           backgroundColor: brandOne,
                   //           message: 'Coming soon !!',
-                  //           textStyle: GoogleFonts.nunito(
+                  //           textStyle: GoogleFonts.poppins(
                   //             fontSize: 14,
                   //             color: Colors.white,
-                  //             fontWeight: FontWeight.w700,
+                  //             fontWeight: FontWeight.w600,
                   //           ),
                   //         ),
                   //       );
@@ -676,7 +675,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //         fontWeight: FontWeight.bold,
                   //         fontFamily: "DefaultFontFamily",
                   //         letterSpacing: 0.5,
-                  //         color: Colors.black,
+                  //         color: brandOne,
                   //       ),
                   //     ),
                   //     subtitle: const Text(
@@ -685,12 +684,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //         fontSize: 14.0,
                   //         letterSpacing: 0.5,
                   //         fontFamily: "DefaultFontFamily",
-                  //         color: Colors.black,
+                  //         color: brandOne,
                   //       ),
                   //     ),
                   //     trailing: const Icon(
                   //       Icons.arrow_right_outlined,
-                  //       color: Colors.black,
+                  //       color: brandOne,
                   //     ),
                   //   ),
                   // ),
@@ -714,7 +713,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //       fontFamily: "DefaultFontFamily",
                   //       letterSpacing: 0.5,
                   //       fontWeight: FontWeight.bold,
-                  //       color: Colors.black,
+                  //       color: brandOne,
                   //     ),
                   //   ),
                   //   subtitle: const Text(
@@ -723,12 +722,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   //       fontSize: 14.0,
                   //       letterSpacing: 0.5,
                   //       fontFamily: "DefaultFontFamily",
-                  //       color: Colors.black,
+                  //       color: brandOne,
                   //     ),
                   //   ),
                   //   trailing: const Icon(
                   //     Icons.arrow_right_outlined,
-                  //     color: Colors.black,
+                  //     color: brandOne,
                   //   ),
                   // ),
                 ],

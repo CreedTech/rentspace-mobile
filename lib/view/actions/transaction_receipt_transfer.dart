@@ -62,9 +62,9 @@ class _TransactionReceiptTransferState
         centerTitle: true,
         title: Text(
           'Transaction Details',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 20.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -86,8 +86,8 @@ class _TransactionReceiptTransferState
                         children: [
                           Text(
                             '- ${currencyFormat.format(widget.amount)}',
-                            style: GoogleFonts.nunito(
-                              fontWeight: FontWeight.w800,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w700,
                               fontSize: 28.sp,
                               // letterSpacing: 2,
                               color: brandOne,
@@ -96,7 +96,7 @@ class _TransactionReceiptTransferState
                           (widget.status == 'completed')
                               ? Text(
                                   'Successful',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16.sp,
                                     color: Colors.green,
@@ -105,7 +105,7 @@ class _TransactionReceiptTransferState
                               : (widget.status == 'failed')
                                   ? Text(
                                       'Failed',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16.sp,
                                         color: Colors.red,
@@ -113,7 +113,7 @@ class _TransactionReceiptTransferState
                                     )
                                   : Text(
                                       'Pending',
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16.sp,
                                         color: Colors.yellow[800],
@@ -134,7 +134,7 @@ class _TransactionReceiptTransferState
                       ),
                       child: Text(
                         'The Recipient Account is to be credited within 5 minutes, subject to notification by the bank.',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: brandOne.withOpacity(0.7),
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
@@ -156,7 +156,7 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Amount',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -164,7 +164,7 @@ class _TransactionReceiptTransferState
                             ),
                             Text(
                               currencyFormat.format(widget.amount),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -177,7 +177,7 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Fee',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -187,7 +187,7 @@ class _TransactionReceiptTransferState
                               currencyFormat.format(
                                 double.parse(widget.fees),
                               ),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -210,7 +210,7 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Transaction Details',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
                                 color: brandOne,
@@ -229,7 +229,7 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Description',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -242,7 +242,7 @@ class _TransactionReceiptTransferState
                                 widget.description,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13.sp,
                                   color: brandOne,
@@ -262,7 +262,7 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Transaction Type',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -276,7 +276,7 @@ class _TransactionReceiptTransferState
                                     .capitalize!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -296,7 +296,7 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Payment Method',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -309,7 +309,7 @@ class _TransactionReceiptTransferState
                                 'Space Wallet'.capitalizeFirst!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -329,7 +329,7 @@ class _TransactionReceiptTransferState
                               flex: 3,
                               child: Text(
                                 'Transaction Reference',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -346,7 +346,7 @@ class _TransactionReceiptTransferState
                                     widget.transactionRef,
                                     textAlign: TextAlign.end,
                                     // maxLines: 2,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14.sp,
                                       color: brandOne,
@@ -394,7 +394,7 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Merchant Reference',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -407,7 +407,7 @@ class _TransactionReceiptTransferState
                                 widget.merchantRef,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -427,7 +427,7 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Transaction Date',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandTwo,
@@ -440,7 +440,7 @@ class _TransactionReceiptTransferState
                                 formatDateTime(widget.transactionDate),
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
                                   color: brandOne,
@@ -460,7 +460,7 @@ class _TransactionReceiptTransferState
                         //       flex: 1,
                         //       child: Text(
                         //         'Session ID',
-                        //         style: GoogleFonts.nunito(
+                        //         style: GoogleFonts.poppins(
                         //           fontWeight: FontWeight.w600,
                         //           fontSize: 14.sp,
                         //           color: brandTwo,
@@ -477,7 +477,7 @@ class _TransactionReceiptTransferState
                         //             widget.sessionId,
                         //             textAlign: TextAlign.end,
                         //             // maxLines: 2,
-                        //             style: GoogleFonts.nunito(
+                        //             style: GoogleFonts.poppins(
                         //               fontWeight: FontWeight.w600,
                         //               fontSize: 14.sp,
                         //               color: brandOne,
@@ -514,7 +514,6 @@ class _TransactionReceiptTransferState
                         //     ),
                         //   ],
                         // ),
-                     
                       ],
                     )
                   ],
@@ -540,7 +539,7 @@ class _TransactionReceiptTransferState
               //       child: Text(
               //         'Share Receipt',
               //         textAlign: TextAlign.center,
-              //         style: GoogleFonts.nunito(
+              //         style: GoogleFonts.poppins(
               //             fontSize: 16.sp, fontWeight: FontWeight.w600),
               //       ),
               //     ),

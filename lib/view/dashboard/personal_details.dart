@@ -68,10 +68,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         centerTitle: true,
         title: Text(
           'Personal Info',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 24,
-              fontWeight: FontWeight.w700),
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600),
         ),
       ),
       body: SafeArea(
@@ -102,7 +102,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Full Name',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -111,7 +111,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                           "${userController.userModel!.userDetails![0].lastName.capitalize} ${userController.userModel!.userDetails![0].firstName.capitalize}"
                               .toUpperCase(),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'User Name',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -145,9 +145,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                           userController.userModel!.userDetails![0].userName!
                               .toUpperCase(),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                             fontSize: 13.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -169,7 +169,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Email',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -178,9 +178,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                             obscureEmail(userController
                                 .userModel!.userDetails![0].email!),
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                               fontSize: 13.sp,
+                              fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () async {},
@@ -210,7 +210,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Phone',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -219,9 +219,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                             userController
                                 .userModel!.userDetails![0].phoneNumber!,
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                               fontSize: 13.sp,
+                              fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         // onTap: () {
@@ -244,14 +244,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 child: Text(
                                   'verify',
                                   style:
-                                      GoogleFonts.nunito(color: Colors.white),
+                                      GoogleFonts.poppins(color: Colors.white),
                                 ),
                               )
                             : Icon(
                                 Iconsax.verify5,
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                        
                       ),
                     ),
                     Padding(
@@ -270,7 +269,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'BVN',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -282,9 +281,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 ? obscureBVN(userController
                                     .userModel!.userDetails![0].bvn)
                                 : '',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                               fontSize: 13.sp,
+                              fontSize: 13.sp,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
@@ -308,7 +307,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 child: Text(
                                   'Add BVN',
                                   style:
-                                      GoogleFonts.nunito(color: Colors.white),
+                                      GoogleFonts.poppins(color: Colors.white),
                                 ),
                               )
                             : Icon(
@@ -337,7 +336,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Address',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -350,9 +349,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               .residentialAddress.capitalize!
                           // : 'Add Your Address for KYC Verification'
                           ,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                             fontSize: 13.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),
@@ -388,7 +387,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Date Of Birth',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
@@ -397,9 +396,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         subtitle: Text(
                           userController.userModel!.userDetails![0].dateOfBirth
                               .toString(),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                             fontSize: 13.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),

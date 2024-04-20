@@ -45,7 +45,7 @@ class _SecurityState extends State<Security> {
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics enabled',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -66,7 +66,7 @@ class _SecurityState extends State<Security> {
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics enabled',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -94,7 +94,7 @@ class _SecurityState extends State<Security> {
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics disabled',
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.poppins(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -122,7 +122,7 @@ class _SecurityState extends State<Security> {
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics disabled',
-            textStyle: GoogleFonts.nunito(
+            textStyle: GoogleFonts.poppins(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -233,9 +233,9 @@ class _SecurityState extends State<Security> {
         centerTitle: true,
         title: Text(
           'Security',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
               color: Theme.of(context).primaryColor,
-              fontSize: 20.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -266,10 +266,10 @@ class _SecurityState extends State<Security> {
                         ),
                         title: Text(
                           'Reset Password',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         onTap: () {
@@ -304,10 +304,10 @@ class _SecurityState extends State<Security> {
                         },
                         title: Text(
                           'Change Payment PIN',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                            fontSize:15.sp,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         trailing: Icon(
@@ -316,7 +316,7 @@ class _SecurityState extends State<Security> {
                         ),
                       ),
                     ),
-                   
+
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: ListTile(
@@ -340,10 +340,10 @@ class _SecurityState extends State<Security> {
                         },
                         title: Text(
                           'Forgot Payment PIN',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         trailing: Icon(
@@ -352,7 +352,7 @@ class _SecurityState extends State<Security> {
                         ),
                       ),
                     ),
-                   
+
                     // Padding(
                     //   padding: const EdgeInsets.symmetric(vertical: 0),
                     //   child: ListTile(
@@ -375,7 +375,7 @@ class _SecurityState extends State<Security> {
                     //     // },
                     //     title: Text(
                     //       'Biometrics Login',
-                    //       style: GoogleFonts.nunito(
+                    //       style: GoogleFonts.poppins(
                     //         color: Theme.of(context).primaryColor,
                     //         fontSize: 15.sp,
                     //         fontWeight: FontWeight.w600,
@@ -387,7 +387,7 @@ class _SecurityState extends State<Security> {
                     //                     true)
                     //             ? 'Disable Biometrics'
                     //             : 'Enable Biometrics',
-                    //         style: GoogleFonts.nunito(
+                    //         style: GoogleFonts.poppins(
                     //           color: Theme.of(context).primaryColor,
                     //           fontSize: 12,
                     //           fontWeight: FontWeight.w400,
@@ -417,7 +417,6 @@ class _SecurityState extends State<Security> {
                     //     // ),
                     //   ),
                     // ),
-                 
                   ],
                 ),
               ),

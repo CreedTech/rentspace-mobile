@@ -1,11 +1,11 @@
-const root = "/";
+// const root = "/";
 
 // AUTH
-const login = "/login";
+// const login = "/login";
 const register = "/register";
 
 /// Home Path
-const home = "/home";
+// const home = "/home";
 
 const airtime = "/airtime";
 const dataBundle = "/dataBundle";

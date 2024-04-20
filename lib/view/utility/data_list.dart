@@ -164,7 +164,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
         centerTitle: true,
         title: Text(
           'Choose Data Bundle',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
@@ -218,7 +218,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             ),
                             Text(
                               widget.network,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14.sp,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
@@ -226,7 +226,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             ),
                             Text(
                               widget.number,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 12.sp,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w500,
@@ -243,7 +243,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                         child: Text(
                           'Choose Bundle',
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w700,
@@ -296,7 +296,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                 : null,
                                             title: Text(
                                               nameInfo,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
@@ -310,7 +310,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       decimalDigits: 0)
                                                   .format(
                                                       double.parse(amountInfo)),
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
@@ -326,10 +326,10 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             )
                           : Column(
                               children: [
-                                SizedBox(height:30.h),
+                                SizedBox(height: 30.h),
                                 Text(
                                   'Loading Data...',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
@@ -368,7 +368,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             ),
                             Text(
                               'Selected',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -379,7 +379,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 selectedItem!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w700,
@@ -389,7 +389,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 NumberFormat.simpleCurrency(
                                         name: 'NGN', decimalDigits: 0)
                                     .format(double.parse(selectedItemAmount!)),
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w700,
@@ -427,7 +427,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 child: Text(
                                   'Submit',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     // fontFamily: 'Milliard',
                                     color: brandOne,
                                     fontSize: 14.sp,
@@ -464,8 +464,6 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       return null;
     }
 
-
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -484,8 +482,8 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                 Text(
                   NumberFormat.simpleCurrency(name: 'NGN').format(amount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.w800,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
                   ),
@@ -523,7 +521,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Provider Network',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -548,7 +546,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                     Text(
                                       widget.network,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,
@@ -566,7 +564,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Recipient Number',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -574,7 +572,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 ),
                                 Text(
                                   number,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -590,7 +588,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -599,7 +597,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(amount),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -615,7 +613,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -624,7 +622,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(0),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -640,7 +638,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500,
@@ -651,7 +649,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 //   children: [
                                 //     Text(
                                 //       'Space Wallet',
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -660,7 +658,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 //     Text(
                                 //       NumberFormat.simpleCurrency(name: 'NGN').format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -693,14 +691,14 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14.sp,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -713,7 +711,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                       TextSpan(
                                         text:
                                             '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -731,7 +729,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp,
@@ -753,7 +751,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12.sp,
@@ -836,7 +834,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                          GoogleFonts.nunito(
+                                                          GoogleFonts.poppins(
                                                         color: brandOne,
                                                         fontSize: 28.sp,
                                                       ),
@@ -946,10 +944,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                                     .text +
                                                                 value;
                                                       });
-                                                     
                                                     },
                                                     textStyle:
-                                                        GoogleFonts.nunito(
+                                                        GoogleFonts.poppins(
                                                       color: brandOne,
                                                       fontSize: 24.sp,
                                                     ),
@@ -993,7 +990,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -1025,11 +1022,11 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //                 ),
                             //                 Text(
                             //                   'Enter PIN to Proceed',
-                            //                   style: GoogleFonts.nunito(
+                            //                   style: GoogleFonts.poppins(
                             //                       fontSize: 18,
                             //                       color: Theme.of(context)
                             //                           .primaryColor,
-                            //                       fontWeight: FontWeight.w800),
+                            //                       fontWeight: FontWeight.w700),
                             //                   textAlign: TextAlign.center,
                             //                 ),
                             //                 const SizedBox(
@@ -1142,7 +1139,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //                   child: Text(
                             //                     'Proceed to Payment',
                             //                     textAlign: TextAlign.center,
-                            //                     style: GoogleFonts.nunito(
+                            //                     style: GoogleFonts.poppins(
                             //                       color: Colors.white,
                             //                       fontSize: 16,
                             //                       fontWeight: FontWeight.w700,
@@ -1166,7 +1163,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //         child: Text(
                             //           'Pay',
                             //           textAlign: TextAlign.center,
-                            //           style: GoogleFonts.nunito(
+                            //           style: GoogleFonts.poppins(
                             //             color: Colors.white,
                             //             fontSize: 19.sp,
                             //             fontWeight: FontWeight.w600,
@@ -1236,7 +1233,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
                           fontSize: 18.sp,
@@ -1248,7 +1245,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500),
@@ -1277,7 +1274,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1307,7 +1304,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1329,5 +1326,4 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       ),
     );
   }
-
 }

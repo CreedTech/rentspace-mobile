@@ -66,7 +66,7 @@
 //           centerTitle: true,
 //           title: Text(
 //             'Utility History',
-//             style: GoogleFonts.nunito(
+//             style: GoogleFonts.poppins(
 //               color: Theme.of(context).primaryColor,
 //               fontSize: 22,
 //               fontWeight: FontWeight.w700,
@@ -87,7 +87,7 @@
 //                       Center(
 //                         child: Text(
 //                           "No Transaction history",
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             fontSize: 20,
 //                             color: Theme.of(context).primaryColor,
 //                             fontWeight: FontWeight.bold,
@@ -126,7 +126,7 @@
 //                                 "${utilityController.utilityHistoryModel!.utilityHistories![index].description} ",
 //                                 maxLines: 1,
 //                                 overflow: TextOverflow.ellipsis,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   fontSize: 12.sp,
 //                                   fontWeight: FontWeight.w700,
 //                                   color: Theme.of(context).primaryColor,
@@ -139,7 +139,7 @@
 //                                 .utilityHistoryModel!
 //                                 .utilityHistories![index]
 //                                 .createdAt),
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               fontSize: 10.sp,
 //                               fontWeight: FontWeight.w300,
 //                               color: Theme.of(context).primaryColor,
@@ -149,7 +149,7 @@
 //                             children: [
 //                               Text(
 //                                 "- ${nairaFormaet.format(double.parse(utilityController.utilityHistoryModel!.utilityHistories![index].amount.toString()))}",
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   fontSize: 14,
 //                                   fontWeight: FontWeight.w700,
 //                                   color: Theme.of(context).primaryColor,
@@ -160,7 +160,7 @@
 //                                       'Completed')
 //                                   ? Text(
 //                                       'Successful',
-//                                       style: GoogleFonts.nunito(
+//                                       style: GoogleFonts.poppins(
 //                                         fontSize: 14,
 //                                         fontWeight: FontWeight.w500,
 //                                         color: Colors.green,
@@ -173,7 +173,7 @@
 //                                           'failed')
 //                                       ? Text(
 //                                           'Failed',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                             color: Colors.red,
@@ -181,7 +181,7 @@
 //                                         )
 //                                       : Text(
 //                                           'Pending',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                             color: Colors.yellow[800],

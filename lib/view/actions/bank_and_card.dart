@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 import '../../controller/auth/user_controller.dart';
 
@@ -47,9 +47,9 @@ class _BankAndCardState extends State<BankAndCard> {
           ),
           title: Text(
             'Bank & Card Details',
-            style: GoogleFonts.nunito(
+            style: GoogleFonts.poppins(
                 color: Theme.of(context).primaryColor,
-                fontSize: 20,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w700),
           ),
         ),
@@ -104,7 +104,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                           children: [
               //                             Text(
               //                               "XXXX XXXX XXXX ${userController.user[0].cardDigit.substring(5, 9)}",
-              //                               style: GoogleFonts.nunito(
+              //                               style: GoogleFonts.poppins(
               //                                 fontSize: 20.0,
               //                                 // letterSpacing: 2.0,
               //                                 // fontFamily: "DefaultFontFamily",
@@ -121,7 +121,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                           children: [
               //                             Text(
               //                               userController.user[0].cardExpire,
-              //                               style: GoogleFonts.nunito(
+              //                               style: GoogleFonts.poppins(
               //                                 fontSize: 15.0,
               //                                 // letterSpacing: 2.0,
               //                                 // fontFamily: "DefaultFontFamily",
@@ -138,7 +138,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                           children: [
               //                             Text(
               //                               userController.user[0].cardHolder,
-              //                               style: GoogleFonts.nunito(
+              //                               style: GoogleFonts.poppins(
               //                                 fontSize: 20.0,
               //                                 // letterSpacing: 2.0,
               //                                 // fontFamily: "DefaultFontFamily",
@@ -179,7 +179,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                               20.0, 10.0, 20.0, 5.0),
               //                           child: Text(
               //                             "",
-              //                             style: GoogleFonts.nunito(
+              //                             style: GoogleFonts.poppins(
               //                               fontSize: 14.0,
               //                               // fontFamily: "DefaultFontFamily",
               //                               //letterSpacing: 1.0,
@@ -207,7 +207,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                             5.0, 4.0, 5.0, 4.0),
               //                         child: Text(
               //                           userController.user[0].cardCVV,
-              //                           style: GoogleFonts.nunito(
+              //                           style: GoogleFonts.poppins(
               //                             fontSize: 14.0,
               //                             // fontFamily: "DefaultFontFamily",
               //                             //letterSpacing: 1.0,
@@ -223,7 +223,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                           20.0, 10.0, 20.0, 5.0),
               //                       child: Text(
               //                         "This card is the property of your Bank Name and is issued to the cardholder subject to the terms and conditions associated with the account. Unauthorized use, duplication, or disclosure of this card is strictly prohibited. If found, please return to your Bank Address. The cardholder is responsible for the safety and security of this card. Any loss, theft, or unauthorized use must be reported immediately to your Bank Customer Service Number",
-              //                         style: GoogleFonts.nunito(
+              //                         style: GoogleFonts.poppins(
               //                           fontSize: 6.0,
               //                           color: Colors.white,
               //                           // fontFamily: "DefaultFontFamily",
@@ -242,7 +242,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //             padding: const EdgeInsets.all(10.0),
               //             child: Text(
               //               'Bank Details',
-              //               style: GoogleFonts.nunito(
+              //               style: GoogleFonts.poppins(
               //                 fontSize: 17,
               //                 fontWeight: FontWeight.w700,
               //                 color: Theme.of(context).primaryColor,
@@ -263,7 +263,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //               children: [
               //                 Text(
               //                   userController.user[0].accountName,
-              //                   style: GoogleFonts.nunito(
+              //                   style: GoogleFonts.poppins(
               //                     fontSize: 16.0,
               //                     // fontFamily: "DefaultFontFamily",
               //                     // letterSpacing: 0.5,
@@ -276,7 +276,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                 ),
               //                 Text(
               //                   userController.user[0].bankName,
-              //                   style: GoogleFonts.nunito(
+              //                   style: GoogleFonts.poppins(
               //                     fontSize: 12.0,
               //                     // fontFamily: "DefaultFontFamily",
               //                     // letterSpacing: 0.5,
@@ -289,7 +289,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                 ),
               //                 Text(
               //                   userController.user[0].accountNumber,
-              //                   style: GoogleFonts.nunito(
+              //                   style: GoogleFonts.poppins(
               //                     color: Theme.of(context).primaryColor,
               //                   ),
               //                 ),
@@ -319,7 +319,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                 child: Text(
               //                   'Update',
               //                   textAlign: TextAlign.center,
-              //                   style: GoogleFonts.nunito(
+              //                   style: GoogleFonts.poppins(
               //                     color: Colors.white,
               //                     fontWeight: FontWeight.w700,
               //                     fontSize: 16,
@@ -358,7 +358,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                               ),
               //                               Text(
               //                                 'Are you sure you want to delete this card?',
-              //                                 style: GoogleFonts.nunito(
+              //                                 style: GoogleFonts.poppins(
               //                                   fontSize: 18,
               //                                   fontWeight: FontWeight.w600,
               //                                   // fontFamily: "DefaultFontFamily",
@@ -404,7 +404,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                                         //           'Your card has been deleted successfully',
               //                                         //       textStyle:
               //                                         //           GoogleFonts
-              //                                         //               .nunito(
+              //                                         //               .poppins(
               //                                         //         fontSize: 14,
               //                                         //         color:
               //                                         //             Colors.white,
@@ -515,7 +515,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //                 },
               //                 child: Text('Delete',
               //                     textAlign: TextAlign.center,
-              //                     style: GoogleFonts.nunito(
+              //                     style: GoogleFonts.poppins(
               //                       color: Colors.white,
               //                       fontWeight: FontWeight.w700,
               //                       fontSize: 16,
@@ -531,7 +531,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //             Image.asset('assets/card_empty.png'),
               //             Text(
               //               'No Bank Details Or Card Details Added Yet',
-              //               style: GoogleFonts.nunito(
+              //               style: GoogleFonts.poppins(
               //                   fontSize: 17, fontWeight: FontWeight.w700),
               //             ),
               //             const SizedBox(
@@ -554,7 +554,7 @@ class _BankAndCardState extends State<BankAndCard> {
               //               child: Text(
               //                 'Add Details',
               //                 textAlign: TextAlign.center,
-              //                 style: GoogleFonts.nunito(
+              //                 style: GoogleFonts.poppins(
               //                   color: Colors.white,
               //                   fontWeight: FontWeight.w700,
               //                   fontSize: 16,
@@ -564,7 +564,6 @@ class _BankAndCardState extends State<BankAndCard> {
               //           ],
               //         ),
               //       ),
-            
             ],
           ),
         ),

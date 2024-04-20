@@ -438,7 +438,7 @@
 //                                                       'Insufficient fund. You need to fund your wallet to perform this transaction.',
 //                                                       textAlign:
 //                                                           TextAlign.center,
-//                                                       style: GoogleFonts.nunito(
+//                                                       style: GoogleFonts.poppins(
 //                                                         color: brandOne,
 //                                                         fontSize: 16,
 //                                                         fontWeight:
@@ -601,7 +601,7 @@
 //         CustomSnackBar.error(
 //           backgroundColor: brandOne,
 //           message: 'You just earned a Space point!',
-//           textStyle: GoogleFonts.nunito(
+//           textStyle: GoogleFonts.poppins(
 //             fontSize: 14,
 //             color: Colors.white,
 //             fontWeight: FontWeight.w700,
@@ -683,7 +683,7 @@
 //         CustomSnackBar.error(
 //           backgroundColor: brandOne,
 //           message: 'You just earned a Space point!',
-//           textStyle: GoogleFonts.nunito(
+//           textStyle: GoogleFonts.poppins(
 //             fontSize: 14,
 //             color: Colors.white,
 //             fontWeight: FontWeight.w700,
@@ -870,7 +870,7 @@
 //                     Text(
 //                       "Subscribe to $tvPlanName and earn 1 SpacePoint!",
 //                       textAlign: TextAlign.center,
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                           color: Theme.of(context).primaryColor,
 //                           fontSize: 18,
 //                           fontWeight: FontWeight.w700),
@@ -881,7 +881,7 @@
 //                     Text(
 //                       " $tvFirst $tvLast",
 //                       textAlign: TextAlign.center,
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                         color: Theme.of(context).primaryColor,
 //                         fontSize: 20,
 //                         fontWeight: FontWeight.w700,
@@ -892,7 +892,7 @@
 //                     ),
 //                     Text(
 //                       " $tvStatus",
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                           color:
 //                               (tvStatus == "Open") ? Colors.green : Colors.red,
 //                           fontSize: 16,
@@ -993,7 +993,7 @@
 //                             child: Text(
 //                               'Subscribe',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 color: Colors.white,
 //                                 fontSize: 19.sp,
 //                                 fontWeight: FontWeight.w600,
@@ -1040,7 +1040,7 @@
 //                   Text(
 //                     electricName,
 //                     textAlign: TextAlign.center,
-//                     style: GoogleFonts.nunito(
+//                     style: GoogleFonts.poppins(
 //                         color: Theme.of(context).primaryColor,
 //                         fontSize: 18,
 //                         fontWeight: FontWeight.w700),
@@ -1072,7 +1072,7 @@
 //                           ),
 //                           label: Text(
 //                             "Enter valid Meter number",
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               color: Colors.grey,
 //                               fontSize: 12,
 //                               fontWeight: FontWeight.w400,
@@ -1105,7 +1105,7 @@
 //                           contentPadding: const EdgeInsets.all(14),
 //                           fillColor: brandThree,
 //                           hintText: '',
-//                           hintStyle: GoogleFonts.nunito(
+//                           hintStyle: GoogleFonts.poppins(
 //                             color: Colors.grey,
 //                             fontSize: 12,
 //                             fontWeight: FontWeight.w400,
@@ -1174,7 +1174,7 @@
 //                                         Text(
 //                                           "Buy Electricity and earn 1 SpacePoint!",
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
 //                                               fontSize: 18,
@@ -1188,7 +1188,7 @@
 //                                           textAlign: TextAlign.center,
 //                                           maxLines: 2,
 //                                           overflow: TextOverflow.ellipsis,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             color:
 //                                                 Theme.of(context).primaryColor,
 //                                             fontSize: 20,
@@ -1240,7 +1240,7 @@
 //                                                 ),
 //                                                 label: Text(
 //                                                   "Amount in naira",
-//                                                   style: GoogleFonts.nunito(
+//                                                   style: GoogleFonts.poppins(
 //                                                     color: Colors.grey,
 //                                                     fontSize: 12,
 //                                                     fontWeight: FontWeight.w400,
@@ -1283,7 +1283,7 @@
 //                                                     const EdgeInsets.all(14),
 //                                                 fillColor: brandThree,
 //                                                 hintText: '',
-//                                                 hintStyle: GoogleFonts.nunito(
+//                                                 hintStyle: GoogleFonts.poppins(
 //                                                   color: Colors.grey,
 //                                                   fontSize: 12,
 //                                                   fontWeight: FontWeight.w400,
@@ -1395,7 +1395,7 @@
 //                                                                             textAlign:
 //                                                                                 TextAlign.center,
 //                                                                             style:
-//                                                                                 GoogleFonts.nunito(
+//                                                                                 GoogleFonts.poppins(
 //                                                                               color: brandOne,
 //                                                                               fontSize: 16,
 //                                                                               fontWeight: FontWeight.w600,
@@ -1504,7 +1504,7 @@
 //                                                 child: Text(
 //                                                   'Subscribe',
 //                                                   textAlign: TextAlign.center,
-//                                                   style: GoogleFonts.nunito(
+//                                                   style: GoogleFonts.poppins(
 //                                                     color: Colors.white,
 //                                                     fontSize: 19.sp,
 //                                                     fontWeight: FontWeight.w600,
@@ -1592,7 +1592,7 @@
 //                                                                             textAlign:
 //                                                                                 TextAlign.center,
 //                                                                             style:
-//                                                                                 GoogleFonts.nunito(
+//                                                                                 GoogleFonts.poppins(
 //                                                                               color: brandOne,
 //                                                                               fontSize: 16,
 //                                                                               fontWeight: FontWeight.w600,
@@ -1699,7 +1699,7 @@
 //                           child: Text(
 //                             'Validate',
 //                             textAlign: TextAlign.center,
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               color: Colors.white,
 //                               fontSize: 19.sp,
 //                               fontWeight: FontWeight.w600,
@@ -1781,7 +1781,7 @@
 //                                           Text(
 //                                             "Subscribe to $dataPlanName and earn 1 SpacePoint!",
 //                                             textAlign: TextAlign.center,
-//                                             style: GoogleFonts.nunito(
+//                                             style: GoogleFonts.poppins(
 //                                                 color: Theme.of(context)
 //                                                     .primaryColor,
 //                                                 fontSize: 18,
@@ -1822,7 +1822,7 @@
 //                                                   ),
 //                                                   label: Text(
 //                                                     "Enter valid number",
-//                                                     style: GoogleFonts.nunito(
+//                                                     style: GoogleFonts.poppins(
 //                                                       color: Colors.grey,
 //                                                       fontSize: 12,
 //                                                       fontWeight:
@@ -1874,7 +1874,7 @@
 //                                                   fillColor: brandThree,
 //                                                   hintText:
 //                                                       'e.g 080 123 456 789 ',
-//                                                   hintStyle: GoogleFonts.nunito(
+//                                                   hintStyle: GoogleFonts.poppins(
 //                                                     color: Colors.grey,
 //                                                     fontSize: 12,
 //                                                     fontWeight: FontWeight.w400,
@@ -1925,7 +1925,7 @@
 //                                                   child: Text(
 //                                                     'Pay',
 //                                                     textAlign: TextAlign.center,
-//                                                     style: GoogleFonts.nunito(
+//                                                     style: GoogleFonts.poppins(
 //                                                       color: Colors.white,
 //                                                       fontSize: 19.sp,
 //                                                       fontWeight:
@@ -1952,13 +1952,13 @@
 //                                 vertical: 10, horizontal: 10),
 //                             tileColor: Colors.white,
 //                             title: Text(dataList[index].name,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                     color: Theme.of(context).primaryColor,
 //                                     fontSize: 16.sp,
 //                                     fontWeight: FontWeight.w700)),
 //                             subtitle: Text(
 //                               'Amount: ${nairaFormaet.format(int.tryParse(dataList[index].amount.toString()))}, ',
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                   color: Theme.of(context).primaryColor,
 //                                   fontSize: 15,
 //                                   fontWeight: FontWeight.w500),
@@ -2042,7 +2042,7 @@
 //                                     Text(
 //                                       "Subscribe to $tvPlanName and earn 1 SpacePoint!",
 //                                       textAlign: TextAlign.center,
-//                                       style: GoogleFonts.nunito(
+//                                       style: GoogleFonts.poppins(
 //                                           color: Theme.of(context).primaryColor,
 //                                           fontSize: 18,
 //                                           fontWeight: FontWeight.w700),
@@ -2078,7 +2078,7 @@
 //                                             ),
 //                                             label: Text(
 //                                               "Enter valid Smart card number",
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 color: Colors.grey,
 //                                                 fontSize: 12,
 //                                                 fontWeight: FontWeight.w400,
@@ -2117,7 +2117,7 @@
 //                                                 const EdgeInsets.all(14),
 //                                             fillColor: brandThree,
 //                                             hintText: '',
-//                                             hintStyle: GoogleFonts.nunito(
+//                                             hintStyle: GoogleFonts.poppins(
 //                                               color: Colors.grey,
 //                                               fontSize: 12,
 //                                               fontWeight: FontWeight.w400,
@@ -2157,7 +2157,7 @@
 //                                             child: Text(
 //                                               'Validate',
 //                                               textAlign: TextAlign.center,
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 color: Colors.white,
 //                                                 fontSize: 19.sp,
 //                                                 fontWeight: FontWeight.w600,
@@ -2185,14 +2185,14 @@
 //                         tileColor: Colors.white,
 //                         title: Text(
 //                           tvList[index].name,
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                               color: Theme.of(context).primaryColor,
 //                               fontSize: 16.sp,
 //                               fontWeight: FontWeight.w700),
 //                         ),
 //                         subtitle: Text(
 //                           'Amount: ${nairaFormaet.format(int.tryParse(tvList[index].amount.toString()))}, Validity: ${tvList[index].validity}',
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                               color: Theme.of(context).primaryColor,
 //                               fontSize: 15,
 //                               fontWeight: FontWeight.w500),
@@ -2364,7 +2364,7 @@
 //       validator: validateAmount,
 //       // update the state variable when the text changes
 
-//       style: GoogleFonts.nunito(
+//       style: GoogleFonts.poppins(
 //         color: Theme.of(context).primaryColor,
 //       ),
 //       keyboardType: TextInputType.number,
@@ -2372,7 +2372,7 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "How much do you want to recharge?",
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
@@ -2400,7 +2400,7 @@
 //               color: Colors.red, width: 2.0), // Change color to yellow
 //         ),
 //         prefixText: "₦ ",
-//         prefixStyle: GoogleFonts.nunito(
+//         prefixStyle: GoogleFonts.poppins(
 //           color: Colors.black,
 //           fontSize: 13,
 //           fontWeight: FontWeight.w700,
@@ -2408,7 +2408,7 @@
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
 //         hintText: 'Amount in Naira',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -2430,7 +2430,7 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "Enter valid number",
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
@@ -2461,7 +2461,7 @@
 //         contentPadding: const EdgeInsets.all(14),
 //         fillColor: brandThree,
 //         hintText: 'e.g 080 123 456 789 ',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -2489,7 +2489,7 @@
 //                   centerTitle: true,
 //                   title: Text(
 //                     'Utilities',
-//                     style: GoogleFonts.nunito(
+//                     style: GoogleFonts.poppins(
 //                       color: Theme.of(context).primaryColor,
 //                       fontSize: 22,
 //                       fontWeight: FontWeight.w700,
@@ -2506,7 +2506,7 @@
 //                           children: [
 //                             Text(
 //                               "History$varValue",
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 fontSize: 14,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
@@ -2564,7 +2564,7 @@
 //                                             child: Text(
 //                                               "Pay for your bills and earn one SpacePoint!",
 //                                               // textAlign: TextAlign.center,
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 fontSize: 18.sp,
 //                                                 fontWeight: FontWeight.w700,
 //                                                 color: Theme.of(context)
@@ -2579,7 +2579,7 @@
 //                                             child: Text(
 //                                               "Get access to a wide range of utilities and earn a SpacePoint when you make payment from your SpaceWallet!",
 //                                               // textAlign: TextAlign.center,
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 fontSize: 12.sp,
 //                                                 //height: 0.5,
 //                                                 color: Theme.of(context)
@@ -2600,7 +2600,7 @@
 //                                                 Text(
 //                                                   "Wallet balance",
 //                                                   textAlign: TextAlign.center,
-//                                                   style: GoogleFonts.nunito(
+//                                                   style: GoogleFonts.poppins(
 //                                                     fontSize: 14.sp,
 //                                                     fontWeight: FontWeight.bold,
 //                                                     color: Theme.of(context)
@@ -2641,7 +2641,7 @@
 //                                                     ? Text(
 //                                                         "*****",
 //                                                         style:
-//                                                             GoogleFonts.nunito(
+//                                                             GoogleFonts.poppins(
 //                                                           fontSize: 16.sp,
 //                                                           fontWeight:
 //                                                               FontWeight.bold,
@@ -2653,7 +2653,7 @@
 //                                                     : Text(
 //                                                         '${hideBalance ? nairaFormaet.format(double.parse(userController.userModel!.userDetails![0].wallet.mainBalance.toString())) : "*****"} ',
 //                                                         style:
-//                                                             GoogleFonts.nunito(
+//                                                             GoogleFonts.poppins(
 //                                                           fontSize: 20.sp,
 //                                                           fontWeight:
 //                                                               FontWeight.bold,
@@ -2675,7 +2675,7 @@
 //                                             (userController.isLoading.value)
 //                                                 ? Text(
 //                                                     'SpacePoints: ***',
-//                                                     style: GoogleFonts.nunito(
+//                                                     style: GoogleFonts.poppins(
 //                                                       fontSize: 16.sp,
 //                                                       fontWeight:
 //                                                           FontWeight.w600,
@@ -2685,7 +2685,7 @@
 //                                                   )
 //                                                 : Text(
 //                                                     'SpacePoints: ${userController.userModel!.userDetails![0].utilityPoints.floor().toString()}',
-//                                                     style: GoogleFonts.nunito(
+//                                                     style: GoogleFonts.poppins(
 //                                                       fontSize: 14.sp,
 //                                                       fontWeight:
 //                                                           FontWeight.w600,
@@ -2711,7 +2711,7 @@
 //                                       //     initiallyExpanded: true,
 //                                       //     title: Text(
 //                                       //       'Airtime Top Up',
-//                                       //       style: GoogleFonts.nunito(
+//                                       //       style: GoogleFonts.poppins(
 //                                       //           fontSize: 16,
 //                                       //           fontWeight: FontWeight.w500,
 //                                       //           color: Colors.white),
@@ -2770,7 +2770,7 @@
 //                                       //     initiallyExpanded: true,
 //                                       //     title: Text(
 //                                       //       'Data Subscription',
-//                                       //       style: GoogleFonts.nunito(
+//                                       //       style: GoogleFonts.poppins(
 //                                       //           fontSize: 16,
 //                                       //           fontWeight: FontWeight.w500,
 //                                       //           color: Colors.white),
@@ -2816,7 +2816,7 @@
 //                                       //         ),
 //                                       //         leading: Text(
 //                                       //           'MTN Data Plans',
-//                                       //           style: GoogleFonts.nunito(
+//                                       //           style: GoogleFonts.poppins(
 //                                       //             color: Theme.of(context)
 //                                       //                 .canvasColor,
 //                                       //             fontSize: 15,
@@ -2847,7 +2847,7 @@
 //                                       //         ),
 //                                       //         leading: Text(
 //                                       //           'GLO Data Plans',
-//                                       //           style: GoogleFonts.nunito(
+//                                       //           style: GoogleFonts.poppins(
 //                                       //             color: Theme.of(context)
 //                                       //                 .canvasColor,
 //                                       //             fontSize: 15,
@@ -2878,7 +2878,7 @@
 //                                       //         ),
 //                                       //         leading: Text(
 //                                       //           'Airtel Data Plans',
-//                                       //           style: GoogleFonts.nunito(
+//                                       //           style: GoogleFonts.poppins(
 //                                       //             color: Theme.of(context)
 //                                       //                 .canvasColor,
 //                                       //             fontSize: 15,
@@ -2910,7 +2910,7 @@
 //                                       //         ),
 //                                       //         leading: Text(
 //                                       //           '9Mobile Data Plans',
-//                                       //           style: GoogleFonts.nunito(
+//                                       //           style: GoogleFonts.poppins(
 //                                       //             color: Theme.of(context)
 //                                       //                 .canvasColor,
 //                                       //             fontSize: 15,
@@ -2937,7 +2937,7 @@
 //                                           initiallyExpanded: true,
 //                                           title: Text(
 //                                             'Cable Tv',
-//                                             style: GoogleFonts.nunito(
+//                                             style: GoogleFonts.poppins(
 //                                                 fontSize: 16,
 //                                                 fontWeight: FontWeight.w500,
 //                                                 color: Colors.white),
@@ -2984,7 +2984,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'DSTV - Subscription',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3016,7 +3016,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'GOtv - Subscription',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3047,7 +3047,7 @@
 //                                             //   ),
 //                                             //   leading: Text(
 //                                             //     'Startimes - Subscription',
-//                                             //     style: GoogleFonts.nunito(
+//                                             //     style: GoogleFonts.poppins(
 //                                             //       color: Theme.of(context)
 //                                             //           .canvasColor,
 //                                             //       fontSize: 15,
@@ -3077,7 +3077,7 @@
 //                                           initiallyExpanded: true,
 //                                           title: Text(
 //                                             'Electricity - Prepaid',
-//                                             style: GoogleFonts.nunito(
+//                                             style: GoogleFonts.poppins(
 //                                                 fontSize: 16,
 //                                                 fontWeight: FontWeight.w500,
 //                                                 color: Colors.white),
@@ -3123,7 +3123,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'Ikeja Electric',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3154,7 +3154,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'EKO Electric',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3185,7 +3185,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'IBEDC',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3216,7 +3216,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'Jos Electricity',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3247,7 +3247,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'Abuja Electricity',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3278,7 +3278,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'Kaduna Electric',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3309,7 +3309,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'Kano Electric',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3340,7 +3340,7 @@
 //                                               ),
 //                                               leading: Text(
 //                                                 'PH Electric',
-//                                                 style: GoogleFonts.nunito(
+//                                                 style: GoogleFonts.poppins(
 //                                                   color: Theme.of(context)
 //                                                       .canvasColor,
 //                                                   fontSize: 15,
@@ -3376,7 +3376,7 @@
 //                                           Flexible(
 //                                             child: Text(
 //                                               "kindly confirm your BVN to use this service.",
-//                                               style: GoogleFonts.nunito(
+//                                               style: GoogleFonts.poppins(
 //                                                 fontSize: 18.0,
 //                                                 fontWeight: FontWeight.w700,
 //                                                 color: Theme.of(context)
@@ -3421,7 +3421,7 @@
 //                               children: [
 //                                 Text(
 //                                   "$loadMssg$varValue",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 20,
 //                                     color: Theme.of(context).primaryColor,
 //                                   ),
@@ -3452,7 +3452,7 @@
 //                   ),
 //                   Text(
 //                     "You need to fund your Space Wallet to use this service.",
-//                     style: GoogleFonts.nunito(
+//                     style: GoogleFonts.poppins(
 //                       fontSize: 16.0,
 //                       fontWeight: FontWeight.w700,
 //                       color: Theme.of(context).primaryColor,
@@ -3480,7 +3480,7 @@
 //                       child: Text(
 //                         'Fund Wallet',
 //                         textAlign: TextAlign.center,
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           color: Colors.white,
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
@@ -3532,7 +3532,7 @@
 //                       ),
 //                       Text(
 //                         'Recharge and get 1 SpacePoint!',
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
 //                           color: Theme.of(context).primaryColor,
@@ -3550,7 +3550,7 @@
 //                               children: [
 //                                 Text(
 //                                   "Valid GLO Phone number",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 14,
 //                                     fontWeight: FontWeight.w600,
 //                                     color: Theme.of(context).primaryColor,
@@ -3600,11 +3600,11 @@
 //                                         // ),
 //                                         Text(
 //                                           'Enter PIN to Proceed',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                               fontSize: 22.h,
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
-//                                               fontWeight: FontWeight.w800),
+//                                               fontWeight: FontWeight.w700),
 //                                           textAlign: TextAlign.center,
 //                                         ),
 //                                         const SizedBox(
@@ -3804,7 +3804,7 @@
 //                                                       message:
 //                                                           'You just earned a Space point!',
 //                                                       textStyle:
-//                                                           GoogleFonts.nunito(
+//                                                           GoogleFonts.poppins(
 //                                                         fontSize: 14,
 //                                                         color: Colors.white,
 //                                                         fontWeight:
@@ -3882,7 +3882,7 @@
 //                               child: Text(
 //                                 'Pay',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.white,
 //                                   fontSize: 19.sp,
 //                                   fontWeight: FontWeight.w600,
@@ -3914,7 +3914,7 @@
 //       ),
 //       leading: Text(
 //         'GLO airtime',
-//         style: GoogleFonts.nunito(
+//         style: GoogleFonts.poppins(
 //           color: Theme.of(context).canvasColor,
 //           fontSize: 15,
 //         ),
@@ -3960,7 +3960,7 @@
 //                       ),
 //                       Text(
 //                         'Recharge and get 1 SpacePoint!',
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
 //                           color: Theme.of(context).primaryColor,
@@ -3978,7 +3978,7 @@
 //                               children: [
 //                                 Text(
 //                                   "Valid AIRTEL Phone number",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 14,
 //                                     fontWeight: FontWeight.w600,
 //                                     color: Theme.of(context).primaryColor,
@@ -4028,11 +4028,11 @@
 //                                         // ),
 //                                         Text(
 //                                           'Enter PIN to Proceed',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                               fontSize: 22.h,
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
-//                                               fontWeight: FontWeight.w800),
+//                                               fontWeight: FontWeight.w700),
 //                                           textAlign: TextAlign.center,
 //                                         ),
 //                                         const SizedBox(
@@ -4232,7 +4232,7 @@
 //                                                       message:
 //                                                           'You just earned a Space point!',
 //                                                       textStyle:
-//                                                           GoogleFonts.nunito(
+//                                                           GoogleFonts.poppins(
 //                                                         fontSize: 14,
 //                                                         color: Colors.white,
 //                                                         fontWeight:
@@ -4310,7 +4310,7 @@
 //                               child: Text(
 //                                 'Pay',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.white,
 //                                   fontSize: 19.sp,
 //                                   fontWeight: FontWeight.w600,
@@ -4342,7 +4342,7 @@
 //       ),
 //       leading: Text(
 //         'Airtel airtime',
-//         style: GoogleFonts.nunito(
+//         style: GoogleFonts.poppins(
 //           color: Theme.of(context).canvasColor,
 //           fontSize: 15,
 //         ),
@@ -4388,7 +4388,7 @@
 //                       ),
 //                       Text(
 //                         'Recharge and get 1 SpacePoint!',
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
 //                           color: Theme.of(context).primaryColor,
@@ -4406,7 +4406,7 @@
 //                               children: [
 //                                 Text(
 //                                   "Valid 9MOBILE Phone number",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 14,
 //                                     fontWeight: FontWeight.w600,
 //                                     color: Theme.of(context).primaryColor,
@@ -4456,11 +4456,11 @@
 //                                         // ),
 //                                         Text(
 //                                           'Enter PIN to Proceed',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                               fontSize: 22.h,
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
-//                                               fontWeight: FontWeight.w800),
+//                                               fontWeight: FontWeight.w700),
 //                                           textAlign: TextAlign.center,
 //                                         ),
 //                                         const SizedBox(
@@ -4660,7 +4660,7 @@
 //                                                       message:
 //                                                           'You just earned a Space point!',
 //                                                       textStyle:
-//                                                           GoogleFonts.nunito(
+//                                                           GoogleFonts.poppins(
 //                                                         fontSize: 14,
 //                                                         color: Colors.white,
 //                                                         fontWeight:
@@ -4732,7 +4732,7 @@
 //                               child: Text(
 //                                 'Pay',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.white,
 //                                   fontSize: 19.sp,
 //                                   fontWeight: FontWeight.w600,
@@ -4764,7 +4764,7 @@
 //       ),
 //       leading: Text(
 //         '9Mobile airtime',
-//         style: GoogleFonts.nunito(
+//         style: GoogleFonts.poppins(
 //           color: Theme.of(context).canvasColor,
 //           fontSize: 15,
 //         ),
@@ -4810,7 +4810,7 @@
 //                       ),
 //                       Text(
 //                         'Recharge and get 1 SpacePoint!',
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
 //                           color: Theme.of(context).primaryColor,
@@ -4828,7 +4828,7 @@
 //                               children: [
 //                                 Text(
 //                                   "Valid MTN Phone number",
-//                                   style: GoogleFonts.nunito(
+//                                   style: GoogleFonts.poppins(
 //                                     fontSize: 14,
 //                                     fontWeight: FontWeight.w600,
 //                                     color: Theme.of(context).primaryColor,
@@ -4878,11 +4878,11 @@
 //                                         // ),
 //                                         Text(
 //                                           'Enter PIN to Proceed',
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                               fontSize: 22.h,
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
-//                                               fontWeight: FontWeight.w800),
+//                                               fontWeight: FontWeight.w700),
 //                                           textAlign: TextAlign.center,
 //                                         ),
 //                                         const SizedBox(
@@ -5091,7 +5091,7 @@
 //                                                       message:
 //                                                           'You just earned a Space point!',
 //                                                       textStyle:
-//                                                           GoogleFonts.nunito(
+//                                                           GoogleFonts.poppins(
 //                                                         fontSize: 14,
 //                                                         color: Colors.white,
 //                                                         fontWeight:
@@ -5189,7 +5189,7 @@
 //                                               //                                 textAlign:
 //                                               //                                     TextAlign.center,
 //                                               //                                 style:
-//                                               //                                     GoogleFonts.nunito(
+//                                               //                                     GoogleFonts.poppins(
 //                                               //                                   color: brandOne,
 //                                               //                                   fontSize: 16,
 //                                               //                                   fontWeight: FontWeight.w600,
@@ -5414,7 +5414,7 @@
 //                                         //               message:
 //                                         //                   'You just earned a Space point!',
 //                                         //               textStyle:
-//                                         //                   GoogleFonts.nunito(
+//                                         //                   GoogleFonts.poppins(
 //                                         //                 fontSize: 14,
 //                                         //                 color: Colors.white,
 //                                         //                 fontWeight:
@@ -5459,7 +5459,7 @@
 //                                         //   child: Text(
 //                                         //     'Proceed to Payment',
 //                                         //     textAlign: TextAlign.center,
-//                                         //     style: GoogleFonts.nunito(
+//                                         //     style: GoogleFonts.poppins(
 //                                         //       color: Colors.white,
 //                                         //       fontSize: 16,
 //                                         //       fontWeight: FontWeight.w700,
@@ -5487,7 +5487,7 @@
 //                               child: Text(
 //                                 'Pay',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.white,
 //                                   fontSize: 19.sp,
 //                                   fontWeight: FontWeight.w600,
@@ -5511,7 +5511,7 @@
 //       tileColor: brandSix,
 //       leading: Text(
 //         'MTN airtime',
-//         style: GoogleFonts.nunito(
+//         style: GoogleFonts.poppins(
 //           color: Theme.of(context).canvasColor,
 //           fontSize: 15,
 //         ),

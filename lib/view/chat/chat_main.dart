@@ -115,7 +115,7 @@
 //         ),
 //         title: Text(
 //           'How can we help?',
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Theme.of(context).primaryColor,
 //             fontSize: 16,
 //           ),
@@ -220,7 +220,7 @@
 //                         padding: const EdgeInsets.only(right: 10),
 //                         child: Text(
 //                           snapshot.data!.docs[index]['body'],
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             color: Colors.white,
 //                           ),
 //                         ),
@@ -242,7 +242,7 @@
 //                     ? DateFormat.jm().format(
 //                         snapshot.data!.docs[index]['timestamp'].toDate())
 //                     : '',
-//                 style: GoogleFonts.nunito(
+//                 style: GoogleFonts.poppins(
 //                   fontSize: 12,
 //                   color: Colors.black.withOpacity(0.5),
 //                 ),
@@ -304,7 +304,7 @@
 //                         padding: const EdgeInsets.only(right: 10),
 //                         child: Text(
 //                           snapshot.data!.docs[index]['body'],
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             color: Colors.white,
 //                           ),
 //                         ),
@@ -326,7 +326,7 @@
 //                     ? DateFormat.jm().format(
 //                         snapshot.data!.docs[index]['timestamp'].toDate())
 //                     : '',
-//                 style: GoogleFonts.nunito(
+//                 style: GoogleFonts.poppins(
 //                   fontSize: 12,
 //                   color: Colors.black.withOpacity(0.5),
 //                 ),

@@ -35,7 +35,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         title: Text(
           'Notifications',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,
@@ -43,7 +43,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: 20.w,
           vertical: 2.h,
         ),
@@ -106,14 +106,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
             //               ),
             //               title: Text(
             //                 notifications.title,
-            //                 style: GoogleFonts.nunito(
+            //                 style: GoogleFonts.poppins(
             //                   fontSize: 14,
             //                   fontWeight: FontWeight.w500,
             //                 ),
             //               ),
             //               subtitle: Text(
             //                 notifications.message,
-            //                 style: GoogleFonts.nunito(
+            //                 style: GoogleFonts.poppins(
             //                   fontSize: 14,
             //                   fontWeight: FontWeight.w400,
             //                 ),
@@ -124,8 +124,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             //         });
             //   }),
             // ),
-         
-         ],
+          ],
         ),
       ),
     );
@@ -146,4 +145,3 @@ class _NotificationsPageState extends State<NotificationsPage> {
     }
   }
 }
-

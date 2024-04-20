@@ -68,7 +68,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
     setState(() {
       _aPinController.text = _aPinController.text + value;
     });
-
   }
 
   // @override
@@ -130,7 +129,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
         fontSize: 14.sp,
         fontWeight: FontWeight.w600,
@@ -149,14 +148,14 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.nunito(
+        prefixStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
           fontSize: 16.sp,
           fontWeight: FontWeight.w600,
@@ -197,7 +196,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -222,7 +221,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         centerTitle: true,
         title: Text(
           'Transfer to Bank Account',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
@@ -244,7 +243,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               ),
               child: Text(
                 'Please note that charging of ₦20.00 on all  transfers will be according to our Terms of use',
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.poppins(
                   color: brandOne.withOpacity(0.7),
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w500,
@@ -287,7 +286,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                 ),
                 Text(
                   widget.accountName,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     fontSize: 14.sp,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w700,
@@ -295,7 +294,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                 ),
                 Text(
                   widget.bankName,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     fontSize: 12.sp,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
@@ -303,7 +302,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                 ),
                 Text(
                   widget.accountNumber,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     fontSize: 12.sp,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
@@ -324,7 +323,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                     padding: const EdgeInsets.fromLTRB(5, 5, 0.0, 0),
                     child: Text(
                       "Amount",
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 14.sp,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w700,
@@ -366,13 +365,11 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                           },
                         );
                   }
-                }
-             
-                ,
+                },
                 child: Text(
                   'Confirm',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
+                  style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -429,14 +426,13 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                 Text(
                   ch8t.format(totalAmount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.w800,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
                   ),
                 ),
                 alert(context),
-           
               ],
             ),
           ),
@@ -469,7 +465,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               children: [
                                 Text(
                                   'Bank',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -494,7 +490,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                     Text(
                                       bankName,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,
@@ -512,7 +508,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               children: [
                                 Text(
                                   'Account Number',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -520,7 +516,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                                 Text(
                                   accountNumber,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -536,7 +532,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -544,7 +540,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                                 Text(
                                   ch8t.format(amount),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -560,7 +556,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -568,7 +564,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                                 Text(
                                   ch8t.format(transactionFee),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -584,7 +580,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500,
@@ -595,7 +591,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 //   children: [
                                 //     Text(
                                 //       'Space Wallet',
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -604,7 +600,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 //     Text(
                                 //       ch8t.format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -637,14 +633,14 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14.sp,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount + transactionFee) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -657,7 +653,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                       TextSpan(
                                         text:
                                             '(${ch8t.format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount + transactionFee) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -675,7 +671,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp,
@@ -697,7 +693,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12.sp,
@@ -885,7 +881,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     onKeyboardTap:
                                                         onKeyboardTap,
                                                     textStyle:
-                                                        GoogleFonts.nunito(
+                                                        GoogleFonts.poppins(
                                                       color: brandOne,
                                                       fontSize: 24.sp,
                                                     ),
@@ -975,7 +971,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                   //     'Proceed to Payment',
                                                   //     textAlign:
                                                   //         TextAlign.center,
-                                                  //     style: GoogleFonts.nunito(
+                                                  //     style: GoogleFonts.poppins(
                                                   //       color: Colors.white,
                                                   //       fontSize: 16,
                                                   //       fontWeight:
@@ -993,7 +989,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -1060,7 +1056,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
                           fontSize: 18.sp,
@@ -1072,7 +1068,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500),
@@ -1101,7 +1097,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1131,7 +1127,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1153,5 +1149,4 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       ),
     );
   }
-
 }

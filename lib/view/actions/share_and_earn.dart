@@ -59,28 +59,28 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
                     children: <TextSpan>[
                       TextSpan(
                         text: "Invite",
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
                         text: ' 1 ',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
                         text: "New User",
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
@@ -95,11 +95,11 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                   children: [
                     Text(
                       'Get 500 Naira',
-                      style: GoogleFonts.nunito(
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
                         fontSize: 40.0.sp,
                         // letterSpacing: 0.5,
-                        fontWeight: FontWeight.w900,
-                        // fontFamily: "DefaultFontFamily",
+                        fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
                     ),
@@ -109,16 +109,15 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width / 4,
+                            width: MediaQuery.of(context).size.width / 5,
                             child: Column(
                               children: [
                                 Text(
                                   'Step 1',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 12.0.sp,
                                     // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w900,
-                                    // fontFamily: "DefaultFontFamily",
+                                    fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -142,8 +141,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Share your referral code with your friends',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 10.0.sp,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 8.0.sp,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -169,10 +168,10 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   'Step 2',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 12.0.sp,
                                     // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w700,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Colors.white,
                                   ),
@@ -197,8 +196,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Friends sign up with your referral code',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 10.0.sp,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 8.0.sp,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -224,10 +223,10 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   'Step 3',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 12.0.sp,
                                     // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w700,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Colors.white,
                                   ),
@@ -252,8 +251,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Friends start using the space rent and you both earn 500 naira',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 10.0.sp,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 8.0.sp,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -272,14 +271,14 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                       child: RichText(
                         textAlign: TextAlign.left,
                         text: TextSpan(
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
                             fontSize: 20.sp,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text: "Total cash earned: ",
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -287,9 +286,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             TextSpan(
                               text: ch8t.format(userController
                                   .userModel!.userDetails![0].referralPoints),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
@@ -309,7 +308,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           children: [
                             Text(
                               'REFERRAL CODE:',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
@@ -332,7 +331,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   ' ${userController.userModel!.userDetails![0].referralCode}',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 30.0.sp,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w700,
@@ -374,7 +373,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             ),
                             Text(
                               'You and Your friends can get bonus with your code',
-                              style: GoogleFonts.nunito(
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
@@ -425,7 +425,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                     Text(
                                       'Share and earn!',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w700,
@@ -452,7 +452,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           children: [
                             Text(
                               'Referred Users (${userController.userModel!.userDetails![0].referrals})',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
@@ -535,7 +535,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                               "${history['lastName']} ${history['firstName']}",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: Theme.of(context)
@@ -546,7 +546,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                         ),
                                         subtitle: Text(
                                           history['email'],
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w300,
                                             color:
@@ -571,7 +571,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                                 ? "waiting"
                                                 : 'done',
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10.0.sp,
                                               // fontFamily: "DefaultFontFamily",
                                               // letterSpacing: 0.5,
@@ -585,7 +585,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                         //           'false')
                                         //       ? 'Successful'
                                         //       : 'Pending',
-                                        //   style: GoogleFonts.nunito(
+                                        //   style: GoogleFonts.poppins(
                                         //     fontSize: 14.sp,
                                         //     fontWeight: FontWeight.w500,
                                         //     color: Colors.yellow[800],
@@ -599,7 +599,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                     child: Center(
                                       child: Text(
                                         "No Referred User",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 12.sp,
                                           // fontFamily: "DefaultFontFamily",
                                           color: Theme.of(context).primaryColor,
@@ -617,7 +617,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             //       child: Text(
                             //         ' ${userController.userModel!.userDetails![0].referredUsers[0]}',
                             //         maxLines: 10,
-                            //         style: GoogleFonts.nunito(
+                            //         style: GoogleFonts.poppins(
                             //           fontSize: 30.0.sp,
                             //           // letterSpacing: 0.5,
                             //           fontWeight: FontWeight.w700,
@@ -666,7 +666,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               },
                               child: Text(
                                 'View All >>',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   decoration: TextDecoration.underline,
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w700,
@@ -689,7 +689,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //       // Todo: work on this part ==========
               //       Text(
               //         'REFERRAL CODE: ${userController.userModel!.userDetails![0].referralCode}',
-              //         style: GoogleFonts.nunito(
+              //         style: GoogleFonts.poppins(
               //           fontSize: 16.0.sp,
               //           // letterSpacing: 0.5,
               //           fontWeight: FontWeight.w700,
@@ -700,7 +700,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //       Text(
               //         'NO OF REFERRED USERS: ${userController.userModel!.userDetails![0].referrals}'
               //             .toString(),
-              //         style: GoogleFonts.nunito(
+              //         style: GoogleFonts.poppins(
               //           fontSize: 14.0.sp,
               //           // letterSpacing: 1.0,
               //           fontWeight: FontWeight.w700,
@@ -727,7 +727,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //   child: Text(
               //     "Participate in our exclusive program and seize the opportunity to earn 500 naira simply by referring friends through your unique code and getting them to save using the Space Rent . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
               //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.nunito(
+              //     style: GoogleFonts.poppins(
               //       fontSize: 16.0,
               //       // fontFamily: "DefaultFontFamily",
               //       fontWeight: FontWeight.w600,
@@ -794,7 +794,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //                 Text(
               //                   'Share now!',
               //                   textAlign: TextAlign.center,
-              //                   style: GoogleFonts.nunito(
+              //                   style: GoogleFonts.poppins(
               //                     color: Colors.white,
               //                     fontSize: 16,
               //                     fontWeight: FontWeight.w700,

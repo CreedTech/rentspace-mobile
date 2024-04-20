@@ -186,7 +186,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
         centerTitle: true,
         title: Text(
           'Choose TV Package',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
@@ -238,7 +238,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             ),
                             Text(
                               widget.tvName,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14.sp,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
@@ -246,7 +246,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             ),
                             Text(
                               widget.name,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 12.sp,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w500,
@@ -254,7 +254,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             ),
                             Text(
                               widget.cardNumber,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 12.sp,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w500,
@@ -271,7 +271,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                         child: Text(
                           'Choose Package',
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w700,
@@ -333,7 +333,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                 : null,
                                             title: Text(
                                               nameInfo,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
@@ -347,7 +347,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                       decimalDigits: 0)
                                                   .format(
                                                       double.parse(amountInfo)),
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
@@ -366,7 +366,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 SizedBox(height: 30.h),
                                 Text(
                                   'Loading Data...',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
@@ -405,7 +405,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             ),
                             Text(
                               'Selected',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandTwo,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -416,7 +416,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 selectedItem!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w700,
@@ -426,7 +426,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 NumberFormat.simpleCurrency(
                                         name: 'NGN', decimalDigits: 0)
                                     .format(double.parse(selectedItemAmount!)),
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w700,
@@ -464,7 +464,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 child: Text(
                                   'Submit',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     // fontFamily: 'Milliard',
                                     color: brandOne,
                                     fontSize: 14.sp,
@@ -529,8 +529,8 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                 Text(
                   NumberFormat.simpleCurrency(name: 'NGN').format(amount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.w800,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
                   ),
@@ -568,7 +568,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               children: [
                                 Text(
                                   'Provider Network',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -593,7 +593,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                     Text(
                                       widget.tvName,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         color: brandOne,
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,
@@ -611,7 +611,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               children: [
                                 Text(
                                   'Smart Card Number',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -619,7 +619,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 ),
                                 Text(
                                   number,
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -635,7 +635,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -644,7 +644,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(amount),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -660,7 +660,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandTwo,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -669,7 +669,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(0),
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -685,7 +685,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandOne,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500,
@@ -696,7 +696,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 //   children: [
                                 //     Text(
                                 //       'Space Wallet',
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -705,7 +705,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 //     Text(
                                 //       NumberFormat.simpleCurrency(name: 'NGN').format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
-                                //       style: GoogleFonts.nunito(
+                                //       style: GoogleFonts.poppins(
                                 //         color: brandOne,
                                 //         fontSize: 15.sp,
                                 //         fontWeight: FontWeight.w600,
@@ -738,14 +738,14 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14.sp,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -758,7 +758,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                       TextSpan(
                                         text:
                                             '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
@@ -776,7 +776,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp,
@@ -798,7 +798,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.nunito(
+                                              style: GoogleFonts.poppins(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12.sp,
@@ -881,7 +881,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                          GoogleFonts.nunito(
+                                                          GoogleFonts.poppins(
                                                         color: brandOne,
                                                         fontSize: 28.sp,
                                                       ),
@@ -971,7 +971,8 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                             number,
                                                             widget.code,
                                                             productCode,
-                                                            invoicePeriod,widget.tvName);
+                                                            invoicePeriod,
+                                                            widget.tvName);
                                                       } else {
                                                         _aPinController.clear();
                                                         if (context.mounted) {
@@ -1005,7 +1006,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                           _aPinController.text);
                                                     },
                                                     textStyle:
-                                                        GoogleFonts.nunito(
+                                                        GoogleFonts.poppins(
                                                       color: brandOne,
                                                       fontSize: 24.sp,
                                                     ),
@@ -1049,7 +1050,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -1116,7 +1117,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
                           fontSize: 18.sp,
@@ -1128,7 +1129,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500),
@@ -1157,7 +1158,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1187,7 +1188,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,

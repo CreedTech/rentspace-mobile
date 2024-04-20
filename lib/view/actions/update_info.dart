@@ -107,10 +107,10 @@
 //                                     alignment: Alignment.topCenter,
 //                                     child: Text(
 //                                       'Information updated Successfully!!',
-//                                       style: GoogleFonts.nunito(
+//                                       style: GoogleFonts.poppins(
 //                                         color: brandTwo,
 //                                         fontSize: 20,
-//                                         fontWeight: FontWeight.w800,
+//                                         fontWeight: FontWeight.w700,
 //                                       ),
 //                                     ),
 //                                   ),
@@ -204,7 +204,7 @@
 //         CustomSnackBar.error(
 //           // backgroundColor: brandOne,
 //           message: nError,
-//           textStyle: GoogleFonts.nunito(
+//           textStyle: GoogleFonts.poppins(
 //             fontSize: 14,
 //             color: Colors.white,
 //             fontWeight: FontWeight.w700,
@@ -300,7 +300,7 @@
 //             CustomSnackBar.error(
 //               // backgroundColor: brandOne,
 //               message: 'Error! :(. Age must be at least $minimumAge years.',
-//               textStyle: GoogleFonts.nunito(
+//               textStyle: GoogleFonts.poppins(
 //                 fontSize: 14,
 //                 color: Colors.white,
 //                 fontWeight: FontWeight.w700,
@@ -326,7 +326,7 @@
 //       onTap: () => _selectDate(context),
 //       decoration: InputDecoration(
 //         labelText: 'Date of Birth',
-//         labelStyle: GoogleFonts.nunito(
+//         labelStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -373,14 +373,14 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "Enter your address",
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
 //           ),
 //         ),
 //         hintText: 'Enter your address...',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -411,7 +411,7 @@
 //     );
 
 //     final gender = DropdownButtonFormField(
-//       style: GoogleFonts.nunito(
+//       style: GoogleFonts.poppins(
 //         color: brandOne,
 //         fontSize: 16,
 //         fontWeight: FontWeight.w600,
@@ -432,7 +432,7 @@
 //       },
 //       decoration: InputDecoration(
 //         hintText: 'Choose Gender',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -478,14 +478,14 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "Choose new username",
-//           style: GoogleFonts.nunito(
+//           style: GoogleFonts.poppins(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
 //           ),
 //         ),
 //         prefixText: "SPACER/",
-//         prefixStyle: GoogleFonts.nunito(
+//         prefixStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 13,
 //           fontWeight: FontWeight.w400,
@@ -511,7 +511,7 @@
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
 //         hintText: 'can contain letters and numbers',
-//         hintStyle: GoogleFonts.nunito(
+//         hintStyle: GoogleFonts.poppins(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -566,7 +566,7 @@
 //                     padding: const EdgeInsets.symmetric(vertical: 3),
 //                     child: Text(
 //                       'Update Your Info to Link your BVN',
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                         color: Colors.black,
 //                         fontWeight: FontWeight.w700,
 //                         fontSize: 16,
@@ -589,7 +589,7 @@
 //                               padding: const EdgeInsets.symmetric(vertical: 3),
 //                               child: Text(
 //                                 'User Name',
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.black,
 //                                   fontWeight: FontWeight.w700,
 //                                   fontSize: 16,
@@ -600,7 +600,7 @@
 //                             username,
 //                             Text(
 //                               _mssg,
-//                               style: GoogleFonts.nunito(
+//                               style: GoogleFonts.poppins(
 //                                 fontSize: 14.0,
 //                                 // fontFamily: "DefaultFontFamily",
 //                                 // letterSpacing: 0.5,
@@ -621,7 +621,7 @@
 //                               padding: const EdgeInsets.symmetric(vertical: 3),
 //                               child: Text(
 //                                 'Date Of Birth',
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.black,
 //                                   fontWeight: FontWeight.w700,
 //                                   fontSize: 16,
@@ -642,7 +642,7 @@
 //                               padding: const EdgeInsets.symmetric(vertical: 3),
 //                               child: Text(
 //                                 'Residential Address',
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.black,
 //                                   fontWeight: FontWeight.w700,
 //                                   fontSize: 16,
@@ -663,7 +663,7 @@
 //                               padding: const EdgeInsets.symmetric(vertical: 3),
 //                               child: Text(
 //                                 'Gender',
-//                                 style: GoogleFonts.nunito(
+//                                 style: GoogleFonts.poppins(
 //                                   color: Colors.black,
 //                                   fontWeight: FontWeight.w700,
 //                                   fontSize: 16,
@@ -722,7 +722,7 @@
 //                                   child: Text(
 //                                     'Continue',
 //                                     textAlign: TextAlign.center,
-//                                     style: GoogleFonts.nunito(
+//                                     style: GoogleFonts.poppins(
 //                                       color: Colors.white,
 //                                       fontSize: 16,
 //                                       fontWeight: FontWeight.w700,

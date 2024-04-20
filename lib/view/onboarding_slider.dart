@@ -1,14 +1,17 @@
+import 'dart:async';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
 
 import 'onboarding_contents.dart';
 import 'slider_done.dart';
-
 
 class OnboardingSlider extends StatefulWidget {
   const OnboardingSlider({super.key});
@@ -19,6 +22,7 @@ class OnboardingSlider extends StatefulWidget {
 
 class _OnboardingSliderState extends State<OnboardingSlider> {
   late PageController _controller;
+  final sessionStateStream = StreamController<SessionState>();
 
   @override
   void initState() {
@@ -51,15 +55,15 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
     );
   }
 
-  void _onIntroEnd(context) {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const SliderDone(),
-      ),
-      (route) => false,
-    );
-    // Get.offAll(() => const SliderDone());
-  }
+  // void _onIntroEnd(context) {
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //     MaterialPageRoute(
+  //       builder: (context) => const SliderDone(),
+  //     ),
+  //     (route) => false,
+  //   );
+  //   // Get.offAll(() => const SliderDone());
+  // }
 
   Widget _buildFullscreenImage(String name) {
     return Image.asset(
@@ -76,15 +80,6 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: brandFour,
-      //   centerTitle: true,
-      //   title: Image.asset(
-      //     'assets/icons/RentSpaceWhite.png',
-      //     height: 120,
-      //   ),
-      // ),
       body: Column(
         children: [
           Expanded(
@@ -103,7 +98,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.sp),
                     child: Column(
                       children: [
                         Padding(
@@ -139,31 +134,60 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 106,
-                                                      vertical: 15),
-                                              textStyle: const TextStyle(
-                                                  color: brandFour,
-                                                  fontSize: 13),
+                                              minimumSize: Size(300.w, 50.h),
+                                              // padding:
+                                              //      EdgeInsets.symmetric(
+                                              //         horizontal: (MediaQuery.of(context).size.width <= 550) ? 70.w :100.w,
+                                              //         vertical: 15.h),
+                                              // textStyle: const TextStyle(
+                                              //     color: brandFour,
+                                              //     fontSize: 13),
                                             ),
-                                            child: Text(
+                                            child: AutoSizeText(
+                                              maxLines: 1,
                                               "Create an account",
-                                              style: GoogleFonts.nunito(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14.sp,
-                                              ),
+                                              minFontSize: 10,
+                                              maxFontSize: 14,
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                  // fontSize: 14.sp,
+                                                  fontSize: 14.sp),
+                                              // ),
                                             ),
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 3, bottom: 10),
+                                          //                            ElevatedButton(
+                                          //   style: ElevatedButton.styleFrom(
+                                          //     minimumSize: Size(400.w, 50.h),
+                                          //     backgroundColor: colorPrimary,
+                                          //     elevation: 0,
+                                          //     shape: RoundedRectangleBorder(
+                                          //       borderRadius: BorderRadius.circular(
+                                          //           88), // Adjust the radius as needed
+                                          //     ),
+                                          //   ),
+                                          //   onPressed: () {
+                                          //     Navigator.of(context).pushNamed(login);
+                                          //   },
+                                          //   child: const Text(
+                                          //     'Sign in',
+                                          //     textAlign: TextAlign.center,
+                                          //   ).normalSized(16).colors(colorWhite),
+                                          // ),
                                           child: ElevatedButton(
                                             onPressed: () {
                                               // Navigator.of(context).push(Material);
-                                              Get.to(const LoginPage());
+                                              Get.to(
+                                                LoginPage(
+                                                  sessionStateStream:
+                                                      sessionStateStream,
+                                                  // loggedOutReason: "Logged out because of user inactivity",
+                                                ),
+                                              );
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.white,
@@ -171,21 +195,19 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 140,
-                                                      vertical: 15),
-                                              textStyle: const TextStyle(
-                                                  color: brandFour,
-                                                  fontSize: 13),
+                                              minimumSize: Size(300.w, 50.h),
                                             ),
-                                            child: Text(
+                                            child: AutoSizeText(
+                                              maxLines: 1,
                                               "Sign In",
-                                              style: GoogleFonts.nunito(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14.sp,
-                                              ),
+                                              minFontSize: 10,
+                                              maxFontSize: 14,
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600,
+                                                  // fontSize: 14.sp,
+                                                  fontSize: 14.sp),
+                                              // ),
                                             ),
                                           ),
                                         ),
@@ -208,18 +230,17 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 130, vertical: 15),
-                                          textStyle: const TextStyle(
-                                              color: brandFour, fontSize: 13),
+                                          minimumSize: Size(300.w, 50.h),
                                         ),
-                                        child: Text(
+                                        child: AutoSizeText(
+                                          maxLines: 1,
                                           "Get Started",
-                                          style: GoogleFonts.nunito(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14.sp,
-                                          ),
+                                          minFontSize: 10,
+                                          maxFontSize: 14,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp),
                                         ),
                                       ),
                                     ),

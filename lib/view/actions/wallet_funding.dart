@@ -115,7 +115,7 @@ class _WalletFundingState extends State<WalletFunding> {
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       final checkoutUrl = jsonResponse['message']['data']["url"];
-     
+
       setState(() {
         _payUrl = checkoutUrl;
         hasCreatedPayment = true;
@@ -169,13 +169,12 @@ class _WalletFundingState extends State<WalletFunding> {
         ),
         title: Text(
           'Top Up With Card',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
           ),
         ),
-      
       ),
       body: (!hasDoneWebview && !hasCreatedPayment)
           ? Column(
@@ -190,7 +189,7 @@ class _WalletFundingState extends State<WalletFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),

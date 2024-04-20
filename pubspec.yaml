@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.3.1+40
+version: 2.3.2+41
 
 environment:
-  sdk: ">=2.17.5 <3.0.0"
+  sdk: '>=2.17.5 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,15 +30,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider:
   google_fonts:
-  carousel_slider: 
-  intro_slider: 
-  introduction_screen: 
+  carousel_slider: ^4.2.1
+  intro_slider:
+  introduction_screen:
   image_picker: ^0.8.5+3
   getwidget:
   flutter_hooks:
@@ -46,20 +45,20 @@ dependencies:
   flutter_riverpod:
   # firebase_auth:
   # cloud_firestore:
-  after_layout: 
-  confetti: 
-  get: 
-  get_storage: 
-  enum_to_string: 
-  cached_network_image: 
-  local_auth: 
+  after_layout:
+  confetti:
+  get:
+  get_storage:
+  enum_to_string:
+  cached_network_image:
+  local_auth:
   badges: ^2.0.3
-  url_launcher: 
-  intl: 
-  flutter_slidable: ^3.0.1 
-  percent_indicator: 
-  fluttertoast: 
-  # firebase_storage: 
+  url_launcher:
+  intl:
+  flutter_slidable: ^3.0.1
+  percent_indicator:
+  fluttertoast:
+  # firebase_storage:
   webview_flutter: ^3.0.4
   delayed_display:
   # rounded_loading_button:
@@ -77,34 +76,34 @@ dependencies:
   # flutter_native_splash:
   pinput:
   settings_ui:
-  go_router: 
+  go_router:
   flutter_credit_card: ^3.0.6
   flutter_form_builder:
   curved_navigation_bar: ^1.0.3
-  bubble_tab_indicator: 
-  flutter_camera_overlay: 
-  overlay_tooltip: 
+  bubble_tab_indicator:
+  flutter_camera_overlay:
+  overlay_tooltip:
   showcaseview: ^1.1.6
-  # flutter_neumorphic: 
+  # flutter_neumorphic:
   #   git:
   #     url: https://github.com/den0206/Flutter-Neumorphic.git
-  #     ref: feature/remoce_accentcolor 
-  wave: 
+  #     ref: feature/remoce_accentcolor
+  wave:
   #awesome_notifications: ^0.7.4+1
-  once: 
-  readmore: 
-  flip_card: 
+  once:
+  readmore:
+  flip_card:
   #mask_text_input_formatter: ^2.4.0
-  flutter_spinkit: ^5.2.0 
+  flutter_spinkit: ^5.2.0
   modal_progress_hud_nsn:
-  shared_preferences: 
+  shared_preferences:
   simple_circular_progress_bar:
   #flutter_windowmanager: ^0.2.0
-  upgrader: 
+  upgrader:
   pattern_formatter:
   jiffy: ^5.0.0
-  chat_bubbles: 
-  encrypt: 
+  chat_bubbles:
+  encrypt:
   lottie: ^2.7.0
   top_snackbar_flutter: ^3.1.0
   iconsax: ^0.0.8
@@ -139,12 +138,13 @@ dependencies:
   flutter_cupertino_datetime_picker: ^3.0.0
   device_info_plus: ^9.1.2
   onscreen_num_keyboard: ^1.0.4
+  local_session_timeout: ^2.3.2
+  html: ^0.15.4
+  flutter_html: ^3.0.0-beta.2
   #path_provider: ^2.0.15
-  
 
-  
 # dependency_overrides:
-  # firebase_core_platform_interface:
+# firebase_core_platform_interface:
 
 dev_dependencies:
   flutter_lints: ^3.0.1
@@ -152,31 +152,29 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 flutter_launcher_icons:
- image_path: "assets/icons/ic_launcher.png"
-#  adaptive_icon_foreground: "assets/images/app_icon.png"
- android: true
- ios: true
- remove_alpha_ios: true
- adaptive_icon_background: #ffff
- background_color: #FFFFFF
+  image_path: 'assets/icons/ic_launcher.png'
+  #  adaptive_icon_foreground: "assets/images/app_icon.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_background: #ffff
+  background_color: #FFFFFF
 # flutter_native_splash:
 #   image: "assets/icons/RentSpace-icon2.png"
 #   fullscreen: true
 #   color: "#155280"
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+# The "flutter_lints" package below contains a set of recommended lints to
+# encourage good coding practices. The lint set provided by the package is
+# activated in the `analysis_options.yaml` file located at the root of your
+# package. See that file for information about deactivating specific lint
+# rules and activating additional ones.
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -204,15 +202,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: DefaultFontFamily
-       fonts:
-         - asset: assets/fonts/nunito.ttf
-           style: normal
-     - family: ArialBlack
-       fonts:
-         - asset: assets/fonts/arialblack.ttf
-           style: normal
-  
+    # - family: DefaultFontFamily
+    #   fonts:
+    #     - asset: assets/fonts/poppins.ttf
+    #       style: normal
+    - family: ArialBlack
+      fonts:
+        - asset: assets/fonts/arialblack.ttf
+          style: normal
+
   # fonts:
   #   - family: Schyler
   #     fonts:

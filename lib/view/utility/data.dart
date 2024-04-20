@@ -45,7 +45,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   final DataBundleFormKey = GlobalKey<FormState>();
   String? _selectedData;
 
-
   List<String> SelectSubscription = const <String>[
     'Data Bundle',
     'Internet Subscription',
@@ -107,7 +106,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       setState(() {
         _selectedCarrier = detectedCarrier;
       });
-     
+
       if (detectedCarrier == 'MTN') {
         setState(() {
           _selectedImage = 'assets/utility/mtn.jpg';
@@ -268,7 +267,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   @override
   Widget build(BuildContext context) {
     final selectNetworkCarrier = CustomDropdown(
-      selectedStyle: GoogleFonts.nunito(
+      selectedStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
           fontSize: 14.sp,
           fontWeight: FontWeight.w500),
@@ -331,10 +330,10 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
         centerTitle: true,
         title: Text(
           'Buy Data',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -356,7 +355,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                         Text(
                           'Enter receiver\'s phone number to buy data instantly.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp,
@@ -451,7 +450,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                             contentPadding: const EdgeInsets.all(14),
                             fillColor: brandThree,
                             hintText: '0XX XXX XXXX',
-                            hintStyle: GoogleFonts.nunito(
+                            hintStyle: GoogleFonts.poppins(
                               color: Colors.grey,
                               fontSize: 12,
                               fontWeight: FontWeight.w400,

@@ -33,7 +33,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
   getBanksList() async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
- 
+
     final response = await http.get(
       Uri.parse(AppConstants.BASE_URL + AppConstants.GET_BANKS_LIST),
       headers: {
@@ -114,7 +114,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
         centerTitle: true,
         title: Text(
           'Select Bank',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
@@ -132,7 +132,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                   Container(
                     color: Colors.white,
                     child: TextFormField(
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14.sp),
                       cursorColor: Theme.of(context).primaryColor,
@@ -212,7 +212,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                               // shape: Border,
                               title: Text(
                                 bankName,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   color: brandOne,
                                   fontWeight: FontWeight.w700,
@@ -226,7 +226,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                                   int index = _bankName.indexOf(selectedItem!);
                                   _currentBankCode = _bankCode[index];
                                 });
-                                
+
                                 Navigator.pop(context, [
                                   bankName,
                                   _currentBankCode

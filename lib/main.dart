@@ -8,22 +8,26 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 // import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/actions/idle_page.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
 import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
-
-
+import 'view/login_page.dart';
+import 'view/splash_screen.dart';
 
 int id = 0;
 final StreamController<String?> selectNotificationStream =
@@ -37,10 +41,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
-
-  if (notificationResponse.input?.isNotEmpty ?? false) {
-
-  }
+  if (notificationResponse.input?.isNotEmpty ?? false) {}
 }
 
 // final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -52,6 +53,10 @@ Future<void> main() async {
   // Get.put(UserController());
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await Firebase.initializeApp(
       // options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -102,8 +107,6 @@ Future<void> main() async {
 // if application is in background
   FirebaseMessaging.onMessageOpenedApp.listen(
     (RemoteMessage message) async {
-
-
       // Navigate to appropriate screen based on notification type
       String notificationType = message.data['notificationType'];
       // switch (notificationType) {
@@ -171,7 +174,6 @@ Future<void> main() async {
 
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
-
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification!.android;
       String notificationType = message.data['notificationType'];
@@ -253,7 +255,7 @@ Future<void> main() async {
       //     ),
       //   );
       // }
-     },
+    },
   );
 
 // If app is closed or terminated
@@ -307,6 +309,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> initNotifications() async {
+  final sessionStateStream = StreamController<SessionState>();
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   const DarwinInitializationSettings initializationSettingsIOS =
@@ -331,7 +334,7 @@ Future<void> initNotifications() async {
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
         // print(notificationResponse.payload);
-        Get.to(FirstPage());
+        Get.to(FirstPage(sessionStateStream: sessionStateStream));
         // Get.to(NewNotificationPage(
         //     message: notificationResponse.payload));
         // Get.to(SettingsPage());
@@ -394,9 +397,6 @@ void displayNotification(
   }
 }
 
-
-
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -424,6 +424,13 @@ void configLoading() {
 
 class _MyAppState extends State<MyApp> {
 // Be sure to cancel subscription after you are done
+  final _sessionNavigatorKey = GlobalKey<NavigatorState>();
+  NavigatorState get _sessionNavigator => _sessionNavigatorKey.currentState!;
+
+  /// Make this stream available throughout the widget tree with with any state management library
+  /// like bloc, provider, GetX, ..
+  final sessionStateStream = StreamController<SessionState>();
+
   @override
   initState() {
     super.initState();
@@ -436,28 +443,65 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final sessionConfig = SessionConfig(
+      invalidateSessionForAppLostFocus: const Duration(minutes: 2),
+      invalidateSessionForUserInactivity: const Duration(minutes: 3),
+    );
+    sessionConfig.stream.listen((SessionTimeoutState timeoutEvent) {
+      // stop listening, as user will already be in auth page
+      sessionStateStream.add(SessionState.stopListening);
+      // sessionCheckout.onResume()
+      if (timeoutEvent == SessionTimeoutState.userInactivityTimeout) {
+        // handle user  inactive timeout
+        // sessionAlert(
+        //     context,
+        //     'Session Timeout',
+        //     'Logged out because of user inactivity',
+        //     'Login',
+        //     sessionStateStream);
+        _sessionNavigator.push(MaterialPageRoute(
+          builder: (_) => IdlePage(
+              sessionStateStream: sessionStateStream,
+              loggedOutReason: "Logged out because of user inactivity"),
+        ));
+      } else if (timeoutEvent == SessionTimeoutState.appFocusTimeout) {
+        // handle user  app lost focus timeout
+        _sessionNavigator.push(MaterialPageRoute(
+          builder: (_) => IdlePage(
+              sessionStateStream: sessionStateStream,
+              loggedOutReason: "Logged out because app lost focus"),
+        ));
+      }
+    });
     setUpScreenUtils(context);
     setStatusBar();
     // ToastContext().init(context);
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      splitScreenMode: false,
-      builder: (contex, child) {
-        return GetMaterialApp(
-          theme: Themes().lightTheme,
-          // darkTheme: Themes().darkTheme,
-          themeMode: ThemeServices().getThemeMode(),
-          debugShowCheckedModeBanner: false,
-          // navigatorKey: _navigatorKey,
-          title: 'RentSpace',
-          initialRoute: root,
-          // home: const SplashScreen(),
-          onGenerateRoute: RouterGenerator().generate,
-          onUnknownRoute: RouterGenerator.onUnknownRoute,
-          builder: EasyLoading.init(),
-        );
-      },
+    return SessionTimeoutManager(
+      userActivityDebounceDuration: const Duration(seconds: 1),
+      sessionConfig: sessionConfig,
+      sessionStateStream: sessionStateStream.stream,
+      child: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: false,
+        builder: (contex, child) {
+          return GetMaterialApp(
+            theme: Themes().lightTheme,
+            // darkTheme: Themes().darkTheme,
+            themeMode: ThemeServices().getThemeMode(),
+            debugShowCheckedModeBanner: false,
+            navigatorKey: _sessionNavigatorKey,
+            title: 'RentSpace',
+            // initialRoute: root,
+            home: SplashScreen(
+              sessionStateStream: sessionStateStream,
+            ),
+            onGenerateRoute: RouterGenerator().generate,
+            onUnknownRoute: RouterGenerator.onUnknownRoute,
+            builder: EasyLoading.init(),
+          );
+        },
+      ),
     );
   }
 }

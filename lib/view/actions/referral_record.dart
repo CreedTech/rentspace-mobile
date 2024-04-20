@@ -41,9 +41,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
         centerTitle: true,
         title: Text(
           'Referral Record',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: brandOne,
-            fontSize: 20.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -70,7 +70,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                       children: [
                         Text(
                           'Total Earned',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -84,7 +84,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                             userController
                                 .userModel!.userDetails![0].referralPoints,
                           ),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -97,7 +97,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                       children: [
                         Text(
                           'Referred Users',
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -109,7 +109,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                         Text(
                           userController.userModel!.userDetails![0].referrals
                               .toString(),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: brandOne,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -132,7 +132,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                     children: [
                       Text(
                         'Referred Users',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).primaryColor,
@@ -210,7 +210,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                         "${history['lastName']} ${history['firstName']}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w700,
                                           color: Theme.of(context).primaryColor,
@@ -220,7 +220,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                   ),
                                   subtitle: Text(
                                     history['email'],
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w300,
                                       color: Theme.of(context).primaryColor,
@@ -243,7 +243,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                           ? "waiting"
                                           : 'done',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 10.0.sp,
                                         // fontFamily: "DefaultFontFamily",
                                         // letterSpacing: 0.5,
@@ -260,7 +260,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                               child: Center(
                                 child: Text(
                                   "No Referred User",
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 12.sp,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Theme.of(context).primaryColor,

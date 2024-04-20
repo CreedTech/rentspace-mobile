@@ -1,4 +1,3 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,23 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-// import 'package:rentspace/controller/auth/user_controller.dart';
-// import 'package:rentspace/constants/db/firebase_db.dart';
-// import 'package:rentspace/controller/box_controller.dart';
-// import 'package:rentspace/controller/deposit_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
-// import 'package:rentspace/controller/tank_controller.dart';
-// import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_intro.dart';
-import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_intro.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
-import 'package:rentspace/view/savings/spaceTank/spacetank_subscription.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
-import '../../model/spacerent_model.dart';
 
 class SavingsPage extends StatefulWidget {
   SavingsPage({
@@ -53,11 +42,9 @@ List savingOptions = [
 ];
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
-// final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 String _hasRent = "";
 double tankBalance = 0;
-// var dum2 = "".obs();
 double boxBalance = 0;
 double depositBalance = 0;
 double rentBalance = 0;
@@ -65,41 +52,12 @@ double targetBalance = 0;
 double totalSavings = 0;
 double totalAssets = 0;
 bool hideBalance = false;
-// List<SpaceRent> _cachedRentData = [];
 bool _isLoading = false;
 
 class _SavingsPageState extends State<SavingsPage> {
   final RentController rentController = Get.find();
-  // final BoxController boxController = Get.find();
-  // final DepositController depositController = Get.find();
-  // final TankController tankController = Get.find();
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-
-  // deleteSpecifiedDocs() async {
-  //   // Query the collection for documents where "amount" is 0 and "id" is "me"
-  //   QuerySnapshot querySnapshot = await firestore
-  //       .collection('spacetank')
-  //       .where('has_paid', isEqualTo: "false")
-  //       .where('id', isEqualTo: userController.user[0].id)
-  //       .get();
-
-  //   // Loop through the documents and delete each one
-  //   for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-  //     await firestore.collection('spacetank').doc(doc.id).delete();
-  //   }
-  // }
-
-  // getUser() async {
-  //   var collection = FirebaseFirestore.instance.collection('accounts');
-  //   var docSnapshot = await collection.doc(userId).get();
-  //   if (docSnapshot.exists) {
-  //     Map<String, dynamic>? data = docSnapshot.data();
-  //     setState(() {
-  //       _hasRent = data?['has_rent'];
-  //     });
-  //   }
-  // }
 
   getSavings() {
     print("rentController.rent");
@@ -156,7 +114,6 @@ class _SavingsPageState extends State<SavingsPage> {
           // depositBalance
           );
     });
-
   }
 
   @override
@@ -191,9 +148,9 @@ class _SavingsPageState extends State<SavingsPage> {
         centerTitle: true,
         title: Text(
           'Save',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
-            fontSize: 22.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -201,15 +158,15 @@ class _SavingsPageState extends State<SavingsPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              top: 15,
-              bottom: 25,
-              right: 20,
+            padding: EdgeInsets.only(
+              left: 20.sp,
+              top: 15.sp,
+              bottom: 20.sp,
+              right: 20.sp,
             ),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 200,
+              height: 200.h,
               decoration: BoxDecoration(
                 color: brandOne,
                 borderRadius: BorderRadius.circular(10),
@@ -220,13 +177,13 @@ class _SavingsPageState extends State<SavingsPage> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 20, left: 20, right: 20),
+                        EdgeInsets.only(top: 15.sp, left: 10.sp, right: 10.sp),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                             Icon(
+                            Icon(
                               Icons.verified_user,
                               color: Colors.green,
                               size: 17.sp,
@@ -237,11 +194,11 @@ class _SavingsPageState extends State<SavingsPage> {
                             Text(
                               "Total Assets",
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 fontSize: 15.0.sp,
                                 // fontFamily: "DefaultFontFamily",
                                 // letterSpacing: 0.5,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
@@ -264,28 +221,28 @@ class _SavingsPageState extends State<SavingsPage> {
                             ),
                           ],
                         ),
-                         SizedBox(
-                          height: 10.sp,
+                        SizedBox(
+                          height: 5.sp,
                         ),
                         (walletController.isLoading.value)
                             ? Text(
                                 nairaFormaet.format(0),
-                                style: GoogleFonts.nunito(
-                                  fontSize: 22.0.sp,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
                               )
                             : Text(
                                 " ${hideBalance ? nairaFormaet.format(totalAssets).toString() : "*****"}",
                                 //  textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
-                                  fontSize: 22.0.sp,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
                               ),
@@ -293,12 +250,12 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 90.h,
+                    height: 100.h,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         Padding(
-                          padding:  EdgeInsets.only(left: 10.w, bottom: 15.h),
+                          padding: EdgeInsets.only(left: 10.w, bottom: 15.h),
                           child: Container(
                             width: 170.w,
                             decoration: BoxDecoration(
@@ -310,7 +267,7 @@ class _SavingsPageState extends State<SavingsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0.sp),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -335,9 +292,9 @@ class _SavingsPageState extends State<SavingsPage> {
                                             width: 5,
                                           ),
                                           Text(
-                                            'SpaceRent',
+                                            'Space Rent',
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.nunito(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 15.0.sp,
                                               fontWeight: FontWeight.w600,
                                               // fontFamily: "DefaultFontFamily",
@@ -347,17 +304,6 @@ class _SavingsPageState extends State<SavingsPage> {
                                           ),
                                         ],
                                       ),
-                                      // GestureDetector(
-                                      //   onTap: () {
-                                      //     (rentController.rent.isEmpty)
-                                      //         ? Get.to(const SpaceRentIntro())
-                                      //         : Get.to(const RentSpaceList());
-                                      //   },
-                                      //   child: const Icon(
-                                      //     Icons.arrow_forward_ios,
-                                      //     size: 15,
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -366,22 +312,22 @@ class _SavingsPageState extends State<SavingsPage> {
                                   child: (rentController.isLoading.value)
                                       ? Text(
                                           nairaFormaet.format(0),
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 17.0.sp,
                                             // fontFamily: "DefaultFontFamily",
                                             // letterSpacing: 0.5,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             color: brandOne,
                                           ),
                                         )
                                       : Text(
                                           " ${hideBalance ? nairaFormaet.format(rentBalance).toString() : "*****"}",
                                           //  textAlign: TextAlign.center,
-                                          style: GoogleFonts.nunito(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 17.0.sp,
                                             // fontFamily: "DefaultFontFamily",
                                             // letterSpacing: 0.5,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             color: brandOne,
                                           ),
                                         ),
@@ -431,7 +377,7 @@ class _SavingsPageState extends State<SavingsPage> {
                         //                   Text(
                         //                     'Space Deposit',
                         //                     textAlign: TextAlign.center,
-                        //                     style: GoogleFonts.nunito(
+                        //                     style: GoogleFonts.poppins(
                         //                       fontSize: 15.0,
                         //                       fontWeight: FontWeight.w600,
                         //                       // fontFamily: "DefaultFontFamily",
@@ -462,11 +408,11 @@ class _SavingsPageState extends State<SavingsPage> {
                         //           child: Text(
                         //             " ${hideBalance ? nairaFormaet.format(depositBalance).toString() : "*****"}",
                         //             //  textAlign: TextAlign.center,
-                        //             style: GoogleFonts.nunito(
+                        //             style: GoogleFonts.poppins(
                         //               fontSize: 17.0.sp,
                         //               // fontFamily: "DefaultFontFamily",
                         //               // letterSpacing: 0.5,
-                        //               fontWeight: FontWeight.w700,
+                        //               fontWeight: FontWeight.w600,
                         //               color: brandOne,
                         //             ),
                         //           ),
@@ -512,10 +458,10 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                     child: Text(
                       'Savings Plan',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: Theme.of(context).primaryColor,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -562,9 +508,9 @@ class _SavingsPageState extends State<SavingsPage> {
                             ),
                             title: Text(
                               'Space Rent',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandOne,
-                                fontSize: 15.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -572,10 +518,10 @@ class _SavingsPageState extends State<SavingsPage> {
                               'Save 70% of your rent and get up to 30% loan.',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: navigationcolorText,
                                 fontSize: 10.sp,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             // onTap: () {
@@ -591,11 +537,11 @@ class _SavingsPageState extends State<SavingsPage> {
                               child: Text(
                                 "Save",
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   fontSize: 12.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
                               ),
@@ -641,7 +587,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   //           ),
                   //           title: Text(
                   //             'Space Deposit',
-                  //             style: GoogleFonts.nunito(
+                  //             style: GoogleFonts.poppins(
                   //               color: brandOne,
                   //               fontSize: 17,
                   //               fontWeight: FontWeight.w600,
@@ -651,7 +597,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   //             'Save 70% of rent for a minimum of 90 days at an interest of 14% and get 100% (Terms and conditions apply).',
                   //             maxLines: 2,
                   //             overflow: TextOverflow.ellipsis,
-                  //             style: GoogleFonts.nunito(
+                  //             style: GoogleFonts.poppins(
                   //               color: navigationcolorText,
                   //               fontSize: 12,
                   //               fontWeight: FontWeight.w600,
@@ -670,11 +616,11 @@ class _SavingsPageState extends State<SavingsPage> {
                   //             child: Text(
                   //               "Save",
                   //               textAlign: TextAlign.center,
-                  //               style: GoogleFonts.nunito(
+                  //               style: GoogleFonts.poppins(
                   //                 fontSize: 15.0,
                   //                 // fontFamily: "DefaultFontFamily",
                   //                 // letterSpacing: 0.5,
-                  //                 fontWeight: FontWeight.w700,
+                  //                 fontWeight: FontWeight.w600,
                   //                 color: Colors.white,
                   //               ),
                   //             ),
@@ -729,7 +675,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   //               ),
                   //               title: Text(
                   //                 'SpaceRent',
-                  //                 style: GoogleFonts.nunito(
+                  //                 style: GoogleFonts.poppins(
                   //                   color: brandOne,
                   //                   fontSize: 17,
                   //                   fontWeight: FontWeight.w600,
@@ -739,7 +685,7 @@ class _SavingsPageState extends State<SavingsPage> {
                   //                 'Save 70% of your rent and get 30% loan.',
                   //                 maxLines: 2,
                   //                 overflow: TextOverflow.ellipsis,
-                  //                 style: GoogleFonts.nunito(
+                  //                 style: GoogleFonts.poppins(
                   //                   color: navigationcolorText,
                   //                   fontSize: 12,
                   //                   fontWeight: FontWeight.w600,
@@ -758,11 +704,11 @@ class _SavingsPageState extends State<SavingsPage> {
                   //                 child: Text(
                   //                   "Save",
                   //                   textAlign: TextAlign.center,
-                  //                   style: GoogleFonts.nunito(
+                  //                   style: GoogleFonts.poppins(
                   //                     fontSize: 15.0,
                   //                     // fontFamily: "DefaultFontFamily",
                   //                     // letterSpacing: 0.5,
-                  //                     fontWeight: FontWeight.w700,
+                  //                     fontWeight: FontWeight.w600,
                   //                     color: Colors.white,
                   //                   ),
                   //                 ),
@@ -814,7 +760,7 @@ class _SavingsPageState extends State<SavingsPage> {
   //           ),
   //           title: Text(
   //             title,
-  //             style: GoogleFonts.nunito(
+  //             style: GoogleFonts.poppins(
   //               color: brandOne,
   //               fontSize: 17,
   //               fontWeight: FontWeight.w600,
@@ -824,7 +770,7 @@ class _SavingsPageState extends State<SavingsPage> {
   //             subTitle,
   //             maxLines: 2,
   //             overflow: TextOverflow.ellipsis,
-  //             style: GoogleFonts.nunito(
+  //             style: GoogleFonts.poppins(
   //               color: navigationcolorText,
   //               fontSize: 12,
   //               fontWeight: FontWeight.w600,
@@ -842,11 +788,11 @@ class _SavingsPageState extends State<SavingsPage> {
   //             child: Text(
   //               "Save",
   //               textAlign: TextAlign.center,
-  //               style: GoogleFonts.nunito(
+  //               style: GoogleFonts.poppins(
   //                 fontSize: 15.0,
   //                 // fontFamily: "DefaultFontFamily",
   //                 // letterSpacing: 0.5,
-  //                 fontWeight: FontWeight.w700,
+  //                 fontWeight: FontWeight.w600,
   //                 color: Colors.white,
   //               ),
   //             ),

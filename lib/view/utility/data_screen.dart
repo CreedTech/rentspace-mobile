@@ -60,7 +60,7 @@
 //     final defaultPinTheme = PinTheme(
 //       width: 50,
 //       height: 50,
-//       textStyle: GoogleFonts.nunito(
+//       textStyle: GoogleFonts.poppins(
 //         fontSize: 20,
 //         color: Theme.of(context).primaryColor,
 //       ),
@@ -239,7 +239,7 @@
 //                 CustomSnackBar.success(
 //                   backgroundColor: Colors.green,
 //                   message: 'You just earned a Space point!',
-//                   textStyle: GoogleFonts.nunito(
+//                   textStyle: GoogleFonts.poppins(
 //                     fontSize: 14,
 //                     color: Colors.white,
 //                     fontWeight: FontWeight.w700,
@@ -297,7 +297,7 @@
 //                                         child: Text(
 //                                           'Insufficient fund. You need to fund your wallet to perform this transaction.',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.nunito(
+//                                           style: GoogleFonts.poppins(
 //                                             color: brandOne,
 //                                             fontSize: 16,
 //                                             fontWeight: FontWeight.w600,
@@ -391,7 +391,7 @@
 //                       alignment: Alignment.center,
 //                       child: Text(
 //                         'Enter PIN to Proceed',
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           color: Theme.of(context).primaryColor,
 //                           fontWeight: FontWeight.w700,
 //                           fontSize: 20,
@@ -534,7 +534,7 @@
 //                                 CustomSnackBar.success(
 //                                   backgroundColor: brandOne,
 //                                   message: 'You just earned a Space point!',
-//                                   textStyle: GoogleFonts.nunito(
+//                                   textStyle: GoogleFonts.poppins(
 //                                     fontSize: 14,
 //                                     color: Colors.white,
 //                                     fontWeight: FontWeight.w700,
@@ -600,7 +600,7 @@
 //                                                           textAlign:
 //                                                               TextAlign.center,
 //                                                           style: GoogleFonts
-//                                                               .nunito(
+//                                                               .poppins(
 //                                                             color: brandOne,
 //                                                             fontSize: 16,
 //                                                             fontWeight:

@@ -94,7 +94,7 @@
 //           CustomSnackBar.success(
 //             backgroundColor: brandOne,
 //             message: 'An OTP has been sent to ${userController.user[0].userPhone}',
-//             textStyle: GoogleFonts.nunito(
+//             textStyle: GoogleFonts.poppins(
 //               fontSize: 14,
 //               color: Colors.white,
 //               fontWeight: FontWeight.w700,
@@ -151,7 +151,7 @@
 //           CustomSnackBar.success(
 //             backgroundColor: brandOne,
 //             message: 'Your phone number has been verified',
-//             textStyle: GoogleFonts.nunito(
+//             textStyle: GoogleFonts.poppins(
 //               fontSize: 14,
 //               color: Colors.white,
 //               fontWeight: FontWeight.w700,
@@ -218,7 +218,7 @@
 //                   (!_otpSent)
 //                       ? Text(
 //                           "OTP will be sent to ${userController.user[0].userPhone}",
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             fontSize: 15.0,
 //                             color: Theme.of(context).primaryColor,
 //                           ),
@@ -226,7 +226,7 @@
 //                         )
 //                       : Text(
 //                           "OTP has been sent to ${userController.user[0].userPhone}",
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             fontSize: 18.0,
 //                             color: Theme.of(context).primaryColor,
 //                           ),
@@ -239,7 +239,7 @@
 //                       ? RoundedLoadingButton(
 //                           child: Text(
 //                             'Send OTP',
-//                             style: GoogleFonts.nunito(
+//                             style: GoogleFonts.poppins(
 //                               color: Colors.white,
 //                             ),
 //                           ),
@@ -264,14 +264,14 @@
 //                       cursorColor: Colors.black,
 //                       controller: _otpController,
 //                       autovalidateMode: AutovalidateMode.onUserInteraction,
-//                       style: GoogleFonts.nunito(
+//                       style: GoogleFonts.poppins(
 //                         color: brandOne,
 //                       ),
 //                       keyboardType: TextInputType.phone,
 //                       decoration: InputDecoration(
 //                         label: Text(
 //                           "OTP",
-//                           style: GoogleFonts.nunito(
+//                           style: GoogleFonts.poppins(
 //                             color: Colors.grey,
 //                             fontSize: 12,
 //                             fontWeight: FontWeight.w400,
@@ -299,7 +299,7 @@
 //                         filled: false,
 //                         contentPadding: const EdgeInsets.all(14),
 //                         hintText: 'enter your OTP ',
-//                         hintStyle: GoogleFonts.nunito(
+//                         hintStyle: GoogleFonts.poppins(
 //                           color: Colors.grey,
 //                           fontSize: 12,
 //                           fontWeight: FontWeight.w400,
@@ -341,7 +341,7 @@
 //                       child: Text(
 //                         'Verify OTP',
 //                         textAlign: TextAlign.center,
-//                         style: GoogleFonts.nunito(
+//                         style: GoogleFonts.poppins(
 //                           color: Colors.white,
 //                           fontSize: 16,
 //                           fontWeight: FontWeight.w700,
@@ -368,7 +368,7 @@
 //                   //   shape: GFButtonShape.pills,
 //                   //   child: Text(
 //                   //     'Verify OTP',
-//                   //     style: GoogleFonts.nunito(
+//                   //     style: GoogleFonts.poppins(
 //                   //       color: Colors.white,
 //                   //     ),
 //                   //   ),

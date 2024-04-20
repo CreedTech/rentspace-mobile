@@ -85,10 +85,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
         ),
         title: Text(
           'Transaction History',
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -135,8 +135,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                               description: _payments[index]['description'],
                               transactionGroup: 'Wallet Payment',
                               transactionDate: _payments[index]['createdAt'],
-                              transactionRef: _payments[index]['transactionReference'],
-                              merchantRef: _payments[index]['merchantReference'],
+                              transactionRef: _payments[index]
+                                  ['transactionReference'],
+                              merchantRef: _payments[index]
+                                  ['merchantReference'],
                             ));
                           },
                           child: ListTile(
@@ -154,18 +156,18 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                               ),
                             ),
                             title: Text(
-                              _payments[index]['description'],
-                              style: GoogleFonts.nunito(
+                              _payments[index]['message'],
+                              style: GoogleFonts.poppins(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 13.sp,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             subtitle: Text(
                               _formatTime(DateTime.parse(
                                       (_payments[index]['createdAt']))
                                   .add(const Duration(hours: 1))),
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: brandOne,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
@@ -173,7 +175,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             ),
                             trailing: Text(
                               '+ ${ch8t.format(_payments[index]['amount'])}',
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.green,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,

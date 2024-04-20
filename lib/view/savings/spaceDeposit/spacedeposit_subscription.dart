@@ -428,7 +428,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           });
         }
       },
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
@@ -436,7 +436,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       decoration: InputDecoration(
         label: Text(
           "How much do you want to fix?",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -466,14 +466,14 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
         prefix: Text(
           "₦$varValue",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             fontSize: 15,
             color: Theme.of(context).primaryColor,
           ),
@@ -501,7 +501,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
           });
         }
       },
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
@@ -509,7 +509,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       decoration: InputDecoration(
         label: Text(
           "How long do you want to fix this savings for?",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -539,7 +539,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter a value',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -554,7 +554,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       validator: validateName,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _nameValue = text),
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -562,7 +562,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       decoration: InputDecoration(
         label: Text(
           " What name would you give this savings?",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -592,7 +592,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'E.g First deposit',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -602,15 +602,15 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
 
     final durationOption = CustomDropdown(
       borderRadius: BorderRadius.circular(10),
-      selectedStyle: GoogleFonts.nunito(
+      selectedStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14),
       hintText: 'Select your Duration',
-      hintStyle: GoogleFonts.nunito(
+      hintStyle: GoogleFonts.poppins(
           // color: Theme.of(context).primaryColor,
           fontSize: 14),
       excludeSelected: true,
       fillColor: Colors.transparent,
-      listItemStyle: GoogleFonts.nunito(
+      listItemStyle: GoogleFonts.poppins(
           color: Theme.of(context).colorScheme.secondary, fontSize: 14),
       borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
       items: durationSelect,
@@ -712,7 +712,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //           ),
       //           Text(
       //             "Let's get you started$varValue",
-      //             style: GoogleFonts.nunito(
+      //             style: GoogleFonts.poppins(
       //               fontSize: 20.sp,
       //               fontWeight: FontWeight.bold,
       //               // letterSpacing: 0.5,
@@ -738,7 +738,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                             vertical: 3, horizontal: 3),
       //                         child: Text(
       //                           'Name of Saving',
-      //                           style: GoogleFonts.nunito(
+      //                           style: GoogleFonts.poppins(
       //                             color: Theme.of(context).primaryColor,
       //                             fontWeight: FontWeight.w700,
       //                             fontSize: 16,
@@ -760,7 +760,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                             vertical: 3, horizontal: 3),
       //                         child: Text(
       //                           'Target Amount',
-      //                           style: GoogleFonts.nunito(
+      //                           style: GoogleFonts.poppins(
       //                             color: Theme.of(context).primaryColor,
       //                             fontWeight: FontWeight.w700,
       //                             fontSize: 16,
@@ -782,7 +782,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                             vertical: 3, horizontal: 3),
       //                         child: Text(
       //                           'Saving Frequency',
-      //                           style: GoogleFonts.nunito(
+      //                           style: GoogleFonts.poppins(
       //                             color: Theme.of(context).primaryColor,
       //                             fontWeight: FontWeight.w700,
       //                             fontSize: 16,
@@ -804,7 +804,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                             vertical: 3, horizontal: 3),
       //                         child: Text(
       //                           'Saving Frequency',
-      //                           style: GoogleFonts.nunito(
+      //                           style: GoogleFonts.poppins(
       //                             color: Theme.of(context).primaryColor,
       //                             fontWeight: FontWeight.w700,
       //                             fontSize: 16,
@@ -820,7 +820,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                   ),
       //                   Text(
       //                     "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum$varValue",
-      //                     style: GoogleFonts.nunito(
+      //                     style: GoogleFonts.poppins(
       //                       fontSize: 14,
       //                       //height: 1.5,
       //                       color: Theme.of(context).primaryColor,
@@ -828,7 +828,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                   ),
       //                   Text(
       //                     interestText,
-      //                     style: GoogleFonts.nunito(
+      //                     style: GoogleFonts.poppins(
       //                       fontSize: 14,
       //                       //height: 1.5,
       //                       color: Colors.red,
@@ -837,7 +837,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                   (showNotice)
       //                       ? Text(
       //                           amountNotice,
-      //                           style: GoogleFonts.nunito(
+      //                           style: GoogleFonts.poppins(
       //                             fontSize: 14,
       //                             //height: 1.5,
       //                             color: Colors.red,
@@ -1054,7 +1054,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                           child: Text(
       //                             "Save ${ch8t.format(((((double.tryParse(_depositAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_depositAmountController.text.trim().replaceAll(',', '')))!) : 1) / ((((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))))} for ${_planDurationController.text.trim()} ${durationType}",
       //                             textAlign: TextAlign.center,
-      //                             style: GoogleFonts.nunito(
+      //                             style: GoogleFonts.poppins(
       //                               color: Colors.white,
       //                               fontSize: 14.sp,
       //                               fontWeight: FontWeight.w500,
@@ -1074,7 +1074,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                           },
       //                           child: Text(
       //                             "By proceeding, you agree with our terms and conditions",
-      //                             style: GoogleFonts.nunito(
+      //                             style: GoogleFonts.poppins(
       //                               decoration: TextDecoration.underline,
       //                               color: Colors.red,
       //                               fontSize: 12.sp,

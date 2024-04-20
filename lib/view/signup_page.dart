@@ -1,4 +1,3 @@
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
@@ -77,6 +77,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final registerFormKey = GlobalKey<FormState>();
+  final sessionStateStream = StreamController<SessionState>();
   final int minimumAge = 18;
   String? selectedGender;
   late int genderValue;
@@ -144,8 +145,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
       return null;
     }
-
-
 
     validateLast(lastValue) {
       if (lastValue.isEmpty) {
@@ -225,14 +224,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Choose new username",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         // prefixText: "SPACER/",
-        prefixStyle: GoogleFonts.nunito(
+        prefixStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
           fontSize: 13.sp,
           fontWeight: FontWeight.w400,
@@ -263,7 +262,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'can contain letters and numbers',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -285,7 +284,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your Phone number",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -316,7 +315,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'e.g 080 123 456 789 ',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -334,7 +333,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         // label: Text(
         //   "Referal code (Optional)",
-        //   style: GoogleFonts.nunito(
+        //   style: GoogleFonts.poppins(
         //     color: Colors.grey,
         //     fontSize: 12,
         //     fontWeight: FontWeight.w400,
@@ -364,7 +363,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'You and your referrer earn 500 naira each',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -384,7 +383,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your First name",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -414,7 +413,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'legal first name',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -433,7 +432,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter Last name",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -463,7 +462,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'legal last name',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -483,7 +482,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your email",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
@@ -513,7 +512,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'e.g mymail@inbox.com',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -569,8 +568,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final forgotLabel = InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginPage(
+                sessionStateStream: sessionStateStream,
+                // loggedOutReason: "Logged out because of user inactivity",
+              ),
+            ));
       },
       child: const Text(
         'I have an account',
@@ -587,7 +592,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         onMonthChangeStartWithFirstDate: true,
         pickerTheme: DateTimePickerTheme(
           backgroundColor: brandOne,
-          itemTextStyle: GoogleFonts.nunito(color: Colors.white),
+          itemTextStyle: GoogleFonts.poppins(color: Colors.white),
           itemHeight: 50.h,
           pickerHeight: 300.h,
           showTitle: true,
@@ -598,7 +603,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           ),
           confirm: Text(
             'Done',
-            style: GoogleFonts.nunito(color: Colors.white),
+            style: GoogleFonts.poppins(color: Colors.white),
           ),
         ),
         initialDateTime: selectedDate,
@@ -624,75 +629,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             if (age < minimumAge) {
               // Show an error message or handle the validation as needed.
               if (!context.mounted) return;
-              showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      title: null,
-                      elevation: 0,
-                      content: SizedBox(
-                        height: 250,
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    // color: brandOne,
-                                  ),
-                                  child: Icon(
-                                    Iconsax.close_circle,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 30.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Iconsax.warning_24,
-                                color: Colors.red,
-                                size: 75.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 12.h,
-                            ),
-                            Text(
-                              'Error! :(',
-                              style: GoogleFonts.nunito(
-                                color: Colors.red,
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Text(
-                              "Age must be at least $minimumAge years.",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
-                                  color: Colors.red, fontSize: 18.sp),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
+              customErrorDialog(context,'Error! :(',"Age must be at least $minimumAge years.");
             } else {
               setState(() {
                 selectedDate = _dateTime!;
@@ -787,10 +724,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     //                     ),
     //                     Text(
     //                       'Error! :(',
-    //                       style: GoogleFonts.nunito(
+    //                       style: GoogleFonts.poppins(
     //                         color: Colors.red,
     //                         fontSize: 28.sp,
-    //                         fontWeight: FontWeight.w800,
+    //                         fontWeight: FontWeight.w600,
     //                       ),
     //                     ),
     //                     SizedBox(
@@ -799,7 +736,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     //                     Text(
     //                       "Age must be at least $minimumAge years.",
     //                       textAlign: TextAlign.center,
-    //                       style: GoogleFonts.nunito(
+    //                       style: GoogleFonts.poppins(
     //                           color: Colors.red, fontSize: 18.sp),
     //                     ),
     //                     SizedBox(
@@ -828,7 +765,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       // onTap: () => _selectDate(context),
       decoration: InputDecoration(
         labelText: 'Date of Birth',
-        labelStyle: GoogleFonts.nunito(
+        labelStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -876,7 +813,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "11 digits BVN",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -909,7 +846,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         // fillColor: brandThree,
         hintText: 'e.g 12345678900',
         contentPadding: const EdgeInsets.all(14),
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -930,14 +867,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         label: Text(
           "Enter your address",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: 'Enter your address...',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -971,15 +908,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     );
 
     final gender = CustomDropdown(
-      selectedStyle: GoogleFonts.nunito(
+      selectedStyle: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14.sp),
       hintText: 'Select your gender',
-      hintStyle: GoogleFonts.nunito(
+      hintStyle: GoogleFonts.poppins(
           // color: Theme.of(context).primaryColor,
           fontSize: 14.sp),
       excludeSelected: true,
       fillColor: Colors.transparent,
-      listItemStyle: GoogleFonts.nunito(
+      listItemStyle: GoogleFonts.poppins(
           color: Theme.of(context).colorScheme.secondary, fontSize: 14.sp),
       borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
       items: const ['Male', 'Female'],
@@ -1014,13 +951,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        centerTitle: false,
+        centerTitle: true,
         title: Text(
           'Sign up',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -1042,9 +979,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'First Name',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1064,9 +1001,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Last Name',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1086,9 +1023,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'User Name',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1108,9 +1045,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Email Address',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1130,9 +1067,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Phone Number',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1149,9 +1086,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Password',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1164,20 +1101,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             width: MediaQuery.of(context).size.width,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.info_outline,
-                                  size: 15,
+                                  size: 15.sp,
                                   color: Color(0xff828282),
                                 ),
                                 SizedBox(
-                                  width: 320,
+                                  width: 320.w,
                                   child: Text(
                                     'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
                                     softWrap: true,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       color: const Color(0xff828282),
-                                      fontSize: 12,
+                                      fontSize: 10.sp,
                                       fontStyle: FontStyle.italic,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -1197,9 +1135,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Date Of Birth',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1219,9 +1157,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Residential Address',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1241,9 +1179,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Gender',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1263,9 +1201,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               vertical: 3.h, horizontal: 3.w),
                           child: Text(
                             'Referral Code(Optional)',
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12.sp,
                               // fontFamily: "DefaultFontFamily",
                             ),
@@ -1277,69 +1215,86 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
                           MediaQuery.of(context).size.height / 80,
                           MediaQuery.of(context).size.height / 600,
                           MediaQuery.of(context).size.height / 80,
+                          MediaQuery.of(context).size.height / 80,
                           // MediaQuery.of(context).size.height / 500,
-                          0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox.adaptive(
-                            visualDensity:
-                                VisualDensity.adaptivePlatformDensity,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                            overlayColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            fillColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return brandTwo;
-                              }
-                              return const Color(0xffF2F2F2);
-                            }),
-                            focusColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            activeColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            side: const BorderSide(
-                              color: Color(0xffBDBDBD),
-                            ),
-                          ),
-                          Text(
-                            'You agree to our ',
-                            style: GoogleFonts.nunito(
-                              fontSize: 12.sp,
-                              color: Theme.of(context).primaryColor,
-
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.to(const TermsAndConditions());
-                            },
-                            child: Text(
-                              'Terms of service',
-                              style: GoogleFonts.nunito(
-                                color: brandTwo,
-                                // fontFamily: "DefaultFontFamily",
-                                fontSize: 12.sp,
-                                // decoration: TextDecoration.underline,
+                        ),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          runAlignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Checkbox.adaptive(
+                              visualDensity:
+                                  VisualDensity.adaptivePlatformDensity,
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                              overlayColor: MaterialStateColor.resolveWith(
+                                (states) => brandTwo,
+                              ),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return brandTwo;
+                                }
+                                return const Color(0xffF2F2F2);
+                              }),
+                              focusColor: MaterialStateColor.resolveWith(
+                                (states) => brandTwo,
+                              ),
+                              activeColor: MaterialStateColor.resolveWith(
+                                (states) => brandTwo,
+                              ),
+                              side: const BorderSide(
+                                color: Color(0xffBDBDBD),
                               ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              'You agree to our ',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12.sp,
+                                color: Theme.of(context).primaryColor,
+
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(const TermsAndConditions());
+                              },
+                              // AutoSizeText(
+                              //               maxLines: 1,
+                              //               "Get Started",
+                              //               minFontSize: 10,
+                              //               maxFontSize: 14,
+                              //               style: GoogleFonts.poppins(
+                              //                   color: Colors.black,
+                              //                   fontWeight: FontWeight.w600,
+                              //                   fontSize: 14.sp),
+                              //             ),
+                              child: Text(
+                                'Terms of service',
+                                style: GoogleFonts.poppins(
+                                  color: brandTwo,
+                                  // fontFamily: "DefaultFontFamily",
+                                  fontSize: 12.sp,
+                                  // decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Center(
@@ -1385,10 +1340,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         child: Text(
                           'Create account',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 12.sp,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

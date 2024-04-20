@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -15,7 +16,11 @@ import '../api/global_services.dart';
 import '../controller/auth/auth_controller.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({super.key});
+  LoginPage(
+      {super.key, required this.sessionStateStream, this.loggedOutReason = ""});
+
+  final StreamController<SessionState> sessionStateStream;
+  late String loggedOutReason;
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPageConsumerState();
@@ -125,7 +130,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14.sp),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
@@ -154,7 +159,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your email',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -184,7 +189,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _passwordController,
       obscureText: obscurity,
-      style: GoogleFonts.nunito(
+      style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor, fontSize: 14.sp),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -216,7 +221,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your password',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
@@ -231,17 +236,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         if (value == null || value.isEmpty) {
           return 'Input a valid password';
         }
-        // if (value.length < 8) {
-        //   return "Password must be at least 8 characters long.";
-        // } else if (!uppercaseRegex.hasMatch(value)) {
-        //   return "Password must contain at least one uppercase letter.";
-        // } else if (!lowercaseRegex.hasMatch(value)) {
-        //   return "Password must contain at least one lowercase letter.";
-        // } else if (!digitsRegex.hasMatch(value)) {
-        //   return "Password must contain at least one number.";
-        // } else if (!specialCharRegex.hasMatch(value)) {
-        //   return "Password must contain at least one special character (#\$%&*?@).";
-        // }
+    
         else {
           return null;
         }
@@ -272,12 +267,30 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      if (widget.loggedOutReason != "")
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Text(
+                            widget.loggedOutReason,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         'Welcome Back👋!!!',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 20.sp,
                           // fontFamily: "DefaultFontFamily",
                         ),
@@ -287,7 +300,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         child: Text(
                           'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: const Color(0xff828282),
                             fontWeight: FontWeight.w400,
                             fontSize: 12.sp,
@@ -312,7 +325,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Email',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12.sp,
@@ -333,7 +346,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   vertical: 3.h, horizontal: 3.w),
                               child: Text(
                                 'Enter Password',
-                                style: GoogleFonts.nunito(
+                                style: GoogleFonts.poppins(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12.sp,
@@ -397,7 +410,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   child: Text(
                                     'Remember me',
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xff828282),
@@ -418,7 +431,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   'Forgot Password?',
-                                  style: GoogleFonts.nunito(
+                                  style: GoogleFonts.poppins(
                                     color: brandFive,
                                     fontSize: 10.sp,
                                     // leadingDistribution:
@@ -465,6 +478,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   token,
                                   deviceType,
                                   deviceModel,
+                                  widget.loggedOutReason,
+                                  widget.sessionStateStream,
                                   rememberMe: _rememberMe,
                                   // usernameController.text.trim(),
                                 );
@@ -475,7 +490,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             child: Text(
                               'Proceed',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w700,
@@ -496,7 +511,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                   //   onPressed: _doSomething,
                   //   child: Text(
                   //     'Proceed',
-                  //     style: GoogleFonts.nunito(
+                  //     style: GoogleFonts.poppins(
                   //         color: Colors.white,
                   //         fontSize: 16,
                   //         fontWeight: FontWeight.w700),
@@ -516,7 +531,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       children: [
                         Text(
                           "Don't have an account? ",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp,
                           ),
@@ -527,7 +542,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           },
                           child: Text(
                             "Sign Up",
-                            style: GoogleFonts.nunito(
+                            style: GoogleFonts.poppins(
                               color: brandFive,
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp,
@@ -540,7 +555,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                   (currentCount != 0)
                       ? Text(
                           "Remaining attempts: ${5 - currentCount}",
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Colors.red,
                           ),
                         )

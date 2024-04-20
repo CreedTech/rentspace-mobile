@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -100,14 +101,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         label: Text(
           "New Password",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: '************',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -163,14 +164,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           ),
         ),
         hintText: '************',
-        hintStyle: GoogleFonts.nunito(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
         label: Text(
           "Repeat Password",
-          style: GoogleFonts.nunito(
+          style: GoogleFonts.poppins(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -224,7 +225,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ),
       ),
@@ -238,12 +239,11 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                   const SizedBox(
                     height: 35,
                   ),
-             
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Kindly fill in your new password.',
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w700,
                           color: brandOne,
                           fontSize: 18),
@@ -259,16 +259,13 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                          
                             password,
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Icon(
                                       Icons.info_outline,
@@ -280,7 +277,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                       child: Text(
                                         'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
                                         softWrap: true,
-                                        style: GoogleFonts.nunito(
+                                        style: GoogleFonts.poppins(
                                           color: const Color(0xff828282),
                                           fontSize: 12,
                                           fontStyle: FontStyle.italic,

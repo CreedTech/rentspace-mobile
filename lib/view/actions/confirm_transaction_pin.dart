@@ -135,7 +135,6 @@ class _ConfirmTransactionPinPageState
           // Navigator.pushNamed(
           //     context, RouteList.enable_user_notification);
         }
-
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -156,7 +155,7 @@ class _ConfirmTransactionPinPageState
                       alignment: Alignment.center,
                       child: Text(
                         'Confirm Transaction PIN',
-                        style: GoogleFonts.nunito(
+                        style: GoogleFonts.poppins(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -196,7 +195,7 @@ class _ConfirmTransactionPinPageState
                   alignment: Alignment.bottomCenter,
                   child: NumericKeyboard(
                     onKeyboardTap: onKeyboardTap,
-                    textStyle: GoogleFonts.nunito(
+                    textStyle: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 28.sp,
                     ),

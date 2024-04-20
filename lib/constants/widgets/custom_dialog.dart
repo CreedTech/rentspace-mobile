@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/login_page.dart';
@@ -36,7 +39,7 @@ void resendVerification(
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -48,7 +51,7 @@ void resendVerification(
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -77,7 +80,7 @@ void resendVerification(
                     child: Text(
                       "Okay",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -95,6 +98,7 @@ void resendVerification(
 
 void verification(BuildContext context, String message, String subText,
     String redirectText) async {
+  final sessionStateStream = StreamController<SessionState>();
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -119,7 +123,7 @@ void verification(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -131,7 +135,7 @@ void verification(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -147,7 +151,10 @@ void verification(BuildContext context, String message, String subText,
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => LoginPage(
+                              sessionStateStream: sessionStateStream,
+                              // loggedOutReason: "Logged out because of user inactivity",
+                            ),
                           ),
                           (route) => false);
                     },
@@ -165,7 +172,7 @@ void verification(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -183,6 +190,7 @@ void verification(BuildContext context, String message, String subText,
 
 void redirectingAlert(BuildContext context, String message, String subText,
     String redirectText) async {
+  final sessionStateStream = StreamController<SessionState>();
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -213,7 +221,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -225,7 +233,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -240,7 +248,10 @@ void redirectingAlert(BuildContext context, String message, String subText,
                       FocusScope.of(context).unfocus();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => LoginPage(
+                              sessionStateStream: sessionStateStream,
+                              // loggedOutReason: "Logged out because of user inactivity",
+                            ),
                           ),
                           (route) => false);
                     },
@@ -258,7 +269,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
+                      style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -326,7 +337,7 @@ void errorDialog(BuildContext context, String message, String subText) {
               ),
               Text(
                 message,
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                   // fontFamily:
@@ -340,7 +351,7 @@ void errorDialog(BuildContext context, String message, String subText) {
               ),
               Text(
                 subText,
-                style: GoogleFonts.nunito(
+                style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                   // fontFamily:
@@ -366,71 +377,84 @@ void customErrorDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          title: null,
-          elevation: 0,
-          content: SizedBox(
-            height: 250.h,
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        // color: brandOne,
-                      ),
-                      child: Icon(
-                        Iconsax.close_circle,
-                        color: Theme.of(context).primaryColor,
-                        size: 30.sp,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AlertDialog(
+              contentPadding:  EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+              elevation: 0,
+              alignment: Alignment.bottomCenter,
+              insetPadding: const EdgeInsets.all(0),
+              scrollable: true,
+              title: null,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              content: SizedBox(
+                height: 220.h,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // color: brandOne,
+                          ),
+                          child: Icon(
+                            Iconsax.close_circle,
+                            color: Colors.red,
+                            size: 30.sp,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Iconsax.warning_2,
+                        color: Colors.red,
+                        size: 45.sp,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Text(
+                      message,
+                      style: GoogleFonts.poppins(
+                        color: Colors.red,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      subText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: Colors.red,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Iconsax.warning_24,
-                    color: Colors.red,
-                    size: 75.sp,
-                  ),
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                Text(
-                  message,
-                  style: GoogleFonts.nunito(
-                    color: Colors.red,
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Text(
-                  subText,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    color: Colors.red,
-                    fontSize: 16.sp,
-                  ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         );
       });
 }
@@ -490,7 +514,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
                 child: Center(
                   child: Text(
                     'Tap to Change',
-                    style: GoogleFonts.nunito(
+                    style: GoogleFonts.poppins(
                       color: brandOne,
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w500,
@@ -511,6 +535,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
 
 Future<void> SucessfulReciept(
     BuildContext context, accountName, amount, bank, subject) async {
+  final sessionStateStream = StreamController<SessionState>();
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -563,16 +588,16 @@ Future<void> SucessfulReciept(
                                   .format(amount),
 
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 26.sp,
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
                               '$subject $accountName',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
@@ -581,7 +606,7 @@ Future<void> SucessfulReciept(
                             Text(
                               bank,
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.nunito(
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
@@ -613,12 +638,13 @@ Future<void> SucessfulReciept(
                           userController.fetchData();
                           walletController.fetchWallet();
                           rentController.fetchRent();
-                          Get.to(const FirstPage());
+                          Get.to(FirstPage(
+                              sessionStateStream: sessionStateStream));
                         },
                         child: Text(
                           'Back Home',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -630,6 +656,103 @@ Future<void> SucessfulReciept(
                 ],
               ),
             ),
+          ),
+        );
+      });
+}
+
+void sessionAlert(BuildContext context, String message, String subText,
+    String redirectText, sessionStateStream) async {
+  // final sessionStateStream = StreamController<SessionState>();
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          content: SizedBox(
+            height: 400,
+            child: SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Image.asset(
+                    'assets/check.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    message,
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    subText,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      // letterSpacing: 0.3,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(
+                              sessionStateStream: sessionStateStream,
+                              // loggedOutReason: "Logged out because of user inactivity",
+                            ),
+                          ),
+                          (route) => false);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: brandFive,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
+                      textStyle:
+                          const TextStyle(color: Colors.white, fontSize: 17),
+                    ),
+                    child: Text(
+                      redirectText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 14,
+                        // letterSpacing: 0.3,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
           ),
         );
       });
