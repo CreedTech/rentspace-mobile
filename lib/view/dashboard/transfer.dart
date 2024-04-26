@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/view/dashboard/transfer_payment_page.dart';
 
@@ -42,6 +45,9 @@ class _TransferPageState extends State<TransferPage> {
   String verifyAccountError = "";
   String _message = '';
   bool isChecking = false;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+  late StreamSubscription subscription;
 
   void _openBankSelectorOverlay() async {
     final List<dynamic>? selectedBank = await Navigator.push(
@@ -230,9 +236,114 @@ class _TransferPageState extends State<TransferPage> {
   @override
   void initState() {
     super.initState();
+    getConnectivity();
     // Initially, the message is null
     _message = '';
     fetchUserData();
+  }
+
+  void getConnectivity() {
+    print('checking internet...');
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                          // fetchUserData();
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override

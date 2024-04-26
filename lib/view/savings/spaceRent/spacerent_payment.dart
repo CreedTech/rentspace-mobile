@@ -117,7 +117,6 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();

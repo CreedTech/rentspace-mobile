@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
@@ -19,6 +21,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/constants/icons.dart';
+import 'package:upgrader/upgrader.dart';
 
 // import '../constants/db/firebase_db.dart';
 import '../controller/auth/auth_controller.dart';
@@ -83,6 +86,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   late int genderValue;
   DateTime? _dateTime;
   String _format = 'yyyy-MMMM-dd';
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+  late StreamSubscription subscription;
 
   void visibility() {
     if (obscurity == true) {
@@ -101,12 +107,115 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   @override
   initState() {
     super.initState();
+    getConnectivity();
     _usernameController.clear();
     setState(() {
       _mssg = "";
       vNum = "";
       vName = "";
     });
+  }
+
+  void getConnectivity() {
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -629,7 +738,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             if (age < minimumAge) {
               // Show an error message or handle the validation as needed.
               if (!context.mounted) return;
-              customErrorDialog(context,'Error! :(',"Age must be at least $minimumAge years.");
+              customErrorDialog(context, 'Error! :(',
+                  "Age must be at least $minimumAge years.");
             } else {
               setState(() {
                 selectedDate = _dateTime!;
@@ -936,427 +1046,439 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       },
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 25.sp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Sign up',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w600,
-            fontSize: 16.sp,
-          ),
-        ),
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        showIgnore: false,
+        durationUntilAlertAgain: const Duration(seconds: 5),
+        debugLogging: true,
+        // debugDisplayAlways:true,
+        dialogStyle: UpgradeDialogStyle.cupertino,
+        showLater: false,
+        canDismissDialog: false,
+        showReleaseNotes: true,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-              child: Form(
-                key: registerFormKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'First Name',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        firstname,
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Last Name',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        lastname,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'User Name',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        username,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Email Address',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        email,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Phone Number',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        phoneNumber,
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Password',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        password,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.info_outline,
-                                  size: 15.sp,
-                                  color: Color(0xff828282),
-                                ),
-                                SizedBox(
-                                  width: 320.w,
-                                  child: Text(
-                                    'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
-                                    softWrap: true,
-                                    style: GoogleFonts.poppins(
-                                      color: const Color(0xff828282),
-                                      fontSize: 10.sp,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Date Of Birth',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    dob,
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Residential Address',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        address,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Gender',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        gender,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 3.h, horizontal: 3.w),
-                          child: Text(
-                            'Referral Code(Optional)',
-                            style: GoogleFonts.poppins(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                        ),
-                        referal,
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          MediaQuery.of(context).size.height / 80,
-                          MediaQuery.of(context).size.height / 600,
-                          MediaQuery.of(context).size.height / 80,
-                          MediaQuery.of(context).size.height / 80,
-                          // MediaQuery.of(context).size.height / 500,
-                        ),
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          runAlignment: WrapAlignment.center,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Checkbox.adaptive(
-                              visualDensity:
-                                  VisualDensity.adaptivePlatformDensity,
-                              value: isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  isChecked = value!;
-                                });
-                              },
-                              overlayColor: MaterialStateColor.resolveWith(
-                                (states) => brandTwo,
-                              ),
-                              fillColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
-                                  return brandTwo;
-                                }
-                                return const Color(0xffF2F2F2);
-                              }),
-                              focusColor: MaterialStateColor.resolveWith(
-                                (states) => brandTwo,
-                              ),
-                              activeColor: MaterialStateColor.resolveWith(
-                                (states) => brandTwo,
-                              ),
-                              side: const BorderSide(
-                                color: Color(0xffBDBDBD),
-                              ),
-                            ),
-                            Text(
-                              'You agree to our ',
+      child: Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).canvasColor,
+          elevation: 0.0,
+          leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              size: 25.sp,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          centerTitle: true,
+          title: Text(
+            'Sign up',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 16.sp,
+            ),
+          ),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                child: Form(
+                  key: registerFormKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'First Name',
                               style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
                                 color: Theme.of(context).primaryColor,
-
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
                                 // fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                Get.to(const TermsAndConditions());
-                              },
-                              // AutoSizeText(
-                              //               maxLines: 1,
-                              //               "Get Started",
-                              //               minFontSize: 10,
-                              //               maxFontSize: 14,
-                              //               style: GoogleFonts.poppins(
-                              //                   color: Colors.black,
-                              //                   fontWeight: FontWeight.w600,
-                              //                   fontSize: 14.sp),
-                              //             ),
-                              child: Text(
-                                'Terms of service',
-                                style: GoogleFonts.poppins(
-                                  color: brandTwo,
-                                  // fontFamily: "DefaultFontFamily",
-                                  fontSize: 12.sp,
-                                  // decoration: TextDecoration.underline,
-                                ),
+                          ),
+                          firstname,
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Last Name',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                          ],
+                          ),
+                          lastname,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'User Name',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          username,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Email Address',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          email,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Phone Number',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          phoneNumber,
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Password',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          password,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.info_outline,
+                                    size: 15.sp,
+                                    color: Color(0xff828282),
+                                  ),
+                                  SizedBox(
+                                    width: 320.w,
+                                    child: Text(
+                                      'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
+                                      softWrap: true,
+                                      style: GoogleFonts.poppins(
+                                        color: const Color(0xff828282),
+                                        fontSize: 10.sp,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Date Of Birth',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      dob,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Residential Address',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          address,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Gender',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          gender,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3.h, horizontal: 3.w),
+                            child: Text(
+                              'Referral Code(Optional)',
+                              style: GoogleFonts.poppins(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                                // fontFamily: "DefaultFontFamily",
+                              ),
+                            ),
+                          ),
+                          referal,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.height / 80,
+                            MediaQuery.of(context).size.height / 600,
+                            MediaQuery.of(context).size.height / 80,
+                            MediaQuery.of(context).size.height / 80,
+                            // MediaQuery.of(context).size.height / 500,
+                          ),
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            runAlignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Checkbox.adaptive(
+                                visualDensity:
+                                    VisualDensity.adaptivePlatformDensity,
+                                value: isChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    isChecked = value!;
+                                  });
+                                },
+                                overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => brandTwo,
+                                ),
+                                fillColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.selected)) {
+                                    return brandTwo;
+                                  }
+                                  return const Color(0xffF2F2F2);
+                                }),
+                                focusColor: MaterialStateColor.resolveWith(
+                                  (states) => brandTwo,
+                                ),
+                                activeColor: MaterialStateColor.resolveWith(
+                                  (states) => brandTwo,
+                                ),
+                                side: const BorderSide(
+                                  color: Color(0xffBDBDBD),
+                                ),
+                              ),
+                              Text(
+                                'You agree to our ',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12.sp,
+                                  color: Theme.of(context).primaryColor,
+
+                                  // fontFamily: "DefaultFontFamily",
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.to(const TermsAndConditions());
+                                },
+                                // AutoSizeText(
+                                //               maxLines: 1,
+                                //               "Get Started",
+                                //               minFontSize: 10,
+                                //               maxFontSize: 14,
+                                //               style: GoogleFonts.poppins(
+                                //                   color: Colors.black,
+                                //                   fontWeight: FontWeight.w600,
+                                //                   fontSize: 14.sp),
+                                //             ),
+                                child: Text(
+                                  'Terms of service',
+                                  style: GoogleFonts.poppins(
+                                    color: brandTwo,
+                                    // fontFamily: "DefaultFontFamily",
+                                    fontSize: 12.sp,
+                                    // decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          backgroundColor: brandOne,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            backgroundColor: brandOne,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            if (registerFormKey.currentState!.validate()) {
+                              if (isChecked == true) {
+                                print(genderValue.toString());
+                                print(dateController.text);
+                                authState.signUp(
+                                    context,
+                                    _firstnameController.text.trim(),
+                                    _lastnameController.text.trim(),
+                                    _usernameController.text.trim(),
+                                    _emailController.text.trim(),
+                                    _passwordController.text.trim(),
+                                    _phoneController.text.trim(),
+                                    dateController.text.trim(),
+                                    _addressController.text.trim(),
+                                    _genderController.text.trim(),
+                                    referralCode:
+                                        _referalController.text.trim() ?? '');
+                              } else {
+                                customErrorDialog(context, 'Error!',
+                                    "You have to agree to the terms of service");
+                              }
+                            } else {
+                              customErrorDialog(context, 'Error!',
+                                  "Please fill the form properly to proceed");
+                            }
+                          },
+                          child: Text(
+                            'Create account',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          if (registerFormKey.currentState!.validate()) {
-                            if (isChecked == true) {
-                              print(genderValue.toString());
-                              print(dateController.text);
-                              authState.signUp(
-                                  context,
-                                  _firstnameController.text.trim(),
-                                  _lastnameController.text.trim(),
-                                  _usernameController.text.trim(),
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                  _phoneController.text.trim(),
-                                  dateController.text.trim(),
-                                  _addressController.text.trim(),
-                                  _genderController.text.trim(),
-                                  referralCode:
-                                      _referalController.text.trim() ?? '');
-                            } else {
-                              customErrorDialog(context, 'Error!',
-                                  "You have to agree to the terms of service");
-                            }
-                          } else {
-                            customErrorDialog(context, 'Error!',
-                                "Please fill the form properly to proceed");
-                          }
-                        },
-                        child: Text(
-                          'Create account',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

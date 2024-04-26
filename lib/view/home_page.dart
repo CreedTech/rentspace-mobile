@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
-
 import '../constants/colors.dart';
 import 'dashboard/dashboard.dart';
 import 'dashboard/settings.dart';
@@ -58,7 +59,10 @@ class _HomePageState extends State<HomePage> {
   bool _hasOpened = false;
   final openedAppStorage = GetStorage();
   final hasReferredStorage = GetStorage();
-  List<String> transIds = [];
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+  late StreamSubscription subscription;
+  // List<String> transIds = [];
   String fundedAmount = "0";
   String _message = "Not Authorized";
   int _selectedIndex = 0;
@@ -198,9 +202,9 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     super.initState();
-    transIds.clear();
+    // transIds.clear();
     // checkStatus();
-
+    getConnectivity();
     setState(() {
       fundedAmount = "0";
     });
@@ -380,6 +384,109 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       currentIndex = int.parse(index);
     });
+  }
+
+  void getConnectivity() {
+    print('checking internet...');
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -586,11 +693,13 @@ class _HomePageState extends State<HomePage> {
                             : navigationcolorText,
                       ),
                     ),
-                    Text(navText[index],style: GoogleFonts.nunito(
-                      fontSize: 12.sp,
-                      color: index == currentIndex? brandOne: Colors.grey,
-                      fontWeight: FontWeight.w600
-                    ),),
+                    Text(
+                      navText[index],
+                      style: GoogleFonts.nunito(
+                          fontSize: 12.sp,
+                          color: index == currentIndex ? brandOne : Colors.grey,
+                          fontWeight: FontWeight.w600),
+                    ),
                     SizedBox(height: MediaQuery.of(context).size.width * .03),
                   ],
                 ),

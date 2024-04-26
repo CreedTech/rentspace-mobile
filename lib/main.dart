@@ -452,13 +452,7 @@ class _MyAppState extends State<MyApp> {
       sessionStateStream.add(SessionState.stopListening);
       // sessionCheckout.onResume()
       if (timeoutEvent == SessionTimeoutState.userInactivityTimeout) {
-        // handle user  inactive timeout
-        // sessionAlert(
-        //     context,
-        //     'Session Timeout',
-        //     'Logged out because of user inactivity',
-        //     'Login',
-        //     sessionStateStream);
+  
         _sessionNavigator.push(MaterialPageRoute(
           builder: (_) => IdlePage(
               sessionStateStream: sessionStateStream,

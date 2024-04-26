@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Rentspace</string>
+    <!-- Other string resources -->
+    <string name="facebook_app_id">1475499056410899</string>
+    <string name="fb_login_protocol_scheme">fb1475499056410899</string>
+    <string name="facebook_client_token">58a1902dfc0bf22176c98c57e4f388e1</string>
+</resources>

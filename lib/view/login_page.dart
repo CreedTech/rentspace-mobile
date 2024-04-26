@@ -1,6 +1,8 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/view/actions/forgot_password.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,11 @@ import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../api/global_services.dart';
 import '../controller/auth/auth_controller.dart';
+import '../internet_connection_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   LoginPage(
@@ -28,6 +32,7 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   //Multiple attempts prevention section
+  late StreamSubscription subscription;
   final loginAttempts = GetStorage();
   final lockAttempts = GetStorage();
   int loginCount = 0;
@@ -36,6 +41,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   bool isLockedOut = false;
   bool isChecked = false;
   bool isLoading = false;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
 
   bool obscurity = true;
   Icon lockIcon = LockIcon().open;
@@ -62,30 +69,11 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     }
   }
 
-  // Future<void> setHasSeenOnboardingPreference(bool value) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setBool('hasSeenOnboarding', value);
-  //   print("====================");
-  //   print("Checking for new users.....");
-  //   print(prefs.get('hasSeenOnboarding'));
-  //   print("====================");
-  // }
-
-  // void _doSomething() async {
-  //   Timer(const Duration(seconds: 1), () {
-  //     _btnController.stop();
-  //   });
-
-  //   if (loginFormKey.currentState!.validate()) {
-  //     authController.login(_emailController.text.trim(),
-  //         _passwordController.text.trim(), context);
-  //   }
-  // }
-
   @override
   initState() {
     // setHasSeenOnboardingPreference(true);
     super.initState();
+    // getConnectivity();
     _getSavedLoginInfo();
     _getDeviceInfo();
   }
@@ -122,9 +110,22 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     }
   }
 
+  void getConnectivity() {
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
+    final isConnected = ref.watch(internetConnectionProvider).isConnected;
     //email field
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -235,9 +236,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         RegExp specialCharRegex = RegExp(r'[#\$%&*?@]');
         if (value == null || value.isEmpty) {
           return 'Input a valid password';
-        }
-    
-        else {
+        } else {
           return null;
         }
       },
@@ -245,339 +244,421 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
 
     //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        // backgroundColor: const Color(0xffE0E0E0),
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-
-        centerTitle: true,
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        showIgnore: false,
+        durationUntilAlertAgain: const Duration(seconds: 5),
+        debugLogging: true,
+        // debugDisplayAlways:true,
+        dialogStyle: UpgradeDialogStyle.cupertino,
+        showLater: false,
+        canDismissDialog: false,
+        showReleaseNotes: true,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      if (widget.loggedOutReason != "")
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Text(
-                            widget.loggedOutReason,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
+        appBar: AppBar(
+          // backgroundColor: const Color(0xffE0E0E0),
+          backgroundColor: Theme.of(context).canvasColor,
+          elevation: 0.0,
+          automaticallyImplyLeading: false,
+
+          centerTitle: true,
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (widget.loggedOutReason != "")
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Text(
+                              widget.loggedOutReason,
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Welcome Back👋!!!',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.sp,
-                          // fontFamily: "DefaultFontFamily",
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 1.w),
-                        child: Text(
-                          'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
+                        Text(
+                          'Welcome Back👋!!!',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
-                            color: const Color(0xff828282),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12.sp,
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20.sp,
                             // fontFamily: "DefaultFontFamily",
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 51.h,
-                  ),
-                  Form(
-                    key: loginFormKey,
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Enter Email',
-                                style: GoogleFonts.poppins(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 1.w),
+                          child: Text(
+                            'Reconnect with your dreams and aspirations as we embrace the next chapter of your journey together.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xff828282),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.sp,
+                              // fontFamily: "DefaultFontFamily",
                             ),
-                            email,
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Enter Password',
-                                style: GoogleFonts.poppins(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
-                                  // fontFamily: "DefaultFontFamily",
-                                ),
-                              ),
-                            ),
-                            password,
-                          ],
-                        ),
-                        SizedBox(
-                          height: 28.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // (_rememberMe == false)
-                            //     ?
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.zero,
-                                  // alignment: Alignment.centerLeft,
-                                  child: Checkbox.adaptive(
-                                      visualDensity:
-                                          VisualDensity.adaptivePlatformDensity,
-                                      value: _rememberMe,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          _rememberMe = value!;
-                                        });
-                                      },
-                                      overlayColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
-                                      ),
-                                      fillColor: MaterialStateProperty
-                                          .resolveWith<Color>(
-                                              (Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return brandFour;
-                                        }
-                                        return const Color(0xffF2F2F2);
-                                      }),
-                                      focusColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
-                                      ),
-                                      activeColor:
-                                          MaterialStateColor.resolveWith(
-                                        (states) => brandFour,
-                                      ),
-                                      side: const BorderSide(
-                                        color: Color(0xffBDBDBD),
-                                      )),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Remember me',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xff828282),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // : const Row(
-                            //     children: [],
-                            //   ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(const ForgotPassword());
-                                // Navigator.of(context).pushNamed(forgotPass);
-                              },
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: GoogleFonts.poppins(
-                                    color: brandFive,
-                                    fontSize: 10.sp,
-                                    // leadingDistribution:
-                                    //     TextLeadingDistribution.even,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      // width: MediaQuery.of(context).size.width * 2,
-                      alignment: Alignment.center,
-                      // height: 110.h,
+                    SizedBox(
+                      height: 51.h,
+                    ),
+                    Form(
+                      key: loginFormKey,
                       child: Column(
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(300.w, 50.h),
-                              backgroundColor: brandOne,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  10,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Enter Email',
+                                  style: GoogleFonts.poppins(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ),
+                              email,
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Enter Password',
+                                  style: GoogleFonts.poppins(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12.sp,
+                                    // fontFamily: "DefaultFontFamily",
+                                  ),
+                                ),
+                              ),
+                              password,
+                            ],
+                          ),
+                          SizedBox(
+                            height: 28.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // (_rememberMe == false)
+                              //     ?
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.zero,
+                                    // alignment: Alignment.centerLeft,
+                                    child: Checkbox.adaptive(
+                                        visualDensity: VisualDensity
+                                            .adaptivePlatformDensity,
+                                        value: _rememberMe,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            _rememberMe = value!;
+                                          });
+                                        },
+                                        overlayColor:
+                                            MaterialStateColor.resolveWith(
+                                          (states) => brandFour,
+                                        ),
+                                        fillColor: MaterialStateProperty
+                                            .resolveWith<Color>(
+                                                (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return brandFour;
+                                          }
+                                          return const Color(0xffF2F2F2);
+                                        }),
+                                        focusColor:
+                                            MaterialStateColor.resolveWith(
+                                          (states) => brandFour,
+                                        ),
+                                        activeColor:
+                                            MaterialStateColor.resolveWith(
+                                          (states) => brandFour,
+                                        ),
+                                        side: const BorderSide(
+                                          color: Color(0xffBDBDBD),
+                                        )),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Remember me',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: const Color(0xff828282),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // : const Row(
+                              //     children: [],
+                              //   ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(const ForgotPassword());
+                                  // Navigator.of(context).pushNamed(forgotPass);
+                                },
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'Forgot Password?',
+                                    style: GoogleFonts.poppins(
+                                      color: brandFive,
+                                      fontSize: 10.sp,
+                                      // leadingDistribution:
+                                      //     TextLeadingDistribution.even,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 2,
+                        alignment: Alignment.center,
+                        // height: 110.h,
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(300.w, 50.h),
+                                backgroundColor: brandOne,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                FocusScope.of(context).unfocus();
+                                if (loginFormKey.currentState!.validate()) {
+                                  authState.signIn(
+                                    context,
+                                    _emailController.text.trim(),
+                                    _passwordController.text.trim(),
+                                    token,
+                                    deviceType,
+                                    deviceModel,
+                                    widget.loggedOutReason,
+                                    widget.sessionStateStream,
+                                    rememberMe: _rememberMe,
+                                    // usernameController.text.trim(),
+                                  );
+                                  // emailController.clear();
+                                  // passwordController.clear();
+                                }
+                              },
+                              child: Text(
+                                'Proceed',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
-                            onPressed: () {
-                              FocusScope.of(context).unfocus();
-                              if (loginFormKey.currentState!.validate()) {
-                                authState.signIn(
-                                  context,
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                  token,
-                                  deviceType,
-                                  deviceModel,
-                                  widget.loggedOutReason,
-                                  widget.sessionStateStream,
-                                  rememberMe: _rememberMe,
-                                  // usernameController.text.trim(),
-                                );
-                                // emailController.clear();
-                                // passwordController.clear();
-                              }
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(const SignupPage());
                             },
                             child: Text(
-                              'Proceed',
-                              textAlign: TextAlign.center,
+                              "Sign Up",
                               style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 14.sp,
+                                color: brandFive,
                                 fontWeight: FontWeight.w700,
+                                fontSize: 14.sp,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-
-                  // RoundedLoadingButton(
-                  //   borderRadius: 5.0,
-                  //   elevation: 0.0,
-                  //   successColor: brandOne,
-                  //   color: brandFive,
-                  //   controller: _btnController,
-                  //   onPressed: _doSomething,
-                  //   child: Text(
-                  //     'Proceed',
-                  //     style: GoogleFonts.poppins(
-                  //         color: Colors.white,
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w700),
-                  //   ),
-                  // ),
-
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const SignupPage());
-                          },
-                          child: Text(
-                            "Sign Up",
+                    (currentCount != 0)
+                        ? Text(
+                            "Remaining attempts: ${5 - currentCount}",
                             style: GoogleFonts.poppins(
-                              color: brandFive,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
+                              color: Colors.red,
                             ),
+                          )
+                        : Text(
+                            d1,
                           ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 15.h,
                     ),
-                  ),
-                  (currentCount != 0)
-                      ? Text(
-                          "Remaining attempts: ${5 - currentCount}",
-                          style: GoogleFonts.poppins(
-                            color: Colors.red,
-                          ),
-                        )
-                      : Text(
-                          d1,
-                        ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    _emailController.dispose();
-    super.dispose();
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
+
+  // @override
+  // void dispose() {
+  //   _passwordController.dispose();
+  //   _emailController.dispose();
+  //   super.dispose();
+  // }
 }

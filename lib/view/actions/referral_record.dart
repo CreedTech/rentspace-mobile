@@ -84,7 +84,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                             userController
                                 .userModel!.userDetails![0].referralPoints,
                           ),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.roboto(
                             color: brandOne,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,

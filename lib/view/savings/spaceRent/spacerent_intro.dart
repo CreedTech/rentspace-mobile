@@ -160,7 +160,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                   ),
                 ),
               ),
-        
+
               const SizedBox(
                 height: 20,
               ),

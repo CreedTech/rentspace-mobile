@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
@@ -37,6 +41,9 @@ double _rentThirty = 0.0;
 double _holdingFee = 0.0;
 String _canShowRent = 'false';
 String _hasCalculate = 'true';
+bool isDeviceConnected = false;
+bool isAlertSet = false;
+late StreamSubscription subscription;
 
 String paymentCount = "";
 //savings goals
@@ -87,20 +94,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         return 31;
     }
   }
-
-  // int _daysInMonth(int month) {
-  //   switch (month) {
-  //     case 2: // February
-  //       return 28;
-  //     case 4: // April
-  //     case 6: // June
-  //     case 9: // September
-  //     case 11: // November
-  //       return 30;
-  //     default:
-  //       return 31;
-  //   }
-  // }
 
   int _calculateDaysInSixMonths(DateTime today) {
     // Calculate the number of days in the next 6 months
@@ -224,6 +217,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   @override
   initState() {
     super.initState();
+    getConnectivity();
     fetchUserData();
     numberInDays = 0;
     showSaveButton = false;
@@ -233,6 +227,108 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     getCurrentUser();
     resetCalculator();
     _intervalController.addListener(_updateDurationType);
+  }
+
+  void getConnectivity() {
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   void _updateDurationType() {
@@ -927,7 +1023,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                           .replaceAll(',', '')))
                                                   .toString(),
                                               overflow: TextOverflow.clip,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.roboto(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -953,7 +1049,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                                       _savingValue.toString()))
                                                   .toString(),
                                               overflow: TextOverflow.clip,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.roboto(
                                                   fontSize: 14.sp,
                                                   color: Theme.of(context)
                                                       .primaryColor,

@@ -436,7 +436,7 @@ class _ElectricityPaymentPageState
                     name: 'NGN',
                   ).format(totalAmount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
@@ -552,7 +552,7 @@ class _ElectricityPaymentPageState
                                   NumberFormat.simpleCurrency(
                                     name: 'NGN',
                                   ).format(amount),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -578,7 +578,7 @@ class _ElectricityPaymentPageState
                                   NumberFormat.simpleCurrency(
                                     name: 'NGN',
                                   ).format(transactionFee),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -646,7 +646,7 @@ class _ElectricityPaymentPageState
                                         text: '(${NumberFormat.simpleCurrency(
                                           name: 'NGN',
                                         ).format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.roboto(
                                           color: ((amount + transactionFee) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)

@@ -26,7 +26,6 @@ import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
-
 import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
@@ -367,7 +366,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                               0)
                                                           .toString()
                                                       : "******",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.roboto(
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 22.sp,
@@ -513,7 +512,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                           child: Text(
                                             " ${hideBalance ? nairaFormaet.format(userController.userModel!.userDetails![0].wallet.mainBalance).toString() : "********"}",
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.roboto(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 25.sp,
                                                 color: Colors.white),
@@ -849,21 +848,21 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               borderRadius: BorderRadius.circular(10),
                               color: brandTwo,
                             ),
-                            child: 
-                            // const Row(
-                            //   children: [
-                            //     Flexible(
-                            //       flex: 2,
-                            //       child: Icon(Icons.share),
-                            //     ),
-                            //     Flexible(
-                            //       flex: 10,
-                            //       child: Text(
-                            //           'Refer Your Friends and Earnjfjsdjgbfdfsjgdfkndfsvkjvfbgfnkdbsvskfbgfnkdsvkfjbgfndlsvfdlgfnbdlbklgfndlkblkgdklfbklgf'),
-                            //     ),
-                            //   ],
-                            // ),
-                            Column(
+                            child:
+                                // const Row(
+                                //   children: [
+                                //     Flexible(
+                                //       flex: 2,
+                                //       child: Icon(Icons.share),
+                                //     ),
+                                //     Flexible(
+                                //       flex: 10,
+                                //       child: Text(
+                                //           'Refer Your Friends and Earnjfjsdjgbfdfsjgdfkndfsvkjvfbgfnkdbsvskfbgfnkdsvkfjbgfndlsvfdlgfnbdlbklgfndlkblkgdklfbklgf'),
+                                //     ),
+                                //   ],
+                                // ),
+                                Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -913,10 +912,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 ),
                               ],
                             ),
-                         
                           ),
                         ),
-                      
+
                         SizedBox(
                           height: 20.h,
                         ),
@@ -1014,7 +1012,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                         //                                               .clip,
                         //                                       maxLines: 2,
                         //                                       fontFamily:
-                        //                                           "Poppins",
+                        //                                           "poppins",
                         //                                       fontSize: screenWidth >
                         //                                               400
                         //                                           ? FontSize
@@ -1055,7 +1053,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                         //     },
                         //   ),
                         // ),
-                     
                       ],
                     ),
                   ),
@@ -1187,4 +1184,5 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           );
         });
   }
+
 }

@@ -286,7 +286,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             TextSpan(
                               text: ch8t.format(userController
                                   .userModel!.userDetails![0].referralPoints),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                               ),

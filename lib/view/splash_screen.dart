@@ -44,12 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
+  // @override
+  // void dispose() {
+  //   _connectivitySubscription.cancel();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   Future<void> loadHasSeenOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -150,19 +150,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: UpgradeAlert(
-        upgrader: Upgrader(
-          showIgnore: false,
-          durationUntilAlertAgain: const Duration(seconds: 5),
-          debugLogging: true,
-          // debugDisplayAlways:true,
-          dialogStyle: UpgradeDialogStyle.cupertino,
-          showLater: false,
-          canDismissDialog: false,
-          showReleaseNotes: true,
-        ),
-        child: Container(
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        showIgnore: false,
+        durationUntilAlertAgain: const Duration(seconds: 5),
+        debugLogging: true,
+        // debugDisplayAlways:true,
+        dialogStyle: UpgradeDialogStyle.cupertino,
+        showLater: false,
+        canDismissDialog: false,
+        showReleaseNotes: true,
+      ),
+      child: Scaffold(
+        body: Container(
           // decoration: const BoxDecoration(
           //   image: DecorationImage(
           //       image: AssetImage(splashScreenBackground), fit: BoxFit.cover),
@@ -173,8 +173,8 @@ class _SplashScreenState extends State<SplashScreen> {
               // WelcomeBackScreen()
               : No_internetScreen(onTap: onTryAgain),
         ),
+        // ),
       ),
-      // ),
     );
   }
 }

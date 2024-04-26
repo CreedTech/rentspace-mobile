@@ -175,7 +175,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             ),
                             trailing: Text(
                               '+ ${ch8t.format(_payments[index]['amount'])}',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 color: Colors.green,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,

@@ -1101,16 +1101,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // await userController.fetchData();
         print(userController.userModel!.userDetails![0].isPinSet);
         // await GlobalService.sharedPreferencesManager.savePin(pin);
-        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
+        await userController.fetchData();
         EasyLoading.dismiss();
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your pin has been successfully set.','Login');
-        // await GlobalService.sharedPreferencesManager.setPin(value: pin);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   RouteList.enable_user_notification,
-        //   (route) => false,
-        // );
+        isLoading = false;
+        redirectingAlert(context, '🎉 Congratulations! 🎉',
+            'Your Transaction has been set successfully!!!.', "Home");
         return;
       } else {
         print('response.message.toString()');

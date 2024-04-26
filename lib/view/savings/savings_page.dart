@@ -227,7 +227,7 @@ class _SavingsPageState extends State<SavingsPage> {
                         (walletController.isLoading.value)
                             ? Text(
                                 nairaFormaet.format(0),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.roboto(
                                   fontSize: 20.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
@@ -238,7 +238,7 @@ class _SavingsPageState extends State<SavingsPage> {
                             : Text(
                                 " ${hideBalance ? nairaFormaet.format(totalAssets).toString() : "*****"}",
                                 //  textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.roboto(
                                   fontSize: 20.0.sp,
                                   // fontFamily: "DefaultFontFamily",
                                   // letterSpacing: 0.5,
@@ -250,7 +250,7 @@ class _SavingsPageState extends State<SavingsPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 100.h,
+                    height: 120.h,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -312,7 +312,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                   child: (rentController.isLoading.value)
                                       ? Text(
                                           nairaFormaet.format(0),
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.roboto(
                                             fontSize: 17.0.sp,
                                             // fontFamily: "DefaultFontFamily",
                                             // letterSpacing: 0.5,
@@ -323,7 +323,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                       : Text(
                                           " ${hideBalance ? nairaFormaet.format(rentBalance).toString() : "*****"}",
                                           //  textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.roboto(
                                             fontSize: 17.0.sp,
                                             // fontFamily: "DefaultFontFamily",
                                             // letterSpacing: 0.5,

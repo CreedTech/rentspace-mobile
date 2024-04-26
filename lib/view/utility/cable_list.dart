@@ -347,7 +347,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                                       decimalDigits: 0)
                                                   .format(
                                                       double.parse(amountInfo)),
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.roboto(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
@@ -384,7 +384,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                 ? Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      height: 150.sp,
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
                         color: brandOne,
@@ -426,7 +426,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 NumberFormat.simpleCurrency(
                                         name: 'NGN', decimalDigits: 0)
                                     .format(double.parse(selectedItemAmount!)),
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.roboto(
                                   color: Colors.white,
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w700,
@@ -529,7 +529,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                 Text(
                   NumberFormat.simpleCurrency(name: 'NGN').format(amount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
@@ -644,7 +644,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(amount),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -669,7 +669,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                 Text(
                                   NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(0),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -758,7 +758,7 @@ class _CableListScreenState extends ConsumerState<CableListScreen> {
                                       TextSpan(
                                         text:
                                             '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.roboto(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)

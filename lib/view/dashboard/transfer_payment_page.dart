@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:bcrypt/bcrypt.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/actions/fund_wallet.dart';
@@ -41,6 +45,9 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
   final TextEditingController _aPinController = TextEditingController();
   bool _isTyping = false;
   bool isTextFieldEmpty = false;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+  late StreamSubscription subscription;
 
   void validateUsersInput() {
     if (withdrawPaymentFormKey.currentState!.validate()) {
@@ -60,6 +67,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
   @override
   initState() {
     super.initState();
+    getConnectivity();
     // _amountController = TextEditingController();
     // _amountController.addListener(_onAmountChanged);
   }
@@ -96,6 +104,110 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
     }
     EasyLoading.dismiss();
     return true;
+  }
+
+  void getConnectivity() {
+    print('checking internet...');
+    subscription = Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && !isAlertSet) {
+          noInternetConnectionScreen(context);
+          setState(() => isAlertSet = true);
+        }
+      },
+    );
+  }
+
+  noInternetConnectionScreen(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            elevation: 0.0,
+            alignment: Alignment.bottomCenter,
+            insetPadding: const EdgeInsets.all(0),
+            title: null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.r),
+                topRight: Radius.circular(30.r),
+              ),
+            ),
+            content: SizedBox(
+              height: 170.h,
+              child: Container(
+                width: 400.w,
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Text(
+                      'No internet Connection',
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          color: brandOne,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 22.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(300, 50),
+                          maximumSize: const Size(400, 50),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          // EasyLoading.dismiss();
+                          setState(() => isAlertSet = false);
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection;
+                          if (!isDeviceConnected && isAlertSet == false) {
+                            // showDialogBox();
+                            noInternetConnectionScreen(context);
+                            setState(() => isAlertSet = true);
+                          }
+                          // fetchUserData();
+                        },
+                        child: Text(
+                          "Try Again",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -426,7 +538,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                 Text(
                   ch8t.format(totalAmount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
@@ -540,7 +652,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                                 Text(
                                   ch8t.format(amount),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -564,7 +676,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                 ),
                                 Text(
                                   ch8t.format(transactionFee),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -653,7 +765,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                       TextSpan(
                                         text:
                                             '(${ch8t.format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.roboto(
                                           color: ((amount + transactionFee) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)

@@ -273,9 +273,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                               );
                                             },
                                             child: Padding(
-                                              padding:
-                                                   EdgeInsets.symmetric(
-                                                      horizontal: 10.sp),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.sp),
                                               child: Text(
                                                 'support@rentspace.tech',
                                                 style: GoogleFonts.poppins(

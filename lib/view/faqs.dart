@@ -44,7 +44,7 @@ class _FaqsPageState extends State<FaqsPage> {
       body: Stack(
         children: [
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: ListView(
               children: [
                 // const SizedBox(
@@ -52,7 +52,7 @@ class _FaqsPageState extends State<FaqsPage> {
                 // ),
                 Padding(
                   padding:
-                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                   child: ExpansionTile(
                     initiallyExpanded: true,
                     title: Text(

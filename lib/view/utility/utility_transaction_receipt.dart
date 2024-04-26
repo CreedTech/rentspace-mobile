@@ -76,7 +76,7 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                         children: [
                           Text(
                             '- ${currencyFormat.format(10000)}',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
                               fontSize: 28.sp,
                               // letterSpacing: 2,

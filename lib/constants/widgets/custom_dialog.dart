@@ -285,6 +285,103 @@ void redirectingAlert(BuildContext context, String message, String subText,
       });
 }
 
+void pinRedirectingAlert(BuildContext context, String message, String subText,
+    String redirectText) async {
+  final sessionStateStream = StreamController<SessionState>();
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          content: SizedBox(
+            height: 400,
+            child: SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Image.asset(
+                    'assets/check.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    message,
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    subText,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      // letterSpacing: 0.3,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => FirstPage(
+                              sessionStateStream: sessionStateStream,
+                              // loggedOutReason: "Logged out because of user inactivity",
+                            ),
+                          ),
+                          (route) => false);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: brandFive,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
+                      textStyle:
+                          const TextStyle(color: Colors.white, fontSize: 17),
+                    ),
+                    child: Text(
+                      redirectText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 14,
+                        // letterSpacing: 0.3,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
+          ),
+        );
+      });
+}
+
 void errorDialog(BuildContext context, String message, String subText) {
   Get.bottomSheet(
     isDismissible: false,
@@ -381,7 +478,7 @@ void customErrorDialog(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             AlertDialog(
-              contentPadding:  EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+              contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
               elevation: 0,
               alignment: Alignment.bottomCenter,
               insetPadding: const EdgeInsets.all(0),
@@ -588,7 +685,7 @@ Future<void> SucessfulReciept(
                                   .format(amount),
 
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontSize: 26.sp,
                                 fontWeight: FontWeight.w700,

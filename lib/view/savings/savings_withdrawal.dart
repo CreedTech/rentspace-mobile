@@ -1015,7 +1015,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         "Available balance: ${nairaFormaet.format(walletController.walletModel!.wallet![0].mainBalance - 20)}",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.roboto(
                           fontSize: 16,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,

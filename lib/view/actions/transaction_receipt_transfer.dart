@@ -86,7 +86,7 @@ class _TransactionReceiptTransferState
                         children: [
                           Text(
                             '- ${currencyFormat.format(widget.amount)}',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
                               fontSize: 28.sp,
                               // letterSpacing: 2,
@@ -164,7 +164,7 @@ class _TransactionReceiptTransferState
                             ),
                             Text(
                               currencyFormat.format(widget.amount),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,
@@ -187,7 +187,7 @@ class _TransactionReceiptTransferState
                               currencyFormat.format(
                                 double.parse(widget.fees),
                               ),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w600,
                                 // fontSize: 16.sp,
                                 color: brandOne,

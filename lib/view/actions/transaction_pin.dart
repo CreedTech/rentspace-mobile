@@ -50,7 +50,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
 
   @override
   Widget build(BuildContext context) {
-
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -127,7 +126,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
-  
+
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(

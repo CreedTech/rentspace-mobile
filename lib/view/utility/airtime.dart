@@ -730,7 +730,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                 Text(
                   ch8t.format(amount),
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
                     fontSize: 30.sp,
                     color: brandOne,
@@ -844,7 +844,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 ),
                                 Text(
                                   ch8t.format(amount),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -868,7 +868,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 ),
                                 Text(
                                   ch8t.format(0),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: brandOne,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -957,7 +957,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       TextSpan(
                                         text:
                                             '(${ch8t.format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.roboto(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)

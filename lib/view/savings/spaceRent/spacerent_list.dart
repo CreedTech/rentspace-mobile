@@ -190,7 +190,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                             ),
                             Text(
                               " ${hideBalance ? ch8t.format(totalSavings) : "****"}",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 24.sp,
                                   color: brandOne),
@@ -265,15 +265,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                       minFontSize: 2.0,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: GoogleFonts
-                                                          .poppins(
-                                                              fontSize:
-                                                                  15.sp,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 15.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              color:
-                                                                  brandOne),
+                                                              color: brandOne),
                                                     ),
                                                     SizedBox(
                                                       height: 10.h,
@@ -308,7 +306,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                       TextAlign
                                                                           .center,
                                                                   style: GoogleFonts
-                                                                      .poppins(
+                                                                      .roboto(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -368,7 +366,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                       TextAlign
                                                                           .center,
                                                                   style: GoogleFonts
-                                                                      .poppins(
+                                                                      .roboto(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:

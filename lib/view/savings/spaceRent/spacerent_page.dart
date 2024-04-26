@@ -176,7 +176,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             ),
                             Text(
                               "${nairaFormaet.format(rentController.rentModel!.rents![widget.current].paidAmount).toString()} $testdum",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 color: Theme.of(context).colorScheme.background,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 31,
@@ -198,7 +198,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       .format(rentController.rentModel!
                                           .rents![widget.current].amount)
                                       .toString(),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
@@ -260,7 +260,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                           .rents![widget.current]
                                           .intervalAmount)
                                       .toString(),
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .background,
@@ -302,8 +302,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                               padding: EdgeInsets.only(top: 10, bottom: 48),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                ],
+                                children: [],
                               ),
                             ),
                             Row(
@@ -492,7 +491,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               // },
                                               trailing: Text(
                                                 '+ ${ch8t.format(history['amount'])}',
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts.roboto(
                                                   color: Colors.green,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w600,
@@ -551,7 +550,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 0.7))
                         .toString(),
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.roboto(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 31.sp,

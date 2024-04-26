@@ -378,7 +378,7 @@ class _LoanPageState extends State<LoanPage> {
                               .format(userController
                                   .userModel!.userDetails![0].loanAmount)
                               .toString(),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.roboto(
                             color: Theme.of(context).colorScheme.background,
                             fontWeight: FontWeight.w700,
                             fontSize: 31.sp,
@@ -400,7 +400,7 @@ class _LoanPageState extends State<LoanPage> {
                                   .format(rentController
                                       .rentModel!.rents![0].amount)
                                   .toString(),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                 color: Theme.of(context).colorScheme.background,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -453,7 +453,7 @@ class _LoanPageState extends State<LoanPage> {
                                                       0.7))
                                               .toString(),
                                           overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.roboto(
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .background,

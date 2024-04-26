@@ -55,7 +55,7 @@ final hasReferredStorage = GetStorage();
 String _isSet = "false";
 List<String> transIds = [];
 List<Widget> listWidgets = [
-  Dashboard(),
+  const Dashboard(),
   SavingsPage(),
   const PortfolioPage(),
   // UtilitiesPage(),
@@ -187,13 +187,14 @@ class _FirstPageState extends State<FirstPage> {
                     0.0.h,
                   ),
                   child: LiquidPullToRefresh(
-                      height: 70,
-                      animSpeedFactor: 2,
-                      color: Colors.white,
-                      backgroundColor: brandOne,
-                      showChildOpacityTransition: false,
-                      onRefresh: onRefresh,
-                      child: shimmerLoader()),
+                    height: 70,
+                    animSpeedFactor: 2,
+                    color: Colors.white,
+                    backgroundColor: brandOne,
+                    showChildOpacityTransition: false,
+                    onRefresh: onRefresh,
+                    child: shimmerLoader(),
+                  ),
                 ),
               ),
             )
@@ -203,7 +204,7 @@ class _FirstPageState extends State<FirstPage> {
                 onFinish: () {
                   showDialog(
                       context: context,
-                      barrierDismissible: false,
+                      barrierDismissible: true,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text(
@@ -223,81 +224,73 @@ class _FirstPageState extends State<FirstPage> {
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height / 2,
                               child: SingleChildScrollView(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    // Image.asset(
-                                    //   "assets/discover.png",
-                                    //   fit: BoxFit.cover,
-                                    //   height: 200,
-                                    // ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Dynamic Virtual Account (DVA): This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 13.0,
-                                        color: brandOne,
-                                        fontWeight: FontWeight.w700,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      // Image.asset(
+                                      //   "assets/discover.png",
+                                      //   fit: BoxFit.cover,
+                                      //   height: 200,
+                                      // ),
+                                      const SizedBox(
+                                        height: 10,
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Fund Wallet: Fuel Your Financial Adventure with Fund Wallet! Click here to top up your funds and embark on your financial journey today!",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 13.0,
-                                        color: brandOne,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Withdrawal: Experience Effortless Fund Withdrawals in an Instant access! Take control of your finances by clicking here to start the withdrawal process, granting you immediate access to your funds.",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 13.0,
-                                        color: brandOne,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: brandOne,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        elevation: 0,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 40, vertical: 15),
-                                        textStyle: const TextStyle(
-                                            color: Colors.white, fontSize: 17),
-                                      ),
-                                      child: Text(
-                                        "That's Nice",
-                                        textAlign: TextAlign.center,
+                                      Text(
+                                        "Virtual Account: This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
                                         style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          // letterSpacing: 0.3,
-                                          fontWeight: FontWeight.w400,
+                                          fontSize: 13.0,
+                                          color: brandOne,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
-                                    )
-                                  ],
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Space Rent: Save 70% of rent for a minimum of 6 months (maximum of 8 months) and get up to 30% loan. Embark on your savings journey today!",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 13.0,
+                                          color: brandOne,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: brandOne,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          elevation: 0,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 40, vertical: 15),
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17),
+                                        ),
+                                        child: Text(
+                                          "That's Nice",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            // letterSpacing: 0.3,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              )),
+                              ),
                             ),
                           ),
                         );
@@ -311,7 +304,7 @@ class _FirstPageState extends State<FirstPage> {
                                       .obs() ==
                                   false)
                               ? const TransactionPin()
-                              : HomePage()
+                              : const HomePage()
                       : No_internetScreen(onTap: onTryAgain),
                 ),
               ),

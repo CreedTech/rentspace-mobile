@@ -188,7 +188,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalInterest),
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
@@ -222,7 +222,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalSavings),
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
@@ -257,7 +257,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     Text(
                                       nairaFormaet
                                           .format(double.parse(_loanAmount)),
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,
@@ -291,7 +291,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                     Text(
                                       nairaFormaet.format(_totalDebts),
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w600,
                                         // letterSpacing: 0.5,

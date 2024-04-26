@@ -174,10 +174,10 @@ class _AllActivitiesState extends State<AllActivities> {
                         );
                       },
                       child: Padding(
-                        padding:  EdgeInsets.fromLTRB(2.sp, 0, 2.sp, 5.sp),
+                        padding: EdgeInsets.fromLTRB(2.sp, 0, 2.sp, 5.sp),
                         child: ListTile(
                           leading: Container(
-                            padding:  EdgeInsets.all(12.sp),
+                            padding: EdgeInsets.all(12.sp),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: (history['transactionType'] == 'Credit')
@@ -225,7 +225,7 @@ class _AllActivitiesState extends State<AllActivities> {
                               (history['transactionType'] == 'Credit')
                                   ? Text(
                                       "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
                                         color: brandOne,
@@ -233,7 +233,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                     )
                                   : Text(
                                       "- ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
                                         color: brandOne,
