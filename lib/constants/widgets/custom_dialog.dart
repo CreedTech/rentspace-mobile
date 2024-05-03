@@ -346,9 +346,9 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) => FirstPage(
-                              sessionStateStream: sessionStateStream,
-                              // loggedOutReason: "Logged out because of user inactivity",
-                            ),
+                                // sessionStateStream: sessionStateStream,
+                                // loggedOutReason: "Logged out because of user inactivity",
+                                ),
                           ),
                           (route) => false);
                     },
@@ -735,8 +735,9 @@ Future<void> SucessfulReciept(
                           userController.fetchData();
                           walletController.fetchWallet();
                           rentController.fetchRent();
-                          Get.to(FirstPage(
-                              sessionStateStream: sessionStateStream));
+                          Get.to(
+                            FirstPage(),
+                          );
                         },
                         child: Text(
                           'Back Home',

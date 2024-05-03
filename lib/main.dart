@@ -334,7 +334,7 @@ Future<void> initNotifications() async {
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
         // print(notificationResponse.payload);
-        Get.to(FirstPage(sessionStateStream: sessionStateStream));
+        Get.to(FirstPage());
         // Get.to(NewNotificationPage(
         //     message: notificationResponse.payload));
         // Get.to(SettingsPage());

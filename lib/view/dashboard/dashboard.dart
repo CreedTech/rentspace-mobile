@@ -706,7 +706,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Top up your wallet for seamless transactions!',
+                                            'Top up your wallet seamlessly',
                                             // overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: GoogleFonts.poppins(

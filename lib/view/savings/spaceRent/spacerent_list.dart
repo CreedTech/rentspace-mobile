@@ -305,8 +305,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style: GoogleFonts
-                                                                      .roboto(
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .roboto(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -365,8 +366,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                  style: GoogleFonts
-                                                                      .roboto(
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .roboto(
                                                                     fontSize:
                                                                         12.sp,
                                                                     fontWeight:
@@ -412,11 +414,16 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                       .center,
                                                               children: [
                                                                 AutoSizeText(
-                                                                  _calculateDaysDifference(rentController
-                                                                          .rentModel!
-                                                                          .rents![
-                                                                              index]
-                                                                          .dueDate)
+                                                                  _calculateDaysDifference(
+                                                                          rentController
+                                                                              .rentModel!
+                                                                              .rents![
+                                                                                  index]
+                                                                              .dueDate,
+                                                                          rentController
+                                                                              .rentModel!
+                                                                              .rents![index]
+                                                                              .date)
                                                                       .toString(),
                                                                   maxLines: 2,
                                                                   minFontSize:
@@ -637,11 +644,11 @@ class _RentSpaceListState extends State<RentSpaceList> {
   //   return differenceDays.abs();
   // }
 
-  int _calculateDaysDifference(String endDateString) {
+  int _calculateDaysDifference(String endDateString, String startDateString) {
     // Parse the provided date strings into DateTime objects
     DateFormat format = DateFormat('dd/MM/yyyy');
     String today = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    DateTime startDate = format.parse(today);
+    DateTime startDate = format.parse(startDateString);
     DateTime endDate = format.parse(endDateString);
 
     // Calculate the difference in days

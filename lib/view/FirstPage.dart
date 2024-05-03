@@ -70,10 +70,10 @@ class CounterNew extends GetxController {}
 final counter = Get.put(CounterNew());
 
 class FirstPage extends StatefulWidget {
-  final StreamController<SessionState> sessionStateStream;
+  // final StreamController<SessionState> sessionStateStream;
   const FirstPage({
     super.key,
-    required this.sessionStateStream,
+    // required this.sessionStateStream,
   });
   //  final sessionStateStream = StreamController<SessionState>();
 

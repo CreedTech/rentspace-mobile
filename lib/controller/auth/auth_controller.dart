@@ -540,9 +540,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         print(sessionStateStream);
         loggedOutReason = await Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (_) => FirstPage(
-                sessionStateStream: sessionStateStream,
-              ),
+              builder: (_) => const FirstPage(),
             ),
             (route) => false);
         // print('loggedOutReason here');
@@ -1371,7 +1369,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
-        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
+        Get.offAll(
+          const FirstPage(),
+        );
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
@@ -1436,7 +1436,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
-        Get.offAll(FirstPage(sessionStateStream: sessionStateStream));
+        Get.offAll(
+          const FirstPage(),
+        );
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;

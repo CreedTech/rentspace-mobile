@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,7 +29,6 @@ String _message = "Not Authorized";
 bool _hasBiometric = false;
 bool _canShowAuth = false;
 final hasBiometricStorage = GetStorage();
-final sessionStateStream = StreamController<SessionState>();
 String screenInfo = "";
 
 class _BiometricsPageState extends State<BiometricsPage> {
@@ -73,8 +71,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
         // Get.to(const FirstPage());
         await Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (_) => FirstPage(
-                sessionStateStream: sessionStateStream,
+              builder: (_) => const FirstPage(
               ),
             ),
             (route) => false);
@@ -130,8 +127,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
           ? checkingForBioMetrics()
           : Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (_) => FirstPage(
-                  sessionStateStream: sessionStateStream,
+                builder: (_) => const FirstPage(
                 ),
               ),
               (route) => false);

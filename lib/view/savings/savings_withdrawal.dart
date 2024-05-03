@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -52,7 +51,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _aPinController = TextEditingController();
   final TextEditingController _bankListController = TextEditingController();
-  final sessionStateStream = StreamController<SessionState>();
   final withdrawFormKey = GlobalKey<FormState>();
   List<String> _filteredBanks = [];
 
@@ -794,7 +792,6 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       await fetchUserData(refresh: true);
       EasyLoading.dismiss();
       Get.offAll(FirstPage(
-        sessionStateStream: sessionStateStream,
       ));
     } else {
       if (context.mounted) {
