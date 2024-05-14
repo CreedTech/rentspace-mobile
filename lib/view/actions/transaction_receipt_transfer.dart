@@ -39,7 +39,7 @@ class TransactionReceiptTransfer extends StatefulWidget {
       _TransactionReceiptTransferState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
 
 class _TransactionReceiptTransferState
     extends State<TransactionReceiptTransfer> {
@@ -55,16 +55,16 @@ class _TransactionReceiptTransferState
           },
           child: Icon(
             Icons.arrow_back_ios,
-            size: 30.sp,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Transaction Details',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -88,7 +88,7 @@ class _TransactionReceiptTransferState
                             '- ${currencyFormat.format(widget.amount)}',
                             style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
-                              fontSize: 28.sp,
+                              fontSize: 28,
                               // letterSpacing: 2,
                               color: brandOne,
                             ),
@@ -96,26 +96,26 @@ class _TransactionReceiptTransferState
                           (widget.status == 'completed')
                               ? Text(
                                   'Successful',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp,
+                                    fontSize: 16,
                                     color: Colors.green,
                                   ),
                                 )
                               : (widget.status == 'failed')
                                   ? Text(
                                       'Failed',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 16.sp,
+                                        fontSize: 16,
                                         color: Colors.red,
                                       ),
                                     )
                                   : Text(
                                       'Pending',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 16.sp,
+                                        fontSize: 16,
                                         color: Colors.yellow[800],
                                       ),
                                     ),
@@ -123,7 +123,7 @@ class _TransactionReceiptTransferState
                       ),
                     ),
                     SizedBox(
-                      height: 15.sp,
+                      height: 15,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -134,19 +134,19 @@ class _TransactionReceiptTransferState
                       ),
                       child: Text(
                         'The Recipient Account is to be credited within 5 minutes, subject to notification by the bank.',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: brandOne.withOpacity(0.7),
-                          fontSize: 10.sp,
+                          fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 15.sp,
+                      height: 15,
                     ),
                     const MySeparator(),
                     SizedBox(
-                      height: 5.sp,
+                      height: 5,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,9 +156,9 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Amount',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 fontWeight: FontWeight.w600,
-                                // fontSize: 16.sp,
+                                // fontSize: 16,
                                 color: brandOne,
                               ),
                             ),
@@ -166,7 +166,7 @@ class _TransactionReceiptTransferState
                               currencyFormat.format(widget.amount),
                               style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w600,
-                                // fontSize: 16.sp,
+                                // fontSize: 16,
                                 color: brandOne,
                               ),
                             ),
@@ -177,9 +177,9 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Fee',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 fontWeight: FontWeight.w600,
-                                // fontSize: 16.sp,
+                                // fontSize: 16,
                                 color: brandOne,
                               ),
                             ),
@@ -189,7 +189,7 @@ class _TransactionReceiptTransferState
                               ),
                               style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w600,
-                                // fontSize: 16.sp,
+                                // fontSize: 16,
                                 color: brandOne,
                               ),
                             ),
@@ -198,11 +198,11 @@ class _TransactionReceiptTransferState
                       ],
                     ),
                     SizedBox(
-                      height: 10.sp,
+                      height: 10,
                     ),
                     const MySeparator(),
                     SizedBox(
-                      height: 10.sp,
+                      height: 10,
                     ),
                     Column(
                       children: [
@@ -210,16 +210,16 @@ class _TransactionReceiptTransferState
                           children: [
                             Text(
                               'Transaction Details',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                                 color: brandOne,
                               ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,9 +229,9 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Description',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -242,9 +242,9 @@ class _TransactionReceiptTransferState
                                 widget.description,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 13.sp,
+                                  fontSize: 13,
                                   color: brandOne,
                                 ),
                               ),
@@ -252,7 +252,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,9 +262,9 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Transaction Type',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -276,9 +276,9 @@ class _TransactionReceiptTransferState
                                     .capitalize!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandOne,
                                 ),
                               ),
@@ -286,7 +286,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,9 +296,9 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Payment Method',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -309,9 +309,9 @@ class _TransactionReceiptTransferState
                                 'Space Wallet'.capitalizeFirst!,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandOne,
                                 ),
                               ),
@@ -319,7 +319,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,9 +329,9 @@ class _TransactionReceiptTransferState
                               flex: 3,
                               child: Text(
                                 'Transaction Reference',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -346,14 +346,14 @@ class _TransactionReceiptTransferState
                                     widget.transactionRef,
                                     textAlign: TextAlign.end,
                                     // maxLines: 2,
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
+                                      fontSize: 14,
                                       color: brandOne,
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 5.sp,
+                                    width: 5,
                                   ),
                                   InkWell(
                                     onTap: () {
@@ -384,7 +384,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,9 +394,9 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Merchant Reference',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -407,9 +407,9 @@ class _TransactionReceiptTransferState
                                 widget.merchantRef,
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandOne,
                                 ),
                               ),
@@ -417,7 +417,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -427,9 +427,9 @@ class _TransactionReceiptTransferState
                               flex: 2,
                               child: Text(
                                 'Transaction Date',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandTwo,
                                 ),
                               ),
@@ -440,9 +440,9 @@ class _TransactionReceiptTransferState
                                 formatDateTime(widget.transactionDate),
                                 textAlign: TextAlign.end,
                                 // maxLines: 2,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                   color: brandOne,
                                 ),
                               ),
@@ -450,7 +450,7 @@ class _TransactionReceiptTransferState
                           ],
                         ),
                         SizedBox(
-                          height: 10.sp,
+                          height: 10,
                         ),
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -460,9 +460,9 @@ class _TransactionReceiptTransferState
                         //       flex: 1,
                         //       child: Text(
                         //         'Session ID',
-                        //         style: GoogleFonts.poppins(
+                        //         style: GoogleFonts.lato(
                         //           fontWeight: FontWeight.w600,
-                        //           fontSize: 14.sp,
+                        //           fontSize: 14,
                         //           color: brandTwo,
                         //         ),
                         //       ),
@@ -477,14 +477,14 @@ class _TransactionReceiptTransferState
                         //             widget.sessionId,
                         //             textAlign: TextAlign.end,
                         //             // maxLines: 2,
-                        //             style: GoogleFonts.poppins(
+                        //             style: GoogleFonts.lato(
                         //               fontWeight: FontWeight.w600,
-                        //               fontSize: 14.sp,
+                        //               fontSize: 14,
                         //               color: brandOne,
                         //             ),
                         //           ),
                         //           SizedBox(
-                        //             width: 5.sp,
+                        //             width: 5,
                         //           ),
                         //           InkWell(
                         //             onTap: () {
@@ -539,8 +539,8 @@ class _TransactionReceiptTransferState
               //       child: Text(
               //         'Share Receipt',
               //         textAlign: TextAlign.center,
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 16.sp, fontWeight: FontWeight.w600),
+              //         style: GoogleFonts.lato(
+              //             fontSize: 16, fontWeight: FontWeight.w600),
               //       ),
               //     ),
               //   ),

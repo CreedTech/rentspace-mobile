@@ -85,10 +85,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
         ),
         title: Text(
           'Transaction History',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -109,7 +109,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                         child: Text(
                           "No Space Rent Transactions",
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 16,
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -157,9 +157,9 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             ),
                             title: Text(
                               _payments[index]['message'],
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 13.sp,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -167,9 +167,9 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                               _formatTime(DateTime.parse(
                                       (_payments[index]['createdAt']))
                                   .add(const Duration(hours: 1))),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandOne,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -177,7 +177,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                               '+ ${ch8t.format(_payments[index]['amount'])}',
                               style: GoogleFonts.roboto(
                                 color: Colors.green,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

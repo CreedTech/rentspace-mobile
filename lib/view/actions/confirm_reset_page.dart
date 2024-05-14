@@ -30,7 +30,7 @@ class _ConfirmResetPageState extends State<ConfirmResetPage> {
             ),
             Text(
               "Check your email",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 fontSize: 20.0,
                 color: Theme.of(context).primaryColor,
               ),
@@ -41,7 +41,7 @@ class _ConfirmResetPageState extends State<ConfirmResetPage> {
             ),
             Text(
               "A password reset link has been sent to your email",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 fontSize: 14.0,
                 color: Theme.of(context).primaryColor,
               ),

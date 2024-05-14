@@ -60,21 +60,21 @@ class _CardTopUpState extends State<CardTopUp> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [ThousandsFormatter()],
       validator: validateAmount,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.poppins(
+        prefixStyle: GoogleFonts.lato(
           color: brandOne,
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -103,7 +103,7 @@ class _CardTopUpState extends State<CardTopUp> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'amount in Naira',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -128,9 +128,9 @@ class _CardTopUpState extends State<CardTopUp> {
         ),
         title: Text(
           'Top Up With Card',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -162,7 +162,7 @@ class _CardTopUpState extends State<CardTopUp> {
                                   vertical: 6, horizontal: 6),
                               child: Text(
                                 'Amount',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,
@@ -176,7 +176,7 @@ class _CardTopUpState extends State<CardTopUp> {
                                   vertical: 6, horizontal: 10),
                               child: Text(
                                 'Use Bank Transfer if amount exceeds ₦9,999.99',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,

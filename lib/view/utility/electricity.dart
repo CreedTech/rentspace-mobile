@@ -183,17 +183,17 @@ class _ElectricityState extends State<Electricity> {
           },
           child: Icon(
             Icons.arrow_back_ios_sharp,
-            size: 20.sp,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Electricity - Prepaid',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -210,7 +210,7 @@ class _ElectricityState extends State<Electricity> {
                 child: Column(
                   children: [
                     // CustomDropdown(
-                    //   selectedStyle: GoogleFonts.poppins(
+                    //   selectedStyle: GoogleFonts.lato(
                     //       color: Theme.of(context).primaryColor,
                     //       fontSize: 14,
                     //       fontWeight: FontWeight.w500),
@@ -253,10 +253,10 @@ class _ElectricityState extends State<Electricity> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Service Provider',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -413,9 +413,9 @@ class _ElectricityState extends State<Electricity> {
                                 AutovalidateMode.onUserInteraction,
                             enableSuggestions: true,
                             cursorColor: Theme.of(context).primaryColor,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 14.sp),
+                                fontSize: 14),
 
                             controller: providerController,
                             textAlignVertical: TextAlignVertical.center,
@@ -472,10 +472,10 @@ class _ElectricityState extends State<Electricity> {
                               hintText: electricity,
                               filled: false,
                               fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.all(14.sp),
-                              hintStyle: GoogleFonts.poppins(
+                              contentPadding: EdgeInsets.all(14),
+                              hintStyle: GoogleFonts.lato(
                                 color: brandOne,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -502,10 +502,10 @@ class _ElectricityState extends State<Electricity> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Meter Number',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -583,9 +583,9 @@ class _ElectricityState extends State<Electricity> {
                               contentPadding: const EdgeInsets.all(14),
                               fillColor: brandThree,
                               hintText: 'Enter Meter Number',
-                              hintStyle: GoogleFonts.poppins(
+                              hintStyle: GoogleFonts.lato(
                                 color: Colors.grey,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -627,9 +627,9 @@ class _ElectricityState extends State<Electricity> {
                                     Text(
                                       'Verifying Meter Details',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -667,9 +667,9 @@ class _ElectricityState extends State<Electricity> {
                                     flex: 6,
                                     child: Text(
                                       verifyAccountError,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: Colors.red,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -707,9 +707,9 @@ class _ElectricityState extends State<Electricity> {
                                     flex: 6,
                                     child: Text(
                                       electricityName,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),

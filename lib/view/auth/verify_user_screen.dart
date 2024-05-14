@@ -18,8 +18,8 @@ class VerifyUserPage extends ConsumerStatefulWidget {
 }
 
 class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
-  int _minutes = 3; // Initialize minutes to 3
-  int _seconds = 0; // Initialize seconds to 0
+  int _minutes = 0; // Initialize minutes to 3
+  int _seconds = 30; // Initialize seconds to 0
   Timer? _timer;
   String currentTxt = '';
   bool isFilled = false;
@@ -52,8 +52,8 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
       _timer!.cancel();
     }
     setState(() {
-      _minutes = 3;
-      _seconds = 0;
+      _minutes = 0;
+      _seconds = 30;
     });
     startCountDown();
   }
@@ -93,7 +93,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -105,7 +105,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -129,7 +129,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -197,7 +197,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                 Text(
                                   'Verify your email',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22,
@@ -205,12 +205,12 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   ),
                                 ),
                                 Text(
-                                  'Enter a four-digit OTP sent to the provided email address',
+                                  'Enter a four-digit OTP sent to ${widget.email}',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp,
+                                    fontSize: 14,
                                     // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
@@ -224,7 +224,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                           SizedBox(
                             height: 32.h,
                           ),
-                          (_minutes == 0)
+                          (_seconds == 0)
                               ? GestureDetector(
                                   onTap: () {
                                     resetCountdown();
@@ -238,17 +238,17 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                       text: TextSpan(children: <TextSpan>[
                                         TextSpan(
                                           text: "Didn’t receive code? ",
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                               color: brandOne,
-                                              fontSize: 12.sp,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w400),
                                         ),
                                         TextSpan(
                                           text: 'Resend OTP',
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                               color: brandOne,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 12.sp),
+                                              fontSize: 12),
                                         ),
                                       ]),
                                     ),
@@ -257,24 +257,24 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                               : const SizedBox(),
                           Text(
                             formattedTime,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 12.sp),
+                                fontSize: 12),
                           ),
                           const SizedBox(
                             height: 70,
                           ),
-                          Text(
-                            'If you did not get the OTP please go back to re-confirm you entered the correct email address',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xff828282),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 10.sp,
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
+                          // Text(
+                          //   'If you did not get the OTP please go back to re-confirm you entered the correct email address',
+                          //   textAlign: TextAlign.center,
+                          //   style: GoogleFonts.lato(
+                          //     color: const Color(0xff828282),
+                          //     fontWeight: FontWeight.w400,
+                          //     fontSize: 10,
+                          //     // fontFamily: "DefaultFontFamily",
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 32.h,
                           ),
@@ -311,8 +311,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                 child: Text(
                                   'Proceed',
                                   textAlign: TextAlign.center,
-                                  style:
-                                      GoogleFonts.poppins(color: Colors.white),
+                                  style: GoogleFonts.lato(color: Colors.white),
                                 ),
                               ),
                             ),

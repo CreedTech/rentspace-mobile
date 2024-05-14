@@ -52,7 +52,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -137,7 +137,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                       alignment: Alignment.center,
                       child: Text(
                         'Enter PIN to Proceed',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -181,9 +181,9 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
                         _pinController.text = _pinController.text + value;
                       });
                     },
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 28.sp,
+                      fontSize: 28,
                     ),
                     rightButtonFn: () {
                       if (_pinController.text.isEmpty) return;

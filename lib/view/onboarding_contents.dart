@@ -12,16 +12,16 @@ class OnboardingContents {
 
 List<OnboardingContents> contents = [
   OnboardingContents(
-    title: "Fast and seamless delivery",
-    image: "assets/slider1.png",
+    title: "SpaceRent",
+    image: "assets/onboarding_img1.png",
     desc:
-        "We delivery your parcels to every corner, no location is beyond your reach",
+        "Save 70% of your rent for a minimum of 180 days and get up to 30% as loan.",
   ),
   OnboardingContents(
-    title: "24 hours delivery",
-    image: "assets/slider2.png",
+    title: "Virtual Account",
+    image: "assets/onboarding_img2.png",
     desc:
-        "We delivery your parcels to every corner, no location is beyond oyr reach",
+        "Instantly recharge Airtime, Data, Cable TV, Electricity, and more with RentSpace Technology. Our advanced tech ensures seamless utility payments.",
   ),
   // OnboardingContents(
   //   title: "On demand and runtime location",

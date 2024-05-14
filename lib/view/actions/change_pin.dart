@@ -29,7 +29,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: GoogleFonts.poppins(
+      textStyle: GoogleFonts.lato(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),
@@ -58,7 +58,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -70,7 +70,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -82,7 +82,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -94,7 +94,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -139,7 +139,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                       alignment: Alignment.center,
                       child: Text(
                         'Change Transaction PIN',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -184,9 +184,9 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                             _changePinController.text + value;
                       });
                     },
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 28.sp,
+                      fontSize: 28,
                     ),
                     rightButtonFn: () {
                       if (_changePinController.text.isEmpty) return;

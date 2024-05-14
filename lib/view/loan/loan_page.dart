@@ -38,8 +38,8 @@ class LoanPage extends StatefulWidget {
   _LoanPageState createState() => _LoanPageState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var ch8t = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
@@ -346,10 +346,10 @@ class _LoanPageState extends State<LoanPage> {
         // centerTitle: true,
         title: Text(
           'Loan',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.white,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -367,10 +367,10 @@ class _LoanPageState extends State<LoanPage> {
                       children: [
                         Text(
                           'Loan Balance',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Colors.white.withOpacity(0.75),
                             fontWeight: FontWeight.w400,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                           ),
                         ),
                         Text(
@@ -381,7 +381,7 @@ class _LoanPageState extends State<LoanPage> {
                           style: GoogleFonts.roboto(
                             color: Theme.of(context).colorScheme.background,
                             fontWeight: FontWeight.w700,
-                            fontSize: 31.sp,
+                            fontSize: 31,
                           ),
                         ),
                         Row(
@@ -389,10 +389,10 @@ class _LoanPageState extends State<LoanPage> {
                           children: [
                             Text(
                               'of your ',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white.withOpacity(0.75),
                                 fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                               ),
                             ),
                             Text(
@@ -408,7 +408,7 @@ class _LoanPageState extends State<LoanPage> {
                             ),
                             Text(
                               ' Loan',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white.withOpacity(0.75),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -432,7 +432,7 @@ class _LoanPageState extends State<LoanPage> {
                                     children: [
                                       Text(
                                         'Interest Accrued:',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: (themeChange.isSavedDarkMode())
                                               ? brandTwo
                                               : Colors.white.withOpacity(0.75),
@@ -472,12 +472,12 @@ class _LoanPageState extends State<LoanPage> {
                                 child: Center(
                                   child: Text(
                                     'Rent Loan',
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       color: (themeChange.isSavedDarkMode())
                                           ? brandTwo
                                           : Colors.white,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 16.sp,
+                                      fontSize: 16,
                                     ),
                                   ),
                                 ),
@@ -486,7 +486,7 @@ class _LoanPageState extends State<LoanPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 25.sp,
+                          height: 25,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -510,7 +510,7 @@ class _LoanPageState extends State<LoanPage> {
                           child: Text(
                             'Pay Off Loan',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -518,14 +518,14 @@ class _LoanPageState extends State<LoanPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 25.sp,
+                          height: 25,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               'Next payement date: ',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white.withOpacity(0.75),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -533,7 +533,7 @@ class _LoanPageState extends State<LoanPage> {
                             ),
                             Text(
                               formattedNextDate.toString(),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).colorScheme.background,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -578,7 +578,7 @@ class _LoanPageState extends State<LoanPage> {
                                 Text(
                                   'Loan History',
                                   textAlign: TextAlign.left,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w700,
                                     color: Theme.of(context).primaryColor,
@@ -593,7 +593,7 @@ class _LoanPageState extends State<LoanPage> {
                                 //   },
                                 //   child: Text(
                                 //     "See All",
-                                //     style: GoogleFonts.poppins(
+                                //     style: GoogleFonts.lato(
                                 //       fontSize: 12.0,
                                 //       fontWeight: FontWeight.w700,
                                 //       color: Theme.of(context).primaryColor,
@@ -618,7 +618,7 @@ class _LoanPageState extends State<LoanPage> {
                                     Center(
                                       child: Text(
                                         "Nothing to show",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           fontSize: 20,
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -658,7 +658,7 @@ class _LoanPageState extends State<LoanPage> {
                                           ),
                                           title: Text(
                                             'Space Rent Saving',
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.lato(
                                               color: Theme.of(context)
                                                   .primaryColor,
                                               fontSize: 17,
@@ -689,7 +689,7 @@ class _LoanPageState extends State<LoanPage> {
                                                     .add(const Duration(
                                                         hours: 1)))
                                                 .toString(),
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.lato(
                                               color: brandTwo,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
@@ -708,7 +708,7 @@ class _LoanPageState extends State<LoanPage> {
                                             //     .split(" ")
                                             //     .last
                                             ,
-                                            style: GoogleFonts.poppins(
+                                            style: GoogleFonts.lato(
                                               color: Theme.of(context)
                                                   .primaryColor,
                                               fontSize: 16,

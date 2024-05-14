@@ -44,7 +44,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -56,7 +56,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
                       alignment: Alignment.center,
                       child: Text(
                         'Set New Transaction PIN',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -161,9 +161,9 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
                       print(value);
                       print(_pinController.text);
                     },
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 28.sp,
+                      fontSize: 28,
                     ),
                     rightButtonFn: () {
                       if (_pinController.text.isEmpty) return;

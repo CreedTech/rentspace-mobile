@@ -11,8 +11,8 @@ class SpaceBoxList extends StatefulWidget {
   _SpaceBoxListState createState() => _SpaceBoxListState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var ch8t = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
@@ -80,14 +80,14 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       height: 200,
       //                                       child: ClipRRect(
       //                                         borderRadius: BorderRadius.only(
-      //                                           topLeft: Radius.circular(30.0.sp),
-      //                                           topRight: Radius.circular(30.0.sp),
+      //                                           topLeft: Radius.circular(30.0),
+      //                                           topRight: Radius.circular(30.0),
       //                                         ),
       //                                         child: Container(
       //                                           color: Theme.of(context)
       //                                               .canvasColor,
       //                                           padding: EdgeInsets.fromLTRB(
-      //                                               10.sp, 5.sp, 10.sp, 5.sp),
+      //                                               10.sp, 5.sp, 10.sp, 5),
       //                                           child: Column(
       //                                             children: [
       //                                               SizedBox(
@@ -553,7 +553,6 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //   ),
       //   backgroundColor: brandOne,
       // ),
-   
     );
   }
 }

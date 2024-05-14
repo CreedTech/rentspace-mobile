@@ -456,7 +456,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                         maxLines: 2,
                         minFontSize: 2.0,
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w700,
                           color: Theme.of(context).primaryColor,
@@ -478,7 +478,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                               maxLines: 2,
                               minFontSize: 2.0,
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
@@ -527,7 +527,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                 child: Text(
                                   buttonLabels[i],
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: selectedIndex == i
                                         ? Colors.white
                                         : brandOne,
@@ -555,7 +555,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                         vertical: 3, horizontal: 3),
                                     child: Text(
                                       'Preferred Start Date',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16,
@@ -573,7 +573,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                     onTap: () => _selectDate(context),
                                     decoration: InputDecoration(
                                       labelText: 'Select your Start date',
-                                      labelStyle: GoogleFonts.poppins(
+                                      labelStyle: GoogleFonts.lato(
                                         color: Colors.grey,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
@@ -626,7 +626,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                         vertical: 3, horizontal: 3),
                                     child: Text(
                                       'Preferred End Date',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16,
@@ -649,7 +649,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                     },
                                     decoration: InputDecoration(
                                       labelText: 'Select your End date',
-                                      labelStyle: GoogleFonts.poppins(
+                                      labelStyle: GoogleFonts.lato(
                                         color: Colors.grey,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
@@ -699,7 +699,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                   Center(
                     child: Text(
                       interestText,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                           fontWeight: FontWeight.w600,
                           color: Colors.red,
                           fontSize: 16),
@@ -742,7 +742,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                       child: Text(
                         "Proceed",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.white,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,

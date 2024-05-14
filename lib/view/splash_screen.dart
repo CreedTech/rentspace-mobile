@@ -191,27 +191,40 @@ class _SplashScreenContentState extends State<SplashScreenContent> {
   Widget build(BuildContext context) {
     return AnnotatedScaffold(
       tint: brandOne,
-      body: Center(
-          child: Lottie.asset(
-        'assets/splash.json',
-        width: context.dx(240.0),
-      )
-          // .image(width: context.dx(240.0))
-          // .animate(delay: 512.milliseconds)
-          // .scale(
-          //   begin: const Offset(0.512, 0.512),
-          //   duration: 1024.milliseconds,
-          //   curve: Curves.bounceOut,
-          // )
-          // .callback(
-          //   callback: (_) => context.goNamed(
-          //     authState.accessToken.isEmpty ||
-          //             authState.currentUser.firstName.isEmpty
-          //         ? '$OnboardingScreen'
-          //         : '$DashboardScreen',
-          //   ),
-          // ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xff39728D),
+              Color(0xff105182),
+            ],
+            stops: [0, 100],
           ),
+        ),
+        child: Center(
+            child: Lottie.asset(
+          'assets/splash.json',
+          width: context.dx(240.0),
+        )
+            // .image(width: context.dx(240.0))
+            // .animate(delay: 512.milliseconds)
+            // .scale(
+            //   begin: const Offset(0.512, 0.512),
+            //   duration: 1024.milliseconds,
+            //   curve: Curves.bounceOut,
+            // )
+            // .callback(
+            //   callback: (_) => context.goNamed(
+            //     authState.accessToken.isEmpty ||
+            //             authState.currentUser.firstName.isEmpty
+            //         ? '$OnboardingScreen'
+            //         : '$DashboardScreen',
+            //   ),
+            // ),
+            ),
+      ),
     );
   }
 }

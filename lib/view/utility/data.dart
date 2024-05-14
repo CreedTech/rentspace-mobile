@@ -27,7 +27,7 @@ class DataBundleScreen extends StatefulWidget {
   State<DataBundleScreen> createState() => _DataBundleScreenState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+var ch8t = NumberFormat.simpleCurrency(name: 'N');
 
 class _DataBundleScreenState extends State<DataBundleScreen> {
   final UserController userController = Get.find();
@@ -94,7 +94,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
 
   String getCurrency() {
     var format =
-        NumberFormat.simpleCurrency(locale: Platform.localeName, name: 'NGN');
+        NumberFormat.simpleCurrency(locale: Platform.localeName, name: 'N');
     return format.currencySymbol;
   }
 
@@ -267,9 +267,9 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   @override
   Widget build(BuildContext context) {
     final selectNetworkCarrier = CustomDropdown(
-      selectedStyle: GoogleFonts.poppins(
+      selectedStyle: GoogleFonts.lato(
           color: Theme.of(context).primaryColor,
-          fontSize: 14.sp,
+          fontSize: 14,
           fontWeight: FontWeight.w500),
       items: networkCarrier,
       excludeSelected: true,
@@ -330,10 +330,10 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
         centerTitle: true,
         title: Text(
           'Buy Data',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -355,10 +355,10 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                         Text(
                           'Enter receiver\'s phone number to buy data instantly.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14,
                           ),
                         ),
                         SizedBox(
@@ -450,7 +450,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                             contentPadding: const EdgeInsets.all(14),
                             fillColor: brandThree,
                             hintText: '0XX XXX XXXX',
-                            hintStyle: GoogleFonts.poppins(
+                            hintStyle: GoogleFonts.lato(
                               color: Colors.grey,
                               fontSize: 12,
                               fontWeight: FontWeight.w400,

@@ -169,9 +169,9 @@ class _WalletFundingState extends State<WalletFunding> {
         ),
         title: Text(
           'Top Up With Card',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -189,7 +189,7 @@ class _WalletFundingState extends State<WalletFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),

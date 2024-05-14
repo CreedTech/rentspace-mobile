@@ -84,7 +84,7 @@ class _ForgotPasswordOTPVerificationPageState
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 50,
-      textStyle: GoogleFonts.poppins(
+      textStyle: GoogleFonts.lato(
         fontSize: 20,
         color: Theme.of(context).primaryColor,
       ),
@@ -114,7 +114,7 @@ class _ForgotPasswordOTPVerificationPageState
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: GoogleFonts.poppins(
+        textStyle: GoogleFonts.lato(
           fontSize: 20,
           color: Theme.of(context).primaryColor,
         ),
@@ -162,7 +162,7 @@ class _ForgotPasswordOTPVerificationPageState
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -178,18 +178,18 @@ class _ForgotPasswordOTPVerificationPageState
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text: "We've sent a verification code to ",
-                              style: GoogleFonts.poppins(color: brandOne),
+                              style: GoogleFonts.lato(color: brandOne),
                             ),
                             TextSpan(
                               text: obscureEmail(widget.email),
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandTwo,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -223,7 +223,7 @@ class _ForgotPasswordOTPVerificationPageState
                             children: [
                               Text(
                                 'Didn\'t receive the mail?',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: brandOne,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -244,7 +244,7 @@ class _ForgotPasswordOTPVerificationPageState
                                   },
                                   child: Text(
                                     ' Click here',
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       color: brandTwo,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
@@ -256,7 +256,7 @@ class _ForgotPasswordOTPVerificationPageState
                           if (isClicked == true)
                             Text(
                               formattedTime,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandTwo,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -281,9 +281,9 @@ class _ForgotPasswordOTPVerificationPageState
                       otpController.text = otpController.text + value;
                     });
                   },
-                  textStyle: GoogleFonts.poppins(
+                  textStyle: GoogleFonts.lato(
                     color: brandOne,
-                    fontSize: 28.sp,
+                    fontSize: 28,
                   ),
                   rightButtonFn: () {
                     if (otpController.text.isEmpty) return;

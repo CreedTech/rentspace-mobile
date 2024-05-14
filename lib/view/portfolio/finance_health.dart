@@ -35,7 +35,7 @@ class FinanceHealth extends StatefulWidget {
   _FinanceHealthState createState() => _FinanceHealthState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 
 double tankBalance = 0;
 double boxBalance = 0;
@@ -178,14 +178,14 @@ class _FinanceHealthState extends State<FinanceHealth> {
       decoration: InputDecoration(
         label: Text(
           "Monthly income ? ",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: GoogleFonts.poppins(
+        prefixStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 14,
           fontWeight: FontWeight.w400,
@@ -214,7 +214,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'amount in Naira',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 14,
           fontWeight: FontWeight.w400,
@@ -260,7 +260,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                   Text(
                     'Use the following assesments to calculate your portfolio worth',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
@@ -271,7 +271,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                   ),
                   Text(
                     'Your assets are calculated automatically for you.',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: const Color(0xff4E4B4B),
                       fontSize: 14,
                       // fontFamily: "DefaultFontFamily",
@@ -342,7 +342,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                               //         backgroundColor: brandOne,
                               //         message:
                               //             'You scored ${outcome.toString()}%',
-                              //         textStyle: GoogleFonts.poppins(
+                              //         textStyle: GoogleFonts.lato(
                               //           fontSize: 14,
                               //           color: Colors.white,
                               //           fontWeight: FontWeight.w700,

@@ -126,7 +126,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: Colors.green,
           message: 'Your profile picture has been updated successfully. !!',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -192,7 +192,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     //     CustomSnackBar.success(
     //       backgroundColor: brandOne,
     //       message: 'Your profile picture has been updated successfully. !!',
-    //       textStyle: GoogleFonts.poppins(
+    //       textStyle: GoogleFonts.lato(
     //         fontSize: 14,
     //         color: Colors.white,
     //         fontWeight: FontWeight.w600,
@@ -239,7 +239,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics enabled',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -260,7 +260,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics enabled',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -286,7 +286,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics disabled',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -307,7 +307,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics disabled',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -489,8 +489,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           children: [
                             Text(
                               "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
-                              style: GoogleFonts.poppins(
-                                fontSize: 18.0.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w600,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -522,8 +522,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                       true)
                                   ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
                                   : "Wallet ID: ${userController.userModel!.userDetails![0].wallet.walletId}",
-                              style: GoogleFonts.poppins(
-                                fontSize: 15.0.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.w400,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -568,9 +568,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //             userController.userModel!
                               //                 .userDetails![0].referralPoints,
                               //           ),
-                              //           style: GoogleFonts.poppins(
+                              //           style: GoogleFonts.lato(
                               //             color: brandOne,
-                              //             fontSize: 20.sp,
+                              //             fontSize: 20,
                               //             fontWeight: FontWeight.w600,
                               //           ),
                               //         ),
@@ -579,9 +579,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //         // ),
                               //         Text(
                               //           'SpacePoints',
-                              //           style: GoogleFonts.poppins(
+                              //           style: GoogleFonts.lato(
                               //             color: brandOne,
-                              //             fontSize: 14.sp,
+                              //             fontSize: 14,
                               //             fontWeight: FontWeight.w500,
                               //           ),
                               //         ),
@@ -597,9 +597,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //             userController.userModel!
                               //                 .userDetails![0].referralPoints,
                               //           ),
-                              //           style: GoogleFonts.poppins(
+                              //           style: GoogleFonts.lato(
                               //             color: brandOne,
-                              //             fontSize: 20.sp,
+                              //             fontSize: 20,
                               //             fontWeight: FontWeight.w600,
                               //           ),
                               //         ),
@@ -608,9 +608,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //         // ),
                               //         Text(
                               //           'Referral Bonus',
-                              //           style: GoogleFonts.poppins(
+                              //           style: GoogleFonts.lato(
                               //             color: brandOne,
-                              //             fontSize: 14.sp,
+                              //             fontSize: 14,
                               //             fontWeight: FontWeight.w500,
                               //           ),
                               //         ),
@@ -625,13 +625,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               //   children: [
                               //     Text(
                               //       'Referral Points',
-                              //       style: GoogleFonts.poppins(
+                              //       style: GoogleFonts.lato(
                               //         color: brandOne,
                               //       ),
                               //     ),
                               //     Text(
                               //       "${valueNotifier.toInt()}%",
-                              //       style: GoogleFonts.poppins(
+                              //       style: GoogleFonts.lato(
                               //         color: brandOne,
                               //         fontWeight: FontWeight.w600,
                               //       ),
@@ -654,21 +654,21 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     ),
                                     child: Text(
                                       'SpacePoints',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(right: 20.sp),
+                                    padding: EdgeInsets.only(right: 20),
                                     child: Text(
                                       userController.userModel!.userDetails![0]
                                           .utilityPoints
                                           .floor()
                                           .toString(),
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 16.sp,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -706,9 +706,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Profile',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -739,9 +739,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Security',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -772,9 +772,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Referral',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -805,9 +805,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Contact Us',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -837,9 +837,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'FAQs',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -869,9 +869,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   ),
                   title: Text(
                     'Logout',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -894,8 +894,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                 ),
                                 Text(
                                   'Are you sure you want to logout?',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 15.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Theme.of(context).primaryColor,
@@ -930,10 +930,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                         ),
                                         child: Text(
                                           "Yes",
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14.sp,
+                                            fontSize: 14,
                                           ),
                                         ),
                                       ),
@@ -955,16 +955,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle: GoogleFonts.poppins(
-                                              color: brandFour,
-                                              fontSize: 13.sp),
+                                          textStyle: GoogleFonts.lato(
+                                              color: brandFour, fontSize: 13),
                                         ),
                                         child: Text(
                                           "No",
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14.sp,
+                                            fontSize: 14,
                                           ),
                                         ),
                                       ),

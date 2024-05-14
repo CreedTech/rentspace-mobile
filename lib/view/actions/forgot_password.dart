@@ -43,7 +43,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
@@ -73,7 +73,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your email',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -119,7 +119,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -140,7 +140,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                       children: [
                         Text(
                           'Regain access with password recovery.',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: const Color(0xff828282),
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
@@ -164,7 +164,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
                                   'Enter Email',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
@@ -210,7 +210,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                             Text(
                               'Send OTP',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,

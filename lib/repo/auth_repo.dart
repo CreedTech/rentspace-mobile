@@ -130,10 +130,14 @@ class AuthRepository {
     if (response.statusCode == 200) {
       responseModel = ResponseModel("Code sent to your email", true);
       return responseModel;
-    } else {
+    }
+    if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
-      responseModel = ResponseModel(error, false);
-      return responseModel;
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
     }
   }
 

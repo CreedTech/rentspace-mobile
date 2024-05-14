@@ -13,8 +13,8 @@
 //   _SpaceTankLiquidateState createState() => _SpaceTankLiquidateState();
 // }
 
-// var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
-// var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+// var ch8t = NumberFormat.simpleCurrency(name: 'N');
+// var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 // var now = DateTime.now();
 // var formatter = DateFormat('yyyy-MM-dd');
 // String formattedDate = formatter.format(now);

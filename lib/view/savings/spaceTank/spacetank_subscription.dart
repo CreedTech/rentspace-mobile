@@ -23,7 +23,7 @@
 // }
 
 // //
-// var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+// var ch8t = NumberFormat.simpleCurrency(name: 'N');
 // var varValue = "".obs;
 // String interestValue = "0";
 // String interestText = "Fill all the fields to see your interest.";

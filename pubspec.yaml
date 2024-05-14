@@ -36,68 +36,66 @@ dependencies:
   provider:
   google_fonts:
   carousel_slider: ^4.2.1
-  intro_slider:
-  introduction_screen:
   image_picker: ^0.8.5+3
   getwidget:
-  flutter_hooks:
-  hooks_riverpod:
+  # flutter_hooks:
+  # hooks_riverpod:
   flutter_riverpod:
   # firebase_auth:
   # cloud_firestore:
-  after_layout:
+  # after_layout:
   confetti:
   get:
   get_storage:
-  enum_to_string:
+  # enum_to_string:
   cached_network_image:
   local_auth:
   badges: ^2.0.3
   url_launcher:
   intl:
-  flutter_slidable: ^3.0.1
+  # flutter_slidable: ^3.0.1
   percent_indicator:
   fluttertoast:
   # firebase_storage:
   webview_flutter: ^3.0.4
-  delayed_display:
+  # delayed_display:
   # rounded_loading_button:
   circular_countdown_timer:
   dio:
   pretty_dio_logger:
   font_awesome_flutter:
   connectivity_plus: ^2.3.5
-  signature:
+  # signature:
   # animated_custom_dropdown:
   animated_custom_dropdown: ^1.5.0
-  syncfusion_flutter_charts:
+  # syncfusion_flutter_charts:
   share_plus:
-  text_scroll:
+  # text_scroll:
   # flutter_native_splash:
   pinput:
-  settings_ui:
-  go_router:
+  # settings_ui:
+  # go_router:
   flutter_credit_card: ^3.0.6
-  flutter_form_builder:
+  # flutter_form_builder:
   curved_navigation_bar: ^1.0.3
   bubble_tab_indicator:
-  flutter_camera_overlay:
-  overlay_tooltip:
+  # flutter_camera_overlay:
+  # overlay_tooltip:
   showcaseview: ^1.1.6
   # flutter_neumorphic:
   #   git:
   #     url: https://github.com/den0206/Flutter-Neumorphic.git
   #     ref: feature/remoce_accentcolor
-  wave:
+  # wave:
   #awesome_notifications: ^0.7.4+1
-  once:
-  readmore:
-  flip_card:
+  # once:
+  # readmore:
+  # flip_card:
   #mask_text_input_formatter: ^2.4.0
   flutter_spinkit: ^5.2.0
   modal_progress_hud_nsn:
   shared_preferences:
-  simple_circular_progress_bar:
+  # simple_circular_progress_bar:
   #flutter_windowmanager: ^0.2.0
   upgrader:
   pattern_formatter:
@@ -107,23 +105,23 @@ dependencies:
   lottie: ^2.7.0
   top_snackbar_flutter: ^3.1.0
   iconsax: ^0.0.8
-  icons_plus: ^4.0.0
+  # icons_plus: ^4.0.0
   iconic: ^0.0.3
   dotted_border: ^2.1.0
   file_picker: ^6.1.1
-  drop_down_list: ^0.0.6
+  # drop_down_list: ^0.0.6
   cupertino_progress_bar: ^0.2.0
   flutter_animation_progress_bar: ^2.3.1
   clipboard: ^0.1.3
   toast: ^0.3.0
   flutter_inappwebview: ^5.8.0
-  flutter_faq: ^1.0.1+1
+  # flutter_faq: ^1.0.1+1
   flutter_easyloading: ^3.0.5
   flutter_local_notifications: ^16.2.0
   timeago: ^3.6.0
-  sizer: ^2.0.15
+  # sizer: ^2.0.15
   flutter_screenutil: ^5.9.0
-  flutter_stepindicator: ^0.1.7
+  # flutter_stepindicator: ^0.1.7
   linear_step_indicator: ^1.0.0+3
   typewritertext: ^2.3.1
   auto_size_text: ^3.0.0
@@ -204,7 +202,7 @@ flutter:
   fonts:
     # - family: DefaultFontFamily
     #   fonts:
-    #     - asset: assets/fonts/poppins.ttf
+    #     - asset: assets/fonts/lato.ttf
     #       style: normal
     - family: ArialBlack
       fonts:

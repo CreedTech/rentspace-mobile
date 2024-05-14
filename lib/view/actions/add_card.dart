@@ -229,7 +229,7 @@ class _AddCardState extends State<AddCard> {
       //       CustomSnackBar.success(
       //         backgroundColor: brandOne,
       //         message: 'Your details have been updated successfully. !!',
-      //         textStyle: GoogleFonts.poppins(
+      //         textStyle: GoogleFonts.lato(
       //           fontSize: 14,
       //           color: Colors.white,
       //           fontWeight: FontWeight.w700,
@@ -252,12 +252,12 @@ class _AddCardState extends State<AddCard> {
     }
 
     // final banksList = CustomDropdown(
-    //   selectedStyle: GoogleFonts.poppins(
+    //   selectedStyle: GoogleFonts.lato(
     //       color: Theme.of(context).primaryColor, fontSize: 14),
     //   hintText: 'Select an option?',
     //   excludeSelected: true,
     //   fillColor: Colors.transparent,
-    //   listItemStyle: GoogleFonts.poppins(
+    //   listItemStyle: GoogleFonts.lato(
     //       color: Theme.of(context).colorScheme.secondary, fontSize: 14),
     //   items: _bankName,
     //   controller: bankNameController,
@@ -277,7 +277,7 @@ class _AddCardState extends State<AddCard> {
     //   },
     // );
     // final bankOption = DropdownButtonFormField(
-    //   style: GoogleFonts.poppins(
+    //   style: GoogleFonts.lato(
     //     color: Theme.of(context).primaryColor,
     //     fontSize: 16,
     //     fontWeight: FontWeight.w600,
@@ -298,7 +298,7 @@ class _AddCardState extends State<AddCard> {
     //   },
     //   decoration: InputDecoration(
     //     hintText: 'Choose Bank',
-    //     hintStyle: GoogleFonts.poppins(
+    //     hintStyle: GoogleFonts.lato(
     //       color: Colors.grey,
     //       fontSize: 12,
     //       fontWeight: FontWeight.w400,
@@ -384,7 +384,7 @@ class _AddCardState extends State<AddCard> {
     //       .toList(),
     //   hintText: 'Choose Bank',
     //   inputDecorationTheme: InputDecorationTheme(
-    //     hintStyle: GoogleFonts.poppins(
+    //     hintStyle: GoogleFonts.lato(
     //       color: Colors.grey,
     //       fontSize: 12,
     //       fontWeight: FontWeight.w400,
@@ -486,7 +486,7 @@ class _AddCardState extends State<AddCard> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
         fontSize: 16,
         fontWeight: FontWeight.w600,
@@ -528,7 +528,7 @@ class _AddCardState extends State<AddCard> {
         contentPadding: const EdgeInsets.all(14),
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -551,9 +551,9 @@ class _AddCardState extends State<AddCard> {
         ),
         title: Text(
           'Add Bank & Card Details',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -637,10 +637,10 @@ class _AddCardState extends State<AddCard> {
                           ),
                           labelText: 'Number',
                           hintText: 'XXXX XXXX XXXX XXXX',
-                          hintStyle: GoogleFonts.poppins(
+                          hintStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.poppins(
+                          labelStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
                           contentPadding: const EdgeInsets.all(14),
@@ -669,20 +669,20 @@ class _AddCardState extends State<AddCard> {
                                   color: Colors.red,
                                   width: 2.0), // Change color to yellow
                             ),
-                            hintStyle: GoogleFonts.poppins(
+                            hintStyle: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
                             ),
-                            labelStyle: GoogleFonts.poppins(
+                            labelStyle: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
                             ),
                             labelText: 'Expiry Date',
                             hintText: 'XX/XX',
                             contentPadding: const EdgeInsets.all(14)),
                         cvvCodeDecoration: InputDecoration(
-                          hintStyle: GoogleFonts.poppins(
+                          hintStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.poppins(
+                          labelStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
@@ -713,10 +713,10 @@ class _AddCardState extends State<AddCard> {
                           contentPadding: const EdgeInsets.all(14),
                         ),
                         cardHolderDecoration: InputDecoration(
-                          hintStyle: GoogleFonts.poppins(
+                          hintStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
-                          labelStyle: GoogleFonts.poppins(
+                          labelStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                           ),
                           border: OutlineInputBorder(
@@ -754,7 +754,7 @@ class _AddCardState extends State<AddCard> {
                           (cardValidity == "Valid Card" || cardValidity == "")
                               ? ""
                               : "Invalid Card",
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 18,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -769,7 +769,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 2, 20, 2),
                         child: Text(
                           (cardExpiry == "Expired Card") ? "Expired Card" : "",
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 18,
                             color: (cardValidity == "Expired Card")
                                 ? Colors.greenAccent
@@ -782,7 +782,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 10),
                         child: Text(
                           "Add your bank details",
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 16,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -802,13 +802,13 @@ class _AddCardState extends State<AddCard> {
                                   padding: const EdgeInsets.fromLTRB(
                                       15.0, 2, 15.0, 2),
                                   child: CustomDropdown(
-                                    selectedStyle: GoogleFonts.poppins(
+                                    selectedStyle: GoogleFonts.lato(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 14),
                                     hintText: 'Select an option?',
                                     excludeSelected: true,
                                     fillColor: Colors.transparent,
-                                    listItemStyle: GoogleFonts.poppins(
+                                    listItemStyle: GoogleFonts.lato(
                                         color: Theme.of(context)
                                             .colorScheme
                                             .secondary,
@@ -848,7 +848,7 @@ class _AddCardState extends State<AddCard> {
                                   const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                               child: Text(
                                 "Loading banks...",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 16,
                                   // fontFamily: "DefaultFontFamily",
                                   //letterSpacing: 2.0,
@@ -866,7 +866,7 @@ class _AddCardState extends State<AddCard> {
                         padding: const EdgeInsets.fromLTRB(20.0, 10, 20.0, 10),
                         child: Text(
                           _bankAccountName,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 16.0,
                             // fontFamily: "DefaultFontFamily",
                             // letterSpacing: 0.5,
@@ -895,7 +895,7 @@ class _AddCardState extends State<AddCard> {
                         child: Text(
                           'Submit',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(color: Colors.white),
+                          style: GoogleFonts.lato(color: Colors.white),
                         ),
                       ),
 

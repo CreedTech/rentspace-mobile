@@ -49,7 +49,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
   TextEditingController _amountController = TextEditingController();
   TextEditingController _aPinController = TextEditingController();
 
-  var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+  var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
   String walletID = "";
   String userID = "";
   String uId = "";

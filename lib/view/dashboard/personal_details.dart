@@ -68,9 +68,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         centerTitle: true,
         title: Text(
           'Personal Info',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w600),
         ),
       ),
@@ -102,18 +102,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Full Name',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
                           "${userController.userModel!.userDetails![0].lastName.capitalize} ${userController.userModel!.userDetails![0].firstName.capitalize}"
                               .toUpperCase(),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -136,18 +136,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'User Name',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
                           userController.userModel!.userDetails![0].userName!
                               .toUpperCase(),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -169,18 +169,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Email',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
                             obscureEmail(userController
                                 .userModel!.userDetails![0].email!),
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 13.sp,
+                              fontSize: 13,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () async {},
@@ -210,18 +210,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Phone',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
                             userController
                                 .userModel!.userDetails![0].phoneNumber!,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 13.sp,
+                              fontSize: 13,
                               fontWeight: FontWeight.w600,
                             )),
                         // onTap: () {
@@ -243,8 +243,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 ),
                                 child: Text(
                                   'verify',
-                                  style:
-                                      GoogleFonts.poppins(color: Colors.white),
+                                  style: GoogleFonts.lato(color: Colors.white),
                                 ),
                               )
                             : Icon(
@@ -269,9 +268,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'BVN',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -281,9 +280,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 ? obscureBVN(userController
                                     .userModel!.userDetails![0].bvn)
                                 : '',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 13.sp,
+                              fontSize: 13,
                               fontWeight: FontWeight.w600,
                             )),
                         onTap: () {
@@ -306,8 +305,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 ),
                                 child: Text(
                                   'Add BVN',
-                                  style:
-                                      GoogleFonts.poppins(color: Colors.white),
+                                  style: GoogleFonts.lato(color: Colors.white),
                                 ),
                               )
                             : Icon(
@@ -336,9 +334,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Address',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -349,9 +347,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               .residentialAddress.capitalize!
                           // : 'Add Your Address for KYC Verification'
                           ,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),
@@ -387,18 +385,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                         title: Text(
                           'Date Of Birth',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
                           userController.userModel!.userDetails![0].dateOfBirth
                               .toString(),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                             // decoration: TextDecoration.
                           ),

@@ -5,12 +5,12 @@ class Themes {
   // Light Theme
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: brandOne,
-    appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: const AppBarTheme(backgroundColor: Color(0xffF6F6F8)),
+    scaffoldBackgroundColor: const Color(0xffF6F6F8),
     iconTheme: const IconThemeData(
       color: brandOne,
     ),
-    canvasColor: const Color(0xFFFFFFFF),
+    canvasColor: const Color(0xffF6F6F8),
     cardColor: brandTwo.withOpacity(0.2),
     primaryColorLight: brandOne,
     textSelectionTheme: const TextSelectionThemeData(

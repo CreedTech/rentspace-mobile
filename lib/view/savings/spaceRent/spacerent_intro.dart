@@ -33,10 +33,10 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
         automaticallyImplyLeading: false,
         title: Text(
           'Create Savings Plans',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
         actions: [
@@ -79,7 +79,7 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
               ),
               Text(
                 "Space Rent",
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.lato(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                   color: Theme.of(context).primaryColor,
@@ -90,8 +90,8 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
               ),
               Text(
                 "Save 70% of rent for a minimum of 6 months (maximum of 8 months) and get up to 30% loan. (Terms and conditions apply)",
-                style: GoogleFonts.poppins(
-                  fontSize: 12.sp,
+                style: GoogleFonts.lato(
+                  fontSize: 12,
                   fontWeight: FontWeight.w400,
                   color: Theme.of(context).primaryColor,
                 ),
@@ -133,9 +133,9 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                       Text(
                         'Create SpaceRent',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.white,
-                          fontSize: 14.sp,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -171,10 +171,10 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                   },
                   child: Text(
                     "By proceeding, you agree with our terms and conditions",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       decoration: TextDecoration.underline,
                       color: Colors.red,
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.center,

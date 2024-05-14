@@ -239,6 +239,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.success == false &&
+          response.message.contains("User not found")) {
+        message = "User with mail not found";
+        // custTomDialog(context, message);
+        customErrorDialog(context, 'Error', message);
+
+        return;
       }
     } catch (e) {
       message = "Ooops something went wrong";
@@ -361,7 +368,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'BVN Verified Successfully!!',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -1479,8 +1486,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Payment Pin Reset Successful!!',
-            textStyle: GoogleFonts.poppins(
-              fontSize: 14.sp,
+            textStyle: GoogleFonts.lato(
+              fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -1546,8 +1553,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Payment Pin Changed Successfully!!',
-            textStyle: GoogleFonts.poppins(
-              fontSize: 14.sp,
+            textStyle: GoogleFonts.lato(
+              fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),

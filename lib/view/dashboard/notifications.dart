@@ -35,9 +35,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         title: Text(
           'Notifications',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
-            fontSize: 18.sp,
+            fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -73,7 +73,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             //                   Container(
             //                     // width: 48,
             //                     // height: 48,
-            //                     padding: EdgeInsets.all(15.sp),
+            //                     padding: EdgeInsets.all(15),
             //                     decoration: const BoxDecoration(
             //                       color: brandThree,
             //                       borderRadius: BorderRadius.all(
@@ -106,14 +106,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
             //               ),
             //               title: Text(
             //                 notifications.title,
-            //                 style: GoogleFonts.poppins(
+            //                 style: GoogleFonts.lato(
             //                   fontSize: 14,
             //                   fontWeight: FontWeight.w500,
             //                 ),
             //               ),
             //               subtitle: Text(
             //                 notifications.message,
-            //                 style: GoogleFonts.poppins(
+            //                 style: GoogleFonts.lato(
             //                   fontSize: 14,
             //                   fontWeight: FontWeight.w400,
             //                 ),

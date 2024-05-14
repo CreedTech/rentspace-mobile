@@ -71,8 +71,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
         // Get.to(const FirstPage());
         await Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (_) => const FirstPage(
-              ),
+              builder: (_) => const FirstPage(),
             ),
             (route) => false);
         // Navigator.of(context).pushNamedAndRemoveUntil(
@@ -127,8 +126,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
           ? checkingForBioMetrics()
           : Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (_) => const FirstPage(
-                ),
+                builder: (_) => const FirstPage(),
               ),
               (route) => false);
       //  Get.to(const FirstPage()
@@ -175,7 +173,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: Text(
                         screenInfo,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor,
@@ -214,7 +212,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                               ),
                               child: Text(
                                 "Authenticate",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/actions/referral_record.dart';
 import 'package:rentspace/view/login_page.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/splash_screen.dart';
 import 'package:rentspace/view/utility/airtime.dart';
@@ -17,51 +18,17 @@ class RouterGenerator {
   Route<dynamic> generate(RouteSettings settings) {
     final arguments = settings.arguments;
     switch (settings.name) {
-      // case root:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const SplashScreen(),
-      //     settings: const RouteSettings(name: root),
-      //   );
-      // case home:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const FirstPage(),
-      //     settings: const RouteSettings(name: home),
-      //   );
-      // case newNotification:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const NewNotificationPage(),
-      //     settings: const RouteSettings(name: newNotification),
-      //   );
+ 
       case referral_record:
         return MaterialPageRoute(
           builder: (context) => const ReferralRecord(),
           settings: const RouteSettings(name: referral_record),
         );
-      // case onboarding:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const OnboardingScreen(),
-      //     settings: const RouteSettings(name: onboarding),
-      //   );
-      // case onboardingOne:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const OnboardingViewOne(),
-      //     settings: const RouteSettings(name: onboardingOne),
-      //   );
-      // case onboardingTwo:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const OnboardingViewTwo(),
-      //     settings: const RouteSettings(name: onboardingTwo),
-      //   );
-      // case onboardingThree:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const OnboardingViewThree(),
-      //     settings: const RouteSettings(name: onboardingThree),
-      //   );
-      // case getStarted:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const GetStartedView(),
-      //     settings: const RouteSettings(name: getStarted),
-      //   );
+      case rentList:
+        return MaterialPageRoute(
+          builder: (context) => const RentSpaceList(),
+          settings: const RouteSettings(name: rentList),
+        );
       case register:
         return MaterialPageRoute(
           builder: (context) => const SignupPage(),

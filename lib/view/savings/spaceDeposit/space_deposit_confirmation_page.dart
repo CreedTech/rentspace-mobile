@@ -28,7 +28,7 @@ class SpaceDepositConfirmationPage extends StatefulWidget {
       _SpaceDepositConfirmationPageState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 bool showNotice = false;
 String interestValue = "0";
 String amountNotice = "";
@@ -211,7 +211,7 @@ class _SpaceDepositConfirmationPageState
                           maxLines: 2,
                           minFontSize: 2.0,
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 16.sp,
                             // letterSpacing: 0.5,
                             color: Colors.white,
@@ -236,7 +236,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Target Amount",
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -247,7 +247,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(int.parse(widget.amount)),
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -271,7 +271,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "${widget.interval} Savings:",
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -282,7 +282,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(double.parse(interestValue)),
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -306,7 +306,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Interest Rate:",
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -316,7 +316,7 @@ class _SpaceDepositConfirmationPageState
                                   ),
                                   Text(
                                     '$interestRate% per annum',
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -340,7 +340,7 @@ class _SpaceDepositConfirmationPageState
                                 children: [
                                   Text(
                                     "Frequency:",
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
 
@@ -350,7 +350,7 @@ class _SpaceDepositConfirmationPageState
                                   ),
                                   Text(
                                     widget.interval,
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -379,7 +379,7 @@ class _SpaceDepositConfirmationPageState
                           alignment: Alignment.topLeft,
                           child: Text(
                             'Select Funding Source',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                               color: Theme.of(context).primaryColor,
@@ -388,14 +388,14 @@ class _SpaceDepositConfirmationPageState
                         ),
                       ),
                       CustomDropdown(
-                        selectedStyle: GoogleFonts.poppins(
+                        selectedStyle: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12),
                         hintText: 'Select Source?',
-                        hintStyle: GoogleFonts.poppins(fontSize: 12),
+                        hintStyle: GoogleFonts.lato(fontSize: 12),
                         excludeSelected: true,
                         fillColor: Colors.transparent,
-                        listItemStyle: GoogleFonts.poppins(
+                        listItemStyle: GoogleFonts.lato(
                             color: Theme.of(context).colorScheme.secondary,
                             fontSize: 12),
                         items: const ['DVA Wallet ', 'Debit Card'],
@@ -456,17 +456,17 @@ class _SpaceDepositConfirmationPageState
                         text: TextSpan(children: <TextSpan>[
                           TextSpan(
                             text: "Accept ",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400),
                           ),
                           TextSpan(
                             text: 'Terms & Conditions',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 12.sp),
+                                fontSize: 12),
                           ),
                         ]),
                       ),
@@ -478,7 +478,7 @@ class _SpaceDepositConfirmationPageState
                       children: [
                         Text(
                           'I acknowledge that if I do not reach my set Target amount by the end date, I will forfeit all interest accrued on this Target Savings',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                               fontWeight: FontWeight.w400, fontSize: 10),
                         ),
                         SizedBox(
@@ -486,7 +486,7 @@ class _SpaceDepositConfirmationPageState
                         ),
                         Text(
                           'case I break this Target before its end date, I acknowledge that I will forfeit all accrued interest and pay a 1% early withdrawal fee, which is aimed to encourage commitment to the savings goal and cover processing costs.',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                               fontWeight: FontWeight.w400, fontSize: 10),
                         ),
                       ],
@@ -517,7 +517,7 @@ class _SpaceDepositConfirmationPageState
                   child: Text(
                     "Create Space Deposit",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Colors.white,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,

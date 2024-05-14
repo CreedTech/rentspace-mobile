@@ -77,9 +77,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
         ),
         title: Text(
           'Contact Us',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -105,8 +105,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           vertical: 10, horizontal: 20),
                       child: Text(
                         "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
-                        style: GoogleFonts.poppins(
-                          fontSize: 12.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                           // fontFamily: "DefaultFontFamily",
                           // letterSpacing: 1.0,
@@ -133,7 +133,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         //         children: [
                         //           Text(
                         //             "Phone Number",
-                        //             style: GoogleFonts.poppins(
+                        //             style: GoogleFonts.lato(
                         //               color: Theme.of(context).primaryColor,
                         //               fontSize: 17,
                         //               fontWeight: FontWeight.w600,
@@ -165,7 +165,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         //                               horizontal: 10),
                         //                       child: Text(
                         //                         '+234 (1) 344 4012',
-                        //                         style: GoogleFonts.poppins(
+                        //                         style: GoogleFonts.lato(
                         //                           color: Theme.of(context).colorScheme.secondary,
                         //                           fontSize: 17,
                         //                           fontWeight: FontWeight.w600,
@@ -204,7 +204,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         //                                 vertical: 10),
                         //                         child: Text(
                         //                           'Copy',
-                        //                           style: GoogleFonts.poppins(
+                        //                           style: GoogleFonts.lato(
                         //                               color: Theme.of(context)
                         //                                   .colorScheme.primary,
                         //                               fontSize: 12,
@@ -241,9 +241,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                 children: [
                                   Text(
                                     "Email address",
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       color: Theme.of(context).primaryColor,
-                                      fontSize: 15.sp,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -274,14 +274,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 10.sp),
+                                                  horizontal: 10),
                                               child: Text(
                                                 'support@rentspace.tech',
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts.lato(
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .secondary,
-                                                  fontSize: 12.sp,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
@@ -301,7 +301,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: brandOne,
                                                     textColor: Colors.white,
-                                                    fontSize: 16.0.sp);
+                                                    fontSize: 16.0);
                                               });
                                             },
                                             child: Container(
@@ -318,11 +318,11 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                                         vertical: 10),
                                                 child: Text(
                                                   'Copy',
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.lato(
                                                       color: Theme.of(context)
                                                           .colorScheme
                                                           .primary,
-                                                      fontSize: 12.sp,
+                                                      fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w600),
                                                 ),
@@ -350,7 +350,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                             padding: const EdgeInsets.all(15.0),
                             child: Text(
                               'Follow Us on Social Media',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -502,7 +502,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
           style: TextStyle(
             color: brandOne,
             fontWeight: FontWeight.w600,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),

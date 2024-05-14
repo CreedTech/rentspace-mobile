@@ -32,7 +32,7 @@ class _SpaceDepositIntroState extends State<SpaceDepositIntro> {
         automaticallyImplyLeading: false,
         title: Text(
           'Create Savings Plans',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -80,7 +80,7 @@ class _SpaceDepositIntroState extends State<SpaceDepositIntro> {
             ),
             Text(
               "Space Deposit",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).primaryColor,
@@ -91,7 +91,7 @@ class _SpaceDepositIntroState extends State<SpaceDepositIntro> {
             ),
             Text(
               "Save 70% of rent for a minimum of 90 days at an interest of 14% and get 100% (Terms and conditions apply).",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).primaryColor,
@@ -135,7 +135,7 @@ class _SpaceDepositIntroState extends State<SpaceDepositIntro> {
                 child: Text(
                   'Create new Space Deposit',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.lato(
                     color: Colors.white,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

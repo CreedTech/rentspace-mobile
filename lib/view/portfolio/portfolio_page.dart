@@ -18,6 +18,7 @@ import 'package:rentspace/view/portfolio/finance_health.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 // import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -32,7 +33,7 @@ class PortfolioPage extends StatefulWidget {
   _PortfolioPageState createState() => _PortfolioPageState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 double _totalInterest = 0;
 String _loanAmount = "0";
 dynamic _totalSavings = 0;
@@ -87,20 +88,33 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text(
-          'Portfolio',
-          style: GoogleFonts.poppins(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-          ),
+        centerTitle: false,
+        title: Row(
+          children: [
+            Text(
+              'Portfolio',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 23.w),
+            child: Image.asset(
+              'assets/icons/message_icon.png',
+              height: 30.h,
+            ),
+          ),
+        ],
       ),
       body: LiquidPullToRefresh(
         height: 100,
@@ -112,227 +126,184 @@ class _PortfolioPageState extends State<PortfolioPage> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 5,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 24),
               child: ListView(
                 children: [
                   const SizedBox(
                     height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
+                  Container(
+                    // height: 300,
+                    padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          alignment: Alignment(2, 0),
+                          scale: 0.5,
+                          image:
+                              AssetImage('assets/logo_colored_transparent.png'),
+                        ),
                         borderRadius: BorderRadius.circular(15),
                         // color: brandOne,
-                        gradient: const LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            gradientOne,
-                            gradientTwo,
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Portfolio Overview",
-                            style: GoogleFonts.poppins(
-                              fontSize: 16.0.sp,
-                              // letterSpacing: 0.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Manage your account portfolio",
-                            style: GoogleFonts.poppins(
-                              fontSize: 12.0.sp,
-                              // letterSpacing: 0.5,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(15, 25, 15, 25),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total interests:",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    Text(
-                                      nairaFormaet.format(_totalInterest),
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                const MySeparator(
-                                  color: Color(0xffE0E0E0),
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total savings:",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    Text(
-                                      nairaFormaet.format(_totalSavings),
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                const MySeparator(
-                                  color: Color(0xffE0E0E0),
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total loans:",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    Text(
-                                      nairaFormaet
-                                          .format(double.parse(_loanAmount)),
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                const MySeparator(
-                                  color: Color(0xffE0E0E0),
-                                ),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total debts:",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    Text(
-                                      nairaFormaet.format(_totalDebts),
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w600,
-                                        // letterSpacing: 0.5,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
+                        color: brandOne),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Total loan amount ${double.parse(_loanAmount) == 0 ? 'displayed here' : _loanAmount}",
+                              style: GoogleFonts.lato(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Icon(
+                              Iconsax.clock,
+                              color: colorWhite,
+                              size: 24,
+                              weight: 100,
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Text(
-                          "Portfolio Actions",
-                          style: GoogleFonts.poppins(
-                            fontSize: 20.0.sp,
+                          "Remained to pay",
+                          style: GoogleFonts.lato(
+                            fontSize: 12.0,
                             // letterSpacing: 0.5,
-
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
                           ),
                         ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          nairaFormaet.format(double.parse(_loanAmount)),
+                          style: GoogleFonts.lato(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            // letterSpacing: 0.5,
+                            color: colorWhite,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Container(
-                          padding: const EdgeInsets.all(2),
-                          child: Image.asset(
-                            "assets/icons/carbon_portfolio.png",
-                            height: 28,
-                            width: 29,
-                            color: Theme.of(context).primaryColor,
+                          padding:
+                              const EdgeInsets.fromLTRB(36.5, 20, 36.5, 20),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white.withOpacity(0.11),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Next Payment Date",
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: colorWhite,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Icon(
+                                            Icons.calendar_today_rounded,
+                                            color: colorWhite,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            "-- / -- / --",
+                                            style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: colorWhite,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: 1,
+                                    height: 51,
+                                    decoration:
+                                        const BoxDecoration(color: colorWhite),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Upcoming Payment',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: colorWhite,
+                                        ),
+                                      ),
+                                      Text(
+                                        nairaFormaet.format(_totalInterest),
+                                        style: GoogleFonts.lato(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorWhite,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width - 50,
+                                      50),
+                                  backgroundColor: const Color(0xffD0D0D0),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {},
+                                child: Text(
+                                  'Payment Info',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    color: const Color(0xff515151),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -341,395 +312,668 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  (rentController.rentModel!.rents!.isNotEmpty)
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 7),
-                          child: ListTile(
-                            minLeadingWidth: 0,
-                            // shape: ShapeBorder,
-                            leading: Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).cardColor,
-                              ),
-                              child: const Icon(
-                                Iconsax.money_recive5,
-                                color: brandOne,
-                              ),
-                            ),
-                            title: Text(
-                              'Loan',
-                              style: GoogleFonts.poppins(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            subtitle: Text(
-                              "Access Your Loan",
-                              style: GoogleFonts.poppins(
-                                fontSize: 12.0.sp,
-                                // letterSpacing: 0.5,
+                  Text(
+                    "Actions",
+                    style: GoogleFonts.lato(
+                      fontSize: 16.0,
+                      color: colorBlack,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: colorWhite,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        (rentController.rentModel!.rents!.isNotEmpty)
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 7),
+                                child: ListTile(
+                                  minLeadingWidth: 0,
+                                  // shape: ShapeBorder,
+                                  leading:
+                                      Image.asset('assets/icons/money_box.png'),
+                                  title: Text(
+                                    'Ask for Loan',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "See available loans",
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12.0,
+                                      // letterSpacing: 0.5,
 
-                                color: const Color(0xff828282),
-                              ),
-                            ),
-                            onTap: () {
-                              ((rentController
-                                          .rentModel!.rents![0].paidAmount) <=
-                                      (rentController
-                                              .rentModel!.rents![0].amount *
-                                          0.7))
-                                  ? showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                          ),
-                                          title: null,
-                                          scrollable: true,
-                                          elevation: 0,
-                                          content: SizedBox(
-                                            // height: 450.h,
-                                            child: Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                        // color: brandOne,
+                                      color: const Color(0xff4B4B4B),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    ((rentController.rentModel!.rents![0]
+                                                .paidAmount) <=
+                                            (rentController.rentModel!.rents![0]
+                                                    .amount *
+                                                0.7))
+                                        ? showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
+                                                title: null,
+                                                scrollable: true,
+                                                elevation: 0,
+                                                content: SizedBox(
+                                                  // height: 220.h,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Column(
+                                                    children: [
+                                                      Wrap(
+                                                        alignment: WrapAlignment
+                                                            .center,
+                                                        crossAxisAlignment:
+                                                            WrapCrossAlignment
+                                                                .center,
+                                                        // mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .info_outline_rounded,
+                                                            color: colorBlack,
+                                                            size: 24,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 4,
+                                                          ),
+                                                          Text(
+                                                            'Oops!',
+                                                            style: GoogleFonts
+                                                                .lato(
+                                                              color: colorBlack,
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      child: Icon(
-                                                        Iconsax.close_circle,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        size: 30,
+                                                      const SizedBox(
+                                                        height: 14,
                                                       ),
-                                                    ),
+                                                      Text(
+                                                        'You currently do not qualify for a rent loan\n.Please continue to save consistently up to 70% of your Space Rent to qualify.',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts.lato(
+                                                          color: colorBlack,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 29,
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            minimumSize: Size(
+                                                                MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width -
+                                                                    50,
+                                                                50),
+                                                            backgroundColor:
+                                                                brandTwo,
+                                                            elevation: 0,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                10,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: Text(
+                                                            'Ok',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: GoogleFonts
+                                                                .lato(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 30.h,
-                                                ),
-                                                Align(
-                                                  alignment: Alignment.center,
-                                                  child: Image.asset(
-                                                    'assets/cancel_round.png',
-                                                    width: 70.w,
-                                                    color: brandOne,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 30.h,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Text(
-                                                      'Loan not Available',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontSize: 22.sp,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'You currently do not qualify for a rent loan. You would need to save up to 70% of your total rent CONSISTENTLY!!! to qualify',
-                                                  textAlign: TextAlign.center,
-                                                  style: GoogleFonts.poppins(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                                SizedBox(
-                                                  height: 40.h,
-                                                ),
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    minimumSize:
-                                                        const Size(300, 50),
-                                                    maximumSize:
-                                                        const Size(400, 50),
-                                                    backgroundColor: brandOne,
-                                                    elevation: 0,
+                                              );
+                                            })
+                                        : (rentController
+                                                .rentModel!.rents!.isNotEmpty)
+                                            ? showDialog(
+                                                context: context,
+                                                barrierDismissible: true,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                        10,
+                                                              16),
+                                                    ),
+                                                    title: null,
+                                                    scrollable: true,
+                                                    elevation: 0,
+                                                    content: SizedBox(
+                                                      // height: 220.h,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        children: [
+                                                          Wrap(
+                                                            alignment:
+                                                                WrapAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                WrapCrossAlignment
+                                                                    .center,
+                                                            // mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              const Icon(
+                                                                Icons
+                                                                    .info_outline_rounded,
+                                                                color:
+                                                                    colorBlack,
+                                                                size: 24,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 4,
+                                                              ),
+                                                              Text(
+                                                                'Oops!',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .lato(
+                                                                  color:
+                                                                      colorBlack,
+                                                                  fontSize: 24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 14,
+                                                          ),
+                                                          Text(
+                                                            'You are yet to create a Space Rent plan.\nPlease create a Space Rent plan to have access to our loan service.',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: GoogleFonts
+                                                                .lato(
+                                                              color: colorBlack,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 29,
+                                                          ),
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .bottomCenter,
+                                                            child:
+                                                                ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                minimumSize: Size(
+                                                                    MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        50,
+                                                                    50),
+                                                                backgroundColor:
+                                                                    brandTwo,
+                                                                elevation: 0,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                    10,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Get.to(
+                                                                    const SpaceRentCreation());
+                                                              },
+                                                              child: Text(
+                                                                'Create Space Rent',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .lato(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 20,
+                                                          ),
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .bottomCenter,
+                                                            child:
+                                                                ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                minimumSize: Size(
+                                                                    MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        50,
+                                                                    50),
+                                                                backgroundColor:
+                                                                    colorWhite,
+                                                                elevation: 0,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  side: const BorderSide(
+                                                                      color:
+                                                                          brandTwo),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                    10,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              child: Text(
+                                                                'Ok',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .lato(
+                                                                  color:
+                                                                      brandTwo,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                })
+                                            : (userController
+                                                        .userModel!
+                                                        .userDetails![0]
+                                                        .hasVerifiedKyc ==
+                                                    false)
+                                                ? Get.to(const KYCIntroPage())
+                                                : Get.to(const LoanPage());
+                                    // Get.to(const ProfilePage());
+                                    // Navigator.pushNamed(context, RouteList.profile);
+                                  },
+                                  trailing: const Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: colorBlack,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        const Divider(
+                          thickness: 1,
+                          color: Color(0xffC9C9C9),
+                          indent: 17,
+                          endIndent: 17,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // color: brandThree,
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Set border radius
+                            ),
+                            child: ListTile(
+                              // shape: ShapeBorder,
+                              leading:
+                                  Image.asset('assets/icons/wallet_box.png'),
+                              title: Text(
+                                'Make Loan Payment',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Pay an outstanding loan",
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.0,
+                                  // letterSpacing: 0.5,
+
+                                  color: const Color(0xff4B4B4B),
+                                ),
+                              ),
+                              onTap: () {
+                                (double.parse(_loanAmount) == 0)
+                                    ? showDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            title: null,
+                                            scrollable: true,
+                                            elevation: 0,
+                                            content: SizedBox(
+                                              // height: 220.h,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Column(
+                                                children: [
+                                                  Wrap(
+                                                    alignment:
+                                                        WrapAlignment.center,
+                                                    crossAxisAlignment:
+                                                        WrapCrossAlignment
+                                                            .center,
+                                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons
+                                                            .info_outline_rounded,
+                                                        color: colorBlack,
+                                                        size: 24,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text(
+                                                        'Oops!',
+                                                        style: GoogleFonts.lato(
+                                                          color: colorBlack,
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 14,
+                                                  ),
+                                                  Text(
+                                                    'No loan payment to be made.\nYou currently do not have any outstanding loan payments.',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.lato(
+                                                      color: colorBlack,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 29,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        minimumSize: Size(
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                50,
+                                                            50),
+                                                        backgroundColor:
+                                                            brandTwo,
+                                                        elevation: 0,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Text(
+                                                        'Ok',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts.lato(
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text(
-                                                    'Go Back',
-                                                    textAlign: TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                      color: Colors.white,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10.h,
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      })
-                                  : (userController.userModel!.userDetails![0]
-                                              .hasVerifiedKyc ==
-                                          false)
-                                      ? Get.to(const KYCIntroPage())
-                                      : Get.to(const LoanPage());
-                              // Get.to(const ProfilePage());
-                              // Navigator.pushNamed(context, RouteList.profile);
-                            },
-                            trailing: Icon(
-                              Iconsax.arrow_right_3,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // color: brandThree,
-                        borderRadius:
-                            BorderRadius.circular(8.0), // Set border radius
-                      ),
-                      child: ListTile(
-                        // shape: ShapeBorder,
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                          ),
-                          child: const Icon(
-                            Icons.credit_score,
-                            color: brandOne,
-                          ),
-                        ),
-                        title: Text(
-                          'Credit Score',
-                          style: GoogleFonts.poppins(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Build your credit score",
-                          style: GoogleFonts.poppins(
-                            fontSize: 12.0.sp,
-                            // letterSpacing: 0.5,
-
-                            color: const Color(0xff828282),
-                          ),
-                        ),
-                        onTap: () {
-                          showTopSnackBar(
-                            Overlay.of(context),
-                            CustomSnackBar.success(
-                              backgroundColor: brandOne,
-                              message: 'Coming soon !!',
-                              textStyle: GoogleFonts.poppins(
-                                fontSize: 14.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
+                                          );
+                                        })
+                                    : const SizedBox();
+                              },
+                              trailing: const Icon(
+                                Icons.keyboard_arrow_right,
+                                color: colorBlack,
+                                size: 20,
                               ),
                             ),
-                          );
-                          // Get.to(const ProfilePage());
-                          // Navigator.pushNamed(context, RouteList.profile);
-                        },
-                        trailing: Icon(
-                          Iconsax.arrow_right_3,
-                          color: Theme.of(context).primaryColor,
+                          ),
                         ),
-                      ),
+                        const Divider(
+                          thickness: 1,
+                          color: Color(0xffC9C9C9),
+                          indent: 17,
+                          endIndent: 17,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // color: brandThree,
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Set border radius
+                            ),
+                            child: ListTile(
+                              // shape: ShapeBorder,
+                              leading:
+                                  Image.asset('assets/icons/portfolio_box.png'),
+                              title: Text(
+                                'Make Loan Payment',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Pay an outstanding loan",
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.0,
+                                  // letterSpacing: 0.5,
+
+                                  color: const Color(0xff4B4B4B),
+                                ),
+                              ),
+                              onTap: () {
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    backgroundColor: brandOne,
+                                    message: 'Coming soon !!',
+                                    textStyle: GoogleFonts.lato(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                );
+                              },
+                              trailing: const Icon(
+                                Icons.keyboard_arrow_right,
+                                color: colorBlack,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          color: Color(0xffC9C9C9),
+                          indent: 17,
+                          endIndent: 17,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // color: brandThree,
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Set border radius
+                            ),
+                            child: ListTile(
+                              // shape: ShapeBorder,
+                              leading:
+                                  Image.asset('assets/icons/credit_check.png'),
+                              title: Text(
+                                'Make Loan Payment',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "Pay an outstanding loan",
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.0,
+                                  // letterSpacing: 0.5,
+
+                                  color: const Color(0xff4B4B4B),
+                                ),
+                              ),
+                              onTap: () {
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.success(
+                                    backgroundColor: brandOne,
+                                    message: 'Coming soon !!',
+                                    textStyle: GoogleFonts.lato(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                );
+                              },
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 3),
+                                    decoration: BoxDecoration(
+                                      color: brandTwo.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text(
+                                      "Coming Soon",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 7),
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       // color: brandThree,
-                  //       borderRadius:
-                  //           BorderRadius.circular(8.0), // Set border radius
-                  //     ),
-                  //     child: ListTile(
-                  //       // shape: ShapeBorder,
-                  //       leading: Container(
-                  //         padding: const EdgeInsets.all(9),
-                  //         decoration: BoxDecoration(
-                  //           shape: BoxShape.circle,
-                  //           color: Theme.of(context).cardColor,
-                  //         ),
-                  //         child: const Icon(
-                  //           Icons.heart_broken_outlined,
-                  //           color: brandOne,
-                  //         ),
-                  //       ),
-                  //       title: Text(
-                  //         'Finance Health',
-                  //         style: GoogleFonts.poppins(
-                  //           color: Theme.of(context).primaryColor,
-                  //           fontSize: 17,
-                  //           fontWeight: FontWeight.w600,
-                  //         ),
-                  //       ),
-                  //       subtitle: Text(
-                  //         "Free finance health checker",
-                  //         style: GoogleFonts.poppins(
-                  //           fontSize: 14.0,
-                  //           // letterSpacing: 0.5,
-
-                  //           color: const Color(0xff828282),
-                  //         ),
-                  //       ),
-                  //       onTap: () {
-                  //         Get.to(const FinanceHealth());
-                  //       },
-                  //       trailing: Icon(
-                  //         Iconsax.arrow_right_3,
-                  //         color: Theme.of(context).primaryColor,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     // border: Border.all(
-                  //     //   color: Colors.grey, // Set the border color
-                  //     //   width: 1.0, // Set the border width
-                  //     // ),
-                  //     color: brandThree,
-                  //     borderRadius:
-                  //         BorderRadius.circular(8.0), // Set border radius
-                  //   ),
-                  //   child: ListTile(
-                  //     // tileColor: brandThree,
-                  //     onTap: () {
-                  //       showTopSnackBar(
-                  //         Overlay.of(context),
-                  //         CustomSnackBar.success(
-                  //           backgroundColor: brandOne,
-                  //           message: 'Coming soon !!',
-                  //           textStyle: GoogleFonts.poppins(
-                  //             fontSize: 14,
-                  //             color: Colors.white,
-                  //             fontWeight: FontWeight.w600,
-                  //           ),
-                  //         ),
-                  //       );
-                  //       // Get.snackbar(
-                  //       //   "Coming soon!",
-                  //       //   'This feature is coming soon to RentSpace!',
-                  //       //   animationDuration: const Duration(seconds: 1),
-                  //       //   backgroundColor: brandOne,
-                  //       //   colorText: Colors.white,
-                  //       //   snackPosition: SnackPosition.TOP,
-                  //       // );
-                  //     },
-                  //     leading: const Icon(
-                  //       Icons.credit_score,
-                  //       color: brandOne,
-                  //       size: 30,
-                  //     ),
-                  //     title: const Text(
-                  //       "Credit Score",
-                  //       style: TextStyle(
-                  //         fontSize: 15.0,
-                  //         fontWeight: FontWeight.bold,
-                  //         fontFamily: "DefaultFontFamily",
-                  //         letterSpacing: 0.5,
-                  //         color: brandOne,
-                  //       ),
-                  //     ),
-                  //     subtitle: const Text(
-                  //       "Build your credit score",
-                  //       style: TextStyle(
-                  //         fontSize: 14.0,
-                  //         letterSpacing: 0.5,
-                  //         fontFamily: "DefaultFontFamily",
-                  //         color: brandOne,
-                  //       ),
-                  //     ),
-                  //     trailing: const Icon(
-                  //       Icons.arrow_right_outlined,
-                  //       color: brandOne,
-                  //     ),
-                  //   ),
-                  // ),
-                  // // const SizedBox(
-                  // //   height: 20,
-                  // // ),
-                  // ListTile(
-                  //   tileColor: brandThree,
-                  //   onTap: () {
-                  //     Get.to(const FinanceHealth());
-                  //   },
-                  //   leading: Image.asset(
-                  //     "assets/icons/health-icon.png",
-                  //     height: 40,
-                  //     width: 40,
-                  //   ),
-                  //   title: const Text(
-                  //     "Finance Health",
-                  //     style: TextStyle(
-                  //       fontSize: 15.0,
-                  //       fontFamily: "DefaultFontFamily",
-                  //       letterSpacing: 0.5,
-                  //       fontWeight: FontWeight.bold,
-                  //       color: brandOne,
-                  //     ),
-                  //   ),
-                  //   subtitle: const Text(
-                  //     "Free finance health checker",
-                  //     style: TextStyle(
-                  //       fontSize: 14.0,
-                  //       letterSpacing: 0.5,
-                  //       fontFamily: "DefaultFontFamily",
-                  //       color: brandOne,
-                  //     ),
-                  //   ),
-                  //   trailing: const Icon(
-                  //     Icons.arrow_right_outlined,
-                  //     color: brandOne,
-                  //   ),
-                  // ),
                 ],
               ),
             ),

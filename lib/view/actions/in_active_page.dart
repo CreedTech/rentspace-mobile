@@ -33,7 +33,7 @@ class _InActivePageState extends State<InActivePage> {
           child: Center(
             child: Text(
               "RentSpace is temporarily under maintenance. We will be back shortly.😊",
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 fontSize: 20.0,
                 color: Theme.of(context).primaryColor,
               ),

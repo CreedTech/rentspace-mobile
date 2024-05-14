@@ -88,8 +88,8 @@ class _IdlePageState extends State<IdlePage> {
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
-          fontSize: 25.sp,
+        textStyle: GoogleFonts.lato(
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -100,8 +100,8 @@ class _IdlePageState extends State<IdlePage> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
-          fontSize: 25.sp,
+        textStyle: GoogleFonts.lato(
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -112,8 +112,8 @@ class _IdlePageState extends State<IdlePage> {
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
-          fontSize: 25.sp,
+        textStyle: GoogleFonts.lato(
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -124,8 +124,8 @@ class _IdlePageState extends State<IdlePage> {
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
-          fontSize: 25.sp,
+        textStyle: GoogleFonts.lato(
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -187,7 +187,7 @@ class _IdlePageState extends State<IdlePage> {
                     //     ),
                     //     child: Text(
                     //       widget.loggedOutReason,
-                    //       style: GoogleFonts.poppins(
+                    //       style: GoogleFonts.lato(
                     //         color: Colors.white,
                     //       ),
                     //     ),
@@ -200,10 +200,10 @@ class _IdlePageState extends State<IdlePage> {
                       child: Text(
                         'Enter Your Rentspace Pin to Return to Rentspace',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
+                          fontSize: 16,
                           // fontFamily: "DefaultFontFamily",
                         ),
                       ),
@@ -224,9 +224,9 @@ class _IdlePageState extends State<IdlePage> {
                               defaultPinTheme: PinTheme(
                                 width: 50,
                                 height: 50,
-                                textStyle: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.lato(
                                   color: brandOne,
-                                  fontSize: 28.sp,
+                                  fontSize: 28,
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -237,8 +237,8 @@ class _IdlePageState extends State<IdlePage> {
                               focusedPinTheme: PinTheme(
                                 width: 50,
                                 height: 50,
-                                textStyle: TextStyle(
-                                  fontSize: 25.sp,
+                                textStyle: GoogleFonts.lato(
+                                  fontSize: 25,
                                   color: brandOne,
                                 ),
                                 decoration: BoxDecoration(
@@ -250,8 +250,8 @@ class _IdlePageState extends State<IdlePage> {
                               submittedPinTheme: PinTheme(
                                 width: 50,
                                 height: 50,
-                                textStyle: TextStyle(
-                                  fontSize: 25.sp,
+                                textStyle: GoogleFonts.lato(
+                                  fontSize: 25,
                                   color: brandOne,
                                 ),
                                 decoration: BoxDecoration(
@@ -263,8 +263,8 @@ class _IdlePageState extends State<IdlePage> {
                               followingPinTheme: PinTheme(
                                 width: 50,
                                 height: 50,
-                                textStyle: TextStyle(
-                                  fontSize: 25.sp,
+                                textStyle: GoogleFonts.lato(
+                                  fontSize: 25,
                                   color: brandOne,
                                 ),
                                 decoration: BoxDecoration(
@@ -316,9 +316,9 @@ class _IdlePageState extends State<IdlePage> {
                     alignment: Alignment.bottomCenter,
                     child: NumericKeyboard(
                       onKeyboardTap: onKeyboardTap,
-                      textStyle: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.lato(
                         color: brandOne,
-                        fontSize: 28.sp,
+                        fontSize: 28,
                       ),
                       rightButtonFn: () {
                         if (_pinController.text.isEmpty) return;

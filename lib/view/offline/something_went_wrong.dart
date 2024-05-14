@@ -38,7 +38,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                             padding: EdgeInsets.all(15.h),
                             child: Icon(
                               Iconsax.emoji_sad,
-                              size: 55.sp,
+                              size: 55,
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
@@ -50,8 +50,8 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Center(
                         child: Text(
                           'Something Went Wrong',
-                          style: GoogleFonts.poppins(
-                            fontSize: 22.sp,
+                          style: GoogleFonts.lato(
+                            fontSize: 22,
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
                           ),
@@ -63,8 +63,8 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Please check your connection and try again',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -72,8 +72,8 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Confirm that your celluar data or Wi-Fi is on',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -81,8 +81,8 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                       Text(
                         '- Confirm that your Rentspace App is given network access',
                         // textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -113,9 +113,9 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                 child: Text(
                   "Retry",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.lato(
                     color: Colors.white,
-                    fontSize: 14.sp,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

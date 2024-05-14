@@ -75,7 +75,7 @@ class _ConfirmTransactionPinPageState
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -87,7 +87,7 @@ class _ConfirmTransactionPinPageState
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -99,7 +99,7 @@ class _ConfirmTransactionPinPageState
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class _ConfirmTransactionPinPageState
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class _ConfirmTransactionPinPageState
                       alignment: Alignment.center,
                       child: Text(
                         'Confirm Transaction PIN',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -195,9 +195,9 @@ class _ConfirmTransactionPinPageState
                   alignment: Alignment.bottomCenter,
                   child: NumericKeyboard(
                     onKeyboardTap: onKeyboardTap,
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 28.sp,
+                      fontSize: 28,
                     ),
                     rightButtonFn: () {
                       if (_confirmPinController.text.isEmpty) return;

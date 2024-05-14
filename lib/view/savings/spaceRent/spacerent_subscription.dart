@@ -26,7 +26,7 @@
 //   ConsumerState<ConsumerStatefulWidget> createState() => _RentSpaceSubscriptionState();
 // }
 
-// var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+// var ch8t = NumberFormat.simpleCurrency(name: 'N');
 // var varValue = "".obs;
 // final _history = [];
 // String _userFirst = '';
@@ -299,7 +299,7 @@
 //         });
 //         setState(() => _amountValue = text);
 //       },
-//       style: GoogleFonts.poppins(
+//       style: GoogleFonts.lato(
 //         color: Theme.of(context).primaryColor,
 //       ),
 //       keyboardType: TextInputType.number,
@@ -307,7 +307,7 @@
 //       decoration: InputDecoration(
 //         label: Text(
 //           "How much is your rent per year?",
-//           style: GoogleFonts.poppins(
+//           style: GoogleFonts.lato(
 //             color: Colors.grey,
 //             fontSize: 12,
 //             fontWeight: FontWeight.w400,
@@ -334,7 +334,7 @@
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
 //         hintText: 'Rent amount in Naira',
-//         hintStyle: GoogleFonts.poppins(
+//         hintStyle: GoogleFonts.lato(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -349,7 +349,7 @@
 //     //   validator: validateOldFunc,
 //     //   // update the state variable when the text changes
 //     //   onChanged: (text) => setState(() => _amountValue = text),
-//     //   style: GoogleFonts.poppins(
+//     //   style: GoogleFonts.lato(
 //     //     color: Theme.of(context).primaryColor,
 //     //   ),
 //     //   inputFormatters: [ThousandsFormatter()],
@@ -357,7 +357,7 @@
 //     //   decoration: InputDecoration(
 //     //     label: Text(
 //     //       "How much of your rent is left?",
-//     //       style: GoogleFonts.poppins(
+//     //       style: GoogleFonts.lato(
 //     //         color: Colors.grey,
 //     //         fontSize: 12,
 //     //         fontWeight: FontWeight.w400,
@@ -384,7 +384,7 @@
 //     //     filled: false,
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //     hintText: 'Rent amount in Naira',
-//     //     hintStyle: GoogleFonts.poppins(
+//     //     hintStyle: GoogleFonts.lato(
 //     //       color: Colors.grey,
 //     //       fontSize: 12,
 //     //       fontWeight: FontWeight.w400,
@@ -477,8 +477,8 @@
 //                   Center(
 //                     child: Text(
 //                       "We Simplified the process for you$varValue",
-//                       style: GoogleFonts.poppins(
-//                         fontSize: 20.sp,
+//                       style: GoogleFonts.lato(
+//                         fontSize: 20,
 //                         fontWeight: FontWeight.bold,
 //                         // letterSpacing: 0.5,
 //                         color: Theme.of(context).primaryColor,
@@ -491,7 +491,7 @@
 //                   (_hasCalculate == 'true')
 //                       ? Text(
 //                           "$varValue",
-//                           style: GoogleFonts.poppins(
+//                           style: GoogleFonts.lato(
 //                             fontSize: 14,
 //                             color: Theme.of(context).primaryColor,
 //                           ),
@@ -522,8 +522,8 @@
 //                             Text(
 //                               'Your rent will be due in ${_calculateDaysDifference()} days',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.poppins(
-//                                 fontSize: 14.sp,
+//                               style: GoogleFonts.lato(
+//                                 fontSize: 14,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
 //                               ),
@@ -534,8 +534,8 @@
 //                             Text(
 //                               'Your rent will be due in approximately ${_formatWeeksDifference()}',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.poppins(
-//                                 fontSize: 14.sp,
+//                               style: GoogleFonts.lato(
+//                                 fontSize: 14,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
 //                               ),
@@ -546,8 +546,8 @@
 //                             Text(
 //                               'Your rent will be due in approximately ${_calculateMonthsDifference()} months',
 //                               textAlign: TextAlign.center,
-//                               style: GoogleFonts.poppins(
-//                                 fontSize: 14.sp,
+//                               style: GoogleFonts.lato(
+//                                 fontSize: 14,
 //                                 fontWeight: FontWeight.w500,
 //                                 color: Theme.of(context).primaryColor,
 //                               ),
@@ -584,7 +584,7 @@
 //                               Icon(
 //                                 Icons.calendar_month_outlined,
 //                                 color: Colors.white,
-//                                 size: 18.sp,
+//                                 size: 18,
 //                               ),
 //                               const SizedBox(
 //                                 width: 10,
@@ -592,9 +592,9 @@
 //                               Text(
 //                                 'Select on calendar',
 //                                 textAlign: TextAlign.center,
-//                                 style: GoogleFonts.poppins(
+//                                 style: GoogleFonts.lato(
 //                                   color: Colors.white,
-//                                   fontSize: 14.sp,
+//                                   fontSize: 14,
 //                                   fontWeight: FontWeight.w500,
 //                                 ),
 //                               ),
@@ -636,8 +636,8 @@
 //                                 child: Text(
 //                                   "Invalid date. Pick a different date (minimum of 6 months and maximum of 8 months).",
 //                                   textAlign: TextAlign.center,
-//                                   style: GoogleFonts.poppins(
-//                                     fontSize: 12.sp,
+//                                   style: GoogleFonts.lato(
+//                                     fontSize: 12,
 //                                     color: Colors.red,
 //                                   ),
 //                                 ),
@@ -657,7 +657,7 @@
 //                                     children: [
 //                                       Text(
 //                                         "",
-//                                         style: GoogleFonts.poppins(
+//                                         style: GoogleFonts.lato(
 //                                           fontSize: 16,
 //                                           color: Theme.of(context).primaryColor,
 //                                         ),
@@ -753,8 +753,8 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .poppins(
-//                                                             fontSize: 16.sp,
+//                                                               .lato(
+//                                                             fontSize: 16,
 //                                                             color: Theme.of(
 //                                                                     context)
 //                                                                 .primaryColor,
@@ -771,9 +771,9 @@
 //                                                                   'Total Rent: ',
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .poppins(
+//                                                                           .lato(
 //                                                                     fontSize:
-//                                                                         16.sp,
+//                                                                         16,
 //                                                                     color: Theme.of(
 //                                                                             context)
 //                                                                         .primaryColor,
@@ -790,9 +790,9 @@
 //                                                                           .clip,
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .poppins(
+//                                                                           .lato(
 //                                                                     fontSize:
-//                                                                         16.sp,
+//                                                                         16,
 //                                                                     color: Theme.of(
 //                                                                             context)
 //                                                                         .primaryColor,
@@ -809,9 +809,9 @@
 //                                                                   'Holding Fee: ',
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .poppins(
+//                                                                           .lato(
 //                                                                     fontSize:
-//                                                                         16.sp,
+//                                                                         16,
 //                                                                     color: Theme.of(
 //                                                                             context)
 //                                                                         .primaryColor,
@@ -828,9 +828,9 @@
 //                                                                           .clip,
 //                                                                   style:
 //                                                                       GoogleFonts
-//                                                                           .poppins(
+//                                                                           .lato(
 //                                                                     fontSize:
-//                                                                         16.sp,
+//                                                                         16,
 //                                                                     color: Theme.of(
 //                                                                             context)
 //                                                                         .primaryColor,
@@ -899,11 +899,11 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .poppins(
+//                                                                         .lato(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
-//                                                                           14.sp,
+//                                                                           14,
 //                                                                       fontWeight:
 //                                                                           FontWeight
 //                                                                               .w500,
@@ -990,7 +990,7 @@
 //                                                           Text(
 //                                                             'Oops!!',
 //                                                             style: GoogleFonts
-//                                                                 .poppins(
+//                                                                 .lato(
 //                                                               color: Colors.red,
 //                                                               fontSize: 28,
 //                                                               fontWeight:
@@ -1006,7 +1006,7 @@
 //                                                             textAlign: TextAlign
 //                                                                 .center,
 //                                                             style: GoogleFonts
-//                                                                 .poppins(
+//                                                                 .lato(
 //                                                                     color:
 //                                                                         brandOne,
 //                                                                     fontSize:
@@ -1026,9 +1026,9 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_dailyValue.toString())).toString()} daily for ${_calculateDaysDifference()} days',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             color: Colors.white,
-//                                             fontSize: 14.sp,
+//                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                           ),
 //                                         ),
@@ -1123,8 +1123,8 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .poppins(
-//                                                             fontSize: 16.sp,
+//                                                               .lato(
+//                                                             fontSize: 16,
 //                                                             color: Theme.of(
 //                                                                     context)
 //                                                                 .primaryColor,
@@ -1189,11 +1189,11 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .poppins(
+//                                                                         .lato(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
-//                                                                           14.sp,
+//                                                                           14,
 //                                                                       fontWeight:
 //                                                                           FontWeight
 //                                                                               .w500,
@@ -1272,7 +1272,7 @@
 //                                             //               Text(
 //                                             //                 'Oops!!',
 //                                             //                 style:
-//                                             //                     GoogleFonts.poppins(
+//                                             //                     GoogleFonts.lato(
 //                                             //                   color: Colors.red,
 //                                             //                   fontSize: 28,
 //                                             //                   fontWeight:
@@ -1287,7 +1287,7 @@
 //                                             //                 textAlign:
 //                                             //                     TextAlign.center,
 //                                             //                 style:
-//                                             //                     GoogleFonts.poppins(
+//                                             //                     GoogleFonts.lato(
 //                                             //                         color: brandOne,
 //                                             //                         fontSize: 18),
 //                                             //               ),
@@ -1304,9 +1304,9 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_weeklyValue.toString())).toString()} weekly for ${_calculateWeeksDifference()} weeks',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             color: Colors.white,
-//                                             fontSize: 14.sp,
+//                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                           ),
 //                                         ),
@@ -1401,8 +1401,8 @@
 //                                                         Text(
 //                                                           'RentSpace created',
 //                                                           style: GoogleFonts
-//                                                               .poppins(
-//                                                             fontSize: 16.sp,
+//                                                               .lato(
+//                                                             fontSize: 16,
 //                                                             color: Theme.of(
 //                                                                     context)
 //                                                                 .primaryColor,
@@ -1467,11 +1467,11 @@
 //                                                                         TextAlign
 //                                                                             .center,
 //                                                                     style: GoogleFonts
-//                                                                         .poppins(
+//                                                                         .lato(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontSize:
-//                                                                           14.sp,
+//                                                                           14,
 //                                                                       fontWeight:
 //                                                                           FontWeight
 //                                                                               .w500,
@@ -1499,9 +1499,9 @@
 //                                         child: Text(
 //                                           'Save ${ch8t.format(double.tryParse(_monthlyValue.toString())).toString()} monthly for ${_calculateMonthsDifference()} months',
 //                                           textAlign: TextAlign.center,
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             color: Colors.white,
-//                                             fontSize: 14.sp,
+//                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                           ),
 //                                         ),
@@ -1515,11 +1515,11 @@
 //                                         },
 //                                         child: Text(
 //                                           "By proceeding, you agree with our terms and conditions",
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             decoration:
 //                                                 TextDecoration.underline,
 //                                             color: Colors.red,
-//                                             fontSize: 12.sp,
+//                                             fontSize: 12,
 //                                             fontWeight: FontWeight.w500,
 //                                           ),
 //                                           textAlign: TextAlign.center,

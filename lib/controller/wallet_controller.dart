@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
 
-
 class WalletController extends GetxController {
   var isLoading = true.obs;
   final wallet = <Wallet>[].obs;
@@ -20,11 +19,8 @@ class WalletController extends GetxController {
     fetchWallet();
   }
 
-
-
-
   fetchWallet() async {
-     isLoading(true);
+    isLoading(true);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
@@ -37,6 +33,7 @@ class WalletController extends GetxController {
             'Accept': 'application/json',
             'Authorization': 'Bearer $authToken'
           }).timeout(const Duration(seconds: 30));
+      print('fetching here');
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
@@ -60,5 +57,4 @@ class WalletController extends GetxController {
       isLoading(false);
     }
   }
-
 }

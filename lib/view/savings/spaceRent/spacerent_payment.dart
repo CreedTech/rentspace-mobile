@@ -29,7 +29,7 @@ String _payUrl = "";
 String _mssg = "Initiating payment...";
 String _mssgBody = "";
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+var ch8t = NumberFormat.simpleCurrency(name: 'N');
 
 class SpaceRentFunding extends StatefulWidget {
   double amount;
@@ -164,7 +164,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   children: [
                     Text(
                       _mssg,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         fontSize: 20,
                         color: Theme.of(context).primaryColor,
                       ),
@@ -175,7 +175,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
                     _mssgBody,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       fontSize: 15,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -200,7 +200,7 @@ class _SpaceRentFundingState extends State<SpaceRentFunding> {
                   CustomSnackBar.error(
                     // backgroundColor: brandOne,
                     message: e.toString(),
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       fontSize: 14,
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

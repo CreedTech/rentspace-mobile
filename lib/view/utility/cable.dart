@@ -195,17 +195,17 @@ class _CableScreenState extends State<CableScreen> {
           },
           child: Icon(
             Icons.arrow_back_ios_sharp,
-            size: 20.sp,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'TV',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -236,10 +236,10 @@ class _CableScreenState extends State<CableScreen> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Service Provider',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -383,9 +383,9 @@ class _CableScreenState extends State<CableScreen> {
                                 AutovalidateMode.onUserInteraction,
                             enableSuggestions: true,
                             cursorColor: Theme.of(context).primaryColor,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 14.sp),
+                                fontSize: 14),
 
                             controller: providerController,
                             textAlignVertical: TextAlignVertical.center,
@@ -442,10 +442,10 @@ class _CableScreenState extends State<CableScreen> {
                               hintText: tvCable,
                               filled: false,
                               fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.all(14.sp),
-                              hintStyle: GoogleFonts.poppins(
+                              contentPadding: EdgeInsets.all(14),
+                              hintStyle: GoogleFonts.lato(
                                 color: brandOne,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -472,10 +472,10 @@ class _CableScreenState extends State<CableScreen> {
                                 vertical: 3.h, horizontal: 3.w),
                             child: Text(
                               'Smart Card Number',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -556,9 +556,9 @@ class _CableScreenState extends State<CableScreen> {
                               contentPadding: const EdgeInsets.all(14),
                               fillColor: brandThree,
                               hintText: 'Enter Smart Card Number',
-                              hintStyle: GoogleFonts.poppins(
+                              hintStyle: GoogleFonts.lato(
                                 color: Colors.grey,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -600,9 +600,9 @@ class _CableScreenState extends State<CableScreen> {
                                     Text(
                                       'Verifying Smart Card Details',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -640,9 +640,9 @@ class _CableScreenState extends State<CableScreen> {
                                     flex: 6,
                                     child: Text(
                                       verifyAccountError,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: Colors.red,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -680,9 +680,9 @@ class _CableScreenState extends State<CableScreen> {
                                     flex: 6,
                                     child: Text(
                                       tvName,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 14.sp,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -710,10 +710,10 @@ class _CableScreenState extends State<CableScreen> {
                     //             vertical: 3.h, horizontal: 3.w),
                     //         child: Text(
                     //           'Choose Package',
-                    //           style: GoogleFonts.poppins(
+                    //           style: GoogleFonts.lato(
                     //             color: Theme.of(context).primaryColor,
                     //             fontWeight: FontWeight.w700,
-                    //             fontSize: 14.sp,
+                    //             fontSize: 14,
                     //           ),
                     //         ),
                     //       ),
@@ -860,9 +860,9 @@ class _CableScreenState extends State<CableScreen> {
                     //             AutovalidateMode.onUserInteraction,
                     //         enableSuggestions: true,
                     //         cursorColor: Theme.of(context).primaryColor,
-                    //         style: GoogleFonts.poppins(
+                    //         style: GoogleFonts.lato(
                     //             color: Theme.of(context).primaryColor,
-                    //             fontSize: 14.sp),
+                    //             fontSize: 14),
 
                     //         controller: providerController,
                     //         textAlignVertical: TextAlignVertical.center,
@@ -919,10 +919,10 @@ class _CableScreenState extends State<CableScreen> {
                     //           hintText: tvCable,
                     //           filled: false,
                     //           fillColor: Colors.transparent,
-                    //           contentPadding: EdgeInsets.all(14.sp),
-                    //           hintStyle: GoogleFonts.poppins(
+                    //           contentPadding: EdgeInsets.all(14),
+                    //           hintStyle: GoogleFonts.lato(
                     //             color: brandOne,
-                    //             fontSize: 12.sp,
+                    //             fontSize: 12,
                     //             fontWeight: FontWeight.w700,
                     //           ),
                     //         ),

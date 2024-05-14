@@ -20,7 +20,7 @@ class ReferralRecord extends StatefulWidget {
 
 class _ReferralRecordState extends State<ReferralRecord> {
   final UserController userController = Get.find();
-  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+  var ch8t = NumberFormat.simpleCurrency(name: 'N');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +41,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
         centerTitle: true,
         title: Text(
           'Referral Record',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -70,9 +70,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
                       children: [
                         Text(
                           'Total Earned',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -86,7 +86,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                           ),
                           style: GoogleFonts.roboto(
                             color: brandOne,
-                            fontSize: 20.sp,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         )
@@ -97,9 +97,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
                       children: [
                         Text(
                           'Referred Users',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -109,9 +109,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
                         Text(
                           userController.userModel!.userDetails![0].referrals
                               .toString(),
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 20.sp,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         )
@@ -132,8 +132,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                     children: [
                       Text(
                         'Referred Users',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -172,8 +172,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                   leading: CircleAvatar(
                                     backgroundColor: Colors.transparent,
                                     child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(50.sp),
+                                      borderRadius: BorderRadius.circular(50),
                                       child: CachedNetworkImage(
                                         imageUrl: history['avatar']['url'],
                                         height: 30.h,
@@ -210,8 +209,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                         "${history['lastName']} ${history['firstName']}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12.sp,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Theme.of(context).primaryColor,
                                         ),
@@ -220,8 +219,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                   ),
                                   subtitle: Text(
                                     history['email'],
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 10.sp,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 10,
                                       fontWeight: FontWeight.w300,
                                       color: Theme.of(context).primaryColor,
                                     ),
@@ -243,8 +242,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                           ? "waiting"
                                           : 'done',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 10.0.sp,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 10.0,
                                         // fontFamily: "DefaultFontFamily",
                                         // letterSpacing: 0.5,
                                         fontWeight: FontWeight.w700,
@@ -260,8 +259,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                               child: Center(
                                 child: Text(
                                   "No Referred User",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12,
                                     // fontFamily: "DefaultFontFamily",
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,

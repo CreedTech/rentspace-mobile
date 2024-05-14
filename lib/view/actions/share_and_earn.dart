@@ -26,7 +26,7 @@ class ShareAndEarn extends StatefulWidget {
 
 class _ShareAndEarnState extends State<ShareAndEarn> {
   final UserController userController = Get.find();
-  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+  var ch8t = NumberFormat.simpleCurrency(name: 'N');
   @override
   initState() {
     super.initState();
@@ -59,28 +59,28 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
                     children: <TextSpan>[
                       TextSpan(
                         text: "Invite",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
                         text: ' 1 ',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
                         text: "New User",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
@@ -96,8 +96,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                     Text(
                       'Get 500 Naira',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        fontSize: 40.0.sp,
+                      style: GoogleFonts.lato(
+                        fontSize: 40.0,
                         // letterSpacing: 0.5,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
@@ -114,8 +114,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   'Step 1',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
@@ -141,8 +141,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Share your referral code with your friends',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 8.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 8.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -168,8 +168,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   'Step 2',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w700,
                                     // fontFamily: "DefaultFontFamily",
@@ -196,8 +196,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Friends sign up with your referral code',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 8.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 8.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -223,8 +223,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   'Step 3',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w700,
                                     // fontFamily: "DefaultFontFamily",
@@ -251,8 +251,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 Text(
                                   'Friends start using the space rent and you both earn 500 naira',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 8.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 8.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w600,
                                     // fontFamily: "DefaultFontFamily",
@@ -271,14 +271,14 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                       child: RichText(
                         textAlign: TextAlign.left,
                         text: TextSpan(
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontWeight: FontWeight.w700,
-                            fontSize: 20.sp,
+                            fontSize: 20,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                               text: "Total cash earned: ",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -308,8 +308,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           children: [
                             Text(
                               'REFERRAL CODE:',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -331,8 +331,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               children: [
                                 Text(
                                   ' ${userController.userModel!.userDetails![0].referralCode}',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 30.0.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 30.0,
                                     // letterSpacing: 0.5,
                                     fontWeight: FontWeight.w700,
                                     // fontFamily: "DefaultFontFamily",
@@ -362,7 +362,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   },
                                   child: Icon(
                                     Icons.copy,
-                                    size: 16.sp,
+                                    size: 16,
                                     color: brandOne,
                                   ),
                                 ),
@@ -374,8 +374,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             Text(
                               'You and Your friends can get bonus with your code',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -416,7 +416,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   children: [
                                     Icon(
                                       Icons.share_outlined,
-                                      size: 20.sp,
+                                      size: 20,
                                       color: brandOne,
                                     ),
                                     const SizedBox(
@@ -425,9 +425,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                     Text(
                                       'Share and earn!',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 16.sp,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -452,8 +452,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                           children: [
                             Text(
                               'Referred Users (${userController.userModel!.userDetails![0].referrals})',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Theme.of(context).primaryColor,
                               ),
@@ -496,7 +496,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                           backgroundColor: Colors.transparent,
                                           child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(50.sp),
+                                                BorderRadius.circular(50),
                                             child: CachedNetworkImage(
                                               imageUrl: history['avatar']
                                                   ['url'],
@@ -535,8 +535,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                               "${history['lastName']} ${history['firstName']}",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12.sp,
+                                              style: GoogleFonts.lato(
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.w700,
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -546,8 +546,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                         ),
                                         subtitle: Text(
                                           history['email'],
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 10.sp,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 10,
                                             fontWeight: FontWeight.w300,
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -571,8 +571,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                                 ? "waiting"
                                                 : 'done',
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 10.0.sp,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 10.0,
                                               // fontFamily: "DefaultFontFamily",
                                               // letterSpacing: 0.5,
                                               fontWeight: FontWeight.w700,
@@ -585,8 +585,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                         //           'false')
                                         //       ? 'Successful'
                                         //       : 'Pending',
-                                        //   style: GoogleFonts.poppins(
-                                        //     fontSize: 14.sp,
+                                        //   style: GoogleFonts.lato(
+                                        //     fontSize: 14,
                                         //     fontWeight: FontWeight.w500,
                                         //     color: Colors.yellow[800],
                                         //   ),
@@ -599,8 +599,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                     child: Center(
                                       child: Text(
                                         "No Referred User",
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12.sp,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
                                           // fontFamily: "DefaultFontFamily",
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -617,8 +617,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             //       child: Text(
                             //         ' ${userController.userModel!.userDetails![0].referredUsers[0]}',
                             //         maxLines: 10,
-                            //         style: GoogleFonts.poppins(
-                            //           fontSize: 30.0.sp,
+                            //         style: GoogleFonts.lato(
+                            //           fontSize: 30.0,
                             //           // letterSpacing: 0.5,
                             //           fontWeight: FontWeight.w700,
                             //           // fontFamily: "DefaultFontFamily",
@@ -646,7 +646,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             //       },
                             //       child: Icon(
                             //         Icons.copy,
-                            //         size: 16.sp,
+                            //         size: 16,
                             //         color: brandOne,
                             //       ),
                             //     ),
@@ -666,9 +666,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               },
                               child: Text(
                                 'View All >>',
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   decoration: TextDecoration.underline,
-                                  fontSize: 12.sp,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                   color: Theme.of(context).primaryColor,
                                 ),
@@ -689,8 +689,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //       // Todo: work on this part ==========
               //       Text(
               //         'REFERRAL CODE: ${userController.userModel!.userDetails![0].referralCode}',
-              //         style: GoogleFonts.poppins(
-              //           fontSize: 16.0.sp,
+              //         style: GoogleFonts.lato(
+              //           fontSize: 16.0,
               //           // letterSpacing: 0.5,
               //           fontWeight: FontWeight.w700,
               //           // fontFamily: "DefaultFontFamily",
@@ -700,8 +700,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //       Text(
               //         'NO OF REFERRED USERS: ${userController.userModel!.userDetails![0].referrals}'
               //             .toString(),
-              //         style: GoogleFonts.poppins(
-              //           fontSize: 14.0.sp,
+              //         style: GoogleFonts.lato(
+              //           fontSize: 14.0,
               //           // letterSpacing: 1.0,
               //           fontWeight: FontWeight.w700,
               //           // fontFamily: "DefaultFontFamily",
@@ -727,7 +727,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //   child: Text(
               //     "Participate in our exclusive program and seize the opportunity to earn 500 naira simply by referring friends through your unique code and getting them to save using the Space Rent . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
               //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.poppins(
+              //     style: GoogleFonts.lato(
               //       fontSize: 16.0,
               //       // fontFamily: "DefaultFontFamily",
               //       fontWeight: FontWeight.w600,
@@ -794,7 +794,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //                 Text(
               //                   'Share now!',
               //                   textAlign: TextAlign.center,
-              //                   style: GoogleFonts.poppins(
+              //                   style: GoogleFonts.lato(
               //                     color: Colors.white,
               //                     fontSize: 16,
               //                     fontWeight: FontWeight.w700,

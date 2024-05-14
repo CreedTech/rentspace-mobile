@@ -39,7 +39,7 @@ void resendVerification(
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -51,7 +51,7 @@ void resendVerification(
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -80,7 +80,7 @@ void resendVerification(
                     child: Text(
                       "Okay",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -123,7 +123,7 @@ void verification(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -135,7 +135,7 @@ void verification(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -172,7 +172,7 @@ void verification(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -221,7 +221,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -233,7 +233,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -269,7 +269,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -318,7 +318,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -330,7 +330,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -345,7 +345,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                       FocusScope.of(context).unfocus();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => FirstPage(
+                            builder: (context) => const FirstPage(
                                 // sessionStateStream: sessionStateStream,
                                 // loggedOutReason: "Logged out because of user inactivity",
                                 ),
@@ -366,7 +366,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,
@@ -434,7 +434,7 @@ void errorDialog(BuildContext context, String message, String subText) {
               ),
               Text(
                 message,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.lato(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                   // fontFamily:
@@ -448,7 +448,7 @@ void errorDialog(BuildContext context, String message, String subText) {
               ),
               Text(
                 subText,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.lato(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                   // fontFamily:
@@ -472,88 +472,124 @@ void customErrorDialog(
     BuildContext context, String message, String subText) async {
   showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            AlertDialog(
-              contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
-              elevation: 0,
-              alignment: Alignment.bottomCenter,
-              insetPadding: const EdgeInsets.all(0),
-              scrollable: true,
-              title: null,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-              ),
-              content: SizedBox(
-                height: 220.h,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: null,
+          scrollable: true,
+          elevation: 0,
+          content: SizedBox(
+            // height: 220.h,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: Align(
+                //     alignment: Alignment.topRight,
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(30),
+                //         // color: brandOne,
+                //       ),
+                //       child: Icon(
+                //         Iconsax.close_circle,
+                //         color: Colors.red,
+                //         size: 30,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: Icon(
+                //     Iconsax.warning_2,
+                //     color: Colors.red,
+                //     size: 45,
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 12.h,
+                // ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            // color: brandOne,
-                          ),
-                          child: Icon(
-                            Iconsax.close_circle,
-                            color: Colors.red,
-                            size: 30.sp,
-                          ),
-                        ),
-                      ),
+                    const Icon(
+                      Icons.info_outline_rounded,
+                      color: colorBlack,
+                      size: 24,
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Iconsax.warning_2,
-                        color: Colors.red,
-                        size: 45.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12.h,
+                    const SizedBox(
+                      width: 4,
                     ),
                     Text(
                       message,
-                      style: GoogleFonts.poppins(
-                        color: Colors.red,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
+                      style: GoogleFonts.lato(
+                        color: colorBlack,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Text(
-                      subText,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        color: Colors.red,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(
+                  height: 14,
+                ),
+                Text(
+                  subText,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 29,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
+                      backgroundColor: brandTwo,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Ok',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       });
+
 }
 
 void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
@@ -611,16 +647,16 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
                 child: Center(
                   child: Text(
                     'Tap to Change',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 17.sp,
+                      fontSize: 17,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
               //  SizedBox(
-              //   height: 10.sp,
+              //   height: 10,
               // ),
             ],
           ),
@@ -669,11 +705,11 @@ Future<void> SucessfulReciept(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Center(
+                            const Center(
                               child: Icon(
                                 Icons.verified,
                                 color: Colors.greenAccent,
-                                size: 68.sp,
+                                size: 68,
                               ),
                             ),
                             SizedBox(
@@ -681,31 +717,31 @@ Future<void> SucessfulReciept(
                             ),
                             Text(
                               // '₦ 10,000',
-                              NumberFormat.simpleCurrency(name: 'NGN')
+                              NumberFormat.simpleCurrency(name: 'N')
                                   .format(amount),
 
                               textAlign: TextAlign.center,
                               style: GoogleFonts.roboto(
                                 color: Colors.white,
-                                fontSize: 26.sp,
+                                fontSize: 26,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
                               '$subject $accountName',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
-                                fontSize: 15.sp,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
                               bank,
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
-                                fontSize: 15.sp,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -736,13 +772,13 @@ Future<void> SucessfulReciept(
                           walletController.fetchWallet();
                           rentController.fetchRent();
                           Get.to(
-                            FirstPage(),
+                            const FirstPage(),
                           );
                         },
                         child: Text(
                           'Back Home',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -792,7 +828,7 @@ void sessionAlert(BuildContext context, String message, String subText,
                   ),
                   Text(
                     message,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
@@ -804,7 +840,7 @@ void sessionAlert(BuildContext context, String message, String subText,
                   Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       // letterSpacing: 0.3,
@@ -840,7 +876,7 @@ void sessionAlert(BuildContext context, String message, String subText,
                     child: Text(
                       redirectText,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                         color: Colors.white,
                         fontSize: 14,
                         // letterSpacing: 0.3,

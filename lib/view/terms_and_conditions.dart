@@ -38,7 +38,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           },
           child: Icon(
             Icons.close,
-            size: 30.sp,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),

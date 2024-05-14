@@ -28,7 +28,7 @@ class AirtimePage extends ConsumerStatefulWidget {
   ConsumerState<AirtimePage> createState() => _AirtimePageState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+var ch8t = NumberFormat.simpleCurrency(name: 'N');
 
 class _AirtimePageState extends ConsumerState<AirtimePage> {
   final UserController userController = Get.find();
@@ -73,7 +73,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
 
   String getCurrency() {
     var format =
-        NumberFormat.simpleCurrency(locale: Platform.localeName, name: 'NGN');
+        NumberFormat.simpleCurrency(locale: Platform.localeName, name: 'N');
     return format.currencySymbol;
   }
 
@@ -240,7 +240,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
   Widget build(BuildContext context) {
     final appState = ref.watch(appControllerProvider.notifier);
     final selectNetworkCarrier = CustomDropdown(
-      selectedStyle: GoogleFonts.poppins(
+      selectedStyle: GoogleFonts.lato(
           color: Theme.of(context).primaryColor,
           fontSize: 14,
           fontWeight: FontWeight.w500),
@@ -302,10 +302,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         centerTitle: true,
         title: Text(
           'Airtime',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -417,7 +417,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             contentPadding: const EdgeInsets.all(14),
                             fillColor: brandThree,
                             hintText: '0XX XXX XXXX',
-                            hintStyle: GoogleFonts.poppins(
+                            hintStyle: GoogleFonts.lato(
                               color: Colors.grey,
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -454,9 +454,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                   alignment: Alignment.topLeft,
                                   child: Text(
                                     'Top up',
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       color: brandOne,
-                                      fontSize: 16.sp,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -542,15 +542,15 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                     hintText: 'Enter Amount',
                                     filled: false,
                                     fillColor: brandThree,
-                                    errorStyle: GoogleFonts.poppins(
+                                    errorStyle: GoogleFonts.lato(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600),
-                                    // hintStyle: GoogleFonts.poppins(
+                                    // hintStyle: GoogleFonts.lato(
                                     //   color: Colors.grey,
                                     //   fontSize: 12,
                                     //   fontWeight: FontWeight.w400,
                                     // ),
-                                    contentPadding: EdgeInsets.all(14.sp),
+                                    contentPadding: EdgeInsets.all(14),
                                     border: UnderlineInputBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                       borderSide: const BorderSide(
@@ -575,7 +575,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                           width: 2.0), // Change color to yellow
                                     ),
                                     prefixText: "₦  ",
-                                    prefixStyle: GoogleFonts.poppins(
+                                    prefixStyle: GoogleFonts.lato(
                                       color: brandOne,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w700,
@@ -681,9 +681,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
             padding: const EdgeInsets.all(15),
             child: Text(
               '₦$amount',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.lato(
                 color: brandOne,
-                fontSize: 16.sp,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.center,
@@ -732,7 +732,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
-                    fontSize: 30.sp,
+                    fontSize: 30,
                     color: brandOne,
                   ),
                 ),
@@ -769,9 +769,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               children: [
                                 Text(
                                   'Provider Network',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -794,9 +794,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                     Text(
                                       _selectedCarrier,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 12.sp,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -812,17 +812,17 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               children: [
                                 Text(
                                   'Recipient Number',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   number,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -836,9 +836,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -846,7 +846,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                   ch8t.format(amount),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -860,9 +860,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -870,7 +870,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                   ch8t.format(0),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -884,9 +884,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 16.sp,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -895,18 +895,18 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 //   children: [
                                 //     Text(
                                 //       'Space Wallet',
-                                //       style: GoogleFonts.poppins(
+                                //       style: GoogleFonts.lato(
                                 //         color: brandOne,
-                                //         fontSize: 15.sp,
+                                //         fontSize: 15,
                                 //         fontWeight: FontWeight.w600,
                                 //       ),
                                 //     ),
                                 //     Text(
                                 //       ch8t.format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
-                                //       style: GoogleFonts.poppins(
+                                //       style: GoogleFonts.lato(
                                 //         color: brandOne,
-                                //         fontSize: 15.sp,
+                                //         fontSize: 15,
                                 //         fontWeight: FontWeight.w600,
                                 //       ),
                                 //     ),
@@ -932,26 +932,26 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                               .wallet![0].mainBalance)
                                       ? Colors.grey
                                       : brandOne,
-                                  size: 25.sp,
+                                  size: 25,
                                 ),
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
+                                      fontSize: 14,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       TextSpan(
@@ -964,7 +964,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
@@ -975,10 +975,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 12.sp,
+                                          fontSize: 12,
                                         ),
                                       )
                                     : null,
@@ -997,16 +997,16 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.lato(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 12.sp,
+                                                fontSize: 12,
                                               ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
                                               color: brandOne,
-                                              size: 20.sp,
+                                              size: 20,
                                             )
                                           ],
                                         ),
@@ -1014,7 +1014,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                     : Icon(
                                         Icons.check,
                                         color: brandOne,
-                                        size: 20.sp,
+                                        size: 20,
                                       ),
                               ),
                             ),
@@ -1080,9 +1080,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                          GoogleFonts.poppins(
+                                                          GoogleFonts.lato(
                                                         color: brandOne,
-                                                        fontSize: 28.sp,
+                                                        fontSize: 28,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
@@ -1097,7 +1097,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -1113,7 +1113,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -1129,7 +1129,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -1198,10 +1198,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                       print(
                                                           _aPinController.text);
                                                     },
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
+                                                    textStyle: GoogleFonts.lato(
                                                       color: brandOne,
-                                                      fontSize: 24.sp,
+                                                      fontSize: 24,
                                                     ),
                                                     rightButtonFn: () {
                                                       if (_aPinController
@@ -1290,7 +1289,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                   //     'Proceed to Payment',
                                                   //     textAlign:
                                                   //         TextAlign.center,
-                                                  //     style: GoogleFonts.poppins(
+                                                  //     style: GoogleFonts.lato(
                                                   //       color: Colors.white,
                                                   //       fontSize: 16,
                                                   //       fontWeight:
@@ -1308,7 +1307,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -1340,7 +1339,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             //                 ),
                             //                 Text(
                             //                   'Enter PIN to Proceed',
-                            //                   style: GoogleFonts.poppins(
+                            //                   style: GoogleFonts.lato(
                             //                       fontSize: 18,
                             //                       color: Theme.of(context)
                             //                           .primaryColor,
@@ -1457,7 +1456,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             //                   child: Text(
                             //                     'Proceed to Payment',
                             //                     textAlign: TextAlign.center,
-                            //                     style: GoogleFonts.poppins(
+                            //                     style: GoogleFonts.lato(
                             //                       color: Colors.white,
                             //                       fontSize: 16,
                             //                       fontWeight: FontWeight.w700,
@@ -1481,9 +1480,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             //         child: Text(
                             //           'Pay',
                             //           textAlign: TextAlign.center,
-                            //           style: GoogleFonts.poppins(
+                            //           style: GoogleFonts.lato(
                             //             color: Colors.white,
-                            //             fontSize: 19.sp,
+                            //             fontSize: 19,
                             //             fontWeight: FontWeight.w600,
                             //           ),
                             //         ),
@@ -1540,7 +1539,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                       //         child: Icon(
                       //           Iconsax.close_circle,
                       //           color: Colors.red,
-                      //           size: 20.sp,
+                      //           size: 20,
                       //         ),
                       //       ),
                       //     ),
@@ -1551,10 +1550,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18.sp,
+                          fontSize: 18,
                         ),
                       ),
                       SizedBox(
@@ -1563,9 +1562,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
@@ -1592,7 +1591,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1622,7 +1621,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1640,7 +1639,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       child: Icon(
         Icons.close,
         color: brandOne,
-        size: 20.sp,
+        size: 20,
       ),
     );
   }

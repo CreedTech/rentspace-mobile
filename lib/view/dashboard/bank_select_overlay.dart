@@ -107,16 +107,16 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
           },
           child: Icon(
             Icons.close,
-            size: 20.sp,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Select Bank',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -132,14 +132,13 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                   Container(
                     color: Colors.white,
                     child: TextFormField(
-                      style: GoogleFonts.poppins(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14.sp),
+                      style: GoogleFonts.lato(
+                          color: Theme.of(context).primaryColor, fontSize: 14),
                       cursorColor: Theme.of(context).primaryColor,
                       controller: _searchController,
                       decoration: InputDecoration(
                         filled: false,
-                        contentPadding: EdgeInsets.all(3.sp),
+                        contentPadding: EdgeInsets.all(3),
                         prefixIcon: const Icon(
                           Icons.search_outlined,
                           color: brandOne,
@@ -149,7 +148,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                                 ? IconButton(
                                     icon: Icon(
                                       Iconsax.close_circle5,
-                                      size: 18.sp,
+                                      size: 18,
                                     ),
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
@@ -185,7 +184,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                               const BorderSide(color: Colors.red, width: 2.0),
                         ),
                         hintStyle: TextStyle(
-                          fontSize: 12.sp,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
                         hintText: "Search Bank Name",
@@ -212,8 +211,8 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                               // shape: Border,
                               title: Text(
                                 bankName,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
+                                style: GoogleFonts.lato(
+                                  fontSize: 14,
                                   color: brandOne,
                                   fontWeight: FontWeight.w700,
                                 ),

@@ -69,7 +69,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -104,7 +104,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter your password',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -132,9 +132,9 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
         centerTitle: true,
         title: Text(
           'Forgot PIN',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -154,7 +154,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             'Enter your Password',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,

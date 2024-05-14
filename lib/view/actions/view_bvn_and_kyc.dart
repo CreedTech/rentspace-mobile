@@ -43,7 +43,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
         ),
         title: Text(
           'Details',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
             fontSize: 16,
@@ -118,7 +118,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
                     children: [
                       Text(
                         "BVN: ${widget.bvn}",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           fontSize: 15.0,
                           height: 2,
                           fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
                       ),
                       Text(
                         "KYC: ${widget.kyc}",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,

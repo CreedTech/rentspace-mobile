@@ -110,7 +110,7 @@
 //         CustomSnackBar.success(
 //           backgroundColor: brandOne,
 //           message: 'Your ID card image has been uploaded successfully!!',
-//           textStyle: GoogleFonts.poppins(
+//           textStyle: GoogleFonts.lato(
 //             fontSize: 14,
 //             color: Colors.white,
 //             fontWeight: FontWeight.w700,
@@ -136,14 +136,14 @@
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
 //       cursorColor: Theme.of(context).primaryColor,
 //       controller: _kycController,
-//       style: GoogleFonts.poppins(
+//       style: GoogleFonts.lato(
 //         color: Theme.of(context).primaryColor,
 //       ),
 //       keyboardType: TextInputType.multiline,
 //       decoration: InputDecoration(
 //         // label: Text(
 //         //   "KYC : residential address",
-//         //   style: GoogleFonts.poppins(
+//         //   style: GoogleFonts.lato(
 //         //     color: Colors.grey,
 //         //     fontSize: 12,
 //         //     fontWeight: FontWeight.w400,
@@ -171,7 +171,7 @@
 //         contentPadding: const EdgeInsets.all(14),
 //         fillColor: brandThree,
 //         hintText: 'Enter your KYC : residential address...',
-//         hintStyle: GoogleFonts.poppins(
+//         hintStyle: GoogleFonts.lato(
 //           color: Colors.grey,
 //           fontSize: 12,
 //           fontWeight: FontWeight.w400,
@@ -213,7 +213,7 @@
 //           centerTitle: true,
 //           title: Text(
 //             'KYC Details',
-//             style: GoogleFonts.poppins(
+//             style: GoogleFonts.lato(
 //               color: Theme.of(context).primaryColor,
 //               fontSize: 16,
 //             ),
@@ -244,7 +244,7 @@
 //                                 alignment: Alignment.topLeft,
 //                                 child: Text(
 //                                   'Select Your ID verification Type',
-//                                   style: GoogleFonts.poppins(
+//                                   style: GoogleFonts.lato(
 //                                     fontSize: 16,
 //                                     fontWeight: FontWeight.w500,
 //                                     color: Theme.of(context).primaryColor,
@@ -254,7 +254,7 @@
 //                             ),
 //                             CustomDropdown(
 //                               selectedStyle:
-//                                   GoogleFonts.poppins(color: brandOne),
+//                                   GoogleFonts.lato(color: brandOne),
 //                               hintText: 'Select an option?',
 //                               fillColor: brandThree,
 //                               items: item,
@@ -279,7 +279,7 @@
 //                       Text(
 //                         "Provide your national identity information. Make sure your face is properly shown on the ID card. Image upload dimension should be 800px x 500px.",
 //                         textAlign: TextAlign.center,
-//                         style: GoogleFonts.poppins(
+//                         style: GoogleFonts.lato(
 //                           fontSize: 14,
 //                           color: Theme.of(context).primaryColor,
 //                           fontWeight: FontWeight.w400,
@@ -332,9 +332,9 @@
 //                                                         child: Text(
 //                                                           'Upload Valid Id Card',
 //                                                           style: GoogleFonts
-//                                                               .poppins(
+//                                                               .lato(
 //                                                             color: brandOne,
-//                                                             fontSize: 16.sp,
+//                                                             fontSize: 16,
 //                                                             fontWeight:
 //                                                                 FontWeight.w500,
 //                                                           ),
@@ -406,7 +406,7 @@
 //                                                                           FontWeight
 //                                                                               .w500,
 //                                                                       fontSize:
-//                                                                           12.sp,
+//                                                                           12,
 //                                                                     ),
 //                                                                   ),
 //                                                                 ],
@@ -462,7 +462,7 @@
 //                                       ),
 //                                       Text(
 //                                         "Select You File [ jpg, png, jpeg ]",
-//                                         style: GoogleFonts.poppins(
+//                                         style: GoogleFonts.lato(
 //                                           color: Theme.of(context).primaryColor,
 //                                           fontSize: 12,
 //                                         ),
@@ -519,7 +519,7 @@
 //                                                 children: [
 //                                                   Text(
 //                                                     _platformFile!.name,
-//                                                     style: GoogleFonts.poppins(
+//                                                     style: GoogleFonts.lato(
 //                                                       fontSize: 13,
 //                                                       color:
 //                                                           Colors.grey.shade800,
@@ -603,7 +603,7 @@
 //                       //                         children: [
 //                       //                           Text(
 //                       //                             _platformFile!.name,
-//                       //                             style: GoogleFonts.poppins(
+//                       //                             style: GoogleFonts.lato(
 //                       //                               fontSize: 13,
 //                       //                               color: Colors.grey.shade800,
 //                       //                             ),

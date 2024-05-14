@@ -84,7 +84,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
     //     CustomSnackBar.success(
     //       backgroundColor: brandOne,
     //       message: 'BVN & KYC updated !!.',
-    //       textStyle: GoogleFonts.poppins(
+    //       textStyle: GoogleFonts.lato(
     //         fontSize: 14,
     //         color: Colors.white,
     //         fontWeight: FontWeight.w700,
@@ -129,7 +129,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
     //                                 child: Text(
     //                                   'Your BVN & KYC has been updated successfully.\n Proceed to add Card',
     //                                   textAlign: TextAlign.center,
-    //                                   style: GoogleFonts.poppins(
+    //                                   style: GoogleFonts.lato(
     //                                     color: Theme.of(context).primaryColor,
     //                                     fontSize: 20,
     //                                     fontWeight: FontWeight.w500,
@@ -243,7 +243,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -276,7 +276,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Enter Password to Submit',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -308,9 +308,9 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
         centerTitle: true,
         title: Text(
           'Confirm Details',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -357,7 +357,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                         children: [
                           Text(
                             "BVN: ${widget.bvnValue}",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               fontSize: 18.0,
                               color: Colors.white,
                             ),
@@ -367,7 +367,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                           ),
                           Text(
                             "KYC: ${widget.kycValue}",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               fontSize: 18.0,
                               color: Colors.white,
                             ),
@@ -382,7 +382,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5, 0, 5),
                       child: Text(
                         "ID card:",
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           fontSize: 18,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -420,7 +420,7 @@ class _BvnAndKycConfirmPageState extends State<BvnAndKycConfirmPage> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'Enter Password to Submit',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,

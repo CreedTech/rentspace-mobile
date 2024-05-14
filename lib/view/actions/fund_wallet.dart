@@ -19,7 +19,7 @@ class FundWallet extends StatefulWidget {
   _FundWalletState createState() => _FundWalletState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
@@ -52,9 +52,9 @@ class _FundWalletState extends State<FundWallet> {
         ),
         title: Text(
           'Fund Wallet',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -78,17 +78,17 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   title: Text(
                     'Bank Transfer',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   subtitle: Text(
                     'Add money via your banking platforms',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -111,9 +111,9 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Rentspace Account Number',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: brandTwo,
-                              fontSize: 12.sp,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -122,9 +122,9 @@ class _FundWalletState extends State<FundWallet> {
                               Text(
                                 userController
                                     .userModel!.userDetails![0].dvaNumber,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: brandOne,
-                                  fontSize: 25.sp,
+                                  fontSize: 25,
                                   letterSpacing: 4,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -155,7 +155,7 @@ class _FundWalletState extends State<FundWallet> {
                                 },
                                 child: Icon(
                                   Icons.copy,
-                                  size: 16.sp,
+                                  size: 16,
                                   color: brandOne,
                                 ),
                               )
@@ -171,17 +171,17 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Bank',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: brandTwo,
-                              fontSize: 12.sp,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
                             'Providus Bank',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: brandOne,
-                              fontSize: 16.sp,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -195,17 +195,17 @@ class _FundWalletState extends State<FundWallet> {
                         children: [
                           Text(
                             'Account Name',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: brandTwo,
-                              fontSize: 12.sp,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
                             userController.userModel!.userDetails![0].dvaName,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: brandOne,
-                              fontSize: 16.sp,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -235,17 +235,17 @@ class _FundWalletState extends State<FundWallet> {
                   ),
                   title: Text(
                     'Top-up with Card',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp,
+                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   subtitle: Text(
                     'Add money via your bank card',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
                   ),

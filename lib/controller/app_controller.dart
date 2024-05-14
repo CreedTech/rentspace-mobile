@@ -17,6 +17,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
 import '../view/actions/fund_wallet.dart';
+import '../view/savings/spaceRent/spacerent_success_page.dart';
 import 'wallet_controller.dart';
 
 final appControllerProvider =
@@ -41,8 +42,6 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     isLoading = true;
     if (rentName.isEmpty ||
         rentName == '' ||
-        dueDate.isEmpty ||
-        dueDate == '' ||
         interval.isEmpty ||
         interval == '' ||
         intervalAmount == '' ||
@@ -55,12 +54,12 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     }
     Map<String, dynamic> params = {
       'rentName': rentName,
-      'due_date': dueDate,
+      'due_date': dueDate.toString(),
       'interval': interval,
       'interval_amount': intervalAmount,
       'amount': amount,
       'payment_count': paymentCount,
-      'date': date,
+      'date': date.toString(),
       'duration': duration.toString()
     };
     print('params');
@@ -90,14 +89,24 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Space Rent Created Successfully!!',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
         );
-        Get.to(const RentSpaceList());
+        Get.to(
+          SpaceRentSuccessPage(
+              rentValue: amount,
+              savingsValue: intervalAmount,
+              startDate: date,
+              durationType: interval,
+              paymentCount: paymentCount,
+              rentName: rentName,
+              duration: duration,
+              receivalDate: dueDate),
+        );
         // if (walletController.walletModel!.wallet![0].mainBalance <
         //     intervalAmount) {
         //   Get.back();
@@ -139,7 +148,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //                                 child: Text(
         //                                   'Insufficient fund. You need to fund your wallet to perform this transaction.',
         //                                   textAlign: TextAlign.center,
-        //                                   style: GoogleFonts.poppins(
+        //                                   style: GoogleFonts.lato(
         //                                     color: brandOne,
         //                                     fontSize: 16,
         //                                     fontWeight: FontWeight.w600,
@@ -212,7 +221,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //     CustomSnackBar.success(
         //       backgroundColor: Colors.green,
         //       message: 'Space Rent Created Successfully!!',
-        //       textStyle: GoogleFonts.poppins(
+        //       textStyle: GoogleFonts.lato(
         //         fontSize: 14,
         //         color: Colors.white,
         //         fontWeight: FontWeight.w700,
@@ -320,7 +329,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           CustomSnackBar.success(
             backgroundColor: Colors.green,
             message: 'Space Rent Creation Successful',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -337,7 +346,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //       CustomSnackBar.success(
         //         backgroundColor: brandOne,
         //         message: 'Space Rent Successfully!!',
-        //         textStyle: GoogleFonts.poppins(
+        //         textStyle: GoogleFonts.lato(
         //           fontSize: 14,
         //           color: Colors.white,
         //           fontWeight: FontWeight.w700,
@@ -430,7 +439,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //       CustomSnackBar.success(
         //         backgroundColor: brandOne,
         //         message: 'Space Rent Successfully!!',
-        //         textStyle: GoogleFonts.poppins(
+        //         textStyle: GoogleFonts.lato(
         //           fontSize: 14,
         //           color: Colors.white,
         //           fontWeight: FontWeight.w700,
@@ -548,7 +557,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.poppins(
+              textStyle: GoogleFonts.lato(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -689,7 +698,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.poppins(
+              textStyle: GoogleFonts.lato(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -831,7 +840,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                         "Here is your Token: $electricToken",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontSize: 22.sp,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -854,9 +863,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                         child: Text(
                           'Copy to clipboard',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Colors.white,
-                            fontSize: 16.sp,
+                            fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -890,7 +899,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.poppins(
+              textStyle: GoogleFonts.lato(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -1030,7 +1039,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             CustomSnackBar.success(
               backgroundColor: Colors.green,
               message: 'You just earned $spacePoints Space point!',
-              textStyle: GoogleFonts.poppins(
+              textStyle: GoogleFonts.lato(
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

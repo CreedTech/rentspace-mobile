@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
   String _message = "Not Authorized";
   int _selectedIndex = 0;
   final WalletController walletController = Get.put(WalletController());
+  final RentController rentController = Get.put(RentController());
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   // checkStatus() {
@@ -105,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   'Welcome Spacer!',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 20.sp,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
                     color: brandOne,
                     fontWeight: FontWeight.w600,
                   ),
@@ -133,8 +135,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
-                          style: GoogleFonts.poppins(
-                            fontSize: 11.sp,
+                          style: GoogleFonts.lato(
+                            fontSize: 11,
                             color: brandOne,
                             fontWeight: FontWeight.w600,
                           ),
@@ -161,9 +163,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             "Start",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               color: Colors.white,
-                              fontSize: 12.sp,
+                              fontSize: 12,
                               // letterSpacing: 0.3,
                               fontWeight: FontWeight.w400,
                             ),
@@ -238,7 +240,7 @@ class _HomePageState extends State<HomePage> {
   //           builder: (BuildContext context) {
   //             return AlertDialog(
   //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10.sp),
+  //                 borderRadius: BorderRadius.circular(10),
   //               ),
   //               title: null,
   //               elevation: 0,
@@ -254,13 +256,13 @@ class _HomePageState extends State<HomePage> {
   //                         alignment: Alignment.topRight,
   //                         child: Container(
   //                           decoration: BoxDecoration(
-  //                             borderRadius: BorderRadius.circular(30.sp),
+  //                             borderRadius: BorderRadius.circular(30),
   //                             // color: brandOne,
   //                           ),
   //                           child: Icon(
   //                             Iconsax.close_circle,
   //                             color: Theme.of(context).primaryColor,
-  //                             size: 30.sp,
+  //                             size: 30,
   //                           ),
   //                         ),
   //                       ),
@@ -270,17 +272,17 @@ class _HomePageState extends State<HomePage> {
   //                       child: Icon(
   //                         Iconsax.warning_24,
   //                         color: Colors.red,
-  //                         size: 75.sp,
+  //                         size: 75,
   //                       ),
   //                     ),
   //                     SizedBox(
-  //                       height: 12.sp,
+  //                       height: 12,
   //                     ),
   //                     Text(
   //                       'Error',
-  //                       style: GoogleFonts.poppins(
+  //                       style: GoogleFonts.lato(
   //                         color: Colors.red,
-  //                         fontSize: 28.sp,
+  //                         fontSize: 28,
   //                         fontWeight: FontWeight.w600,
   //                       ),
   //                     ),
@@ -290,8 +292,8 @@ class _HomePageState extends State<HomePage> {
   //                     Text(
   //                       "Biometrics failed",
   //                       textAlign: TextAlign.center,
-  //                       style: GoogleFonts.poppins(
-  //                           color: Colors.red, fontSize: 18.sp),
+  //                       style: GoogleFonts.lato(
+  //                           color: Colors.red, fontSize: 18),
   //                     ),
   //                     SizedBox(
   //                       height: 10.h,
@@ -309,7 +311,7 @@ class _HomePageState extends State<HomePage> {
   //         builder: (BuildContext context) {
   //           return AlertDialog(
   //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(10.sp),
+  //               borderRadius: BorderRadius.circular(10),
   //             ),
   //             title: null,
   //             elevation: 0,
@@ -325,13 +327,13 @@ class _HomePageState extends State<HomePage> {
   //                       alignment: Alignment.topRight,
   //                       child: Container(
   //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(30.sp),
+  //                           borderRadius: BorderRadius.circular(30),
   //                           // color: brandOne,
   //                         ),
   //                         child: Icon(
   //                           Iconsax.close_circle,
   //                           color: Theme.of(context).primaryColor,
-  //                           size: 30.sp,
+  //                           size: 30,
   //                         ),
   //                       ),
   //                     ),
@@ -341,7 +343,7 @@ class _HomePageState extends State<HomePage> {
   //                     child: Icon(
   //                       Iconsax.warning_24,
   //                       color: Colors.red,
-  //                       size: 75.sp,
+  //                       size: 75,
   //                     ),
   //                   ),
   //                   SizedBox(
@@ -349,9 +351,9 @@ class _HomePageState extends State<HomePage> {
   //                   ),
   //                   Text(
   //                     'Error',
-  //                     style: GoogleFonts.poppins(
+  //                     style: GoogleFonts.lato(
   //                       color: Colors.red,
-  //                       fontSize: 28.sp,
+  //                       fontSize: 28,
   //                       fontWeight: FontWeight.w600,
   //                     ),
   //                   ),
@@ -361,9 +363,9 @@ class _HomePageState extends State<HomePage> {
   //                   Text(
   //                     "Biometrics failed",
   //                     textAlign: TextAlign.center,
-  //                     style: GoogleFonts.poppins(
+  //                     style: GoogleFonts.lato(
   //                       color: Colors.red,
-  //                       fontSize: 18.sp,
+  //                       fontSize: 18,
   //                     ),
   //                   ),
   //                   SizedBox(
@@ -405,7 +407,7 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30.sp, 30.sp, 30.sp, 20.sp),
+            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -425,9 +427,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       'No internet Connection',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                           color: brandOne,
-                          fontSize: 16.sp,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
@@ -436,9 +438,9 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                           color: brandOne,
-                          fontSize: 12.sp,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
@@ -473,9 +475,9 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           "Try Again",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -498,8 +500,8 @@ class _HomePageState extends State<HomePage> {
             height: 250.h,
             child: ClipRRect(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0.sp),
-                topRight: Radius.circular(30.0.sp),
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
               ),
               child: Container(
                 color: Theme.of(context).canvasColor,
@@ -516,8 +518,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text(
                       'Are you sure you want to exit?',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18.sp,
+                      style: GoogleFonts.lato(
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         // fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
@@ -531,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(3.sp),
+                          padding: EdgeInsets.all(3),
                           child: ElevatedButton(
                             onPressed: () async {
                               exit(0);
@@ -539,23 +541,23 @@ class _HomePageState extends State<HomePage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.sp),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 40.w,
                                 vertical: 15.h,
                               ),
-                              textStyle: GoogleFonts.poppins(
+                              textStyle: GoogleFonts.lato(
                                 color: brandFour,
-                                fontSize: 13.sp,
+                                fontSize: 13,
                               ),
                             ),
                             child: Text(
                               "Yes",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -564,7 +566,7 @@ class _HomePageState extends State<HomePage> {
                           width: 20.w,
                         ),
                         Padding(
-                          padding: EdgeInsets.all(3.sp),
+                          padding: EdgeInsets.all(3),
                           child: ElevatedButton(
                             onPressed: () {
                               Get.back();
@@ -572,21 +574,21 @@ class _HomePageState extends State<HomePage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: brandTwo,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.sp),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 40.w,
                                 vertical: 15.h,
                               ),
-                              textStyle: GoogleFonts.poppins(
-                                  color: brandFour, fontSize: 13.sp),
+                              textStyle: GoogleFonts.lato(
+                                  color: brandFour, fontSize: 13),
                             ),
                             child: Text(
                               "No",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -620,8 +622,9 @@ class _HomePageState extends State<HomePage> {
             child: _buildPage(currentIndex),
           ),
           bottomNavigationBar: Container(
-            margin: const EdgeInsets.all(20),
-            height: MediaQuery.of(context).size.width * .155,
+            margin:
+                const EdgeInsets.only(bottom: 35, top: 20, left: 20, right: 20),
+            height: 80,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -631,7 +634,7 @@ class _HomePageState extends State<HomePage> {
                   offset: const Offset(0, 10),
                 ),
               ],
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: ListView.builder(
               itemCount: 4,
@@ -666,7 +669,7 @@ class _HomePageState extends State<HomePage> {
                           ? MediaQuery.of(context).size.width * .014
                           : 0,
                       decoration: const BoxDecoration(
-                        color: brandOne,
+                        color: brandTwo,
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(10),
                         ),
@@ -678,7 +681,7 @@ class _HomePageState extends State<HomePage> {
                       title: showCaseTitle[index],
                       description: showCaseDesc[index],
                       disableAnimation: false,
-                      showcaseBackgroundColor: brandOne,
+                      showcaseBackgroundColor: brandTwo,
                       showArrow: true,
                       textColor: Colors.white,
                       overlayPadding: const EdgeInsets.all(5),
@@ -687,17 +690,17 @@ class _HomePageState extends State<HomePage> {
                         index == currentIndex
                             ? listOfIcons[index]
                             : listOfUnselectedIcons[index],
-                        size: MediaQuery.of(context).size.width * .05,
+                        size: 30,
                         color: index == currentIndex
-                            ? brandOne
+                            ? brandTwo
                             : navigationcolorText,
                       ),
                     ),
                     Text(
                       navText[index],
-                      style: GoogleFonts.nunito(
-                          fontSize: 12.sp,
-                          color: index == currentIndex ? brandOne : Colors.grey,
+                      style: GoogleFonts.lato(
+                          fontSize: 12,
+                          color: index == currentIndex ? brandTwo : Colors.grey,
                           fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * .03),
@@ -725,8 +728,8 @@ class _HomePageState extends State<HomePage> {
           //         overlayPadding: const EdgeInsets.all(5),
           //         animationDuration: const Duration(seconds: 2),
           //         child: _selectedIndex == 0
-          //             ? Icon(Iconsax.home5, size: 25.sp)
-          //             : Icon(Iconsax.home, size: 25.sp),
+          //             ? Icon(Iconsax.home5, size: 25)
+          //             : Icon(Iconsax.home, size: 25),
           //         // Image.asset(
           //         //   "assets/icons/home_icon.png",
           //         //   height: 30,
@@ -749,8 +752,8 @@ class _HomePageState extends State<HomePage> {
           //         overlayPadding: const EdgeInsets.all(5),
           //         animationDuration: const Duration(seconds: 2),
           //         child: _selectedIndex == 1
-          //             ? Icon(Iconsax.activity5, size: 25.sp)
-          //             : Icon(Iconsax.activity, size: 25.sp),
+          //             ? Icon(Iconsax.activity5, size: 25)
+          //             : Icon(Iconsax.activity, size: 25),
           //       ),
           //       label: "Savings",
           //     ),
@@ -770,13 +773,13 @@ class _HomePageState extends State<HomePage> {
           //             ? Image.asset(
           //                 "assets/icons/carbon_portfolio.png",
           //                 // height: 28,
-          //                 width: 25.sp,
+          //                 width: 25,
           //                 color: Theme.of(context).colorScheme.secondary,
           //               )
           //             : Image.asset(
           //                 "assets/icons/carbon_portfolio.png",
           //                 // height: 28,
-          //                 width: 25.sp,
+          //                 width: 25,
           //                 color: navigationcolorText,
           //               ),
           //       ),
@@ -798,13 +801,13 @@ class _HomePageState extends State<HomePage> {
           //     //         ? Image.asset(
           //     //             "assets/icons/utility_icon.png",
           //     //             // height: 28,
-          //     //             width: 20.sp,
+          //     //             width: 20,
           //     //             color: Theme.of(context).colorScheme.secondary,
           //     //           )
           //     //         : Image.asset(
           //     //             "assets/icons/utility_icon.png",
-          //     //             height: 20.sp,
-          //     //             width: 20.sp,
+          //     //             height: 20,
+          //     //             width: 20,
           //     //             color: navigationcolorText,
           //     //           ),
           //     //   ),
@@ -825,9 +828,9 @@ class _HomePageState extends State<HomePage> {
           //         child: _selectedIndex == 4
           //             ? Icon(
           //                 Icons.person,
-          //                 size: 25.sp,
+          //                 size: 25,
           //               )
-          //             : Icon(Icons.person_outline, size: 25.sp),
+          //             : Icon(Icons.person_outline, size: 25),
           //       ),
           //       label: "Profile",
           //     ),
@@ -844,13 +847,13 @@ class _HomePageState extends State<HomePage> {
           //   ),
           //   unselectedItemColor: navigationcolorText,
           //   unselectedLabelStyle:
-          //       GoogleFonts.poppins(color: navigationcolorText),
+          //       GoogleFonts.lato(color: navigationcolorText),
           //   selectedIconTheme: IconThemeData(
           //     color: Theme.of(context).colorScheme.secondary,
           //   ),
-          //   selectedLabelStyle: GoogleFonts.poppins(
+          //   selectedLabelStyle: GoogleFonts.lato(
           //     color: Theme.of(context).colorScheme.secondary,
-          //     fontSize: 10.sp,
+          //     fontSize: 10,
           //     fontWeight: FontWeight.w600,
           //   ),
           //   onTap: _onItemTapped,
@@ -889,13 +892,13 @@ class _HomePageState extends State<HomePage> {
   List<IconData> listOfIcons = [
     Iconsax.home5,
     Iconsax.activity5,
-    Icons.assessment,
+    Iconsax.chart_square5,
     Icons.person,
   ];
   List<IconData> listOfUnselectedIcons = [
     Iconsax.home,
     Iconsax.activity,
-    Icons.assessment_outlined,
+    Iconsax.chart_square,
     Icons.person_outline,
   ];
 

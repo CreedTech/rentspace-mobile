@@ -117,9 +117,9 @@ class _ElectricityPaymentPageState
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
-        fontSize: 14.sp,
+        fontSize: 14,
         fontWeight: FontWeight.w600,
       ),
       keyboardType: TextInputType.number,
@@ -136,16 +136,16 @@ class _ElectricityPaymentPageState
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
-            fontSize: 12.sp,
+            fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.poppins(
+        prefixStyle: GoogleFonts.lato(
           color: Theme.of(context).primaryColor,
-          fontSize: 16.sp,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
         border: OutlineInputBorder(
@@ -172,9 +172,9 @@ class _ElectricityPaymentPageState
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
-          fontSize: 12.sp,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -190,16 +190,16 @@ class _ElectricityPaymentPageState
           },
           child: Icon(
             Icons.arrow_back_ios,
-            size: 20.sp,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Electricity Payment',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -221,9 +221,9 @@ class _ElectricityPaymentPageState
                 ),
                 child: Text(
                   'Pay your your electricity bills and earn spacepoints!!!',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.lato(
                     color: brandOne.withOpacity(0.7),
-                    fontSize: 10.sp,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -266,8 +266,8 @@ class _ElectricityPaymentPageState
                 Text(
                   widget.electricityName,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14.sp,
+                  style: GoogleFonts.lato(
+                    fontSize: 14,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w700,
                   ),
@@ -275,8 +275,8 @@ class _ElectricityPaymentPageState
                 Text(
                   widget.electricity,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12.sp,
+                  style: GoogleFonts.lato(
+                    fontSize: 12,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
                   ),
@@ -284,8 +284,8 @@ class _ElectricityPaymentPageState
                 Text(
                   widget.meterNumber,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12.sp,
+                  style: GoogleFonts.lato(
+                    fontSize: 12,
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
@@ -293,8 +293,8 @@ class _ElectricityPaymentPageState
                 // Text(
                 //   widget.electricityDescription,
                 //   textAlign: TextAlign.center,
-                //   style: GoogleFonts.poppins(
-                //     fontSize: 10.sp,
+                //   style: GoogleFonts.lato(
+                //     fontSize: 10,
                 //     color: Theme.of(context).primaryColor,
                 //     fontWeight: FontWeight.w400,
                 //   ),
@@ -314,8 +314,8 @@ class _ElectricityPaymentPageState
                     padding: const EdgeInsets.fromLTRB(5, 5, 0.0, 0),
                     child: Text(
                       "Amount",
-                      style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
+                      style: GoogleFonts.lato(
+                        fontSize: 14,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w700,
                       ),
@@ -376,7 +376,7 @@ class _ElectricityPaymentPageState
                 child: Text(
                   'Confirm',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.lato(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -433,12 +433,12 @@ class _ElectricityPaymentPageState
                 const SizedBox(),
                 Text(
                   NumberFormat.simpleCurrency(
-                    name: 'NGN',
+                    name: 'N',
                   ).format(totalAmount),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
-                    fontSize: 30.sp,
+                    fontSize: 30,
                     color: brandOne,
                   ),
                 ),
@@ -475,9 +475,9 @@ class _ElectricityPaymentPageState
                               children: [
                                 Text(
                                   'Electricity',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -500,9 +500,9 @@ class _ElectricityPaymentPageState
                                     Text(
                                       electricity,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 12.sp,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -518,17 +518,17 @@ class _ElectricityPaymentPageState
                               children: [
                                 Text(
                                   'Meter Number',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   meterNumber,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -542,19 +542,19 @@ class _ElectricityPaymentPageState
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   NumberFormat.simpleCurrency(
-                                    name: 'NGN',
+                                    name: 'N',
                                   ).format(amount),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -568,19 +568,19 @@ class _ElectricityPaymentPageState
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   NumberFormat.simpleCurrency(
-                                    name: 'NGN',
+                                    name: 'N',
                                   ).format(transactionFee),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -594,9 +594,9 @@ class _ElectricityPaymentPageState
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 16.sp,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -620,31 +620,31 @@ class _ElectricityPaymentPageState
                                               .wallet![0].mainBalance)
                                       ? Colors.grey
                                       : brandOne,
-                                  size: 25.sp,
+                                  size: 25,
                                 ),
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
+                                      fontSize: 14,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: ((amount + transactionFee) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       TextSpan(
                                         text: '(${NumberFormat.simpleCurrency(
-                                          name: 'NGN',
+                                          name: 'N',
                                         ).format(walletController.walletModel!.wallet![0].mainBalance)})',
                                         style: GoogleFonts.roboto(
                                           color: ((amount + transactionFee) >
@@ -653,7 +653,7 @@ class _ElectricityPaymentPageState
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
@@ -664,10 +664,10 @@ class _ElectricityPaymentPageState
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 12.sp,
+                                          fontSize: 12,
                                         ),
                                       )
                                     : null,
@@ -686,16 +686,16 @@ class _ElectricityPaymentPageState
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.lato(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 12.sp,
+                                                fontSize: 12,
                                               ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
                                               color: brandOne,
-                                              size: 20.sp,
+                                              size: 20,
                                             )
                                           ],
                                         ),
@@ -703,7 +703,7 @@ class _ElectricityPaymentPageState
                                     : Icon(
                                         Icons.check,
                                         color: brandOne,
-                                        size: 20.sp,
+                                        size: 20,
                                       ),
                               ),
                             ),
@@ -766,7 +766,7 @@ class _ElectricityPaymentPageState
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -782,7 +782,7 @@ class _ElectricityPaymentPageState
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -798,7 +798,7 @@ class _ElectricityPaymentPageState
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -814,7 +814,7 @@ class _ElectricityPaymentPageState
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -878,10 +878,9 @@ class _ElectricityPaymentPageState
                                                   NumericKeyboard(
                                                     onKeyboardTap:
                                                         onKeyboardTap,
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
+                                                    textStyle: GoogleFonts.lato(
                                                       color: brandOne,
-                                                      fontSize: 24.sp,
+                                                      fontSize: 24,
                                                     ),
                                                     rightButtonFn: () {
                                                       if (_aPinController
@@ -923,7 +922,7 @@ class _ElectricityPaymentPageState
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -979,7 +978,7 @@ class _ElectricityPaymentPageState
                       //         child: Icon(
                       //           Iconsax.close_circle,
                       //           color: Colors.red,
-                      //           size: 20.sp,
+                      //           size: 20,
                       //         ),
                       //       ),
                       //     ),
@@ -990,10 +989,10 @@ class _ElectricityPaymentPageState
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18.sp,
+                          fontSize: 18,
                         ),
                       ),
                       SizedBox(
@@ -1002,9 +1001,9 @@ class _ElectricityPaymentPageState
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
@@ -1031,7 +1030,7 @@ class _ElectricityPaymentPageState
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1061,7 +1060,7 @@ class _ElectricityPaymentPageState
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1079,7 +1078,7 @@ class _ElectricityPaymentPageState
       child: Icon(
         Icons.close,
         color: brandOne,
-        size: 20.sp,
+        size: 20,
       ),
     );
   }

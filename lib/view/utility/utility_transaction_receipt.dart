@@ -14,7 +14,7 @@ class UtilityTransactionReceipt extends StatefulWidget {
       _UtilityTransactionReceiptState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
 
 class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
   @override
@@ -36,9 +36,9 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
         centerTitle: true,
         title: Text(
           'Transaction Details',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -64,9 +64,9 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                     //       width: 50,
                     //     ),
                     //     Text('Transaction Receipt',
-                    //     style: GoogleFonts.poppins(
+                    //     style: GoogleFonts.lato(
                     //       fontWeight: FontWeight.w700,
-                    //       fontSize: 14.sp,
+                    //       fontSize: 14,
                     //       color: brandOne,
                     //     ),),
                     //   ],
@@ -78,16 +78,16 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                             '- ${currencyFormat.format(10000)}',
                             style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
-                              fontSize: 28.sp,
+                              fontSize: 28,
                               // letterSpacing: 2,
                               color: brandOne,
                             ),
                           ),
                           Text(
                             'Successful',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               fontWeight: FontWeight.w600,
-                              fontSize: 16.sp,
+                              fontSize: 16,
                               color: const Color.fromARGB(255, 1, 197, 8),
                             ),
                           ),
@@ -117,8 +117,8 @@ class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
                     child: Text(
                       'Share Receipt',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16.sp, fontWeight: FontWeight.w600),
+                      style: GoogleFonts.lato(
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

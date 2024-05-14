@@ -157,16 +157,16 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
           },
           child: Icon(
             Icons.arrow_back_ios,
-            size: 20.sp,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Choose Data Bundle',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -218,16 +218,16 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             ),
                             Text(
                               widget.network,
-                              style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 14,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
                               widget.number,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
+                              style: GoogleFonts.lato(
+                                fontSize: 12,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -243,9 +243,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                         child: Text(
                           'Choose Bundle',
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -296,17 +296,17 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                 : null,
                                             title: Text(
                                               nameInfo,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.lato(
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
-                                                fontSize: 10.sp,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                             trailing: Text(
                                               NumberFormat.simpleCurrency(
-                                                      name: 'NGN',
+                                                      name: 'N',
                                                       decimalDigits: 0)
                                                   .format(
                                                       double.parse(amountInfo)),
@@ -314,7 +314,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                 color: selectedItem == nameInfo
                                                     ? brandOne
                                                     : Colors.white,
-                                                fontSize: 10.sp,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
@@ -329,9 +329,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 SizedBox(height: 30.h),
                                 Text(
                                   'Loading Data...',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 14.sp,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -347,7 +347,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                 ? Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      // height: 160.sp,
+                      // height: 160,
                       padding: EdgeInsets.symmetric(vertical: 10.h),
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
@@ -365,13 +365,13 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 10.sp,
+                              height: 10,
                             ),
                             Text(
                               'Selected',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandTwo,
-                                fontSize: 12.sp,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -380,19 +380,19 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 selectedItem!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Colors.white,
-                                  fontSize: 15.sp,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                               trailing: Text(
                                 NumberFormat.simpleCurrency(
-                                        name: 'NGN', decimalDigits: 0)
+                                        name: 'N', decimalDigits: 0)
                                     .format(double.parse(selectedItemAmount!)),
                                 style: GoogleFonts.roboto(
                                   color: Colors.white,
-                                  fontSize: 15.sp,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -428,10 +428,10 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 child: Text(
                                   'Submit',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     // fontFamily: 'Milliard',
                                     color: brandOne,
-                                    fontSize: 14.sp,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -481,11 +481,11 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
               children: [
                 const SizedBox(),
                 Text(
-                  NumberFormat.simpleCurrency(name: 'NGN').format(amount),
+                  NumberFormat.simpleCurrency(name: 'N').format(amount),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
-                    fontSize: 30.sp,
+                    fontSize: 30,
                     color: brandOne,
                   ),
                 ),
@@ -522,9 +522,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Provider Network',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -547,9 +547,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                     Text(
                                       widget.network,
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.lato(
                                         color: brandOne,
-                                        fontSize: 12.sp,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -565,17 +565,17 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Recipient Number',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   number,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -589,18 +589,18 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Amount',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  NumberFormat.simpleCurrency(name: 'NGN')
+                                  NumberFormat.simpleCurrency(name: 'N')
                                       .format(amount),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -614,18 +614,18 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Transaction Fee',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandTwo,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  NumberFormat.simpleCurrency(name: 'NGN')
+                                  NumberFormat.simpleCurrency(name: 'N')
                                       .format(0),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
-                                    fontSize: 12.sp,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 )
@@ -639,9 +639,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               children: [
                                 Text(
                                   'Payment Method',
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.lato(
                                     color: brandOne,
-                                    fontSize: 16.sp,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -650,18 +650,18 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 //   children: [
                                 //     Text(
                                 //       'Space Wallet',
-                                //       style: GoogleFonts.poppins(
+                                //       style: GoogleFonts.lato(
                                 //         color: brandOne,
-                                //         fontSize: 15.sp,
+                                //         fontSize: 15,
                                 //         fontWeight: FontWeight.w600,
                                 //       ),
                                 //     ),
                                 //     Text(
-                                //       NumberFormat.simpleCurrency(name: 'NGN').format(userController.userModel!
+                                //       NumberFormat.simpleCurrency(name: 'N').format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
-                                //       style: GoogleFonts.poppins(
+                                //       style: GoogleFonts.lato(
                                 //         color: brandOne,
-                                //         fontSize: 15.sp,
+                                //         fontSize: 15,
                                 //         fontWeight: FontWeight.w600,
                                 //       ),
                                 //     ),
@@ -687,39 +687,39 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                               .wallet![0].mainBalance)
                                       ? Colors.grey
                                       : brandOne,
-                                  size: 25.sp,
+                                  size: 25,
                                 ),
                                 title: RichText(
                                   // textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    style: GoogleFonts.poppins(
+                                    style: GoogleFonts.lato(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
+                                      fontSize: 14,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: "Balance",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       TextSpan(
                                         text:
-                                            '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
-                                        style: GoogleFonts.poppins(
+                                            '(${NumberFormat.simpleCurrency(name: 'N').format(walletController.walletModel!.wallet![0].mainBalance)})',
+                                        style: GoogleFonts.lato(
                                           color: ((amount) >
                                                   walletController.walletModel!
                                                       .wallet![0].mainBalance)
                                               ? Colors.grey
                                               : brandOne,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
@@ -730,10 +730,10 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                             .mainBalance)
                                     ? Text(
                                         'Insufficient Balance',
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 12.sp,
+                                          fontSize: 12,
                                         ),
                                       )
                                     : null,
@@ -752,16 +752,16 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                             Text(
                                               'Top up',
                                               textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.lato(
                                                 color: brandOne,
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 12.sp,
+                                                fontSize: 12,
                                               ),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
                                               color: brandOne,
-                                              size: 20.sp,
+                                              size: 20,
                                             )
                                           ],
                                         ),
@@ -769,7 +769,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                     : Icon(
                                         Icons.check,
                                         color: brandOne,
-                                        size: 20.sp,
+                                        size: 20,
                                       ),
                               ),
                             ),
@@ -835,9 +835,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                          GoogleFonts.poppins(
+                                                          GoogleFonts.lato(
                                                         color: brandOne,
-                                                        fontSize: 28.sp,
+                                                        fontSize: 28,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
@@ -852,7 +852,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -868,7 +868,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -884,7 +884,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle: TextStyle(
-                                                        fontSize: 25.sp,
+                                                        fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
@@ -946,10 +946,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                                                 value;
                                                       });
                                                     },
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
+                                                    textStyle: GoogleFonts.lato(
                                                       color: brandOne,
-                                                      fontSize: 24.sp,
+                                                      fontSize: 24,
                                                     ),
                                                     rightButtonFn: () {
                                                       if (_aPinController
@@ -991,7 +990,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                               child: Text(
                                 'Pay',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -1023,7 +1022,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //                 ),
                             //                 Text(
                             //                   'Enter PIN to Proceed',
-                            //                   style: GoogleFonts.poppins(
+                            //                   style: GoogleFonts.lato(
                             //                       fontSize: 18,
                             //                       color: Theme.of(context)
                             //                           .primaryColor,
@@ -1140,7 +1139,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //                   child: Text(
                             //                     'Proceed to Payment',
                             //                     textAlign: TextAlign.center,
-                            //                     style: GoogleFonts.poppins(
+                            //                     style: GoogleFonts.lato(
                             //                       color: Colors.white,
                             //                       fontSize: 16,
                             //                       fontWeight: FontWeight.w700,
@@ -1164,9 +1163,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             //         child: Text(
                             //           'Pay',
                             //           textAlign: TextAlign.center,
-                            //           style: GoogleFonts.poppins(
+                            //           style: GoogleFonts.lato(
                             //             color: Colors.white,
-                            //             fontSize: 19.sp,
+                            //             fontSize: 19,
                             //             fontWeight: FontWeight.w600,
                             //           ),
                             //         ),
@@ -1223,7 +1222,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       //         child: Icon(
                       //           Iconsax.close_circle,
                       //           color: Colors.red,
-                      //           size: 20.sp,
+                      //           size: 20,
                       //         ),
                       //       ),
                       //     ),
@@ -1234,10 +1233,10 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       ),
                       Text(
                         'Payment Not completed',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: brandOne,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18.sp,
+                          fontSize: 18,
                         ),
                       ),
                       SizedBox(
@@ -1246,9 +1245,9 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                       Text(
                         'Do you want to cancel this payment?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                             color: brandOne,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
@@ -1275,7 +1274,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             child: Text(
                               'Proceed to Pay',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1305,7 +1304,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                             child: Text(
                               'Cancel',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1323,7 +1322,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
       child: Icon(
         Icons.close,
         color: brandOne,
-        size: 20.sp,
+        size: 20,
       ),
     );
   }

@@ -177,7 +177,7 @@ class _FirstPageState extends State<FirstPage> {
     return Obx(
       () => (userController.isHomePageLoading.value.obs() == true)
           ? Scaffold(
-              backgroundColor: Theme.of(context).canvasColor,
+              backgroundColor: const Color(0xffF6F6F8),
               body: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -210,7 +210,7 @@ class _FirstPageState extends State<FirstPage> {
                           title: Text(
                             'Discover',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.lato(
                               fontSize: 20.0,
                               color: brandOne,
                               fontWeight: FontWeight.w700,
@@ -238,7 +238,7 @@ class _FirstPageState extends State<FirstPage> {
                                       ),
                                       Text(
                                         "Virtual Account: This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           fontSize: 13.0,
                                           color: brandOne,
                                           fontWeight: FontWeight.w700,
@@ -249,7 +249,7 @@ class _FirstPageState extends State<FirstPage> {
                                       ),
                                       Text(
                                         "Space Rent: Save 70% of rent for a minimum of 6 months (maximum of 8 months) and get up to 30% loan. Embark on your savings journey today!",
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           fontSize: 13.0,
                                           color: brandOne,
                                           fontWeight: FontWeight.w700,
@@ -279,7 +279,7 @@ class _FirstPageState extends State<FirstPage> {
                                         child: Text(
                                           "That's Nice",
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                             color: Colors.white,
                                             fontSize: 14,
                                             // letterSpacing: 0.3,

@@ -20,33 +20,30 @@ class IconsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: brandTwo.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: Icon(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
               // Iconsax.wifi_square5,
               icon,
               color: iconColor,
-              size: 25.h,
+              size: 24.h,
             ),
-          ),
-          SizedBox(
-            height: 8.h,
-          ),
-          Text(
-            IconsName,
-            style: GoogleFonts.poppins(
-              color: brandOne,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w500,
+            SizedBox(
+              height: 8.h,
             ),
-          ),
-        ],
+            Text(
+              IconsName,
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

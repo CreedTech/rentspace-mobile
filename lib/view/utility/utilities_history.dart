@@ -15,7 +15,7 @@
 //   _UtilitiesHistoryState createState() => _UtilitiesHistoryState();
 // }
 
-// var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+// var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
 
 // class _UtilitiesHistoryState extends State<UtilitiesHistory> {
 //   final RefreshController refreshController =
@@ -66,7 +66,7 @@
 //           centerTitle: true,
 //           title: Text(
 //             'Utility History',
-//             style: GoogleFonts.poppins(
+//             style: GoogleFonts.lato(
 //               color: Theme.of(context).primaryColor,
 //               fontSize: 22,
 //               fontWeight: FontWeight.w700,
@@ -87,7 +87,7 @@
 //                       Center(
 //                         child: Text(
 //                           "No Transaction history",
-//                           style: GoogleFonts.poppins(
+//                           style: GoogleFonts.lato(
 //                             fontSize: 20,
 //                             color: Theme.of(context).primaryColor,
 //                             fontWeight: FontWeight.bold,
@@ -126,8 +126,8 @@
 //                                 "${utilityController.utilityHistoryModel!.utilityHistories![index].description} ",
 //                                 maxLines: 1,
 //                                 overflow: TextOverflow.ellipsis,
-//                                 style: GoogleFonts.poppins(
-//                                   fontSize: 12.sp,
+//                                 style: GoogleFonts.lato(
+//                                   fontSize: 12,
 //                                   fontWeight: FontWeight.w700,
 //                                   color: Theme.of(context).primaryColor,
 //                                 ),
@@ -139,8 +139,8 @@
 //                                 .utilityHistoryModel!
 //                                 .utilityHistories![index]
 //                                 .createdAt),
-//                             style: GoogleFonts.poppins(
-//                               fontSize: 10.sp,
+//                             style: GoogleFonts.lato(
+//                               fontSize: 10,
 //                               fontWeight: FontWeight.w300,
 //                               color: Theme.of(context).primaryColor,
 //                             ),
@@ -149,7 +149,7 @@
 //                             children: [
 //                               Text(
 //                                 "- ${nairaFormaet.format(double.parse(utilityController.utilityHistoryModel!.utilityHistories![index].amount.toString()))}",
-//                                 style: GoogleFonts.poppins(
+//                                 style: GoogleFonts.lato(
 //                                   fontSize: 14,
 //                                   fontWeight: FontWeight.w700,
 //                                   color: Theme.of(context).primaryColor,
@@ -160,7 +160,7 @@
 //                                       'Completed')
 //                                   ? Text(
 //                                       'Successful',
-//                                       style: GoogleFonts.poppins(
+//                                       style: GoogleFonts.lato(
 //                                         fontSize: 14,
 //                                         fontWeight: FontWeight.w500,
 //                                         color: Colors.green,
@@ -173,7 +173,7 @@
 //                                           'failed')
 //                                       ? Text(
 //                                           'Failed',
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                             color: Colors.red,
@@ -181,7 +181,7 @@
 //                                         )
 //                                       : Text(
 //                                           'Pending',
-//                                           style: GoogleFonts.poppins(
+//                                           style: GoogleFonts.lato(
 //                                             fontSize: 14,
 //                                             fontWeight: FontWeight.w500,
 //                                             color: Colors.yellow[800],

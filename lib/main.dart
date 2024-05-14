@@ -444,8 +444,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final sessionConfig = SessionConfig(
-      invalidateSessionForAppLostFocus: const Duration(minutes: 2),
-      invalidateSessionForUserInactivity: const Duration(minutes: 3),
+      invalidateSessionForAppLostFocus: const Duration(minutes: 3),
+      invalidateSessionForUserInactivity: const Duration(minutes: 5),
     );
     sessionConfig.stream.listen((SessionTimeoutState timeoutEvent) {
       // stop listening, as user will already be in auth page
@@ -473,31 +473,23 @@ class _MyAppState extends State<MyApp> {
       userActivityDebounceDuration: const Duration(seconds: 1),
       sessionConfig: sessionConfig,
       sessionStateStream: sessionStateStream.stream,
-      child: ScreenUtilInit(
-        designSize: const Size(390, 844),
-        minTextAdapt: true,
-        splitScreenMode: false,
-        builder: (contex, child) {
-          return MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: const TextScaler.linear(1)),
-            child: GetMaterialApp(
-              theme: Themes().lightTheme,
-              // darkTheme: Themes().darkTheme,
-              themeMode: ThemeServices().getThemeMode(),
-              debugShowCheckedModeBanner: false,
-              navigatorKey: _sessionNavigatorKey,
-              title: 'RentSpace',
-              // initialRoute: root,
-              home: SplashScreen(
-                sessionStateStream: sessionStateStream,
-              ),
-              onGenerateRoute: RouterGenerator().generate,
-              onUnknownRoute: RouterGenerator.onUnknownRoute,
-              builder: EasyLoading.init(),
-            ),
-          );
-        },
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
+        child: GetMaterialApp(
+          theme: Themes().lightTheme,
+          // darkTheme: Themes().darkTheme,
+          themeMode: ThemeServices().getThemeMode(),
+          debugShowCheckedModeBanner: false,
+          navigatorKey: _sessionNavigatorKey,
+          title: 'RentSpace',
+          // initialRoute: root,
+          home: SplashScreen(
+            sessionStateStream: sessionStateStream,
+          ),
+          onGenerateRoute: RouterGenerator().generate,
+          onUnknownRoute: RouterGenerator.onUnknownRoute,
+          builder: EasyLoading.init(),
+        ),
       ),
     );
   }

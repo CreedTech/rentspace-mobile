@@ -45,7 +45,7 @@ class _SecurityState extends State<Security> {
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics enabled',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -66,7 +66,7 @@ class _SecurityState extends State<Security> {
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics enabled',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -94,7 +94,7 @@ class _SecurityState extends State<Security> {
         CustomSnackBar.success(
           backgroundColor: brandOne,
           message: 'Biometrics disabled',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -122,7 +122,7 @@ class _SecurityState extends State<Security> {
           CustomSnackBar.success(
             backgroundColor: brandOne,
             message: 'Biometrics disabled',
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -226,16 +226,16 @@ class _SecurityState extends State<Security> {
           },
           child: Icon(
             Icons.arrow_back,
-            size: 30.sp,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Security',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
-              fontSize: 16.sp,
+              fontSize: 16,
               fontWeight: FontWeight.w700),
         ),
       ),
@@ -266,9 +266,9 @@ class _SecurityState extends State<Security> {
                         ),
                         title: Text(
                           'Reset Password',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -304,9 +304,9 @@ class _SecurityState extends State<Security> {
                         },
                         title: Text(
                           'Change Payment PIN',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -340,9 +340,9 @@ class _SecurityState extends State<Security> {
                         },
                         title: Text(
                           'Forgot Payment PIN',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -375,9 +375,9 @@ class _SecurityState extends State<Security> {
                     //     // },
                     //     title: Text(
                     //       'Biometrics Login',
-                    //       style: GoogleFonts.poppins(
+                    //       style: GoogleFonts.lato(
                     //         color: Theme.of(context).primaryColor,
-                    //         fontSize: 15.sp,
+                    //         fontSize: 15,
                     //         fontWeight: FontWeight.w600,
                     //       ),
                     //     ),
@@ -387,7 +387,7 @@ class _SecurityState extends State<Security> {
                     //                     true)
                     //             ? 'Disable Biometrics'
                     //             : 'Enable Biometrics',
-                    //         style: GoogleFonts.poppins(
+                    //         style: GoogleFonts.lato(
                     //           color: Theme.of(context).primaryColor,
                     //           fontSize: 12,
                     //           fontWeight: FontWeight.w400,

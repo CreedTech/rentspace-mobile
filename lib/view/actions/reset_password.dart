@@ -101,14 +101,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         label: Text(
           "New Password",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         hintText: '************',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -164,14 +164,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           ),
         ),
         hintText: '************',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
         label: Text(
           "Repeat Password",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
@@ -225,7 +225,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
+            fontSize: 16,
           ),
         ),
       ),
@@ -243,7 +243,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Kindly fill in your new password.',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.lato(
                           fontWeight: FontWeight.w700,
                           color: brandOne,
                           fontSize: 18),
@@ -277,7 +277,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                       child: Text(
                                         'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
                                         softWrap: true,
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.lato(
                                           color: const Color(0xff828282),
                                           fontSize: 12,
                                           fontStyle: FontStyle.italic,

@@ -55,7 +55,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   List<String> _filteredBanks = [];
 
   String liquidateReason = "I have an emergency";
-  var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
+  var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
   // String walletID = "";
   // String userID = "";
   String? selectedItem;
@@ -169,7 +169,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         'Error!',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Colors.red,
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
@@ -181,8 +181,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       Text(
                         "Something went wrong",
                         textAlign: TextAlign.center,
-                        style:
-                            GoogleFonts.poppins(color: brandOne, fontSize: 18),
+                        style: GoogleFonts.lato(color: brandOne, fontSize: 18),
                       ),
                       const SizedBox(
                         height: 10,
@@ -782,7 +781,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         CustomSnackBar.success(
           backgroundColor: Colors.green,
           message: 'Wallet Transfer Successful',
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.lato(
             fontSize: 14,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -791,8 +790,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       );
       await fetchUserData(refresh: true);
       EasyLoading.dismiss();
-      Get.offAll(FirstPage(
-      ));
+      Get.offAll(FirstPage());
     } else {
       if (context.mounted) {
         customErrorDialog(context, 'Error', 'Something went wrong');
@@ -848,8 +846,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.poppins(
-          color: Theme.of(context).primaryColor, fontSize: 14.sp),
+      style:
+          GoogleFonts.lato(color: Theme.of(context).primaryColor, fontSize: 14),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -887,9 +885,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         contentPadding: const EdgeInsets.all(14),
         filled: false,
         hintText: 'Enter your account number...',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
-          fontSize: 12.sp,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -914,20 +912,20 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: GoogleFonts.poppins(
-          color: Theme.of(context).primaryColor, fontSize: 14.sp),
+      style:
+          GoogleFonts.lato(color: Theme.of(context).primaryColor, fontSize: 14),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: Colors.grey,
             fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.poppins(
+        prefixStyle: GoogleFonts.lato(
           color: Theme.of(context).primaryColor,
           fontSize: 16,
           fontWeight: FontWeight.w400,
@@ -956,7 +954,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         filled: false,
         contentPadding: const EdgeInsets.all(14),
         hintText: 'Amount in Naira',
-        hintStyle: GoogleFonts.poppins(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 12,
           fontWeight: FontWeight.w400,
@@ -980,9 +978,9 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
         title: Text(
           'Transfer Funds',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.lato(
             color: brandOne,
-            fontSize: 16.sp,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -1001,8 +999,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                       ),
                       Text(
                         "Note that the transfer process will be according to our Terms of use",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                         ),
@@ -1031,8 +1029,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                                 child: Text(
                                   "How much do you want to transfer?",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -1049,7 +1047,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   const EdgeInsets.fromLTRB(0.0, 5, 0.0, 5),
                               child: Text(
                                 "Where should we send your transfer?",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 16,
                                   //letterSpacing: 2.0,
                                   color: Theme.of(context).primaryColor,
@@ -1061,16 +1059,16 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 ? Column(
                                     children: [
                                       CustomDropdown(
-                                        selectedStyle: GoogleFonts.poppins(
+                                        selectedStyle: GoogleFonts.lato(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontSize: 12),
                                         hintText: 'Select Bank',
                                         hintStyle:
-                                            GoogleFonts.poppins(fontSize: 12),
+                                            GoogleFonts.lato(fontSize: 12),
                                         excludeSelected: true,
                                         fillColor: Colors.transparent,
-                                        listItemStyle: GoogleFonts.poppins(
+                                        listItemStyle: GoogleFonts.lato(
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .secondary,
@@ -1116,7 +1114,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                       children: [
                                         Text(
                                           "Loading banks...",
-                                          style: GoogleFonts.poppins(
+                                          style: GoogleFonts.lato(
                                             fontSize: 16,
                                             //letterSpacing: 2.0,
                                             color:
@@ -1146,7 +1144,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                   const EdgeInsets.fromLTRB(0.0, 0, 20.0, 10),
                               child: Text(
                                 _bankAccountName,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w700,
                                   color: Theme.of(context).primaryColor,
@@ -1203,7 +1201,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                             // ),
                                             Text(
                                               'Enter PIN to Proceed',
-                                              style: GoogleFonts.poppins(
+                                              style: GoogleFonts.lato(
                                                   fontSize: 18,
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -1220,7 +1218,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 width: 50,
                                                 height: 50,
                                                 textStyle: TextStyle(
-                                                  fontSize: 25.sp,
+                                                  fontSize: 25,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(
@@ -1235,7 +1233,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 width: 50,
                                                 height: 50,
                                                 textStyle: TextStyle(
-                                                  fontSize: 25.sp,
+                                                  fontSize: 25,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(
@@ -1250,7 +1248,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 width: 50,
                                                 height: 50,
                                                 textStyle: TextStyle(
-                                                  fontSize: 25.sp,
+                                                  fontSize: 25,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(
@@ -1265,7 +1263,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 width: 50,
                                                 height: 50,
                                                 textStyle: TextStyle(
-                                                  fontSize: 25.sp,
+                                                  fontSize: 25,
                                                   color: brandOne,
                                                 ),
                                                 decoration: BoxDecoration(
@@ -1321,10 +1319,10 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                   TextInputType.number,
                                             ),
                                             // SizedBox(
-                                            //   height: 20.sp,
+                                            //   height: 20,
                                             // ),
                                             // SizedBox(
-                                            //   height: 40.sp,
+                                            //   height: 40,
                                             // ),
                                             // ElevatedButton(
                                             //   style: ElevatedButton.styleFrom(
@@ -1378,7 +1376,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                             //   child: Text(
                                             //     'Proceed to Transfer',
                                             //     textAlign: TextAlign.center,
-                                            //     style: GoogleFonts.poppins(
+                                            //     style: GoogleFonts.lato(
                                             //       color: Colors.white,
                                             //       fontSize: 16,
                                             //       fontWeight: FontWeight.w700,
@@ -1447,7 +1445,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 //               ),
                                 //               Text(
                                 //                 'Invalid',
-                                //                 style: GoogleFonts.poppins(
+                                //                 style: GoogleFonts.lato(
                                 //                   color: Colors.red,
                                 //                   fontSize: 28,
                                 //                   fontWeight: FontWeight.w700,
@@ -1459,7 +1457,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                 //               Text(
                                 //                 "Please fill the form properly to proceed",
                                 //                 textAlign: TextAlign.center,
-                                //                 style: GoogleFonts.poppins(
+                                //                 style: GoogleFonts.lato(
                                 //                     color: brandOne,
                                 //                     fontSize: 18),
                                 //               ),
@@ -1476,7 +1474,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                             child: Text(
                               'Transfer',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -1508,7 +1506,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                         child: Text(
                           "kindly confirm your BVN to perform this action.",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.lato(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor,
@@ -1539,8 +1537,8 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                     child: Text(
                       'Begin Verification',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp, fontWeight: FontWeight.w600),
+                      style: GoogleFonts.lato(
+                          fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ),
                   // GFButton(

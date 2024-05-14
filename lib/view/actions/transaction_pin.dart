@@ -71,7 +71,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -83,7 +83,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -107,7 +107,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
         width: 50,
         height: 50,
         textStyle: TextStyle(
-          fontSize: 25.sp,
+          fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
@@ -142,7 +142,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                       alignment: Alignment.center,
                       child: Text(
                         'Set Transaction PIN',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -182,9 +182,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                   alignment: Alignment.bottomCenter,
                   child: NumericKeyboard(
                     onKeyboardTap: onKeyboardTap,
-                    textStyle: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.lato(
                       color: brandOne,
-                      fontSize: 28.sp,
+                      fontSize: 28,
                     ),
                     rightButtonFn: () {
                       if (_pinController.text.isEmpty) return;

@@ -43,7 +43,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
                           padding: EdgeInsets.all(15.h),
                           child: Icon(
                             Iconsax.emoji_sad5,
-                            size: 55.sp,
+                            size: 55,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -53,8 +53,8 @@ class _No_internetScreenState extends State<No_internetScreen> {
                       ),
                       Text(
                         'No Internet Connection',
-                        style: GoogleFonts.poppins(
-                          fontSize: 20.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -65,8 +65,8 @@ class _No_internetScreenState extends State<No_internetScreen> {
                       Text(
                         'Internet connection required, please connect to the the internet and try again. Thank you!',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400,
                         ),
@@ -97,9 +97,9 @@ class _No_internetScreenState extends State<No_internetScreen> {
                 child: Text(
                   "Try Again",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.lato(
                     color: Colors.white,
-                    fontSize: 12.sp,
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
