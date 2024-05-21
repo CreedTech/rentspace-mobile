@@ -58,6 +58,7 @@ class _TransferPageState extends State<TransferPage> {
   bool isAlertSet = false;
   late StreamSubscription subscription;
   List<String> _bankName = [];
+  List recentBanksName = [];
   String _currentBankName = 'Select bank';
   bool _canShowOptions = false;
   bool _isTyping = false;
@@ -139,24 +140,6 @@ class _TransferPageState extends State<TransferPage> {
       hasError = false;
       _bankAccountName = "";
     }
-  }
-
-  Future<bool> fetchUserData({bool refresh = true}) async {
-    EasyLoading.show(
-      indicator: const CustomLoader(),
-      maskType: EasyLoadingMaskType.black,
-      dismissOnTap: false,
-    );
-    if (refresh) {
-      print('fetching');
-      await getBanksList();
-      await userController.fetchData();
-      await walletController.fetchWallet();
-      print('fetched');
-      // setState(() {}); // Move setState inside fetchData
-    }
-    EasyLoading.dismiss();
-    return true;
   }
 
   getAccountDetails(String currentCode) async {
@@ -293,6 +276,24 @@ class _TransferPageState extends State<TransferPage> {
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
     }
+  }
+
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    if (refresh) {
+      print('fetching');
+      await getBanksList();
+      await userController.fetchData();
+      await userController.fetchRecentTransfers();
+      await walletController.fetchWallet();
+      print('fetched');
+    }
+    EasyLoading.dismiss();
+    return true;
   }
 
 // Function to check if both fields are not empty and initiate API call
@@ -823,50 +824,72 @@ class _TransferPageState extends State<TransferPage> {
                   ),
                   Container(
                     height: 80,
-                    child: ListView(
+                    child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        Container(
-                          width: 59,
-                          child: Column(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: userController
+                          .recentTransfersModel!.recentTransfers!.length,
+                      itemBuilder: ((context, index) {
+                        print(userController.recentTempName);
+                        final details = userController.recentTempName[index];
+                        List<String> nameParts = details[0].split(' ');
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _bankController.text = details[1];
+                              _accountNumberController.text = details[2];
+                              _bankAccountName = details[0];
+                            });
+                          },
+                          child: Row(
                             children: [
-                              Image.asset(
-                                'assets/icons/bank_icon.png',
-                                width: 44,
-                                height: 44,
+                              Container(
+                                width: 59,
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/bank_icon.png',
+                                      width: 44,
+                                      height: 44,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          nameParts[0].toString().capitalize!,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: GoogleFonts.lato(
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          nameParts[1].toString().capitalize!,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.lato(
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'ken',
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.lato(
-                                      color: colorBlack,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Cameroon',
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.lato(
-                                      color: colorBlack,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
+                              const SizedBox(
+                                width: 12,
                               ),
                             ],
                           ),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                      ],
+                        );
+                      }),
                     ),
                   ),
                   Form(

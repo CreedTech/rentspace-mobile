@@ -13,6 +13,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/theme.dart';
@@ -28,6 +29,7 @@ import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
 import 'view/login_page.dart';
 import 'view/splash_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
 int id = 0;
 final StreamController<String?> selectNotificationStream =
@@ -50,6 +52,14 @@ Future<void> main() async {
   await GlobalService.init();
 //initialize GetStorage
   await GetStorage.init();
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await Hive.initFlutter('rentspace');
+  } else {
+    await Hive.initFlutter();
+    print('Hive Intialized');
+  }
+  await openHiveBox('userInfo');
+  await openHiveBox('dataBundles');
   // Get.put(UserController());
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
@@ -100,6 +110,7 @@ Future<void> main() async {
   }
 
   FirebaseMessaging.instance.getToken().then((value) {
+    // print(value);
     GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
   });
   requestNotificationPermission();
@@ -302,6 +313,26 @@ Future<void> main() async {
   // configLoading();
   runApp(const ProviderScope(child: MyApp()));
 }
+
+Future<void> openHiveBox(String boxName, {bool limit = false}) async {
+  final box = await Hive.openBox(boxName).onError((error, stackTrace) async {
+    final Directory dir = await getApplicationDocumentsDirectory();
+    final String dirPath = dir.path;
+    print(dirPath);
+    File dbFile = File('$dirPath/$boxName.hive');
+    print(dbFile);
+    File lockFile = File('$dirPath/$boxName.lock');
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      dbFile = File('$dirPath/rentspace/$boxName.hive');
+      lockFile = File('$dirPath/rentspace/$boxName.lock');
+    }
+    await dbFile.delete();
+    await lockFile.delete();
+    await Hive.openBox(boxName);
+    throw 'Failed to open $boxName Box\nError: $error';
+  });
+}
+
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

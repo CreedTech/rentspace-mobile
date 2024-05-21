@@ -375,7 +375,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         // Handle tap event
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                           horizontal: 10,
                                           vertical: 3,
                                         ),
@@ -505,7 +505,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 Get.to(const TransferPage());
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 7),
                                 decoration: BoxDecoration(
                                   color: colorWhite,
@@ -522,7 +522,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.swap_horizontal_circle,
                                       color: brandTwo,
                                       size: 26,
@@ -551,7 +551,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 Get.to(const FundWallet());
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 7),
                                 decoration: BoxDecoration(
                                   color: colorWhite,
@@ -568,7 +568,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.add_circle,
                                       color: brandTwo,
                                       size: 26,
@@ -1122,7 +1122,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   children: [
                                     ListTile(
                                       leading: Container(
-                                        padding: EdgeInsets.all(8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: (history['transactionType'] ==
@@ -1704,7 +1704,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+            contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),

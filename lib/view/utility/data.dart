@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
@@ -15,10 +16,14 @@ import 'package:rentspace/view/utility/data_list.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../api/global_services.dart';
+import '../../constants/app_constants.dart';
+import '../../constants/data_constants.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
+import 'package:http/http.dart' as http;
 
 class DataBundleScreen extends StatefulWidget {
   const DataBundleScreen({super.key});
@@ -38,12 +43,21 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   final TextEditingController selectnetworkController = TextEditingController();
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
+  final TextEditingController packageController = TextEditingController();
   final TextEditingController selectplanmodelsubController =
       TextEditingController();
   final TextEditingController selectnetworkproviderController =
       TextEditingController();
   final DataBundleFormKey = GlobalKey<FormState>();
   String? _selectedData;
+
+  List<String> _amount = [];
+  List<String> _dataName = [];
+  List<String> _dataValidity = [];
+  String? selectedItem;
+  String? selectedItemAmount;
+  String? selectedItemValidity;
+  bool isDataSelected = false;
 
   List<String> SelectSubscription = const <String>[
     'Data Bundle',
@@ -233,6 +247,61 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
     return true;
   }
 
+  Future getDataBundles() async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+    final response = await http.post(
+      Uri.parse(AppConstants.BASE_URL + AppConstants.GET_DATA_VARIATION_CODES),
+      headers: {
+        'Authorization': 'Bearer $authToken',
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode(<String, String>{
+        "selectedNetwork": _selectedCarrier,
+      }),
+    );
+    EasyLoading.dismiss();
+    // print(response);
+
+    if (response.statusCode == 200) {
+      EasyLoading.dismiss();
+      var jsonResponse = jsonDecode(response.body);
+      print('jsonResponse');
+      List<String> dataAmount = [];
+      List<String> dataName = [];
+      List<String> dataValidity = [];
+      // tempName.add("Select bank");
+      for (var item in jsonResponse['amount_options']) {
+        String amount = item['amount'];
+        String name = item['name'];
+        String validity = item['validity'];
+        // String name = item['name'];
+        if (name != "") {
+          dataAmount.add(amount);
+          dataName.add(name);
+          dataValidity.add(validity);
+        }
+      }
+      if (!mounted) return;
+      setState(() {
+        _amount = dataAmount;
+        _dataName = dataName;
+        _dataValidity = dataValidity;
+        // _bankCode = tempCode;
+
+        // _canShowOptions = true;
+      });
+    } else {
+      EasyLoading.dismiss();
+      print('Failed to load data from the server');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -266,6 +335,400 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final networkCarrierSelect = TextFormField(
+      onTap: () {
+        showModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: const Color(0xffF6F6F8),
+          context: context,
+          builder: (BuildContext context) {
+            List<String> airtimeBill = DataConstants.dataCodes
+                .map((airtime) => airtime['code']!)
+                .toList();
+            List<String> name = DataConstants.dataCodes
+                .map((airtime) => airtime['name']!)
+                .toList();
+            List<String> image = DataConstants.dataCodes
+                .map((airtime) => airtime['image']!)
+                .toList();
+
+            return Container(
+              height: 350,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              decoration: BoxDecoration(
+                  color: const Color(0xffF6F6F8),
+                  borderRadius: BorderRadius.circular(19)),
+              child: ListView(
+                children: [
+                  Text(
+                    'Select Network',
+                    style: GoogleFonts.lato(
+                        fontSize: 16,
+                        color: colorBlack,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: name.length,
+                      itemBuilder: (context, idx) {
+                        return Column(
+                          children: [
+                            ListTileTheme(
+                              contentPadding: const EdgeInsets.only(
+                                  left: 13.0, right: 13.0, top: 4, bottom: 4),
+                              selectedColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              child: ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 8,
+                                      ),
+                                      child: CircleAvatar(
+                                        radius:
+                                            20, // Adjust the radius as needed
+                                        backgroundColor: Colors
+                                            .transparent, // Ensure the background is transparent
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            image[idx],
+                                            width: 29,
+                                            height: 28,
+                                            fit: BoxFit
+                                                .fitWidth, // Ensure the image fits inside the circle
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Text(
+                                        name[idx],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: colorDark),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                // selected: _selectedCarrier == name[idx],
+                                onTap: () {
+                                  // billType = airtimeBill[idx];
+                                  // _selectedCarrier = name[idx];
+                                  // _selectedImage = image[idx];
+                                  // canProceed = true;
+                                  setState(() {
+                                    billType = airtimeBill[idx];
+                                    _selectedCarrier = name[idx];
+                                    _selectedImage = image[idx];
+                                    // canProceed = true;
+                                  });
+                                  selectnetworkController.text =
+                                      _selectedCarrier;
+
+                                  Navigator.pop(
+                                    context,
+                                  );
+
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                            (idx != name.length - 1)
+                                ? const Divider(
+                                    color: Color(0xffC9C9C9),
+                                    height: 1,
+                                    indent: 13,
+                                    endIndent: 13,
+                                  )
+                                : SizedBox(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      readOnly: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: colorBlack,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
+      controller: selectnetworkController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 1.0), // Change color to yellow
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.only(right: 10, left: 15),
+          child: CircleAvatar(
+            radius: 14, // Adjust the radius as needed
+            backgroundColor:
+                Colors.transparent, // Ensure the background is transparent
+            child: ClipOval(
+              child: Image.asset(
+                _selectedImage,
+                width: 28,
+                height: 28,
+                fit: BoxFit.cover, // Ensure the image fits inside the circle
+              ),
+            ),
+          ),
+        ),
+        suffixIcon: const Icon(
+          Icons.keyboard_arrow_down,
+          size: 24,
+          color: colorBlack,
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        hintStyle: GoogleFonts.lato(
+          color: brandOne,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      maxLines: 1,
+    );
+
+    final choosePackage = TextFormField(
+      onTap: () async {
+        await getDataBundles().then((value) {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: const Color(0xffF6F6F8),
+            isDismissible: true,
+            enableDrag: true,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return FractionallySizedBox(
+                heightFactor: 0.88,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF6F6F8),
+                    borderRadius: BorderRadius.circular(19),
+                  ),
+                  child: ListView(
+                    children: [
+                      Text(
+                        'Choose Package',
+                        style: GoogleFonts.lato(
+                            fontSize: 16,
+                            color: colorBlack,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: _dataName.length,
+                          itemBuilder: (context, idx) {
+                            return Column(
+                              children: [
+                                ListTileTheme(
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 13.0,
+                                      right: 13.0,
+                                      top: 4,
+                                      bottom: 4),
+                                  selectedColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  child: ListTile(
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 8,
+                                          ),
+                                          child: CircleAvatar(
+                                            radius:
+                                                20, // Adjust the radius as needed
+                                            backgroundColor: Colors
+                                                .transparent, // Ensure the background is transparent
+                                            child: ClipOval(
+                                              child: Image.asset(
+                                                _selectedImage,
+                                                width: 29,
+                                                height: 28,
+                                                fit: BoxFit
+                                                    .fitWidth, // Ensure the image fits inside the circle
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          child: Text(
+                                            _dataName[idx],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.lato(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorDark),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    // selected: _selectedCarrier == name[idx],
+                                    onTap: () {
+                                      setState(() {
+                                        selectedItem = _dataName[idx];
+                                        selectedItemAmount = _amount[idx];
+                                        selectedItemValidity =
+                                            _dataValidity[idx];
+                                        isDataSelected = true;
+                                      });
+                                      packageController.text = _dataName[idx];
+
+                                      Navigator.pop(
+                                        context,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                (idx != _dataName.length - 1)
+                                    ? const Divider(
+                                        color: Color(0xffC9C9C9),
+                                        height: 1,
+                                        indent: 13,
+                                        endIndent: 13,
+                                      )
+                                    : SizedBox(),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        });
+      },
+      readOnly: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: colorBlack,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      controller: packageController,
+      textAlignVertical: TextAlignVertical.center,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xffE0E0E0), width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
+        ),
+        suffixIcon: const Icon(
+          Icons.keyboard_arrow_down,
+          size: 24,
+          color: colorBlack,
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        hintStyle: GoogleFonts.lato(
+          color: brandOne,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      maxLines: 1,
+    );
+
     final selectNetworkCarrier = CustomDropdown(
       selectedStyle: GoogleFonts.lato(
           color: Theme.of(context).primaryColor,
@@ -317,31 +780,80 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(Icons.arrow_back_ios_sharp,
-              size: 30, color: Theme.of(context).primaryColor),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Buy Data',
-          style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Data',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 24.h),
           child: ListView(
             children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  color: colorWhite,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.lato(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Space Wallet: ',
+                          style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          )),
+                      TextSpan(
+                        text: ch8t.format(walletController
+                            .walletModel!.wallet![0].mainBalance),
+                        style: GoogleFonts.lato(
+                          color: brandOne,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Stack(
                 children: [
                   Form(
@@ -352,19 +864,45 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                         SizedBox(
                           height: 13.h,
                         ),
-                        Text(
-                          'Enter receiver\'s phone number to buy data instantly.',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 3.w),
+                              child: Text(
+                                'Select Network',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            networkCarrierSelect,
+                          ],
                         ),
                         SizedBox(
                           height: 13.h,
                         ),
-                        selectNetworkCarrier,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 3.w),
+                              child: Text(
+                                'Choose Package',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            choosePackage,
+                          ],
+                        ),
                         SizedBox(
                           height: 13.h,
                         ),

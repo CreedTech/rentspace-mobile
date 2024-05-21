@@ -52,6 +52,7 @@ class AppConstants {
   static const ADD_UTILITY_HISTORY = '/api/utilities/add-utility';
   static const UTILITY_HISTORY = '/api/utilities/utility-history';
   static const WALLET_HISTORY = '/api/wallet/wallet-histories';
+  static const RECENT_TRANSFERS = '/api/wallet/user-recent-transfers';
 
   static const TOKEN = '';
   static const FCM_TOKEN = '/api/user/postToken';

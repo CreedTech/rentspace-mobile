@@ -11,11 +11,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
+import 'package:rentspace/constants/airtime_constants.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/app_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/view/utility/airtime_confirmation.dart';
 
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
@@ -52,9 +54,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     "assets/utility/9mobile.jpg",
   ];
 
-  String _selectedCarrier = 'Select Network';
+  String? _selectedCarrier;
   String _selectedImage = 'assets/utility/mtn.jpg';
-  String billType = '';
+  String? billType;
   String _userInput = '';
 
   bool showInvalidAmountAlert = false;
@@ -64,8 +66,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     if (airtimeformKey.currentState!.validate()) {
       int amount = int.parse(amountController.text);
       String number = recipientController.text;
-      String bill = billType;
-      String biller = _selectedCarrier;
+      String bill = billType!;
+      String biller = _selectedCarrier!;
 
       confirmPayment(context, amount, number, bill, biller);
     }
@@ -225,12 +227,12 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
   void initState() {
     super.initState();
     fetchUserData();
-    recipientController.addListener(() {
-      setState(() {
-        _selectedCarrier = getCarrier(recipientController.text);
-        selectnetworkController.text = _selectedCarrier;
-      });
-    });
+    // recipientController.addListener(() {
+    //   setState(() {
+    //     _selectedCarrier = getCarrier(recipientController.text);
+    //     selectnetworkController.text = _selectedCarrier!;
+    //   });
+    // });
   }
 
   bool isTextFieldEmpty = false;
@@ -239,106 +241,551 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appControllerProvider.notifier);
-    final selectNetworkCarrier = CustomDropdown(
-      selectedStyle: GoogleFonts.lato(
-          color: Theme.of(context).primaryColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      items: networkCarrier,
-      excludeSelected: true,
-      hintText: 'Select Network',
-      fillColor: Colors.transparent,
-      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
-      fieldSuffixIcon: Icon(
-        Iconsax.arrow_down5,
-        size: 25.h,
-        color: Theme.of(context).primaryColor,
-      ),
-      // fieldSuffixIcon: getNetworkImage(_selectedCarrier),
-      onChanged: (value) {
-        setState(() {
-          _selectedCarrier = value;
-          selectnetworkController.text = _selectedCarrier;
-          // recipientController.clear();
-        });
-        if (_selectedCarrier == 'MTN') {
-          setState(() {
-            billType = 'bill-25';
-            _selectedImage = 'assets/utility/mtn.jpg';
-          });
-        } else if ((_selectedCarrier == 'Glo')) {
-          setState(() {
-            billType = 'bill-27';
-            _selectedImage = "assets/utility/glo.jpg";
-          });
-        } else if ((_selectedCarrier == '9mobile')) {
-          setState(() {
-            billType = 'bill-26';
-            _selectedImage = "assets/utility/9mobile.jpg";
-          });
-        } else if ((_selectedCarrier == 'Airtel')) {
-          setState(() {
-            billType = 'bill-28';
-            _selectedImage = "assets/utility/airtel.jpg";
-          });
-        } else {
-          billType = '';
-          _selectedImage = 'assets/utility/mtn.jpg';
-        }
+    final networkCarrierSelect = TextFormField(
+      onTap: () {
+        showModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: const Color(0xffF6F6F8),
+          context: context,
+          builder: (BuildContext context) {
+            List<String> airtimeBill = AirtimeConstants.airtimeCodes
+                .map((airtime) => airtime['code']!)
+                .toList();
+            List<String> name = AirtimeConstants.airtimeCodes
+                .map((airtime) => airtime['name']!)
+                .toList();
+            List<String> image = AirtimeConstants.airtimeCodes
+                .map((airtime) => airtime['image']!)
+                .toList();
+
+            return Container(
+              height: 350,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              decoration: BoxDecoration(
+                  color: const Color(0xffF6F6F8),
+                  borderRadius: BorderRadius.circular(19)),
+              child: ListView(
+                children: [
+                  Text(
+                    'Select Network',
+                    style: GoogleFonts.lato(
+                        fontSize: 16,
+                        color: colorBlack,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: name.length,
+                      itemBuilder: (context, idx) {
+                        return Column(
+                          children: [
+                            ListTileTheme(
+                              contentPadding: const EdgeInsets.only(
+                                  left: 13.0, right: 13.0, top: 4, bottom: 4),
+                              selectedColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              child: ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 8,
+                                      ),
+                                      child: CircleAvatar(
+                                        radius:
+                                            20, // Adjust the radius as needed
+                                        backgroundColor: Colors
+                                            .transparent, // Ensure the background is transparent
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            image[idx],
+                                            width: 29,
+                                            height: 28,
+                                            fit: BoxFit
+                                                .fitWidth, // Ensure the image fits inside the circle
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Text(
+                                        name[idx],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: colorDark),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                // selected: _selectedCarrier == name[idx],
+                                onTap: () {
+                                  // billType = airtimeBill[idx];
+                                  // _selectedCarrier = name[idx];
+                                  // _selectedImage = image[idx];
+                                  // canProceed = true;
+                                  setState(() {
+                                    billType = airtimeBill[idx];
+                                    _selectedCarrier = name[idx];
+                                    _selectedImage = image[idx];
+                                    // canProceed = true;
+                                  });
+                                  selectnetworkController.text =
+                                      _selectedCarrier!;
+
+                                  Navigator.pop(
+                                    context,
+                                  );
+
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                            (idx != name.length - 1)
+                                ? const Divider(
+                                    color: Color(0xffC9C9C9),
+                                    height: 1,
+                                    indent: 13,
+                                    endIndent: 13,
+                                  )
+                                : SizedBox(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
+      readOnly: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: colorBlack,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
       controller: selectnetworkController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 1.0), // Change color to yellow
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.only(right: 10, left: 15),
+          child: CircleAvatar(
+            radius: 14, // Adjust the radius as needed
+            backgroundColor:
+                Colors.transparent, // Ensure the background is transparent
+            child: ClipOval(
+              child: Image.asset(
+                _selectedImage,
+                width: 28,
+                height: 28,
+                fit: BoxFit.cover, // Ensure the image fits inside the circle
+              ),
+            ),
+          ),
+        ),
+        suffixIcon: const Icon(
+          Icons.keyboard_arrow_down,
+          size: 24,
+          color: colorBlack,
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        hintStyle: GoogleFonts.lato(
+          color: brandOne,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      maxLines: 1,
     );
 
+    // final selectNetworkCarrier = CustomDropdown(
+    //   selectedStyle: GoogleFonts.lato(
+    //       color: Theme.of(context).primaryColor,
+    //       fontSize: 14,
+    //       fontWeight: FontWeight.w500),
+    //   items: networkCarrier,
+    //   excludeSelected: true,
+    //   // hintText: 'Select Network',
+    //   fillColor: Colors.transparent,
+    //   borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+    //   fieldSuffixIcon: const Icon(
+    //     Icons.keyboard_arrow_down,
+    //     size: 24,
+    //     color: colorBlack,
+    //   ),
+    //   // fieldSuffixIcon: getNetworkImage(_selectedCarrier),
+    //   onChanged: (value) {
+    //     setState(() {
+    //       _selectedCarrier = value;
+    //       selectnetworkController.text = _selectedCarrier;
+    //       // recipientController.clear();
+    //     });
+    //     if (_selectedCarrier == 'MTN') {
+    //       setState(() {
+    //         billType = 'bill-25';
+    //         _selectedImage = 'assets/utility/mtn.jpg';
+    //       });
+    //     } else if ((_selectedCarrier == 'Glo')) {
+    //       setState(() {
+    //         billType = 'bill-27';
+    //         _selectedImage = "assets/utility/glo.jpg";
+    //       });
+    //     } else if ((_selectedCarrier == '9mobile')) {
+    //       setState(() {
+    //         billType = 'bill-26';
+    //         _selectedImage = "assets/utility/9mobile.jpg";
+    //       });
+    //     } else if ((_selectedCarrier == 'Airtel')) {
+    //       setState(() {
+    //         billType = 'bill-28';
+    //         _selectedImage = "assets/utility/airtel.jpg";
+    //       });
+    //     } else {
+    //       billType = '';
+    //       _selectedImage = 'assets/utility/mtn.jpg';
+    //     }
+    //   },
+    //   controller: selectnetworkController,
+    // );
+
     return Scaffold(
+      backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(Icons.arrow_back_ios_sharp,
-              size: 30, color: Theme.of(context).primaryColor),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Airtime',
-          style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Airtime',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 24.h),
           child: ListView(
             children: [
-              Stack(
-                children: [
-                  Form(
-                    key: airtimeformKey,
-                    child: Column(
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  color: colorWhite,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.lato(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Space Wallet: ',
+                          style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          )),
+                      TextSpan(
+                        text: ch8t.format(walletController
+                            .walletModel!.wallet![0].mainBalance),
+                        style: GoogleFonts.lato(
+                          color: brandOne,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: airtimeformKey,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Select an amount',
+                        style: GoogleFonts.lato(
+                          color: colorBlack,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        selectNetworkCarrier,
-                        SizedBox(
-                          height: 13.h,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildAmountButton(200),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            buildAmountButton(2000),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildAmountButton(500),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            buildAmountButton(3000),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            buildAmountButton(1000),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            buildAmountButton(5000),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
+                          child: Text(
+                            'Amount',
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
+                          ),
                         ),
                         TextFormField(
                           enableSuggestions: true,
-                          cursorColor: Theme.of(context).primaryColor,
+                          cursorColor: colorBlack,
+                          style:
+                              GoogleFonts.lato(color: colorBlack, fontSize: 14),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          controller: amountController,
+                          onChanged: (value) {
+                            // Enter_Transaction_Pin.of(context)
+                            //     .updateDisplayedcurrentAmount(value);
+                            setState(() {
+                              print("Entered Amount: $value");
+                              // Check if the text field is empty
+                              displayedAmount = value;
+                              isTextFieldEmpty = value.isNotEmpty &&
+                                  int.tryParse(value) != null &&
+                                  int.parse(value) >= 50 &&
+                                  !(int.tryParse(value)!.isNegative) &&
+                                  int.tryParse(
+                                          value.trim().replaceAll(',', '')) !=
+                                      0 &&
+                                  recipientController.text.isNotEmpty &&
+                                  recipientController.text.length == 11;
+                              // isTextFieldEmpty = value.isNotEmpty &&
+                              //     int.tryParse(value) != null &&
+                              //     int.parse(value) >= 50;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            // hintText: 'Amount',
+                            errorStyle: GoogleFonts.lato(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                            // hintStyle: GoogleFonts.lato(
+                            //   color: Colors.grey,
+                            //   fontSize: 12,
+                            //   fontWeight: FontWeight.w400,
+                            // ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: brandOne,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Color(0xffBDBDBD),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Color(0xffBDBDBD),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: Colors.red,
+                                  width: 2.0), // Change color to yellow
+                            ),
+                            prefixText: "₦ ",
+                            prefixStyle: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            filled: false,
+                            contentPadding: const EdgeInsets.all(14),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter Amount';
+                            }
+                            if (int.tryParse(value) == null) {
+                              return 'Please enter a valid number';
+                            }
+                            if (int.tryParse(value)! < 50) {
+                              return 'Amount cannot be less than 50 naira';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
+                          child: Text(
+                            'Select Network',
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        networkCarrierSelect,
+                      ],
+                    ),
+                    SizedBox(
+                      height: 13.h,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.h, horizontal: 3.w),
+                          child: Text(
+                            'Number',
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          enableSuggestions: true,
+                          cursorColor: colorBlack,
+                          style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                           controller: recipientController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           // validator: validatePhone,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
+
                           keyboardType: TextInputType.number,
                           onChanged: (text) {
                             setState(() {
                               _userInput = text;
                               _selectedCarrier = getCarrier(text);
-                              selectnetworkController.text = _selectedCarrier;
+                              selectnetworkController.text = _selectedCarrier!;
                               print("Selected network: $_selectedCarrier");
                               isTextFieldEmpty = amountController
                                       .text.isNotEmpty &&
@@ -390,267 +837,103 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                           // maxLengthEnforcement: MaxLengthEnforcement.enforced,
                           // maxLength: 11,
                           decoration: InputDecoration(
-                            border: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
                                 color: Color(0xffE0E0E0),
                               ),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                               borderSide:
-                                  const BorderSide(color: brandOne, width: 2.0),
+                                  const BorderSide(color: brandOne, width: 1.0),
                             ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
                                 color: Color(0xffE0E0E0),
                               ),
                             ),
-                            errorBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
                                   color: Colors.red,
-                                  width: 2.0), // Change color to yellow
+                                  width: 1.0), // Change color to yellow
                             ),
                             filled: false,
                             contentPadding: const EdgeInsets.all(14),
                             fillColor: brandThree,
-                            hintText: '0XX XXX XXXX',
-                            hintStyle: GoogleFonts.lato(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100.0),
-                                child: Image.asset(
-                                  _selectedImage,
-                                  height: 10.0,
-                                  width: 10.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 13.h,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: brandTwo.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(11.r),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Top up',
-                                    style: GoogleFonts.lato(
-                                      color: brandOne,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Row(
-                                  // crossAxisAlignment: CrossAxisAlignment.baseline,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        buildAmountButton(50),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        buildAmountButton(500),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        buildAmountButton(100),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        buildAmountButton(1000),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        buildAmountButton(200),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        buildAmountButton(2000),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 3.h,
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                TextFormField(
-                                  enableSuggestions: true,
-                                  cursorColor: Theme.of(context).primaryColor,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  controller: amountController,
-                                  onChanged: (value) {
-                                    // Enter_Transaction_Pin.of(context)
-                                    //     .updateDisplayedcurrentAmount(value);
-                                    setState(() {
-                                      print("Entered Amount: $value");
-                                      // Check if the text field is empty
-                                      displayedAmount = value;
-                                      isTextFieldEmpty = value.isNotEmpty &&
-                                          int.tryParse(value) != null &&
-                                          int.parse(value) >= 50 &&
-                                          !(int.tryParse(value)!.isNegative) &&
-                                          int.tryParse(value
-                                                  .trim()
-                                                  .replaceAll(',', '')) !=
-                                              0 &&
-                                          recipientController.text.isNotEmpty &&
-                                          recipientController.text.length == 11;
-                                      // isTextFieldEmpty = value.isNotEmpty &&
-                                      //     int.tryParse(value) != null &&
-                                      //     int.parse(value) >= 50;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter Amount',
-                                    filled: false,
-                                    fillColor: brandThree,
-                                    errorStyle: GoogleFonts.lato(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                    // hintStyle: GoogleFonts.lato(
-                                    //   color: Colors.grey,
-                                    //   fontSize: 12,
-                                    //   fontWeight: FontWeight.w400,
-                                    // ),
-                                    contentPadding: EdgeInsets.all(14),
-                                    border: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      borderSide: const BorderSide(
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          color: brandOne, width: 2.0),
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                    errorBorder: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          color: Colors.red,
-                                          width: 2.0), // Change color to yellow
-                                    ),
-                                    prefixText: "₦  ",
-                                    prefixStyle: GoogleFonts.lato(
-                                      color: brandOne,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Enter Amount';
-                                    }
-                                    if (int.tryParse(value) == null) {
-                                      return 'Please enter a valid number';
-                                    }
-                                    if (int.tryParse(value)! < 50) {
-                                      return 'Amount cannot be less than 50 naira';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Visibility(
-                          visible: isTextFieldEmpty,
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(250, 50),
-                                  backgroundColor: brandOne,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      10,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (airtimeformKey.currentState!.validate()) {
-                                    // _doSomething();
-                                    // Get.to(ConfirmTransactionPinPage(
-                                    //     pin: _pinController.text.trim()));
-                                    FocusScope.of(context).unfocus();
-                                    await fetchUserData()
-                                        .then((value) => validateUsersInput())
-                                        .catchError(
-                                          (error) => {
-                                            customErrorDialog(context, 'Oops',
-                                                'Something went wrong. Try again later'),
-                                          },
-                                        );
-                                    // validateUsersInput();
-                                  }
-                                },
-                                child: const Text(
-                                  'Proceed',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 140.h,
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
+                      backgroundColor: (airtimeformKey.currentState != null &&
+                              airtimeformKey.currentState!.validate())
+                          ? brandTwo
+                          : Colors.grey,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (airtimeformKey.currentState != null &&
+                          airtimeformKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
+                        // if (airtimeformKey.currentState!.validate()) {
+                        //   int amount = int.parse(amountController.text);
+                        //   String number = recipientController.text;
+                        //   String bill = billType!;
+                        //   String biller = _selectedCarrier!;
+
+                        //   confirmPayment(context, amount, number, bill, biller);
+                        // }
+                        print(recipientController.text);
+                        print(amountController.text);
+                        print(billType!);
+                        print(_selectedCarrier!);
+                        Get.to(
+                          AirtimeConfirmation(
+                            number: recipientController.text,
+                            bill: billType!,
+                            biller: _selectedCarrier!,
+                            amount: int.parse(amountController.text),
+                            image: _selectedImage,
+                          ),
+                        );
+                        // await fetchUserData()
+                        //     .then((value) => validateUsersInput())
+                        //     .catchError(
+                        //       (error) => {
+                        //         customErrorDialog(context, 'Oops',
+                        //             'Something went wrong. Try again later'),
+                        //       },
+                        //     );
+                      }
+                    },
+                    child: const Text(
+                      'Proceed',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -671,20 +954,20 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       },
       child: Container(
         width: 100.w,
-        height: 70.h,
+        height: 55.h,
         decoration: BoxDecoration(
-          color: brandTwo.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(8.r),
+          color: const Color(0xffEEF8FF),
+          borderRadius: BorderRadius.circular(7.r),
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
             child: Text(
               '₦$amount',
               style: GoogleFonts.lato(
                 color: brandOne,
                 fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -783,7 +1066,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       borderRadius:
                                           BorderRadius.circular(100.0),
                                       child: Image.asset(
-                                        _selectedImage,
+                                        _selectedImage!,
                                         height: 20.h,
                                         width: 20.h,
                                       ),
@@ -792,7 +1075,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       width: 9.w,
                                     ),
                                     Text(
-                                      _selectedCarrier,
+                                      _selectedCarrier!,
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.lato(
                                         color: brandOne,
@@ -1003,7 +1286,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.arrow_forward_ios,
                                               color: brandOne,
                                               size: 20,
@@ -1011,7 +1294,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                           ],
                                         ),
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.check,
                                         color: brandOne,
                                         size: 20,
@@ -1096,7 +1379,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                     focusedPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -1112,7 +1396,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                     submittedPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -1128,7 +1413,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                     followingPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -1232,71 +1518,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                   ),
-
-                                                  // const SizedBox(
-                                                  //   height: 20,
-                                                  // ),
-                                                  // const SizedBox(
-                                                  //   height: 40,
-                                                  // ),
-                                                  // ElevatedButton(
-                                                  //   style: ElevatedButton
-                                                  //       .styleFrom(
-                                                  //     minimumSize:
-                                                  //         const Size(300, 50),
-                                                  //     backgroundColor: brandOne,
-                                                  //     elevation: 0,
-                                                  //     shape:
-                                                  //         RoundedRectangleBorder(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(
-                                                  //         10,
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  //   onPressed: () {
-                                                  //     // if (BCrypt.checkpw(
-                                                  //     //   _aPinController.text
-                                                  //     //       .trim()
-                                                  //     //       .toString(),
-                                                  //     //   userController
-                                                  //     //       .userModel!
-                                                  //     //       .userDetails![0]
-                                                  //     //       .wallet
-                                                  //     //       .pin,
-                                                  //     // )) {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   Get.back();
-                                                  //     //   // _doWallet();
-                                                  //     //   appState.buyAirtime(
-                                                  //     //       context,
-                                                  //     //       amount,
-                                                  //     //       number.toString(),
-                                                  //     //       bill,
-                                                  //     //       biller);
-                                                  //     // } else {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   if (context.mounted) {
-                                                  //     //     customErrorDialog(
-                                                  //     //         context,
-                                                  //     //         "Invalid PIN",
-                                                  //     //         'Enter correct PIN to proceed');
-                                                  //     //   }
-                                                  //     // }
-                                                  //   },
-                                                  //   child: Text(
-                                                  //     'Proceed to Payment',
-                                                  //     textAlign:
-                                                  //         TextAlign.center,
-                                                  //     style: GoogleFonts.lato(
-                                                  //       color: Colors.white,
-                                                  //       fontSize: 16,
-                                                  //       fontWeight:
-                                                  //           FontWeight.w700,
-                                                  //     ),
-                                                  //   ),
-                                                  // ),
                                                 ],
                                               ),
                                             ),
@@ -1636,7 +1857,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
               );
             });
       },
-      child: Icon(
+      child: const Icon(
         Icons.close,
         color: brandOne,
         size: 20,
