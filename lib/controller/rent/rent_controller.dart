@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/model/spacerent_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:rentspace/view/login_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
+import '../../constants/colors.dart';
 
 class RentController extends GetxController {
+  final sessionStateStream = StreamController<SessionState>();
   // final rent = <SpaceRent>[].obs;
   var isLoading = false.obs;
   // final rent = <Rent>[].obs;
@@ -50,11 +56,16 @@ class RentController extends GetxController {
           print('No space rent found');
         }
         isLoading(false);
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
         //   rentModel = ;
         // }
-        // print(response.body);
+        print(response.body);
+        print(response.statusCode);
         print('error fetching data');
       }
     } on TimeoutException {

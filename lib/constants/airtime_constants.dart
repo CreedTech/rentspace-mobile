@@ -21,4 +21,35 @@ class AirtimeConstants {
       'code': 'bill-26',
     },
   ];
+
+  // static List<Map<String, String>> airtimeBillerItems = [
+  //   {
+  //     "id": "airng",
+  //     "name": "AIRTEL",
+  //     "division": "C",
+  //     "product": "423",
+  //     "category": "Airtime"
+  //   },
+  //   {
+  //     "id": "eting",
+  //     "name": "9MOBILE",
+  //     "division": "C",
+  //     "product": "422",
+  //     "category": "AIRTIME"
+  //   },
+  //   {
+  //     "id": "glong",
+  //     "name": "GLO",
+  //     "division": "C",
+  //     "product": "424",
+  //     "category": "AIRTIME"
+  //   },
+  //   {
+  //     "id": "GLO_VBANK",
+  //     "name": "GLO",
+  //     "division": "G",
+  //     "product": "424",
+  //     "category": "AIRTIME"
+  //   }
+  // ];
 }

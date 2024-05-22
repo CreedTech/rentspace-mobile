@@ -102,12 +102,16 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     print('device info');
     print(savedDeviceType);
     print(savedDeviceModel);
+    print(fcmToken);
     if (savedDeviceType != null && savedDeviceModel != null && fcmToken != '') {
       setState(() {
         deviceType = savedDeviceType;
         deviceModel = savedDeviceModel;
         token = fcmToken;
       });
+      print(savedDeviceType);
+      print(savedDeviceModel);
+      print(fcmToken);
     }
   }
 

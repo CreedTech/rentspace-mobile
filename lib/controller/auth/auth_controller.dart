@@ -121,6 +121,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Username already taken")) {
         EasyLoading.dismiss();
@@ -301,6 +305,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("User with this BVN already exists")) {
         EasyLoading.dismiss();
@@ -390,6 +398,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("User with this BVN already exists")) {
         EasyLoading.dismiss();
@@ -469,6 +481,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // );
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // to capture other errors later
         message = "Something went wrong";
@@ -508,6 +524,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
+    print('fcmToken ======');
+    print(fcmToken);
+    print(deviceType);
+    print(deviceModel);
     Map<String, dynamic> user = {
       'email': email.toString().toLowerCase(),
       'password': password,
@@ -1033,6 +1053,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Passwords do not match")) {
         message = "Oops! The Passwords you entered does not match!";
@@ -1140,20 +1164,20 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.logout();
       print('response message here');
       // print(response.message);
-      if (response.message.contains("User logged out successfully")) {
+      if (response.success == true) {
         EasyLoading.dismiss();
         isLoading = false;
         // notifyListeners();
-        state = const AsyncValue.data(true);
-        await GlobalService.sharedPreferencesManager.removeToken();
+        state = const AsyncValue.data(false);
+        // await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();
-        await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
+        // await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('hasSeenOnboarding', false);
         // print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
-        Get.offAll(
+        await Get.offAll(
           LoginPage(
             sessionStateStream: sessionStateStream,
             // loggedOutReason: "Logged out because of user inactivity",
@@ -1242,6 +1266,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Pin was already set")) {
         EasyLoading.dismiss();
@@ -1317,6 +1345,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // to capture other errors later
         message = "Something went wrong";
@@ -1377,6 +1409,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // to capture other errors later
         message = "Something went wrong";
@@ -1427,6 +1463,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
                       email: email.toString().toLowerCase(),
                     )));
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
         message = "Invalid OTP";
@@ -1499,6 +1539,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Wallet not found")) {
         message = "Wallet not found";
@@ -1572,6 +1616,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("New pin and confirm pin do not match")) {
         message = "Pin Mismatch error";

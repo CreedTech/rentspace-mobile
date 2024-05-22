@@ -110,7 +110,7 @@ Future<void> main() async {
   }
 
   FirebaseMessaging.instance.getToken().then((value) {
-    // print(value);
+    print("fcmtoken here $value");
     GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
   });
   requestNotificationPermission();

@@ -91,6 +91,7 @@ class _MultipleDeviceLoginOtpPageState
 
     final authState = ref.watch(authControllerProvider.notifier);
     String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
+    print(MediaQuery.of(context).size.height);
     return UpgradeAlert(
       upgrader: Upgrader(
         showIgnore: false,
@@ -153,7 +154,8 @@ class _MultipleDeviceLoginOtpPageState
                   ),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height - 700,
+                  top: MediaQuery.of(context).size.height -
+                      (MediaQuery.of(context).size.height / 1.33),
                   left: 0,
                   right: 0,
                   bottom: 0,

@@ -11,6 +11,7 @@ import 'package:rentspace/constants/widgets/shimmer_widget.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/utility_controller.dart';
+import 'package:rentspace/controller/utility_response_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
 import 'package:rentspace/view/dashboard/settings.dart';
@@ -37,6 +38,7 @@ final UserController userController = Get.find();
 // final WalletHistoriesController walletHistoriesController = Get.find();
 final WalletController walletController = Get.find();
 final RentController rentController = Get.find();
+final UtilityResponseController utilityResponseController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
@@ -123,6 +125,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(UserController());
     Get.put(RentController());
     Get.put(WalletController());
+    Get.put(UtilityResponseController());
     Get.put(UtilityController());
     Future.delayed(const Duration(seconds: 3), () {
       // fetchUserAndSetState();
@@ -174,6 +177,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(RentController());
     Get.put(UtilityController());
     Get.put(WalletController());
+    Get.put(UtilityResponseController());
     return Obx(
       () => (userController.isHomePageLoading.value.obs() == true)
           ? Scaffold(

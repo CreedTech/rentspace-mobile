@@ -9,36 +9,36 @@ import 'package:rentspace/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:rentspace/model/airtime_model.dart';
+import 'package:rentspace/model/utility_response_model.dart';
 
 import '../../api/global_services.dart';
 import '../constants/colors.dart';
 import '../constants/widgets/custom_dialog.dart';
 import '../view/login_page.dart';
 
-
-
-class AirtimesController extends GetxController {
+class UtilityResponseController extends GetxController {
     final sessionStateStream = StreamController<SessionState>();
   // final userDB = UserDB();
   var isLoading = false.obs;
-  final airtimes = <Airtimes>[].obs;
-  AirtimesModel? airtimesModel;
+  final airtimes = <UtilityResponse>[].obs;
+  UtilityResponseModel? utilityResponseModel;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    fetchAirtimes();
+    // fetchUtilitiesResponse();
   }
 
-  fetchAirtimes() async {
-     isLoading(true);
+  fetchUtilitiesResponse(String categoryName) async {
+    isLoading(true);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
     try {
       isLoading(true);
       http.Response response = await http.get(
-          Uri.parse(AppConstants.BASE_URL + AppConstants.GET_AIRTIMES),
+          Uri.parse(
+              '${AppConstants.BASE_URL}${AppConstants.VFD_GET_BILLER_LISTS}?categoryName=$categoryName'),
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
             'Accept': 'application/json',
@@ -48,15 +48,18 @@ class AirtimesController extends GetxController {
         ///data successfully
         var result = jsonDecode(response.body);
         print("result");
-        // print(result);
+        print(result);
 
-        airtimesModel = AirtimesModel.fromJson(result);
+        utilityResponseModel = UtilityResponseModel.fromJson(result);
         isLoading(false);
-        print(airtimesModel!.airtimes);
+        print('printing utilites...');
+        for (var i = 0; i < utilityResponseModel!.utilities!.length; i++) {
+          print(utilityResponseModel!.utilities![i].name);
+        }
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         print('error auth');
-       multipleLoginRedirectModal(); 
+        multipleLoginRedirectModal();
       } else {
         print(response.body);
         print('error fetching data');

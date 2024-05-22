@@ -21,6 +21,7 @@ import 'package:rentspace/view/utility/airtime_confirmation.dart';
 
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
+import '../../controller/utility_response_controller.dart';
 import '../actions/fund_wallet.dart';
 
 class AirtimePage extends ConsumerStatefulWidget {
@@ -35,6 +36,7 @@ var ch8t = NumberFormat.simpleCurrency(name: 'N');
 class _AirtimePageState extends ConsumerState<AirtimePage> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
+  final UtilityResponseController utilityResponseController = Get.find();
   final TextEditingController amountController = TextEditingController();
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController selectnetworkController = TextEditingController();
@@ -209,6 +211,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
+      await utilityResponseController.fetchUtilitiesResponse('Airtime');
       // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
@@ -248,12 +251,12 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
           backgroundColor: const Color(0xffF6F6F8),
           context: context,
           builder: (BuildContext context) {
-            List<String> airtimeBill = AirtimeConstants.airtimeCodes
-                .map((airtime) => airtime['code']!)
-                .toList();
-            List<String> name = AirtimeConstants.airtimeCodes
-                .map((airtime) => airtime['name']!)
-                .toList();
+            // List<String> airtimeBill = AirtimeConstants.airtimeCodes
+            //     .map((airtime) => airtime['code']!)
+            //     .toList();
+            // List<String> name = AirtimeConstants.airtimeCodes
+            //     .map((airtime) => airtime['name']!)
+            //     .toList();
             List<String> image = AirtimeConstants.airtimeCodes
                 .map((airtime) => airtime['image']!)
                 .toList();
@@ -284,7 +287,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: name.length,
+                      itemCount: utilityResponseController
+                          .utilityResponseModel!.utilities!.length,
                       itemBuilder: (context, idx) {
                         return Column(
                           children: [
@@ -309,7 +313,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                             .transparent, // Ensure the background is transparent
                                         child: ClipOval(
                                           child: Image.asset(
-                                            image[idx],
+                                            'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.toLowerCase()}.jpg',
                                             width: 29,
                                             height: 28,
                                             fit: BoxFit
@@ -325,7 +329,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       width: MediaQuery.of(context).size.width *
                                           0.4,
                                       child: Text(
-                                        name[idx],
+                                        utilityResponseController
+                                            .utilityResponseModel!
+                                            .utilities![idx]
+                                            .name,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.lato(
                                             fontSize: 14,
@@ -339,13 +346,21 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 // selected: _selectedCarrier == name[idx],
                                 onTap: () {
                                   // billType = airtimeBill[idx];
-                                  // _selectedCarrier = name[idx];
-                                  // _selectedImage = image[idx];
+                                  _selectedCarrier = utilityResponseController
+                                      .utilityResponseModel!
+                                      .utilities![idx]
+                                      .name;
+                                  _selectedImage =
+                                      'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.toLowerCase()}.jpg';
                                   // canProceed = true;
                                   setState(() {
-                                    billType = airtimeBill[idx];
-                                    _selectedCarrier = name[idx];
-                                    _selectedImage = image[idx];
+                                    // billType = airtimeBill[idx];
+                                    _selectedCarrier = utilityResponseController
+                                        .utilityResponseModel!
+                                        .utilities![idx]
+                                        .name;
+                                    _selectedImage =
+                                        'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.toLowerCase()}.jpg';
                                     // canProceed = true;
                                   });
                                   selectnetworkController.text =
@@ -359,7 +374,12 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 },
                               ),
                             ),
-                            (idx != name.length - 1)
+                            (idx !=
+                                    utilityResponseController
+                                        .utilityResponseModel!
+                                        .utilities![idx]
+                                        .name
+                                        .length)
                                 ? const Divider(
                                     color: Color(0xffC9C9C9),
                                     height: 1,

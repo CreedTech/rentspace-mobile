@@ -1,16 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../../api/global_services.dart';
+import '../../constants/colors.dart';
+import '../../constants/widgets/custom_dialog.dart';
 import '../../model/recent_transfers_model.dart';
+import '../../view/login_page.dart';
 
 class UserController extends GetxController {
+  final sessionStateStream = StreamController<SessionState>();
   // final userDB = UserDB();
   var isLoading = false.obs;
   var isHomePageLoading = false.obs;
@@ -26,7 +32,7 @@ class UserController extends GetxController {
     super.onInit();
     fetchData();
     fetchInitialData();
-    fetchRecentTransfers();
+    // fetchRecentTransfers();
   }
 
   fetchData() async {
@@ -50,6 +56,10 @@ class UserController extends GetxController {
 
         userModel = UserModel.fromJson(result);
         isLoading(false);
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // print(response.body);
         print('error fetching data');
@@ -89,6 +99,10 @@ class UserController extends GetxController {
 
         userModel = UserModel.fromJson(result);
         isHomePageLoading(false);
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // print(response.body);
         print('error fetching data');
@@ -140,12 +154,16 @@ class UserController extends GetxController {
           );
           // print('Fetched details:');
         }
-          // print(recentTempName);
+        // print(recentTempName);
         // print('recent transfers data successfully fetched');
         if (recentTransfersModel!.recentTransfers!.isEmpty) {
           // print('No recent transfers found');
         }
         isLoading(false);
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         print('error fetching data');
       }
@@ -190,6 +208,10 @@ class UserController extends GetxController {
       if (!recentTempName.contains(newEntry)) {
         recentTempName.add(newEntry);
       }
+    } else if (response.body.contains('Invalid token') ||
+        response.body.contains('Invalid token or device')) {
+      print('error auth');
+      multipleLoginRedirectModal();
     } else {
       print('error fetching details');
 

@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
@@ -17,9 +20,11 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
 import '../view/actions/fund_wallet.dart';
+import '../view/login_page.dart';
 import '../view/savings/spaceRent/spacerent_success_page.dart';
 import 'wallet_controller.dart';
 
+  final sessionStateStream = StreamController<SessionState>();
 final appControllerProvider =
     StateNotifierProvider<AppController, AsyncValue<bool>>((ref) {
   final repository = ref.watch(appRepositoryProvider);
@@ -256,6 +261,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains(
               "Due date must be between 6 and 8 months from the current date")) {
@@ -376,6 +385,11 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      }
+       else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
@@ -469,6 +483,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      }else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
@@ -578,7 +596,11 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
-      } else if (response.success == false &&
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
+      }else if (response.success == false &&
           response.message
               .contains("Number must be greater than or equal to 50")) {
         EasyLoading.dismiss();
@@ -710,6 +732,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         SucessfulReciept(context, phoneNumber, amount, network, 'Data to ');
         // Navi
         return;
+      }else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
               .contains("String must contain at least 10 character(s)")) {
@@ -912,6 +938,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //     context, meterNumber, amount, electricityName, 'Electricity to ');
         // Navi
         return;
+      }else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
               .contains("String must contain at least 10 character(s)")) {
@@ -1051,6 +1081,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         SucessfulReciept(context, smartCardNumber, amount, tvName, 'Data to ');
         // Navi
         return;
+      }else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
               .contains("String must contain at least 10 character(s)")) {
@@ -1179,6 +1213,10 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // SucessfulReciept();
         // Navi
         return;
+      }else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Incorrect PIN")) {
         EasyLoading.dismiss();

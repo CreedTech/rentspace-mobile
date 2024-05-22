@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:local_session_timeout/local_session_timeout.dart';
 
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
+import '../constants/colors.dart';
+import '../constants/widgets/custom_dialog.dart';
 import '../model/data_bundle_model.dart';
+import '../view/login_page.dart';
 
 class DataBundleController extends GetxController {
+    final sessionStateStream = StreamController<SessionState>();
   var isLoading = false.obs;
   DataBundleResponse? dataBundleResponse;
 
@@ -68,7 +74,11 @@ class DataBundleController extends GetxController {
           );
           print('Data bundle loaded from Hive');
         }
-      } else {
+      }  else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
+      }else {
         print('Error fetching data: ${response.statusCode}');
       }
     } on TimeoutException {

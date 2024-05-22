@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 // import 'package:rentspace/model/response/wallet_response.dart';
 import 'package:rentspace/model/wallet_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
+import '../constants/colors.dart';
+import '../constants/widgets/custom_dialog.dart';
+import '../view/login_page.dart';
 
 class WalletController extends GetxController {
+    final sessionStateStream = StreamController<SessionState>();
   var isLoading = true.obs;
   final wallet = <Wallet>[].obs;
   WalletModel? walletModel;
@@ -41,7 +47,11 @@ class WalletController extends GetxController {
 
         walletModel = WalletModel.fromJson(result);
         isLoading(false);
-      } else {
+      }  else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
+      }else {
         // print(response.body);
         print('error fetching data');
       }

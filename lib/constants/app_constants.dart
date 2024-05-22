@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 class AppConstants {
-  static const BASE_URL = 'https://rentspacetech-backend-production.up.railway.app';
+  static const BASE_URL = 'http://35.223.163.78';
   static const SIGN_UP = '/api/user/create';
   static const GET_WALLET = '/api/wallet/get-wallet';
   static const WALLET_TRANSFER = '/api/wallet/wallet-withdrawal';
@@ -13,7 +13,8 @@ class AppConstants {
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
   static const SINGLE_DEVICE_LOGIN_OTP = '/api/auth/single-device-login-otp';
-  static const VERIFY_SINGLE_DEVICE_LOGIN_OTP = '/api/auth/verify-single-device-login-otp';
+  static const VERIFY_SINGLE_DEVICE_LOGIN_OTP =
+      '/api/auth/verify-single-device-login-otp';
   static const LOGOUT = '/api/user/logout';
 
   static const GET_USER = '/api/user/get-user';
@@ -57,4 +58,11 @@ class AppConstants {
   static const TOKEN = '';
   static const FCM_TOKEN = '/api/user/postToken';
   static const PROFILE_PICTURE = '';
+
+  // VFD BILL PAYMENTS
+  static const VFD_GET_BILLER_CATEGORIES = '/api/get-vfd-biller-categories';
+  static const VFD_GET_BILLER_LISTS = '/api/get-vfd-biller-list';
+  static const VFD_GET_BILLER_ITEMS = '/api/get-vfd-biller-items';
+  static const VFD_PAY_BILL = '/api/pay-vfd-bill';
+  static const VFD_VALIDATE_CUSTOMER = '/api/validate-vfd-customer';
 }

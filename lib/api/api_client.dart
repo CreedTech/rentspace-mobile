@@ -1,11 +1,19 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 
 import '../constants/app_constants.dart';
+import '../constants/colors.dart';
+import '../view/login_page.dart';
 
+final sessionStateStream = StreamController<SessionState>();
 // return ApiClient with Provider since it does not change
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClient();
@@ -34,29 +42,29 @@ class ApiClient {
 
   Future<http.Response> postData(String url, body) async {
     print('got to api client');
+    print(AppConstants.BASE_URL + url);
 
     try {
       final response = await http.post(
         Uri.parse(AppConstants.BASE_URL + url),
         headers: _mainHeaders,
-        // headers: {
-        //   'Content-type': 'application/json; charset=UTF-8',
-        //   'Accept': 'application/json',
-        //   'Authorization': 'Bearer $token',
-        // },
         body: body,
       );
-      // .timeout(const Duration(seconds: 30));
 
-      // print(AppConstants.BASE_URL + url);
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Request was successful, return the response
         print('response');
-        // print(jsonDecode(response.body).toString());
+        return response;
+      } else if (response.statusCode == 401) {
+        print('auth error here');
+
+        print('error auth');
+        // redirectingAlert(context, 'message', 'subText', 'redirectText');
+        multipleLoginRedirectModal();
+
         return response;
       } else {
         // Request failed with a non-2XX status code
-        // print(response.body);
         http.Response('Error: ${response.reasonPhrase} ', response.statusCode);
         print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
 
@@ -75,6 +83,7 @@ class ApiClient {
       return resp;
     }
   }
+
 
 /*  Method to update data to backend  **/
   Future putData(url, body) async {

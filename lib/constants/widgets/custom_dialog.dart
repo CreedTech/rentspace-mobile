@@ -589,7 +589,6 @@ void customErrorDialog(
           ),
         );
       });
-
 }
 
 void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
@@ -890,4 +889,94 @@ void sessionAlert(BuildContext context, String message, String subText,
           ),
         );
       });
+}
+
+Future<dynamic> multipleLoginRedirectModal() {
+  final sessionStateStream = StreamController<SessionState>();
+  return Get.dialog(
+    barrierDismissible: false,
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error,
+                        color: colorBlack,
+                        size: 24,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        "Multiple Device Login Attempt",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          color: colorBlack,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  Text(
+                    "Your Rentspace Account has been logged in on another device. Multiple Device login may lead to theft.",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                      color: colorBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  //Buttons
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: const Color(0xFFFFFFFF),
+                      minimumSize: const Size(0, 45),
+                      backgroundColor: brandTwo,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.offAll(
+                          LoginPage(sessionStateStream: sessionStateStream));
+                    },
+                    child: Text(
+                      'Re Login',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

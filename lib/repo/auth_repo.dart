@@ -372,7 +372,7 @@ class AuthRepository {
       // responseModel = ResponseModel("Code sent to your email", true);
       // return responseModel;
       print('response on logout');
-      // print(response.body);
+      print(response.body);
       responseModel = ResponseModel('User logged out successfully', true);
       return responseModel;
     }

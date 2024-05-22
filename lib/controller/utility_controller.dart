@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:local_session_timeout/local_session_timeout.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
+import '../constants/colors.dart';
+import '../constants/widgets/custom_dialog.dart';
 import '../model/utility_model.dart';
+import '../view/login_page.dart';
 
 class UtilityController extends GetxController {
+    final sessionStateStream = StreamController<SessionState>();
   var isLoading = false.obs;
   // final rent = <Rent>[].obs;
   UtilityHistoryModel? utilityHistoryModel;
@@ -49,6 +55,10 @@ class UtilityController extends GetxController {
           print('No utility histories found');
         }
         isLoading(false);
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
         //   rentModel = ;

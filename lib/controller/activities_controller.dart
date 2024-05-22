@@ -1,18 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
 // import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../../api/global_services.dart';
+import '../constants/colors.dart';
+import '../constants/widgets/custom_dialog.dart';
 import '../model/activities_model.dart';
+import '../view/login_page.dart';
 
 
 
 class ActivitiesController extends GetxController {
+    final sessionStateStream = StreamController<SessionState>();
   // final userDB = UserDB();
   var isLoading = false.obs;
   final activities = <Activities>[].obs;
@@ -47,7 +53,11 @@ class ActivitiesController extends GetxController {
         activitiesModel = ActivitiesModel.fromJson(result);
         isLoading(false);
         print(activitiesModel!.activities);
-      } else {
+      }  else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
+      }else {
         print(response.body);
         print('error fetching data');
       }

@@ -56,4 +56,105 @@ class ElectriciryConstants {
       'description': 'PortHarcourt Prepaid'
     },
   ];
+
+  static List<Map<String, String>> electirictyBillerItems = [
+    {
+      "id": "eko_electric_postpaid",
+      "name": "Eko Postpaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "eko_electric_prepaid",
+      "name": "Eko Prepaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "enugu_electric_postpaid",
+      "name": "Enugu Postpaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "enugu_electric_prepaid",
+      "name": "Enugu Prepaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "ibadan_electric_postpaid",
+      "name": "Ibadan Postpaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "ibadan_electric_prepaid",
+      "name": "Ibadan Prepaid",
+      "division": "B",
+      "product": "400",
+      "category": "Utility"
+    },
+    {
+      "id": "ikeja_electric_postpaid",
+      "name": "Ikeja Postpaid",
+      "division": "B",
+      "product": "402",
+      "category": "Utility"
+    },
+    {
+      "id": "ikeja_electric_prepaid",
+      "name": "Ikeja Prepaid",
+      "division": "B",
+      "product": "402",
+      "category": "Utility"
+    },
+    {
+      "id": "jos_electric_postpaid",
+      "name": "Jos Postpaid",
+      "division": "B",
+      "product": "403",
+      "category": "Utility"
+    },
+    {
+      "id": "jos_electric_prepaid",
+      "name": "Jos Prepaid",
+      "division": "B",
+      "product": "403",
+      "category": "Utility"
+    },
+    {
+      "id": "kaduna_electric_prepaid",
+      "name": "Kaduna Prepaid",
+      "division": "B",
+      "product": "404",
+      "category": "Utility"
+    },
+    {
+      "id": "kedco_electric_prepaid",
+      "name": "Kano Prepaid",
+      "division": "B",
+      "product": "405",
+      "category": "Utility"
+    },
+    {
+      "id": "portharcourt_electric_postpaid",
+      "name": "Port Harcourt Postpaid (Xpresspayments)",
+      "division": "B",
+      "product": "406",
+      "category": "Utility"
+    },
+    {
+      "id": "portharcourt_electric_prepaid",
+      "name": "Port Harcourt Prepaid (Xpresspayments)",
+      "division": "B",
+      "product": "406",
+      "category": "Utility"
+    }
+  ];
 }
