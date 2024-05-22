@@ -171,6 +171,56 @@ class AuthRepository {
     return responseModel = ResponseModel(error, false);
   }
 
+  Future<ResponseModel> singleDeviceLoginOtp(body) async {
+    print('Got here in otp repo');
+    ResponseModel responseModel;
+    // Call signIn method in SharedPreferencesManager to get the token
+    // String authToken =
+    //     await GlobalService.sharedPreferencesManager.getAuthToken();
+    // print('authToken');
+    // print(authToken);
+
+    // // Update the headers in ApiClient with the obtained token
+    // _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.SINGLE_DEVICE_LOGIN_OTP, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified then login', true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
+  Future<ResponseModel> verifySingleDeviceLoginOtp(body) async {
+    print('Got here in otp repo');
+    ResponseModel responseModel;
+    Response response = await _apiClient.postData(
+        AppConstants.VERIFY_SINGLE_DEVICE_LOGIN_OTP, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel('Otp Verified', true);
+      return responseModel;
+    }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
   Future<ResponseModel> postFcmToken(body) async {
     print('Got here in auth fcm token repo');
     ResponseModel responseModel;
@@ -300,7 +350,6 @@ class AuthRepository {
     //  print("Here in repo" + response.reasonPhrase.toString());
     return responseModel = ResponseModel(error, false);
   }
-
 
   Future<ResponseModel> logout() async {
     print('Got here in user repo');

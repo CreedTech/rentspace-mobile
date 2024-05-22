@@ -334,7 +334,7 @@ Future<void> initNotifications() async {
         print("onMessageOpened here: ${notificationResponse.payload}");
         print('payload before routing');
         // print(notificationResponse.payload);
-        Get.to(FirstPage());
+        Get.to(const FirstPage());
         // Get.to(NewNotificationPage(
         //     message: notificationResponse.payload));
         // Get.to(SettingsPage());
@@ -452,7 +452,6 @@ class _MyAppState extends State<MyApp> {
       sessionStateStream.add(SessionState.stopListening);
       // sessionCheckout.onResume()
       if (timeoutEvent == SessionTimeoutState.userInactivityTimeout) {
-  
         _sessionNavigator.push(MaterialPageRoute(
           builder: (_) => IdlePage(
               sessionStateStream: sessionStateStream,
@@ -479,20 +478,24 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: false,
         builder: (contex, child) {
-          return GetMaterialApp(
-            theme: Themes().lightTheme,
-            // darkTheme: Themes().darkTheme,
-            themeMode: ThemeServices().getThemeMode(),
-            debugShowCheckedModeBanner: false,
-            navigatorKey: _sessionNavigatorKey,
-            title: 'RentSpace',
-            // initialRoute: root,
-            home: SplashScreen(
-              sessionStateStream: sessionStateStream,
+          return MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: const TextScaler.linear(1)),
+            child: GetMaterialApp(
+              theme: Themes().lightTheme,
+              // darkTheme: Themes().darkTheme,
+              themeMode: ThemeServices().getThemeMode(),
+              debugShowCheckedModeBanner: false,
+              navigatorKey: _sessionNavigatorKey,
+              title: 'RentSpace',
+              // initialRoute: root,
+              home: SplashScreen(
+                sessionStateStream: sessionStateStream,
+              ),
+              onGenerateRoute: RouterGenerator().generate,
+              onUnknownRoute: RouterGenerator.onUnknownRoute,
+              builder: EasyLoading.init(),
             ),
-            onGenerateRoute: RouterGenerator().generate,
-            onUnknownRoute: RouterGenerator.onUnknownRoute,
-            builder: EasyLoading.init(),
           );
         },
       ),

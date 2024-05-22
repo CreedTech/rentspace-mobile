@@ -14,6 +14,7 @@ import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
 import 'package:rentspace/view/actions/reset_pin.dart';
+import 'package:rentspace/view/auth/multiple_device_login.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
 import 'package:rentspace/view/home_page.dart';
@@ -30,6 +31,7 @@ import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
 import '../../view/FirstPage.dart';
 import '../../view/actions/reset_password.dart';
+import '../../view/auth/multiple_device_login_otp_page.dart';
 // import 'user_controller.dart';
 
 final authControllerProvider =
@@ -138,6 +140,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
               .contains("String must contain at least 11 character(s)")) {
         EasyLoading.dismiss();
         message = "Phone Number must be at least 11";
+        isLoading = false;
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -611,24 +614,21 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         );
         customErrorDialog(context, 'Error', message);
 
-        // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
         return;
       } else if (response.success == false &&
           response.message
               .contains("User already logged in on another device")) {
-        // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "User already logged in on another device";
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => BvnPage(
-              email: email.toString().toLowerCase(),
+            builder: (context) => MultipleDeviceLogin(
+              email: email,
             ),
           ),
         );
-        customErrorDialog(context, 'Error', message);
+        // customErrorDialog(context, 'Error', message);
 
-        // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
         return;
       } else {
         // authStatus = AuthStatus.NOT_LOGGED_IN;
@@ -665,6 +665,122 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       //  debugPrint(state.toString());
       // print(e.toString());
     } finally {
+      isLoading = false;
+      return;
+    }
+  }
+
+  Future singleDeviceLoginOtp(BuildContext context, email) async {
+    // print(email);
+    isLoading = true;
+    if (email.isEmpty || email == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+
+    Map<String, dynamic> mail = {
+      'email': email.toString().toLowerCase(),
+    };
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var response = await authRepository.singleDeviceLoginOtp(mail);
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        Get.to(
+            MultipleDeviceLoginOtpPage(email: email.toString().toLowerCase()));
+        // resendVerification(context);
+        // resendVerification(context, 'Successfully Sent 🎉',
+        //     'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
+        return;
+      } else if (response.success == false &&
+          response.message.contains("User not found")) {
+        message = "User not found";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        // to capture other errors later
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Oops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  Future verifySingleDeviceLoginOtp(BuildContext context, email, otp) async {
+    // print(email);
+    isLoading = true;
+    if (email.isEmpty || email == '' || otp.isEmpty || otp == '') {
+      customErrorDialog(context, 'Error', 'All fields are required');
+      return;
+    }
+
+    Map<String, dynamic> body = {
+      'email': email.toString().toLowerCase(),
+      'otp': otp
+    };
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var response = await authRepository.verifySingleDeviceLoginOtp(body);
+      if (response.success) {
+        EasyLoading.dismiss();
+        isLoading = false;
+        Get.to(LoginPage(sessionStateStream: sessionStateStream));
+        // resendVerification(context);
+        // resendVerification(context, 'Successfully Sent 🎉',
+        //     'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
+        return;
+      } else if (response.success == false &&
+          response.message.contains("Invalid OTP")) {
+        message = "Invalid OTP";
+        EasyLoading.dismiss();
+        isLoading = false;
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.success == false &&
+          response.message.contains("This otp has expired")) {
+        message = "This otp has expired";
+        EasyLoading.dismiss();
+        isLoading = false;
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      message = "Ooops something went wrong";
+      EasyLoading.dismiss();
+      isLoading = false;
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      EasyLoading.dismiss();
       isLoading = false;
       return;
     }
@@ -787,8 +903,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       customErrorDialog(context, 'Error', message);
 
       return;
+    } finally {
+      isLoading = false;
     }
-    return;
   }
 
   Future forgotPassword(BuildContext context, email) async {

@@ -12,6 +12,8 @@ class AppConstants {
   static const SET_NEW_PIN_OTP = '/api/wallet/set-pin';
   static const CHANGE_PIN = '/api/wallet/change-pin';
   static const LOGIN = '/api/user/login';
+  static const SINGLE_DEVICE_LOGIN_OTP = '/api/auth/single-device-login-otp';
+  static const VERIFY_SINGLE_DEVICE_LOGIN_OTP = '/api/auth/verify-single-device-login-otp';
   static const LOGOUT = '/api/user/logout';
 
   static const GET_USER = '/api/user/get-user';
