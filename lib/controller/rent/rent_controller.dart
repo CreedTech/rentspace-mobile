@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
+import '../../constants/widgets/custom_dialog.dart';
 
 class RentController extends GetxController {
   final sessionStateStream = StreamController<SessionState>();

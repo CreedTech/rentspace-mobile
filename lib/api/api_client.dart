@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 
 import '../constants/app_constants.dart';
 
@@ -14,12 +16,10 @@ final sessionStateStream = StreamController<SessionState>();
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClient();
 });
-
 class ApiClient {
   String? appBaseUrl = AppConstants.BASE_URL;
   late Map<String, String> _mainHeaders;
   String token = "";
-
   ApiClient() {
     // Initialize headers without the token
     _mainHeaders = {
@@ -27,18 +27,15 @@ class ApiClient {
       'Accept': 'application/json',
     };
   }
-
   // Update headers with the token
   void updateHeaders(String newToken) {
     token = newToken;
     _mainHeaders['Authorization'] = 'Bearer $token';
   }
-
   /// Method to send data to backend, don't edit this code  *
-
   Future<http.Response> postData(String url, body) async {
-    // print('got to api client');
-    // print(AppConstants.BASE_URL + url);
+    print('got to api client');
+    print(AppConstants.BASE_URL + url);
 
     try {
       final response = await http.post(
@@ -49,12 +46,13 @@ class ApiClient {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Request was successful, return the response
-        // print('response');
+        print('response');
+        // print(jsonDecode(response.body).toString());
         return response;
       } else if (response.statusCode == 401) {
-        // print('auth error here');
+        print('auth error here');
 
-        // print('error auth');
+        print('error auth');
         // redirectingAlert(context, 'message', 'subText', 'redirectText');
         multipleLoginRedirectModal();
 
@@ -74,11 +72,11 @@ class ApiClient {
     } catch (e) {
       // Handle any other exceptions here
       var resp = http.Response('Error: $e', 504);
-      // print('Other exception  ${resp.reasonPhrase} ${resp.body}');
-
+      print('Other exception  ${resp.reasonPhrase}');
       return resp;
     }
   }
+
 
 /*  Method to update data to backend  **/
   Future putData(url, body) async {
@@ -93,21 +91,19 @@ class ApiClient {
     } on TimeoutException {
       response = http.Response("Network Time out", 200);
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
 
       response = http.Response(e.toString(), 504);
     }
     return response;
     //var response = await http.put(url, body: body, headers: _mainHeaders);
   }
-
 /*  Method to accept data from backend  **/
   Future getData(url) async {
     // print('got to api client');
     try {
       final response = await http.get(Uri.parse(AppConstants.BASE_URL + url),
           headers: _mainHeaders);
-
       if (response.statusCode == 200) {
         // Request was successful, return the response
         // print('jsonDecode(response.body).toString()');
@@ -129,15 +125,13 @@ class ApiClient {
       // print(e);
       // Handle any other exceptions here
       var resp = http.Response('Error: $e', 504);
-      // print('Other exception  ${resp.reasonPhrase}');
+      print('Other exception  ${resp.reasonPhrase}');
 
       return resp;
     }
-
     // Response response = await get(url, headers: _mainHeaders);
     // return response;
   }
-
 /*  Method to send photo to backend  **/
   Future postPhoto(String url, String imagePath) async {
     var headers = {
@@ -150,9 +144,7 @@ class ApiClient {
     request.fields.addAll({'URL': url});
     request.files.add(await http.MultipartFile.fromPath('image', imagePath));
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       // print(await response.stream.bytesToString());
     } else {

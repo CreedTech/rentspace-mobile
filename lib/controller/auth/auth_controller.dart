@@ -330,6 +330,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
@@ -1720,6 +1724,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        print('error auth');
+        multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Wallet not found")) {
         message = "Wallet not found";
