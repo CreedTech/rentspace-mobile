@@ -1,4 +1,3 @@
-
 class SpaceRentModel {
   SpaceRentModel({
     required this.rents,
@@ -47,30 +46,35 @@ class SpaceRent {
   final dynamic intervalAmount;
   final dynamic paidAmount;
   final String paymentStatus;
+  final dynamic spaceRentInterest;
   final String nextDate;
   final String createdAt;
   final String updatedAt;
   final List<dynamic> rentHistories;
+  final List<dynamic> spaceRentInterestHistories;
 
-  SpaceRent(
-      {required this.id,
-      required this.rentName,
-      required this.rentspaceId,
-      required this.currentPayment,
-      required this.date,
-      required this.hasPaid,
-      required this.dueDate,
-      required this.interval,
-      required this.amount,
-      required this.paymentCount,
-      required this.completed,
-      required this.intervalAmount,
-      required this.paidAmount,
-      required this.paymentStatus,
-      required this.nextDate,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.rentHistories});
+  SpaceRent({
+    required this.id,
+    required this.rentName,
+    required this.rentspaceId,
+    required this.currentPayment,
+    required this.date,
+    required this.hasPaid,
+    required this.dueDate,
+    required this.interval,
+    required this.amount,
+    required this.paymentCount,
+    required this.completed,
+    required this.intervalAmount,
+    required this.paidAmount,
+    required this.paymentStatus,
+    required this.spaceRentInterest,
+    required this.nextDate,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.rentHistories,
+    required this.spaceRentInterestHistories,
+  });
 
   factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
       id: json['_id'],
@@ -84,13 +88,15 @@ class SpaceRent {
       amount: json['amount'],
       paymentCount: json['payment_count'],
       completed: json['completed'],
+      spaceRentInterest: json['spaceRentInterest'],
       intervalAmount: json['interval_amount'],
       paidAmount: json['paid_amount'],
       paymentStatus: json['payment_status'],
       nextDate: json['next_date'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      rentHistories: json["rentHistories"]);
+      rentHistories: json["rentHistories"],
+      spaceRentInterestHistories: json["spaceRentInterestHistories"]);
 
   Map<String, dynamic> toJson() => {
         '_id': id,
@@ -104,12 +110,14 @@ class SpaceRent {
         'amount': amount,
         'payment_count': paymentCount,
         'completed': completed,
+        'spaceRentInterest': spaceRentInterest,
         'interval_amount': intervalAmount,
         'paid_amount': paidAmount,
         'payment_status': paymentStatus,
         'next_date': nextDate,
         'createdAt': createdAt,
         'updatedAt': updatedAt,
-        'rentHistories': rentHistories
+        'rentHistories': rentHistories,
+        'spaceRentInterestHistories': spaceRentInterestHistories
       };
 }

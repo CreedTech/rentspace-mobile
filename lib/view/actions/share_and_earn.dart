@@ -26,7 +26,7 @@ class ShareAndEarn extends StatefulWidget {
 
 class _ShareAndEarnState extends State<ShareAndEarn> {
   final UserController userController = Get.find();
-  var ch8t = NumberFormat.simpleCurrency(name: 'N');
+  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
   @override
   initState() {
     super.initState();

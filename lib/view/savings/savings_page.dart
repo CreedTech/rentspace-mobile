@@ -45,7 +45,7 @@ List savingOptions = [
   },
 ];
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 
 String _hasRent = "";
 double tankBalance = 0;

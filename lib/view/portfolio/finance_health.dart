@@ -35,7 +35,7 @@ class FinanceHealth extends StatefulWidget {
   _FinanceHealthState createState() => _FinanceHealthState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 
 double tankBalance = 0;
 double boxBalance = 0;

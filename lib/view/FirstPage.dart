@@ -8,6 +8,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/widgets/shimmer_widget.dart';
+import 'package:rentspace/controller/airtime_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/utility_controller.dart';
@@ -39,6 +40,7 @@ final UserController userController = Get.find();
 final WalletController walletController = Get.find();
 final RentController rentController = Get.find();
 final UtilityResponseController utilityResponseController = Get.find();
+final AirtimesController airtimesController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
@@ -125,7 +127,8 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(UserController());
     Get.put(RentController());
     Get.put(WalletController());
-    Get.put(UtilityResponseController());
+    Get.put(UtilityResponseController(context));
+    Get.put(AirtimesController(context));
     Get.put(UtilityController());
     Future.delayed(const Duration(seconds: 3), () {
       // fetchUserAndSetState();
@@ -177,7 +180,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(RentController());
     Get.put(UtilityController());
     Get.put(WalletController());
-    Get.put(UtilityResponseController());
+    Get.put(UtilityResponseController(context));
     return Obx(
       () => (userController.isHomePageLoading.value.obs() == true)
           ? Scaffold(

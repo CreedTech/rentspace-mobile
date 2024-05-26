@@ -28,7 +28,7 @@ class SpaceDepositConfirmationPage extends StatefulWidget {
       _SpaceDepositConfirmationPageState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 bool showNotice = false;
 String interestValue = "0";
 String amountNotice = "";

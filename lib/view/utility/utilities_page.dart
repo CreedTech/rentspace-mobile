@@ -116,7 +116,7 @@
 // }
 
 // //API endpoints
-// var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+// var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 // //variables
 // bool canLoad = false;
 // bool showLoading = false;

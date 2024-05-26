@@ -481,7 +481,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
               children: [
                 const SizedBox(),
                 Text(
-                  NumberFormat.simpleCurrency(name: 'N').format(amount),
+                  NumberFormat.simpleCurrency(name: 'NGN').format(amount),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w700,
@@ -596,7 +596,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                   ),
                                 ),
                                 Text(
-                                  NumberFormat.simpleCurrency(name: 'N')
+                                  NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(amount),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
@@ -621,7 +621,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                   ),
                                 ),
                                 Text(
-                                  NumberFormat.simpleCurrency(name: 'N')
+                                  NumberFormat.simpleCurrency(name: 'NGN')
                                       .format(0),
                                   style: GoogleFonts.roboto(
                                     color: brandOne,
@@ -657,7 +657,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                 //       ),
                                 //     ),
                                 //     Text(
-                                //       NumberFormat.simpleCurrency(name: 'N').format(userController.userModel!
+                                //       NumberFormat.simpleCurrency(name: 'NGN').format(userController.userModel!
                                 //           .userDetails![0].wallet.mainBalance),
                                 //       style: GoogleFonts.lato(
                                 //         color: brandOne,
@@ -711,7 +711,7 @@ class _DataListScreenState extends ConsumerState<DataListScreen> {
                                       ),
                                       TextSpan(
                                         text:
-                                            '(${NumberFormat.simpleCurrency(name: 'N').format(walletController.walletModel!.wallet![0].mainBalance)})',
+                                            '(${NumberFormat.simpleCurrency(name: 'NGN').format(walletController.walletModel!.wallet![0].mainBalance)})',
                                         style: GoogleFonts.lato(
                                           color: ((amount) >
                                                   walletController.walletModel!

@@ -486,37 +486,6 @@ void customErrorDialog(
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.of(context).pop();
-                //   },
-                //   child: Align(
-                //     alignment: Alignment.topRight,
-                //     child: Container(
-                //       decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(30),
-                //         // color: brandOne,
-                //       ),
-                //       child: Icon(
-                //         Iconsax.close_circle,
-                //         color: Colors.red,
-                //         size: 30,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-
-                // Align(
-                //   alignment: Alignment.center,
-                //   child: Icon(
-                //     Iconsax.warning_2,
-                //     color: Colors.red,
-                //     size: 45,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 12.h,
-                // ),
                 Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -552,7 +521,6 @@ void customErrorDialog(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-
                 const SizedBox(
                   height: 29,
                 ),
@@ -575,6 +543,98 @@ void customErrorDialog(
                     },
                     child: Text(
                       'Ok',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+void customSuccessDialog(
+    BuildContext context, String message, String subText) async {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: null,
+          scrollable: true,
+          elevation: 0,
+          content: SizedBox(
+            // height: 220.h,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/success_icon.png',
+                      width: 24,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      message,
+                      style: GoogleFonts.lato(
+                        color: colorBlack,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 14,
+                ),
+                Text(
+                  subText,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  height: 29,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
+                      backgroundColor: brandTwo,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      // Navigator.of(context).pop();
+                      Get.to(const FirstPage());
+                    },
+                    child: Text(
+                      'Continue',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                         color: Colors.white,
@@ -716,7 +776,7 @@ Future<void> SucessfulReciept(
                             ),
                             Text(
                               // '₦ 10,000',
-                              NumberFormat.simpleCurrency(name: 'N')
+                              NumberFormat.simpleCurrency(name: 'NGN')
                                   .format(amount),
 
                               textAlign: TextAlign.center,

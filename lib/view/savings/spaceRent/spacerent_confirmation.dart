@@ -40,7 +40,7 @@ class SpaceRentConfirmationPage extends ConsumerStatefulWidget {
       _SpaceRentConfirmationPageState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
 class _SpaceRentConfirmationPageState
     extends ConsumerState<SpaceRentConfirmationPage> {

@@ -34,7 +34,7 @@ class TransferPage extends StatefulWidget {
   State<TransferPage> createState() => _TransferPageState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
 class _TransferPageState extends State<TransferPage> {
   final UserController userController = Get.find();
@@ -117,20 +117,20 @@ class _TransferPageState extends State<TransferPage> {
     }
   }
 
-  void _openBankSelectorOverlay() async {
-    final List<dynamic>? selectedBank = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const BankSelectorOverlay()),
-    );
-    if (selectedBank != null && selectedBank.length == 2) {
-      setState(() {
-        _selectedBank = selectedBank[0];
-        _currentBankCode = selectedBank[1];
-        _bankController.text = _selectedBank!;
-      });
-    }
-    _checkFieldsAndHitApi();
-  }
+  // void _openBankSelectorOverlay() async {
+  //   final List<dynamic>? selectedBank = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const BankSelectorOverlay()),
+  //   );
+  //   if (selectedBank != null && selectedBank.length == 2) {
+  //     setState(() {
+  //       _selectedBank = selectedBank[0];
+  //       _currentBankCode = selectedBank[1];
+  //       _bankController.text = _selectedBank!;
+  //     });
+  //   }
+  //   _checkFieldsAndHitApi();
+  // }
 
   void _updateMessage() {
     if (isChecking) {
@@ -288,7 +288,7 @@ class _TransferPageState extends State<TransferPage> {
       print('fetching');
       await getBanksList();
       await userController.fetchData();
-      await userController.fetchRecentTransfers();
+      // await userController.fetchRecentTransfers();
       await walletController.fetchWallet();
       print('fetched');
     }
@@ -811,87 +811,89 @@ class _TransferPageState extends State<TransferPage> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40, bottom: 10),
-                    child: Text(
-                      'Recents',
-                      style: GoogleFonts.lato(
-                        color: colorBlack,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: userController
-                          .recentTransfersModel!.recentTransfers!.length,
-                      itemBuilder: ((context, index) {
-                        print(userController.recentTempName);
-                        final details = userController.recentTempName[index];
-                        List<String> nameParts = details[0].split(' ');
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _bankController.text = details[1];
-                              _accountNumberController.text = details[2];
-                              _bankAccountName = details[0];
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 59,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/bank_icon.png',
-                                      width: 44,
-                                      height: 44,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          nameParts[0].toString().capitalize!,
-                                          textAlign: TextAlign.center,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: GoogleFonts.lato(
-                                            color: colorBlack,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          nameParts[1].toString().capitalize!,
-                                          textAlign: TextAlign.center,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.lato(
-                                            color: colorBlack,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 40, bottom: 10),
+                  //   child: Text(
+                  //     'Recents',
+                  //     style: GoogleFonts.lato(
+                  //       color: colorBlack,
+                  //       fontWeight: FontWeight.w500,
+                  //       fontSize: 16,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // Container(
+                  //   height: 80,
+                  //   child: ListView.builder(
+                  //     scrollDirection: Axis.horizontal,
+                  //     physics: const BouncingScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: userController
+                  //         .recentTransfersModel!.recentTransfers!.length,
+                  //     itemBuilder: ((context, index) {
+                  //       print(userController.recentTempName);
+                  //       final details = userController.recentTempName[index];
+                  //       List<String> nameParts = details[0].split(' ');
+                  //       return GestureDetector(
+                  //         onTap: () {
+                  //           setState(() {
+                  //             _bankController.text = details[1];
+                  //             _accountNumberController.text = details[2];
+                  //             _bankAccountName = details[0];
+                  //           });
+                  //         },
+                  //         child: Row(
+                  //           children: [
+                  //             Container(
+                  //               width: 59,
+                  //               child: Column(
+                  //                 children: [
+                  //                   Image.asset(
+                  //                     'assets/icons/bank_icon.png',
+                  //                     width: 44,
+                  //                     height: 44,
+                  //                   ),
+                  //                   Column(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.center,
+                  //                     children: [
+                  //                       Text(
+                  //                         nameParts[0].toString().capitalize!,
+                  //                         textAlign: TextAlign.center,
+                  //                         overflow: TextOverflow.ellipsis,
+                  //                         maxLines: 1,
+                  //                         style: GoogleFonts.lato(
+                  //                           color: colorBlack,
+                  //                           fontWeight: FontWeight.w400,
+                  //                           fontSize: 12,
+                  //                         ),
+                  //                       ),
+                  //                       Text(
+                  //                         nameParts[1].toString().capitalize!,
+                  //                         textAlign: TextAlign.center,
+                  //                         overflow: TextOverflow.ellipsis,
+                  //                         style: GoogleFonts.lato(
+                  //                           color: colorBlack,
+                  //                           fontWeight: FontWeight.w400,
+                  //                           fontSize: 12,
+                  //                         ),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             const SizedBox(
+                  //               width: 12,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  // ),
+
                   Form(
                     key: withdrawFormKey,
                     child: Column(

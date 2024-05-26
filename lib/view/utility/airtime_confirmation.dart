@@ -5,26 +5,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
+import 'package:rentspace/controller/airtime_controller.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
+import '../../controller/utility_response_controller.dart';
 import '../../controller/wallet_controller.dart';
 
 class AirtimeConfirmation extends ConsumerStatefulWidget {
-  const AirtimeConfirmation(
-      {super.key,
-      required this.number,
-      required this.bill,
-      required this.biller,
-      required this.image,
-      required this.amount});
-  final String number, bill, biller, image;
+  const AirtimeConfirmation({
+    super.key,
+    required this.number,
+    required this.billerId,
+    required this.name,
+    required this.image,
+    required this.divisionId,
+    required this.productId,
+    required this.amount,
+    required this.category,
+    this.customerName,
+  });
+  final String number, billerId, name, image, divisionId, productId, category;
+  final String? customerName;
   final num amount;
 
   @override
@@ -33,9 +42,11 @@ class AirtimeConfirmation extends ConsumerStatefulWidget {
 }
 
 class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
-  var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+  var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
+  final AirtimesController airtimesController = Get.find();
+  final UtilityResponseController utilityResponseController = Get.find();
   final TextEditingController _aPinController = TextEditingController();
   bool isFilled = false;
 
@@ -54,6 +65,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
+
       // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
@@ -63,6 +75,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
   @override
   void initState() {
     super.initState();
+    utilityResponseController.fetchBillerItem(
+        widget.billerId, widget.divisionId, widget.productId);
     fetchUserData();
   }
 
@@ -197,15 +211,18 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               ),
                             ),
                             SizedBox(
-                              height: 8.h,
+                              height: 10.h,
                             ),
                             Text(
-                              widget.number,
+                              '${widget.customerName!} ${widget.number}',
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: colorBlack,
                               ),
+                            ),
+                            SizedBox(
+                              height: 17.h,
                             ),
                           ],
                         ),
@@ -220,6 +237,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            SizedBox(
+                              height: 17.h,
+                            ),
                             Text(
                               'Network',
                               style: GoogleFonts.lato(
@@ -229,7 +249,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               ),
                             ),
                             SizedBox(
-                              height: 8.h,
+                              height: 9.h,
                             ),
                             Row(
                               children: [
@@ -245,7 +265,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                   width: 10,
                                 ),
                                 Text(
-                                  widget.biller,
+                                  widget.name,
                                   style: GoogleFonts.lato(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -253,6 +273,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                   ),
                                 ),
                               ],
+                            ),
+                            SizedBox(
+                              height: 17.h,
                             ),
                           ],
                         ),
@@ -267,6 +290,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            SizedBox(
+                              height: 17.h,
+                            ),
                             Text(
                               'Description',
                               style: GoogleFonts.lato(
@@ -276,10 +302,10 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               ),
                             ),
                             SizedBox(
-                              height: 8.h,
+                              height: 9.h,
                             ),
                             Text(
-                              'Airtime',
+                              widget.category.capitalize!,
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -416,8 +442,10 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               // obscuringCharacter: '*',
                                               useNativeKeyboard: false,
                                               obscureText: true,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               obscuringWidget: Center(
                                                 child: Text(
                                                   "*",
@@ -519,17 +547,39 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                       .wallet
                                                       .pin,
                                                 )) {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  var billerItems =
+                                                      Hive.box(widget.billerId);
+                                                  print(billerItems);
+                                                  var storedData = billerItems
+                                                      .get(widget.billerId);
+                                                  print(widget.billerId);
+                                                  //  storedData['data'];
+                                                  var outputList =
+                                                      storedData['data']
+                                                          .where((o) =>
+                                                              o['billerid'] ==
+                                                              widget.billerId)
+                                                          .toList();
+                                                  print(
+                                                      'output list ${outputList}');
                                                   await fetchUserData()
                                                       .then((value) {
-                                                    appState.buyAirtime(
-                                                        context,
-                                                        widget.amount,
-                                                        widget.number
-                                                            .toString(),
-                                                        widget.bill,
-                                                        widget.biller);
+                                                    airtimesController.payBill(
+                                                      widget.number,
+                                                      widget.amount.toString(),
+                                                      outputList[0]['division'],
+                                                      outputList[0]
+                                                          ['paymentCode'],
+                                                      widget.productId,
+                                                      widget.billerId,
+                                                      widget.category,
+                                                      widget.name,
+                                                    );
                                                   }).catchError(
                                                     (error) {
+                                                      print(error);
                                                       setState(() {
                                                         isFilled = false;
                                                       });

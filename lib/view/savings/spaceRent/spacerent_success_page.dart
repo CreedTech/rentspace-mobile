@@ -27,7 +27,7 @@ class SpaceRentSuccessPage extends StatefulWidget {
 }
 
 class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
-  var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+  var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
   @override
   Widget build(BuildContext context) {

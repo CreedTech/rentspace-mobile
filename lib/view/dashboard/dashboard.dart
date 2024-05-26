@@ -62,7 +62,7 @@ class Dashboard extends ConsumerStatefulWidget {
   _DashboardConsumerState createState() => _DashboardConsumerState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 final themeChange = Get.put(ThemeServices());
 final UserController userController = Get.put(UserController());
 // final ActivitiesController activitiesController =
@@ -109,15 +109,15 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     var hour = DateTime.now().hour;
     if (hour < 12) {
       setState(() {
-        _greeting = 'Good morning 🌅 ';
+        _greeting = 'Good morning';
       });
     } else if (hour < 17) {
       setState(() {
-        _greeting = 'Good Afternoon 🕑';
+        _greeting = 'Good Afternoon';
       });
     } else {
       setState(() {
-        _greeting = 'Good evening 🌙 ';
+        _greeting = 'Good evening';
       });
     }
   }

@@ -33,7 +33,7 @@ class PortfolioPage extends StatefulWidget {
   _PortfolioPageState createState() => _PortfolioPageState();
 }
 
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 double _totalInterest = 0;
 String _loanAmount = "0";
 dynamic _totalSavings = 0;

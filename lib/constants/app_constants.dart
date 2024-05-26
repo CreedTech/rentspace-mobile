@@ -24,6 +24,7 @@ class AppConstants {
   static const OTP = '/api/auth/password/verify';
   static const RESENDOTP = '/api/user/resend-verification-otp';
   static const FORGOTPASSWORD = '/api/auth/password/forgot-password';
+  static const CHANGE_PASSWORD = '/api/user/password/change';
   static const RESEND_PASSWORD_OTP = '/api/user/resend-password-otp';
   static const UPDATE_PHOTO = '/api/user/update-profile';
   static const RESET_PASSWORD = '/api/auth/password/reset-password';

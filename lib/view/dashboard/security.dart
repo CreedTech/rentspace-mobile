@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/actions/change_password.dart';
 import 'package:rentspace/view/actions/change_pin_intro.dart';
 import 'package:rentspace/view/actions/forgot_pin_intro.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -216,209 +217,287 @@ class _SecurityState extends State<Security> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Security',
-          style: GoogleFonts.lato(
-              color: Theme.of(context).primaryColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700),
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Security',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+          padding: EdgeInsets.symmetric(
+            vertical: 15.h,
+            horizontal: 24.w,
           ),
-          child: Column(
+          child: ListView(
             children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: ListTile(
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                          ),
-                          child: const Icon(
-                            Iconsax.password_check,
-                            color: brandOne,
-                          ),
+              Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 17, top: 17, right: 17, bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1), // Shadow color
+                          spreadRadius: 0.5, // Spread radius
+                          blurRadius: 2, // Blur radius
+                          offset: const Offset(0, 3), // Offset
                         ),
-                        title: Text(
-                          'Reset Password',
-                          style: GoogleFonts.lato(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        onTap: () {
-                          Get.to(const ForgotPassword());
-                        },
-                        trailing: Icon(
-                          Iconsax.arrow_right_3,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+                      ],
+                      color: colorWhite,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: ListTile(
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          minVerticalPadding: 0,
+                          // horizontalTitleGap: 0,
+                          minLeadingWidth: 0,
+                          onTap: () {
+                            Get.to(const ChangePassword());
+                          },
+                          title: Text(
+                            "Change Password",
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: colorBlack,
+                            ),
                           ),
-                          child: const Icon(
-                            Iconsax.password_check,
-                            color: brandOne,
-                          ),
-                        ),
-                        onTap: () {
-                          Get.to(const ChangePinIntro());
-                          // Get.to(ForgotPin(
-                          //   password: userController.user[0].userPassword,
-                          //   pin: userController.user[0].transactionPIN,
-                          // ));
-                        },
-                        title: Text(
-                          'Change Payment PIN',
-                          style: GoogleFonts.lato(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        trailing: Icon(
-                          Iconsax.arrow_right_3,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: ListTile(
-                        leading: Container(
-                          padding: const EdgeInsets.all(9),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                          ),
-                          child: const Icon(
-                            Iconsax.password_check,
-                            color: brandOne,
+                          trailing: const Icon(
+                            Icons.keyboard_arrow_right,
+                            color: colorBlack,
+                            size: 20,
                           ),
                         ),
-                        onTap: () {
-                          Get.to(const ForgotPinIntro());
-                          // Get.to(ForgotPin(
-                          //   password: userController.user[0].userPassword,
-                          //   pin: userController.user[0].transactionPIN,
-                          // ));
-                        },
-                        title: Text(
-                          'Forgot Payment PIN',
-                          style: GoogleFonts.lato(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
+                        const Divider(
+                          color: Color(0xffC9C9C9),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          minVerticalPadding: 0,
+                          // horizontalTitleGap: 0,
+                          minLeadingWidth: 0,
+                          onTap: () {
+                            Get.to(const ForgotPinIntro());
+                          },
+                          title: Text(
+                            'Change Transaction Pin',
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: colorBlack,
+                            ),
                           ),
-                        ),
-                        trailing: Icon(
-                          Iconsax.arrow_right_3,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
 
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 0),
-                    //   child: ListTile(
-                    //     leading: Container(
-                    //       padding: const EdgeInsets.all(9),
-                    //       decoration: BoxDecoration(
-                    //         shape: BoxShape.circle,
-                    //         color: Theme.of(context).cardColor,
-                    //       ),
-                    //       child: const Icon(
-                    //         Iconsax.finger_scan,
-                    //         color: brandOne,
-                    //       ),
-                    //     ),
-                    //     // onTap: () {
-                    //     //   Get.to(ForgotPin(
-                    //     //     password: userController.user[0].userPassword,
-                    //     //     pin: userController.user[0].transactionPIN,
-                    //     //   ));
-                    //     // },
-                    //     title: Text(
-                    //       'Biometrics Login',
-                    //       style: GoogleFonts.lato(
-                    //         color: Theme.of(context).primaryColor,
-                    //         fontSize: 15,
-                    //         fontWeight: FontWeight.w600,
-                    //       ),
-                    //     ),
-                    //     subtitle: Text(
-                    //         (hasBiometricStorage.read('hasBiometric') != null &&
-                    //                 hasBiometricStorage.read('hasBiometric') ==
-                    //                     true)
-                    //             ? 'Disable Biometrics'
-                    //             : 'Enable Biometrics',
-                    //         style: GoogleFonts.lato(
-                    //           color: Theme.of(context).primaryColor,
-                    //           fontSize: 12,
-                    //           fontWeight: FontWeight.w400,
-                    //         )),
-                    //     trailing: Switch(
-                    //       activeColor: Theme.of(context).primaryColor,
-                    //       inactiveTrackColor: brandTwo,
-                    //       value:
-                    //           hasBiometricStorage.read('hasBiometric') ?? false,
-                    //       onChanged: (_hasBiometric) {
-                    //         print(_hasBiometric);
-                    //         print('hasBiometricStorage');
-                    //         print(hasBiometricStorage.read('hasBiometric'));
-                    //         if ((hasBiometricStorage.read('hasBiometric') !=
-                    //                 null &&
-                    //             hasBiometricStorage.read('hasBiometric') ==
-                    //                 true)) {
-                    //           _NotAuthenticateMe();
-                    //         } else {
-                    //           _authenticateMe();
-                    //         }
-                    //       },
-                    //     ),
-                    //     // const Icon(
-                    //     //   Iconsax.arrow_right_3,
-                    //     //   color: brandOne,
-                    //     // ),
-                    //   ),
-                    // ),
-                  ],
-                ),
+                          trailing: const Icon(
+                            Icons.keyboard_arrow_right,
+                            color: colorBlack,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 0),
+                  //   child: ListTile(
+                  //     leading: Container(
+                  //       padding: const EdgeInsets.all(9),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Theme.of(context).cardColor,
+                  //       ),
+                  //       child: const Icon(
+                  //         Iconsax.password_check,
+                  //         color: brandOne,
+                  //       ),
+                  //     ),
+                  //     title: Text(
+                  //       'Reset Password',
+                  //       style: GoogleFonts.lato(
+                  //         color: Theme.of(context).primaryColor,
+                  //         fontSize: 13,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Get.to(const ForgotPassword());
+                  //     },
+                  //     trailing: Icon(
+                  //       Iconsax.arrow_right_3,
+                  //       color: Theme.of(context).primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 0),
+                  //   child: ListTile(
+                  //     leading: Container(
+                  //       padding: const EdgeInsets.all(9),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Theme.of(context).cardColor,
+                  //       ),
+                  //       child: const Icon(
+                  //         Iconsax.password_check,
+                  //         color: brandOne,
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Get.to(const ChangePinIntro());
+                  //       // Get.to(ForgotPin(
+                  //       //   password: userController.user[0].userPassword,
+                  //       //   pin: userController.user[0].transactionPIN,
+                  //       // ));
+                  //     },
+                  //     title: Text(
+                  //       'Change Payment PIN',
+                  //       style: GoogleFonts.lato(
+                  //         color: Theme.of(context).primaryColor,
+                  //         fontSize: 13,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     trailing: Icon(
+                  //       Iconsax.arrow_right_3,
+                  //       color: Theme.of(context).primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 0),
+                  //   child: ListTile(
+                  //     leading: Container(
+                  //       padding: const EdgeInsets.all(9),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Theme.of(context).cardColor,
+                  //       ),
+                  //       child: const Icon(
+                  //         Iconsax.password_check,
+                  //         color: brandOne,
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Get.to(const ForgotPinIntro());
+                  //       // Get.to(ForgotPin(
+                  //       //   password: userController.user[0].userPassword,
+                  //       //   pin: userController.user[0].transactionPIN,
+                  //       // ));
+                  //     },
+                  //     title: Text(
+                  //       'Forgot Payment PIN',
+                  //       style: GoogleFonts.lato(
+                  //         color: Theme.of(context).primaryColor,
+                  //         fontSize: 13,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     trailing: Icon(
+                  //       Iconsax.arrow_right_3,
+                  //       color: Theme.of(context).primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 0),
+                  //   child: ListTile(
+                  //     leading: Container(
+                  //       padding: const EdgeInsets.all(9),
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Theme.of(context).cardColor,
+                  //       ),
+                  //       child: const Icon(
+                  //         Iconsax.finger_scan,
+                  //         color: brandOne,
+                  //       ),
+                  //     ),
+                  //     // onTap: () {
+                  //     //   Get.to(ForgotPin(
+                  //     //     password: userController.user[0].userPassword,
+                  //     //     pin: userController.user[0].transactionPIN,
+                  //     //   ));
+                  //     // },
+                  //     title: Text(
+                  //       'Biometrics Login',
+                  //       style: GoogleFonts.lato(
+                  //         color: Theme.of(context).primaryColor,
+                  //         fontSize: 15,
+                  //         fontWeight: FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //     subtitle: Text(
+                  //         (hasBiometricStorage.read('hasBiometric') != null &&
+                  //                 hasBiometricStorage.read('hasBiometric') ==
+                  //                     true)
+                  //             ? 'Disable Biometrics'
+                  //             : 'Enable Biometrics',
+                  //         style: GoogleFonts.lato(
+                  //           color: Theme.of(context).primaryColor,
+                  //           fontSize: 12,
+                  //           fontWeight: FontWeight.w400,
+                  //         )),
+                  //     trailing: Switch(
+                  //       activeColor: Theme.of(context).primaryColor,
+                  //       inactiveTrackColor: brandTwo,
+                  //       value:
+                  //           hasBiometricStorage.read('hasBiometric') ?? false,
+                  //       onChanged: (_hasBiometric) {
+                  //         print(_hasBiometric);
+                  //         print('hasBiometricStorage');
+                  //         print(hasBiometricStorage.read('hasBiometric'));
+                  //         if ((hasBiometricStorage.read('hasBiometric') !=
+                  //                 null &&
+                  //             hasBiometricStorage.read('hasBiometric') ==
+                  //                 true)) {
+                  //           _NotAuthenticateMe();
+                  //         } else {
+                  //           _authenticateMe();
+                  //         }
+                  //       },
+                  //     ),
+                  //     // const Icon(
+                  //     //   Iconsax.arrow_right_3,
+                  //     //   color: brandOne,
+                  //     // ),
+                  //   ),
+                  // ),
+                ],
               ),
             ],
           ),

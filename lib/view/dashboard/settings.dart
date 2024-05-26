@@ -1,6 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -389,7 +393,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color(0xffF6F6F8),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            Text(
+              'Profile',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: LiquidPullToRefresh(
         height: 100,
         animSpeedFactor: 2,
@@ -399,483 +421,428 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         onRefresh: onRefresh,
         child: SafeArea(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            vertical: 15.h,
+            horizontal: 24.w,
+          ),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  // height: 80,
-                  width: MediaQuery.of(context).size.width - 20,
-                  // decoration: BoxDecoration(
-                  //   color: brandOne,
-                  //   borderRadius: BorderRadius.circular(20),
-                  // ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Stack(
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 17, top: 17, right: 17, bottom: 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1), // Shadow color
+                      spreadRadius: 0.5, // Spread radius
+                      blurRadius: 2, // Blur radius
+                      offset: const Offset(0, 3), // Offset
+                    ),
+                  ],
+                  color: colorWhite,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      minVerticalPadding: 0,
+                      horizontalTitleGap: 0,
+                      minLeadingWidth: 0,
+                      title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 13, vertical: 5),
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 1),
-                              borderRadius: BorderRadius.circular(100),
+                              color: const Color(0xffF2F2F2),
+                              borderRadius: BorderRadius.circular(6),
                             ),
-                            child: Container(
-                              width: 60,
-                              height: 60,
-                              // padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                // border: Border.all(color: brandOne,width: 2),
-                                // color: brandOne,
-                                // shape: BoxShape.circle,
-                                borderRadius: BorderRadius.circular(100),
-                                image: DecorationImage(
-                                  colorFilter: const ColorFilter.mode(
-                                    brandThree,
-                                    BlendMode.darken,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Space Point: ',
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: colorBlack,
                                   ),
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                    userController
-                                        .userModel!.userDetails![0].avatar,
-                                  ),
-                                  // NetworkImage(
-                                  //   userController.user[0].image,
-                                  // ),
                                 ),
-                              ),
-                              // child: Image.network(
-                              //   userController.user[0].image,
-                              //   fit: BoxFit.cover,
-                              //   // height: 60,
-                              //   // width: 60,
-                              // ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () {
-                                _pickImage(context, ImageSource.gallery);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(100),
+                                const SizedBox(
+                                  width: 13,
                                 ),
-                                child: const Icon(
-                                  Icons.camera_alt_outlined,
-                                  color: Colors.white,
-                                  size: 15,
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/spacepoint.png',
+                                      width: 8.25,
+                                      height: 11,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      userController.userModel!.userDetails![0]
+                                          .utilityPoints
+                                          .toString(),
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: brandTwo,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
-                              style: GoogleFonts.lato(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            (userController.userModel!.userDetails![0].status ==
-                                    'verified')
-                                ? Icon(
-                                    Iconsax.verify5,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  )
-                                : const SizedBox(),
-
-                            //  ? const Icon(
-                            //   Iconsax.verify5,
-                            //   color: brandOne,
-                            // ):,
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              (userController
-                                          .userModel!.userDetails![0].hasDva ==
-                                      true)
-                                  ? "Account Number: ${userController.userModel!.userDetails![0].dvaNumber}"
-                                  : "Wallet ID: ${userController.userModel!.userDetails![0].wallet.walletId}",
-                              style: GoogleFonts.lato(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            // const Icon(
-                            //   Iconsax.copy,
-                            //   color: brandTwo,
-                            //   size: 15,
-                            // ),
-                          ],
-                        ),
-                      ),
-                      // CupertinoProgressBar(
-                      //   value: ,
-                      // ),
-                      Container(
-                        width: 320,
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: brandThree,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          child: Column(
+                      subtitle: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 13,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceAround,
-                              //   children: [
-                              //     Column(
-                              //       crossAxisAlignment:
-                              //           CrossAxisAlignment.start,
-                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(
-                              //           ch8t.format(
-                              //             userController.userModel!
-                              //                 .userDetails![0].referralPoints,
-                              //           ),
-                              //           style: GoogleFonts.lato(
-                              //             color: brandOne,
-                              //             fontSize: 20,
-                              //             fontWeight: FontWeight.w600,
-                              //           ),
-                              //         ),
-                              //         // SizedBox(
-                              //         //   height: 10.h,
-                              //         // ),
-                              //         Text(
-                              //           'SpacePoints',
-                              //           style: GoogleFonts.lato(
-                              //             color: brandOne,
-                              //             fontSize: 14,
-                              //             fontWeight: FontWeight.w500,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   Column(
-                              //       crossAxisAlignment:
-                              //           CrossAxisAlignment.start,
-                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(
-                              //           ch8t.format(
-                              //             userController.userModel!
-                              //                 .userDetails![0].referralPoints,
-                              //           ),
-                              //           style: GoogleFonts.lato(
-                              //             color: brandOne,
-                              //             fontSize: 20,
-                              //             fontWeight: FontWeight.w600,
-                              //           ),
-                              //         ),
-                              //         // SizedBox(
-                              //         //   height: 10.h,
-                              //         // ),
-                              //         Text(
-                              //           'Referral Bonus',
-                              //           style: GoogleFonts.lato(
-                              //             color: brandOne,
-                              //             fontSize: 14,
-                              //             fontWeight: FontWeight.w500,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //     ],
-                              // ),
-
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Text(
-                              //       'Referral Points',
-                              //       style: GoogleFonts.lato(
-                              //         color: brandOne,
-                              //       ),
-                              //     ),
-                              //     Text(
-                              //       "${valueNotifier.toInt()}%",
-                              //       style: GoogleFonts.lato(
-                              //         color: brandOne,
-                              //         fontWeight: FontWeight.w600,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Text(
-                                      'SpacePoints',
-                                      style: GoogleFonts.lato(
-                                        color: Colors.white,
-                                      ),
+                                  Text(
+                                    'Account Number: ',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: colorBlack,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 20),
-                                    child: Text(
-                                      userController.userModel!.userDetails![0]
-                                          .utilityPoints
-                                          .floor()
-                                          .toString(),
-                                      style: GoogleFonts.lato(
-                                        color: brandOne,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  Text(
+                                    userController
+                                        .userModel!.userDetails![0].dvaNumber,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorBlack,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Clipboard.setData(
+                                        ClipboardData(
+                                          text: userController.userModel!
+                                              .userDetails![0].dvaNumber,
+                                        ),
+                                      );
+                                      Fluttertoast.showToast(
+                                        msg: "Copied to clipboard!",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: brandOne,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                    },
+                                    child: Image.asset(
+                                      'assets/icons/copy_icon.png',
+                                      width: 24,
+                                      height: 24,
+                                      color: colorBlack,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
+                                  Text(
+                                    'Copy',
+                                    style: GoogleFonts.lato(
+                                      color: brandTwo,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      color: Color(0xffC9C9C9),
+                    ),
+                    GestureDetector(
+                       onTap: () {
+                          Get.to(const PersonalDetails());
+                        },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Container(
+                          width: 42.5,
+                          height: 42.5,
+                          // padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              colorFilter: const ColorFilter.mode(
+                                brandThree,
+                                BlendMode.darken,
+                              ),
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                userController.userModel!.userDetails![0].avatar,
+                              ),
+                            ),
+                          ),
+                        ),
+                        title: Text(
+                          "${userController.userModel!.userDetails![0].firstName.capitalizeFirst} ${userController.userModel!.userDetails![0].lastName.capitalizeFirst}",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Account Details",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
                         ),
                       ),
-                      // LinearProgressIndicator(
-                      //   color: (valueNotifier < 70)
-                      //       ? (valueNotifier < 30
-                      //           ? Colors.red
-                      //           : Colors.cyan)
-                      //       : Colors.greenAccent,
-                      // ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 17, top: 17, right: 17, bottom: 17),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1), // Shadow color
+                      spreadRadius: 0.5, // Spread radius
+                      blurRadius: 2, // Blur radius
+                      offset: const Offset(0, 3), // Offset
                     ),
-                    child: const Icon(
-                      Iconsax.user,
-                      color: brandOne,
+                  ],
+                  color: colorWhite,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const Security());
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/security.png'),
+                        title: Text(
+                          "Security",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Manage your account security",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
                     ),
-                  ),
-                  title: Text(
-                    'Profile',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
+                    const Divider(
+                      color: Color(0xffC9C9C9),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        // Get.to(const Security());
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/theme_mode.png'),
+                        title: Text(
+                          "Dark Mode",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Switch to dark mode",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Color(0xffC9C9C9),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const ShareAndEarn());
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/referrals.png'),
+                        title: Text(
+                          "Referral",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Refer and earn",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Color(0xffC9C9C9),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const ContactUsPage());
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/contact.png'),
+                        title: Text(
+                          "Contact us",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Get support or send feedback",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Color(0xffC9C9C9),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const FaqsPage());
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/faq.png'),
+                        title: Text(
+                          "FAQ",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "See frequently asked questions",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 39,
+              ),
+              Center(
+                child: GestureDetector(
                   onTap: () {
-                    Get.to(const PersonalDetails());
-                    // Navigator.pushNamed(context, RouteList.profile);
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-              // Divider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    child: const Icon(
-                      Iconsax.security_safe,
-                      color: brandOne,
-                    ),
-                  ),
-                  title: Text(
-                    'Security',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(const Security());
-                    // Navigator.pushNamed(context, RouteList.profile);
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    child: const Icon(
-                      Iconsax.share,
-                      color: brandOne,
-                    ),
-                  ),
-                  title: Text(
-                    'Referral',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(const ShareAndEarn());
-                    // Navigator.pushNamed(context, RouteList.profile);
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    child: const Icon(
-                      Iconsax.call,
-                      color: brandOne,
-                    ),
-                  ),
-                  title: Text(
-                    'Contact Us',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(const ContactUsPage());
-                    // Navigator.pushNamed(context, RouteList.profile);
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    child: const Icon(
-                      Iconsax.information,
-                      color: brandOne,
-                    ),
-                  ),
-                  title: Text(
-                    'FAQs',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(const FaqsPage());
-                    // Navigator.pushNamed(context, RouteList.profile);
-                  },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                    child: const Icon(
-                      Iconsax.logout,
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text(
-                    'Logout',
-                    style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () async {
                     Get.bottomSheet(
                       SizedBox(
                         height: 250,
@@ -978,12 +945,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         ),
                       ),
                     );
-
-                    // .then((value) => {Get.to(LoginPage())});
                   },
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'Sign out',
+                    style: GoogleFonts.lato(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xffB51D1D),
+                    ),
                   ),
                 ),
               ),

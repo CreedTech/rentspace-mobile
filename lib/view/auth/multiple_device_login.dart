@@ -84,7 +84,7 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                   ),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height - 700,
+                  top: MediaQuery.of(context).size.height  / 4,
                   left: 0,
                   right: 0,
                   bottom: 0,

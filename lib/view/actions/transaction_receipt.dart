@@ -37,7 +37,7 @@ class TransactionReceipt extends StatefulWidget {
   State<TransactionReceipt> createState() => _TransactionReceiptState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
 class _TransactionReceiptState extends State<TransactionReceipt> {
   @override

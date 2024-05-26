@@ -78,7 +78,7 @@ class ApiClient {
     } catch (e) {
       // Handle any other exceptions here
       var resp = http.Response('Error: $e', 504);
-      print('Other exception  ${resp.reasonPhrase}');
+      print('Other exception  ${resp.reasonPhrase} ${resp.body}');
 
       return resp;
     }

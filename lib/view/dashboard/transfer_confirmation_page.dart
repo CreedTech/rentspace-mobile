@@ -37,7 +37,7 @@ class TransferConfirmationPage extends ConsumerStatefulWidget {
       _TransferConfirmationPageState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
 class _TransferConfirmationPageState
     extends ConsumerState<TransferConfirmationPage> {

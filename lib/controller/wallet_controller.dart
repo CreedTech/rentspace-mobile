@@ -39,7 +39,7 @@ class WalletController extends GetxController {
             'Accept': 'application/json',
             'Authorization': 'Bearer $authToken'
           }).timeout(const Duration(seconds: 30));
-      print('fetching here');
+      // print('fetching here');
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);

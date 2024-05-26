@@ -15,7 +15,7 @@
 //   _UtilitiesHistoryState createState() => _UtilitiesHistoryState();
 // }
 
-// var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+// var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 
 // class _UtilitiesHistoryState extends State<UtilitiesHistory> {
 //   final RefreshController refreshController =

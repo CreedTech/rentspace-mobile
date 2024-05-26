@@ -18,8 +18,8 @@ class SpaceDepositList extends StatefulWidget {
   _SpaceDepositListState createState() => _SpaceDepositListState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'N');
-var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
+var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);

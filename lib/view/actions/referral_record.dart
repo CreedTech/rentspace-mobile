@@ -20,7 +20,7 @@ class ReferralRecord extends StatefulWidget {
 
 class _ReferralRecordState extends State<ReferralRecord> {
   final UserController userController = Get.find();
-  var ch8t = NumberFormat.simpleCurrency(name: 'N');
+  var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
   @override
   Widget build(BuildContext context) {
     return Scaffold(

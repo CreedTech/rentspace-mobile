@@ -26,7 +26,7 @@
 //   ConsumerState<ConsumerStatefulWidget> createState() => _RentSpaceSubscriptionState();
 // }
 
-// var ch8t = NumberFormat.simpleCurrency(name: 'N');
+// var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
 // var varValue = "".obs;
 // final _history = [];
 // String _userFirst = '';

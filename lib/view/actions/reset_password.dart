@@ -204,29 +204,36 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+       backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
-        // backgroundColor: const Color(0xffE0E0E0),
-        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 25,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Reset Password',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Change Password',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: SafeArea(

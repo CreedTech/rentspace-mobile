@@ -14,7 +14,7 @@ class UtilityTransactionReceipt extends StatefulWidget {
       _UtilityTransactionReceiptState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 
 class _UtilityTransactionReceiptState extends State<UtilityTransactionReceipt> {
   @override

@@ -55,7 +55,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
   List<String> _filteredBanks = [];
 
   String liquidateReason = "I have an emergency";
-  var nairaFormaet = NumberFormat.simpleCurrency(name: 'N');
+  var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
   // String walletID = "";
   // String userID = "";
   String? selectedItem;

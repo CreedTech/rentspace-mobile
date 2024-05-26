@@ -29,7 +29,7 @@ String _payUrl = "";
 String _mssg = "Initiating payment...";
 String _mssgBody = "";
 
-var ch8t = NumberFormat.simpleCurrency(name: 'N');
+var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
 
 class SpaceRentFunding extends StatefulWidget {
   double amount;

@@ -3,21 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:rentspace/constants/tv_constants.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rentspace/view/utility/cable_list.dart';
+import 'package:rentspace/view/utility/airtime.dart';
 
-import '../../api/global_services.dart';
-import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
+import '../../controller/utility_response_controller.dart';
 import '../../controller/wallet_controller.dart';
 import 'package:http/http.dart' as http;
+
+import 'airtime_confirmation.dart';
 
 class CableScreen extends StatefulWidget {
   const CableScreen({super.key});
@@ -30,21 +28,32 @@ class _CableScreenState extends State<CableScreen> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
   final TextEditingController providerController = TextEditingController();
+  final TextEditingController packageController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
   final TextEditingController smartcardController = TextEditingController();
+  final UtilityResponseController utilityResponseController = Get.find();
   final tvFormKey = GlobalKey<FormState>();
-  String _selectedTVCode = 'bill-20';
-  String tvCable = 'DSTV - Subscription';
-  String tvImage = 'assets/utility/dstv.jpg';
-  String tvName = '';
-  String tvNumber = '';
+  bool isDataSelected = false;
+  bool isNetworkSelected = false;
+  bool isNunmberInputted = false;
+  String? _selectedCarrier;
+  String? _selectedImage;
+  String? billerId;
+  String? divisionId;
+  String? productId;
+  String? description;
+  // String _selectedTVCode = 'bill-20';
+  // String tvCable = 'DSTV - Subscription';
+  // String tvImage = 'assets/utility/dstv.jpg';
   // String tvName = '';
-  bool hasError = false;
-  String verifyAccountError = "";
-  String _message = '';
-  bool isChecking = false;
-  bool canProceed = false;
+  // String tvNumber = '';
+  // bool hasError = false;
+  // String verifyAccountError = "";
+  // String _message = '';
+  // bool isChecking = false;
+  // bool canProceed = false;
 
-  bool isTextFieldEmpty = false;
+  // bool isTextFieldEmpty = false;
   Future<bool> fetchUserData({bool refresh = true}) async {
     EasyLoading.show(
       indicator: const CustomLoader(),
@@ -54,127 +63,131 @@ class _CableScreenState extends State<CableScreen> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
+      await utilityResponseController.fetchUtilitiesResponse('Cable TV');
       // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
   }
 
-  void _updateMessage() {
-    if (isChecking) {
-      // If checking, display loader message
-      _message = 'Verifying TV Details';
-      verifyAccountError = "";
-      hasError = false;
-      tvName = "";
-    }
-  }
+  // void _updateMessage() {
+  //   if (isChecking) {
+  //     // If checking, display loader message
+  //     _message = 'Verifying TV Details';
+  //     verifyAccountError = "";
+  //     hasError = false;
+  //     tvName = "";
+  //   }
+  // }
 
-  verifyTV(String currentCode) async {
-    String authToken =
-        await GlobalService.sharedPreferencesManager.getAuthToken();
+  // verifyTV(String currentCode) async {
+  //   String authToken =
+  //       await GlobalService.sharedPreferencesManager.getAuthToken();
 
-    setState(() {
-      isChecking = true;
-      tvName = "";
-      verifyAccountError = "";
-      hasError = false;
-      canProceed = false;
-    });
-    final response = await http.post(
-        Uri.parse(AppConstants.BASE_URL + AppConstants.VERIFY_TV),
-        headers: {
-          'Authorization': 'Bearer $authToken',
-          "Content-Type": "application/json"
-        },
-        body: json.encode({
-          "billingServiceID": _selectedTVCode,
-          "smartCardNumber": smartcardController.text.trim().toString()
-        }));
+  //   setState(() {
+  //     isChecking = true;
+  //     tvName = "";
+  //     verifyAccountError = "";
+  //     hasError = false;
+  //     canProceed = false;
+  //   });
+  //   final response = await http.post(
+  //       Uri.parse(AppConstants.BASE_URL + AppConstants.VERIFY_TV),
+  //       headers: {
+  //         'Authorization': 'Bearer $authToken',
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: json.encode({
+  //         "billingServiceID": _selectedTVCode,
+  //         "smartCardNumber": smartcardController.text.trim().toString()
+  //       }));
 
-    if (response.statusCode == 200) {
-      // Request successful, handle the response data
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      final smartCardFirstName = jsonResponse['firstName'];
-      final smartCardLastName = jsonResponse['lastName'];
-      final smartCardStatus = jsonResponse['accountStatus'];
-      tvName = '$smartCardFirstName $smartCardLastName';
-      if (tvName != '' && tvName != 'N/A') {
-        setState(() {
-          tvName = tvName;
-          isChecking = false;
-          hasError = false;
-          canProceed = true;
-        });
-        _updateMessage();
-      } else {
-        // Error handling
-        setState(() {
-          tvName = "";
-          isChecking = false;
-          hasError = true;
-          verifyAccountError =
-              'SmartCard Validation failed. Please check the digits and try again';
-          canProceed = false;
-        });
-        _updateMessage();
-        // if (context.mounted) {
-        //   customErrorDialog(context, 'Error!', "Invalid account number");
-        // }
-      }
+  //   if (response.statusCode == 200) {
+  //     // Request successful, handle the response data
+  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
+  //     final smartCardFirstName = jsonResponse['firstName'];
+  //     final smartCardLastName = jsonResponse['lastName'];
+  //     final smartCardStatus = jsonResponse['accountStatus'];
+  //     tvName = '$smartCardFirstName $smartCardLastName';
+  //     if (tvName != '' && tvName != 'N/A') {
+  //       setState(() {
+  //         tvName = tvName;
+  //         isChecking = false;
+  //         hasError = false;
+  //         canProceed = true;
+  //       });
+  //       _updateMessage();
+  //     } else {
+  //       // Error handling
+  //       setState(() {
+  //         tvName = "";
+  //         isChecking = false;
+  //         hasError = true;
+  //         verifyAccountError =
+  //             'SmartCard Validation failed. Please check the digits and try again';
+  //         canProceed = false;
+  //       });
+  //       _updateMessage();
+  //       // if (context.mounted) {
+  //       //   customErrorDialog(context, 'Error!', "Invalid account number");
+  //       // }
+  //     }
 
-      //print(response.body);
-    } else {
-      // Error handling
-      setState(() {
-        tvName = "";
-        isChecking = false;
-        hasError = true;
-        verifyAccountError =
-            'SmartCard Validation failed. Please check the digits and try again';
-        canProceed = false;
-      });
-      _updateMessage();
+  //     //print(response.body);
+  //   } else {
+  //     // Error handling
+  //     setState(() {
+  //       tvName = "";
+  //       isChecking = false;
+  //       hasError = true;
+  //       verifyAccountError =
+  //           'SmartCard Validation failed. Please check the digits and try again';
+  //       canProceed = false;
+  //     });
+  //     _updateMessage();
 
-      // if (context.mounted) {
-      //   customErrorDialog(context, 'Error!', 'Something went wrong');
-      // }
+  //     // if (context.mounted) {
+  //     //   customErrorDialog(context, 'Error!', 'Something went wrong');
+  //     // }
 
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
-    }
-  }
+  //     print(
+  //         'Request failed with status: ${response.statusCode}, ${response.body}');
+  //   }
+  // }
 
-  void _checkFieldsAndHitApi() {
-    if (tvFormKey.currentState!.validate()) {
-      verifyTV(_selectedTVCode);
-    }
-  }
+  // void _checkFieldsAndHitApi() {
+  //   if (tvFormKey.currentState!.validate()) {
+  //     verifyTV(_selectedTVCode);
+  //   }
+  // }
 
-  void validateUsersInput() {
-    if (tvFormKey.currentState!.validate()) {
-      Get.to(CableListScreen(
-        image: tvImage,
-        name: tvName,
-        tvName: tvCable,
-        cardNumber: smartcardController.text.trim(),
-        code: _selectedTVCode,
-      ));
-    }
-  }
+  // void validateUsersInput() {
+  //   if (tvFormKey.currentState!.validate()) {
+  //     Get.to(CableListScreen(
+  //       image: tvImage,
+  //       name: tvName,
+  //       tvName: tvCable,
+  //       cardNumber: smartcardController.text.trim(),
+  //       code: _selectedTVCode,
+  //     ));
+  //   }
+  // }
 
   @override
   void dispose() {
     super.dispose();
     smartcardController.dispose();
     providerController.dispose();
+    amountController.dispose();
+    packageController.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    canProceed = false;
+    // canProceed = false;
     fetchUserData();
+
     // recipientController.addListener(() {
     //   setState(() {
     //     _selectedCarrier = getCarrier(recipientController.text);
@@ -185,831 +198,1131 @@ class _CableScreenState extends State<CableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.withOpacity(0.2),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back_ios_sharp,
-            size: 20,
-            color: Theme.of(context).primaryColor,
+    final choosePackage = TextFormField(
+      onTap: () async {
+        (isNetworkSelected == true)
+            ? await utilityResponseController
+                .fetchBillerItem(billerId!, divisionId!, productId!)
+                .then((value) {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: const Color(0xffF6F6F8),
+                  isDismissible: true,
+                  enableDrag: true,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    var billerItems = Hive.box(billerId!);
+                    print(billerItems);
+                    var storedData = billerItems.get(billerId!);
+                    print(billerId);
+                    //  storedData['data'];
+                    var outputList = storedData['data']
+                        .where((o) => o['billerid'] == billerId!)
+                        .toList();
+                    print('output data list ${outputList}');
+                    return FractionallySizedBox(
+                      heightFactor: 0.88,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 20),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffF6F6F8),
+                          borderRadius: BorderRadius.circular(19),
+                        ),
+                        child: ListView(
+                          children: [
+                            Text(
+                              'Choose Package',
+                              style: GoogleFonts.lato(
+                                  fontSize: 16,
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: utilityResponseController
+                                    .billerItemResponseModel!
+                                    .data
+                                    .paymentItems
+                                    .length,
+                                itemBuilder: (context, idx) {
+                                  return Column(
+                                    children: [
+                                      ListTileTheme(
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 13.0,
+                                            right: 13.0,
+                                            top: 4,
+                                            bottom: 4),
+                                        selectedColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        child: ListTile(
+                                          leading: CircleAvatar(
+                                            radius:
+                                                20, // Adjust the radius as needed
+                                            backgroundColor: Colors
+                                                .transparent, // Ensure the background is transparent
+                                            child: ClipOval(
+                                              child: Image.asset(
+                                                'assets/utility/${_selectedCarrier!.replaceAll(' ', '').toLowerCase()}.jpg',
+                                                width: 29,
+                                                height: 28,
+                                                fit: BoxFit
+                                                    .fitWidth, // Ensure the image fits inside the circle
+                                              ),
+                                            ),
+                                          ),
+
+                                          title: Text(
+                                            utilityResponseController
+                                                .billerItemResponseModel!
+                                                .data
+                                                .paymentItems[idx]
+                                                .paymentItemName
+                                                .capitalize!,
+                                            maxLines: 2,
+                                            style: GoogleFonts.lato(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorDark),
+                                          ),
+                                          trailing: Text(
+                                            ch8t.format(
+                                              double.tryParse(
+                                                utilityResponseController
+                                                    .billerItemResponseModel!
+                                                    .data
+                                                    .paymentItems[idx]
+                                                    .amount,
+                                              ),
+                                            ),
+                                            style: GoogleFonts.lato(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorBlack),
+                                          ),
+                                          // selected: _selectedCarrier == name[idx],
+                                          onTap: () {
+                                            setState(() {
+                                              // selectedItem = _dataName[idx];
+                                              // selectedItemAmount = _amount[idx];
+                                              // selectedItemValidity =
+                                              //     _dataValidity[idx];
+                                              isDataSelected = true;
+                                              amountController.text =
+                                                  utilityResponseController
+                                                      .billerItemResponseModel!
+                                                      .data
+                                                      .paymentItems[idx]
+                                                      .amount;
+                                              description =
+                                                  utilityResponseController
+                                                      .billerItemResponseModel!
+                                                      .data
+                                                      .paymentItems[idx]
+                                                      .paymentItemName
+                                                      .capitalize!;
+                                            });
+                                            packageController.text =
+                                                utilityResponseController
+                                                    .billerItemResponseModel!
+                                                    .data
+                                                    .paymentItems[idx]
+                                                    .paymentItemName
+                                                    .capitalize!;
+
+                                            Navigator.pop(
+                                              context,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      (idx !=
+                                              utilityResponseController
+                                                  .billerItemResponseModel!
+                                                  .data
+                                                  .paymentItems[idx]
+                                                  .paymentItemName
+                                                  .length)
+                                          ? const Divider(
+                                              color: Color(0xffC9C9C9),
+                                              height: 1,
+                                              indent: 13,
+                                              endIndent: 13,
+                                            )
+                                          : SizedBox(),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              })
+            : null;
+      },
+      readOnly: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: colorBlack,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      controller: packageController,
+      textAlignVertical: TextAlignVertical.center,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
           ),
         ),
-        centerTitle: true,
-        title: Text(
-          'TV',
-          style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Color(0xffE0E0E0), width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color(0xffE0E0E0),
           ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
+        ),
+        suffixIcon: const Icon(
+          Icons.keyboard_arrow_down,
+          size: 24,
+          color: colorBlack,
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        hintStyle: GoogleFonts.lato(
+          color: brandOne,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      maxLines: 1,
+    );
+
+    return Scaffold(
+      backgroundColor: const Color(0xffF6F6F8),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Cable',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 15.h,
-            horizontal: 20.h,
-          ),
-          child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 24.h),
+          child: Stack(
             children: [
-              Form(
-                key: tvFormKey,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Service Provider',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: colorWhite,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: RichText(
+                      text: TextSpan(
+                        style: GoogleFonts.lato(
+                          color: Colors.black54,
+                          fontSize: 14,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Space Wallet: ',
                               style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
+                                color: colorBlack,
+                                fontWeight: FontWeight.w400,
                                 fontSize: 14,
+                              )),
+                          TextSpan(
+                            text: ch8t.format(walletController
+                                .walletModel!.wallet![0].mainBalance),
+                            style: GoogleFonts.lato(
+                              color: brandOne,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Form(
+                    key: tvFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 3.h, horizontal: 3.w),
+                              child: Text(
+                                'Select Network',
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          ),
-                          TextFormField(
-                            onTap: () {
-                              showModalBottomSheet(
-                                showDragHandle: true,
-                                isDismissible: true,
-                                backgroundColor: Colors.white,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  List<String> tvBill = TVConstants.tvCodes
-                                      .map((country) => country['code']!)
-                                      .toList();
-                                  List<String> name = TVConstants.tvCodes
-                                      .map((country) => country['name']!)
-                                      .toList();
-                                  List<String> image = TVConstants.tvCodes
-                                      .map((country) => country['image']!)
-                                      .toList();
-
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      padding: const EdgeInsets.fromLTRB(
-                                        0,
-                                        10,
-                                        0,
-                                        10,
-                                      ),
-                                      itemCount: name.length,
-                                      itemBuilder: (context, idx) {
-                                        return ListTileTheme(
-                                          selectedColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          child: ListTile(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                              left: 25.0,
-                                              right: 25.0,
+                            TextFormField(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  isDismissible: true,
+                                  backgroundColor: const Color(0xffF6F6F8),
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2.8,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 20),
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xffF6F6F8),
+                                          borderRadius:
+                                              BorderRadius.circular(19)),
+                                      child: ListView(
+                                        children: [
+                                          Text(
+                                            'Select Network',
+                                            style: GoogleFonts.lato(
+                                                fontSize: 16,
+                                                color: colorBlack,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
                                             ),
-                                            title: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    right: 8,
-                                                  ),
-                                                  child: CircleAvatar(
-                                                    radius:
-                                                        20, // Adjust the radius as needed
-                                                    backgroundColor: Colors
-                                                        .transparent, // Ensure the background is transparent
-                                                    child: ClipOval(
-                                                      child: Image.asset(
-                                                        image[idx],
-                                                        width: 35,
-                                                        height: 35,
-                                                        fit: BoxFit
-                                                            .fitWidth, // Ensure the image fits inside the circle
+                                            child: ListView.builder(
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                0,
+                                                10,
+                                                0,
+                                                10,
+                                              ),
+                                              itemCount:
+                                                  utilityResponseController
+                                                      .utilityResponseModel!
+                                                      .utilities!
+                                                      .length,
+                                              itemBuilder: (context, idx) {
+                                                return Column(
+                                                  children: [
+                                                    ListTileTheme(
+                                                      selectedColor:
+                                                          Theme.of(context)
+                                                              .colorScheme
+                                                              .secondary,
+                                                      child: ListTile(
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          left: 25.0,
+                                                          right: 25.0,
+                                                        ),
+                                                        title: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                right: 8,
+                                                              ),
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius:
+                                                                    20, // Adjust the radius as needed
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent, // Ensure the background is transparent
+                                                                child: ClipOval(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.replaceAll(' ', '').toLowerCase()}.jpg',
+                                                                    width: 29,
+                                                                    height: 28,
+                                                                    fit: BoxFit
+                                                                        .fitWidth, // Ensure the image fits inside the circle
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 8,
+                                                            ),
+                                                            SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.4,
+                                                              child: Text(
+                                                                utilityResponseController
+                                                                    .utilityResponseModel!
+                                                                    .utilities![
+                                                                        idx]
+                                                                    .name,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: GoogleFonts.lato(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color:
+                                                                        colorDark),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        onTap: () {
+                                                          // billType = airtimeBill[idx];
+                                                          _selectedCarrier =
+                                                              utilityResponseController
+                                                                  .utilityResponseModel!
+                                                                  .utilities![
+                                                                      idx]
+                                                                  .name;
+                                                          _selectedImage =
+                                                              'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.replaceAll(' ', '').toLowerCase()}.jpg';
+                                                          var billerLists =
+                                                              Hive.box(
+                                                                  'Cable TV');
+                                                          var storedData =
+                                                              billerLists.get(
+                                                                  'Cable TV');
+                                                          //  storedData['data'];
+                                                          print(
+                                                              _selectedCarrier!);
+                                                          var outputList =
+                                                              storedData['data']
+                                                                  .where((o) =>
+                                                                      o['name'] ==
+                                                                      _selectedCarrier!)
+                                                                  .toList();
+                                                          print(
+                                                              'output list ${outputList}');
+                                                          // canProceed = true;
+                                                          setState(() {
+                                                            // billType = airtimeBill[idx];
+                                                            _selectedCarrier =
+                                                                utilityResponseController
+                                                                    .utilityResponseModel!
+                                                                    .utilities![
+                                                                        idx]
+                                                                    .name;
+                                                            _selectedImage =
+                                                                'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.replaceAll(' ', '').toLowerCase()}.jpg';
+                                                            // canProceed = true;
+                                                            providerController
+                                                                    .text =
+                                                                _selectedCarrier!;
+                                                            billerId =
+                                                                outputList[0]
+                                                                    ['id'];
+                                                            divisionId =
+                                                                outputList[0][
+                                                                    'division'];
+                                                            productId =
+                                                                outputList[0]
+                                                                    ['product'];
+                                                            isNetworkSelected =
+                                                                true;
+                                                          });
+                                                          print(billerId);
+                                                          print(divisionId);
+                                                          print(productId);
+
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Text(
-                                                    name[idx],
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            leading: Radio<String>(
-                                              fillColor: MaterialStateColor
-                                                  .resolveWith(
-                                                (states) => brandOne,
-                                              ),
-                                              value: name[idx],
-                                              groupValue: tvCable,
-                                              onChanged: (String? value) {
-                                                tvCable = value!;
-                                                // Hive.box('settings')
-                                                //     .put('region', region);
-                                                Navigator.pop(context);
-                                                setState(() {
-                                                  _selectedTVCode = tvBill[idx];
-                                                  tvCable = name[idx];
-                                                  tvImage = image[idx];
-                                                  canProceed = true;
-                                                });
+                                                    (idx !=
+                                                            utilityResponseController
+                                                                .utilityResponseModel!
+                                                                .utilities![idx]
+                                                                .name
+                                                                .length)
+                                                        ? const Divider(
+                                                            color: Color(
+                                                                0xffC9C9C9),
+                                                            height: 1,
+                                                            indent: 13,
+                                                            endIndent: 13,
+                                                          )
+                                                        : SizedBox(),
+                                                  ],
+                                                );
                                               },
                                             ),
-                                            selected: tvCable == name[idx],
-                                            onTap: () {
-                                              _selectedTVCode = tvBill[idx];
-                                              tvCable = name[idx];
-                                              tvImage = image[idx];
-                                              canProceed = true;
-
-                                              Navigator.pop(
-                                                context,
-                                              );
-
-                                              setState(() {});
-                                            },
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            onChanged: (e) {
-                              // _checkFieldsAndHitApi();
-                              setState(() {
-                                canProceed = false;
-                              });
-                              tvName = "";
-                            },
-                            readOnly: true,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            enableSuggestions: true,
-                            cursorColor: Theme.of(context).primaryColor,
-                            style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 14),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
 
-                            controller: providerController,
-                            textAlignVertical: TextAlignVertical.center,
-                            // textCapitalization: TextCapitalization.sentences,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              border: const UnderlineInputBorder(
-                                // borderRadius: BorderRadius.circular(15.0),
-                                borderSide: BorderSide(
-                                  color: Color(0xffE0E0E0),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                // borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    BorderSide(color: brandOne, width: 2.0),
-                              ),
-                              enabledBorder: const UnderlineInputBorder(
-                                // borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: Color(0xffE0E0E0),
-                                ),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                // borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                    color: Colors.red,
-                                    width: 2.0), // Change color to yellow
-                              ),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 8,
-                                ),
-                                child: CircleAvatar(
-                                  radius: 14, // Adjust the radius as needed
-                                  backgroundColor: Colors
-                                      .transparent, // Ensure the background is transparent
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                      tvImage,
-                                      width: 28,
-                                      height: 28,
-                                      fit: BoxFit
-                                          .cover, // Ensure the image fits inside the circle
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              suffixIcon: Icon(
-                                Iconsax.arrow_down5,
-                                size: 25.h,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              hintText: tvCable,
-                              filled: false,
-                              fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.all(14),
-                              hintStyle: GoogleFonts.lato(
-                                color: brandOne,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            maxLines: 1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Smart Card Number',
+                              readOnly: true,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              enableSuggestions: true,
+                              cursorColor: Theme.of(context).primaryColor,
                               style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          TextFormField(
-                            enableSuggestions: true,
-                            cursorColor: Theme.of(context).primaryColor,
-                            controller: smartcardController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            // validator: validatePhone,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            keyboardType: TextInputType.number,
-                            onChanged: (text) {
-                              setState(() {
-                                tvName = "";
-                                // _userInput = text;
-                                // _selectedCarrier = getCarrier(text);
-                                // selectnetworkController.text = _selectedCarrier;
-                                // print("Selected network: $_selectedCarrier");
-                                isTextFieldEmpty = int.tryParse(text) != null &&
-                                    !(int.tryParse(text)!.isNegative) &&
-                                    int.tryParse(text.trim()) != 0 &&
-                                    text.isNotEmpty;
-                                // canProceed = int.tryParse(text) != null &&
-                                //     !(int.tryParse(text)!.isNegative) &&
-                                //     int.tryParse(text.trim()) != 0 &&
-                                //     text.isNotEmpty;
-                                // _checkFieldsAndHitApi();
-                              });
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter Smart Card Number';
-                              }
-                              if (!value.isNum) {
-                                return 'Smart Card number must be entered in digits';
-                              }
-                              // if (value.length < 10) {
-                              //   return 'Smart Card Number must be at least 10 Digits';
-                              // }
-                              if (value.length > 15) {
-                                return 'Smart Card Number must be less 15 Digits';
-                              }
-                              return null;
-                            },
-                            onEditingComplete: () {
-                              _checkFieldsAndHitApi();
-                            },
-                            // maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            // maxLength: 11,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                                borderSide: const BorderSide(
-                                  color: Color(0xffE0E0E0),
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 14),
+
+                              controller: providerController,
+                              textAlignVertical: TextAlignVertical.center,
+                              // textCapitalization: TextCapitalization.sentences,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xffE0E0E0),
+                                  ),
                                 ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                    color: brandOne, width: 2.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                  color: Color(0xffE0E0E0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: brandOne, width: 1.0),
                                 ),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                    color: Colors.red,
-                                    width: 2.0), // Change color to yellow
-                              ),
-                              filled: false,
-                              contentPadding: const EdgeInsets.all(14),
-                              fillColor: brandThree,
-                              hintText: 'Enter Smart Card Number',
-                              hintStyle: GoogleFonts.lato(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    (isChecking)
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h, horizontal: 10.w),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: brandTwo.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(15),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xffE0E0E0),
+                                  ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Center(
-                                      widthFactor: 0.2,
-                                      child: SizedBox(
-                                        height: 20.h,
-                                        width: 20.w,
-                                        child: const SpinKitSpinningLines(
-                                          color: brandTwo,
+                                errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.red,
+                                      width: 1.0), // Change color to yellow
+                                ),
+                                prefixIcon: (_selectedImage != null)
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10, left: 15),
+                                        child: CircleAvatar(
+                                          radius:
+                                              14, // Adjust the radius as needed
+                                          backgroundColor: Colors
+                                              .transparent, // Ensure the background is transparent
+                                          child: ClipOval(
+                                            child: Image.asset(
+                                              _selectedImage!,
+                                              width: 28,
+                                              height: 28,
+                                              fit: BoxFit
+                                                  .cover, // Ensure the image fits inside the circle
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Text(
-                                      'Verifying Smart Card Details',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                        color: brandOne,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
+                                      )
+                                    : null,
+                                suffixIcon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 24,
+                                  color: colorBlack,
+                                ),
+                                // hintText: tvCable,
+                                filled: false,
+                                fillColor: Colors.transparent,
+                                contentPadding: const EdgeInsets.all(14),
+                                hintStyle: GoogleFonts.lato(
+                                  color: brandOne,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
+                              maxLines: 1,
                             ),
-                          )
-                        : const SizedBox(),
-                    (hasError == true || verifyAccountError != '')
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h, horizontal: 10.w),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    // flex: 2,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 10.w, left: 10.w),
-                                      child: const Icon(
-                                        Iconsax.close_circle5,
-                                        color: Colors.red,
-                                      ),
-                                    ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                        Visibility(
+                          visible: isNetworkSelected,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Choose Package',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
                                   ),
-                                  Flexible(
-                                    flex: 6,
-                                    child: Text(
-                                      verifyAccountError,
-                                      style: GoogleFonts.lato(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                    (tvName != '')
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h, horizontal: 10.w),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: brandTwo.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    // flex: 2,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 10.w, left: 10.w),
-                                      child: const Icon(
-                                        Icons.verified,
-                                        color: brandOne,
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 6,
-                                    child: Text(
-                                      tvName,
-                                      style: GoogleFonts.lato(
-                                        color: brandOne,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                    SizedBox(
-                      height: 40.h,
-                    ),
-                    //  Container(
-                    //   padding: const EdgeInsets.symmetric(
-                    //       horizontal: 20, vertical: 30),
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.white,
-                    //     borderRadius: BorderRadius.circular(10),
-                    //   ),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Padding(
-                    //         padding: EdgeInsets.symmetric(
-                    //             vertical: 3.h, horizontal: 3.w),
-                    //         child: Text(
-                    //           'Choose Package',
-                    //           style: GoogleFonts.lato(
-                    //             color: Theme.of(context).primaryColor,
-                    //             fontWeight: FontWeight.w700,
-                    //             fontSize: 14,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       TextFormField(
-                    //         onTap: () {
-                    //           showModalBottomSheet(
-                    //             showDragHandle: true,
-                    //             isDismissible: true,
-                    //             backgroundColor: Colors.white,
-                    //             context: context,
-                    //             builder: (BuildContext context) {
-                    //               List<String> tvBill = TVConstants.tvCodes
-                    //                   .map((country) => country['code']!)
-                    //                   .toList();
-                    //               List<String> name = TVConstants.tvCodes
-                    //                   .map((country) => country['name']!)
-                    //                   .toList();
-                    //               List<String> image = TVConstants.tvCodes
-                    //                   .map((country) => country['image']!)
-                    //                   .toList();
-
-                    //               return Container(
-                    //                 decoration: BoxDecoration(
-                    //                   color: Colors.white,
-                    //                   borderRadius: BorderRadius.circular(20.0),
-                    //                 ),
-                    //                 child: ListView.builder(
-                    //                   physics: const BouncingScrollPhysics(),
-                    //                   shrinkWrap: true,
-                    //                   padding: const EdgeInsets.fromLTRB(
-                    //                     0,
-                    //                     10,
-                    //                     0,
-                    //                     10,
-                    //                   ),
-                    //                   itemCount: name.length,
-                    //                   itemBuilder: (context, idx) {
-                    //                     return ListTileTheme(
-                    //                       selectedColor: Theme.of(context)
-                    //                           .colorScheme
-                    //                           .secondary,
-                    //                       child: ListTile(
-                    //                         contentPadding:
-                    //                             const EdgeInsets.only(
-                    //                           left: 25.0,
-                    //                           right: 25.0,
-                    //                         ),
-                    //                         title: Row(
-                    //                           mainAxisAlignment:
-                    //                               MainAxisAlignment.start,
-                    //                           crossAxisAlignment:
-                    //                               CrossAxisAlignment.start,
-                    //                           children: [
-                    //                             // Padding(
-                    //                             //   padding:
-                    //                             //       const EdgeInsets.only(
-                    //                             //     right: 8,
-                    //                             //   ),
-                    //                             //   child: CircleAvatar(
-                    //                             //     radius:
-                    //                             //         20, // Adjust the radius as needed
-                    //                             //     backgroundColor: Colors
-                    //                             //         .transparent, // Ensure the background is transparent
-                    //                             //     child: ClipOval(
-                    //                             //       child: Image.asset(
-                    //                             //         image[idx],
-                    //                             //         width: 35,
-                    //                             //         height: 35,
-                    //                             //         fit: BoxFit
-                    //                             //             .fitWidth, // Ensure the image fits inside the circle
-                    //                             //       ),
-                    //                             //     ),
-                    //                             //   ),
-                    //                             // ),
-                    //                             const SizedBox(
-                    //                               width: 8,
-                    //                             ),
-                    //                             SizedBox(
-                    //                               width: MediaQuery.of(context)
-                    //                                       .size
-                    //                                       .width *
-                    //                                   0.4,
-                    //                               child: Text(
-                    //                                 name[idx],
-                    //                                 overflow:
-                    //                                     TextOverflow.ellipsis,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         leading: Radio<String>(
-                    //                           fillColor: MaterialStateColor
-                    //                               .resolveWith(
-                    //                             (states) => brandOne,
-                    //                           ),
-                    //                           value: name[idx],
-                    //                           groupValue: tvCable,
-                    //                           onChanged: (String? value) {
-                    //                             tvCable = value!;
-                    //                             // Hive.box('settings')
-                    //                             //     .put('region', region);
-                    //                             Navigator.pop(context);
-                    //                             setState(() {
-                    //                               _selectedTVCode = tvBill[idx];
-                    //                               tvCable = name[idx];
-                    //                               tvImage = image[idx];
-                    //                               canProceed = true;
-                    //                               print(tvName);
-                    //                             });
-                    //                             print(_selectedTVCode);
-                    //                             print(tvName);
-                    //                           },
-                    //                         ),
-                    //                         selected: tvCable == name[idx],
-                    //                         onTap: () {
-                    //                           _selectedTVCode = tvBill[idx];
-                    //                           tvCable = name[idx];
-                    //                           tvImage = image[idx];
-                    //                           canProceed = true;
-
-                    //                           Navigator.pop(
-                    //                             context,
-                    //                           );
-
-                    //                           setState(() {});
-                    //                         },
-                    //                       ),
-                    //                     );
-                    //                   },
-                    //                 ),
-                    //               );
-                    //             },
-                    //           );
-                    //         },
-                    //         onChanged: (e) {
-                    //           // _checkFieldsAndHitApi();
-                    //           setState(() {
-                    //             canProceed = false;
-                    //           });
-                    //           tvName = "";
-                    //         },
-                    //         readOnly: true,
-                    //         autovalidateMode:
-                    //             AutovalidateMode.onUserInteraction,
-                    //         enableSuggestions: true,
-                    //         cursorColor: Theme.of(context).primaryColor,
-                    //         style: GoogleFonts.lato(
-                    //             color: Theme.of(context).primaryColor,
-                    //             fontSize: 14),
-
-                    //         controller: providerController,
-                    //         textAlignVertical: TextAlignVertical.center,
-                    //         // textCapitalization: TextCapitalization.sentences,
-                    //         keyboardType: TextInputType.emailAddress,
-                    //         decoration: InputDecoration(
-                    //           border: const UnderlineInputBorder(
-                    //             // borderRadius: BorderRadius.circular(15.0),
-                    //             borderSide: BorderSide(
-                    //               color: Color(0xffE0E0E0),
-                    //             ),
-                    //           ),
-                    //           focusedBorder: const UnderlineInputBorder(
-                    //             // borderRadius: BorderRadius.circular(15),
-                    //             borderSide:
-                    //                 BorderSide(color: brandOne, width: 2.0),
-                    //           ),
-                    //           enabledBorder: const UnderlineInputBorder(
-                    //             // borderRadius: BorderRadius.circular(15),
-                    //             borderSide: BorderSide(
-                    //               color: Color(0xffE0E0E0),
-                    //             ),
-                    //           ),
-                    //           errorBorder: const UnderlineInputBorder(
-                    //             // borderRadius: BorderRadius.circular(15),
-                    //             borderSide: BorderSide(
-                    //                 color: Colors.red,
-                    //                 width: 2.0), // Change color to yellow
-                    //           ),
-                    //           // prefixIcon: Padding(
-                    //           //   padding: const EdgeInsets.only(
-                    //           //     right: 8,
-                    //           //   ),
-                    //           //   child: CircleAvatar(
-                    //           //     radius: 14, // Adjust the radius as needed
-                    //           //     backgroundColor: Colors
-                    //           //         .transparent, // Ensure the background is transparent
-                    //           //     child: ClipOval(
-                    //           //       child: Image.asset(
-                    //           //         tvImage,
-                    //           //         width: 28,
-                    //           //         height: 28,
-                    //           //         fit: BoxFit
-                    //           //             .cover, // Ensure the image fits inside the circle
-                    //           //       ),
-                    //           //     ),
-                    //           //   ),
-                    //           // ),
-                    //           suffixIcon: Icon(
-                    //             Iconsax.arrow_right,
-                    //             size: 25.h,
-                    //             color: Theme.of(context).primaryColor,
-                    //           ),
-                    //           hintText: tvCable,
-                    //           filled: false,
-                    //           fillColor: Colors.transparent,
-                    //           contentPadding: EdgeInsets.all(14),
-                    //           hintStyle: GoogleFonts.lato(
-                    //             color: brandOne,
-                    //             fontSize: 12,
-                    //             fontWeight: FontWeight.w700,
-                    //           ),
-                    //         ),
-                    //         maxLines: 1,
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-                    SizedBox(
-                      height: 20.h,
-                    ),
-
-                    Visibility(
-                      visible: tvName == '',
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(250, 50),
-                              backgroundColor: brandOne,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  10,
                                 ),
                               ),
-                            ),
-                            onPressed: () async {
-                              if (tvFormKey.currentState!.validate()) {
-                                // _doSomething();
-                                // Get.to(ConfirmTransactionPinPage(
-                                //     pin: _pinController.text.trim()));
-                                FocusScope.of(context).unfocus();
-                                _checkFieldsAndHitApi();
-                                // validateUsersInput();
-                              }
-                            },
-                            child: const Text(
-                              'Check',
-                              textAlign: TextAlign.center,
-                            ),
+                              choosePackage,
+                            ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                        Visibility(
+                          visible: isDataSelected && isNetworkSelected,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Amount',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              TextFormField(
+                                enableSuggestions: true,
+                                cursorColor: colorBlack,
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                controller: amountController,
+                                readOnly: true,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                // validator: validatePhone,
+                                validator: (value) {
+                                  if (double.tryParse(value!)! >
+                                      walletController.walletModel!.wallet![0]
+                                          .mainBalance) {
+                                    return 'Your account balance is too low for this transaction';
+                                  }
+
+                                  return null;
+                                },
+
+                                keyboardType: TextInputType.number,
+
+                                // maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                // maxLength: 11,
+
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xffE0E0E0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: brandOne, width: 2.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xffE0E0E0),
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Colors.red,
+                                        width: 2.0), // Change color to yellow
+                                  ),
+                                  filled: false,
+                                  contentPadding: const EdgeInsets.all(14),
+                                  fillColor: brandThree,
+                                  prefixText: "₦ ",
+                                  prefixStyle: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                        Visibility(
+                          visible: isDataSelected && isNetworkSelected,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Smart Card Number',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              TextFormField(
+                                enableSuggestions: true,
+                                cursorColor: colorBlack,
+                                controller: smartcardController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                // validator: validatePhone,
+                                style: GoogleFonts.lato(
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                                keyboardType: TextInputType.number,
+                                // onTapOutside: (String) {
+                                //   print(billerId);
+                                //   utilityResponseController.validateCustomer(
+                                //       smartcardController.text.trim(),
+                                //       divisionId,
+                                //       description,
+                                //       productId,
+                                //       billerId);
+                                //   // (utilityResponseController.isValidationLoading.value == false)?
+                                //   var billerLists =
+                                //       Hive.box('customerValidation');
+                                //   var storedData = billerLists.get(billerId);
+                                //   //  storedData['data'];
+                                //   print(_selectedCarrier!);
+                                //   var outputList = storedData['data'];
+                                //   print('output list ${ outputList['name']}');
+                                //   // canProceed = true;
+                                //   setState(() {
+                                //     tvName = outputList['name'];
+                                //     // billerId = outputList[0]['id'];
+                                //     // divisionId = outputList[0]['division'];
+                                //     // productId = outputList[0]['product'];
+                                //     // isNetworkSelected = true;
+                                //   });
+                                // },
+                                // onChanged: (text) {
+                                //   setState(() {
+                                //     // _selectedCarrier = getCarrier(text);
+                                //     // selectnetworkController.text =
+                                //     //     _selectedCarrier!;
+                                //     isTextFieldEmpty =
+                                //         text.isNotEmpty && text.length == 11;
+                                //   });
+                                // },
+
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Enter Smart Card Number';
+                                  }
+                                  if (!value.isNum) {
+                                    return 'Smart Card number must be entered in digits';
+                                  }
+                                  // if (value.length < 10) {
+                                  //   return 'Smart Card Number must be at least 10 Digits';
+                                  // }
+                                  if (value.length > 20) {
+                                    return 'Smart Card Number must be less 15 Digits';
+                                  }
+                                  return null;
+                                },
+                                // onEditingComplete: () {
+                                //   print(billerId);
+                                //   utilityResponseController.validateCustomer(
+                                //       smartcardController.text.trim(),
+                                //       divisionId,
+                                //       description,
+                                //       productId,
+                                //       billerId);
+                                //   // _checkFieldsAndHitApi();
+                                // },
+                                // maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                // maxLength: 11,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xffE0E0E0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                        color: brandOne, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xffE0E0E0),
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                        color: Colors.red,
+                                        width: 1.0), // Change color to yellow
+                                  ),
+                                  filled: false,
+                                  contentPadding: const EdgeInsets.all(14),
+                                  fillColor: brandThree,
+                                  // hintText: 'Enter Smart Card Number',
+                                  hintStyle: GoogleFonts.lato(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // (isChecking)
+                        //     ? Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             vertical: 10.h, horizontal: 10.w),
+                        //         child: Align(
+                        //           alignment: Alignment.center,
+                        //           child: Container(
+                        //             padding: const EdgeInsets.symmetric(
+                        //                 horizontal: 15, vertical: 10),
+                        //             decoration: BoxDecoration(
+                        //               color: brandTwo.withOpacity(0.2),
+                        //               borderRadius: BorderRadius.circular(15),
+                        //             ),
+                        //             child: Row(
+                        //               children: [
+                        //                 SizedBox(
+                        //                   width: 20.w,
+                        //                 ),
+                        //                 Center(
+                        //                   widthFactor: 0.2,
+                        //                   child: SizedBox(
+                        //                     height: 20.h,
+                        //                     width: 20.w,
+                        //                     child: const SpinKitSpinningLines(
+                        //                       color: brandTwo,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //                 SizedBox(
+                        //                   width: 20.w,
+                        //                 ),
+                        //                 Text(
+                        //                   'Verifying Smart Card Details',
+                        //                   textAlign: TextAlign.center,
+                        //                   style: GoogleFonts.lato(
+                        //                     color: brandOne,
+                        //                     fontSize: 14,
+                        //                     fontWeight: FontWeight.w700,
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox(),
+                        // (hasError == true || verifyAccountError != '')
+                        //     ? Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             vertical: 10.h, horizontal: 10.w),
+                        //         child: Container(
+                        //           padding: const EdgeInsets.symmetric(
+                        //               horizontal: 15, vertical: 10),
+                        //           decoration: BoxDecoration(
+                        //             color: Colors.red.withOpacity(0.2),
+                        //             borderRadius: BorderRadius.circular(15),
+                        //           ),
+                        //           child: Row(
+                        //             children: [
+                        //               Flexible(
+                        //                 // flex: 2,
+                        //                 child: Padding(
+                        //                   padding: EdgeInsets.only(
+                        //                       right: 10.w, left: 10.w),
+                        //                   child: const Icon(
+                        //                     Iconsax.close_circle5,
+                        //                     color: Colors.red,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //               Flexible(
+                        //                 flex: 6,
+                        //                 child: Text(
+                        //                   verifyAccountError,
+                        //                   style: GoogleFonts.lato(
+                        //                     color: Colors.red,
+                        //                     fontSize: 14,
+                        //                     fontWeight: FontWeight.w700,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox(),
+                        // ((utilityResponseController.isValidationLoading.value ==
+                        //         false))
+                        //     ? Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             vertical: 10.h, horizontal: 10.w),
+                        //         child: Container(
+                        //           padding: const EdgeInsets.symmetric(
+                        //               horizontal: 15, vertical: 10),
+                        //           decoration: BoxDecoration(
+                        //             color: brandTwo.withOpacity(0.2),
+                        //             borderRadius: BorderRadius.circular(15),
+                        //           ),
+                        //           child: Row(
+                        //             children: [
+                        //               Flexible(
+                        //                 // flex: 2,
+                        //                 child: Padding(
+                        //                   padding: EdgeInsets.only(
+                        //                       right: 10.w, left: 10.w),
+                        //                   child: const Icon(
+                        //                     Icons.verified,
+                        //                     color: brandOne,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //               Flexible(
+                        //                 flex: 6,
+                        //                 child: Text(
+                        //                   tvName,
+                        //                   style: GoogleFonts.lato(
+                        //                     color: brandOne,
+                        //                     fontSize: 14,
+                        //                     fontWeight: FontWeight.w700,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox(),
+                        // SizedBox(
+                        //   height: 40.h,
+                        // ),
+                        // SizedBox(
+                        //   height: 20.h,
+                        // ),
+                        // Visibility(
+                        //   visible: tvName == '',
+                        //   child: Align(
+                        //     alignment: Alignment.bottomCenter,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           vertical: 20, horizontal: 20),
+                        //       child: ElevatedButton(
+                        //         style: ElevatedButton.styleFrom(
+                        //           minimumSize: const Size(250, 50),
+                        //           backgroundColor: brandOne,
+                        //           elevation: 0,
+                        //           shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(
+                        //               10,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         onPressed: () async {
+                        //           if (tvFormKey.currentState!.validate()) {
+                        //             // _doSomething();
+                        //             // Get.to(ConfirmTransactionPinPage(
+                        //             //     pin: _pinController.text.trim()));
+                        //             FocusScope.of(context).unfocus();
+                        //             // _checkFieldsAndHitApi();
+                        //             // validateUsersInput();
+                        //           }
+                        //         },
+                        //         child: const Text(
+                        //           'Check',
+                        //           textAlign: TextAlign.center,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
+                      backgroundColor: (tvFormKey.currentState != null &&
+                              tvFormKey.currentState!.validate())
+                          ? brandTwo
+                          : Colors.grey,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: tvName != '',
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(250, 50),
-                              backgroundColor: brandOne,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  10,
-                                ),
-                              ),
+                    onPressed: () async {
+                      if (tvFormKey.currentState != null &&
+                          tvFormKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
+                        var billerLists = Hive.box('Cable TV');
+                        var storedData = billerLists.get('Cable TV');
+                        //  storedData['data'];
+                        print(_selectedCarrier!);
+                        var outputList = storedData['data']
+                            .where((o) => o['name'] == _selectedCarrier!)
+                            .toList();
+                        print('output list ${outputList}');
+
+                        print(smartcardController.text);
+                        print(amountController.text);
+                        print(description);
+                        print(_selectedCarrier!);
+                        utilityResponseController
+                            .validateCustomer(smartcardController.text,
+                                divisionId, description!, productId, billerId)
+                            .then((value) {
+                          var customerVerification =
+                              Hive.box('customerValidation');
+                          var storedData = customerVerification.get(billerId);
+                          //  storedData['data'];
+                          print(_selectedCarrier!);
+                          var customerInfo = storedData['data'];
+                          print('customer info ${customerInfo['name']}');
+                          Get.to(
+                            AirtimeConfirmation(
+                              number: smartcardController.text,
+                              amount: int.parse(amountController.text),
+                              image: _selectedImage!.replaceAll(' ', ''),
+                              billerId: billerId!,
+                              name: outputList[0]['name'],
+                              divisionId: divisionId!,
+                              productId: productId!,
+                              category: description!,
+                              customerName: customerInfo['name'],
                             ),
-                            onPressed: () async {
-                              if (tvFormKey.currentState!.validate() &&
-                                  tvName != '') {
-                                // _doSomething();
-                                // Get.to(ConfirmTransactionPinPage(
-                                //     pin: _pinController.text.trim()));
-                                FocusScope.of(context).unfocus();
-                                validateUsersInput();
-                                // validateUsersInput();
-                              }
-                            },
-                            child: const Text(
-                              'Proceed',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
+                          );
+                        });
+                        // Get.to(
+                        //   AirtimeConfirmation(
+                        //     number: smartcardController.text,
+                        //     amount: int.parse(amountController.text),
+                        //     image: _selectedImage!,
+                        //     billerId: billerId!,
+                        //     name: outputList[0]['name'],
+                        //     divisionId: divisionId!,
+                        //     productId: productId!,
+                        //     category: description!,
+                        //   ),
+                        // );
+                      }
+                    },
+                    child: const Text(
+                      'Proceed',
+                      textAlign: TextAlign.center,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

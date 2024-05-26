@@ -33,7 +33,7 @@ class SpaceRentCreation extends ConsumerStatefulWidget {
       _SpaceRentCreationState();
 }
 
-var currencyFormat = NumberFormat.simpleCurrency(name: 'N');
+var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
 String _id = '';
 String _rentSpaceID = '';
 String _amountValue = "";
