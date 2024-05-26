@@ -130,7 +130,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
-    final isConnected = ref.watch(internetConnectionProvider).isConnected;
+    // final isConnected = ref.watch(internetConnectionProvider).isConnected;
     //email field
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -233,10 +233,10 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       ),
       maxLines: 1,
       validator: (value) {
-        RegExp uppercaseRegex = RegExp(r'[A-Z]');
-        RegExp lowercaseRegex = RegExp(r'[a-z]');
-        RegExp digitsRegex = RegExp(r'[0-9]');
-        RegExp specialCharRegex = RegExp(r'[#\$%&*?@]');
+        // RegExp uppercaseRegex = RegExp(r'[A-Z]');
+        // RegExp lowercaseRegex = RegExp(r'[a-z]');
+        // RegExp digitsRegex = RegExp(r'[0-9]');
+        // RegExp specialCharRegex = RegExp(r'[#\$%&*?@]');
         if (value == null || value.isEmpty) {
           return 'Input a valid password';
         } else {

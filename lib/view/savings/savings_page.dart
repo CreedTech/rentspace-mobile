@@ -624,9 +624,7 @@ class _SavingsPageState extends State<SavingsPage> {
                       (userController
                                   .userModel!.userDetails![0].hasVerifiedBvn ==
                               true)
-                          ? (rentController.rentModel!.rents!.isEmpty)
-                              ? Get.to(const SpaceRentIntro())
-                              : Get.to(const RentSpaceList())
+                          ? Get.to(const RentSpaceList())
                           : customErrorDialog(
                               context,
                               'Verification!',
@@ -653,7 +651,7 @@ class _SavingsPageState extends State<SavingsPage> {
                               child: Image.asset(
                                 'assets/icons/space_rent.png',
                                 scale: 4,
-                                color: brandOne,
+                                // color: brandOne,
                               ),
                             ),
                             title: Text(
@@ -727,9 +725,9 @@ class _SavingsPageState extends State<SavingsPage> {
                               //   color: brandOne,
                               // ),
                               child: Image.asset(
-                                'assets/icons/shield_icon.png',
-                                scale: 5,
-                                color: brandOne,
+                                'assets/icons/lock_deposit_icon.png',
+                                scale: 3,
+                                // color: brandOne,
                               ),
                             ),
                             title: Text(

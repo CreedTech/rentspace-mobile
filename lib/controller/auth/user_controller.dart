@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -11,11 +13,9 @@ import 'package:rentspace/model/user_details_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../../api/global_services.dart';
-import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../model/recent_transfers_model.dart';
-import '../../view/login_page.dart';
 
 class UserController extends GetxController {
   final sessionStateStream = StreamController<SessionState>();
@@ -65,48 +65,48 @@ class UserController extends GetxController {
         headers: headers,
         body: body,
       );
-      print(body);
+      // // print(body);
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-      print('Response Headers: ${response.headers}');
+      // print('Response Status Code: ${response.statusCode}');
+      // print('Response Body: ${response.body}');
+      // print('Response Headers: ${response.headers}');
       if (response.statusCode == 200) {
-        var result = jsonDecode(response.body);
+        // var result = jsonDecode(response.body);
         EasyLoading.dismiss();
         isLoading(false);
-        print('result success');
+        // print('result success');
         if (context.mounted) {
           customSuccessDialog(
               context, 'Success', 'Password Changed Successfully');
         }
-        print(result);
+        // print(result);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        print('error auth');
+        // print('error auth');
         multipleLoginRedirectModal();
       }
       // else if (response.body.contains('error')) {
       //   EasyLoading.dismiss();
       //   isLoading(false);
       //   var errorResponse = jsonDecode(response.body)['error'];
-      //   print('Status: ${errorResponse['error']}');
-      //   print(response.body);
-      //   print('status fetching data');
+      //   // print('Status: ${errorResponse['error']}');
+      //   // print(response.body);
+      //   // print('status fetching data');
       //   if (context.mounted) {
-      //     print('Context is mounted, showing dialog');
+      //     // print('Context is mounted, showing dialog');
       //     customErrorDialog(context, 'Error', errorResponse);
       //   } else {
-      //     print('Context is not mounted, cannot show dialog');
+      //     // print('Context is not mounted, cannot show dialog');
       //   }
       // }
       else if (response.body.contains('Server Error')) {
         EasyLoading.dismiss();
         isLoading(false);
         if (context.mounted) {
-          print('Context is mounted, showing dialog');
+          // print('Context is mounted, showing dialog');
           customErrorDialog(context, 'Oops', 'Something Went Wrong');
         } else {
-          print('Context is not mounted, cannot show dialog');
+          // print('Context is not mounted, cannot show dialog');
         }
       } else {
         EasyLoading.dismiss();
@@ -119,9 +119,9 @@ class UserController extends GetxController {
         } else {
           errorMessage = 'An unknown error occurred';
         }
-        print('Error: $errorMessage');
-        print(response.body);
-        print('error fetching data');
+        // print('Error: $errorMessage');
+        // print(response.body);
+        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorMessage);
         }
@@ -136,12 +136,12 @@ class UserController extends GetxController {
     } on http.ClientException catch (e) {
       EasyLoading.dismiss();
       isLoading(false);
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
       EasyLoading.dismiss();
       isLoading(false);
-      print('Error while getting data activities is $e');
+      // print('Error while getting data activities is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       EasyLoading.dismiss();
@@ -166,29 +166,29 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print(result);
+        // // print(result);
 
         userModel = UserModel.fromJson(result);
         isLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        print('error auth');
+        // print('error auth');
         multipleLoginRedirectModal();
       } else {
-        // print(response.body);
-        print('error fetching data');
+        // // print(response.body);
+        // print('error fetching data');
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);
-      print('done');
+      // print('done');
     }
   }
 
@@ -209,29 +209,29 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print(result);
+        // // print(result);
 
         userModel = UserModel.fromJson(result);
         isHomePageLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        print('error auth');
+        // print('error auth');
         multipleLoginRedirectModal();
       } else {
-        // print(response.body);
-        print('error fetching data');
+        // // print(response.body);
+        // print('error fetching data');
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isHomePageLoading(false);
-      print('done');
+      // print('done');
     }
   }
 
@@ -251,9 +251,9 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print('result');
-        // print(result);
-        // print(SpaceRentModel.fromJson(result));
+        // // print('result');
+        // // print(result);
+        // // print(SpaceRentModel.fromJson(result));
 
         recentTransfersModel = RecentTransfersModel.fromJson(result);
         recentTempName.clear();
@@ -266,28 +266,28 @@ class UserController extends GetxController {
             recentTransfersModel!.recentTransfers![i].bankCode,
             recentTransfersModel!.recentTransfers![i].accountNumber,
           );
-          // print('Fetched details:');
+          // // print('Fetched details:');
         }
-        // print(recentTempName);
-        // print('recent transfers data successfully fetched');
+        // // print(recentTempName);
+        // // print('recent transfers data successfully fetched');
         if (recentTransfersModel!.recentTransfers!.isEmpty) {
-          // print('No recent transfers found');
+          // // print('No recent transfers found');
         }
         isLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        print('error auth');
+        // print('error auth');
         multipleLoginRedirectModal();
       } else {
-        print('error fetching data');
+        // print('error fetching data');
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);
@@ -308,7 +308,7 @@ class UserController extends GetxController {
             {"financial_institution": bankCode, "account_id": accountNumber}));
 
     if (response.statusCode == 200) {
-      print('fetched successfully');
+      // print('fetched successfully');
       // Request successful, handle the response data
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
@@ -324,13 +324,13 @@ class UserController extends GetxController {
       }
     } else if (response.body.contains('Invalid token') ||
         response.body.contains('Invalid token or device')) {
-      print('error auth');
+      // print('error auth');
       multipleLoginRedirectModal();
     } else {
-      print('error fetching details');
+      // print('error fetching details');
 
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
+      // print(
+          // 'Request failed with status: ${response.statusCode}, ${response.body}');
     }
   }
 }

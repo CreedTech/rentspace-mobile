@@ -9,7 +9,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
-import 'package:rentspace/constants/widgets/separator.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 // import 'package:rentspace/controller/rent_controller.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -124,7 +123,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
@@ -278,125 +277,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                           ),
                         ),
                       ),
-
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Container(
-                      //       padding: EdgeInsets.symmetric(
-                      //           horizontal: 30.w, vertical: 16.h),
-                      //       height: 150.h,
-                      //       width: MediaQuery.of(context).size.width,
-                      //       decoration: const BoxDecoration(
-                      //         image: DecorationImage(
-                      //           image: AssetImage(
-                      //             'assets/space_rent_banner.png',
-                      //           ),
-                      //           fit: BoxFit.cover,
-                      //         ),
-                      //       ),
-                      //       child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Text(
-                      //                 'Total Space Rent',
-                      //                 style: GoogleFonts.lato(
-                      //                     fontSize: 12,
-                      //                     color: colorWhite,
-                      //                     fontWeight: FontWeight.w500),
-                      //               ),
-                      //               Text(
-                      //                 nairaFormaet.format(rentBalance),
-                      //                 style: GoogleFonts.lato(
-                      //                     fontSize: 30,
-                      //                     color: colorWhite,
-                      //                     fontWeight: FontWeight.w600),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               ElevatedButton(
-                      //                 style: ElevatedButton.styleFrom(
-                      //                   minimumSize: const Size(200, 50),
-                      //                   backgroundColor: colorWhite,
-                      //                   elevation: 0,
-                      //                   shape: RoundedRectangleBorder(
-                      //                     borderRadius: BorderRadius.circular(
-                      //                       10,
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 onPressed: () {
-                      //                   Get.to(const SpaceRentCreation());
-                      //                 },
-                      //                 child: Text(
-                      //                   'Create New Space Rent',
-                      //                   textAlign: TextAlign.center,
-                      //                   style: GoogleFonts.lato(
-                      //                       fontSize: 14,
-                      //                       color: brandTwo,
-                      //                       fontWeight: FontWeight.w600),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     // Row(
-                      //     //   children: [
-                      //     //     Text(
-                      //     //       'Total Rent Balance',
-                      //     //       style: GoogleFonts.lato(
-                      //     //         color: brandOne,
-                      //     //         fontSize: 16,
-                      //     //         fontWeight: FontWeight.w600,
-                      //     //       ),
-                      //     //     ),
-                      //     //     const SizedBox(
-                      //     //       width: 5,
-                      //     //     ),
-                      //     //     GestureDetector(
-                      //     //       onTap: () {
-                      //     //         setState(() {
-                      //     //           hideBalance = !hideBalance;
-                      //     //         });
-                      //     //       },
-                      //     //       child: Icon(
-                      //     //         hideBalance
-                      //     //             ? Iconsax.eye
-                      //     //             : Iconsax.eye_slash,
-                      //     //         color: brandOne,
-                      //     //         size: 20.h,
-                      //     //       ),
-                      //     //     )
-                      //     //   ],
-                      //     // ),
-
-                      //     SizedBox(
-                      //       height: 20,
-                      //     ),
-                      //     // Text(
-                      //     //   " ${hideBalance ? ch8t.format(totalSavings) : "****"}",
-                      //     //   style: GoogleFonts.roboto(
-                      //     //       fontWeight: FontWeight.w700,
-                      //     //       fontSize: 24,
-                      //     //       color: brandOne),
-                      //     // ),
-                      //     // SizedBox(
-                      //     //   height: 10,
-                      //     // ),
-                      //   ],
-                      // ),
-
                       Padding(
                         padding: EdgeInsets.only(
                           left: 24.w,
@@ -414,28 +294,36 @@ class _RentSpaceListState extends State<RentSpaceList> {
                       (rentController.rentModel!.rents!.isEmpty)
                           ? Padding(
                               padding: EdgeInsets.only(
-                                left: 24.w,
-                                right: 24.w,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Image.asset(
-                                    'assets/card_empty.png',
-                                    height: 200,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "Nothing to show",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 20,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.bold,
+                                  left: 15.w, right: 15.w, top: 150),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/spacerent_img.png',
+                                      height: 51.4,
+                                      width: 73,
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    SizedBox(
+                                      width: 147,
+                                      child: Center(
+                                        child: Text(
+                                          "Your ongoing Space Rents will be displayed here",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 12,
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             )
                           : Padding(
@@ -840,36 +728,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                 },
                               ),
                             ),
-                      // Align(
-                      //   alignment: Alignment.bottomCenter,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(
-                      //       top: 20,
-                      //     ),
-                      //     child: ElevatedButton(
-                      //       style: ElevatedButton.styleFrom(
-                      //         minimumSize: const Size(350, 50),
-                      //         backgroundColor: brandOne,
-                      //         elevation: 0,
-                      //         shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(
-                      //             10,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       onPressed: () {
-                      //         Get.to(const SpaceRentCreation());
-                      //       },
-                      //       child: Text(
-                      //         'Create New Space rent',
-                      //         textAlign: TextAlign.center,
-                      //         style: GoogleFonts.lato(
-                      //             fontSize: 16,
-                      //             fontWeight: FontWeight.w600),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

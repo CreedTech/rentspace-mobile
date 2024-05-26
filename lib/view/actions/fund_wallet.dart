@@ -11,7 +11,8 @@ class FundWallet extends StatefulWidget {
   const FundWallet({super.key});
 
   @override
-  _FundWalletState createState() => _FundWalletState();
+    State<FundWallet> createState() => _FundWalletState();
+  // _FundWalletState createState() => _FundWalletState();
 }
 
 
@@ -73,7 +74,7 @@ class _FundWalletState extends State<FundWallet> {
                 ),
                 ListTile(
                   onTap: () {
-                    Get.to(BankTransfer());
+                    Get.to(const BankTransfer());
                   },
                   contentPadding: const EdgeInsets.only(left: 15, right: 11),
                   tileColor: colorWhite,

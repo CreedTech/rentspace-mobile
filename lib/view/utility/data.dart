@@ -1,26 +1,19 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/view/utility/data_list.dart';
-import '../../api/global_services.dart';
-import '../../constants/app_constants.dart';
-import '../../constants/data_constants.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/utility_response_controller.dart';
 import '../../controller/wallet_controller.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 import 'airtime_confirmation.dart';
 
@@ -48,12 +41,12 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       TextEditingController();
   final TextEditingController selectnetworkproviderController =
       TextEditingController();
-  final DataBundleFormKey = GlobalKey<FormState>();
+  final dataBundleFormKey = GlobalKey<FormState>();
   // String? _selectedData;
 
-  List<String> _amount = [];
-  List<String> _dataName = [];
-  List<String> _dataValidity = [];
+  // List<String> _amount = [];
+  // List<String> _dataName = [];
+  // List<String> _dataValidity = [];
   String? selectedItem;
   String? selectedItemAmount;
   String? selectedItemValidity;
@@ -61,10 +54,10 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   bool isNetworkSelected = false;
   bool isNunmberInputted = false;
 
-  List<String> SelectSubscription = const <String>[
-    'Data Bundle',
-    'Internet Subscription',
-  ];
+  // List<String> SelectSubscription = const <String>[
+  //   'Data Bundle',
+  //   'Internet Subscription',
+  // ];
 
   // List<String> networkCarrier = const <String>[
   //   'Select Network',
@@ -74,12 +67,12 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   //   '9mobile',
   // ];
 
-  List<String> UserSelectDataPlans = const <String>[
-    'MTN',
-    'Glo',
-    'Airtel',
-    '9mobile',
-  ];
+  // List<String> UserSelectDataPlans = const <String>[
+  //   'MTN',
+  //   'Glo',
+  //   'Airtel',
+  //   '9mobile',
+  // ];
   List<String> networkImages = const <String>[
     'assets/utility/mtn.jpg',
     "assets/utility/airtel.jpg",
@@ -91,26 +84,26 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   String? _selectedImage;
   String billType = '';
   // bool showInvalidRecipientNumberAlert = false;
-  String _userInput = '';
+  // String _userInput = '';
   String? billerId;
   String? divisionId;
   String? productId;
   String? description;
 
-  void validateUsersInput() {
-    if (DataBundleFormKey.currentState!.validate()) {
-      Get.to(DataListScreen(
-          number: recipientController.text.trim(),
-          network: _selectedCarrier!.trim(),
-          image: _selectedImage!));
-      // int amount = int.parse(amountController.text);
-      // String number = recipientController.text;
-      // String bill = billType;
-      // String biller = _selectedCarrier;
+  // void validateUsersInput() {
+  //   if (dataBundleFormKey.currentState!.validate()) {
+  //     Get.to(DataListScreen(
+  //         number: recipientController.text.trim(),
+  //         network: _selectedCarrier!.trim(),
+  //         image: _selectedImage!));
+  //     // int amount = int.parse(amountController.text);
+  //     // String number = recipientController.text;
+  //     // String bill = billType;
+  //     // String biller = _selectedCarrier;
 
-      // confirmPayment(context, amount, number, bill, biller);
-    }
-  }
+  //     // confirmPayment(context, amount, number, bill, biller);
+  //   }
+  // }
 
   String getCurrency() {
     var format =
@@ -926,7 +919,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                     height: 20,
                   ),
                   Form(
-                    key: DataBundleFormKey,
+                    key: dataBundleFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -1097,7 +1090,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                 keyboardType: TextInputType.number,
                                 onChanged: (text) {
                                   setState(() {
-                                    _userInput = text;
+                                    // _userInput = text;
                                     // _selectedCarrier = getCarrier(text);
                                     // selectnetworkController.text =
                                     //     _selectedCarrier!;
@@ -1164,8 +1157,8 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                       minimumSize:
                           Size(MediaQuery.of(context).size.width - 50, 50),
                       backgroundColor:
-                          (DataBundleFormKey.currentState != null &&
-                                  DataBundleFormKey.currentState!.validate())
+                          (dataBundleFormKey.currentState != null &&
+                                  dataBundleFormKey.currentState!.validate())
                               ? brandTwo
                               : Colors.grey,
                       elevation: 0,
@@ -1176,8 +1169,8 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                       ),
                     ),
                     onPressed: () async {
-                      if (DataBundleFormKey.currentState != null &&
-                          DataBundleFormKey.currentState!.validate()) {
+                      if (dataBundleFormKey.currentState != null &&
+                          dataBundleFormKey.currentState!.validate()) {
                         FocusScope.of(context).unfocus();
                         var billerLists = Hive.box('Data');
                         var storedData = billerLists.get('Data');

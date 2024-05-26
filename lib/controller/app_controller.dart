@@ -19,12 +19,10 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
-import '../view/actions/fund_wallet.dart';
-import '../view/login_page.dart';
 import '../view/savings/spaceRent/spacerent_success_page.dart';
 import 'wallet_controller.dart';
 
-  final sessionStateStream = StreamController<SessionState>();
+final sessionStateStream = StreamController<SessionState>();
 final appControllerProvider =
     StateNotifierProvider<AppController, AsyncValue<bool>>((ref) {
   final repository = ref.watch(appRepositoryProvider);
@@ -42,8 +40,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
 
   Future createRent(BuildContext context, rentName, dueDate, interval,
       intervalAmount, amount, paymentCount, date, duration) async {
-    print("duration here");
-    print(duration);
+    // //print("duration here");
+    // //print(duration);
     isLoading = true;
     if (rentName.isEmpty ||
         rentName == '' ||
@@ -67,8 +65,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'date': date.toString(),
       'duration': duration.toString()
     };
-    print('params');
-    // print(params);
+    // //print('params');
+    // //print(params);
     String message;
 
     try {
@@ -84,11 +82,11 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
 
-        print('response.message');
-        print(response.message);
-        var rentspaceId = response.message;
+        // //print('response.message');
+        // //print(response.message);
+        // var rentspaceId = response.message;
         // await GlobalService.
-        print(response.message);
+        // //print(response.message);
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.success(
@@ -220,7 +218,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         //         );
         //       });
         // } else {
-        //   print(response.message);
+        //   //print(response.message);
         //   showTopSnackBar(
         //     Overlay.of(context),
         //     CustomSnackBar.success(
@@ -250,9 +248,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
 
         return;
       } else {
-        print('response.message.toString()');
+        // //print('response.message.toString()');
       }
-      print(response.message.toString());
+      // //print(response.message.toString());
       if (response.success == false &&
           response.message.contains("Space Rent already exists")) {
         EasyLoading.dismiss();
@@ -263,13 +261,13 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        // //print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains(
               "Due date must be between 6 and 8 months from the current date")) {
         EasyLoading.dismiss();
-        // print(response);
+        // //print(response);
         message =
             "Oops! Due date must be between 6 and 8 months from the current date";
         customErrorDialog(context, 'Error', message);
@@ -278,9 +276,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
-        print('response again');
-        print(response.success);
-        print(response.message);
+        // //print('response again');
+        // //print(response.success);
+        // //print(response.message);
         message = "Something went wrong.";
         customErrorDialog(context, 'Error', message);
 
@@ -289,14 +287,14 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      // //print(e);
       message = "Oops something went wrong.\n Try again later.";
       customErrorDialog(context, 'Error', message);
 
       return;
     } finally {
       isLoading = false;
-      return;
+      // return;
     }
   }
 
@@ -314,8 +312,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'date': date,
       'interval': interval
     };
-    print('params');
-    // print(params);
+    // //print('params');
+    // //print(params);
     String message;
     try {
       isLoading = true;
@@ -328,7 +326,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       var response = await appRepository.walletDebit(params);
       EasyLoading.dismiss();
       state = const AsyncData(false);
-      print(response.message.toString());
+      // //print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
         Get.back();
@@ -373,8 +371,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // );
         return;
       } else {
-        print('response.message.toString()');
-        print(response.message.toString());
+        // //print('response.message.toString()');
+        // //print(response.message.toString());
       }
 
       // check for different reasons to enhance users experience
@@ -385,25 +383,24 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
-      }
-       else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        // //print('error auth');
         multipleLoginRedirectModal();
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
-        print('response again');
-        print(response.success);
-        print(response.message);
+        // //print('response again');
+        // //print(response.success);
+        // //print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
         return;
       }
     } catch (e) {
-      print('wallet');
-      print(e);
+      // //print('wallet');
+      // //print(e);
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       message = "Ooops something went wrong";
@@ -412,7 +409,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
-      return;
+      // return;
     }
   }
 
@@ -426,8 +423,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'date': date,
       'interval': interval,
     };
-    print('params');
-    print(params);
+    // //print('params');
+    // //print(params);
     String message;
     try {
       isLoading = true;
@@ -440,7 +437,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       var response = await appRepository.calculateNextPaymentDate(params);
       EasyLoading.dismiss();
       state = const AsyncData(false);
-      print(response.message.toString());
+      // //print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
         Get.back();
@@ -471,8 +468,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // );
         return;
       } else {
-        print('response.message.toString()');
-        print(response.message.toString());
+        // //print('response.message.toString()');
+        // //print(response.message.toString());
       }
 
       // check for different reasons to enhance users experience
@@ -483,24 +480,24 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         customErrorDialog(context, 'Error', message);
 
         return;
-      }else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        // //print('error auth');
         multipleLoginRedirectModal();
       } else {
         EasyLoading.dismiss();
         // to capture other errors later
-        print('response again');
-        // print(response.success);
-        // print(response.message);
+        // //print('response again');
+        // //print(response.success);
+        // //print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
         return;
       }
     } catch (e) {
-      print('wallet');
-      print(e);
+      // //print('wallet');
+      // //print(e);
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       message = "Ooops something went wrong";
@@ -509,7 +506,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
-      return;
+      // return;
     }
   }
 
@@ -532,8 +529,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'network': network,
       'biller': biller
     };
-    print("body");
-    // print(body);
+    // //print("body");
+    // //print(body);
     String message;
 
     try {
@@ -550,7 +547,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         walletController.fetchWallet();
         EasyLoading.dismiss();
         // Navigator.pushNamed(context, RouteList.login);
-        // SucessfulReciept();
+        // successfulReceipt();
         // double earnedAmountNaira = 0.005 * amount;
 
         // // Convert the earned amount in naira to space points (1 space point = 2 naira)
@@ -560,15 +557,15 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         int spacePoints = (0.0025 * amount).floor();
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
-        double earnedAmountNaira = spacePoints * 2;
+        // double earnedAmountNaira = spacePoints * 2;
 
         // Check if spacePoints is a whole number
-        bool isWholeNumber = spacePoints % 1 == 0;
+        // bool isWholeNumber = spacePoints % 1 == 0;
 
         // Format spacePoints based on whether it's a whole number or not
-        String formattedSpacePoints = isWholeNumber
-            ? spacePoints.toStringAsFixed(0)
-            : spacePoints.toStringAsFixed(2);
+        // String formattedSpacePoints = isWholeNumber
+        //     ? spacePoints.toStringAsFixed(0)
+        //     : spacePoints.toStringAsFixed(2);
         if (amount >= 400) {
           showTopSnackBar(
             Overlay.of(context),
@@ -584,7 +581,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           );
         }
 
-        SucessfulReciept(context, phoneNumber, amount, biller, 'Data to ');
+        successfulReceipt(context, phoneNumber, amount, biller, 'Data to ');
         // Navi
         return;
       } else if (response.success == false &&
@@ -598,9 +595,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        //print('error auth');
         multipleLoginRedirectModal();
-      }else if (response.success == false &&
+      } else if (response.success == false &&
           response.message
               .contains("Number must be greater than or equal to 50")) {
         EasyLoading.dismiss();
@@ -644,7 +641,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      //print(e);
       Get.back();
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
@@ -660,14 +657,14 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       EasyLoading.dismiss();
       isLoading = false;
-      return;
+      // return;
     }
   }
 
   Future buyData(BuildContext context, amount, phoneNumber, selectDataPlan,
       network, validity) async {
     isLoading = true;
-    print("Fields");
+    //print("Fields");
 
     isLoading = true;
     if (phoneNumber.isEmpty ||
@@ -685,8 +682,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'selectDataPlan': selectDataPlan,
       'validity': validity,
     };
-    print("body");
-    // print(body);
+    //print("body");
+    // //print(body);
     String message;
 
     try {
@@ -705,15 +702,15 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         int spacePoints = (0.0025 * amount).floor();
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
-        double earnedAmountNaira = spacePoints * 2;
+        // double earnedAmountNaira = spacePoints * 2;
 
         // Check if spacePoints is a whole number
-        bool isWholeNumber = spacePoints % 1 == 0;
+        // bool isWholeNumber = spacePoints % 1 == 0;
 
         // Format spacePoints based on whether it's a whole number or not
-        String formattedSpacePoints = isWholeNumber
-            ? spacePoints.toStringAsFixed(0)
-            : spacePoints.toStringAsFixed(2);
+        // String formattedSpacePoints = isWholeNumber
+        //     ? spacePoints.toStringAsFixed(0)
+        //     : spacePoints.toStringAsFixed(2);
         if (amount >= 400) {
           showTopSnackBar(
             Overlay.of(context),
@@ -729,12 +726,12 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           );
         }
 
-        SucessfulReciept(context, phoneNumber, amount, network, 'Data to ');
+        successfulReceipt(context, phoneNumber, amount, network, 'Data to ');
         // Navi
         return;
-      }else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        //print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
@@ -789,7 +786,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      //print(e);
       Get.back();
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
@@ -805,14 +802,14 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       EasyLoading.dismiss();
       isLoading = false;
-      return;
+      // return;
     }
   }
 
   Future buyElectricity(BuildContext context, amount, phoneNumber, meterNumber,
       billingServiceID, email, electricityName) async {
     isLoading = true;
-    print("Fields");
+    //print("Fields");
 
     isLoading = true;
     if (phoneNumber.isEmpty ||
@@ -830,8 +827,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'billingServiceID': billingServiceID,
       'email': email,
     };
-    print("body");
-    // print(body);
+    //print("body");
+    // //print(body);
     String message;
 
     try {
@@ -910,15 +907,15 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         );
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
-        double earnedAmountNaira = spacePoints * 2;
+        // double earnedAmountNaira = spacePoints * 2;
 
         // Check if spacePoints is a whole number
-        bool isWholeNumber = spacePoints % 1 == 0;
+        // bool isWholeNumber = spacePoints % 1 == 0;
 
         // Format spacePoints based on whether it's a whole number or not
-        String formattedSpacePoints = isWholeNumber
-            ? spacePoints.toStringAsFixed(0)
-            : spacePoints.toStringAsFixed(2);
+        // String formattedSpacePoints = isWholeNumber
+        //     ? spacePoints.toStringAsFixed(0)
+        //     : spacePoints.toStringAsFixed(2);
         if (amount >= 400) {
           showTopSnackBar(
             Overlay.of(context),
@@ -934,13 +931,13 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           );
         }
 
-        // SucessfulReciept(
+        // successfulReceipt(
         //     context, meterNumber, amount, electricityName, 'Electricity to ');
         // Navi
         return;
-      }else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        //print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
@@ -995,7 +992,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      //print(e);
       Get.back();
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
@@ -1011,14 +1008,14 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       EasyLoading.dismiss();
       isLoading = false;
-      return;
+      // return;
     }
   }
 
   Future buyCable(BuildContext context, amount, phoneNumber, smartCardNumber,
       billingServiceID, productCode, invoicePeriod, tvName) async {
     isLoading = true;
-    print("Fields");
+    //print("Fields");
 
     isLoading = true;
     if (phoneNumber.isEmpty || phoneNumber == '') {
@@ -1034,8 +1031,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'productCode': productCode,
       'invoicePeriod': invoicePeriod,
     };
-    print("body");
-    // print(body);
+    //print("body");
+    // //print(body);
     String message;
 
     try {
@@ -1054,15 +1051,15 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         int spacePoints = (0.0025 * amount).floor();
 
         // Convert the earned amount in naira to space points (1 space point = 2 naira)
-        double earnedAmountNaira = spacePoints * 2;
+        // double earnedAmountNaira = spacePoints * 2;
 
         // Check if spacePoints is a whole number
-        bool isWholeNumber = spacePoints % 1 == 0;
+        // bool isWholeNumber = spacePoints % 1 == 0;
 
         // Format spacePoints based on whether it's a whole number or not
-        String formattedSpacePoints = isWholeNumber
-            ? spacePoints.toStringAsFixed(0)
-            : spacePoints.toStringAsFixed(2);
+        // String formattedSpacePoints = isWholeNumber
+        //     ? spacePoints.toStringAsFixed(0)
+        //     : spacePoints.toStringAsFixed(2);
         if (amount >= 400) {
           showTopSnackBar(
             Overlay.of(context),
@@ -1078,12 +1075,12 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
           );
         }
 
-        SucessfulReciept(context, smartCardNumber, amount, tvName, 'Data to ');
+        successfulReceipt(context, smartCardNumber, amount, tvName, 'Data to ');
         // Navi
         return;
-      }else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        //print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message
@@ -1138,7 +1135,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      //print(e);
       Get.back();
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
@@ -1154,18 +1151,18 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } finally {
       EasyLoading.dismiss();
       isLoading = false;
-      return;
+      // return;
     }
   }
 
   Future transferMoney(BuildContext context, bankCode, amount, accountNumber,
       pin, accountName, bankName) async {
     isLoading = true;
-    print("Fields");
-    // print(amount);
-    // print(bankCode);
-    // print(accountNumber);
-    print(pin);
+    //print("Fields");
+    // //print(amount);
+    // //print(bankCode);
+    // //print(accountNumber);
+    //print(pin);
     isLoading = true;
     if (bankCode.isEmpty ||
         bankCode == '' ||
@@ -1187,8 +1184,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       'accountNumber': accountNumber,
       'pin': pin
     };
-    print("body");
-    // print(body);
+    //print("body");
+    // //print(body);
     String message;
 
     try {
@@ -1207,15 +1204,15 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         walletController.fetchWallet();
         Get.back();
 
-        SucessfulReciept(
+        successfulReceipt(
             context, accountName, (amount + 20), bankName, 'Transfer to ');
         // Navigator.pushNamed(context, RouteList.login);
-        // SucessfulReciept();
+        // successfulReceipt();
         // Navi
         return;
-      }else if (response.message.contains('Invalid token') ||
+      } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
+        //print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Incorrect PIN")) {
@@ -1243,7 +1240,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // to capture other errors later
         EasyLoading.dismiss();
         message = "Something went wrong";
-        print('This is the error $message');
+        //print('This is the error $message');
 
         Get.back();
         customErrorDialog(context, 'Error', message);
@@ -1253,7 +1250,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      print(e);
+      //print(e);
       message = "Ooops something went wrong";
       // custTomDialog(context, message);
       Get.back();
@@ -1268,7 +1265,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
-      return;
+      //  return;
     }
   }
 }

@@ -1,4 +1,3 @@
-
 class UtilityHistoryModel {
   UtilityHistoryModel({
     required this.utilityHistories,

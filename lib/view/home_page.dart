@@ -5,8 +5,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,7 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:local_auth/local_auth.dart';
+// import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -56,7 +56,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  // final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _hasOpened = false;
   final openedAppStorage = GetStorage();
   final hasReferredStorage = GetStorage();
@@ -65,11 +65,11 @@ class _HomePageState extends State<HomePage> {
   late StreamSubscription subscription;
   // List<String> transIds = [];
   String fundedAmount = "0";
-  String _message = "Not Authorized";
-  int _selectedIndex = 0;
+  // String _message = "Not Authorized";
+  // int _selectedIndex = 0;
   final WalletController walletController = Get.put(WalletController());
   final RentController rentController = Get.put(RentController());
-  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  // final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   // checkStatus() {
   //   final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
         return;
       }
     } else {
-      print(openedAppStorage.read('hasOpenedApp').toString());
+      // print(openedAppStorage.read('hasOpenedApp').toString());
     }
     //print()
   }
@@ -382,14 +382,14 @@ class _HomePageState extends State<HomePage> {
 
   var currentIndex = 0;
 
-  void _onItemTapped(String index) {
-    setState(() {
-      currentIndex = int.parse(index);
-    });
-  }
+  // void _onItemTapped(String index) {
+  //   setState(() {
+  //     currentIndex = int.parse(index);
+  //   });
+  // }
 
   void getConnectivity() {
-    print('checking internet...');
+    // print('checking internet...');
     subscription = Connectivity().onConnectivityChanged.listen(
       (ConnectivityResult result) async {
         isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -407,7 +407,7 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+            contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -499,7 +499,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 250.h,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
               ),
@@ -533,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: const EdgeInsets.all(3),
                           child: ElevatedButton(
                             onPressed: () async {
                               exit(0);
@@ -566,7 +566,7 @@ class _HomePageState extends State<HomePage> {
                           width: 20.w,
                         ),
                         Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: const EdgeInsets.all(3),
                           child: ElevatedButton(
                             onPressed: () {
                               Get.back();

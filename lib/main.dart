@@ -1,18 +1,18 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 // import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -20,14 +20,11 @@ import 'package:rentspace/constants/theme.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/actions/idle_page.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
-import 'core/helper/helper_route_path.dart';
 import 'core/helper/helper_routes.dart';
-import 'view/login_page.dart';
 import 'view/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -52,11 +49,11 @@ Future<void> main() async {
   await GlobalService.init();
 //initialize GetStorage
   await GetStorage.init();
-    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await Hive.initFlutter('rentspace');
   } else {
     await Hive.initFlutter();
-    print('Hive Intialized');
+    // // // // // // // // print('Hive Intialized');
   }
   await openHiveBox('userInfo');
   await openHiveBox('dataBundles');
@@ -110,7 +107,7 @@ Future<void> main() async {
   }
 
   FirebaseMessaging.instance.getToken().then((value) {
-    print("fcmtoken here $value");
+    // // // // // // // // print("fcmtoken here $value");
     GlobalService.sharedPreferencesManager.setFCMToken(value: value!);
   });
   requestNotificationPermission();
@@ -119,7 +116,7 @@ Future<void> main() async {
   FirebaseMessaging.onMessageOpenedApp.listen(
     (RemoteMessage message) async {
       // Navigate to appropriate screen based on notification type
-      String notificationType = message.data['notificationType'];
+      // String notificationType = message.data['notificationType'];
       // switch (notificationType) {
       //   case 'news':
 
@@ -186,8 +183,8 @@ Future<void> main() async {
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification!.android;
-      String notificationType = message.data['notificationType'];
+      // AndroidNotification? android = message.notification!.android;
+      // String notificationType = message.data['notificationType'];
       // switch (notificationType) {
       //   case 'news':
 
@@ -315,12 +312,12 @@ Future<void> main() async {
 }
 
 Future<void> openHiveBox(String boxName, {bool limit = false}) async {
-  final box = await Hive.openBox(boxName).onError((error, stackTrace) async {
+  await Hive.openBox(boxName).onError((error, stackTrace) async {
     final Directory dir = await getApplicationDocumentsDirectory();
     final String dirPath = dir.path;
-    print(dirPath);
+    // // // // // // // // print(dirPath);
     File dbFile = File('$dirPath/$boxName.hive');
-    print(dbFile);
+    // // // // // // // // print(dbFile);
     File lockFile = File('$dirPath/$boxName.lock');
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       dbFile = File('$dirPath/rentspace/$boxName.hive');
@@ -333,14 +330,13 @@ Future<void> openHiveBox(String boxName, {bool limit = false}) async {
   });
 }
 
-
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // await Firebase.initializeApp();
 }
 
 Future<void> initNotifications() async {
-  final sessionStateStream = StreamController<SessionState>();
+  // final sessionStateStream = StreamController<SessionState>();
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   const DarwinInitializationSettings initializationSettingsIOS =
@@ -362,9 +358,9 @@ Future<void> initNotifications() async {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
         // Get.to(const NotificationsPage());
-        print("onMessageOpened here: ${notificationResponse.payload}");
-        print('payload before routing');
-        // print(notificationResponse.payload);
+        // // // // // // // // print("onMessageOpened here: ${notificationResponse.payload}");
+        // // // // // // // // print('payload before routing');
+        // // // // // // // // // print(notificationResponse.payload);
         Get.to(const FirstPage());
         // Get.to(NewNotificationPage(
         //     message: notificationResponse.payload));
@@ -505,7 +501,7 @@ class _MyAppState extends State<MyApp> {
       sessionConfig: sessionConfig,
       sessionStateStream: sessionStateStream.stream,
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
+        data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
         child: GetMaterialApp(
           theme: Themes().lightTheme,
           // darkTheme: Themes().darkTheme,

@@ -1,4 +1,3 @@
-
 class ReferralModel {
   ReferralModel({
     required this.referrals,

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/signup_page.dart';
 
 import 'onboarding_contents.dart';
-import 'slider_done.dart';
 
 class OnboardingSlider extends StatefulWidget {
   const OnboardingSlider({super.key});
@@ -69,8 +67,6 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: colors[_currentPage],
       appBar: AppBar(

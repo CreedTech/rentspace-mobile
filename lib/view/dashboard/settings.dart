@@ -1,32 +1,32 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+// import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+// import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/app_constants.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/view/FirstPage.dart';
+// import 'package:rentspace/view/FirstPage.dart';
 // import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/actions/add_card.dart';
+// import 'package:rentspace/view/actions/add_card.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/security.dart';
@@ -37,15 +37,15 @@ import '../../api/global_services.dart';
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
 // import '../../constants/firebase_auth_constants.dart';
-import '../../constants/theme_services.dart';
+// import '../../constants/theme_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 // import '../../controller/user_controller.dart';
 import '../../controller/auth/auth_controller.dart';
-import '../actions/bank_and_card.dart';
+// import '../actions/bank_and_card.dart';
 import '../actions/share_and_earn.dart';
 import '../faqs.dart';
-import '../savings/spaceRent/spacerent_list.dart';
+// import '../savings/spaceRent/spacerent_list.dart';
 import 'dashboard.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -584,9 +584,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                       color: Color(0xffC9C9C9),
                     ),
                     GestureDetector(
-                       onTap: () {
-                          Get.to(const PersonalDetails());
-                        },
+                      onTap: () {
+                        Get.to(const PersonalDetails());
+                      },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
                         minVerticalPadding: 0,
@@ -605,7 +605,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                               ),
                               fit: BoxFit.cover,
                               image: CachedNetworkImageProvider(
-                                userController.userModel!.userDetails![0].avatar,
+                                userController
+                                    .userModel!.userDetails![0].avatar,
                               ),
                             ),
                           ),

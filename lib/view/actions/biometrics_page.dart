@@ -12,13 +12,12 @@ import 'dart:io';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
-import '../../core/helper/helper_route_path.dart';
 import '../FirstPage.dart';
 
 class BiometricsPage extends StatefulWidget {
-  BiometricsPage({
-    Key? key,
-  }) : super(key: key);
+  const BiometricsPage({
+    super.key,
+  });
 
   @override
   _BiometricsPageState createState() => _BiometricsPageState();
@@ -26,7 +25,7 @@ class BiometricsPage extends StatefulWidget {
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 String _message = "Not Authorized";
-bool _hasBiometric = false;
+// bool _hasBiometric = false;
 bool _canShowAuth = false;
 final hasBiometricStorage = GetStorage();
 String screenInfo = "";
@@ -38,7 +37,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
       screenInfo = "App locked, complete Biometrics to unlock";
     });
     bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-    print(canCheckBiometrics);
+    // print(canCheckBiometrics);
     _authenticateMe();
     return canCheckBiometrics;
   }

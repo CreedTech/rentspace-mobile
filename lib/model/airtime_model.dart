@@ -1,4 +1,3 @@
-
 class AirtimesModel {
   AirtimesModel({
     required this.airtimes,

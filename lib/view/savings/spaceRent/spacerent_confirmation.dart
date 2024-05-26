@@ -48,6 +48,7 @@ class _SpaceRentConfirmationPageState
   final WalletController walletController = Get.find();
   final TextEditingController _aPinController = TextEditingController();
   bool isFilled = false;
+  String interestRate = "0";
 
   onKeyboardTap(String value) {
     setState(() {
@@ -69,6 +70,92 @@ class _SpaceRentConfirmationPageState
     EasyLoading.dismiss();
     return true;
   }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  // }
+  //    calculateInterest() {
+  //   //50k to 1m, 7% interest
+  //   if (((widget.rentValue) >= 1000) &&
+  //       ((widget.rentValue) < 49999)) {
+  //     setState(() {
+  //       // showSaveButton = true;
+  //       interestRate = "7";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.07 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //1m to 2m, 7.5% interest
+  //   else if (((widget.rentValue) >= 1000000) &&
+  //       ((widget.rentValue) < 2000000)) {
+  //     setState(() {
+  //       interestRate = "7.5";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.075 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //2m to 5m, 8.25% interest
+  //   else if (((widget.rentValue) >= 2000000) &&
+  //       ((widget.rentValue) < 5000000)) {
+  //     setState(() {
+  //       interestRate = "8.5";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.0825 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //5m to 10m, 9% interest
+  //   else if (((widget.rentValue) >= 5000000) &&
+  //       ((widget.rentValue) < 10000000)) {
+  //     setState(() {
+  //       interestRate = "9";
+  //       // showSaveButton = true;
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.09 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //10m to 20m, 10.25% interest
+  //   else if (((widget.rentValue) >= 10000000) &&
+  //       ((widget.rentValue) < 20000000)) {
+  //     setState(() {
+  //       interestRate = "10.25";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.1025 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //20m to 30m, 12% interest
+  //   else if (((widget.rentValue) >= 20000000) &&
+  //       ((widget.rentValue) < 30000000)) {
+  //     setState(() {
+  //       interestRate = "12";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.12 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  //   //30m to 50m, 14% interest
+  //   else if (((widget.rentValue) >= 30000000) &&
+  //       ((widget.rentValue) < 50000000)) {
+  //     setState(() {
+  //       interestRate = "14";
+  //     });
+  //     // return interestValue = ((widget.rentValue) *
+  //     //         0.14 *
+  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
+  //     //     .toString();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +176,7 @@ class _SpaceRentConfirmationPageState
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorWhite,
@@ -159,7 +246,7 @@ class _SpaceRentConfirmationPageState
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       // height: 92.h,
-                      padding: EdgeInsets.all(17),
+                      padding: const EdgeInsets.all(17),
                       decoration: BoxDecoration(
                         color: colorWhite,
                         borderRadius: BorderRadius.circular(10.r),
@@ -191,7 +278,7 @@ class _SpaceRentConfirmationPageState
                   Container(
                     width: MediaQuery.of(context).size.width,
                     // height: 92.h,
-                    padding: EdgeInsets.all(17),
+                    padding: const EdgeInsets.all(17),
                     decoration: BoxDecoration(
                       color: colorWhite,
                       borderRadius: BorderRadius.circular(10.r),
@@ -494,7 +581,7 @@ class _SpaceRentConfirmationPageState
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 22, horizontal: 27),
                                         decoration: BoxDecoration(
                                           color: colorWhite,
@@ -550,7 +637,8 @@ class _SpaceRentConfirmationPageState
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: Color(0xffBDBDBD),
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -604,7 +692,8 @@ class _SpaceRentConfirmationPageState
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: Color(0xffBDBDBD),
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 2.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -684,7 +773,7 @@ class _SpaceRentConfirmationPageState
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 2, horizontal: 7),
                                         decoration: BoxDecoration(
                                           color: colorWhite,

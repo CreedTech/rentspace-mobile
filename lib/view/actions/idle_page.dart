@@ -7,7 +7,6 @@ import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:io';
@@ -83,64 +82,7 @@ class _IdlePageState extends State<IdlePage> {
     //pin theme
 
     //Pin
-    final pinInput = Pinput(
-      useNativeKeyboard: false,
-      defaultPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: GoogleFonts.lato(
-          fontSize: 25,
-          color: brandOne,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 1.0),
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-      focusedPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: GoogleFonts.lato(
-          fontSize: 25,
-          color: brandOne,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-      submittedPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: GoogleFonts.lato(
-          fontSize: 25,
-          color: brandOne,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-      followingPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: GoogleFonts.lato(
-          fontSize: 25,
-          color: brandOne,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-      controller: _pinController,
-      length: 4,
-      validator: validatePin,
-      onChanged: validatePin,
-      closeKeyboardWhenCompleted: true,
-      keyboardType: TextInputType.number,
-    );
-
+  
     return WillPopScope(
       onWillPop: () async {
         exit(0);

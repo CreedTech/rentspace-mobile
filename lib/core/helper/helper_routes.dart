@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/actions/referral_record.dart';
-import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/signup_page.dart';
-import 'package:rentspace/view/splash_screen.dart';
 import 'package:rentspace/view/utility/airtime.dart';
 import 'package:rentspace/view/utility/cable.dart';
 import 'package:rentspace/view/utility/data.dart';
 import 'package:rentspace/view/utility/electricity.dart';
 
-import '../../view/FirstPage.dart';
-import '../../view/utility/utility_transaction_receipt.dart';
 import '../components/component_route_animation.dart';
 import 'helper_route_path.dart';
 
 class RouterGenerator {
   Route<dynamic> generate(RouteSettings settings) {
-    final arguments = settings.arguments;
+    // final arguments = settings.arguments;
     switch (settings.name) {
  
       case referral_record:

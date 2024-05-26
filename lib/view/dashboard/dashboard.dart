@@ -1,14 +1,14 @@
-import 'dart:io';
+// import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:html/parser.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:flutter_html/flutter_html.dart';
+// import 'package:html/parser.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -20,7 +20,7 @@ import 'package:get/get.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-import 'package:rentspace/constants/widgets/app_scrolling.dart';
+// import 'package:rentspace/constants/widgets/app_scrolling.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
@@ -32,21 +32,21 @@ import 'package:rentspace/view/actions/fund_wallet.dart';
 import 'package:rentspace/view/dashboard/all_activities.dart';
 import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/view/dashboard/settings.dart';
+// import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dashboard/transfer.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../api/wp-api.dart';
-import '../../constants/utils/responsive_height.dart';
-import '../../constants/widgets/custom_dialog.dart';
+// import '../../api/wp-api.dart';
+// import '../../constants/utils/responsive_height.dart';
+// import '../../constants/widgets/custom_dialog.dart';
 // import '../../controller/settings_controller.dart';
 import '../../constants/widgets/icon_container.dart';
 import '../../core/helper/helper_route_path.dart';
-import '../actions/onboarding_page.dart';
+// import '../actions/onboarding_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../actions/transaction_receipt.dart';
@@ -74,14 +74,14 @@ final hasFeedsStorage = GetStorage();
 int id = 0;
 
 String _greeting = "";
-bool _hasReferred = false;
+// bool _hasReferred = false;
 String referalCode = "";
 int referalCount = 0;
 int userReferal = 0;
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-String _isSet = "false";
+// String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
 bool hideBalance = false;
@@ -131,7 +131,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   }
 
   getSavings() async {
-    print("rentController.rent");
+    // print("rentController.rent");
     await rentController.fetchRent().then((value) {
       // if (userController.userModel!.userDetails![0].hasRent == true) {
       if (rentController.rentModel!.rents!.isNotEmpty) {
@@ -167,7 +167,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      final notification = message.notification?.title ?? 'No Title';
+      // final notification = message.notification?.title ?? 'No Title';
       // context.read().addNotification(notification);
       userController.fetchData();
       walletController.fetchWallet();
@@ -186,9 +186,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     });
 
     getConnectivity();
-    print("isLoading");
+    // print("isLoading");
     hideBalance = false;
-    print(userController.isLoading.value);
+    // print(userController.isLoading.value);
 
     greeting();
     // _fetchNews();
@@ -200,7 +200,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           isDeviceConnected = await InternetConnectionChecker().hasConnection;
           if (!isDeviceConnected && isAlertSet == false) {
             // showDialogBox();
-            noInternetConnectionScreen(context);
+            if (mounted) {
+              noInternetConnectionScreen(context);
+            }
             setState(() => isAlertSet = true);
           }
         },
@@ -222,9 +224,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
     // final data = ref.watch(userProfileDetailsProvider);
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double sliderHeight = sliderDynamicScreen(screenHeight);
+    // double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+    // double sliderHeight = sliderDynamicScreen(screenHeight);
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F8),
       body: Obx(
@@ -371,7 +373,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             ),
                                           );
                                         }
-                                        print(selectedIndex);
+                                        // print(selectedIndex);
                                         // Handle tap event
                                       },
                                       child: Container(
@@ -1774,7 +1776,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
                             // showDialogBox();
-                            noInternetConnectionScreen(context);
+                            if (context.mounted) {
+                              noInternetConnectionScreen(context);
+                            }
                             setState(() => isAlertSet = true);
                           }
                         },

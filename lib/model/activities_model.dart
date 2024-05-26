@@ -1,4 +1,3 @@
-
 class ActivitiesModel {
   ActivitiesModel({
     required this.activities,
@@ -22,14 +21,12 @@ class ActivitiesModel {
     }
   }
 
-
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['userActivities'] = activities!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
-
 
 class Activities {
   final String id;

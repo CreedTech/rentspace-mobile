@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, depend_on_referenced_packages, prefer_final_fields
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/api_client.dart';

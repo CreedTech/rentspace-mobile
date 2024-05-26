@@ -9,7 +9,6 @@ import 'package:rentspace/view/actions/confirm_transaction_pin.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/icons.dart';
-import '../../constants/widgets/custom_dialog.dart';
 
 class TransactionPin extends ConsumerStatefulWidget {
   const TransactionPin({super.key});

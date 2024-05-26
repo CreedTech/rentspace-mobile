@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rentspace/constants/constants.dart';
-
 
 class SharedPreferencesManager {
   late final SharedPreferences _prefs;
 
   Future<SharedPreferencesManager> init() async {
     _prefs = await SharedPreferences.getInstance();
-    print('Initialize');
+    // print('Initialize');
     return this;
   }
 
@@ -45,6 +42,7 @@ class SharedPreferencesManager {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setBool(HAS_SEEN_ONBOARDING, value);
   }
+
   Future<bool> userAllowedNotifications({required bool value}) async {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setBool('USER_ALLOWED_NOTIFICATIONS', value);
@@ -85,6 +83,7 @@ class SharedPreferencesManager {
     _prefs.setString('password', password);
     _prefs.setBool('rememberMe', rememberMe);
   }
+
   Future<void> deleteLoginInfo() async {
     // final prefs = await SharedPreferences.getInstance();
     _prefs.remove('email');
@@ -153,5 +152,4 @@ class SharedPreferencesManager {
   //     return UserProfileDetailsResponse(msg: '', userDetails: []);
   //   }
   // }
-
 }

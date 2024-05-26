@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class CustomerResponseModel {
   String status;

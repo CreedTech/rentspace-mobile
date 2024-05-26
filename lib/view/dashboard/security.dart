@@ -6,19 +6,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+// import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/change_password.dart';
-import 'package:rentspace/view/actions/change_pin_intro.dart';
-import 'package:rentspace/view/actions/forgot_pin_intro.dart';
+// import 'package:rentspace/view/actions/change_pin_intro.dart';
+import 'package:rentspace/view/actions/change_transaction_pin_otp_page.dart';
+// import 'package:rentspace/view/actions/forgot_pin_intro.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 // import '../../controller/user_controller.dart';
 import '../../controller/auth/user_controller.dart';
-import '../actions/forgot_password.dart';
+// import '../actions/forgot_password.dart';
 
 class Security extends StatefulWidget {
   const Security({super.key});
@@ -309,7 +310,7 @@ class _SecurityState extends State<Security> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            Get.to(const ForgotPinIntro());
+                            Get.to(ChangetransactionPinOtpPage());
                           },
                           title: Text(
                             'Change Transaction Pin',

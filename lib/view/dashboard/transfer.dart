@@ -726,54 +726,19 @@ class _TransferPageState extends State<TransferPage> {
                 vertical: 15.h,
                 horizontal: 24.w,
               ),
-              child: ListView(
+              child: Stack(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        style: GoogleFonts.lato(
-                          color: Colors.black54,
-                          fontSize: 14,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'Space Wallet: ',
-                              style: GoogleFonts.lato(
-                                color: colorBlack,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              )),
-                          TextSpan(
-                            text: currencyFormat.format(walletController
-                                .walletModel!.wallet![0].mainBalance),
-                            style: GoogleFonts.lato(
-                              color: brandOne,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.info_outline,
-                        size: 24,
-                        color: colorBlack,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.4,
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: colorWhite,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                         child: RichText(
                           text: TextSpan(
                             style: GoogleFonts.lato(
@@ -782,796 +747,858 @@ class _TransferPageState extends State<TransferPage> {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Please note that there is a',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
-                              ),
+                                  text: 'Space Wallet: ',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  )),
                               TextSpan(
-                                text: ' N20',
+                                text: currencyFormat.format(walletController
+                                    .walletModel!.wallet![0].mainBalance),
                                 style: GoogleFonts.lato(
                                   color: brandOne,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14,
                                 ),
-                              ),
-                              TextSpan(
-                                text: ' charge on all transfer.',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
-                              ),
+                              )
                             ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 40, bottom: 10),
-                  //   child: Text(
-                  //     'Recents',
-                  //     style: GoogleFonts.lato(
-                  //       color: colorBlack,
-                  //       fontWeight: FontWeight.w500,
-                  //       fontSize: 16,
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // Container(
-                  //   height: 80,
-                  //   child: ListView.builder(
-                  //     scrollDirection: Axis.horizontal,
-                  //     physics: const BouncingScrollPhysics(),
-                  //     shrinkWrap: true,
-                  //     itemCount: userController
-                  //         .recentTransfersModel!.recentTransfers!.length,
-                  //     itemBuilder: ((context, index) {
-                  //       print(userController.recentTempName);
-                  //       final details = userController.recentTempName[index];
-                  //       List<String> nameParts = details[0].split(' ');
-                  //       return GestureDetector(
-                  //         onTap: () {
-                  //           setState(() {
-                  //             _bankController.text = details[1];
-                  //             _accountNumberController.text = details[2];
-                  //             _bankAccountName = details[0];
-                  //           });
-                  //         },
-                  //         child: Row(
-                  //           children: [
-                  //             Container(
-                  //               width: 59,
-                  //               child: Column(
-                  //                 children: [
-                  //                   Image.asset(
-                  //                     'assets/icons/bank_icon.png',
-                  //                     width: 44,
-                  //                     height: 44,
-                  //                   ),
-                  //                   Column(
-                  //                     mainAxisAlignment:
-                  //                         MainAxisAlignment.center,
-                  //                     children: [
-                  //                       Text(
-                  //                         nameParts[0].toString().capitalize!,
-                  //                         textAlign: TextAlign.center,
-                  //                         overflow: TextOverflow.ellipsis,
-                  //                         maxLines: 1,
-                  //                         style: GoogleFonts.lato(
-                  //                           color: colorBlack,
-                  //                           fontWeight: FontWeight.w400,
-                  //                           fontSize: 12,
-                  //                         ),
-                  //                       ),
-                  //                       Text(
-                  //                         nameParts[1].toString().capitalize!,
-                  //                         textAlign: TextAlign.center,
-                  //                         overflow: TextOverflow.ellipsis,
-                  //                         style: GoogleFonts.lato(
-                  //                           color: colorBlack,
-                  //                           fontWeight: FontWeight.w400,
-                  //                           fontSize: 12,
-                  //                         ),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             const SizedBox(
-                  //               width: 12,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     }),
-                  //   ),
-                  // ),
-
-                  Form(
-                    key: withdrawFormKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 10),
-                          child: Text(
-                            "Recipient Account",
-                            style: GoogleFonts.lato(
-                              fontSize: 16,
-                              color: colorBlack,
-                              fontWeight: FontWeight.w500,
-                            ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.info_outline,
+                            size: 24,
+                            color: colorBlack,
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Select Bank',
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            child: RichText(
+                              text: TextSpan(
                                 style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
+                                  color: Colors.black54,
+                                  fontSize: 14,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Please note that there is a',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: ' N20',
+                                    style: GoogleFonts.lato(
+                                      color: brandOne,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: ' charge on all transfer.',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            TextFormField(
-                              onTap: () async {
-                                showModalBottomSheet(
-                                  backgroundColor: const Color(0xffF6F6F8),
-                                  isDismissible: false,
-                                  enableDrag: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (
-                                    BuildContext context,
-                                  ) {
-                                    return StatefulBuilder(builder:
-                                        (BuildContext context,
-                                            StateSetter setState) {
-                                      // String searchQuery = '';
-                                      List<String> filteredBanks(String query) {
-                                        if (query.isEmpty) {
-                                          return _bankName;
-                                        } else {
-                                          setState(() {});
+                          ),
+                        ],
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 40, bottom: 10),
+                      //   child: Text(
+                      //     'Recents',
+                      //     style: GoogleFonts.lato(
+                      //       color: colorBlack,
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      // ),
 
-                                          return _bankName
-                                              .where((bankName) => bankName
-                                                  .toLowerCase()
-                                                  .contains(
-                                                      query.toLowerCase()))
-                                              .toList();
-                                        }
-                                      }
+                      // Container(
+                      //   height: 80,
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.horizontal,
+                      //     physics: const BouncingScrollPhysics(),
+                      //     shrinkWrap: true,
+                      //     itemCount: userController
+                      //         .recentTransfersModel!.recentTransfers!.length,
+                      //     itemBuilder: ((context, index) {
+                      //       print(userController.recentTempName);
+                      //       final details = userController.recentTempName[index];
+                      //       List<String> nameParts = details[0].split(' ');
+                      //       return GestureDetector(
+                      //         onTap: () {
+                      //           setState(() {
+                      //             _bankController.text = details[1];
+                      //             _accountNumberController.text = details[2];
+                      //             _bankAccountName = details[0];
+                      //           });
+                      //         },
+                      //         child: Row(
+                      //           children: [
+                      //             Container(
+                      //               width: 59,
+                      //               child: Column(
+                      //                 children: [
+                      //                   Image.asset(
+                      //                     'assets/icons/bank_icon.png',
+                      //                     width: 44,
+                      //                     height: 44,
+                      //                   ),
+                      //                   Column(
+                      //                     mainAxisAlignment:
+                      //                         MainAxisAlignment.center,
+                      //                     children: [
+                      //                       Text(
+                      //                         nameParts[0].toString().capitalize!,
+                      //                         textAlign: TextAlign.center,
+                      //                         overflow: TextOverflow.ellipsis,
+                      //                         maxLines: 1,
+                      //                         style: GoogleFonts.lato(
+                      //                           color: colorBlack,
+                      //                           fontWeight: FontWeight.w400,
+                      //                           fontSize: 12,
+                      //                         ),
+                      //                       ),
+                      //                       Text(
+                      //                         nameParts[1].toString().capitalize!,
+                      //                         textAlign: TextAlign.center,
+                      //                         overflow: TextOverflow.ellipsis,
+                      //                         style: GoogleFonts.lato(
+                      //                           color: colorBlack,
+                      //                           fontWeight: FontWeight.w400,
+                      //                           fontSize: 12,
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               width: 12,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       );
+                      //     }),
+                      //   ),
+                      // ),
 
-                                      return FractionallySizedBox(
-                                        heightFactor: 0.8,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 26, horizontal: 24),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Column(
+                      Form(
+                        key: withdrawFormKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 10),
+                              child: Text(
+                                "Recipient Account",
+                                style: GoogleFonts.lato(
+                                  fontSize: 16,
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Select Bank',
+                                    style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12),
+                                  ),
+                                ),
+                                TextFormField(
+                                  onTap: () async {
+                                    showModalBottomSheet(
+                                      backgroundColor: const Color(0xffF6F6F8),
+                                      isDismissible: false,
+                                      enableDrag: true,
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (
+                                        BuildContext context,
+                                      ) {
+                                        return StatefulBuilder(builder:
+                                            (BuildContext context,
+                                                StateSetter setState) {
+                                          // String searchQuery = '';
+                                          List<String> filteredBanks(
+                                              String query) {
+                                            if (query.isEmpty) {
+                                              return _bankName;
+                                            } else {
+                                              setState(() {});
+
+                                              return _bankName
+                                                  .where((bankName) => bankName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          query.toLowerCase()))
+                                                  .toList();
+                                            }
+                                          }
+
+                                          return FractionallySizedBox(
+                                            heightFactor: 0.8,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 26,
+                                                        horizontal: 24),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                    Column(
                                                       children: [
-                                                        Text(
-                                                          'Select Bank',
-                                                          style:
-                                                              GoogleFonts.lato(
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'Select Bank',
+                                                              style: GoogleFonts.lato(
                                                                   color:
                                                                       colorBlack,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
                                                                   fontSize: 24),
+                                                            ),
+                                                            GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons.close,
+                                                                  size: 24,
+                                                                  color:
+                                                                      colorBlack,
+                                                                )),
+                                                          ],
                                                         ),
-                                                        GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
+                                                        const SizedBox(
+                                                          height: 18,
+                                                        ),
+                                                        Container(
+                                                          color: const Color(
+                                                              0xffEBEBEB),
+                                                          child: TextFormField(
+                                                            style: GoogleFonts
+                                                                .lato(
+                                                                    color:
+                                                                        colorBlack,
+                                                                    fontSize:
+                                                                        14),
+                                                            cursorColor:
+                                                                colorBlack,
+                                                            controller:
+                                                                _searchController,
+                                                            onChanged:
+                                                                (String value) {
+                                                              _onSearchChanged();
+                                                              print(
+                                                                  "searchQuery here");
+                                                              print(
+                                                                  searchQuery);
                                                             },
-                                                            child: const Icon(
-                                                              Icons.close,
-                                                              size: 24,
-                                                              color: colorBlack,
-                                                            )),
+                                                            // onChanged: (value) {
+                                                            //   setState(() {
+                                                            //     searchQuery = value;
+                                                            //   });
+
+                                                            // },
+                                                            decoration:
+                                                                InputDecoration(
+                                                              filled: false,
+                                                              contentPadding:
+                                                                  const EdgeInsets
+                                                                      .all(3),
+                                                              prefixIcon:
+                                                                  const Icon(
+                                                                Icons
+                                                                    .search_outlined,
+                                                                color:
+                                                                    colorBlack,
+                                                                size: 24,
+                                                              ),
+                                                              suffixIcon:
+                                                                  _isTyping // Show clear button only when typing
+                                                                      ? IconButton(
+                                                                          icon:
+                                                                              const Icon(
+                                                                            Iconsax.close_circle5,
+                                                                            size:
+                                                                                18,
+                                                                          ),
+                                                                          onPressed:
+                                                                              () {
+                                                                            FocusScope.of(context).unfocus();
+                                                                            _searchController.clear(); // Clear the text field
+                                                                          },
+                                                                        )
+                                                                      : null,
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                ),
+                                                                // borderSide: BorderSide.none
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color:
+                                                                      brandOne,
+                                                                ),
+                                                                // borderSide: BorderSide.none
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color:
+                                                                      brandOne,
+                                                                ),
+                                                                // borderSide: BorderSide.none
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                        color: Colors
+                                                                            .red,
+                                                                        width:
+                                                                            2.0),
+                                                              ),
+                                                              hintStyle:
+                                                                  const TextStyle(
+                                                                color:
+                                                                    colorBlack,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                              hintText:
+                                                                  "Search Bank",
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 15.h,
+                                                        ),
                                                       ],
                                                     ),
-                                                    const SizedBox(
-                                                      height: 18,
-                                                    ),
-                                                    Container(
-                                                      color: const Color(
-                                                          0xffEBEBEB),
-                                                      child: TextFormField(
-                                                        style: GoogleFonts.lato(
-                                                            color: colorBlack,
-                                                            fontSize: 14),
-                                                        cursorColor: colorBlack,
-                                                        controller:
-                                                            _searchController,
-                                                        onChanged:
-                                                            (String value) {
-                                                          _onSearchChanged();
-                                                          print(
-                                                              "searchQuery here");
-                                                          print(searchQuery);
-                                                        },
-                                                        // onChanged: (value) {
-                                                        //   setState(() {
-                                                        //     searchQuery = value;
-                                                        //   });
-
-                                                        // },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          filled: false,
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .all(3),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons
-                                                                .search_outlined,
-                                                            color: colorBlack,
-                                                            size: 24,
-                                                          ),
-                                                          suffixIcon:
-                                                              _isTyping // Show clear button only when typing
-                                                                  ? IconButton(
-                                                                      icon:
-                                                                          const Icon(
-                                                                        Iconsax
-                                                                            .close_circle5,
-                                                                        size:
-                                                                            18,
+                                                    Expanded(
+                                                      child: ListView.builder(
+                                                        physics:
+                                                            const BouncingScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        itemCount:
+                                                            filteredBanks(
+                                                                    searchQuery)
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, idx) {
+                                                          final bankName =
+                                                              filteredBanks(
+                                                                      searchQuery)[
+                                                                  idx];
+                                                          return Column(
+                                                            children: [
+                                                              StatefulBuilder(builder:
+                                                                  (BuildContext
+                                                                          context,
+                                                                      StateSetter
+                                                                          setState) {
+                                                                return ListTileTheme(
+                                                                  selectedColor: Theme.of(
+                                                                          context)
+                                                                      .colorScheme
+                                                                      .secondary,
+                                                                  child:
+                                                                      ListTile(
+                                                                    contentPadding:
+                                                                        const EdgeInsets
+                                                                            .only(
+                                                                      left: 0.0,
+                                                                      right:
+                                                                          0.0,
+                                                                    ),
+                                                                    minLeadingWidth:
+                                                                        0,
+                                                                    leading: Image
+                                                                        .asset(
+                                                                      'assets/icons/bank_icon.png',
+                                                                      width: 44,
+                                                                      height:
+                                                                          44,
+                                                                      fit: BoxFit
+                                                                          .fitWidth, // Ensure the image fits inside the circle
+                                                                    ),
+                                                                    title:
+                                                                        SizedBox(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width /
+                                                                          1.5,
+                                                                      child:
+                                                                          Text(
+                                                                        bankName,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts.lato(
+                                                                            fontSize:
+                                                                                16,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: colorBlack),
                                                                       ),
-                                                                      onPressed:
+                                                                    ),
+
+                                                                    // leading: Radio<String>(
+                                                                    //   fillColor: MaterialStateColor
+                                                                    //       .resolveWith(
+                                                                    //     (states) => brandOne,
+                                                                    //   ),
+                                                                    //   value: name[idx],
+                                                                    //   groupValue: tvCable,
+                                                                    //   onChanged: (String? value) {
+                                                                    //     tvCable = value!;
+                                                                    //     // Hive.box('settings')
+                                                                    //     //     .put('region', region);
+                                                                    //     Navigator.pop(context);
+                                                                    //     setState(() {
+                                                                    //       _selectedTVCode =
+                                                                    //           tvBill[idx];
+                                                                    //       tvCable = name[idx];
+                                                                    //       tvImage = image[idx];
+                                                                    //       canProceed = true;
+                                                                    //     });
+                                                                    //   },
+                                                                    // ),
+                                                                    // selected: tvCable == name[idx],
+                                                                    onTap: () {
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus();
+                                                                      setState(
                                                                           () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        _searchController
-                                                                            .clear(); // Clear the text field
-                                                                      },
-                                                                    )
-                                                                  : null,
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: brandOne,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: brandOne,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          errorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    width: 2.0),
-                                                          ),
-                                                          hintStyle:
-                                                              const TextStyle(
-                                                            color: colorBlack,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                          hintText:
-                                                              "Search Bank",
-                                                        ),
+                                                                        _currentBankName =
+                                                                            bankName.toString();
+                                                                        selectedItem =
+                                                                            bankName;
+                                                                        int index =
+                                                                            _bankName.indexOf(selectedItem!);
+                                                                        _currentBankCode =
+                                                                            _bankCode[index];
+                                                                        _selectedBank =
+                                                                            selectedItem;
+                                                                      });
+
+                                                                      _bankController
+                                                                              .text =
+                                                                          selectedItem!;
+                                                                      _checkFieldsAndHitApi();
+                                                                      // _selectedTVCode = tvBill[idx];
+                                                                      // tvCable = name[idx];
+                                                                      // tvImage = image[idx];
+                                                                      // canProceed = true;
+
+                                                                      Navigator
+                                                                          .pop(
+                                                                        context,
+                                                                      );
+                                                                      print(
+                                                                          _selectedBank);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    },
+                                                                  ),
+                                                                );
+                                                              }),
+                                                              const Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            20),
+                                                                child: Divider(
+                                                                  thickness: 1,
+                                                                  color: Color(
+                                                                      0xffC9C9C9),
+                                                                  height: 1,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15.h,
                                                     ),
                                                   ],
                                                 ),
-                                                Expanded(
-                                                  child: ListView.builder(
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    itemCount: filteredBanks(
-                                                            searchQuery)
-                                                        .length,
-                                                    itemBuilder:
-                                                        (context, idx) {
-                                                      final bankName =
-                                                          filteredBanks(
-                                                              searchQuery)[idx];
-                                                      return Column(
-                                                        children: [
-                                                          StatefulBuilder(builder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  StateSetter
-                                                                      setState) {
-                                                            return ListTileTheme(
-                                                              selectedColor: Theme
-                                                                      .of(context)
-                                                                  .colorScheme
-                                                                  .secondary,
-                                                              child: ListTile(
-                                                                contentPadding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                  left: 0.0,
-                                                                  right: 0.0,
-                                                                ),
-                                                                minLeadingWidth:
-                                                                    0,
-                                                                leading:
-                                                                    Image.asset(
-                                                                  'assets/icons/bank_icon.png',
-                                                                  width: 44,
-                                                                  height: 44,
-                                                                  fit: BoxFit
-                                                                      .fitWidth, // Ensure the image fits inside the circle
-                                                                ),
-                                                                title: SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      1.5,
-                                                                  child: Text(
-                                                                    bankName,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color:
-                                                                            colorBlack),
-                                                                  ),
-                                                                ),
-
-                                                                // leading: Radio<String>(
-                                                                //   fillColor: MaterialStateColor
-                                                                //       .resolveWith(
-                                                                //     (states) => brandOne,
-                                                                //   ),
-                                                                //   value: name[idx],
-                                                                //   groupValue: tvCable,
-                                                                //   onChanged: (String? value) {
-                                                                //     tvCable = value!;
-                                                                //     // Hive.box('settings')
-                                                                //     //     .put('region', region);
-                                                                //     Navigator.pop(context);
-                                                                //     setState(() {
-                                                                //       _selectedTVCode =
-                                                                //           tvBill[idx];
-                                                                //       tvCable = name[idx];
-                                                                //       tvImage = image[idx];
-                                                                //       canProceed = true;
-                                                                //     });
-                                                                //   },
-                                                                // ),
-                                                                // selected: tvCable == name[idx],
-                                                                onTap: () {
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus();
-                                                                  setState(() {
-                                                                    _currentBankName =
-                                                                        bankName
-                                                                            .toString();
-                                                                    selectedItem =
-                                                                        bankName;
-                                                                    int index =
-                                                                        _bankName
-                                                                            .indexOf(selectedItem!);
-                                                                    _currentBankCode =
-                                                                        _bankCode[
-                                                                            index];
-                                                                    _selectedBank =
-                                                                        selectedItem;
-                                                                  });
-
-                                                                  _bankController
-                                                                          .text =
-                                                                      selectedItem!;
-                                                                  _checkFieldsAndHitApi();
-                                                                  // _selectedTVCode = tvBill[idx];
-                                                                  // tvCable = name[idx];
-                                                                  // tvImage = image[idx];
-                                                                  // canProceed = true;
-
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                  print(
-                                                                      _selectedBank);
-
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                              ),
-                                                            );
-                                                          }),
-                                                          const Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        20),
-                                                            child: Divider(
-                                                              thickness: 1,
-                                                              color: Color(
-                                                                  0xffC9C9C9),
-                                                              height: 1,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    });
+                                          );
+                                        });
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              onChanged: (e) {
-                                _checkFieldsAndHitApi();
-                                setState(() {
-                                  canProceed = false;
-                                });
-                                // tvName = "";
-                              },
-                              readOnly: true,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              enableSuggestions: true,
-                              cursorColor: colorBlack,
-                              style: GoogleFonts.lato(
-                                  color: colorBlack, fontSize: 14),
+                                  onChanged: (e) {
+                                    _checkFieldsAndHitApi();
+                                    setState(() {
+                                      canProceed = false;
+                                    });
+                                    // tvName = "";
+                                  },
+                                  readOnly: true,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  enableSuggestions: true,
+                                  cursorColor: colorBlack,
+                                  style: GoogleFonts.lato(
+                                      color: colorBlack, fontSize: 14),
 
-                              controller: _bankController,
-                              textAlignVertical: TextAlignVertical.center,
-                              // textCapitalization: TextCapitalization.sentences,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffE0E0E0),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: brandOne, width: 2.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffE0E0E0),
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Colors.red,
-                                      width: 2.0), // Change color to yellow
-                                ),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 12),
-                                  child: Image.asset(
-                                    'assets/icons/bank_icon.png',
-                                    width: 26,
-                                    // Ensure the image fits inside the circle
-                                  ),
-                                ),
-                                suffixIcon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 24,
-                                  color: colorBlack,
-                                ),
-                                filled: false,
-                                fillColor: Colors.transparent,
-                                contentPadding: const EdgeInsets.all(14),
-                              ),
-                              maxLines: 1,
-                            ),
-
-                            // GestureDetector(
-                            //   onTap: _openBankSelectorOverlay,
-                            //   child: AbsorbPointer(
-                            //     child: bank,
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Account Number',
-                                style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            accountNumber
-                          ],
-                        ),
-                        (isChecking)
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 5),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffEEF8FF),
-                                      borderRadius: BorderRadius.circular(15),
+                                  controller: _bankController,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  // textCapitalization: TextCapitalization.sentences,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffE0E0E0),
+                                      ),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 20.w,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                          color: brandOne, width: 2.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffE0E0E0),
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 2.0), // Change color to yellow
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 18, vertical: 12),
+                                      child: Image.asset(
+                                        'assets/icons/bank_icon.png',
+                                        width: 26,
+                                        // Ensure the image fits inside the circle
+                                      ),
+                                    ),
+                                    suffixIcon: const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      size: 24,
+                                      color: colorBlack,
+                                    ),
+                                    filled: false,
+                                    fillColor: Colors.transparent,
+                                    contentPadding: const EdgeInsets.all(14),
+                                  ),
+                                  maxLines: 1,
+                                ),
+
+                                // GestureDetector(
+                                //   onTap: _openBankSelectorOverlay,
+                                //   child: AbsorbPointer(
+                                //     child: bank,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Account Number',
+                                    style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12),
+                                  ),
+                                ),
+                                accountNumber
+                              ],
+                            ),
+                            (isChecking)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 5,
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 5),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffEEF8FF),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
-                                        Center(
-                                          widthFactor: 0.2,
-                                          child: SizedBox(
-                                            height: 20.h,
-                                            width: 20.w,
-                                            child: const SpinKitSpinningLines(
-                                              color: brandTwo,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 20.w,
                                             ),
-                                          ),
+                                            Center(
+                                              widthFactor: 0.2,
+                                              child: SizedBox(
+                                                height: 20.h,
+                                                width: 20.w,
+                                                child:
+                                                    const SpinKitSpinningLines(
+                                                  color: brandTwo,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 20.w,
+                                            ),
+                                            Text(
+                                              'Verifying Account Details',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.lato(
+                                                color: brandOne,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: 20.w,
-                                        ),
-                                        Text(
-                                          'Verifying Account Details',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.lato(
-                                            color: brandOne,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
 
-                            // :(hasError == true)?Text(verifyAccountError):Text(_bankAccountName)
-                            : const SizedBox(),
-                        (hasError == true || verifyAccountError != '')
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.red.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    verifyAccountError,
-                                    style: GoogleFonts.lato(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
+                                // :(hasError == true)?Text(verifyAccountError):Text(_bankAccountName)
+                                : const SizedBox(),
+                            (hasError == true || verifyAccountError != '')
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 5,
                                     ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        (_bankAccountName != '')
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffEEF8FF),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    _bankAccountName.capitalize!,
-                                    style: GoogleFonts.lato(
-                                      color: brandOne,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Text(
+                                        verifyAccountError,
+                                        style: GoogleFonts.lato(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Amount',
-                                style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
-                              ),
+                                  )
+                                : const SizedBox(),
+                            (_bankAccountName != '')
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 5,
+                                    ),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffEEF8FF),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Text(
+                                        _bankAccountName.capitalize!,
+                                        style: GoogleFonts.lato(
+                                          color: brandOne,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            const SizedBox(
+                              height: 20,
                             ),
-                            amount
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Amount',
+                                    style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12),
+                                  ),
+                                ),
+                                amount
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Narration',
+                                    style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12),
+                                  ),
+                                ),
+                                narration
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Narration',
-                                style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            narration
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 40.h,
                   ),
                   Align(
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize:
-                            Size(MediaQuery.of(context).size.width - 50, 50),
-                        backgroundColor:
-                            (withdrawFormKey.currentState != null &&
-                                    withdrawFormKey.currentState!.validate() &&
-                                    _bankAccountName != '')
-                                ? brandTwo
-                                : Colors.grey,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            10,
-                          ),
-                        ),
-                      ),
-                      onPressed: withdrawFormKey.currentState != null &&
-                              withdrawFormKey.currentState!.validate()
-                          ? () async {
-                              FocusScope.of(context).unfocus();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      TransferConfirmationPage(
-                                    bankName: _bankController.text,
-                                    accountNumber:
-                                        _accountNumberController.text,
-                                    bankCode: _currentBankCode,
-                                    accountName: _bankAccountName,
-                                    amount: _amountController.text,
-                                    narration: _narrationController.text,
-                                  ),
-                                ),
-                              );
-                              // Proceed with the action
-                            }
-                          : null,
-                      child: Text(
-                        'Proceed',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          color: (withdrawFormKey.currentState != null &&
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: (withdrawFormKey.currentState !=
+                                      null &&
                                   withdrawFormKey.currentState!.validate() &&
                                   _bankAccountName != '')
-                              ? colorWhite
-                              : colorBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                              ? brandTwo
+                              : Colors.grey,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        onPressed: withdrawFormKey.currentState != null &&
+                                withdrawFormKey.currentState!.validate()
+                            ? () async {
+                                FocusScope.of(context).unfocus();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TransferConfirmationPage(
+                                      bankName: _bankController.text,
+                                      accountNumber:
+                                          _accountNumberController.text,
+                                      bankCode: _currentBankCode,
+                                      accountName: _bankAccountName,
+                                      amount: _amountController.text,
+                                      narration: _narrationController.text,
+                                    ),
+                                  ),
+                                );
+                                // Proceed with the action
+                              }
+                            : null,
+                        child: Text(
+                          'Proceed',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            color: (withdrawFormKey.currentState != null &&
+                                    withdrawFormKey.currentState!.validate() &&
+                                    _bankAccountName != '')
+                                ? colorWhite
+                                : colorBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),

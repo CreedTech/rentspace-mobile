@@ -287,7 +287,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
 
 void pinRedirectingAlert(BuildContext context, String message, String subText,
     String redirectText) async {
-  final sessionStateStream = StreamController<SessionState>();
+  // final sessionStateStream = StreamController<SessionState>();
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -564,7 +564,6 @@ void customSuccessDialog(
   showDialog(
       context: context,
       barrierDismissible: false,
-      
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -651,7 +650,7 @@ void customSuccessDialog(
       });
 }
 
-void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
+void setProfilePictuteDialog(BuildContext context, dynamic onTap) {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -690,7 +689,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
                 height: 5.h,
               ),
               GestureDetector(
-                onTap: () => _onTap,
+                onTap: () => onTap,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(1000),
@@ -702,7 +701,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
                 ),
               ),
               GestureDetector(
-                onTap: () => _onTap,
+                onTap: () => onTap,
                 child: Center(
                   child: Text(
                     'Tap to Change',
@@ -725,9 +724,9 @@ void setProfilePictuteDialog(BuildContext context, dynamic _onTap) {
   );
 }
 
-Future<void> SucessfulReciept(
+Future<void> successfulReceipt(
     BuildContext context, accountName, amount, bank, subject) async {
-  final sessionStateStream = StreamController<SessionState>();
+  // final sessionStateStream = StreamController<SessionState>();
   showDialog(
       context: context,
       barrierDismissible: false,

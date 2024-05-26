@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as p;
-import 'package:http/http.dart' as http;
+// import 'package:path/path.dart' as p;
+// import 'package:http/http.dart' as http;
 
 import 'dart:math';
 import 'package:intl/intl.dart' as intl;

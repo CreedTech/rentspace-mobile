@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import '../../model/announcement_model.dart';
 
 class AnnouncementService extends ChangeNotifier {
-    List<AnnouncementModel> _announcements = [];
+  List<AnnouncementModel> _announcements = [];
 
   List<AnnouncementModel> get announcements => _announcements;
 
   bool get hasUnreadAnnouncements => _announcements.isNotEmpty;
 
-    // Add a method to fetch notifications from Firestore
+  // Add a method to fetch notifications from Firestore
   Future<void> fetchNotificationsFromFirestore() async {
     print('fetching');
     try {
-
       // Update the _announcements list
       // _announcements = fetchedNotifications;
 
@@ -23,5 +22,4 @@ class AnnouncementService extends ChangeNotifier {
       print('Error fetching announcements: $error');
     }
   }
-
 }

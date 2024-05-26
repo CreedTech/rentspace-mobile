@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,7 +13,7 @@ import '../../constants/colors.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/utility_response_controller.dart';
 import '../../controller/wallet_controller.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 import 'airtime_confirmation.dart';
 
@@ -211,15 +211,15 @@ class _CableScreenState extends State<CableScreen> {
                   enableDrag: true,
                   isScrollControlled: true,
                   builder: (BuildContext context) {
-                    var billerItems = Hive.box(billerId!);
-                    print(billerItems);
-                    var storedData = billerItems.get(billerId!);
-                    print(billerId);
+                    // var billerItems = Hive.box(billerId!);
+                    // print(billerItems);
+                    // var storedData = billerItems.get(billerId!);
+                    // print(billerId);
                     //  storedData['data'];
-                    var outputList = storedData['data']
-                        .where((o) => o['billerid'] == billerId!)
-                        .toList();
-                    print('output data list ${outputList}');
+                    // var outputList = storedData['data']
+                    //     .where((o) => o['billerid'] == billerId!)
+                    //     .toList();
+                    // print('output data list ${outputList}');
                     return FractionallySizedBox(
                       heightFactor: 0.88,
                       child: Container(
@@ -360,7 +360,7 @@ class _CableScreenState extends State<CableScreen> {
                                               indent: 13,
                                               endIndent: 13,
                                             )
-                                          : SizedBox(),
+                                          : const SizedBox(),
                                     ],
                                   );
                                 },
@@ -674,16 +674,16 @@ class _CableScreenState extends State<CableScreen> {
                                                               billerLists.get(
                                                                   'Cable TV');
                                                           //  storedData['data'];
-                                                          print(
-                                                              _selectedCarrier!);
+                                                          // print(
+                                                          //     _selectedCarrier!);
                                                           var outputList =
                                                               storedData['data']
                                                                   .where((o) =>
                                                                       o['name'] ==
                                                                       _selectedCarrier!)
                                                                   .toList();
-                                                          print(
-                                                              'output list ${outputList}');
+                                                          // print(
+                                                          //     'output list ${outputList}');
                                                           // canProceed = true;
                                                           setState(() {
                                                             // billType = airtimeBill[idx];
@@ -711,9 +711,9 @@ class _CableScreenState extends State<CableScreen> {
                                                             isNetworkSelected =
                                                                 true;
                                                           });
-                                                          print(billerId);
-                                                          print(divisionId);
-                                                          print(productId);
+                                                          // print(billerId);
+                                                          // print(divisionId);
+                                                          // print(productId);
 
                                                           Navigator.pop(
                                                             context,
@@ -734,7 +734,7 @@ class _CableScreenState extends State<CableScreen> {
                                                             indent: 13,
                                                             endIndent: 13,
                                                           )
-                                                        : SizedBox(),
+                                                        : const SizedBox(),
                                                   ],
                                                 );
                                               },
@@ -1268,17 +1268,17 @@ class _CableScreenState extends State<CableScreen> {
                         FocusScope.of(context).unfocus();
                         var billerLists = Hive.box('Cable TV');
                         var storedData = billerLists.get('Cable TV');
-                        //  storedData['data'];
-                        print(_selectedCarrier!);
+                         storedData['data'];
+                        // print(_selectedCarrier!);
                         var outputList = storedData['data']
                             .where((o) => o['name'] == _selectedCarrier!)
                             .toList();
-                        print('output list ${outputList}');
+                        // print('output list ${outputList}');
 
-                        print(smartcardController.text);
-                        print(amountController.text);
-                        print(description);
-                        print(_selectedCarrier!);
+                        // print(smartcardController.text);
+                        // print(amountController.text);
+                        // print(description);
+                        // print(_selectedCarrier!);
                         utilityResponseController
                             .validateCustomer(smartcardController.text,
                                 divisionId, description!, productId, billerId)
@@ -1287,9 +1287,9 @@ class _CableScreenState extends State<CableScreen> {
                               Hive.box('customerValidation');
                           var storedData = customerVerification.get(billerId);
                           //  storedData['data'];
-                          print(_selectedCarrier!);
+                          // print(_selectedCarrier!);
                           var customerInfo = storedData['data'];
-                          print('customer info ${customerInfo['name']}');
+                          // print('customer info ${customerInfo['name']}');
                           Get.to(
                             AirtimeConfirmation(
                               number: smartcardController.text,

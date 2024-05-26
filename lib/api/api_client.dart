@@ -1,17 +1,13 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 
 import '../constants/app_constants.dart';
-import '../constants/colors.dart';
-import '../view/login_page.dart';
 
 final sessionStateStream = StreamController<SessionState>();
 // return ApiClient with Provider since it does not change
@@ -41,8 +37,8 @@ class ApiClient {
   /// Method to send data to backend, don't edit this code  *
 
   Future<http.Response> postData(String url, body) async {
-    print('got to api client');
-    print(AppConstants.BASE_URL + url);
+    // print('got to api client');
+    // print(AppConstants.BASE_URL + url);
 
     try {
       final response = await http.post(
@@ -53,12 +49,12 @@ class ApiClient {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Request was successful, return the response
-        print('response');
+        // print('response');
         return response;
       } else if (response.statusCode == 401) {
-        print('auth error here');
+        // print('auth error here');
 
-        print('error auth');
+        // print('error auth');
         // redirectingAlert(context, 'message', 'subText', 'redirectText');
         multipleLoginRedirectModal();
 
@@ -66,24 +62,23 @@ class ApiClient {
       } else {
         // Request failed with a non-2XX status code
         http.Response('Error: ${response.reasonPhrase} ', response.statusCode);
-        print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
+        // print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
 
         return response;
       }
     } on TimeoutException {
-      print(500);
+      // print(500);
       return http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
       return http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
       // Handle any other exceptions here
       var resp = http.Response('Error: $e', 504);
-      print('Other exception  ${resp.reasonPhrase} ${resp.body}');
+      // print('Other exception  ${resp.reasonPhrase} ${resp.body}');
 
       return resp;
     }
   }
-
 
 /*  Method to update data to backend  **/
   Future putData(url, body) async {
@@ -98,7 +93,7 @@ class ApiClient {
     } on TimeoutException {
       response = http.Response("Network Time out", 200);
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
 
       response = http.Response(e.toString(), 504);
     }
@@ -108,20 +103,20 @@ class ApiClient {
 
 /*  Method to accept data from backend  **/
   Future getData(url) async {
-    print('got to api client');
+    // print('got to api client');
     try {
       final response = await http.get(Uri.parse(AppConstants.BASE_URL + url),
           headers: _mainHeaders);
 
       if (response.statusCode == 200) {
         // Request was successful, return the response
-        print('jsonDecode(response.body).toString()');
+        // print('jsonDecode(response.body).toString()');
         // print(jsonDecode(response.body));
         return response;
       } else {
         // Request failed with a non-2XX status code
         http.Response('Error: ${response.reasonPhrase}', response.statusCode);
-        print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
+        // print('Failed with non 2XX status code  ${jsonDecode(response.body)}');
 
         return response;
       }
@@ -130,11 +125,11 @@ class ApiClient {
     } on http.ClientException catch (e) {
       return http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('e');
-      print(e);
+      // print('e');
+      // print(e);
       // Handle any other exceptions here
       var resp = http.Response('Error: $e', 504);
-      print('Other exception  ${resp.reasonPhrase}');
+      // print('Other exception  ${resp.reasonPhrase}');
 
       return resp;
     }
@@ -159,9 +154,9 @@ class ApiClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      // print(await response.stream.bytesToString());
     } else {
-      print(response.reasonPhrase);
+      // print(response.reasonPhrase);
     }
   }
 }

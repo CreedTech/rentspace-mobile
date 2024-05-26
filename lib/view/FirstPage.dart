@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
+// import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/widgets/shimmer_widget.dart';
 import 'package:rentspace/controller/airtime_controller.dart';

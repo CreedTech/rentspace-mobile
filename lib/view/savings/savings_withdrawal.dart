@@ -518,7 +518,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
     '090534': 'Polybadan Microfinance Bank',
     '090536': 'Ikoyi-Osun Microfinance Bank',
     '090537': 'Lobrem Microfinance Bank',
-    '090538': 'BluePrint Investments Microfinance Bank',
+    '090538': 'Blueprint Investments Microfinance Bank',
     '090539': 'Enrich Microfinance Bank',
     '090540': 'Aztec Microfinance Bank',
     '090541': 'Excellent Microfinance Bank',

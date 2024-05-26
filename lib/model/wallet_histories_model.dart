@@ -1,4 +1,3 @@
-
 class WalletHistoriesModel {
   WalletHistoriesModel({
     required this.walletHistories,

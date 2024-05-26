@@ -7,13 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+// import 'package:iconsax/iconsax.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/utils/obscureEmail.dart';
+// import '../../constants/utils/obscureEmail.dart';
 // import '../../controller/user_controller.dart';
 import '../../controller/auth/user_controller.dart';
-import '../actions/onboarding_page.dart';
+// import '../actions/onboarding_page.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -38,7 +38,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     // checkingForBioMetrics();
-    print(_isEmailVerified);
+    // print(_isEmailVerified);
   }
 
   Future updateVerification() async {
@@ -339,7 +339,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       minLeadingWidth: 0,
 
                       title: Text(
-                        userController.userModel!.userDetails![0].userName.capitalizeFirst!,
+                        userController.userModel!.userDetails![0].userName
+                            .capitalizeFirst!,
                         style: GoogleFonts.lato(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -360,7 +361,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         size: 20,
                       ),
                     ),
-                  
                     const Divider(
                       color: Color(0xffC9C9C9),
                     ),
@@ -371,7 +371,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       minLeadingWidth: 0,
 
                       title: Text(
-                        userController.userModel!.userDetails![0].residentialAddress.capitalizeFirst!,
+                        userController.userModel!.userDetails![0]
+                            .residentialAddress.capitalizeFirst!,
                         style: GoogleFonts.lato(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -392,7 +393,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         size: 20,
                       ),
                     ),
-                  
                     const Divider(
                       color: Color(0xffC9C9C9),
                     ),
@@ -424,7 +424,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         size: 20,
                       ),
                     ),
-                  
                     const Divider(
                       color: Color(0xffC9C9C9),
                     ),
@@ -456,7 +455,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         size: 20,
                       ),
                     ),
-                  
                     const Divider(
                       color: Color(0xffC9C9C9),
                     ),
@@ -488,7 +486,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         size: 20,
                       ),
                     ),
-                  
                   ],
                 ),
               ),

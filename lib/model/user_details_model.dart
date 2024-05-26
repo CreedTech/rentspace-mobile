@@ -1,4 +1,3 @@
-
 import 'wallet_model.dart';
 
 class UserModel {
@@ -29,7 +28,6 @@ class UserModel {
     return _data;
   }
 }
-
 
 class UserDetailsModel {
   final String id;
@@ -84,7 +82,7 @@ class UserDetailsModel {
   final String updatedAt;
   //  final String userWalletBalance;
   //  final String userWalletNumber;
-  //  final String referrar_id; 
+  //  final String referrar_id;
   //  final String otp;
   //  final int otpExpireIn;
   //  final String accountDate;
@@ -295,6 +293,3 @@ class UserDetailsModel {
         "wallet": wallet.toJson(),
       };
 }
-
-
-

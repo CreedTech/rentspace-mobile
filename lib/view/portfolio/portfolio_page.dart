@@ -18,6 +18,7 @@ import 'package:rentspace/view/portfolio/finance_health.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
+import 'package:rentspace/view/portfolio/portfolio_overview.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 // import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -859,7 +860,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               leading:
                                   Image.asset('assets/icons/portfolio_box.png'),
                               title: Text(
-                                'Make Loan Payment',
+                                'Portfolio Overview',
                                 style: GoogleFonts.lato(
                                   color: colorBlack,
                                   fontSize: 14,
@@ -867,7 +868,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 ),
                               ),
                               subtitle: Text(
-                                "Pay an outstanding loan",
+                                "Manage your account portfolio",
                                 style: GoogleFonts.lato(
                                   fontSize: 12.0,
                                   // letterSpacing: 0.5,
@@ -876,18 +877,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 ),
                               ),
                               onTap: () {
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  CustomSnackBar.success(
-                                    backgroundColor: brandOne,
-                                    message: 'Coming soon !!',
-                                    textStyle: GoogleFonts.lato(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                );
+                                Get.to( PortfolioOverview());
                               },
                               trailing: const Icon(
                                 Icons.keyboard_arrow_right,
@@ -916,7 +906,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               leading:
                                   Image.asset('assets/icons/credit_check.png'),
                               title: Text(
-                                'Make Loan Payment',
+                                'Credit Score',
                                 style: GoogleFonts.lato(
                                   color: colorBlack,
                                   fontSize: 14,
@@ -924,7 +914,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 ),
                               ),
                               subtitle: Text(
-                                "Pay an outstanding loan",
+                                "Build your credit score",
                                 style: GoogleFonts.lato(
                                   fontSize: 12.0,
                                   // letterSpacing: 0.5,

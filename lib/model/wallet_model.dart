@@ -1,11 +1,10 @@
-
 class WalletModel {
-    WalletModel({
+  WalletModel({
     required this.wallet,
   });
   List<Wallet>? wallet;
 
-    WalletModel.fromJson(Map<String, dynamic> json) {
+  WalletModel.fromJson(Map<String, dynamic> json) {
     final dynamic walletData = json['wallet'];
     if (walletData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
@@ -26,7 +25,6 @@ class WalletModel {
     return _data;
   }
 }
-
 
 class Wallet {
   final String id;

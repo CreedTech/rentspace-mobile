@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class BillerItemResponseModel {
   String status;
@@ -12,8 +11,8 @@ class BillerItemResponseModel {
   });
 
   factory BillerItemResponseModel.fromJson(Map<String, dynamic> json) {
-    print('data');
-    print(Data.fromJson(json['data']));
+    // // print('data');
+    // // print(Data.fromJson(json['data']));
     return BillerItemResponseModel(
       status: json['status'],
       message: json['message'],
@@ -39,22 +38,22 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) {
     final dynamic paymentItemsData = json['paymentitems'];
-    print('paymentItemsData');
-    print(paymentItemsData);
+    // print('paymentItemsData');
+    // print(paymentItemsData);
     if (paymentItemsData is List<dynamic>) {
-      print('rents length');
+      // print('rents length');
       return Data(
         paymentItems:
             paymentItemsData.map((e) => BillerItem.fromJson(e)).toList(),
       );
 
-      // print(rents!.length);
+      // // print(rents!.length);
     } else if (paymentItemsData is Map<String, dynamic>) {
-      print("Here");
+      // print("Here");
       return Data(
         paymentItems: [BillerItem.fromJson(paymentItemsData)],
       );
-      // print(rents);
+      // // print(rents);
     } else {
       return Data(paymentItems: []);
     }

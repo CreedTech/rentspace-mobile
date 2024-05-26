@@ -8,7 +8,8 @@ class UtilityResponseModel {
     final dynamic utilitiesData = json['data'];
     print('utilitiesData');
     if (utilitiesData is List<dynamic>) {
-      utilities = utilitiesData.map((e) => UtilityResponse.fromJson(e)).toList();
+      utilities =
+          utilitiesData.map((e) => UtilityResponse.fromJson(e)).toList();
       print('utilities length');
     } else if (utilitiesData is Map<String, dynamic>) {
       print("Here");
@@ -42,7 +43,8 @@ class UtilityResponse {
     required this.category,
   });
 
-  factory UtilityResponse.fromJson(Map<String, dynamic> json) => UtilityResponse(
+  factory UtilityResponse.fromJson(Map<String, dynamic> json) =>
+      UtilityResponse(
         id: json['id'],
         name: json['name'],
         division: json['division'],

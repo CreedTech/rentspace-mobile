@@ -174,7 +174,6 @@ class _SpaceBoxPaymentState extends State<SpaceBoxPayment> {
       //         },
       //         initialUrl: _payUrl,
       //       ),
-   
     );
   }
 }

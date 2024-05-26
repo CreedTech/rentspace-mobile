@@ -1,6 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 // import 'package:rentspace/model/response/wallet_response.dart';
@@ -9,12 +10,10 @@ import 'package:http/http.dart' as http;
 
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
-import '../constants/colors.dart';
 import '../constants/widgets/custom_dialog.dart';
-import '../view/login_page.dart';
 
 class WalletController extends GetxController {
-    final sessionStateStream = StreamController<SessionState>();
+  final sessionStateStream = StreamController<SessionState>();
   var isLoading = true.obs;
   final wallet = <Wallet>[].obs;
   WalletModel? walletModel;
@@ -39,29 +38,29 @@ class WalletController extends GetxController {
             'Accept': 'application/json',
             'Authorization': 'Bearer $authToken'
           }).timeout(const Duration(seconds: 30));
-      // print('fetching here');
+      // // print('fetching here');
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print(result);
+        // // print(result);
 
         walletModel = WalletModel.fromJson(result);
         isLoading(false);
-      }  else if (response.body.contains('Invalid token') ||
+      } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        print('error auth');
+        // print('error auth');
         multipleLoginRedirectModal();
-      }else {
-        // print(response.body);
-        print('error fetching data');
+      } else {
+        // // print(response.body);
+        // print('error fetching data');
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);

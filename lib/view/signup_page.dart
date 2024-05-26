@@ -1,7 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,13 +19,12 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:rentspace/view/login_page.dart';
 import 'package:rentspace/constants/icons.dart';
 import 'package:upgrader/upgrader.dart';
 
 // import '../constants/db/firebase_db.dart';
 import '../controller/auth/auth_controller.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 String dropdownValue = 'User';
 bool isChecked = false;
@@ -76,7 +75,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _referalController = TextEditingController();
-  final TextEditingController _bvnController = TextEditingController();
+  // final TextEditingController _bvnController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final registerFormKey = GlobalKey<FormState>();
@@ -121,6 +120,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       (ConnectivityResult result) async {
         isDeviceConnected = await InternetConnectionChecker().hasConnection;
         if (!isDeviceConnected && !isAlertSet) {
+          if (!mounted) return;
           noInternetConnectionScreen(context);
           setState(() => isAlertSet = true);
         }
@@ -134,7 +134,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+            contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -195,7 +195,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
                             // showDialogBox();
-                            noInternetConnectionScreen(context);
+                            if (context.mounted) {
+                              noInternetConnectionScreen(context);
+                            }
                             setState(() => isAlertSet = true);
                           }
                         },
@@ -285,26 +287,26 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       }
     }
 
-    validateBvn(bvnValue) {
-      if (bvnValue.isEmpty) {
-        return 'BVN cannot be empty';
-      }
-      if (bvnValue.length < 11) {
-        return 'BVN is invalid';
-      }
-      if (int.tryParse(bvnValue) == null) {
-        return 'enter valid BVN';
-      }
-      return null;
-    }
+    // validateBvn(bvnValue) {
+    //   if (bvnValue.isEmpty) {
+    //     return 'BVN cannot be empty';
+    //   }
+    //   if (bvnValue.length < 11) {
+    //     return 'BVN is invalid';
+    //   }
+    //   if (int.tryParse(bvnValue) == null) {
+    //     return 'enter valid BVN';
+    //   }
+    //   return null;
+    // }
 
-    validateAddress(address) {
-      if (address.isEmpty) {
-        return 'Address cannot be empty';
-      }
+    // validateAddress(address) {
+    //   if (address.isEmpty) {
+    //     return 'Address cannot be empty';
+    //   }
 
-      return null;
-    }
+    //   return null;
+    // }
 
     validateUsername(usernameValue) {
       bool hasSpecial =
@@ -537,7 +539,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(color: colorBlack, fontSize: 14),
+      style: const TextStyle(color: colorBlack, fontSize: 14),
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         // label: Text(
@@ -591,7 +593,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(color: colorBlack, fontSize: 14),
+      style: const TextStyle(color: colorBlack, fontSize: 14),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -643,7 +645,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: TextStyle(color: colorBlack, fontSize: 14),
+      style: const TextStyle(color: colorBlack, fontSize: 14),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -681,26 +683,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     );
     //Username
 
-    final forgotLabel = InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginPage(
-                sessionStateStream: sessionStateStream,
-                // loggedOutReason: "Logged out because of user inactivity",
-              ),
-            ));
-      },
-      child: const Text(
-        'I have an account',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 15.0,
-          decoration: TextDecoration.underline,
-        ),
-      ),
-    );
     void _showDatePicker() {
       DatePicker.showDatePicker(
         context,
@@ -711,7 +693,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           itemHeight: 50.h,
           pickerHeight: 300.h,
           showTitle: true,
-          cancel: Icon(
+          cancel: const Icon(
             Iconsax.close_circle,
             color: Colors.white,
             size: 30,
@@ -916,58 +898,58 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       ),
     );
 
-    final address = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
+    // final address = TextFormField(
+    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+    //   enableSuggestions: true,
+    //   cursorColor: Theme.of(context).primaryColor,
+    //   style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
 
-      // minLines: 3,
-      keyboardType: TextInputType.streetAddress,
-      controller: _addressController,
-      maxLines: 1,
-      decoration: InputDecoration(
-        label: Text(
-          "Enter your address",
-          style: GoogleFonts.lato(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        hintText: 'Enter your address...',
-        hintStyle: GoogleFonts.lato(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: validateAddress,
-      // labelText: 'Email Address',
-    );
+    //   // minLines: 3,
+    //   keyboardType: TextInputType.streetAddress,
+    //   controller: _addressController,
+    //   maxLines: 1,
+    //   decoration: InputDecoration(
+    //     label: Text(
+    //       "Enter your address",
+    //       style: GoogleFonts.lato(
+    //         color: Colors.grey,
+    //         fontSize: 12,
+    //         fontWeight: FontWeight.w400,
+    //       ),
+    //     ),
+    //     hintText: 'Enter your address...',
+    //     hintStyle: GoogleFonts.lato(
+    //       color: Colors.grey,
+    //       fontSize: 12,
+    //       fontWeight: FontWeight.w400,
+    //     ),
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(15.0),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     focusedBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10),
+    //       borderSide: const BorderSide(color: brandOne, width: 2.0),
+    //     ),
+    //     enabledBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10),
+    //       borderSide: const BorderSide(
+    //         color: Color(0xffE0E0E0),
+    //       ),
+    //     ),
+    //     errorBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10),
+    //       borderSide: const BorderSide(
+    //           color: Colors.red, width: 2.0), // Change color to yellow
+    //     ),
+    //     filled: false,
+    //     contentPadding: const EdgeInsets.all(14),
+    //   ),
+    //   validator: validateAddress,
+    //   // labelText: 'Email Address',
+    // );
 
     final gender = CustomDropdown(
       selectedStyle:
@@ -1010,15 +992,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         showReleaseNotes: true,
       ),
       child: Scaffold(
-        backgroundColor: Color(0xffFAFAFA),
+        backgroundColor: const Color(0xffFAFAFA),
         appBar: AppBar(
-          backgroundColor: Color(0xffFAFAFA),
+          backgroundColor: const Color(0xffFAFAFA),
           elevation: 0.0,
           leading: GestureDetector(
             onTap: () {
               Get.back();
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               size: 27,
               color: colorBlack,
@@ -1266,7 +1248,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.info_outline,
                                     size: 15,
                                     color: Color(0xff4E4B4B),
@@ -1477,7 +1459,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               height: 50,
                               padding: EdgeInsets.symmetric(vertical: 15.h),
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: brandTwo,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),

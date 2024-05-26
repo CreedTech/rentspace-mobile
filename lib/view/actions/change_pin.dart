@@ -26,18 +26,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.read(authControllerProvider.notifier);
-    final defaultPinTheme = PinTheme(
-      width: 50,
-      height: 50,
-      textStyle: GoogleFonts.lato(
-        fontSize: 20,
-        color: Theme.of(context).primaryColor,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.0),
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
+
     validatePinOne(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'pin cannot be empty';
@@ -57,7 +46,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -69,7 +58,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -81,7 +70,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -93,7 +82,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
