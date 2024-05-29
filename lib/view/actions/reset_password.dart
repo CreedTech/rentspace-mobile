@@ -67,51 +67,37 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     //password field
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: colorBlack,
       controller: newPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: TextStyle(
-        color: Theme.of(context).primaryColor,
+        color: colorBlack,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Colors.red,
-            width: 2.0,
+            width: 1.0,
           ),
-        ),
-        label: Text(
-          "New Password",
-          style: GoogleFonts.lato(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        hintText: '************',
-        hintStyle: GoogleFonts.lato(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
         ),
         suffix: GestureDetector(
           onTap: () {
@@ -120,8 +106,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
             });
           },
           child: Icon(
-            obscureText ? Iconsax.eye_slash5 : Iconsax.eye4,
-            color: brandOne,
+            obscureText ? Iconsax.eye_slash : Iconsax.eye,
+            color: colorBlack,
+            size: 24,
           ),
         ),
         filled: false,
@@ -131,63 +118,51 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     );
     final confirmPassword = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: colorBlack,
       controller: repeatPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: TextStyle(
-        color: Theme.of(context).primaryColor,
+        color: colorBlack,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: brandOne, width: 2.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Colors.red,
-            width: 2.0,
+            width: 1.0,
           ),
         ),
-        hintText: '************',
-        hintStyle: GoogleFonts.lato(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        label: Text(
-          "Repeat Password",
-          style: GoogleFonts.lato(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
+        
+        suffix: GestureDetector(
+          onTap: () {
+            setState(() {
+              obscureText = !obscureText;
+            });
+          },
+          child: Icon(
+            obscureText ? Iconsax.eye_slash : Iconsax.eye,
+            color: colorBlack,
+            size: 24,
           ),
         ),
-        // suffix: GestureDetector(
-        //   onTap: () {
-        //     setState(() {
-        //       obscureText = !obscureText;
-        //     });
-        //   },
-        //   child: Icon(
-        //     obscureText ? Iconsax.eye_slash5 : Iconsax.eye4,
-        //     color: brandOne,
-        //   ),
-        // ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
       ),
@@ -204,141 +179,276 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     );
 
     return Scaffold(
-       backgroundColor: const Color(0xffF6F6F8),
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
-        automaticallyImplyLeading: false,
-        centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios_sharp,
-                size: 27,
-                color: colorBlack,
-              ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Change Password',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
-              ),
-            ),
-          ],
+      backgroundColor: brandOne,
+      body: Container(
+        decoration: const BoxDecoration(
+          color: brandOne,
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        child: Center(
           child: Stack(
+            alignment: Alignment.center,
             children: [
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 35,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Kindly fill in your new password.',
-                      style: GoogleFonts.lato(
-                          fontWeight: FontWeight.w700,
-                          color: brandOne,
-                          fontSize: 18),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Form(
-                    key: resetPwdFormKey,
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            password,
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(
-                                      Icons.info_outline,
-                                      size: 15,
-                                      color: Color(0xff828282),
-                                    ),
-                                    SizedBox(
-                                      width: 320,
-                                      child: Text(
-                                        'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
-                                        softWrap: true,
-                                        style: GoogleFonts.lato(
-                                          color: const Color(0xff828282),
-                                          fontSize: 12,
-                                          fontStyle: FontStyle.italic,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        confirmPassword
-                      ],
-                    ),
-                  ),
-                ],
+              Positioned(
+                top: 0,
+                right: -50,
+                child: Image.asset(
+                  'assets/logo_transparent.png',
+                  width: 205.47.w,
+                  height: 292.51.h,
+                ),
               ),
-              // const Spacer(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(250, 50),
-                    backgroundColor: brandOne,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
+              Positioned(
+                top: 40,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 55),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/logo_main.png',
+                        width: 168,
+                        height: 50.4.h,
                       ),
-                    ),
-                  ),
-                  onPressed: () {
-                    if (resetPwdFormKey.currentState!.validate()) {
-                      // Resend Email Verification Code
-                      authState.resetPassword(
-                        context,
-                        widget.email,
-                        newPasswordController.text.trim(),
-                        repeatPasswordController.text.trim(),
-                      );
-                      // resetPasswordDialog(context);
-                    }
-                  },
-                  child: const Text(
-                    'Reset Password',
-                    textAlign: TextAlign.center,
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 12.h, left: 30),
+                        child: Text(
+                          'your financial power...',
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic,
+                            color: colorWhite,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+              Positioned(
+                top: MediaQuery.of(context).size.height / 4,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Create New Password',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            'Email verified successfully!\nCreate new password to gain access to your account.',
+                            style: GoogleFonts.lato(
+                              color: const Color(0xff4B4B4B),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              // fontFamily: "DefaultFontFamily",
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 49,
+                          ),
+                          Form(
+                            key: resetPwdFormKey,
+                            child: Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Password',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    password,
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Confirm Password',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    confirmPassword,
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
+                          children: [
+                            Container(
+                              // width: MediaQuery.of(context).size.width * 2,
+                              alignment: Alignment.center,
+                              // height: 110.h,
+                              child: Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(
+                                          MediaQuery.of(context).size.width -
+                                              50,
+                                          50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      if (resetPwdFormKey.currentState!
+                                          .validate()) {
+                                        authState.resetPassword(
+                                            context,
+                                            widget.email,
+                                            newPasswordController.text.trim(),
+                                            repeatPasswordController.text
+                                                .trim());
+                                        // _emailController.clear();
+                                      }
+                                    },
+                                    child: Text(
+                                      'Continue',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                        color: colorWhite,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Column(
+              //   children: [
+              //     const SizedBox(
+              //       height: 35,
+              //     ),
+              //     Align(
+              //       alignment: Alignment.topLeft,
+              //       child: Text(
+              //         'Kindly fill in your new password.',
+              //         style: GoogleFonts.lato(
+              //             fontWeight: FontWeight.w700,
+              //             color: brandOne,
+              //             fontSize: 18),
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       height: 25,
+              //     ),
+              //     Form(
+              //       key: resetPwdFormKey,
+              //       child: Column(
+              //         children: [
+              //           Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               password,
+              //               Padding(
+              //                 padding: const EdgeInsets.symmetric(vertical: 8),
+              //                 child: SizedBox(
+              //                   width: MediaQuery.of(context).size.width,
+              //                   child: Row(
+              //                     crossAxisAlignment: CrossAxisAlignment.start,
+              //                     children: [
+              //                       const Icon(
+              //                         Icons.info_outline,
+              //                         size: 15,
+              //                         color: Color(0xff828282),
+              //                       ),
+              //                       SizedBox(
+              //                         width: 320,
+              //                         child: Text(
+              //                           'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
+              //                           softWrap: true,
+              //                           style: GoogleFonts.lato(
+              //                             color: const Color(0xff828282),
+              //                             fontSize: 12,
+              //                             fontStyle: FontStyle.italic,
+              //                             fontWeight: FontWeight.w400,
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //           const SizedBox(
+              //             height: 15,
+              //           ),
+              //           confirmPassword
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+
+              // const Spacer(),
             ],
           ),
         ),

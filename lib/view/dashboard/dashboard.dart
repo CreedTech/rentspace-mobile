@@ -473,7 +473,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             decoration: BoxDecoration(
                                               color: colorWhite,
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(10),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color(
@@ -842,12 +842,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                   reversedIndex];
                                               return GestureDetector(
                                                 onTap: () {
-                                                  print(reversedIndex);
-                                                  print(userController
-                                                          .userModel!
-                                                          .userDetails![0]
-                                                          .walletHistories[
-                                                      reversedIndex]);
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -862,100 +856,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       ),
                                                     ),
                                                   );
-                                                  // Navigator.push(context, MaterialPageRoute(builder: (_) => TransactionReceipt(videoData: {'videoName': videoName,'videoUrl':videoUrl,'posterUrl':posterUrl}));
-                                                  // Navigator.pushNamed(
-                                                  //   context,
-                                                  //   transactionDetails,
-                                                  //   arguments: {
-                                                  //     'hello': 'hello'
-                                                  //   },
-                                                  // );
-                                                  // Get.to(TransactionReceipt(
-                                                  //   amount: history['amount'],
-                                                  //   status: history['status'],
-                                                  //   fees: history['fees'] ?? 0,
-                                                  //   transactionType: history[
-                                                  //       'transactionType'],
-                                                  //   description: history[
-                                                  //           'description'] ??
-                                                  //       '',
-                                                  //   transactionGroup: history[
-                                                  //       'transactionGroup'],
-                                                  //   transactionDate:
-                                                  //       history['createdAt'],
-                                                  //   transactionRef: history[
-                                                  //           'transactionReference'] ??
-                                                  //       '',
-                                                  //   merchantRef: history[
-                                                  //           'merchantReference'] ??
-                                                  //       '',
-                                                  //   // sessionId: history['sessionId'] ?? '',
-                                                  // ));
-                                                  // Get.to(
-                                                  //   (history['transactionGroup']
-                                                  //               .toString()
-                                                  //               .toLowerCase() ==
-                                                  //           'transfer')
-                                                  //       ? TransactionReceiptTransfer(
-                                                  //           amount: history['amount'],
-                                                  //           status: history['status'],
-                                                  //           fees: history['fees'] ?? 0,
-                                                  //           transactionType:
-                                                  //               history['transactionType'],
-                                                  //           description: history['description'],
-                                                  //           transactionGroup:
-                                                  //               history['transactionGroup'],
-                                                  //           transactionDate:
-                                                  //               history['createdAt'],
-                                                  //           transactionRef: history[
-                                                  //                   'transactionReference'] ??
-                                                  //               '',
-                                                  //           merchantRef:
-                                                  //               history['merchantReference'],
-                                                  //           // sessionId: history['sessionId'] ?? '',
-                                                  //         )
-                                                  //       : (history['transactionGroup']
-                                                  //                   .toString()
-                                                  //                   .toLowerCase() ==
-                                                  //               'static-account-transfer')
-                                                  //           ? TransactionReceiptDVA(
-                                                  //               amount: history['amount'],
-                                                  //               status: history['status'],
-                                                  //               fees: history['fees'] ?? 0,
-                                                  //               transactionType:
-                                                  //                   history['transactionType'],
-                                                  //               description:
-                                                  //                   history['description'],
-                                                  //               transactionGroup:
-                                                  //                   history['transactionGroup'],
-                                                  //               transactionDate:
-                                                  //                   history['createdAt'],
-                                                  //               transactionRef: history[
-                                                  //                       'transactionReference'] ??
-                                                  //                   '',
-                                                  //               merchantRef: history[
-                                                  //                   'merchantReference'],
-                                                  //               remarks: history['remarks'],
-                                                  //             )
-                                                  //           : TransactionReceipt(
-                                                  //               amount: history['amount'],
-                                                  //               status: history['status'],
-                                                  //               fees: history['fees'] ?? 0,
-                                                  //               transactionType:
-                                                  //                   history['transactionType'],
-                                                  //               description:
-                                                  //                   history['description'],
-                                                  //               transactionGroup:
-                                                  //                   history['transactionGroup'],
-                                                  //               transactionDate:
-                                                  //                   history['createdAt'],
-                                                  //               transactionRef: history[
-                                                  //                       'transactionReference'] ??
-                                                  //                   '',
-                                                  //               merchantRef: history[
-                                                  //                   'merchantReference'],
-                                                  //             ),
-                                                  // );
                                                 },
                                                 child: Column(
                                                   children: [
@@ -998,8 +898,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            "${history['description'] ?? history['message'] ?? 'No Description Found'} ",
-                                                            maxLines: 2,
+                                                            "${history['description'] ?? history['message'] ?? 'No Description Found'} "
+                                                                .capitalize!,
+                                                            // maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -1096,352 +997,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                   ),
 
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-
-                                  GestureDetector(
-                                    onTap: () {
-                                      // (DateTime.parse(walletController.walletModel!.wallet![0].nextWithdrawalDate!) != DateTime.now())?
-                                      (walletController.walletModel!.wallet![0]
-                                                  .nextWithdrawalDate !=
-                                              '')
-                                          ? ((DateTime(
-                                                      DateTime.now().year,
-                                                      DateTime.now().month,
-                                                      DateTime.now().day))
-                                                  .isBefore(DateTime(
-                                                      DateTime.parse(walletController.walletModel!.wallet![0].nextWithdrawalDate!)
-                                                          .add(const Duration(
-                                                              hours: 1))
-                                                          .year,
-                                                      DateTime.parse(walletController
-                                                              .walletModel!
-                                                              .wallet![0]
-                                                              .nextWithdrawalDate!)
-                                                          .add(const Duration(
-                                                              hours: 1))
-                                                          .month,
-                                                      DateTime.parse(walletController
-                                                              .walletModel!
-                                                              .wallet![0]
-                                                              .nextWithdrawalDate!)
-                                                          .add(const Duration(hours: 1))
-                                                          .day)))
-                                              ? showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      title: null,
-                                                      scrollable: true,
-                                                      elevation: 0,
-                                                      content: SizedBox(
-                                                        // height: 220.h,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 10,
-                                                                  horizontal:
-                                                                      0),
-                                                          child: Column(
-                                                            children: [
-                                                              Wrap(
-                                                                alignment:
-                                                                    WrapAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    WrapCrossAlignment
-                                                                        .center,
-                                                                // mainAxisAlignment: MainAxisAlignment.center,
-                                                                children: [
-                                                                  const Icon(
-                                                                    Icons
-                                                                        .info_outline_rounded,
-                                                                    color:
-                                                                        colorBlack,
-                                                                    size: 24,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 4,
-                                                                  ),
-                                                                  Text(
-                                                                    'Oops!',
-                                                                    style:
-                                                                        GoogleFonts
-                                                                            .lato(
-                                                                      color:
-                                                                          colorBlack,
-                                                                      fontSize:
-                                                                          24,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 14,
-                                                              ),
-                                                              Text(
-                                                                'You have used up your withdrawal for this month.\nGreat job managing your funds! More withdrawals will be available next month.',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .lato(
-                                                                  color:
-                                                                      colorBlack,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 29,
-                                                              ),
-                                                              Align(
-                                                                alignment: Alignment
-                                                                    .bottomCenter,
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    minimumSize: Size(
-                                                                        MediaQuery.of(context).size.width -
-                                                                            50,
-                                                                        50),
-                                                                    backgroundColor:
-                                                                        brandTwo,
-                                                                    elevation:
-                                                                        0,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                        10,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  child: Text(
-                                                                    'Ok',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style:
-                                                                        GoogleFonts
-                                                                            .lato(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  })
-                                              : (userController.userModel!.userDetails![0].withdrawalAccount!.isBlank!)
-                                                  ? Get.to(WithdrawalPage())
-                                                  : Get.to(WithdrawContinuationPage(
-                                                      bankCode: userController
-                                                          .userModel!
-                                                          .userDetails![0]
-                                                          .withdrawalAccount!
-                                                          .bankCode,
-                                                      accountNumber:
-                                                          userController
-                                                              .userModel!
-                                                              .userDetails![0]
-                                                              .withdrawalAccount!
-                                                              .accountNumber,
-                                                      bankName: userController
-                                                          .userModel!
-                                                          .userDetails![0]
-                                                          .withdrawalAccount!
-                                                          .bankName,
-                                                      accountHolderName:
-                                                          userController
-                                                              .userModel!
-                                                              .userDetails![0]
-                                                              .withdrawalAccount!
-                                                              .accountHolderName,
-                                                    ))
-                                          : (userController.userModel!.userDetails![0].withdrawalAccount!.isBlank!)
-                                              ? Get.to(WithdrawalPage())
-                                              : Get.to(WithdrawContinuationPage(
-                                                  bankCode: userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .withdrawalAccount!
-                                                      .bankCode,
-                                                  accountNumber: userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .withdrawalAccount!
-                                                      .accountNumber,
-                                                  bankName: userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .withdrawalAccount!
-                                                      .bankName,
-                                                  accountHolderName:
-                                                      userController
-                                                          .userModel!
-                                                          .userDetails![0]
-                                                          .withdrawalAccount!
-                                                          .accountHolderName,
-                                                ));
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 17,
-                                          top: 17,
-                                          right: 17,
-                                          bottom: 17),
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: const BoxDecoration(
-                                        color: colorWhite,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            flex: 9,
-                                            child: Row(
-                                              children: [
-                                                Flexible(
-                                                  flex: 2,
-                                                  child: Image.asset(
-                                                    'assets/icons/withdraw.png',
-                                                    width: 42.5,
-                                                    height: 42.5,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 15,
-                                                ),
-                                                Flexible(
-                                                  flex: 8,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Withdraw ',
-                                                        style: GoogleFonts.lato(
-                                                            color: colorBlack,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                      Text(
-                                                        'Make a withdrawal to your bank account',
-                                                        maxLines: 2,
-                                                        style: GoogleFonts.lato(
-                                                            color: const Color(
-                                                                0xff4B4B4B),
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Text(walletController.walletModel!
-                                              .wallet![0].nextWithdrawalDate!),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: brandOne,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Text(
-                                              (walletController
-                                                          .walletModel!
-                                                          .wallet![0]
-                                                          .nextWithdrawalDate !=
-                                                      '')
-                                                  ? ((DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).isBefore(DateTime(
-                                                          DateTime.parse(walletController
-                                                                  .walletModel!
-                                                                  .wallet![0]
-                                                                  .nextWithdrawalDate!)
-                                                              .add(
-                                                                  const Duration(
-                                                                      hours: 1))
-                                                              .year,
-                                                          DateTime.parse(walletController
-                                                                  .walletModel!
-                                                                  .wallet![0]
-                                                                  .nextWithdrawalDate!)
-                                                              .add(
-                                                                  const Duration(
-                                                                      hours: 1))
-                                                              .month,
-                                                          DateTime.parse(walletController
-                                                                  .walletModel!
-                                                                  .wallet![0]
-                                                                  .nextWithdrawalDate!)
-                                                              .add(const Duration(hours: 1))
-                                                              .day)))
-                                                      ? 'X0'
-                                                      : 'X1'
-                                                  : 'X1',
-                                              style: GoogleFonts.lato(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: colorWhite,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(
                                     height: 60.h,
                                   ),
@@ -2005,6 +1560,33 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     subscription.cancel();
     // valueNotifier.dispose();
     super.dispose();
+  }
+
+  String formatMongoDBDate(String dateStr) {
+    DateTime date = DateTime.parse(dateStr);
+    int day = date.day;
+    String daySuffix;
+
+    if (day >= 11 && day <= 13) {
+      daySuffix = 'th';
+    } else {
+      switch (day % 10) {
+        case 1:
+          daySuffix = 'st';
+          break;
+        case 2:
+          daySuffix = 'nd';
+          break;
+        case 3:
+          daySuffix = 'rd';
+          break;
+        default:
+          daySuffix = 'th';
+      }
+    }
+
+    String month = DateFormat('MMMM').format(date);
+    return '$day$daySuffix $month';
   }
 
   String formatDateTime(String dateTimeString) {

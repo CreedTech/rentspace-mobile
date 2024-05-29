@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/controller/app_controller.dart';
 import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/login_page.dart';
 
@@ -634,6 +635,99 @@ void customSuccessDialog(
                     },
                     child: Text(
                       'Continue',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+void customRedirectingSuccessDialog(
+    BuildContext context, String message, String subText) async {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: null,
+          scrollable: true,
+          elevation: 0,
+          content: SizedBox(
+            // height: 220.h,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/success_icon.png',
+                      width: 24,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      message,
+                      style: GoogleFonts.lato(
+                        color: colorBlack,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 14,
+                ),
+                Text(
+                  subText,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  height: 29,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
+                      backgroundColor: brandTwo,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      // Navigator.of(context).pop();
+                      Get.offAll(LoginPage(
+                        sessionStateStream: sessionStateStream,
+                      ));
+                    },
+                    child: Text(
+                      'Sign in',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                         color: Colors.white,

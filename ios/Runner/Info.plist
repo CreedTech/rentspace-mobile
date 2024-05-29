@@ -36,6 +36,8 @@
 	<string>App requires access to your location to let you add location to server</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Select A Profile Picture</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To Save Receipts to Gallery</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

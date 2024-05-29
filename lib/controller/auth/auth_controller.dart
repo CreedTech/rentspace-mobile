@@ -1140,11 +1140,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        redirectingAlert(
-            context,
-            '🎉 Congratulations! 🎉',
-            'Your password has been successfully set, and your account is now secure.',
-            "Login");
+        customRedirectingSuccessDialog(
+            context, 'Success', 'Password changed successfully.');
+        // redirectingAlert(
+        //     context,
+        //     '🎉 Congratulations! 🎉',
+        //     'Your password has been successfully set, and your account is now secure.',
+        //     "Login");
         return;
       } else {
         // print(response.message.toString());

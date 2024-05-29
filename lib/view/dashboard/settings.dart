@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:local_auth/local_auth.dart';
 // import 'package:path/path.dart';
@@ -47,6 +48,8 @@ import '../actions/share_and_earn.dart';
 import '../faqs.dart';
 // import '../savings/spaceRent/spacerent_list.dart';
 import 'dashboard.dart';
+import 'withdraw_continuation_page.dart';
+import 'withdraw_page.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -696,6 +699,224 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
+                        // (DateTime.parse(walletController.walletModel!.wallet![0].nextWithdrawalDate!) != DateTime.now())?
+                        (walletController.walletModel!.wallet![0]
+                                    .nextWithdrawalDate !=
+                                '')
+                            ? ((DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day))
+                                    .isBefore(DateTime(
+                                        DateTime.parse(walletController
+                                                .walletModel!
+                                                .wallet![0]
+                                                .nextWithdrawalDate!)
+                                            .add(const Duration(hours: 1))
+                                            .year,
+                                        DateTime.parse(walletController
+                                                .walletModel!
+                                                .wallet![0]
+                                                .nextWithdrawalDate!)
+                                            .add(const Duration(hours: 1))
+                                            .month,
+                                        DateTime.parse(walletController
+                                                .walletModel!
+                                                .wallet![0]
+                                                .nextWithdrawalDate!)
+                                            .add(const Duration(hours: 1))
+                                            .day)))
+                                ? showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                        ),
+                                        title: null,
+                                        scrollable: true,
+                                        elevation: 0,
+                                        content: SizedBox(
+                                          // height: 220.h,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 0),
+                                            child: Column(
+                                              children: [
+                                                Wrap(
+                                                  alignment:
+                                                      WrapAlignment.center,
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.center,
+                                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons
+                                                          .info_outline_rounded,
+                                                      color: colorBlack,
+                                                      size: 24,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      'Oops!',
+                                                      style: GoogleFonts.lato(
+                                                        color: colorBlack,
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 14,
+                                                ),
+                                                Text(
+                                                  'You have used up your withdrawal for this month.\nGreat job managing your funds! Your next withdrawal date is ${formatMongoDBDate(walletController.walletModel!.wallet![0].nextWithdrawalDate!)}.',
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.lato(
+                                                    color: colorBlack,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 29,
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      minimumSize: Size(
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              50,
+                                                          50),
+                                                      backgroundColor: brandTwo,
+                                                      elevation: 0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text(
+                                                      'Ok',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts.lato(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    })
+                                : (userController.userModel!.userDetails![0]
+                                        .withdrawalAccount!.isBlank!)
+                                    ? Get.to(WithdrawalPage())
+                                    : Get.to(WithdrawContinuationPage(
+                                        bankCode: userController
+                                            .userModel!
+                                            .userDetails![0]
+                                            .withdrawalAccount!
+                                            .bankCode,
+                                        accountNumber: userController
+                                            .userModel!
+                                            .userDetails![0]
+                                            .withdrawalAccount!
+                                            .accountNumber,
+                                        bankName: userController
+                                            .userModel!
+                                            .userDetails![0]
+                                            .withdrawalAccount!
+                                            .bankName,
+                                        accountHolderName: userController
+                                            .userModel!
+                                            .userDetails![0]
+                                            .withdrawalAccount!
+                                            .accountHolderName,
+                                      ))
+                            : (userController.userModel!.userDetails![0]
+                                    .withdrawalAccount!.isBlank!)
+                                ? Get.to(WithdrawalPage())
+                                : Get.to(WithdrawContinuationPage(
+                                    bankCode: userController
+                                        .userModel!
+                                        .userDetails![0]
+                                        .withdrawalAccount!
+                                        .bankCode,
+                                    accountNumber: userController
+                                        .userModel!
+                                        .userDetails![0]
+                                        .withdrawalAccount!
+                                        .accountNumber,
+                                    bankName: userController
+                                        .userModel!
+                                        .userDetails![0]
+                                        .withdrawalAccount!
+                                        .bankName,
+                                    accountHolderName: userController
+                                        .userModel!
+                                        .userDetails![0]
+                                        .withdrawalAccount!
+                                        .accountHolderName,
+                                  ));
+                      },
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        minVerticalPadding: 0,
+                        // horizontalTitleGap: 0,
+                        minLeadingWidth: 0,
+                        leading: Image.asset('assets/icons/withdraw.png'),
+                        title: Text(
+                          "WIthdraw Funds",
+                          style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: colorBlack,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Withdrawal once a monthy",
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorBlack,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: colorBlack,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Color(0xffC9C9C9),
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         // Get.to(const Security());
                       },
                       child: ListTile(
@@ -962,5 +1183,32 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         )),
       ),
     );
+  }
+
+   String formatMongoDBDate(String dateStr) {
+    DateTime date = DateTime.parse(dateStr);
+    int day = date.day;
+    String daySuffix;
+
+    if (day >= 11 && day <= 13) {
+      daySuffix = 'th';
+    } else {
+      switch (day % 10) {
+        case 1:
+          daySuffix = 'st';
+          break;
+        case 2:
+          daySuffix = 'nd';
+          break;
+        case 3:
+          daySuffix = 'rd';
+          break;
+        default:
+          daySuffix = 'th';
+      }
+    }
+
+    String month = DateFormat('MMMM').format(date);
+    return '$day$daySuffix $month';
   }
 }

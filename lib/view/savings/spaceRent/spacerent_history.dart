@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
@@ -56,8 +59,22 @@ doSomeThing() {
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   final RentController rentController = Get.find();
   final UserController userController = Get.find();
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  bool isRefresh = false;
 
   List _payments = [];
+
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
+    if (mounted) {
+      setState(() {
+        isRefresh = true;
+      });
+    }
+    rentController.fetchRent();
+  }
 
   @override
   initState() {
@@ -71,135 +88,331 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
 
   @override
   Widget build(BuildContext context) {
+    var groupedByMonth = {};
+
+    for (var item in _payments) {
+      DateTime createdAt = DateTime.parse(item['createdAt']);
+
+      String monthKey =
+          "${createdAt.year}-${createdAt.month.toString().padLeft(2, '0')}";
+
+      if (!groupedByMonth.containsKey(monthKey)) {
+        groupedByMonth[monthKey] = [];
+      }
+      groupedByMonth[monthKey]!.add(item);
+    }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.close,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          'Transaction History',
-          style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Text(
+                rentController.rentModel!.rents![widget.current].rentName,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 15.h,
+          horizontal: 24.w,
+        ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            rentController
-                    .rentModel!.rents![widget.current].rentHistories.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/card_empty.png',
-                        height: 500.h,
-                      ),
-                      Center(
-                        child: Text(
-                          "No Space Rent Transactions",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: BoxDecoration(
+                color: colorWhite,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${rentController.rentModel!.rents![widget.current].rentName} balance',
+                    style: GoogleFonts.lato(
+                      color: colorBlack,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Text(
+                    nairaFormaet.format(rentController
+                        .rentModel!.rents![widget.current].paidAmount),
+                    style: GoogleFonts.lato(
+                      color: Color(0xff278210),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 30,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Transactions',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+            ),
+            const Divider(
+              color: Color(0xffC9C9C9),
+              thickness: 1,
+            ),
+            Expanded(
+              child: (_payments.isEmpty)
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Image.asset(
+                          'assets/card_empty.png',
+                          height: 300.h,
+                        ),
+                        Center(
+                          child: Text(
+                            "No Rent history",
+                            style: GoogleFonts.lato(
+                              fontSize: 20,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: _payments.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        child: GestureDetector(
-                          onTap: () {
-                              Navigator.push(
+                      ],
+                    )
+                  : LiquidPullToRefresh(
+                      height: 70,
+                      animSpeedFactor: 2,
+                      color: brandOne,
+                      backgroundColor: colorWhite,
+                      showChildOpacityTransition: false,
+                      onRefresh: onRefresh,
+                      child: ListView(
+                        children: groupedByMonth.entries
+                            .toList()
+                            .reversed
+                            .map((entry) {
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  DateFormat.MMMM().format(
+                                      DateTime.parse('${entry.key}-01')),
+                                  style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 12.75, top: 16, right: 12.75),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey
+                                              .withOpacity(0.5), // Shadow color
+                                          spreadRadius: 0.5, // Spread radius
+                                          blurRadius: 2, // Blur radius
+                                          offset: const Offset(0, 3), // Offset
+                                        ),
+                                      ],
+                                      color: colorWhite),
+                                  child: Column(
+                                    children: [
+                                      ...entry.value
+                                          .map<Widget>((item) {
+                                            return Column(
+                                              children: [
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 0),
+                                                  minLeadingWidth: 0,
+                                                  onTap: () {
+                                                    print('item');
+                                                    print(item);
+                                                    // print(userController
+                                                    //     .userModel!
+                                                    //     .userDetails![0]
+                                                    //     .walletHistories[item]);
+                                                    Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             const TransactionReceipt(),
                                                         settings: RouteSettings(
-                                                            arguments:_payments[index],
-
+                                                          arguments: item,
                                                         ),
                                                       ),
                                                     );
-                          
-                            // Get.to(TransactionReceipt(
-                            //   amount: _payments[index]['amount'],
-                            //   status: _payments[index]['status'],
-                            //   fees: _payments[index]['fees'],
-                            //   transactionType: _payments[index]['message'],
-                            //   description: _payments[index]['description'],
-                            //   transactionGroup: 'Wallet Payment',
-                            //   transactionDate: _payments[index]['createdAt'],
-                            //   transactionRef: _payments[index]
-                            //       ['transactionReference'],
-                            //   merchantRef: _payments[index]
-                            //       ['merchantReference'],
-                            // ));
-                          },
-                          child: ListTile(
-                            leading: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: brandOne,
-                              ),
-                              child: Image.asset(
-                                "assets/icons/savings/spacerent.png",
-                                height: 20,
-                                width: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                            title: Text(
-                              _payments[index]['message'],
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            subtitle: Text(
-                              _formatTime(DateTime.parse(
-                                      (_payments[index]['createdAt']))
-                                  .add(const Duration(hours: 1))),
-                              style: GoogleFonts.lato(
-                                color: brandOne,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            trailing: Text(
-                              '+ ${ch8t.format(_payments[index]['amount'])}',
-                              style: GoogleFonts.roboto(
-                                color: Colors.green,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+
+                                          
+                                                  },
+                                                  leading: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12),
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color:
+                                                          (item['transactionType'] ==
+                                                                  'Credit')
+                                                              ? brandTwo
+                                                              : brandTwo,
+                                                    ),
+                                                    child:
+                                                        (item['transactionType'] ==
+                                                                'Credit')
+                                                            ? const Icon(
+                                                                Icons
+                                                                    .call_received,
+                                                                color: Color(
+                                                                    0xff80FF00),
+                                                                size: 20,
+                                                              )
+                                                            : const Icon(
+                                                                Icons
+                                                                    .arrow_outward_sharp,
+                                                                color:
+                                                                    colorWhite,
+                                                                size: 20,
+                                                              ),
+                                                  ),
+                                                  title: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${item['description'] ?? item['message'] ?? 'No Description Found'} ",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: GoogleFonts.lato(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: colorBlack,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  subtitle: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 9,
+                                                      ),
+                                                      Text(
+                                                        formatDateTime(
+                                                            item['createdAt']),
+                                                        style: GoogleFonts.lato(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: const Color(
+                                                              0xff4B4B4B),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  trailing: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      (item['transactionType'] ==
+                                                              'Credit')
+                                                          ? Text(
+                                                              "+ ${nairaFormaet.format(double.parse(item['amount'].toString()))}",
+                                                              style: GoogleFonts
+                                                                  .lato(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: const Color(
+                                                                    0xff56AB00),
+                                                              ),
+                                                            )
+                                                          : Text(
+                                                              nairaFormaet.format(
+                                                                  double.parse(item[
+                                                                          'amount']
+                                                                      .toString())),
+                                                              style: GoogleFonts
+                                                                  .lato(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color:
+                                                                    colorBlack,
+                                                              ),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                ((groupedByMonth.keys.length) !=
+                                                        (item[entry.key]))
+                                                    ? const Divider(
+                                                        color:
+                                                            Color(0xffC9C9C9),
+                                                      )
+                                                    : const Text(''),
+                                              ],
+                                            );
+                                          })
+                                          .toList()
+                                          .reversed,
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ]);
+                        }).toList(),
+                      ),
+                    ),
+            ),
           ],
         ),
       ),
@@ -228,5 +441,19 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
       return input.substring(nairaIndex + 1).trim();
     }
     return '';
+  }
+
+  String formatDateTime(String dateTimeString) {
+    // Parse the date string into a DateTime object
+    DateTime dateTime =
+        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
+
+    // Define the date format you want
+    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
+
+    // Format the DateTime object into a string
+    String formattedDateTime = formatter.format(dateTime);
+
+    return formattedDateTime;
   }
 }

@@ -5,7 +5,7 @@ class SpaceRentModel {
   List<SpaceRent>? rents;
 
   SpaceRentModel.fromJson(Map<String, dynamic> json) {
-    final dynamic spaceRentData = json['rent'];
+    final dynamic spaceRentData = json['rents'];
     print('spaceRentData');
     print(spaceRentData);
     if (spaceRentData is List<dynamic>) {
@@ -26,7 +26,7 @@ class SpaceRentModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['rent'] = rents!.map((e) => e.toJson()).toList();
+    _data['rents'] = rents!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -51,7 +51,7 @@ class SpaceRent {
   final String createdAt;
   final String updatedAt;
   final List<dynamic> rentHistories;
-  // final List<dynamic>? spaceRentInterestHistories;
+  final List<dynamic>? spaceRentInterestHistories;
 
   SpaceRent({
     required this.id,
@@ -73,7 +73,7 @@ class SpaceRent {
     required this.createdAt,
     required this.updatedAt,
     required this.rentHistories,
-    // required this.spaceRentInterestHistories,
+    required this.spaceRentInterestHistories,
   });
 
   factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
@@ -96,7 +96,7 @@ class SpaceRent {
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       rentHistories: json["rentHistories"],
-      // spaceRentInterestHistories: json["spaceRentInterestHistories"] ?? '',
+      spaceRentInterestHistories: json["spaceRentInterestHistories"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -119,6 +119,6 @@ class SpaceRent {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'rentHistories': rentHistories,
-        // 'spaceRentInterestHistories': spaceRentInterestHistories
+        'spaceRentInterestHistories': spaceRentInterestHistories
       };
 }

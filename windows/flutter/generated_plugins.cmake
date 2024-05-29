@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   local_auth_windows
   modal_progress_hud_nsn
+  printing
   share_plus
   smart_auth
   url_launcher_windows

@@ -42,42 +42,34 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
-      style: GoogleFonts.lato(
-        color: Theme.of(context).primaryColor,
-      ),
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(color: colorBlack),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: const Color(0xffE0E0E0),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
-        hintText: 'Enter your email',
-        hintStyle: GoogleFonts.lato(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
       ),
       maxLines: 1,
       validator: (value) {
@@ -98,137 +90,227 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        // backgroundColor: const Color(0xffE0E0E0),
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 25,
-            color: Theme.of(context).primaryColor,
-          ),
+      backgroundColor: brandOne,
+      body: Container(
+        decoration: const BoxDecoration(
+          color: brandOne,
         ),
-        centerTitle: true,
-        title: Text(
-          'Forgot Password',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          ListView(
+        child: Center(
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              // SizedBox(
-              //   height: 80,
-              // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Regain access with password recovery.',
+              Positioned(
+                top: 0,
+                right: -50,
+                child: Image.asset(
+                  'assets/logo_transparent.png',
+                  width: 205.47.w,
+                  height: 292.51.h,
+                ),
+              ),
+              Positioned(
+                top: 40,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 55),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/logo_main.png',
+                        width: 168,
+                        height: 50.4.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 12.h, left: 30),
+                        child: Text(
+                          'your financial power...',
                           style: GoogleFonts.lato(
-                            color: const Color(0xff828282),
-                            fontWeight: FontWeight.w400,
                             fontSize: 12,
-                            // fontFamily: "DefaultFontFamily",
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic,
+                            color: colorWhite,
                           ),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height / 4,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Form(
-                      key: forgotPassFormKey,
-                      child: Column(
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  'Enter Email',
-                                  style: GoogleFonts.lato(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    // fontFamily: "DefaultFontFamily",
-                                  ),
+                          Text(
+                            'Forgot Password',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            'No worries, we’ll get you back on track.\nInput your email address below to receive an OTP. ',
+                            style: GoogleFonts.lato(
+                              color: const Color(0xff4B4B4B),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              // fontFamily: "DefaultFontFamily",
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 79,
+                          ),
+                          Form(
+                            key: forgotPassFormKey,
+                            child: Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Text(
+                                        'Email',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    email,
+                                  ],
                                 ),
-                              ),
-                              email,
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(300, 50),
-                          backgroundColor: brandOne,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          if (forgotPassFormKey.currentState!.validate()) {
-                            authState.forgotPassword(
-                              context,
-                              _emailController.text.trim(),
-                            );
-                            // _emailController.clear();
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
                           children: [
-                            Text(
-                              'Send OTP',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                            Container(
+                              // width: MediaQuery.of(context).size.width * 2,
+                              alignment: Alignment.center,
+                              // height: 110.h,
+                              child: Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(
+                                          MediaQuery.of(context).size.width -
+                                              50,
+                                          50),
+                                      backgroundColor: brandTwo,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      if (forgotPassFormKey.currentState!
+                                          .validate()) {
+                                        authState.forgotPassword(
+                                          context,
+                                          _emailController.text.trim(),
+                                        );
+                                        // _emailController.clear();
+                                      }
+                                    },
+                                    child: Text(
+                                      'Continue',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                        color: colorWhite,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              // width: MediaQuery.of(context).size.width * 2,
+                              alignment: Alignment.center,
+                              // height: 110.h,
+                              child: Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(
+                                          MediaQuery.of(context).size.width -
+                                              50,
+                                          50),
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Get.back();
+                                      // Get.back();
+                                    },
+                                    child: Text(
+                                      'Cancel',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

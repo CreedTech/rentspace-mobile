@@ -606,11 +606,12 @@ class _HomePageState extends State<HomePage> {
 
         return false;
       },
+      // ?TODO CHANGE UPGRADER
       child: UpgradeAlert(
         upgrader: Upgrader(
-          showIgnore: false,
+          showIgnore: true,
           durationUntilAlertAgain: const Duration(seconds: 5),
-          debugLogging: true,
+          debugLogging: false,
           // debugDisplayAlways:true,
           dialogStyle: UpgradeDialogStyle.cupertino,
           showLater: false,

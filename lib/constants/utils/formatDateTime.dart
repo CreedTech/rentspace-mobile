@@ -8,7 +8,7 @@ String formatDateTime(String dateTimeString) {
   DateTime localDateTime = utcDateTime.add(const Duration(hours: 1));
 
   // Define the date format you want
-  final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm:ss a');
+  final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
 
   // Format the local DateTime object into a string
   String formattedDateTime = formatter.format(localDateTime);

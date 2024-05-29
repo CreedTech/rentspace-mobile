@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_list.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controller/rent/rent_controller.dart';
@@ -118,6 +119,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(rentController
+        .rentModel!.rents![widget.current].spaceRentInterestHistories);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffF6F6F8),
@@ -154,865 +157,718 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         ),
       ),
       //
-      body: Obx(
-        () => ((rentController.rentModel!.rents![widget.current].paidAmount) <=
-                (rentController.rentModel!.rents![widget.current].amount.obs *
-                    0.7))
-            ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 0, bottom: 20.h),
-                      child: IntrinsicHeight(
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff278210),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    top: 40.h,
-                                    right: -30.w,
-                                    child: Transform.scale(
-                                      scale: MediaQuery.of(context).size.width /
-                                          300, // Adjust the reference width as needed
-                                      child: Image.asset(
-                                        'assets/house_slant.png',
-                                        width: 103.91, // Width without scaling
-                                        height:
-                                            144.17, // Height without scaling
-                                      ),
-                                    ),
+      body: Obx(() => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 0, bottom: 20.h),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff278210),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 40.h,
+                                right: -30.w,
+                                child: Transform.scale(
+                                  scale: MediaQuery.of(context).size.width /
+                                      300, // Adjust the reference width as needed
+                                  child: Image.asset(
+                                    'assets/house_slant.png',
+                                    width: 103.91, // Width without scaling
+                                    height: 144.17, // Height without scaling
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 15.w,
-                                        top: 14.h,
-                                        right: 0.w,
-                                        bottom: 14.h),
-                                    child: Column(
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 15.w,
+                                    top: 14.h,
+                                    right: 0.w,
+                                    bottom: 14.h),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '${rentController.rentModel!.rents![widget.current].rentName} Balance',
-                                              style: GoogleFonts.lato(
-                                                fontSize: 12,
-                                                color: colorWhite,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              nairaFormaet.format(rentController
+                                        Text(
+                                          '${rentController.rentModel!.rents![widget.current].rentName} Balance',
+                                          style: GoogleFonts.lato(
+                                            fontSize: 12,
+                                            color: colorWhite,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          nairaFormaet
+                                              .format(rentController
                                                   .rentModel!
                                                   .rents![widget.current]
-                                                  .paidAmount),
+                                                  .paidAmount)
+                                              .obs(),
+                                          style: GoogleFonts.lato(
+                                            fontSize: 30,
+                                            color: colorWhite,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.8,
+                                          child: LinearPercentIndicator(
+                                            padding: EdgeInsets.only(
+                                                left: 0, right: 19.w),
+                                            animateFromLastPercent: true,
+                                            backgroundColor:
+                                                const Color(0xff134107),
+                                            trailing: Text(
+                                              ' ${((rentController.rentModel!.rents![widget.current].paidAmount / rentController.rentModel!.rents![widget.current].amount) * 100).toInt()}%',
                                               style: GoogleFonts.lato(
-                                                fontSize: 30,
-                                                color: colorWhite,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w600,
+                                                color: colorWhite,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.8,
-                                              child: LinearPercentIndicator(
-                                                padding: EdgeInsets.only(
-                                                    left: 0, right: 19.w),
-                                                animateFromLastPercent: true,
-                                                backgroundColor:
-                                                    const Color(0xff134107),
-                                                trailing: Text(
-                                                  ' ${((rentController.rentModel!.rents![widget.current].paidAmount / rentController.rentModel!.rents![widget.current].amount) * 100).toInt()}%',
+                                            percent: ((rentController
+                                                        .rentModel!
+                                                        .rents![widget.current]
+                                                        .paidAmount /
+                                                    rentController
+                                                        .rentModel!
+                                                        .rents![widget.current]
+                                                        .amount))
+                                                .toDouble(),
+                                            animation: true,
+                                            barRadius:
+                                                const Radius.circular(50.0),
+                                            lineHeight: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                40,
+                                            fillColor: Colors.transparent,
+                                            progressColor: colorWhite,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 14.h),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              left: 11.w,
+                                              right: 25.w,
+                                              top: 9.h,
+                                              bottom: 9.h),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffFFFFFF)
+                                                .withOpacity(0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Target',
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: colorWhite,
+                                                ),
+                                              ),
+                                              // AutoSizeText(
+                                              //   nairaFormaet.format(
+                                              //       rentController
+                                              //           .rentModel!
+                                              //           .rents![widget.current]
+                                              //           .amount),
+                                              //   maxLines: 2,
+                                              //   // minFontSize: 2.0,
+                                              //   // textAlign: TextAlign.center,
+                                              //   style: GoogleFonts.lato(
+                                              //     fontSize: 16.0,
+                                              //     fontWeight: FontWeight.w600,
+                                              //     color: colorWhite,
+                                              //   ),
+                                              // ),
+                                              SizedBox(
+                                                width: 106.w,
+                                                child: Text(
+                                                  nairaFormaet.format(50000000),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: GoogleFonts.lato(
-                                                    fontSize: 14,
+                                                    fontSize: 16.0,
                                                     fontWeight: FontWeight.w600,
                                                     color: colorWhite,
                                                   ),
                                                 ),
-                                                percent: ((rentController
-                                                            .rentModel!
-                                                            .rents![
-                                                                widget.current]
-                                                            .paidAmount /
-                                                        rentController
-                                                            .rentModel!
-                                                            .rents![
-                                                                widget.current]
-                                                            .amount))
-                                                    .toDouble(),
-                                                animation: true,
-                                                barRadius:
-                                                    const Radius.circular(50.0),
-                                                lineHeight:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        40,
-                                                fillColor: Colors.transparent,
-                                                progressColor: colorWhite,
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                        SizedBox(height: 14.h),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  left: 11.w,
-                                                  right: 25.w,
-                                                  top: 9.h,
-                                                  bottom: 9.h),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffFFFFFF)
-                                                    .withOpacity(0.2),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 11.w, vertical: 9.h),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffFFFFFF)
+                                                .withOpacity(0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Due in',
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: colorWhite,
+                                                ),
                                               ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Target',
-                                                    style: GoogleFonts.lato(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: colorWhite,
-                                                    ),
-                                                  ),
-                                                  // AutoSizeText(
-                                                  //   nairaFormaet.format(
-                                                  //       rentController
-                                                  //           .rentModel!
-                                                  //           .rents![widget.current]
-                                                  //           .amount),
-                                                  //   maxLines: 2,
-                                                  //   // minFontSize: 2.0,
-                                                  //   // textAlign: TextAlign.center,
-                                                  //   style: GoogleFonts.lato(
-                                                  //     fontSize: 16.0,
-                                                  //     fontWeight: FontWeight.w600,
-                                                  //     color: colorWhite,
-                                                  //   ),
-                                                  // ),
-                                                  SizedBox(
-                                                    width: 106.w,
-                                                    child: Text(
-                                                      nairaFormaet
-                                                          .format(50000000),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: GoogleFonts.lato(
-                                                        fontSize: 16.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: colorWhite,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                              Text(
+                                                '${_calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days',
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: colorWhite,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 10.w,
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 11.w,
-                                                  vertical: 9.h),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffFFFFFF)
-                                                    .withOpacity(0.2),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Due in',
-                                                    style: GoogleFonts.lato(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: colorWhite,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '${_calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days',
-                                                    style: GoogleFonts.lato(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: colorWhite,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(SpaceRentInterestHistoryPage(
+                                current: widget.current));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 6),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              color: colorWhite,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              ),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/percent_box.png',
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'Total Interest accrued: ',
+                                      style: GoogleFonts.lato(
+                                          color: colorDark,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(
+                                      ch8t.format(rentController
+                                          .rentModel!
+                                          .rents![widget.current]
+                                          .spaceRentInterest),
+                                      style: GoogleFonts.lato(
+                                          color: const Color(0xff278210),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: colorBlack,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  // height: 92.h,
+                  padding: const EdgeInsets.all(17),
+                  decoration: BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Saving Schedule',
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: colorDark,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 9.h,
+                          ),
+                          Text(
+                            '${ch8t.format(rentController.rentModel!.rents![widget.current].intervalAmount)}/${rentController.rentModel!.rents![widget.current].interval.toLowerCase()}',
+                            style: GoogleFonts.lato(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: colorDark,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '',
+                            style: GoogleFonts.lato(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xff4B4B4B),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: GoogleFonts.lato(
+                                  // fontWeight: FontWeight.w700,
+                                  color: colorBlack,
+                                  fontSize: 12,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Next Payment: ',
+                                    style: GoogleFonts.lato(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: rentController.rentModel!
+                                        .rents![widget.current].nextDate,
+                                    style: GoogleFonts.lato(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                (((rentController.rentModel!.rents![widget.current].paidAmount /
+                                    rentController.rentModel!
+                                        .rents![widget.current].amount) *
+                                100)
+                            .toInt() >=
+                        70)
+                    ? Container(
+                        width: MediaQuery.of(context).size.width,
+                        // height: 92.h,
+                        padding: const EdgeInsets.all(17),
+                        decoration: BoxDecoration(
+                          color: colorWhite,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 4,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Loan',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorDark,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 3.h,
+                                  ),
+                                  Text(
+                                    'You are now eligible to ask for up to 30% loan for this Space Rent Plan',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: colorDark,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 6),
-                              width: MediaQuery.of(context).size.width,
-                              decoration: const BoxDecoration(
-                                color: colorWhite,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
+                            const Spacer(),
+                            Flexible(
+                              flex: 2,
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/percent_box.png',
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(
-                                        'Total Interest accrued: ',
-                                        style: GoogleFonts.lato(
-                                            color: colorDark,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        ch8t.format(rentController
-                                            .rentModel!
-                                            .rents![widget.current]
-                                            .spaceRentInterest),
-                                        style: GoogleFonts.lato(
-                                            color: const Color(0xff278210),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      )
-                                    ],
+                                  Image.asset(
+                                    'assets/coins.png',
+                                    width: 55,
+                                    height: 53,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Icon(
-                                      Icons.keyboard_arrow_right,
-                                      color: colorBlack,
-                                      size: 20,
-                                    ),
+                                  // SizedBox(
+                                  //   height: 8.h,
+                                  // ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: colorBlack,
+                                    size: 20,
                                   ),
                                 ],
                               ),
                             ),
                           ],
                         ),
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'History',
+                      style: GoogleFonts.lato(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: colorBlack,
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      // height: 92.h,
-                      padding: const EdgeInsets.all(17),
-                      decoration: BoxDecoration(
-                        color: colorWhite,
-                        borderRadius: BorderRadius.circular(10.r),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(SpaceRentHistory(
+                          current: widget.current,
+                        ));
+                      },
+                      child: Text(
+                        'View All',
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: brandTwo,
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                (rentController.rentModel!.rents![widget.current].rentHistories
+                        .isEmpty)
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Saving Schedule',
-                                style: GoogleFonts.lato(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: colorDark,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 9.h,
-                              ),
-                              Text(
-                                '${ch8t.format(rentController.rentModel!.rents![widget.current].intervalAmount)}/${rentController.rentModel!.rents![widget.current].interval.toLowerCase()}',
-                                style: GoogleFonts.lato(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: colorDark,
-                                ),
-                              ),
-                            ],
+                          Image.asset(
+                            'assets/card_empty.png',
+                            height: 150.h,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '',
-                                style: GoogleFonts.lato(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff4B4B4B),
-                                ),
+                          Center(
+                            child: Text(
+                              "No Transaction history",
+                              style: GoogleFonts.lato(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                    style: GoogleFonts.lato(
-                                      // fontWeight: FontWeight.w700,
-                                      color: colorBlack,
-                                      fontSize: 12,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Next Payment: ',
-                                        style: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: rentController.rentModel!
-                                            .rents![widget.current].nextDate,
-                                        style: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                            ],
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    (((rentController.rentModel!.rents![widget.current]
-                                            .paidAmount /
-                                        rentController.rentModel!
-                                            .rents![widget.current].amount) *
-                                    100)
-                                .toInt() >=
-                            70)
-                        ? Container(
-                            width: MediaQuery.of(context).size.width,
-                            // height: 92.h,
-                            padding: const EdgeInsets.all(17),
-                            decoration: BoxDecoration(
-                              color: colorWhite,
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 4,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Loan',
-                                        style: GoogleFonts.lato(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: colorDark,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 3.h,
-                                      ),
-                                      Text(
-                                        'You are now eligible to ask for up to 30% loan for this Space Rent Plan',
-                                        style: GoogleFonts.lato(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: colorDark,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Spacer(),
-                                Flexible(
-                                  flex: 2,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/coins.png',
-                                        width: 55,
-                                        height: 53,
-                                      ),
-                                      // SizedBox(
-                                      //   height: 8.h,
-                                      // ),
-                                      const Icon(
-                                        Icons.keyboard_arrow_right,
-                                        color: colorBlack,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : SizedBox(),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'History',
-                          style: GoogleFonts.lato(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: colorBlack,
-                          ),
+                      )
+                    : Container(
+                        height: rentController.rentModel!.rents![widget.current]
+                                    .rentHistories.length <
+                                3
+                            ? (rentController.rentModel!.rents![widget.current]
+                                    .rentHistories.length *
+                                80)
+                            : rentController.rentModel!.rents![widget.current]
+                                    .rentHistories.isEmpty
+                                ? 240.h
+                                : 240.h,
+                        decoration: BoxDecoration(
+                          color: colorWhite,
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(SpaceRentHistory(
-                              current: widget.current,
-                            ));
-                          },
-                          child: Text(
-                            'View All',
-                            style: GoogleFonts.lato(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: brandTwo,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    (rentController.rentModel!.rents![widget.current]
-                            .rentHistories.isEmpty)
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Image.asset(
-                                'assets/card_empty.png',
-                                height: 150.h,
-                              ),
-                              Center(
-                                child: Text(
-                                  "No Transaction history",
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(
-                            height: rentController
-                                        .rentModel!
-                                        .rents![widget.current]
-                                        .rentHistories
-                                        .length <
-                                    3
-                                ? (rentController
-                                        .rentModel!
-                                        .rents![widget.current]
-                                        .rentHistories
-                                        .length *
-                                    80)
-                                : rentController
-                                        .rentModel!
-                                        .rents![widget.current]
-                                        .rentHistories
-                                        .isEmpty
-                                    ? 240.h
-                                    : 240.h,
-                            decoration: BoxDecoration(
-                              color: colorWhite,
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              itemCount: (rentController
-                                          .rentModel!
-                                          .rents![widget.current]
-                                          .rentHistories
-                                          .length <
-                                      3)
-                                  ? rentController
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: (rentController
                                       .rentModel!
                                       .rents![widget.current]
                                       .rentHistories
-                                      .length
-                                  : 3,
-                              itemBuilder: (BuildContext context, int index) {
-                                int reversedIndex = rentController
-                                        .rentModel!
-                                        .rents![widget.current]
-                                        .rentHistories
-                                        .length -
-                                    1 -
-                                    index;
-                                // Access the activities in reverse order
-                                final history = rentController
+                                      .length <
+                                  3)
+                              ? rentController.rentModel!.rents![widget.current]
+                                  .rentHistories.length
+                              : 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            int reversedIndex = rentController
                                     .rentModel!
                                     .rents![widget.current]
-                                    .rentHistories[index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    print('index');
-                                    print(history);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TransactionReceipt(),
-                                        settings: RouteSettings(
-                                          arguments: history,
-                                        ),
-                                      ),
-                                    );
-
-                                    // Get.to(
-                                    //   (history['transactionGroup']
-                                    //               .toString()
-                                    //               .toLowerCase() ==
-                                    //           'transfer')
-                                    //       ? TransactionReceiptTransfer(
-                                    //           amount: history['amount'],
-                                    //           status: history['status'],
-                                    //           fees: history['fees'] ?? 0,
-                                    //           transactionType:
-                                    //               history['transactionType'],
-                                    //           description:
-                                    //               history['description'],
-                                    //           transactionGroup:
-                                    //               history['transactionGroup'],
-                                    //           transactionDate:
-                                    //               history['createdAt'],
-                                    //           transactionRef: history[
-                                    //                   'transactionReference'] ??
-                                    //               '',
-                                    //           merchantRef:
-                                    //               history['merchantReference'],
-                                    //           // sessionId: history['sessionId'] ?? '',
-                                    //         )
-                                    //       : (history['transactionGroup']
-                                    //                   .toString()
-                                    //                   .toLowerCase() ==
-                                    //               'static-account-transfer')
-                                    //           ? TransactionReceiptDVA(
-                                    //               amount: history['amount'],
-                                    //               status: history['status'],
-                                    //               fees: history['fees'] ?? 0,
-                                    //               transactionType: history[
-                                    //                   'transactionType'],
-                                    //               description:
-                                    //                   history['description'],
-                                    //               transactionGroup: history[
-                                    //                   'transactionGroup'],
-                                    //               transactionDate:
-                                    //                   history['createdAt'],
-                                    //               transactionRef: history[
-                                    //                       'transactionReference'] ??
-                                    //                   '',
-                                    //               merchantRef: history[
-                                    //                   'merchantReference'],
-                                    //               remarks: history['remarks'],
-                                    //             )
-                                    //           : TransactionReceipt(
-                                    //               amount: history['amount'],
-                                    //               status: history['status'],
-                                    //               fees: history['fees'] ?? 0,
-                                    //               transactionType: history[
-                                    //                   'transactionType'],
-                                    //               description:
-                                    //                   history['description'],
-                                    //               transactionGroup: history[
-                                    //                   'transactionGroup'],
-                                    //               transactionDate:
-                                    //                   history['createdAt'],
-                                    //               transactionRef: history[
-                                    //                       'transactionReference'] ??
-                                    //                   '',
-                                    //               merchantRef: history[
-                                    //                   'merchantReference'],
-                                    //             ),
-                                    // );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        leading: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: brandTwo,
-                                          ),
-                                          child: (history['transactionType'] ==
-                                                  'Credit')
-                                              ? Icon(
-                                                  Icons.arrow_outward_sharp,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                )
-                                              : const Icon(
-                                                  Icons.call_received,
-                                                  color: Color(0xff80FF00),
-                                                ),
-                                        ),
-                                        title: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${history['message']} ",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.lato(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: colorBlack,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        subtitle: Text(
-                                          formatDateTime(history['createdAt']),
-                                          style: GoogleFonts.lato(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color: const Color(0xff4B4B4B),
-                                          ),
-                                        ),
-                                        trailing: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            (history['transactionType'] ==
-                                                    'Credit')
-                                                ? Text(
-                                                    "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                                    style: GoogleFonts.roboto(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: const Color(
-                                                          0xff56AB00),
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    nairaFormaet.format(
-                                                        double.parse(
-                                                            history['amount']
-                                                                .toString())),
-                                                    style: GoogleFonts.lato(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: colorBlack,
-                                                    ),
-                                                  ),
-                                            const Text('')
-                                          ],
-                                        ),
-                                      ),
-                                      (rentController
-                                                  .rentModel!
-                                                  .rents![widget.current]
-                                                  .rentHistories
-                                                  .length >
-                                              1)
-                                          ? const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 13),
-                                              child: Divider(
-                                                thickness: 1,
-                                                color: Color(0xffC9C9C9),
-                                              ),
-                                            )
-                                          : const SizedBox(),
-                                    ],
+                                    .rentHistories
+                                    .length -
+                                1 -
+                                index;
+                            // Access the activities in reverse order
+                            final history = rentController.rentModel!
+                                .rents![widget.current].rentHistories[index];
+                            return GestureDetector(
+                              onTap: () {
+                                print('index');
+                                print(history);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TransactionReceipt(),
+                                    settings: RouteSettings(
+                                      arguments: history,
+                                    ),
                                   ),
                                 );
-                              },
-                            ),
-                          ),
-                  ],
-                ),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/check.png',
-                    width: 120.w,
-                  ),
-                  SizedBox(
-                    height: 55.h,
-                  ),
-                  Text(
-                    'Congrats, you are eligile for a loan',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Text(
-                    'Total Loanable amount',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  Text(
-                    nairaFormaet
-                        .format(rentController
-                                .rentModel!.rents![widget.current].amount -
-                            (rentController
-                                    .rentModel!.rents![widget.current].amount *
-                                0.7))
-                        .toString(),
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.roboto(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 31,
-                    ),
-                  ),
 
-                  SizedBox(
-                    height: 70.h,
-                  ),
-                  // Spacer(),
-                  Column(
-                    children: [
-                      Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(300, 50),
-                            backgroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: brandOne),
-                              borderRadius: BorderRadius.circular(
-                                10,
+                                // Get.to(
+                                //   (history['transactionGroup']
+                                //               .toString()
+                                //               .toLowerCase() ==
+                                //           'transfer')
+                                //       ? TransactionReceiptTransfer(
+                                //           amount: history['amount'],
+                                //           status: history['status'],
+                                //           fees: history['fees'] ?? 0,
+                                //           transactionType:
+                                //               history['transactionType'],
+                                //           description:
+                                //               history['description'],
+                                //           transactionGroup:
+                                //               history['transactionGroup'],
+                                //           transactionDate:
+                                //               history['createdAt'],
+                                //           transactionRef: history[
+                                //                   'transactionReference'] ??
+                                //               '',
+                                //           merchantRef:
+                                //               history['merchantReference'],
+                                //           // sessionId: history['sessionId'] ?? '',
+                                //         )
+                                //       : (history['transactionGroup']
+                                //                   .toString()
+                                //                   .toLowerCase() ==
+                                //               'static-account-transfer')
+                                //           ? TransactionReceiptDVA(
+                                //               amount: history['amount'],
+                                //               status: history['status'],
+                                //               fees: history['fees'] ?? 0,
+                                //               transactionType: history[
+                                //                   'transactionType'],
+                                //               description:
+                                //                   history['description'],
+                                //               transactionGroup: history[
+                                //                   'transactionGroup'],
+                                //               transactionDate:
+                                //                   history['createdAt'],
+                                //               transactionRef: history[
+                                //                       'transactionReference'] ??
+                                //                   '',
+                                //               merchantRef: history[
+                                //                   'merchantReference'],
+                                //               remarks: history['remarks'],
+                                //             )
+                                //           : TransactionReceipt(
+                                //               amount: history['amount'],
+                                //               status: history['status'],
+                                //               fees: history['fees'] ?? 0,
+                                //               transactionType: history[
+                                //                   'transactionType'],
+                                //               description:
+                                //                   history['description'],
+                                //               transactionGroup: history[
+                                //                   'transactionGroup'],
+                                //               transactionDate:
+                                //                   history['createdAt'],
+                                //               transactionRef: history[
+                                //                       'transactionReference'] ??
+                                //                   '',
+                                //               merchantRef: history[
+                                //                   'merchantReference'],
+                                //             ),
+                                // );
+                              },
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: brandTwo,
+                                      ),
+                                      child: (history['transactionType'] ==
+                                              'Credit')
+                                          ? Icon(
+                                              Icons.arrow_outward_sharp,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            )
+                                          : const Icon(
+                                              Icons.call_received,
+                                              color: Color(0xff80FF00),
+                                            ),
+                                    ),
+                                    title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${history['message']} ",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: colorBlack,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: Text(
+                                      formatDateTime(history['createdAt']),
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                        color: const Color(0xff4B4B4B),
+                                      ),
+                                    ),
+                                    trailing: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        (history['transactionType'] == 'Credit')
+                                            ? Text(
+                                                "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      const Color(0xff56AB00),
+                                                ),
+                                              )
+                                            : Text(
+                                                nairaFormaet.format(
+                                                    double.parse(
+                                                        history['amount']
+                                                            .toString())),
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: colorBlack,
+                                                ),
+                                              ),
+                                        const Text('')
+                                      ],
+                                    ),
+                                  ),
+                                  (rentController
+                                              .rentModel!
+                                              .rents![widget.current]
+                                              .rentHistories
+                                              .length >
+                                          1)
+                                      ? const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 13),
+                                          child: Divider(
+                                            thickness: 1,
+                                            color: Color(0xffC9C9C9),
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
                               ),
-                            ),
-                          ),
-                          onPressed: () {
-                            // Get.to(const LoanPage());
+                            );
                           },
-                          child: Text(
-                            'Continue Saving',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: brandOne,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(300, 50),
-                            backgroundColor: brandOne,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            (userController.userModel!.userDetails![0]
-                                        .hasVerifiedKyc ==
-                                    false)
-                                ? Get.to(const KYCIntroPage())
-                                : Get.to(const LoanPage());
-                          },
-                          child: Text(
-                            'Take Loan',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                  // Spacer(),
-                ],
-              ),
-      ),
+              ],
+            ),
+          )),
 
       backgroundColor: const Color(0xffF6F6F8),
     );

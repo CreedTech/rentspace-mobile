@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/view/actions/transaction_receipt.dart';
-import 'package:rentspace/view/actions/transaction_receipt_dva.dart';
-import 'package:rentspace/view/actions/transaction_receipt_transfer.dart';
 
 import '../../constants/colors.dart';
 import 'dashboard.dart';

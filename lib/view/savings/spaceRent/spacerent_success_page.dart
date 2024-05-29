@@ -7,6 +7,8 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/core/helper/helper_route_path.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 
+import '../../FirstPage.dart';
+
 class SpaceRentSuccessPage extends StatefulWidget {
   const SpaceRentSuccessPage(
       {super.key,
@@ -205,7 +207,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                 //     ),
                                 //     (route) => false);
                                 // Get.until((route) => Get.currentRoute == rentList);
-                                Get.close(3);
+                                Get.offAll(const FirstPage());
                                 // Get.until((route) => false);
                                 // Get.offNamedUntil(rentList, (route) => false);
                                 // Navigator.popUntil(
