@@ -115,6 +115,34 @@ class AuthRepository {
     }
   }
 
+  Future<ResponseModel> createProvidusDva(body) async {
+    ResponseModel responseModel;
+
+    // String authToken =
+    //     await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    // _apiClient.updateHeaders(authToken);
+    Response response = await _apiClient.postData(
+        AppConstants.PROVIDUS_CREATE_DVA, jsonEncode(body));
+    print("response");
+    // print(response.body);
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel("DVA Creation successful", true);
+      return responseModel;
+    }
+
+    // print("Here in repo${jsonDecode(response.body)}");
+
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
+  }
+
   Future<ResponseModel> resendOTP(email) async {
     ResponseModel responseModel;
     // Call signIn method in SharedPreferencesManager to get the token
@@ -155,7 +183,7 @@ class AuthRepository {
       _apiClient.updateHeaders(token);
       return responseModel;
     }
-    // print("Here in repo${jsonDecode(response.body)}");
+    print("Here in repo${jsonDecode(response.body)}");
     var error = jsonDecode(response.body)['errors'].toString();
     if (jsonDecode(response.body)['error'] ==
         'User not verified, please verify your account') {
@@ -169,10 +197,19 @@ class AuthRepository {
         'User already logged in on another device') {
       error = 'User already logged in on another device';
     }
+    if (response.body.contains('errors')) {
+      var error = jsonDecode(response.body)['errors'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    } else {
+      var error = jsonDecode(response.body)['error'].toString();
+      print("Here in error$error");
+      return responseModel = ResponseModel(error, false);
+    }
 
 //  Here in repo{error: User not verified, please verify your account}
     //  print("Here in repo" + response.reasonPhrase.toString());
-    return responseModel = ResponseModel(error, false);
+    // return responseModel = ResponseModel(error, false);
   }
 
   Future<ResponseModel> singleDeviceLoginOtp(body) async {

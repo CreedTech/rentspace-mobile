@@ -5,6 +5,7 @@ import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:rentspace/controller/auth/user_controller.dart';
 
 import '../../../controller/rent/rent_controller.dart';
 import '../../actions/transaction_receipt.dart';
@@ -54,6 +55,7 @@ doSomeThing() {
 
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   final RentController rentController = Get.find();
+  final UserController userController = Get.find();
 
   List _payments = [];
 
@@ -127,19 +129,31 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                         padding: const EdgeInsets.symmetric(vertical: 7),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(TransactionReceipt(
-                              amount: _payments[index]['amount'],
-                              status: _payments[index]['status'],
-                              fees: _payments[index]['fees'],
-                              transactionType: _payments[index]['message'],
-                              description: _payments[index]['description'],
-                              transactionGroup: 'Wallet Payment',
-                              transactionDate: _payments[index]['createdAt'],
-                              transactionRef: _payments[index]
-                                  ['transactionReference'],
-                              merchantRef: _payments[index]
-                                  ['merchantReference'],
-                            ));
+                              Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const TransactionReceipt(),
+                                                        settings: RouteSettings(
+                                                            arguments:_payments[index],
+
+                                                        ),
+                                                      ),
+                                                    );
+                          
+                            // Get.to(TransactionReceipt(
+                            //   amount: _payments[index]['amount'],
+                            //   status: _payments[index]['status'],
+                            //   fees: _payments[index]['fees'],
+                            //   transactionType: _payments[index]['message'],
+                            //   description: _payments[index]['description'],
+                            //   transactionGroup: 'Wallet Payment',
+                            //   transactionDate: _payments[index]['createdAt'],
+                            //   transactionRef: _payments[index]
+                            //       ['transactionReference'],
+                            //   merchantRef: _payments[index]
+                            //       ['merchantReference'],
+                            // ));
                           },
                           child: ListTile(
                             leading: Container(

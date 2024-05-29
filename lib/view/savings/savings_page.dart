@@ -650,13 +650,13 @@ class _SavingsPageState extends State<SavingsPage> {
                               // ),
                               child: Image.asset(
                                 'assets/icons/space_rent.png',
-                                scale: 4,
+                                width: 19.5,
+                                height: 19.5,
                                 // color: brandOne,
                               ),
                             ),
                             title: Text(
                               'Space Rent',
-                              textScaleFactor: 1.0,
                               style: GoogleFonts.lato(
                                 color: brandOne,
                                 fontSize: 14,
@@ -666,7 +666,6 @@ class _SavingsPageState extends State<SavingsPage> {
                             subtitle: Text(
                               'Save 70% of your rent and get up to 30% loan.',
                               maxLines: 2,
-                              textScaleFactor: 1.0,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.lato(
                                 color: const Color(0xff4B4B4B),
@@ -726,7 +725,9 @@ class _SavingsPageState extends State<SavingsPage> {
                               // ),
                               child: Image.asset(
                                 'assets/icons/lock_deposit_icon.png',
-                                scale: 3,
+                                width: 19.5,
+                                height: 19.5,
+                                // scale: 4,
                                 // color: brandOne,
                               ),
                             ),

@@ -44,12 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _connectivitySubscription.cancel();
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
 
-  //   super.dispose();
-  // }
+    super.dispose();
+  } 
 
   Future<void> loadHasSeenOnboarding() async {
     final prefs = await SharedPreferences.getInstance();

@@ -5,6 +5,7 @@ class Themes {
   // Light Theme
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: brandOne,
+
     appBarTheme: const AppBarTheme(backgroundColor: Color(0xffF6F6F8)),
     scaffoldBackgroundColor: const Color(0xffF6F6F8),
     iconTheme: const IconThemeData(

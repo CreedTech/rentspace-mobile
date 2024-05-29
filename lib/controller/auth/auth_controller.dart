@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/actions/change_transaction_pin_otp_page.dart';
 import 'package:rentspace/view/actions/forgot_password_otp_verification.dart';
 import 'package:rentspace/view/actions/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/actions/onboarding_page.dart';
@@ -27,6 +28,7 @@ import '../../constants/widgets/custom_loader.dart';
 import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
 import '../../view/FirstPage.dart';
+import '../../view/actions/change_transaction_pin.dart';
 import '../../view/actions/reset_password.dart';
 import '../../view/auth/multiple_device_login_otp_page.dart';
 // import 'user_controller.dart';
@@ -282,7 +284,19 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.verifyBVN(params);
       // print(response.message.toString());
       if (response.success) {
-        // EasyLoading.dismiss();
+        EasyLoading.dismiss();
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'BVN Verified Successfully!!',
+            textStyle: GoogleFonts.lato(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
         createDva(
           context,
           email.toString().toLowerCase(),
@@ -380,6 +394,99 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
+
+        return;
+      } else {
+        // print('response.message.toString()');
+      }
+      // print(response.message.toString());
+
+      // check for different reasons to enhance users experience
+      if (response.success == false &&
+          response.message.contains("User already has DVA")) {
+        EasyLoading.dismiss();
+        message = "User already has a Virtual Account";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else if (response.message.contains('Invalid token') ||
+          response.message.contains('Invalid token or device')) {
+        // print('error auth');
+        multipleLoginRedirectModal();
+      } else if (response.success == false &&
+          response.message.contains("User with this BVN already exists")) {
+        EasyLoading.dismiss();
+        // print('response here');
+        // // print(response.success);
+        // // print(response);
+        message = "Oops! User with this BVN already exists";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      } else {
+        EasyLoading.dismiss();
+        // to capture other errors later
+        // print('response again');
+        // // print(response.success);
+        // // print(response.message);
+        message = "Something went wrong";
+        customErrorDialog(context, 'Error', message);
+
+        return;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      state = AsyncError(e, StackTrace.current);
+      message = "Ooops something went wrong";
+      customErrorDialog(context, 'Error', message);
+
+      return;
+    } finally {
+      isLoading = false;
+      //  return;
+    }
+  }
+
+  Future createProvidusDva(BuildContext context, email) async {
+    isLoading = true;
+
+    Map<String, dynamic> params = {
+      'email': email.toString().toLowerCase(),
+    };
+    print('params');
+    // print(params);
+    String message;
+    try {
+      isLoading = true;
+      state = const AsyncLoading();
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var response = await authRepository.createProvidusDva(params);
+      // // print(response.message.toString());
+      if (response.success) {
+        // await userController.fetchData();
+        Get.offAll(
+          LoginPage(
+            sessionStateStream: sessionStateStream,
+            // loggedOutReason: "Logged out because of user inactivity",
+          ),
+        );
+        EasyLoading.dismiss();
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.success(
+        //     backgroundColor: brandOne,
+        //     message: 'BVN Verified Successfully!!',
+        //     textStyle: GoogleFonts.lato(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w700,
+        //     ),
+        //   ),
+        // );
 
         return;
       } else {
@@ -545,7 +652,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.signIn(user);
       EasyLoading.dismiss();
       state = const AsyncData(false);
-      // print('response.message');
+      print('response.message');
       // // print(response.message);
       if (response.success == true) {
         isLoading = false;
@@ -577,7 +684,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
         return;
       } else {
-        // print(response.message.toString());
+        print(response.message.toString());
       }
       // authStatus = AuthStatus.NOT_LOGGED_IN;
 
@@ -1329,7 +1436,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    ForgotPinOTPVerificationPage(email: email)));
+                    ChangetransactionPinOtpPage(email: email)));
         return;
       } else {
         // // print(response.message.toString());
@@ -1454,11 +1561,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         EasyLoading.dismiss();
         isLoading = false;
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ResetPIN(
-                      email: email.toString().toLowerCase(),
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChangeTransactionPin(
+              email: email.toString().toLowerCase(),
+            ),
+          ),
+        );
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
@@ -1518,21 +1627,23 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         userController.fetchData();
         EasyLoading.dismiss();
         isLoading = false;
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: Colors.green,
-            message: 'Payment Pin Reset Successful!!',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-        Get.offAll(
-          const FirstPage(),
-        );
+        customSuccessDialog(
+            context, 'Success', 'Transaction Pin changed successfully.');
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.success(
+        //     backgroundColor: Colors.green,
+        //     message: 'Payment Pin Reset Successful!!',
+        //     textStyle: GoogleFonts.lato(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w700,
+        //     ),
+        //   ),
+        // );
+        // Get.offAll(
+        //   const FirstPage(),
+        // );
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;

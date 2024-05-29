@@ -42,8 +42,8 @@ class RentController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print('result');
-        // print(result);
+        print('result');
+        print(result);
         // print(SpaceRentModel.fromJson(result));
 
         rentModel = SpaceRentModel.fromJson(result);
@@ -73,7 +73,7 @@ class RentController extends GetxController {
       // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      // print('Error while getting data is $e');
+      print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);

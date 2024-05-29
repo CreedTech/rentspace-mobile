@@ -36,6 +36,8 @@ class Wallet {
   final String walletId;
   final String createdAt;
   final String updatedAt;
+  final String? lastWithdrawalDate;
+  final String? nextWithdrawalDate;
 
   Wallet({
     required this.id,
@@ -47,6 +49,8 @@ class Wallet {
     required this.walletId,
     required this.createdAt,
     required this.updatedAt,
+    required this.lastWithdrawalDate,
+    required this.nextWithdrawalDate,
   });
 
   factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
@@ -59,6 +63,8 @@ class Wallet {
         walletId: json["walletId"],
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
+        lastWithdrawalDate: json["lastWithdrawalDate"] ?? '',
+        nextWithdrawalDate: json["nextWithdrawalDate"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +77,7 @@ class Wallet {
         "walletId": walletId,
         "createdAt": createdAt,
         "updatedAt": updatedAt,
+        "lastWithdrawalDate": lastWithdrawalDate,
+        "nextWithdrawalDate": nextWithdrawalDate,
       };
 }

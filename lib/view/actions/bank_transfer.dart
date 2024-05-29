@@ -183,6 +183,7 @@ class _BankTransferState extends State<BankTransfer> {
                       ),
                       Text(
                         userController.userModel!.userDetails![0].dvaName,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.lato(
                           color: colorBlack,
                           fontSize: 20,

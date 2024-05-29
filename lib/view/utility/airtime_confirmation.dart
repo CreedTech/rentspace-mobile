@@ -214,7 +214,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               height: 10.h,
                             ),
                             Text(
-                              '${widget.customerName!} ${widget.number}',
+                              '${widget.customerName ?? ''} ${widget.number}',
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

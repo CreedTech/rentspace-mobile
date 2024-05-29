@@ -1,4 +1,5 @@
 import 'wallet_model.dart';
+import 'withdrawal_account_model.dart';
 
 class UserModel {
   UserModel({
@@ -95,6 +96,7 @@ class UserDetailsModel {
   final List<dynamic> activities;
   final List<dynamic> walletHistories;
   final List<dynamic> referredUsers;
+  final WithdrawalAccount? withdrawalAccount;
   final Wallet wallet;
 
   UserDetailsModel({
@@ -157,6 +159,7 @@ class UserDetailsModel {
     // required this.accountNumber,
     // required this.referalId,
     required this.wallet,
+    required this.withdrawalAccount,
     required this.activities,
     required this.walletHistories,
     required this.referredUsers,
@@ -224,6 +227,8 @@ class UserDetailsModel {
         // accountDate: json["account_date"] ?? '',
         // activities: Activities.fromJson(json["activities"]),
         wallet: Wallet.fromJson(json["wallet"]),
+        withdrawalAccount:
+            WithdrawalAccount.fromJson(json["withdrawalAccount"]),
         activities: json["activities"],
         walletHistories: json["walletHistories"],
         referredUsers: json["referredUsers"],
@@ -291,5 +296,6 @@ class UserDetailsModel {
         "walletHistories": walletHistories,
         "referredUsers": referredUsers,
         "wallet": wallet.toJson(),
+        "withdrawalAccount": withdrawalAccount!.toJson(),
       };
 }

@@ -1035,10 +1035,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
+                       Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
@@ -1056,10 +1053,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                                 firstname,
                               ],
                             ),
-                          ),
-                          SizedBox(width: 10.w),
-                          Expanded(
-                            child: Column(
+                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
@@ -1071,54 +1065,97 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                                       color: colorBlack,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      // fontFamily: "DefaultFontFamily",
                                     ),
                                   ),
                                 ),
-                                lastname,
+                                firstname,
                               ],
                             ),
-                          ),
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Padding(
-                          //       padding: EdgeInsets.symmetric(
-                          //           vertical: 3.h, horizontal: 3.w),
-                          //       child: Text(
-                          //         'First Name',
-                          //         style: GoogleFonts.lato(
-                          //           color: Theme.of(context).primaryColor,
-                          //           fontWeight: FontWeight.w600,
-                          //           fontSize: 12,
-                          //           // fontFamily: "DefaultFontFamily",
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     firstname,
-                          //   ],
-                          // ),
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Padding(
-                          //       padding: EdgeInsets.symmetric(
-                          //           vertical: 3.h, horizontal: 3.w),
-                          //       child: Text(
-                          //         'First Name',
-                          //         style: GoogleFonts.lato(
-                          //           color: Theme.of(context).primaryColor,
-                          //           fontWeight: FontWeight.w600,
-                          //           fontSize: 12,
-                          //           // fontFamily: "DefaultFontFamily",
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     firstname,
-                          //   ],
-                          // ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Padding(
+                      //             padding: EdgeInsets.symmetric(
+                      //                 vertical: 3.h, horizontal: 3.w),
+                      //             child: Text(
+                      //               'First Name',
+                      //               style: GoogleFonts.lato(
+                      //                 color: colorBlack,
+                      //                 fontWeight: FontWeight.w600,
+                      //                 fontSize: 12,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           firstname,
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 10.w),
+                      //     Expanded(
+                      //       child: Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Padding(
+                      //             padding: EdgeInsets.symmetric(
+                      //                 vertical: 3.h, horizontal: 3.w),
+                      //             child: Text(
+                      //               'Last Name',
+                      //               style: GoogleFonts.lato(
+                      //                 color: colorBlack,
+                      //                 fontWeight: FontWeight.w600,
+                      //                 fontSize: 12,
+                      //                 // fontFamily: "DefaultFontFamily",
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           lastname,
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     // Column(
+                      //     //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //     //   children: [
+                      //     //     Padding(
+                      //     //       padding: EdgeInsets.symmetric(
+                      //     //           vertical: 3.h, horizontal: 3.w),
+                      //     //       child: Text(
+                      //     //         'First Name',
+                      //     //         style: GoogleFonts.lato(
+                      //     //           color: Theme.of(context).primaryColor,
+                      //     //           fontWeight: FontWeight.w600,
+                      //     //           fontSize: 12,
+                      //     //           // fontFamily: "DefaultFontFamily",
+                      //     //         ),
+                      //     //       ),
+                      //     //     ),
+                      //     //     firstname,
+                      //     //   ],
+                      //     // ),
+                      //     // Column(
+                      //     //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //     //   children: [
+                      //     //     Padding(
+                      //     //       padding: EdgeInsets.symmetric(
+                      //     //           vertical: 3.h, horizontal: 3.w),
+                      //     //       child: Text(
+                      //     //         'First Name',
+                      //     //         style: GoogleFonts.lato(
+                      //     //           color: Theme.of(context).primaryColor,
+                      //     //           fontWeight: FontWeight.w600,
+                      //     //           fontSize: 12,
+                      //     //           // fontFamily: "DefaultFontFamily",
+                      //     //         ),
+                      //     //       ),
+                      //     //     ),
+                      //     //     firstname,
+                      //     //   ],
+                      //     // ),
+                      //   ],
+                      // ),
+                     
                       // Column(
                       //   crossAxisAlignment: CrossAxisAlignment.start,
                       //   children: [

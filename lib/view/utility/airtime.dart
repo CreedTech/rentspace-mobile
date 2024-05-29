@@ -209,7 +209,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     );
     if (refresh) {
       await userController.fetchData();
-      await walletController.fetchWallet();
+      // await walletController.fetchWallet();
       await utilityResponseController.fetchUtilitiesResponse('Airtime');
       // setState(() {}); // Move setState inside fetchData
     }
@@ -250,8 +250,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
           backgroundColor: const Color(0xffF6F6F8),
           context: context,
           builder: (BuildContext context) {
-           
-
             return Container(
               height: 350,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -511,32 +509,67 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                       color: colorWhite,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: RichText(
-                      text: TextSpan(
-                        style: GoogleFonts.lato(
-                          color: Colors.black54,
-                          fontSize: 14,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Space Points:',
+                          style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
                         ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'Space Wallet: ',
-                              style: GoogleFonts.lato(
-                                color: colorBlack,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              )),
-                          TextSpan(
-                            text: ch8t.format(walletController
-                                .walletModel!.wallet![0].mainBalance),
-                            style: GoogleFonts.lato(
-                              color: brandOne,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          )
-                        ],
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Image.asset(
+                          'assets/spacepoint.png',
+                          width: 9.75,
+                          height: 13,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          userController
+                              .userModel!.userDetails![0].utilityPoints
+                              .toString(),
+                          style: GoogleFonts.lato(
+                            color: brandOne,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
+                    //  RichText(
+                    //   text: TextSpan(
+                    //     style: GoogleFonts.lato(
+                    //       color: Colors.black54,
+                    //       fontSize: 14,
+                    //     ),
+                    //     children: <TextSpan>[
+                    //       TextSpan(
+                    //         text: 'Space Points: ',
+                    //         style: GoogleFonts.lato(
+                    //           color: colorBlack,
+                    //           fontWeight: FontWeight.w400,
+                    //           fontSize: 14,
+                    //         ),
+                    //       ),
+                    //       TextSpan(
+                    //         text: userController
+                    //             .userModel!.userDetails![0].utilityPoints
+                    //             .toString(),
+                    //         style: GoogleFonts.lato(
+                    //           color: brandOne,
+                    //           fontWeight: FontWeight.w600,
+                    //           fontSize: 14,
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -689,9 +722,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                   return 'Enter Amount';
                                 }
                                 if (int.tryParse(value)! >
-                                    walletController
-                                        .walletModel!.wallet![0].mainBalance) {
-                                  return 'Your account balance is too low for this transaction';
+                                    userController.userModel!.userDetails![0]
+                                        .utilityPoints) {
+                                  return 'Your Space Point is too low for this transaction';
                                 }
                                 if (int.tryParse(value) == null) {
                                   return 'Please enter a valid number';
@@ -883,9 +916,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                         var outputList = storedData['data']
                             .where((o) => o['name'] == _selectedCarrier!)
                             .toList();
-                        // print('output list ${outputList}');
+                        print('output list ${outputList}');
 
-                        // print(recipientController.text);
+                        print(outputList[0]['name']);
                         // print(amountController.text);
                         // print(billType!);
                         // print(_selectedCarrier!);

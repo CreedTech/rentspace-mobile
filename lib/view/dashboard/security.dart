@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -18,14 +19,15 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/colors.dart';
 // import '../../controller/user_controller.dart';
+import '../../controller/auth/auth_controller.dart';
 import '../../controller/auth/user_controller.dart';
 // import '../actions/forgot_password.dart';
 
-class Security extends StatefulWidget {
+class Security extends ConsumerStatefulWidget {
   const Security({super.key});
 
   @override
-  State<Security> createState() => _SecurityState();
+  ConsumerState<Security> createState() => _SecurityState();
 }
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
@@ -33,7 +35,7 @@ String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
 
-class _SecurityState extends State<Security> {
+class _SecurityState extends ConsumerState<Security> {
   final UserController userController = Get.find();
 
   enableBiometrics() {
@@ -217,6 +219,7 @@ class _SecurityState extends State<Security> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider.notifier);
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
@@ -310,7 +313,7 @@ class _SecurityState extends State<Security> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            Get.to(ChangetransactionPinOtpPage());
+                            authState.forgotPin(context, userController.userModel!.userDetails![0].email);
                           },
                           title: Text(
                             'Change Transaction Pin',

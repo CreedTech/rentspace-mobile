@@ -11,6 +11,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
+import 'package:rentspace/view/actions/fund_wallet.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/widgets/custom_dialog.dart';
@@ -160,6 +161,13 @@ class _SpaceRentConfirmationPageState
   @override
   Widget build(BuildContext context) {
     final rentState = ref.watch(appControllerProvider.notifier);
+    final currentDate = DateTime.now();
+    final formattedReceivalDate =
+        DateFormat('dd/MM/yyyy').format(widget.receivalDate);
+    final formattedCurrentDate = DateFormat('dd/MM/yyyy').format(currentDate);
+    print('formattedCurrentDate');
+    print(formattedCurrentDate);
+    print(widget.startDate);
     print('width');
     print(MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.height / 3));
@@ -715,20 +723,155 @@ class _SpaceRentConfirmationPageState
                                                 )) {
                                                   await fetchUserData()
                                                       .then((value) {
-                                                    rentState.createRent(
-                                                        context,
-                                                        widget.rentName,
-                                                        DateFormat('dd/MM/yyyy')
-                                                            .format(widget
-                                                                .receivalDate),
-                                                        widget.durationType,
-                                                        widget.savingsValue,
-                                                        widget.rentValue,
-                                                        widget.paymentCount,
-                                                        widget.startDate,
-                                                        widget.duration
-                                                        // fundingController.text,
-                                                        );
+                                                    final hasSufficientBalance =
+                                                        checkSufficientBalance();
+                                                    (widget.startDate ==
+                                                            formattedCurrentDate)
+                                                        ? (hasSufficientBalance)
+                                                            ? rentState.createRent(
+                                                                context,
+                                                                widget.rentName,
+                                                                DateFormat('dd/MM/yyyy')
+                                                                    .format(widget
+                                                                        .receivalDate),
+                                                                widget
+                                                                    .durationType,
+                                                                widget
+                                                                    .savingsValue,
+                                                                widget
+                                                                    .rentValue,
+                                                                widget
+                                                                    .paymentCount,
+                                                                widget
+                                                                    .startDate,
+                                                                widget.duration
+                                                                // fundingController.text,
+                                                                )
+                                                            : showDialog(
+                                                                context:
+                                                                    context,
+                                                                barrierDismissible:
+                                                                    true,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return AlertDialog(
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              16),
+                                                                    ),
+                                                                    title: null,
+                                                                    scrollable:
+                                                                        true,
+                                                                    elevation:
+                                                                        0,
+                                                                    content:
+                                                                        SizedBox(
+                                                                      // height: 220.h,
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical:
+                                                                                10,
+                                                                            horizontal:
+                                                                                0),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Wrap(
+                                                                              alignment: WrapAlignment.center,
+                                                                              crossAxisAlignment: WrapCrossAlignment.center,
+                                                                              // mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                const Icon(
+                                                                                  Icons.info_outline_rounded,
+                                                                                  color: colorBlack,
+                                                                                  size: 24,
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  width: 4,
+                                                                                ),
+                                                                                Text(
+                                                                                  'Insufficient fund.',
+                                                                                  style: GoogleFonts.lato(
+                                                                                    color: colorBlack,
+                                                                                    fontSize: 24,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 14,
+                                                                            ),
+                                                                            Text(
+                                                                              'You need to fund your wallet to perform this transaction.',
+                                                                              textAlign: TextAlign.center,
+                                                                              style: GoogleFonts.lato(
+                                                                                color: colorBlack,
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.w400,
+                                                                              ),
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 29,
+                                                                            ),
+                                                                            Align(
+                                                                              alignment: Alignment.bottomCenter,
+                                                                              child: ElevatedButton(
+                                                                                style: ElevatedButton.styleFrom(
+                                                                                  minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
+                                                                                  backgroundColor: brandTwo,
+                                                                                  elevation: 0,
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(
+                                                                                      10,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                onPressed: () {
+                                                                                  Navigator.of(context).pop();
+                                                                                  Get.to(FundWallet());
+                                                                                },
+                                                                                child: Text(
+                                                                                  'Ok',
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: GoogleFonts.lato(
+                                                                                    color: Colors.white,
+                                                                                    fontSize: 14,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                })
+                                                        : rentState.createRent(
+                                                            context,
+                                                            widget.rentName,
+                                                            DateFormat(
+                                                                    'dd/MM/yyyy')
+                                                                .format(widget
+                                                                    .receivalDate),
+                                                            widget.durationType,
+                                                            widget.savingsValue,
+                                                            widget.rentValue,
+                                                            widget.paymentCount,
+                                                            widget.startDate,
+                                                            widget.duration
+                                                            // fundingController.text,
+                                                            );
                                                   }).catchError(
                                                     (error) {
                                                       setState(() {
@@ -855,5 +998,11 @@ class _SpaceRentConfirmationPageState
     int differenceInDays = difference.inDays.abs();
 
     return differenceInDays;
+  }
+
+  bool checkSufficientBalance() {
+    // Compare mainBalance with savingsValue and return true if mainBalance is greater or equal
+    return walletController.walletModel!.wallet![0].mainBalance >=
+        widget.savingsValue;
   }
 }

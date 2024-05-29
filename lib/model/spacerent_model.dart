@@ -7,7 +7,7 @@ class SpaceRentModel {
   SpaceRentModel.fromJson(Map<String, dynamic> json) {
     final dynamic spaceRentData = json['rent'];
     print('spaceRentData');
-    // print(spaceRentData);
+    print(spaceRentData);
     if (spaceRentData is List<dynamic>) {
       rents = spaceRentData.map((e) => SpaceRent.fromJson(e)).toList();
       // print('rents length');
@@ -51,7 +51,7 @@ class SpaceRent {
   final String createdAt;
   final String updatedAt;
   final List<dynamic> rentHistories;
-  final List<dynamic> spaceRentInterestHistories;
+  // final List<dynamic>? spaceRentInterestHistories;
 
   SpaceRent({
     required this.id,
@@ -73,7 +73,7 @@ class SpaceRent {
     required this.createdAt,
     required this.updatedAt,
     required this.rentHistories,
-    required this.spaceRentInterestHistories,
+    // required this.spaceRentInterestHistories,
   });
 
   factory SpaceRent.fromJson(Map<String, dynamic> json) => SpaceRent(
@@ -88,7 +88,7 @@ class SpaceRent {
       amount: json['amount'],
       paymentCount: json['payment_count'],
       completed: json['completed'],
-      spaceRentInterest: json['spaceRentInterest'],
+      spaceRentInterest: json['spaceRentInterest'] ?? 0,
       intervalAmount: json['interval_amount'],
       paidAmount: json['paid_amount'],
       paymentStatus: json['payment_status'],
@@ -96,7 +96,8 @@ class SpaceRent {
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       rentHistories: json["rentHistories"],
-      spaceRentInterestHistories: json["spaceRentInterestHistories"]);
+      // spaceRentInterestHistories: json["spaceRentInterestHistories"] ?? '',
+      );
 
   Map<String, dynamic> toJson() => {
         '_id': id,
@@ -118,6 +119,6 @@ class SpaceRent {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'rentHistories': rentHistories,
-        'spaceRentInterestHistories': spaceRentInterestHistories
+        // 'spaceRentInterestHistories': spaceRentInterestHistories
       };
 }

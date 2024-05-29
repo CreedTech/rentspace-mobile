@@ -7,6 +7,7 @@ const register = "/register";
 /// Home Path
 const rentList = "/rentList";
 
+const transactionDetails = '/details';
 const airtime = "/airtime";
 const dataBundle = "/dataBundle";
 const electricity = "/electricity";

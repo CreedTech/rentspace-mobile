@@ -710,72 +710,85 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     .rentHistories[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    Get.to(
-                                      (history['transactionGroup']
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              'transfer')
-                                          ? TransactionReceiptTransfer(
-                                              amount: history['amount'],
-                                              status: history['status'],
-                                              fees: history['fees'] ?? 0,
-                                              transactionType:
-                                                  history['transactionType'],
-                                              description:
-                                                  history['description'],
-                                              transactionGroup:
-                                                  history['transactionGroup'],
-                                              transactionDate:
-                                                  history['createdAt'],
-                                              transactionRef: history[
-                                                      'transactionReference'] ??
-                                                  '',
-                                              merchantRef:
-                                                  history['merchantReference'],
-                                              // sessionId: history['sessionId'] ?? '',
-                                            )
-                                          : (history['transactionGroup']
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  'static-account-transfer')
-                                              ? TransactionReceiptDVA(
-                                                  amount: history['amount'],
-                                                  status: history['status'],
-                                                  fees: history['fees'] ?? 0,
-                                                  transactionType: history[
-                                                      'transactionType'],
-                                                  description:
-                                                      history['description'],
-                                                  transactionGroup: history[
-                                                      'transactionGroup'],
-                                                  transactionDate:
-                                                      history['createdAt'],
-                                                  transactionRef: history[
-                                                          'transactionReference'] ??
-                                                      '',
-                                                  merchantRef: history[
-                                                      'merchantReference'],
-                                                  remarks: history['remarks'],
-                                                )
-                                              : TransactionReceipt(
-                                                  amount: history['amount'],
-                                                  status: history['status'],
-                                                  fees: history['fees'] ?? 0,
-                                                  transactionType: history[
-                                                      'transactionType'],
-                                                  description:
-                                                      history['description'],
-                                                  transactionGroup: history[
-                                                      'transactionGroup'],
-                                                  transactionDate:
-                                                      history['createdAt'],
-                                                  transactionRef: history[
-                                                          'transactionReference'] ??
-                                                      '',
-                                                  merchantRef: history[
-                                                      'merchantReference'],
-                                                ),
+                                    print('index');
+                                    print(history);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TransactionReceipt(),
+                                        settings: RouteSettings(
+                                          arguments: history,
+                                        ),
+                                      ),
                                     );
+
+                                    // Get.to(
+                                    //   (history['transactionGroup']
+                                    //               .toString()
+                                    //               .toLowerCase() ==
+                                    //           'transfer')
+                                    //       ? TransactionReceiptTransfer(
+                                    //           amount: history['amount'],
+                                    //           status: history['status'],
+                                    //           fees: history['fees'] ?? 0,
+                                    //           transactionType:
+                                    //               history['transactionType'],
+                                    //           description:
+                                    //               history['description'],
+                                    //           transactionGroup:
+                                    //               history['transactionGroup'],
+                                    //           transactionDate:
+                                    //               history['createdAt'],
+                                    //           transactionRef: history[
+                                    //                   'transactionReference'] ??
+                                    //               '',
+                                    //           merchantRef:
+                                    //               history['merchantReference'],
+                                    //           // sessionId: history['sessionId'] ?? '',
+                                    //         )
+                                    //       : (history['transactionGroup']
+                                    //                   .toString()
+                                    //                   .toLowerCase() ==
+                                    //               'static-account-transfer')
+                                    //           ? TransactionReceiptDVA(
+                                    //               amount: history['amount'],
+                                    //               status: history['status'],
+                                    //               fees: history['fees'] ?? 0,
+                                    //               transactionType: history[
+                                    //                   'transactionType'],
+                                    //               description:
+                                    //                   history['description'],
+                                    //               transactionGroup: history[
+                                    //                   'transactionGroup'],
+                                    //               transactionDate:
+                                    //                   history['createdAt'],
+                                    //               transactionRef: history[
+                                    //                       'transactionReference'] ??
+                                    //                   '',
+                                    //               merchantRef: history[
+                                    //                   'merchantReference'],
+                                    //               remarks: history['remarks'],
+                                    //             )
+                                    //           : TransactionReceipt(
+                                    //               amount: history['amount'],
+                                    //               status: history['status'],
+                                    //               fees: history['fees'] ?? 0,
+                                    //               transactionType: history[
+                                    //                   'transactionType'],
+                                    //               description:
+                                    //                   history['description'],
+                                    //               transactionGroup: history[
+                                    //                   'transactionGroup'],
+                                    //               transactionDate:
+                                    //                   history['createdAt'],
+                                    //               transactionRef: history[
+                                    //                       'transactionReference'] ??
+                                    //                   '',
+                                    //               merchantRef: history[
+                                    //                   'merchantReference'],
+                                    //             ),
+                                    // );
                                   },
                                   child: Column(
                                     children: [

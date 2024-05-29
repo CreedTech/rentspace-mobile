@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/FirstPage.dart';
-import 'package:rentspace/view/dashboard/dashboard.dart';
-import 'package:rentspace/view/loan/loan_page.dart';
 
 import '../../constants/colors.dart';
+import '../FirstPage.dart';
 
-class SuccessFulScreen extends StatefulWidget {
-  const SuccessFulScreen(
-      {super.key,
-      required this.image,
-      required this.name,
-      required this.category,
-      required this.amount,
-      required this.billerId,
-      required this.number,
-      required this.date,
-      this.token});
-  final String image, category, amount, billerId, number, date, name;
-  final String? token;
+class WithdrawalSuccessfulScreen extends StatefulWidget {
+  const WithdrawalSuccessfulScreen({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.category,
+    required this.amount,
+    required this.bank,
+    required this.number,
+    required this.date,
+  });
+  final String image, category, amount, bank, number, date, name;
 
   @override
-  State<SuccessFulScreen> createState() => _SuccessFulScreenState();
+  State<WithdrawalSuccessfulScreen> createState() =>
+      _WithdrawalSuccessfulScreenState();
 }
 
-class _SuccessFulScreenState extends State<SuccessFulScreen> {
+class _WithdrawalSuccessfulScreenState
+    extends State<WithdrawalSuccessfulScreen> {
   var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
   @override
   Widget build(BuildContext context) {
@@ -72,7 +68,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         backgroundColor: Colors.transparent, //
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/utility/${widget.image.toLowerCase()}.jpg',
+                            'assets/icons/${widget.image.toLowerCase()}.png',
                             height: 50,
                           ),
                         ),
@@ -80,7 +76,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 6, bottom: 6.h),
                         child: Text(
-                          widget.category.capitalize!,
+                          widget.name.capitalize!,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             fontSize: 20,
@@ -104,7 +100,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 13.h),
                         child: Text(
-                          widget.name,
+                          widget.bank.toUpperCase(),
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             fontSize: 14,
@@ -182,7 +178,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 height: 13.h,
                               ),
                               Text(
-                                'Congrats! Your ${widget.category} recharge was successful.',
+                                'Congrats! Your ${widget.category} has been completed successfully.',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
@@ -193,90 +189,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                             ],
                           ),
                         ),
-                        (widget.token != '')
-                            ? Column(
-                                children: [
-                                  Text(
-                                    'Token:',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: colorDark,
-                                    ),
-                                  ),
-                                  Wrap(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        // alignment: WrapAlignment.center,
-                                        // runAlignment: WrapAlignment.center,
-                                        // crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: [
-                                          Text(
-                                            widget.token!.removeAllWhitespace,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.lato(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: colorDark,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 14,
-                                          ),
-                                          Row(
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Clipboard.setData(
-                                                    ClipboardData(
-                                                      text: widget.token!
-                                                          .removeAllWhitespace,
-                                                    ),
-                                                  );
-                                                  Fluttertoast.showToast(
-                                                    msg: "Copied to clipboard!",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity:
-                                                        ToastGravity.SNACKBAR,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: brandOne,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0,
-                                                  );
-                                                },
-                                                child: Image.asset(
-                                                  'assets/icons/copy_icon.png',
-                                                  width: 24,
-                                                  height: 24,
-                                                  color: colorBlack,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              Text(
-                                                'Copy',
-                                                style: GoogleFonts.lato(
-                                                  color: brandTwo,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
+
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Row(

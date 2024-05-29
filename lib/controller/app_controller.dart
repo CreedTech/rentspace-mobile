@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/constants/widgets/custom_loader.dart';
@@ -19,6 +20,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../constants/colors.dart';
 import '../repo/app_repository.dart';
+import '../view/actions/fund_wallet.dart';
 import '../view/savings/spaceRent/spacerent_success_page.dart';
 import 'wallet_controller.dart';
 
@@ -84,167 +86,136 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
 
         // //print('response.message');
         // //print(response.message);
-        // var rentspaceId = response.message;
+        var rentspaceId = response.message;
         // await GlobalService.
         // //print(response.message);
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: Colors.green,
-            message: 'Space Rent Created Successfully!!',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-        Get.to(
-          SpaceRentSuccessPage(
-              rentValue: amount,
-              savingsValue: intervalAmount,
-              startDate: date,
-              durationType: interval,
-              paymentCount: paymentCount,
-              rentName: rentName,
-              duration: duration,
-              receivalDate: dueDate),
-        );
-        // if (walletController.walletModel!.wallet![0].mainBalance <
-        //     intervalAmount) {
-        //   Get.back();
-        //   showDialog(
-        //       context: context,
-        //       barrierDismissible: true,
-        //       builder: (BuildContext context) {
-        //         return Column(
-        //           mainAxisAlignment: MainAxisAlignment.end,
-        //           children: [
-        //             AlertDialog(
-        //               contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
-        //               elevation: 0,
-        //               alignment: Alignment.bottomCenter,
-        //               insetPadding: const EdgeInsets.all(0),
-        //               scrollable: true,
-        //               title: null,
-        //               shape: const RoundedRectangleBorder(
-        //                 borderRadius: BorderRadius.only(
-        //                   topLeft: Radius.circular(30),
-        //                   topRight: Radius.circular(30),
-        //                 ),
-        //               ),
-        //               content: SizedBox(
-        //                 child: SizedBox(
-        //                   width: MediaQuery.of(context).size.width,
-        //                   child: Column(
-        //                     children: [
-        //                       Padding(
-        //                         padding:
-        //                             const EdgeInsets.symmetric(vertical: 40),
-        //                         child: Column(
-        //                           children: [
-        //                             Padding(
-        //                               padding: const EdgeInsets.symmetric(
-        //                                   vertical: 15),
-        //                               child: Align(
-        //                                 alignment: Alignment.topCenter,
-        //                                 child: Text(
-        //                                   'Insufficient fund. You need to fund your wallet to perform this transaction.',
-        //                                   textAlign: TextAlign.center,
-        //                                   style: GoogleFonts.lato(
-        //                                     color: brandOne,
-        //                                     fontSize: 16,
-        //                                     fontWeight: FontWeight.w600,
-        //                                   ),
-        //                                 ),
-        //                               ),
-        //                             ),
-        //                             Padding(
-        //                               padding: const EdgeInsets.symmetric(
-        //                                   vertical: 10),
-        //                               child: Column(
-        //                                 children: [
-        //                                   Padding(
-        //                                     padding: const EdgeInsets.all(3),
-        //                                     child: ElevatedButton(
-        //                                       onPressed: () {
-        //                                         FocusScope.of(context)
-        //                                             .unfocus();
-        //                                         Get.back();
-        //                                         Get.to(const FundWallet());
-        //                                       },
-        //                                       style: ElevatedButton.styleFrom(
-        //                                         backgroundColor:
-        //                                             Theme.of(context)
-        //                                                 .colorScheme
-        //                                                 .secondary,
-        //                                         shape: RoundedRectangleBorder(
-        //                                           borderRadius:
-        //                                               BorderRadius.circular(8),
-        //                                         ),
-        //                                         padding:
-        //                                             const EdgeInsets.symmetric(
-        //                                                 horizontal: 60,
-        //                                                 vertical: 15),
-        //                                         textStyle: const TextStyle(
-        //                                             color: brandFour,
-        //                                             fontSize: 13),
-        //                                       ),
-        //                                       child: const Text(
-        //                                         "Fund Wallet",
-        //                                         style: TextStyle(
-        //                                           color: Colors.white,
-        //                                           fontWeight: FontWeight.w700,
-        //                                           fontSize: 16,
-        //                                         ),
-        //                                       ),
-        //                                     ),
-        //                                   ),
-        //                                   const SizedBox(
-        //                                     height: 10,
-        //                                   ),
-        //                                 ],
-        //                               ),
-        //                             ),
-        //                           ],
-        //                         ),
-        //                       ),
-        //                     ],
-        //                   ),
-        //                 ),
-        //               ),
-        //             )
-        //           ],
-        //         );
-        //       });
-        // } else {
-        //   //print(response.message);
-        //   showTopSnackBar(
-        //     Overlay.of(context),
-        //     CustomSnackBar.success(
-        //       backgroundColor: Colors.green,
-        //       message: 'Space Rent Created Successfully!!',
-        //       textStyle: GoogleFonts.lato(
-        //         fontSize: 14,
-        //         color: Colors.white,
-        //         fontWeight: FontWeight.w700,
-        //       ),
-        //     ),
-        //   );
-        //   Get.to(const RentSpaceList());
-        //   // walletDebit(
-        //   //     context, intervalAmount, amount, rentspaceId, date, interval);
-        // }
-        // if (paymentType == "Debit Card") {
-        //   Get.to(
-        //     SpaceRentFunding(
-        //       amount: intervalAmount,
-        //       interval: interval,
-        //     ),
-        //   );
-        // } else {
-
-        // }
+        if (date == DateFormat('dd/MM/yyyy').format(DateTime.now())) {
+          if (walletController.walletModel!.wallet![0].mainBalance <
+              intervalAmount) {
+            Get.back();
+            showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    title: null,
+                    scrollable: true,
+                    elevation: 0,
+                    content: SizedBox(
+                      // height: 220.h,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 0),
+                        child: Column(
+                          children: [
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.info_outline_rounded,
+                                  color: colorBlack,
+                                  size: 24,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  'Insufficient fund.',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 14,
+                            ),
+                            Text(
+                              'You need to fund your wallet to perform this transaction.',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                color: colorBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 29,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width - 50,
+                                      50),
+                                  backgroundColor: brandTwo,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Get.to(FundWallet());
+                                },
+                                child: Text(
+                                  'Ok',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          } else {
+            await walletDebit(context, intervalAmount, amount, rentspaceId,
+                    date, interval)
+                .then(
+              (value) => Get.to(
+                SpaceRentSuccessPage(
+                    rentValue: amount,
+                    savingsValue: intervalAmount,
+                    startDate: date,
+                    durationType: interval,
+                    paymentCount: paymentCount,
+                    rentName: rentName,
+                    duration: duration,
+                    receivalDate: dueDate),
+              ),
+            );
+          }
+        } else {
+          Get.to(
+            SpaceRentSuccessPage(
+                rentValue: amount,
+                savingsValue: intervalAmount,
+                startDate: date,
+                durationType: interval,
+                paymentCount: paymentCount,
+                rentName: rentName,
+                duration: duration,
+                receivalDate: dueDate),
+          );
+        }
 
         return;
       } else {
@@ -329,22 +300,22 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       // //print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
-        Get.back();
-        Get.back();
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: Colors.green,
-            message: 'Space Rent Creation Successful',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
         // Get.back();
-        Get.to(const RentSpaceList());
+        // Get.back();
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.success(
+        //     backgroundColor: Colors.green,
+        //     message: 'Space Rent Creation Successful',
+        //     textStyle: GoogleFonts.lato(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w700,
+        //     ),
+        //   ),
+        // );
+        // // Get.back();
+        // Get.to(const RentSpaceList());
         // calculateNextPaymentDate(context, date, interval);
         // Get.to(const RentSpaceList());
 
@@ -393,7 +364,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         // //print('response again');
         // //print(response.success);
         // //print(response.message);
-        message = "Something went wrong";
+        message = "Something went wrong during spacerent payment";
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -403,7 +374,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       // //print(e);
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
+      message = "Ooops something went wrong during space rent payment";
       customErrorDialog(context, 'Error', message);
 
       return;

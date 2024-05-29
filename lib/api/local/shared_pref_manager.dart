@@ -119,37 +119,5 @@ class SharedPreferencesManager {
     // Call your update PIN endpoint here
   }
 
-  // Future<bool> saveUserDetails(UserProfileDetailsResponse userDetails) async {
-  //   try {
-  //     String userDetailsJson = jsonEncode(userDetails.toJson());
-  //     _prefs.setString(USER_DETAILS, userDetailsJson);
-  //     print('printing ------');
-  //     print(USER_DETAILS);
-  //     getUserDetails();
-  //     return true;
-  //   } catch (e) {
-  //     print('Error saving user details: $e');
-  //     return false;
-  //   }
-  // }
 
-  // Future<UserProfileDetailsResponse> getUserDetails() async {
-  //   try {
-  //     String userDetailsString = _prefs.getString(USER_DETAILS) ?? '';
-
-  //     if (userDetailsString.isNotEmpty) {
-  //       Map<String, dynamic> userDetailsMap = json.decode(userDetailsString);
-  //       print('userDetailsMap');
-  //       print(userDetailsMap);
-  //       return UserProfileDetailsResponse.fromJson(userDetailsMap);
-  //     } else {
-  //       // Return a default or empty UserProfileDetailsResponse when no data is found
-  //       return UserProfileDetailsResponse(msg: '', userDetails: []);
-  //     }
-  //   } catch (e) {
-  //     print('Error getting user details: $e');
-
-  //     return UserProfileDetailsResponse(msg: '', userDetails: []);
-  //   }
-  // }
 }

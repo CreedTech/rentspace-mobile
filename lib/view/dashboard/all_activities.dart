@@ -225,6 +225,47 @@ class _AllActivitiesState extends State<AllActivities> {
                                                           .symmetric(
                                                           horizontal: 0),
                                                   minLeadingWidth: 0,
+                                                  onTap: () {
+                                                    print('item');
+                                                    print(item);
+                                                    // print(userController
+                                                    //     .userModel!
+                                                    //     .userDetails![0]
+                                                    //     .walletHistories[item]);
+                                                       Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const TransactionReceipt(),
+                                                        settings: RouteSettings(
+                                                            arguments:item,
+
+                                                        ),
+                                                      ),
+                                                    );
+
+                                                    // Get.to(TransactionReceipt(
+                                                    //   amount: item['amount'],
+                                                    //   status: item['status'],
+                                                    //   fees: item['fees'] ?? 0,
+                                                    //   transactionType: item[
+                                                    //       'transactionType'],
+                                                    //   description:
+                                                    //       item['description'] ??
+                                                    //           '',
+                                                    //   transactionGroup: item[
+                                                    //       'transactionGroup'],
+                                                    //   transactionDate:
+                                                    //       item['createdAt'],
+                                                    //   transactionRef: item[
+                                                    //           'transactionReference'] ??
+                                                    //       '',
+                                                    //   merchantRef: item[
+                                                    //           'merchantReference'] ??
+                                                    //       '',
+                                                    //   // sessionId: item['sessionId'] ?? '',
+                                                    // ));
+                                                  },
                                                   leading: Container(
                                                     padding:
                                                         const EdgeInsets.all(
@@ -261,7 +302,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "${item['description']} ",
+                                                        "${item['description'] ?? item['message']  ?? 'No Description Found'} ",
                                                         maxLines: 2,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -328,55 +369,6 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                     colorBlack,
                                                               ),
                                                             ),
-                                                      // (item['status']
-                                                      //             .toString()
-                                                      //             .toLowerCase() ==
-                                                      //         'completed')
-                                                      //     ? Text(
-                                                      //         'Successful',
-                                                      //         style: GoogleFonts
-                                                      //             .lato(
-                                                      //           fontSize: 10,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .w500,
-                                                      //           color: Colors
-                                                      //               .green,
-                                                      //         ),
-                                                      //       )
-                                                      //     : (item['status']
-                                                      //                 .toString()
-                                                      //                 .toLowerCase() ==
-                                                      //             'failed')
-                                                      //         ? Text(
-                                                      //             'Failed',
-                                                      //             style:
-                                                      //                 GoogleFonts
-                                                      //                     .lato(
-                                                      //               fontSize:
-                                                      //                   10,
-                                                      //               fontWeight:
-                                                      //                   FontWeight
-                                                      //                       .w500,
-                                                      //               color: Colors
-                                                      //                   .red,
-                                                      //             ),
-                                                      //           )
-                                                      //         : Text(
-                                                      //             'Pending',
-                                                      //             style:
-                                                      //                 GoogleFonts
-                                                      //                     .lato(
-                                                      //               fontSize:
-                                                      //                   10,
-                                                      //               fontWeight:
-                                                      //                   FontWeight
-                                                      //                       .w500,
-                                                      //               color: Colors
-                                                      //                       .yellow[
-                                                      //                   800],
-                                                      //             ),
-                                                      //           )
                                                     ],
                                                   ),
                                                 ),
@@ -394,6 +386,9 @@ class _AllActivitiesState extends State<AllActivities> {
                                           .reversed,
                                     ],
                                   ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
                               ]);
                         }).toList(),

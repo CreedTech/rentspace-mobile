@@ -15,6 +15,7 @@ import '../../constants/widgets/custom_loader.dart';
 import '../../controller/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet_controller.dart';
+import '../sucess/withdrawal_success_screen.dart';
 
 class TransferConfirmationPage extends ConsumerStatefulWidget {
   const TransferConfirmationPage(
@@ -70,7 +71,7 @@ class _TransferConfirmationPageState
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    // fetchUserData();
   }
 
   @override
@@ -137,7 +138,7 @@ class _TransferConfirmationPageState
                   SizedBox(
                     width: 280.w,
                     child: Text(
-                      'Confirm the following details to complete your transaction.',
+                      'Confirm the following details to complete your withdrawal.',
                       style: GoogleFonts.lato(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -303,6 +304,7 @@ class _TransferConfirmationPageState
                       ),
                     ),
                     onPressed: () async {
+                      _aPinController.clear();
                       showModalBottomSheet(
                           context: context,
                           backgroundColor: const Color(0xffF6F6F8),
@@ -497,36 +499,66 @@ class _TransferConfirmationPageState
                                                       .wallet
                                                       .pin,
                                                 )) {
+                                                  print(widget.accountName);
+                                                  print(widget.amount);
+                                                  print(widget.narration);
+                                                  print(userController
+                                                      .userModel!
+                                                      .userDetails![0]
+                                                      .dvaName);
+                                                  print(widget.accountNumber);
+                                                  print(widget.bankCode);
+                                                  print(_aPinController.text
+                                                      .trim());
                                                   await fetchUserData()
                                                       .then((value) {
-                                                    appState.transferMoney(
-                                                        context,
-                                                        widget.bankCode,
-                                                        double.parse(widget
-                                                            .amount
-                                                            .trim()
-                                                            .replaceAll(
-                                                                ',', '')),
-                                                        widget.accountNumber
-                                                            .toString(),
-                                                        _aPinController.text
-                                                            .trim()
-                                                            .toString(),
-                                                        widget.accountName,
-                                                        widget.bankName);
+                                                    // Get.to(
+                                                    //   WithdrawalSuccessfulScreen(
+                                                    //     name:
+                                                    //         widget.accountName,
+                                                    //     image: 'bank_icon',
+                                                    //     category: 'withdrawal',
+                                                    //     amount:
+                                                    //         widget.amount,
+                                                    //     bank: widget.bankName,
+                                                    //     number:
+                                                    //         widget.accountNumber,
+                                                    //     date: DateTime.now()
+                                                    //         .toString(),
+                                                    //   ),
+                                                    // );
+                                                    walletController
+                                                        .walletWithdrawal(
+                                                            context,
+                                                            widget.accountName,
+                                                            widget.amount,
+                                                            widget.narration,
+                                                            userController
+                                                                .userModel!
+                                                                .userDetails![0]
+                                                                .dvaName,
+                                                            widget
+                                                                .accountNumber,
+                                                            widget.bankCode,
+                                                            _aPinController.text
+                                                                .trim(),
+                                                            widget.bankName);
+                                                    _aPinController.clear();
+                                                    // Get.back();
                                                   }).catchError(
                                                     (error) {
                                                       setState(() {
                                                         isFilled = false;
                                                       });
+
                                                       customErrorDialog(
                                                           context,
                                                           'Oops',
                                                           'Something went wrong. Try again later');
+                                                      _aPinController.clear();
                                                     },
                                                   );
                                                 } else {
-                                                  _aPinController.clear();
                                                   if (context.mounted) {
                                                     setState(() {
                                                       isFilled = false;
@@ -535,6 +567,7 @@ class _TransferConfirmationPageState
                                                         context,
                                                         "Invalid Transaction Pin!",
                                                         'Please confirm your transaction pin.');
+                                                    _aPinController.clear();
                                                   }
                                                 }
                                               },
@@ -608,7 +641,7 @@ class _TransferConfirmationPageState
                           });
                     },
                     child: Text(
-                      'Send Money',
+                      'Withdraw',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                         color: Colors.white,

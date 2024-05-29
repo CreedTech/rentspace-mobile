@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/actions/referral_record.dart';
+import 'package:rentspace/view/actions/transaction_receipt.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/utility/airtime.dart';
@@ -29,6 +30,11 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const SignupPage(),
           settings: const RouteSettings(name: register),
+        );
+      case transactionDetails:
+        return MaterialPageRoute(
+          builder: (context) => const TransactionReceipt(),
+          settings: const RouteSettings(name: transactionDetails),
         );
       // case phone_number_otp:
       //   return MaterialPageRoute(

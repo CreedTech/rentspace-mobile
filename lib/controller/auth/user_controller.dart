@@ -11,6 +11,7 @@ import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:rentspace/view/dashboard/withdraw_continuation_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
@@ -151,6 +152,7 @@ class UserController extends GetxController {
 
   fetchData() async {
     isLoading(true);
+    print('fetching');
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
@@ -166,25 +168,25 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // // print(result);
+        // print(result);
 
         userModel = UserModel.fromJson(result);
         isLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
+        print('error auth');
         multipleLoginRedirectModal();
       } else {
         // // print(response.body);
-        // print('error fetching data');
+        print('error fetching data ${response.body}');
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      // print('Error while getting data is $e');
+      print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      // print('Error while getting data is $e');
+      print('Error while getting data is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);
@@ -330,7 +332,112 @@ class UserController extends GetxController {
       // print('error fetching details');
 
       // print(
-          // 'Request failed with status: ${response.statusCode}, ${response.body}');
+      // 'Request failed with status: ${response.statusCode}, ${response.body}');
     }
   }
+
+  Future createWithdrawalAccount(BuildContext context, String bankCode,
+      String accountNumber, bankName, accountHolderName) async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    isLoadingRecentTransfers(true);
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    try {
+      final response = await http.post(
+        Uri.parse(AppConstants.BASE_URL +
+            AppConstants.PROVIDUS_CREATE_WITHDRAWAL_ACCOUNT),
+        headers: {
+          'Authorization': 'Bearer $authToken',
+          "Content-Type": "application/json"
+        },
+        body: json.encode(
+          {
+            "accountHolderName": accountHolderName,
+            "bankName": bankName,
+            "accountNumber": accountNumber,
+            "bankCode": bankCode
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print('fetched successfully');
+        // Request successful, handle the response data
+        // final Map<String, dynamic> jsonResponse = json.decode(response.body);
+        EasyLoading.dismiss();
+        isLoadingRecentTransfers(false);
+        Get.to(
+          WithdrawContinuationPage(
+            bankCode: bankCode,
+            accountNumber: accountNumber,
+            bankName: bankName,
+            accountHolderName: accountHolderName,
+          ),
+        );
+      } else if (response.body.contains('Invalid token') ||
+          response.body.contains('Invalid token or device')) {
+        EasyLoading.dismiss();
+        isLoadingRecentTransfers(false);
+        // print('error auth');
+        multipleLoginRedirectModal();
+      } else {
+        EasyLoading.dismiss();
+        isLoadingRecentTransfers(false);
+        var errorResponse = jsonDecode(response.body);
+        String errorMessage;
+        if (response.body.contains('error') ||
+            response.body.contains('message') ||
+            response.body.contains('errors')) {
+          // setState(() {
+          errorMessage = extractErrorMessage(errorResponse);
+          if (context.mounted) {
+            customErrorDialog(context, 'Error', errorMessage);
+          }
+          // });
+        }
+        // print('error fetching details');
+
+        // print(
+        // 'Request failed with status: ${response.statusCode}, ${response.body}');
+      }
+    } on TimeoutException {
+      EasyLoading.dismiss();
+      isLoadingRecentTransfers(false);
+      if (context.mounted) {
+        customErrorDialog(context, 'Error', 'Network Timeout');
+      }
+      throw http.Response('Network Timeout', 500);
+    } on http.ClientException catch (e) {
+      EasyLoading.dismiss();
+      isLoadingRecentTransfers(false);
+      // print('Error while getting data is $e');
+      throw http.Response('HTTP Client Exception: $e', 500);
+    } catch (e) {
+      EasyLoading.dismiss();
+      isLoadingRecentTransfers(false);
+      // print('Error while getting data activities is $e');
+      throw http.Response('Error: $e', 504);
+    } finally {
+      EasyLoading.dismiss();
+      isLoadingRecentTransfers(false);
+    }
+  }
+}
+
+String extractErrorMessage(Map<String, dynamic> response) {
+  if (response.containsKey('message')) {
+    return response['message'];
+  } else if (response.containsKey('error')) {
+    return response['error'];
+  } else if (response.containsKey('errors')) {
+    if (response['errors'] is List && response['errors'].isNotEmpty) {
+      return response['errors'][0]['error'] ?? 'Something went wrong';
+    }
+  }
+  return 'Something went wrong. Try Again Later.';
 }
