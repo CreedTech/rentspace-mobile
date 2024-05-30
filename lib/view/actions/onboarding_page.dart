@@ -155,7 +155,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
           onTap: () {
             Get.back();
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             size: 27,
             color: colorBlack,
@@ -245,7 +245,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.info_outline,
                                   size: 14,
                                   color: Color(0xff4E4B4B),

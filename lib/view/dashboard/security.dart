@@ -13,6 +13,7 @@ import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/change_password.dart';
 // import 'package:rentspace/view/actions/change_pin_intro.dart';
 import 'package:rentspace/view/actions/change_transaction_pin_otp_page.dart';
+import 'package:rentspace/view/dashboard/withdrawal_account.dart';
 // import 'package:rentspace/view/actions/forgot_pin_intro.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -313,10 +314,39 @@ class _SecurityState extends ConsumerState<Security> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            authState.forgotPin(context, userController.userModel!.userDetails![0].email);
+                            authState.forgotPin(
+                                context,
+                                userController
+                                    .userModel!.userDetails![0].email);
                           },
                           title: Text(
                             'Change Transaction Pin',
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: colorBlack,
+                            ),
+                          ),
+
+                          trailing: const Icon(
+                            Icons.keyboard_arrow_right,
+                            color: colorBlack,
+                            size: 20,
+                          ),
+                        ),
+                        const Divider(
+                          color: Color(0xffC9C9C9),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          minVerticalPadding: 0,
+                          // horizontalTitleGap: 0,
+                          minLeadingWidth: 0,
+                          onTap: () {
+                            Get.to(WithdrawalAccount());
+                          },
+                          title: Text(
+                            'Withdrawal Account',
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

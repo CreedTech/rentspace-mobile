@@ -89,6 +89,8 @@ class _HomePageState extends State<HomePage> {
   // }
 
   checkIsOpenedApp() {
+    print('storage opened');
+    print(openedAppStorage.read('hasOpenedApp'));
     if (openedAppStorage.read('hasOpenedApp') == null) {
       openedAppStorage.write('hasOpenedApp', false);
       if ((openedAppStorage.read('hasOpenedApp') == false)) {

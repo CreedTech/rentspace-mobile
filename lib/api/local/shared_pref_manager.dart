@@ -10,15 +10,15 @@ class SharedPreferencesManager {
     return this;
   }
 
-  Future<bool> isLoggedIn() async {
-    // final _prefs = await SharedPreferences.getInstance();
-    return _prefs.getBool(IS_LOGGED_IN) ?? false;
-  }
+  // Future<bool> isLoggedIn() async {
+  //   // final _prefs = await SharedPreferences.getInstance();
+  //   return _prefs.getBool(IS_LOGGED_IN) ?? false;
+  // }
 
-  Future<bool> setLoggedIn({required bool value}) async {
-    // final _prefs = await SharedPreferences.getInstance();
-    return _prefs.setBool(IS_LOGGED_IN, value);
-  }
+  // Future<bool> setLoggedIn({required bool value}) async {
+  //   // final _prefs = await SharedPreferences.getInstance();
+  //   return _prefs.setBool(IS_LOGGED_IN, value);
+  // }
 
   // Future<String> getPin() async {
   //   // final _prefs = await SharedPreferences.getInstance();
@@ -73,6 +73,7 @@ class SharedPreferencesManager {
     // final prefs = await SharedPreferences.getInstance();
     _prefs.remove('device_type');
     _prefs.remove('device_model');
+    _prefs.remove('fcm_token');
   }
 
   // Function to save login credentials and remember me status to shared preferences
@@ -101,23 +102,23 @@ class SharedPreferencesManager {
     return _prefs.getString('fcm_token') ?? '';
   }
 
-  Future<void> savePin(String newPin) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('pin', newPin);
-    // pin = newPin;
-  }
+  // Future<void> savePin(String newPin) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('pin', newPin);
+  //   // pin = newPin;
+  // }
 
-  // Function to retrieve the user's PIN
-  Future getPin() async {
-    // final prefs = await SharedPreferences.getInstance();
-    return _prefs.getString('pin');
-  }
+  // // Function to retrieve the user's PIN
+  // Future getPin() async {
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   return _prefs.getString('pin');
+  // }
 
-  // Function to update the user's PIN
-  Future<void> updatePin(String newPin) async {
-    await savePin(newPin);
-    // Call your update PIN endpoint here
-  }
+  // // Function to update the user's PIN
+  // Future<void> updatePin(String newPin) async {
+  //   await savePin(newPin);
+  //   // Call your update PIN endpoint here
+  // }
 
 
 }

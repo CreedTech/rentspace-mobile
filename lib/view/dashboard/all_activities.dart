@@ -224,8 +224,8 @@ class _AllActivitiesState extends State<AllActivities> {
                                                           horizontal: 0),
                                                   minLeadingWidth: 0,
                                                   onTap: () {
-                                                    print('item');
-                                                    print(item);
+                                                    // print('item');
+                                                    // print(item);
                                                     // print(userController
                                                     //     .userModel!
                                                     //     .userDetails![0]

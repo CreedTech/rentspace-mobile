@@ -109,7 +109,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       daysInSixMonths += _daysInMonth(_endDate.month + i, _endDate.year);
     }
     print('here');
-    print(daysInSixMonths);
+    // print(daysInSixMonths);
     // print('daysInSixMonths');
     // print(_daysInMonth(today.month + 6, today.year));
     return daysInSixMonths;
@@ -148,17 +148,17 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     final endYear = endDate.year;
     final endMonth = endDate.month;
 
-    print(startDate);
-    print(duration);
-    print('======');
-    print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
+    // print(startDate);
+    // print(duration);
+    // print('======');
+    // print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
 
     final monthsDifference =
         ((endYear - startYear) * 12) + (endMonth - startMonth);
-    print('here======');
-    print(endDate);
-    print(endDate.difference(startDate).inDays);
-    // print('monthsDifference: $monthsDifference');
+    // print('here======');
+    // print(endDate);
+    // print(endDate.difference(startDate).inDays);
+    // // print('monthsDifference: $monthsDifference');
 
     return monthsDifference.abs();
   }
@@ -176,20 +176,20 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   }
 
   int _calculateWeeksDifferences(DateTime startDate, int duration) {
-    print(startDate);
-    print(duration);
-    print('======');
-    print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
-    //     _calculateDaysInSixMonths(startDate, duration);
+    // print(startDate);
+    // print(duration);
+    // print('======');
+    // print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
+    // //     _calculateDaysInSixMonths(startDate, duration);
     // DateTime endDate = startDate
     //     .add(Duration(days: _calculateDaysInSixMonths(startDate, _duration)));
     DateTime endDate =
         Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime;
 
     receivalDate = endDate;
-    print('here======');
-    print(endDate);
-    print(endDate.difference(startDate).inDays ~/ 7);
+    // print('here======');
+    // print(endDate);
+    // print(endDate.difference(startDate).inDays ~/ 7);
     return endDate.difference(startDate).inDays ~/ 7;
   }
 
@@ -383,7 +383,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
     // print('6 months from today is: $sixMonthsLater');
     int daysInSixMonths = _calculateDaysInSixMonths(_endDate, _duration);
-    print(daysInSixMonths);
+    // print(daysInSixMonths);
     int daysInEightMonths = _calculateDaysInEightMonths(today);
 
     // DateTime sixMonthsLater = today.add(Duration(days: daysInSixMonths));
@@ -453,13 +453,13 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
           _savingValue =
               ((rent) / _calculateWeeksDifferences(_endDate, _duration));
-          print("_endDate");
-          print(_endDate);
-          print(_duration);
-          print(_savingValue);
+          // print("_endDate");
+          // print(_endDate);
+          // print(_duration);
+          // print(_savingValue);
           int weeksDifference = _calculateWeeksDifferences(_endDate, _duration);
 
-          print("Number of weeks after $_duration months: $weeksDifference");
+          // print("Number of weeks after $_duration months: $weeksDifference");
         } else {
           paymentCount =
               _calculateMonthsDifference(_endDate, _duration).toString();
@@ -467,9 +467,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
               ((rent) / _calculateMonthsDifference(_endDate, _duration));
           int monthsDifference =
               _calculateMonthsDifference(_endDate, _duration);
-          print("Number of months after $_duration months: $monthsDifference");
+          // print("Number of months after $_duration months: $monthsDifference");
           int daysInSixMonths = _calculateDaysInSixMonths(_endDate, _duration);
-          print(daysInSixMonths);
+          // print(daysInSixMonths);
         }
         _dailyValue = ((rent) / _calculateDaysDifference());
       });

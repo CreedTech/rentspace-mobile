@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -61,32 +63,42 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          'Contact Us',
-          style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF6F6F8),
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorBlack,
+              ),
+            ),
+            SizedBox(
+              width: 4.h,
+            ),
+            Text(
+              'Contact Us',
+              style: GoogleFonts.lato(
+                color: colorBlack,
+                fontWeight: FontWeight.w500,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
       ),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
             child: ListView(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
@@ -99,18 +111,12 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      child: Text(
-                        "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
-                        style: GoogleFonts.lato(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          // fontFamily: "DefaultFontFamily",
-                          // letterSpacing: 1.0,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                    Text(
+                      "Hey there, need a hand or have something exciting to share? We'd love to hear from you! Get in touch and let's make finance fun together!",
+                      style: GoogleFonts.lato(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: colorBlack,
                       ),
                     ),
                     Column(
@@ -224,13 +230,22 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         // ),
 
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Container(
-                            width: 350,
+                            // width: 450,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: brandTwo.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(15),
+                              color: colorWhite,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey
+                                      .withOpacity(0.1), // Shadow color
+                                  spreadRadius: 0.5, // Spread radius
+                                  blurRadius: 2, // Blur radius
+                                  offset: const Offset(0, 3), // Offset
+                                ),
+                              ],
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -241,95 +256,83 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                   Text(
                                     "Email address",
                                     style: GoogleFonts.lato(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
+                                      color: colorBlack,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).canvasColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              launchEmail(
-                                                context,
-                                                toEmail:
-                                                    'support@rentspace.tech',
-                                                subject: 'Help & support',
-                                                message:
-                                                    'Hi, could you assist me with..... in the RentSpace app?\nThanks.',
-                                              );
-                                            },
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              child: Text(
-                                                'support@rentspace.tech',
-                                                style: GoogleFonts.lato(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            launchEmail(
+                                              context,
+                                              toEmail: 'support@rentspace.tech',
+                                              subject: 'Help & support',
+                                              message:
+                                                  'Hi, could you assist me with..... in the RentSpace app?\nThanks.',
+                                            );
+                                          },
+                                          child: Text(
+                                            'support@rentspace.tech'
+                                                .capitalize!,
+                                            style: GoogleFonts.lato(
+                                              color: colorBlack,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              FlutterClipboard.copy(
-                                                      'support@rentspace.tech')
-                                                  .then((result) {
+                                        ),
+                                        Wrap(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Clipboard.setData(
+                                                  const ClipboardData(
+                                                    text:
+                                                        'support@rentspace.tech',
+                                                  ),
+                                                );
                                                 Fluttertoast.showToast(
-                                                    msg: "Copied to clipboard!",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity:
-                                                        ToastGravity.BOTTOM,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: brandOne,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0);
-                                              });
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 10),
-                                                child: Text(
-                                                  'Copy',
-                                                  style: GoogleFonts.lato(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
+                                                  msg: "Copied to clipboard!",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity:
+                                                      ToastGravity.SNACKBAR,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: brandOne,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                );
+                                              },
+                                              child: Image.asset(
+                                                'assets/icons/copy_icon.png',
+                                                width: 24,
+                                                height: 24,
+                                                color: colorBlack,
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            Text(
+                                              'Copy',
+                                              style: GoogleFonts.lato(
+                                                color: brandTwo,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -350,7 +353,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                             child: Text(
                               'Follow Us on Social Media',
                               style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
+                                color: colorBlack,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -496,7 +499,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'RentSpace',
           style: TextStyle(
             color: brandOne,

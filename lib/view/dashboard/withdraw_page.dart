@@ -85,8 +85,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
           "beneficiaryBank": currentCode,
           "accountNumber": _accountNumberController.text.trim().toString()
         }));
-    print(currentCode);
-    print(currentCode);
+    // print(currentCode);
+    // print(currentCode);
 
     if (response.statusCode == 200) {
       // Request successful, handle the response data
@@ -624,7 +624,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                                           _onSearchChanged();
                                                           print(
                                                               "searchQuery here");
-                                                          print(searchQuery);
+                                                          // print(searchQuery);
                                                         },
                                                         // onChanged: (value) {
                                                         //   setState(() {
@@ -840,8 +840,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
-                                                                  print(
-                                                                      selectedBankName);
+                                                                  // print(
+                                                                  //     selectedBankName);
 
                                                                   setState(
                                                                       () {});

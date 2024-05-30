@@ -297,7 +297,14 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       setState(() {
                                         isFilled = true;
                                       });
-                                      authState.setNewPin(context, _pinOneController.text.trim(), _confirmPinController.text.trim());
+                                      if (changeTransactionPinFormKey
+                                          .currentState!
+                                          .validate()) {
+                                        authState.setNewPin(
+                                            context,
+                                            _pinOneController.text.trim(),
+                                            _confirmPinController.text.trim());
+                                      }
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -354,7 +361,10 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                           changeTransactionPinFormKey.currentState!
                               .validate()) {
                         FocusScope.of(context).unfocus();
-                        authState.setNewPin(context, _pinOneController.text.trim(), _confirmPinController.text.trim());
+                        authState.setNewPin(
+                            context,
+                            _pinOneController.text.trim(),
+                            _confirmPinController.text.trim());
                       }
                     },
                     child: const Text(

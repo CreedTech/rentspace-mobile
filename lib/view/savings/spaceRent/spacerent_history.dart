@@ -50,9 +50,9 @@ doSomeThing() {
   try {
     DateTime dateTime =
         DateTime.parse(dateString).add(const Duration(hours: 1));
-    print("Parsed DateTime: $dateTime");
+    // print("Parsed DateTime: $dateTime");
   } catch (e) {
-    print("Error parsing date: $e");
+    // print("Error parsing date: $e");
   }
 }
 
@@ -265,8 +265,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                           horizontal: 0),
                                                   minLeadingWidth: 0,
                                                   onTap: () {
-                                                    print('item');
-                                                    print(item);
+                                                    // print('item');
+                                                    // print(item);
                                                     // print(userController
                                                     //     .userModel!
                                                     //     .userDetails![0]

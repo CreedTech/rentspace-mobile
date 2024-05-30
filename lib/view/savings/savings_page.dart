@@ -64,7 +64,7 @@ class _SavingsPageState extends State<SavingsPage> {
   final WalletController walletController = Get.find();
 
   getSavings() {
-    print("rentController.rent");
+    // print("rentController.rent");
     // if (tankController.tank.isNotEmpty) {
     //   for (int i = 0; i < tankController.tank.length; i++) {
     //     tankBalance += tankController.tank[i].targetAmount.toInt();
@@ -143,7 +143,7 @@ class _SavingsPageState extends State<SavingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
+    // print(MediaQuery.of(context).size.width);
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(

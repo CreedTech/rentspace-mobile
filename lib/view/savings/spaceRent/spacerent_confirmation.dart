@@ -165,12 +165,12 @@ class _SpaceRentConfirmationPageState
     final formattedReceivalDate =
         DateFormat('dd/MM/yyyy').format(widget.receivalDate);
     final formattedCurrentDate = DateFormat('dd/MM/yyyy').format(currentDate);
-    print('formattedCurrentDate');
-    print(formattedCurrentDate);
-    print(widget.startDate);
-    print('width');
-    print(MediaQuery.of(context).size.height -
-        (MediaQuery.of(context).size.height / 3));
+    // print('formattedCurrentDate');
+    // print(formattedCurrentDate);
+    // print(widget.startDate);
+    // print('width');
+    // print(MediaQuery.of(context).size.height -
+    //     (MediaQuery.of(context).size.height / 3));
     return Scaffold(
       backgroundColor: brandOne,
       appBar: AppBar(

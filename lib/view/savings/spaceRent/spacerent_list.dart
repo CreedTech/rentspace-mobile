@@ -47,7 +47,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
   final RentController rentController = Get.find();
 
   getSavings() {
-    print("rentController.rent");
 
     if (rentController.rentModel!.rents!.isNotEmpty) {
       for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
@@ -64,7 +63,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
     setState(() {
       totalSavings = rentBalance;
     });
-    print(totalSavings);
+    // print(totalSavings);
   }
 
   @override
@@ -89,7 +88,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error fetching rent: $e');
+      // print('Error fetching rent: $e');
       // Handle error
     } finally {
       setState(() {

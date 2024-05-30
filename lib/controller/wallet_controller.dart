@@ -111,7 +111,7 @@ class WalletController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         // print('fetched successfully');
         // Request successful, handle the response data
         // final Map<String, dynamic> jsonResponse = json.decode(response.body);

@@ -262,29 +262,29 @@ class AuthRepository {
     }
   }
 
-  Future<ResponseModel> postFcmToken(body) async {
-    print('Got here in auth fcm token repo');
-    ResponseModel responseModel;
-    Response response =
-        await _apiClient.postData(AppConstants.FCM_TOKEN, jsonEncode(body));
-    print('response in repo');
-    // print(response);
+//   Future<ResponseModel> postFcmToken(body) async {
+//     print('Got here in auth fcm token repo');
+//     ResponseModel responseModel;
+//     Response response =
+//         await _apiClient.postData(AppConstants.FCM_TOKEN, jsonEncode(body));
+//     print('response in repo');
+//     // print(response);
 
-    if (response.statusCode == 200) {
-      String token = jsonDecode(response.body)['token'];
-      await GlobalService.sharedPreferencesManager.setAuthToken(value: token);
+//     if (response.statusCode == 200) {
+//       String token = jsonDecode(response.body)['token'];
+//       await GlobalService.sharedPreferencesManager.setAuthToken(value: token);
 
-      responseModel = ResponseModel('logged in', true);
-      _apiClient.updateHeaders(token);
-      return responseModel;
-    }
-    // print("Here in fcm repo${jsonDecode(response.body)}");
-    var error = jsonDecode(response.body)['errors'].toString();
+//       responseModel = ResponseModel('logged in', true);
+//       _apiClient.updateHeaders(token);
+//       return responseModel;
+//     }
+//     // print("Here in fcm repo${jsonDecode(response.body)}");
+//     var error = jsonDecode(response.body)['errors'].toString();
 
-//  Here in repo{error: User not verified, please verify your account}
-    //  print("Here in repo" + response.reasonPhrase.toString());
-    return responseModel = ResponseModel(error, false);
-  }
+// //  Here in repo{error: User not verified, please verify your account}
+//     //  print("Here in repo" + response.reasonPhrase.toString());
+//     return responseModel = ResponseModel(error, false);
+//   }
 
   Future<ResponseModel> forgotPassword(email) async {
     print('Got here in auth repo');
@@ -409,7 +409,7 @@ class AuthRepository {
       // responseModel = ResponseModel("Code sent to your email", true);
       // return responseModel;
       print('response on logout');
-      print(response.body);
+      // print(response.body);
       responseModel = ResponseModel('User logged out successfully', true);
       return responseModel;
     }
@@ -445,11 +445,11 @@ class AuthRepository {
     // var error = jsonDecode(response.body)['errors'].toString();
     if (response.body.contains('errors')) {
       var error = jsonDecode(response.body)['errors'].toString();
-      print("Here in error$error");
+      // print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     } else {
       var error = jsonDecode(response.body)['error'].toString();
-      print("Here in error$error");
+      // print("Here in error$error");
       return responseModel = ResponseModel(error, false);
     }
 

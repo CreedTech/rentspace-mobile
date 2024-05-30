@@ -150,7 +150,7 @@ class UserController extends GetxController {
     }
   }
 
-  fetchData() async {
+  Future fetchData() async {
     isLoading(true);
     print('fetching');
     String authToken =

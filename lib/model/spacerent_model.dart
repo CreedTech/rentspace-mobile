@@ -6,8 +6,8 @@ class SpaceRentModel {
 
   SpaceRentModel.fromJson(Map<String, dynamic> json) {
     final dynamic spaceRentData = json['rents'];
-    print('spaceRentData');
-    print(spaceRentData);
+    // print('spaceRentData');
+    // print(spaceRentData);
     if (spaceRentData is List<dynamic>) {
       rents = spaceRentData.map((e) => SpaceRent.fromJson(e)).toList();
       // print('rents length');

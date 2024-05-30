@@ -119,8 +119,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(rentController
-        .rentModel!.rents![widget.current].spaceRentInterestHistories);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffF6F6F8),
@@ -313,7 +311,12 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                               SizedBox(
                                                 width: 106.w,
                                                 child: Text(
-                                                  nairaFormaet.format(50000000),
+                                                  nairaFormaet.format(
+                                                      rentController
+                                                          .rentModel!
+                                                          .rents![
+                                                              widget.current]
+                                                          .amount),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: GoogleFonts.lato(
@@ -688,8 +691,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 .rents![widget.current].rentHistories[index];
                             return GestureDetector(
                               onTap: () {
-                                print('index');
-                                print(history);
+                                // print('index');
+                                // print(history);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

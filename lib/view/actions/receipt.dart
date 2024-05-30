@@ -16,7 +16,6 @@ import '../../controller/auth/user_controller.dart';
 
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_plus/share_plus.dart';
@@ -250,16 +249,10 @@ class _ReceiptState extends State<Receipt> {
                       children: [
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                print('download');
-                                _sharePdf();
-                              },
-                              child: Image.asset(
-                                'assets/rentspace_receipt.png',
-                                width: 81,
-                                height: 23,
-                              ),
+                            Image.asset(
+                              'assets/rentspace_receipt.png',
+                              width: 81,
+                              height: 23,
                             ),
                           ],
                         ),

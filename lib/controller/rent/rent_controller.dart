@@ -43,8 +43,8 @@ class RentController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        print('result');
-        print(result);
+        // print('result');
+        // print(result);
         // print(SpaceRentModel.fromJson(result));
 
         rentModel = SpaceRentModel.fromJson(result);

@@ -50,11 +50,11 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
       dismissOnTap: false,
     );
     if (refresh) {
-      print('fetching');
+      // print('fetching');
       await userController.fetchData();
       // await userController.fetchRecentTransfers();
       await walletController.fetchWallet();
-      print('fetched');
+      // print('fetched');
     }
     EasyLoading.dismiss();
     return true;
@@ -69,7 +69,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
   }
 
   void getConnectivity() {
-    print('checking internet...');
+    // print('checking internet...');
     subscription = Connectivity().onConnectivityChanged.listen(
       (ConnectivityResult result) async {
         isDeviceConnected = await InternetConnectionChecker().hasConnection;

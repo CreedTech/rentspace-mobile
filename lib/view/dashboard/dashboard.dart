@@ -55,6 +55,7 @@ import '../../core/helper/helper_route_path.dart';
 // import '../actions/onboarding_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../actions/transaction_pin.dart';
 import '../actions/transaction_receipt.dart';
 import '../actions/transaction_receipt_dva.dart';
 import '../actions/transaction_receipt_transfer.dart';
@@ -158,11 +159,28 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     });
   }
 
+  Future<void> setTransationPin() async {
+    await Future.delayed(const Duration(seconds: 1));
+    if (userController.userModel!.userDetails![0].isPinSet == true) {
+      // Get.to(TransactionPin());
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const TransactionPin()),
+        );
+      }
+    }
+  }
+
   @override
   initState() {
     super.initState();
-    print(userController.userModel!.userDetails![0].firstName);
-    rentBalance = 0;
+    // setTransationPin();
+    setState(() {
+      rentBalance = 0;
+    });
+    fetchUserData();
+    // print(userController.userModel!.userDetails![0].firstName);
     selectedIndex = rentspaceProducts[0];
     getSavings();
 
@@ -230,8 +248,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print('nextWithdrawalDate');
-    print(walletController.walletModel!.wallet![0].nextWithdrawalDate != '');
+    // print('nextWithdrawalDate');
+    // print(walletController.walletModel!.wallet![0].nextWithdrawalDate != '');
     // final data = ref.watch(userProfileDetailsProvider);
     // double screenWidth = MediaQuery.of(context).size.width;
     // double screenHeight = MediaQuery.of(context).size.height;

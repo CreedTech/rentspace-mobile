@@ -80,7 +80,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
   bool isRefresh = false;
 
   Future getImage(BuildContext context) async {
-    print('getting...');
+    // print('getting...');
     var _image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -118,7 +118,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     EasyLoading.dismiss();
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
-      print('Image uploaded successfully');
+      // print('Image uploaded successfully');
       // Get.back();
 
       refreshController.refreshCompleted();
@@ -233,7 +233,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     //     userController.userModel!.userDetails![0].hasVerifiedEmail;
 
     checkingForBioMetrics();
-    print(_isEmailVerified);
+    // print(_isEmailVerified);
   }
 
   enableBiometrics(BuildContext context) {
@@ -278,7 +278,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         return;
       }
     } else {
-      print(hasBiometricStorage.read('hasBiometric').toString());
+      // print(hasBiometricStorage.read('hasBiometric').toString());
     }
     //print()
   }
@@ -325,14 +325,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         return;
       }
     } else {
-      print(hasBiometricStorage.read('hasBiometric').toString());
+      // print(hasBiometricStorage.read('hasBiometric').toString());
     }
     //print()
   }
 
   Future<bool> checkingForBioMetrics() async {
     bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-    print(canCheckBiometrics);
+    // print(canCheckBiometrics);
     return canCheckBiometrics;
   }
 
@@ -351,9 +351,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         customErrorDialog(context, 'Error', "Could not authenticate");
       }
 
-      print("Authenticated");
+      // print("Authenticated");
     } catch (e) {
-      print("Not authenticated");
+      // print("Not authenticated");
     }
     if (!mounted) return;
   }
@@ -1102,9 +1102,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                       child: ElevatedButton(
                                         onPressed: () async {
                                           Navigator.pop(context);
-                                          await authState.logout(context).then(
-                                                (value) => GetStorage().erase(),
-                                              );
+                                          await authState.logout(context);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.red,
@@ -1185,7 +1183,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     );
   }
 
-   String formatMongoDBDate(String dateStr) {
+  String formatMongoDBDate(String dateStr) {
     DateTime date = DateTime.parse(dateStr);
     int day = date.day;
     String daySuffix;

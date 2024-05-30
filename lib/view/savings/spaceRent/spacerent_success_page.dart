@@ -33,7 +33,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
+    // print(MediaQuery.of(context).size.height);
     return WillPopScope(
       onWillPop: () async {
         // Navigator.of(context).pop(returningValue);

@@ -307,8 +307,7 @@ class _FirstPageState extends State<FirstPage> {
                   builder: (context) => (isInternetConnected)
                       ? (userController.userModel == null)
                           ? SomethingWentWrong(onTap: onReloadAgain)
-                          : (userController.userModel!.userDetails![0].isPinSet
-                                      .obs() ==
+                          : (userController.userModel!.userDetails![0].isPinSet ==
                                   false)
                               ? const TransactionPin()
                               : const HomePage()

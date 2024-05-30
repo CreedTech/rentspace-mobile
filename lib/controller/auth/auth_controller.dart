@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
@@ -17,7 +18,9 @@ import 'package:rentspace/view/actions/reset_pin.dart';
 import 'package:rentspace/view/auth/multiple_device_login.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/verify_user_screen.dart';
+import 'package:rentspace/view/home_page.dart';
 import 'package:rentspace/view/login_page.dart';
+import 'package:rentspace/view/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -921,71 +924,71 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future postFcmToken(BuildContext context, fcmToken) async {
-    // print('fcmToken here');
-    // print(fcmToken);
-    // isLoading = true;
-    if (fcmToken.isEmpty || fcmToken == '') {
-      return;
-    }
-    Map<String, dynamic> token = {
-      'fcm_token': fcmToken,
-    };
-    // String message;
-    try {
-      // isLoading = true;
-      state = const AsyncLoading();
-      // print('Got here in fcm token contrl');
-      // EasyLoading.show(
-      //   indicator: const CustomLoader(),
-      //   maskType: EasyLoadingMaskType.black,
-      //   dismissOnTap: false,
-      // );
+  // Future postFcmToken(BuildContext context, fcmToken) async {
+  //   // print('fcmToken here');
+  //   // print(fcmToken);
+  //   // isLoading = true;
+  //   if (fcmToken.isEmpty || fcmToken == '') {
+  //     return;
+  //   }
+  //   Map<String, dynamic> token = {
+  //     'fcm_token': fcmToken,
+  //   };
+  //   // String message;
+  //   try {
+  //     // isLoading = true;
+  //     state = const AsyncLoading();
+  //     // print('Got here in fcm token contrl');
+  //     // EasyLoading.show(
+  //     //   indicator: const CustomLoader(),
+  //     //   maskType: EasyLoadingMaskType.black,
+  //     //   dismissOnTap: false,
+  //     // );
 
-      var response = await authRepository.postFcmToken(token);
-      // EasyLoading.dismiss();
-      state = const AsyncData(false);
-      // print('response.message');
-      // // print(response);
-      // // print(response.message);
-      if (response.success) {
-        // print('posted');
-        // isLoading = false;
+  //     var response = await authRepository.postFcmToken(token);
+  //     // EasyLoading.dismiss();
+  //     state = const AsyncData(false);
+  //     // print('response.message');
+  //     // // print(response);
+  //     // // print(response.message);
+  //     if (response.success) {
+  //       // print('posted');
+  //       // isLoading = false;
 
-        return;
-      } else {
-        // print(response.message.toString());
-      }
-      // if (response.success == false &&
-      //     response.message.contains("Incorrect credentials")) {
-      //   // authStatus = AuthStatus.NOT_LOGGED_IN;
-      //   message = "Incorrect credentials";
-      //   customErrorDialog(context, 'Error', message);
-      //   // showTopSnackBar(
-      //   //   Overlay.of(context),
-      //   //   CustomSnackBar.error(
-      //   //     message: message,
-      //   //   ),
-      //   // );
+  //       return;
+  //     } else {
+  //       // print(response.message.toString());
+  //     }
+  //     // if (response.success == false &&
+  //     //     response.message.contains("Incorrect credentials")) {
+  //     //   // authStatus = AuthStatus.NOT_LOGGED_IN;
+  //     //   message = "Incorrect credentials";
+  //     //   customErrorDialog(context, 'Error', message);
+  //     //   // showTopSnackBar(
+  //     //   //   Overlay.of(context),
+  //     //   //   CustomSnackBar.error(
+  //     //   //     message: message,
+  //     //   //   ),
+  //     //   // );
 
-      //   return;
-      // }
-    } catch (e) {
-      // authStatus = AuthStatus.NOT_LOGGED_IN;
-      state = const AsyncData(false);
-      // EasyLoading.dismiss();
-      state = AsyncError(e, StackTrace.current);
-      // message = "Ooops something went wrong";
-      // customErrorDialog(context, 'Error', message);
-      // print('e');
-      // print(e);
+  //     //   return;
+  //     // }
+  //   } catch (e) {
+  //     // authStatus = AuthStatus.NOT_LOGGED_IN;
+  //     state = const AsyncData(false);
+  //     // EasyLoading.dismiss();
+  //     state = AsyncError(e, StackTrace.current);
+  //     // message = "Ooops something went wrong";
+  //     // customErrorDialog(context, 'Error', message);
+  //     // print('e');
+  //     // print(e);
 
-      return;
-    } finally {
-      // isLoading = false;
-      // return;
-    }
-  }
+  //     return;
+  //   } finally {
+  //     // isLoading = false;
+  //     // return;
+  //   }
+  // }
 
   Future verifyForgotPasswordOtp(BuildContext context, email, otp) async {
     // print("Fields");
@@ -1279,20 +1282,23 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         // notifyListeners();
         state = const AsyncValue.data(false);
-        // await GlobalService.sharedPreferencesManager.removeToken();
-        await GlobalService.sharedPreferencesManager.deleteLoginInfo();
-        // await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
+        // final GetStorage storage = GetStorage();
         final prefs = await SharedPreferences.getInstance();
+        
+        await GetStorage().erase();
+        await prefs.clear();
+       
+        await GlobalService.sharedPreferencesManager.removeToken();
+        await GlobalService.sharedPreferencesManager.deleteLoginInfo();
+        await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
+
         prefs.setBool('hasSeenOnboarding', false);
+      
+       
         // // print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 
-        await Get.offAll(
-          LoginPage(
-            sessionStateStream: sessionStateStream,
-            // loggedOutReason: "Logged out because of user inactivity",
-          ),
-        );
+        await Get.offAll(SplashScreen(sessionStateStream: sessionStateStream));
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(builder: (context) => const LoginPage()),
         //     (route) => false);
@@ -1318,7 +1324,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-      message = "Ooops something went wrong";
+      message = "Oops something went wrong";
       customErrorDialog(context, 'Error', message);
 
       return;
@@ -1357,11 +1363,15 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // await userController.fetchData();
         // print(userController.userModel!.userDetails![0].isPinSet);
         // await GlobalService.sharedPreferencesManager.savePin(pin);
-        await userController.fetchData();
+        await userController.fetchData().then((value) {
+          EasyLoading.dismiss();
+          isLoading = false;
+          Get.to(const FirstPage());
+        });
         EasyLoading.dismiss();
         isLoading = false;
-        redirectingAlert(context, '🎉 Congratulations! 🎉',
-            'Your Transaction has been set successfully!!!.', "Home");
+        // redirectingAlert(context, '🎉 Congratulations! 🎉',
+        //     'Your Transaction has been set successfully!!!.', "Home");
         return;
       } else {
         // print('response.message.toString()');
