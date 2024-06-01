@@ -48,9 +48,9 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -196,6 +196,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                           children: [
                             Text(
                               'Total loan amount',
+                              textAlign: TextAlign.end,
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
@@ -225,7 +226,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                     height: 20,
                   ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
@@ -259,9 +260,11 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         flex: 5,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               'Total outstanding loan amount',
+                              textAlign: TextAlign.end,
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
@@ -276,6 +279,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                                 userController
                                     .userModel!.userDetails![0].loanAmount,
                               ),
+                              textAlign: TextAlign.end,
                               style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,

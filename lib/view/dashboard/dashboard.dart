@@ -91,7 +91,7 @@ String formattedDate = formatter.format(now);
 // String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
-bool hideBalance = true;
+bool hideBalance = false;
 int currentPos = 0;
 
 class _DashboardConsumerState extends ConsumerState<Dashboard> {
@@ -130,8 +130,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   }
 
   Future<bool> fetchUserData({bool refresh = true}) async {
+    setState(() {});
     if (refresh) {
       await userController.fetchData();
+      await walletController.fetchWallet();
       setState(() {}); // Move setState inside fetchData
     }
     return true;
@@ -212,7 +214,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
     getConnectivity();
     // print("isLoading");
-    hideBalance = true;
+    hideBalance = false;
     // print(userController.isLoading.value);
 
     greeting();
@@ -248,13 +250,13 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
     // print('nextWithdrawalDate');
     // print(walletController.walletModel!.wallet![0].nextWithdrawalDate != '');
     // final data = ref.watch(userProfileDetailsProvider);
     // double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.height;
     // double sliderHeight = sliderDynamicScreen(screenHeight);
-
     return Scaffold(
       backgroundColor: brandOne,
       body: Obx(
@@ -266,27 +268,220 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           showChildOpacityTransition: false,
           onRefresh: onRefresh,
           child: SafeArea(
-            // top: false,
-            child: Column(
+            top: false,
+            child: ListView(
+              physics: ClampingScrollPhysics(),
               children: [
-                SizedBox(
-                  // height: 250.0.h,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: -30,
-                          right: -50,
-                          child: Image.asset(
-                            'assets/logo_transparent.png',
-                            width: 255.47,
-                            height: 291.75,
-                          ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: brandOne,
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: -30,
+                        right: -50,
+                        child: Image.asset(
+                          'assets/logo_transparent.png',
+                          width: 255.47,
+                          height: 291.75,
                         ),
-                        Column(
-                          children: [
-                            Padding(
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                              24.0.w,
+                              0.0.h,
+                              24.0.w,
+                              0.0.h,
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Hi, ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
+                                              style: GoogleFonts.lato(
+                                                fontSize: 24.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorWhite,
+                                              ),
+                                            ),
+                                            Text(
+                                              _greeting,
+                                              style: GoogleFonts.lato(
+                                                fontSize: 12.0,
+                                                // letterSpacing: 1.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorWhite,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(const ContactUsPage());
+                                      },
+                                      child: Image.asset(
+                                        'assets/icons/message_icon.png',
+                                        width: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 23.h,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Space Wallet',
+                                          style: GoogleFonts.lato(
+                                            color: colorWhite,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              hideBalance = !hideBalance;
+                                            });
+                                          },
+                                          child: Icon(
+                                            hideBalance
+                                                ? Iconsax.eye
+                                                : Iconsax.eye_slash,
+                                            color: colorWhite,
+                                            size: 20,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Text(
+                                      hideBalance
+                                          ? nairaFormaet
+                                              .format((selectedIndex ==
+                                                          rentspaceProducts[0]
+                                                      ? walletController
+                                                          .walletModel!
+                                                          .wallet![0]
+                                                          .mainBalance
+                                                      : selectedIndex ==
+                                                              rentspaceProducts[
+                                                                  1]
+                                                          ? rentBalance
+                                                          : selectedIndex ==
+                                                                  rentspaceProducts[
+                                                                      2]
+                                                              ? 0
+                                                              : walletController
+                                                                  .walletModel!
+                                                                  .wallet![0]
+                                                                  .mainBalance) ??
+                                                  0)
+                                              .toString()
+                                          : "******",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato(
+                                          color: colorWhite,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.to(const FundWallet());
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 39, vertical: 12),
+                                            decoration: BoxDecoration(
+                                              color: colorWhite,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(
+                                                      0x1A000000), // Color with 15% opacity
+                                                  blurRadius: 19.0,
+                                                  spreadRadius: -4.0,
+                                                ),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.add_circle,
+                                                  color: brandTwo,
+                                                  size: 26,
+                                                ),
+                                                SizedBox(
+                                                  width: 10.w,
+                                                ),
+                                                Text(
+                                                  'Add Money ',
+                                                  style: GoogleFonts.lato(
+                                                    color: brandTwo,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 22.h,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: (screenHeight >= 1000)
+                                ? MediaQuery.of(context).size.height / 1.2
+                                : MediaQuery.of(context).size.height / 1.8,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                            child: Padding(
                               padding: EdgeInsets.fromLTRB(
                                 24.0.w,
                                 0.0.h,
@@ -294,635 +489,456 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 0.0.h,
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  Text(
+                                    'Quick Actions',
+                                    style: GoogleFonts.lato(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: colorBlack),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          minimumSize: Size(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.45,
+                                              45),
+                                          backgroundColor: colorWhite,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Get.to(const AirtimePage());
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 18),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/call_icon.png',
+                                                width: 24,
+                                                height: 24,
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              Text(
+                                                'Buy Airtime',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.lato(
+                                                  color: colorBlack,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          minimumSize: Size(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.45,
+                                              45),
+                                          backgroundColor: colorWhite,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Get.to(const SpaceRentCreation());
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 18),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/space_rent.png',
+                                                width: 24,
+                                                height: 24,
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              Text(
+                                                'New Space Rent',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.lato(
+                                                  color: colorBlack,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Hi ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 24.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: colorWhite,
-                                                ),
-                                              ),
-                                              Text(
-                                                _greeting,
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 12.0,
-                                                  // letterSpacing: 1.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: colorWhite,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                      Text(
+                                        'Transactions',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: colorBlack,
+                                        ),
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.to(const ContactUsPage());
+                                          Get.to(const AllActivities());
                                         },
-                                        child: Image.asset(
-                                          'assets/icons/message_icon.png',
-                                          width: 24,
+                                        child: Text(
+                                          'View All',
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: brandTwo,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 23.h,
+                                    height: 10.h,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Space Wallet',
-                                            style: GoogleFonts.lato(
-                                              color: colorWhite,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                hideBalance = !hideBalance;
-                                              });
-                                            },
-                                            child: Icon(
-                                              hideBalance
-                                                  ? Iconsax.eye
-                                                  : Iconsax.eye_slash,
-                                              color: colorWhite,
-                                              size: 20,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Text(
-                                        hideBalance
-                                            ? nairaFormaet
-                                                .format((selectedIndex ==
-                                                            rentspaceProducts[0]
-                                                        ? walletController
-                                                            .walletModel!
-                                                            .wallet![0]
-                                                            .mainBalance
-                                                        : selectedIndex ==
-                                                                rentspaceProducts[
-                                                                    1]
-                                                            ? rentBalance
-                                                            : selectedIndex ==
-                                                                    rentspaceProducts[
-                                                                        2]
-                                                                ? 0
-                                                                : walletController
-                                                                    .walletModel!
-                                                                    .wallet![0]
-                                                                    .mainBalance) ??
-                                                    0)
-                                                .toString()
-                                            : "******",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.lato(
-                                            color: colorWhite,
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              Get.to(const FundWallet());
-                                            },
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 39,
-                                                      vertical: 12),
-                                              decoration: BoxDecoration(
-                                                color: colorWhite,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    color: Color(
-                                                        0x1A000000), // Color with 15% opacity
-                                                    blurRadius: 19.0,
-                                                    spreadRadius: -4.0,
-                                                  ),
-                                                ],
+                                  (userController.userModel!.userDetails![0]
+                                          .walletHistories.isEmpty)
+                                      ? SizedBox(
+                                          height: 240,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/history_icon.png',
+                                                height: 33.5.h,
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.add_circle,
-                                                    color: brandTwo,
-                                                    size: 26,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10.w,
-                                                  ),
-                                                  Text(
-                                                    'Add Money ',
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Center(
+                                                child: SizedBox(
+                                                  width: 180,
+                                                  child: Text(
+                                                    "Your transactions will be displayed here",
+                                                    textAlign: TextAlign.center,
                                                     style: GoogleFonts.lato(
-                                                      color: brandTwo,
                                                       fontSize: 14,
+                                                      color: colorBlack,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 22.h,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).canvasColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        24.0.w,
-                        0.0.h,
-                        24.0.w,
-                        0.0.h,
-                      ),
-                      child: ListView(
-                        children: [
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Text(
-                            'Quick Actions',
-                            style: GoogleFonts.lato(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: colorBlack),
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width / 2.45,
-                                      45),
-                                  backgroundColor: colorWhite,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Get.to(const AirtimePage());
-                                },
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 18),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/call_icon.png',
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(
-                                        height: 14,
-                                      ),
-                                      Text(
-                                        'Buy Airtime',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.lato(
-                                          color: colorBlack,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width / 2.45,
-                                      45),
-                                  backgroundColor: colorWhite,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Get.to(const SpaceRentCreation());
-                                },
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 18),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/space_rent.png',
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(
-                                        height: 14,
-                                      ),
-                                      Text(
-                                        'New Space Rent',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.lato(
-                                          color: colorBlack,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Transactions',
-                                style: GoogleFonts.lato(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: colorBlack,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(const AllActivities());
-                                },
-                                child: Text(
-                                  'View All',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: brandTwo,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          (userController.userModel!.userDetails![0]
-                                  .walletHistories.isEmpty)
-                              ? SizedBox(
-                                  height: 240,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/history_icon.png',
-                                        height: 33.5.h,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Center(
-                                        child: SizedBox(
-                                          width: 180,
-                                          child: Text(
-                                            "Your transactions will be displayed here",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.lato(
-                                              fontSize: 14,
-                                              color: colorBlack,
-                                              fontWeight: FontWeight.w500,
+                                        )
+                                      : SingleChildScrollView(
+                                          child: Container(
+                                            // height: 249,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15),
+                                            decoration: BoxDecoration(
+                                              color: colorWhite,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : SingleChildScrollView(
-                                  child: Container(
-                                    // height: 249,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    decoration: BoxDecoration(
-                                      color: colorWhite,
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      physics: const ClampingScrollPhysics(),
-                                      itemCount: (userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .walletHistories
-                                                  .length <
-                                              3)
-                                          ? userController
-                                              .userModel!
-                                              .userDetails![0]
-                                              .walletHistories
-                                              .length
-                                          : 3,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        int reversedIndex = userController
-                                                .userModel!
-                                                .userDetails![0]
-                                                .walletHistories
-                                                .length -
-                                            1 -
-                                            index;
-                                        final history = userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .walletHistories[index];
-
-                                        final item = userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .walletHistories[index];
-                                        final itemLength = item.length;
-
-                                        bool showDivider = true;
-
-                                        if (index <
-                                            userController
-                                                    .userModel!
-                                                    .userDetails![0]
-                                                    .walletHistories
-                                                    .length -
-                                                1) {
-                                          if ((itemLength == 1 &&
-                                                  index % 2 == 0) ||
-                                              (itemLength == 2 &&
-                                                  (index + 1) % 2 == 0) ||
-                                              (itemLength >= 3 &&
-                                                  (index + 1) % 3 == 0)) {
-                                            showDivider = false;
-                                          }
-                                        } else {
-                                          showDivider = false;
-                                        }
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const TransactionReceipt(),
-                                                settings: RouteSettings(
-                                                  arguments: userController
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const ClampingScrollPhysics(),
+                                              itemCount: (userController
+                                                          .userModel!
+                                                          .userDetails![0]
+                                                          .walletHistories
+                                                          .length <
+                                                      3)
+                                                  ? userController
                                                       .userModel!
                                                       .userDetails![0]
-                                                      .walletHistories[index],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
-                                            children: [
-                                              // const SizedBox(
-                                              //   height: 24,
-                                              // ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 10),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Flexible(
-                                                      flex: 7,
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        // mainAxisAlignment:
-                                                        //     MainAxisAlignment
-                                                        //         .spaceBetween,
-                                                        children: [
-                                                          Flexible(
-                                                            flex: 2,
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(12),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: (history[
-                                                                            'transactionType'] ==
-                                                                        'Credit')
-                                                                    ? brandTwo
-                                                                    : brandTwo,
+                                                      .walletHistories
+                                                      .length
+                                                  : 3,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                int reversedIndex =
+                                                    userController
+                                                            .userModel!
+                                                            .userDetails![0]
+                                                            .walletHistories
+                                                            .length -
+                                                        1 -
+                                                        index;
+                                                final history = userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .walletHistories[index];
+
+                                                final item = userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .walletHistories[index];
+                                                final itemLength = item.length;
+
+                                                bool showDivider = true;
+
+                                                if (index <
+                                                    userController
+                                                            .userModel!
+                                                            .userDetails![0]
+                                                            .walletHistories
+                                                            .length -
+                                                        1) {
+                                                  if ((itemLength == 1 &&
+                                                          index % 2 == 0) ||
+                                                      (itemLength == 2 &&
+                                                          (index + 1) % 2 ==
+                                                              0) ||
+                                                      (itemLength >= 3 &&
+                                                          (index + 1) % 3 ==
+                                                              0)) {
+                                                    showDivider = false;
+                                                  }
+                                                } else {
+                                                  showDivider = false;
+                                                }
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const TransactionReceipt(),
+                                                        settings: RouteSettings(
+                                                          arguments: userController
+                                                                  .userModel!
+                                                                  .userDetails![0]
+                                                                  .walletHistories[
+                                                              index],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      // const SizedBox(
+                                                      //   height: 24,
+                                                      // ),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 12,
+                                                                vertical: 10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6),
+                                                        ),
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Flexible(
+                                                              flex: 7,
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                // mainAxisAlignment:
+                                                                //     MainAxisAlignment
+                                                                //         .spaceBetween,
+                                                                children: [
+                                                                  Flexible(
+                                                                    flex: 2,
+                                                                    child:
+                                                                        Container(
+                                                                      padding: const EdgeInsets
+                                                                          .all(
+                                                                          12),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        color: (history['transactionType'] ==
+                                                                                'Credit')
+                                                                            ? brandTwo
+                                                                            : brandTwo,
+                                                                      ),
+                                                                      child: (history['transactionType'] ==
+                                                                              'Credit')
+                                                                          ? const Icon(
+                                                                              Icons.call_received,
+                                                                              color: Color(0xff80FF00),
+                                                                              size: 20,
+                                                                            )
+                                                                          : const Icon(
+                                                                              Icons.arrow_outward_sharp,
+                                                                              color: colorWhite,
+                                                                              size: 20,
+                                                                            ),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                      width:
+                                                                          12),
+                                                                  Flexible(
+                                                                    flex: 8,
+                                                                    child:
+                                                                        Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          "${history['description'] ?? history['message'] ?? 'No Description Found'} "
+                                                                              .capitalize!,
+                                                                          maxLines:
+                                                                              1,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                          style:
+                                                                              GoogleFonts.lato(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color:
+                                                                                colorBlack,
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Text(
+                                                                          formatDateTime(
+                                                                              history['createdAt']),
+                                                                          style:
+                                                                              GoogleFonts.lato(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color:
+                                                                                const Color(0xff4B4B4B),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
+                                                            ),
+                                                            Flexible(
+                                                              flex: 3,
                                                               child: (history[
                                                                           'transactionType'] ==
                                                                       'Credit')
-                                                                  ? const Icon(
-                                                                      Icons
-                                                                          .call_received,
-                                                                      color: Color(
-                                                                          0xff80FF00),
-                                                                      size: 20,
+                                                                  ? Text(
+                                                                      "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color: const Color(
+                                                                            0xff56AB00),
+                                                                      ),
                                                                     )
-                                                                  : const Icon(
-                                                                      Icons
-                                                                          .arrow_outward_sharp,
-                                                                      color:
-                                                                          colorWhite,
-                                                                      size: 20,
+                                                                  : Text(
+                                                                      nairaFormaet
+                                                                          .format(
+                                                                              double.parse(history['amount'].toString())),
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color:
+                                                                            colorBlack,
+                                                                      ),
                                                                     ),
                                                             ),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 12),
-                                                          Flexible(
-                                                            flex: 8,
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  "${history['description'] ?? history['message'] ?? 'No Description Found'} "
-                                                                      .capitalize!,
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color:
-                                                                        colorBlack,
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                    height: 5),
-                                                                Text(
-                                                                  formatDateTime(
-                                                                      history[
-                                                                          'createdAt']),
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: const Color(
-                                                                        0xff4B4B4B),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Flexible(
-                                                      flex: 3,
-                                                      child: (history[
-                                                                  'transactionType'] ==
-                                                              'Credit')
-                                                          ? Text(
-                                                              "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                                              style: GoogleFonts
-                                                                  .lato(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: const Color(
-                                                                    0xff56AB00),
-                                                              ),
-                                                            )
-                                                          : Text(
-                                                              nairaFormaet.format(
-                                                                  double.parse(history[
-                                                                          'amount']
-                                                                      .toString())),
-                                                              style: GoogleFonts
-                                                                  .lato(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color:
-                                                                    colorBlack,
-                                                              ),
-                                                            ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
 
-                                              if (showDivider)
-                                                const Divider(
-                                                  thickness: 1,
-                                                  color: Color(0xffC9C9C9),
-                                                  indent: 17,
-                                                  endIndent: 17,
-                                                ),
-                                            ],
+                                                      if (showDivider)
+                                                        const Divider(
+                                                          thickness: 1,
+                                                          color:
+                                                              Color(0xffC9C9C9),
+                                                          indent: 17,
+                                                          endIndent: 17,
+                                                        ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                          SizedBox(
-                            height: 60.h,
+                                        ),
+
+                                  // SizedBox(
+                                  //   height: 60.h,
+                                  // ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
@@ -1030,12 +1046,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          elevation: 0,
                           minimumSize:
                               Size(MediaQuery.of(context).size.width - 50, 50),
                           backgroundColor: brandTwo,
+                          elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
                           ),
                         ),
                         onPressed: () async {

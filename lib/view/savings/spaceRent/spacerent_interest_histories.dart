@@ -69,9 +69,9 @@ class _SpaceRentInterestHistoryPageState
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -137,14 +137,14 @@ class _SpaceRentInterestHistoryPageState
                 ],
               ),
             ),
-            if (_interests.isEmpty)
-              const SizedBox(
-                height: 20,
-              ),
+            // if (_interests.isEmpty)
+            const SizedBox(
+              height: 20,
+            ),
             (_interests.isEmpty)
                 ? Container(
-                  height: MediaQuery.of(context).size.height/ 2,
-                  child: Column(
+                    height: MediaQuery.of(context).size.height / 2,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -171,7 +171,7 @@ class _SpaceRentInterestHistoryPageState
                         ),
                       ],
                     ),
-                )
+                  )
                 : Expanded(
                     child: LiquidPullToRefresh(
                       height: 70,
@@ -209,94 +209,142 @@ class _SpaceRentInterestHistoryPageState
                                           .map<Widget>((item) {
                                             return Column(
                                               children: [
-                                                ListTile(
-                                                  contentPadding:
-                                                      const EdgeInsets
+                                                Column(
+                                                  children: [
+                                                    // const SizedBox(
+                                                    //   height: 24,
+                                                    // ),
+                                                    Container(
+                                                      padding: const EdgeInsets
                                                           .symmetric(
-                                                          horizontal: 0),
-                                                  minLeadingWidth: 0,
-                                                  leading: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            color: brandTwo),
-                                                    child: const Icon(
-                                                      Icons.call_received,
-                                                      color: Color(0xff80FF00),
-                                                      size: 20,
+                                                          horizontal: 12,
+                                                          vertical: 10),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6),
+                                                      ),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            flex: 7,
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              // mainAxisAlignment:
+                                                              //     MainAxisAlignment
+                                                              //         .spaceBetween,
+                                                              children: [
+                                                                Flexible(
+                                                                  flex: 2,
+                                                                  child:
+                                                                      Container(
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            12),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color:
+                                                                          brandTwo,
+                                                                    ),
+                                                                    child:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .call_received,
+                                                                      color: Color(
+                                                                          0xff80FF00),
+                                                                      size: 20,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                    width: 12),
+                                                                Flexible(
+                                                                  flex: 8,
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        "${item['interestAmount']} Space Rent Interest "
+                                                                            .capitalize!,
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts
+                                                                            .lato(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          color:
+                                                                              colorBlack,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          height:
+                                                                              5),
+                                                                      Text(
+                                                                        formatDateTime(
+                                                                            item['createdAt']),
+                                                                        style: GoogleFonts
+                                                                            .lato(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontWeight:
+                                                                              FontWeight.w400,
+                                                                          color:
+                                                                              const Color(0xff4B4B4B),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Flexible(
+                                                            flex: 3,
+                                                            child: Text(
+                                                              "+ ₦${item['interestAmount']}",
+                                                              style: GoogleFonts
+                                                                  .lato(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: const Color(
+                                                                    0xff56AB00),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                  title: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "${item['interestAmount']} Space Rent Interest",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: colorBlack,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  subtitle: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 9,
-                                                      ),
-                                                      Text(
-                                                        formatDateTime(
-                                                            item['createdAt']),
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: const Color(
-                                                              0xff4B4B4B),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  trailing: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        "+ ₦${item['interestAmount']}",
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: const Color(
-                                                              0xff56AB00),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 15,
-                                                      ),
-                                                    ],
-                                                  ),
+
+                                                    const Divider(
+                                                      thickness: 1,
+                                                      color: Color(0xffC9C9C9),
+                                                      indent: 17,
+                                                      endIndent: 17,
+                                                    ),
+                                                  ],
                                                 ),
-                                                ((groupedByMonth.keys.length) !=
-                                                        (item[entry.key]))
-                                                    ? const Divider(
-                                                        color:
-                                                            Color(0xffC9C9C9),
-                                                      )
-                                                    : const Text(''),
                                               ],
                                             );
                                           })

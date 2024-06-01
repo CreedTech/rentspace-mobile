@@ -1286,9 +1286,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         prefs.setBool('hasSeenOnboarding', false);
 
         // // print(prefs.get('hasSeenOnboarding'));
-        // Get.offAll(const LoginPage());
+        // Get.offAll( LoginPage());
 
-        await Get.offAll(SplashScreen(sessionStateStream: sessionStateStream));
+        await Get.offAll(LoginPage(sessionStateStream: sessionStateStream));
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(builder: (context) => const LoginPage()),
         //     (route) => false);

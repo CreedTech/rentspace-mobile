@@ -124,10 +124,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -293,21 +293,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                   color: colorWhite,
                                                 ),
                                               ),
-                                              // AutoSizeText(
-                                              //   nairaFormaet.format(
-                                              //       rentController
-                                              //           .rentModel!
-                                              //           .rents![widget.current]
-                                              //           .amount),
-                                              //   maxLines: 2,
-                                              //   // minFontSize: 2.0,
-                                              //   // textAlign: TextAlign.center,
-                                              //   style: GoogleFonts.lato(
-                                              //     fontSize: 16.0,
-                                              //     fontWeight: FontWeight.w600,
-                                              //     color: colorWhite,
-                                              //   ),
-                                              // ),
                                               SizedBox(
                                                 width: 106.w,
                                                 child: Text(
@@ -703,6 +688,25 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     .length -
                                 1 -
                                 index;
+
+                            final item = rentController.rentModel!
+                                .rents![widget.current].rentHistories[index];
+                            final itemLength = item.length;
+
+                            bool showDivider = true;
+
+                            if (index <
+                                rentController.rentModel!.rents![widget.current]
+                                        .rentHistories.length -
+                                    1) {
+                              if ((itemLength == 1 && index % 2 == 0) ||
+                                  (itemLength == 2 && (index + 1) % 2 == 0) ||
+                                  (itemLength >= 3 && (index + 1) % 3 == 0)) {
+                                showDivider = false;
+                              }
+                            } else {
+                              showDivider = false;
+                            }
                             // Access the activities in reverse order
                             final history = rentController.rentModel!
                                 .rents![widget.current].rentHistories[index];
@@ -720,166 +724,133 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     ),
                                   ),
                                 );
-
-                                // Get.to(
-                                //   (history['transactionGroup']
-                                //               .toString()
-                                //               .toLowerCase() ==
-                                //           'transfer')
-                                //       ? TransactionReceiptTransfer(
-                                //           amount: history['amount'],
-                                //           status: history['status'],
-                                //           fees: history['fees'] ?? 0,
-                                //           transactionType:
-                                //               history['transactionType'],
-                                //           description:
-                                //               history['description'],
-                                //           transactionGroup:
-                                //               history['transactionGroup'],
-                                //           transactionDate:
-                                //               history['createdAt'],
-                                //           transactionRef: history[
-                                //                   'transactionReference'] ??
-                                //               '',
-                                //           merchantRef:
-                                //               history['merchantReference'],
-                                //           // sessionId: history['sessionId'] ?? '',
-                                //         )
-                                //       : (history['transactionGroup']
-                                //                   .toString()
-                                //                   .toLowerCase() ==
-                                //               'static-account-transfer')
-                                //           ? TransactionReceiptDVA(
-                                //               amount: history['amount'],
-                                //               status: history['status'],
-                                //               fees: history['fees'] ?? 0,
-                                //               transactionType: history[
-                                //                   'transactionType'],
-                                //               description:
-                                //                   history['description'],
-                                //               transactionGroup: history[
-                                //                   'transactionGroup'],
-                                //               transactionDate:
-                                //                   history['createdAt'],
-                                //               transactionRef: history[
-                                //                       'transactionReference'] ??
-                                //                   '',
-                                //               merchantRef: history[
-                                //                   'merchantReference'],
-                                //               remarks: history['remarks'],
-                                //             )
-                                //           : TransactionReceipt(
-                                //               amount: history['amount'],
-                                //               status: history['status'],
-                                //               fees: history['fees'] ?? 0,
-                                //               transactionType: history[
-                                //                   'transactionType'],
-                                //               description:
-                                //                   history['description'],
-                                //               transactionGroup: history[
-                                //                   'transactionGroup'],
-                                //               transactionDate:
-                                //                   history['createdAt'],
-                                //               transactionRef: history[
-                                //                       'transactionReference'] ??
-                                //                   '',
-                                //               merchantRef: history[
-                                //                   'merchantReference'],
-                                //             ),
-                                // );
                               },
                               child: Column(
                                 children: [
-                                  ListTile(
-                                    leading: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: brandTwo,
-                                      ),
-                                      child: (history['transactionType'] ==
-                                              'Credit')
-                                          ? Icon(
-                                              Icons.arrow_outward_sharp,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            )
-                                          : const Icon(
-                                              Icons.call_received,
-                                              color: Color(0xff80FF00),
-                                            ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
                                     ),
-                                    title: Column(
+                                    child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "${history['message']} ",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: colorBlack,
+                                        Flexible(
+                                          flex: 7,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment
+                                            //         .spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                flex: 2,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(12),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: brandTwo,
+                                                  ),
+                                                  child: (history[
+                                                              'transactionType'] ==
+                                                          'Credit')
+                                                      ? Icon(
+                                                          Icons
+                                                              .arrow_outward_sharp,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
+                                                        )
+                                                      : const Icon(
+                                                          Icons.call_received,
+                                                          color:
+                                                              Color(0xff80FF00),
+                                                        ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Flexible(
+                                                flex: 8,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "${history['message']} "
+                                                          .capitalize!,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: GoogleFonts.lato(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: colorBlack,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      formatDateTime(
+                                                          history['createdAt']),
+                                                      style: GoogleFonts.lato(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: const Color(
+                                                            0xff4B4B4B),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                        Flexible(
+                                          flex: 3,
+                                          child: (history['transactionType'] ==
+                                                  'Credit')
+                                              ? Text(
+                                                  "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                                  style: GoogleFonts.roboto(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xff56AB00),
+                                                  ),
+                                                )
+                                              : Text(
+                                                  nairaFormaet.format(
+                                                      double.parse(
+                                                          history['amount']
+                                                              .toString())),
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: colorBlack,
+                                                  ),
+                                                ),
                                         ),
                                       ],
                                     ),
-                                    subtitle: Text(
-                                      formatDateTime(history['createdAt']),
-                                      style: GoogleFonts.lato(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: const Color(0xff4B4B4B),
-                                      ),
-                                    ),
-                                    trailing: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        (history['transactionType'] == 'Credit')
-                                            ? Text(
-                                                "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                                style: GoogleFonts.roboto(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      const Color(0xff56AB00),
-                                                ),
-                                              )
-                                            : Text(
-                                                nairaFormaet.format(
-                                                    double.parse(
-                                                        history['amount']
-                                                            .toString())),
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: colorBlack,
-                                                ),
-                                              ),
-                                        const Text('')
-                                      ],
-                                    ),
                                   ),
-                                  (rentController
-                                              .rentModel!
-                                              .rents![widget.current]
-                                              .rentHistories
-                                              .length >
-                                          1)
-                                      ? const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 13),
-                                          child: Divider(
-                                            thickness: 1,
-                                            color: Color(0xffC9C9C9),
-                                          ),
-                                        )
-                                      : const SizedBox(),
+                                  if (showDivider)
+                                    const Divider(
+                                      thickness: 1,
+                                      color: Color(0xffC9C9C9),
+                                      indent: 17,
+                                      endIndent: 17,
+                                    ),
                                 ],
                               ),
                             );

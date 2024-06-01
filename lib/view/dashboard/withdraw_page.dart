@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 
 import '../../api/global_services.dart';
@@ -123,6 +124,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
 
       //print(response.body);
     } else {
+      print(response.body);
       // Error handling
       setState(() {
         _bankAccountName = "";
@@ -133,74 +135,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
       _updateMessage();
 
       if (context.mounted) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: null,
-                elevation: 0,
-                content: SizedBox(
-                  height: 250,
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              // color: brandOne,
-                            ),
-                            child: const Icon(
-                              Iconsax.close_circle,
-                              color: brandOne,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Iconsax.warning_24,
-                          color: Colors.red,
-                          size: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Error!',
-                        style: GoogleFonts.lato(
-                          color: Colors.red,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Something went wrong",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(color: brandOne, fontSize: 18),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
+        customErrorDialog(context, 'Error', 'Something Went Wrong');
       }
 
       print(
@@ -382,12 +317,15 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateNumber,
       // maxLengthEnforcement: MaxLengthEnforcement.enforced,
       controller: _accountNumberController,
       keyboardType: TextInputType.number,
       onChanged: (e) {
+        if (_accountNumberController.text.length == 11) {
+          FocusScope.of(context).unfocus();
+        }
         _checkFieldsAndHitApi();
       },
       // onEditingComplete: handleEditingComplete(editedValue),
@@ -435,9 +373,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -460,341 +398,372 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 15.h,
-            horizontal: 24.h,
-          ),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 15.h,
+              horizontal: 24.h,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Text(
-                    'You only get one withdrawal per month. Please add your withdrawal account below to proceed.',
-                    style: GoogleFonts.lato(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: colorBlack,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    'Add a Withdrawal Account',
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: colorBlack,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Row(
+                  Stack(
                     children: [
-                      const Icon(
-                        Icons.info_outline,
-                        size: 24,
-                        color: colorBlack,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        child: RichText(
-                          text: TextSpan(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'You only get one withdrawal per month. Please add your withdrawal account below to proceed.',
                             style: GoogleFonts.lato(
-                              color: Colors.black54,
                               fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: colorBlack,
                             ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text:
-                                    'Please add an account that is linked to your BVN',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Add a Withdrawal Account',
+                            style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: colorBlack,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.info_outline,
+                                size: 24,
+                                color: colorBlack,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.4,
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: GoogleFonts.lato(
+                                      color: Colors.black54,
+                                      fontSize: 14,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text:
+                                            'Please add an account that is linked to your BVN',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Form(
-                    key: withdrawalFormKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Select Bank',
-                                style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            TextFormField(
-                              onTap: () async {
-                                _accountNumberController.clear();
-                                setState(() {
-                                  _bankAccountName = '';
-                                });
-                                showModalBottomSheet(
-                                  backgroundColor: const Color(0xffF6F6F8),
-                                  isDismissible: false,
-                                  enableDrag: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (context) => BankSelection(
-                                    onBankSelected:
-                                        (selectedBank, selectedCode) {
-                                      _bankController.text = selectedBank;
-                                      selectedBankCode = selectedCode;
-                                      selectedBankName = selectedBank;
-
-                                      _handleBankSelection(
-                                          selectedBank, selectedCode);
-                                    },
-                                  ),
-                                  // },
-                                );
-                              },
-                              onChanged: (e) {
-                                _checkFieldsAndHitApi();
-                                // setState(() {
-                                //   canProceed = false;
-                                // });
-                                // tvName = "";
-                              },
-                              readOnly: true,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              enableSuggestions: true,
-                              cursorColor: colorBlack,
-                              style: GoogleFonts.lato(
-                                  color: colorBlack, fontSize: 14),
-
-                              controller: _bankController,
-                              textAlignVertical: TextAlignVertical.center,
-                              // textCapitalization: TextCapitalization.sentences,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffE0E0E0),
-                                  ),
+                          Form(
+                            key: withdrawalFormKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: brandOne, width: 1.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffE0E0E0),
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Colors.red,
-                                      width: 1.0), // Change color to yellow
-                                ),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 12),
-                                  child: Image.asset(
-                                    'assets/icons/bank_icon.png',
-                                    width: 26,
-                                    // Ensure the image fits inside the circle
-                                  ),
-                                ),
-                                suffixIcon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 24,
-                                  color: colorBlack,
-                                ),
-                                filled: false,
-                                fillColor: Colors.transparent,
-                                contentPadding: const EdgeInsets.all(14),
-                              ),
-                              maxLines: 1,
-                            ),
-
-                            // GestureDetector(
-                            //   onTap: _openBankSelectorOverlay,
-                            //   child: AbsorbPointer(
-                            //     child: bank,
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Account Number',
-                                style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            accountNumber
-                          ],
-                        ),
-                        (isChecking)
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 5),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffEEF8FF),
-                                      borderRadius: BorderRadius.circular(15),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Select Bank',
+                                        style: GoogleFonts.lato(
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
+                                      ),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 20.w,
+                                    TextFormField(
+                                      onTap: () async {
+                                        _accountNumberController.clear();
+                                        setState(() {
+                                          _bankAccountName = '';
+                                        });
+                                        showModalBottomSheet(
+                                          backgroundColor:
+                                              const Color(0xffF6F6F8),
+                                          isDismissible: false,
+                                          enableDrag: true,
+                                          isScrollControlled: true,
+                                          context: context,
+                                          builder: (context) => BankSelection(
+                                            onBankSelected:
+                                                (selectedBank, selectedCode) {
+                                              _bankController.text =
+                                                  selectedBank;
+                                              selectedBankCode = selectedCode;
+                                              selectedBankName = selectedBank;
+
+                                              _handleBankSelection(
+                                                  selectedBank, selectedCode);
+                                            },
+                                          ),
+                                          // },
+                                        );
+                                      },
+                                      onChanged: (e) {
+                                        _checkFieldsAndHitApi();
+                                        // setState(() {
+                                        //   canProceed = false;
+                                        // });
+                                        // tvName = "";
+                                      },
+                                      readOnly: true,
+                                      // autovalidateMode:
+                                      //     AutovalidateMode.onUserInteraction,
+                                      enableSuggestions: true,
+                                      cursorColor: colorBlack,
+                                      style: GoogleFonts.lato(
+                                          color: colorBlack, fontSize: 14),
+
+                                      controller: _bankController,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      // textCapitalization: TextCapitalization.sentences,
+                                      keyboardType: TextInputType.emailAddress,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffE0E0E0),
+                                          ),
                                         ),
-                                        Center(
-                                          widthFactor: 0.2,
-                                          child: SizedBox(
-                                            height: 20.h,
-                                            width: 20.w,
-                                            child: const SpinKitSpinningLines(
-                                              color: brandTwo,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: brandOne, width: 1.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffE0E0E0),
+                                          ),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.red,
+                                              width:
+                                                  1.0), // Change color to yellow
+                                        ),
+                                        prefixIcon: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 18, vertical: 12),
+                                          child: Image.asset(
+                                            'assets/icons/bank_icon.png',
+                                            width: 26,
+                                            // Ensure the image fits inside the circle
+                                          ),
+                                        ),
+                                        suffixIcon: const Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: 24,
+                                          color: colorBlack,
+                                        ),
+                                        filled: false,
+                                        fillColor: Colors.transparent,
+                                        contentPadding:
+                                            const EdgeInsets.all(14),
+                                      ),
+                                      maxLines: 1,
+                                    ),
+
+                                    // GestureDetector(
+                                    //   onTap: _openBankSelectorOverlay,
+                                    //   child: AbsorbPointer(
+                                    //     child: bank,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Account Number',
+                                        style: GoogleFonts.lato(
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                    accountNumber
+                                  ],
+                                ),
+                                (isChecking)
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 5,
+                                        ),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15, vertical: 5),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffEEF8FF),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 20.w,
+                                                ),
+                                                Center(
+                                                  widthFactor: 0.2,
+                                                  child: SizedBox(
+                                                    height: 20.h,
+                                                    width: 20.w,
+                                                    child:
+                                                        const SpinKitSpinningLines(
+                                                      color: brandTwo,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20.w,
+                                                ),
+                                                Text(
+                                                  'Verifying Account Details',
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.lato(
+                                                    color: brandOne,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 20.w,
+                                      )
+
+                                    // :(hasError == true)?Text(verifyAccountError):Text(_bankAccountName)
+                                    : const SizedBox(),
+                                (hasError == true || verifyAccountError != '')
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 5,
                                         ),
-                                        Text(
-                                          'Verifying Account Details',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.lato(
-                                            color: brandOne,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.red.withOpacity(0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Text(
+                                            verifyAccountError,
+                                            style: GoogleFonts.lato(
+                                              color: Colors.red,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
+                                      )
+                                    : const SizedBox(),
+                                (_bankAccountName != '')
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 5,
+                                        ),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffEEF8FF),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Text(
+                                            _bankAccountName.capitalize!,
+                                            style: GoogleFonts.lato(
+                                              color: brandOne,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              )
-
-                            // :(hasError == true)?Text(verifyAccountError):Text(_bankAccountName)
-                            : const SizedBox(),
-                        (hasError == true || verifyAccountError != '')
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.red.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    verifyAccountError,
-                                    style: GoogleFonts.lato(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        (_bankAccountName != '')
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffEEF8FF),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    _bankAccountName.capitalize!,
-                                    style: GoogleFonts.lato(
-                                      color: brandOne,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CustomButton(
+                      text: 'Proceed',
+                      onTap: withdrawalFormKey.currentState != null &&
+                              withdrawalFormKey.currentState!.validate() &&
+                              _bankAccountName != ''
+                          ? () async {
+                              FocusScope.of(context).unfocus();
+                              userController.createWithdrawalAccount(
+                                context,
+                                selectedBankCode!,
+                                _accountNumberController.text.trim(),
+                                selectedBankName,
+                                _bankAccountName,
+                              );
+                            }
+                          : null,
                     ),
                   ),
                 ],
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomButton(
-                  text: 'Proceed',
-                  onTap: withdrawalFormKey.currentState != null &&
-                          withdrawalFormKey.currentState!.validate() &&
-                          _bankAccountName != ''
-                      ? () async {
-                          FocusScope.of(context).unfocus();
-                          userController.createWithdrawalAccount(
-                            context,
-                            selectedBankCode!,
-                            _accountNumberController.text.trim(),
-                            selectedBankName,
-                            _bankAccountName,
-                          );
-                        }
-                      : null,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

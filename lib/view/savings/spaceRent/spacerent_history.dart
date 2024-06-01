@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -108,9 +109,9 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -259,19 +260,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                           .map<Widget>((item) {
                                             return Column(
                                               children: [
-                                                ListTile(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 0),
-                                                  minLeadingWidth: 0,
+                                                GestureDetector(
                                                   onTap: () {
-                                                    // print('item');
-                                                    // print(item);
-                                                    // print(userController
-                                                    //     .userModel!
-                                                    //     .userDetails![0]
-                                                    //     .walletHistories[item]);
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -283,119 +273,171 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                       ),
                                                     );
                                                   },
-                                                  leading: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12),
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 10),
                                                     decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color:
-                                                          (item['transactionType'] ==
-                                                                  'Credit')
-                                                              ? brandTwo
-                                                              : brandTwo,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6),
                                                     ),
-                                                    child:
-                                                        (item['transactionType'] ==
-                                                                'Credit')
-                                                            ? const Icon(
-                                                                Icons
-                                                                    .call_received,
-                                                                color: Color(
-                                                                    0xff80FF00),
-                                                                size: 20,
-                                                              )
-                                                            : const Icon(
-                                                                Icons
-                                                                    .arrow_outward_sharp,
-                                                                color:
-                                                                    colorWhite,
-                                                                size: 20,
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Flexible(
+                                                          flex: 7,
+                                                          child: Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            // mainAxisAlignment:
+                                                            //     MainAxisAlignment
+                                                            //         .spaceBetween,
+                                                            children: [
+                                                              Flexible(
+                                                                flex: 2,
+                                                                child:
+                                                                    Container(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          12),
+                                                                  decoration:
+                                                                      const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                        brandTwo,
+                                                                  ),
+                                                                  child: (item[
+                                                                              'transactionType'] ==
+                                                                          'Credit')
+                                                                      ? const Icon(
+                                                                          Icons
+                                                                              .call_received,
+                                                                          color:
+                                                                              Color(0xff80FF00),
+                                                                          size:
+                                                                              20,
+                                                                        )
+                                                                      : const Icon(
+                                                                          Icons
+                                                                              .arrow_outward_sharp,
+                                                                          color:
+                                                                              colorWhite,
+                                                                          size:
+                                                                              20,
+                                                                        ),
+                                                                ),
                                                               ),
-                                                  ),
-                                                  title: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "${item['description'] ?? item['message'] ?? 'No Description Found'} ",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: colorBlack,
+                                                              const SizedBox(
+                                                                  width: 12),
+                                                              Flexible(
+                                                                flex: 8,
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      "${item['description'] ?? item['message'] ?? 'No Description Found'} "
+                                                                          .capitalize!,
+                                                                      maxLines:
+                                                                          1,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color:
+                                                                            colorBlack,
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Text(
+                                                                      formatDateTime(
+                                                                          item[
+                                                                              'createdAt']),
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color: const Color(
+                                                                            0xff4B4B4B),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  subtitle: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 9,
-                                                      ),
-                                                      Text(
-                                                        formatDateTime(
-                                                            item['createdAt']),
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: const Color(
-                                                              0xff4B4B4B),
+                                                        Flexible(
+                                                          flex: 3,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              (item['transactionType'] ==
+                                                                      'Credit')
+                                                                  ? Text(
+                                                                      "+ ${nairaFormaet.format(double.parse(item['amount'].toString()))}",
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color: const Color(
+                                                                            0xff56AB00),
+                                                                      ),
+                                                                    )
+                                                                  : Text(
+                                                                      nairaFormaet
+                                                                          .format(
+                                                                              double.parse(item['amount'].toString())),
+                                                                      style: GoogleFonts
+                                                                          .lato(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color:
+                                                                            colorBlack,
+                                                                      ),
+                                                                    ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  trailing: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      (item['transactionType'] ==
-                                                              'Credit')
-                                                          ? Text(
-                                                              "+ ${nairaFormaet.format(double.parse(item['amount'].toString()))}",
-                                                              style: GoogleFonts
-                                                                  .lato(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: const Color(
-                                                                    0xff56AB00),
-                                                              ),
-                                                            )
-                                                          : Text(
-                                                              nairaFormaet.format(
-                                                                  double.parse(item[
-                                                                          'amount']
-                                                                      .toString())),
-                                                              style: GoogleFonts
-                                                                  .lato(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color:
-                                                                    colorBlack,
-                                                              ),
-                                                            ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                                ((groupedByMonth.keys.length) !=
-                                                        (item[entry.key]))
-                                                    ? const Divider(
-                                                        color:
-                                                            Color(0xffC9C9C9),
-                                                      )
-                                                    : const Text(''),
+                                                const Divider(
+                                                  thickness: 1,
+                                                  color: Color(0xffC9C9C9),
+                                                  indent: 17,
+                                                  endIndent: 17,
+                                                ),
                                               ],
                                             );
                                           })

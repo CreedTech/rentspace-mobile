@@ -470,7 +470,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             child: Row(
                               children: [
                                 Text(
-                                  'Space Point: ',
+                                  'Space Points: ',
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,

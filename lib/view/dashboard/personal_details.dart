@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -152,9 +153,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-            onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -189,20 +190,26 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 children: [
                   Stack(
                     children: [
-                      Container(
-                        width: 52.5,
-                        height: 52.5,
-                        // padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            colorFilter: const ColorFilter.mode(
-                              brandThree,
-                              BlendMode.darken,
-                            ),
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              userController.userModel!.userDetails![0].avatar,
+                      GestureDetector(
+                        onTap: () {
+                          _pickImage(context, ImageSource.gallery);
+                        },
+                        child: Container(
+                          width: 52.5,
+                          height: 52.5,
+                          // padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              colorFilter: const ColorFilter.mode(
+                                brandThree,
+                                BlendMode.darken,
+                              ),
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                userController
+                                    .userModel!.userDetails![0].avatar,
+                              ),
                             ),
                           ),
                         ),
@@ -210,21 +217,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            _pickImage(context, ImageSource.gallery);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: brandTwo,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt_outlined,
-                              color: Colors.white,
-                              size: 12,
-                            ),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: brandTwo,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: const Icon(
+                            Icons.camera_alt_outlined,
+                            color: Colors.white,
+                            size: 12,
                           ),
                         ),
                       ),
@@ -360,7 +362,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                       ),
                       subtitle: Text(
-                        "Username",
+                        "Account Name",
                         style: GoogleFonts.lato(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -392,7 +394,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                       ),
                       subtitle: Text(
-                        "Account Number",
+                        "Username",
                         style: GoogleFonts.lato(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

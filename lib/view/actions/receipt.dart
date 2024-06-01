@@ -225,6 +225,7 @@ class _ReceiptState extends State<Receipt> {
 
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F8),
+      appBar: AppBar(),
       body: RepaintBoundary(
         key: _globalKey,
         child: SafeArea(
