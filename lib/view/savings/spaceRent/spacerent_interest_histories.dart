@@ -68,34 +68,34 @@ class _SpaceRentInterestHistoryPageState
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Text(
-                'Interest History',
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.lato(
-                  color: colorBlack,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24,
+              SizedBox(
+                width: 4.h,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Text(
+                  'Interest History',
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -105,6 +105,7 @@ class _SpaceRentInterestHistoryPageState
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
@@ -136,32 +137,43 @@ class _SpaceRentInterestHistoryPageState
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: (_interests.isEmpty)
-                  ? Column(
+            if (_interests.isEmpty)
+              const SizedBox(
+                height: 20,
+              ),
+            (_interests.isEmpty)
+                ? Container(
+                  height: MediaQuery.of(context).size.height/ 2,
+                  child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/card_empty.png',
-                          height: 300.h,
+                          'assets/icons/history_icon.png',
+                          height: 33.5.h,
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Center(
-                          child: Text(
-                            "No Rent history",
-                            style: GoogleFonts.lato(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
+                          child: SizedBox(
+                            width: 180,
+                            child: Text(
+                              "Your interest history will be displayed here",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: 14,
+                                color: colorBlack,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
                       ],
-                    )
-                  : LiquidPullToRefresh(
+                    ),
+                )
+                : Expanded(
+                    child: LiquidPullToRefresh(
                       height: 70,
                       animSpeedFactor: 2,
                       color: brandOne,
@@ -263,7 +275,7 @@ class _SpaceRentInterestHistoryPageState
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        "+ ${nairaFormaet.format(double.parse(item['interestAmount'].toString()))}",
+                                                        "+ ₦${item['interestAmount']}",
                                                         style: GoogleFonts.lato(
                                                           fontSize: 14,
                                                           fontWeight:
@@ -272,7 +284,9 @@ class _SpaceRentInterestHistoryPageState
                                                               0xff56AB00),
                                                         ),
                                                       ),
-                                                      SizedBox(width: 15,),
+                                                      const SizedBox(
+                                                        width: 15,
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -298,7 +312,7 @@ class _SpaceRentInterestHistoryPageState
                         }).toList(),
                       ),
                     ),
-            ),
+                  ),
           ],
         ),
       ),

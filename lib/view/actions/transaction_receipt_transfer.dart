@@ -129,7 +129,7 @@ class _TransactionReceiptTransferState
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
-                        color: brandTwo.withOpacity(0.2),
+                        color: Color(0xffEEF8FF),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(

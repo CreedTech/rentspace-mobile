@@ -39,14 +39,31 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).primaryColor,
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-            size: 30,
-            color: Colors.white,
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: GestureDetector(
+           onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 27,
+                color: colorWhite,
+              ),
+              SizedBox(
+                width: 4.h,
+              ),
+              Text(
+                'Referral',
+                style: GoogleFonts.lato(
+                  color: colorWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -54,6 +71,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
         children: [
           ListView(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Align(
                 alignment: Alignment.center,
                 child: RichText(
@@ -61,7 +81,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                   text: TextSpan(
                     style: GoogleFonts.lato(
                       fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                      fontSize: 14,
                     ),
                     children: <TextSpan>[
                       TextSpan(
@@ -103,166 +123,169 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                         color: Colors.white,
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 10.h),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 5,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Step 1',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 10.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 4,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Step 1',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(9),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
+                                  SizedBox(
+                                    height: 5.h,
                                   ),
-                                  child: const Icon(
-                                    Iconsax.share,
-                                    color: brandOne,
+                                  Container(
+                                    padding: const EdgeInsets.all(9),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: const Icon(
+                                      Iconsax.share,
+                                      color: brandOne,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  'Share your referral code with your friends',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 8.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w600,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
+                                  SizedBox(
+                                    height: 5.h,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Share your referral code with your friends',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 8.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600,
+                                      // fontFamily: "DefaultFontFamily",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          const Icon(
-                            Iconsax.arrow_right_3,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          const Icon(
-                            Iconsax.arrow_right_3,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 4,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Step 2',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w700,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(9),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                  ),
-                                  child: const Icon(
-                                    Iconsax.login,
-                                    color: brandOne,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  'Friends sign up with your referral code',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 8.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w600,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
+                            const Icon(
+                              Iconsax.arrow_right_3,
+                              color: Colors.white,
+                              size: 15,
                             ),
-                          ),
-                          const Icon(
-                            Iconsax.arrow_right_3,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          const Icon(
-                            Iconsax.arrow_right_3,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 4,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Step 3',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w700,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(9),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                  ),
-                                  child: const Icon(
-                                    Iconsax.house_25,
-                                    color: brandOne,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  'Friends start using the space rent and you both earn 500 naira',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 8.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w600,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
+                            const Icon(
+                              Iconsax.arrow_right_3,
+                              color: Colors.white,
+                              size: 15,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 4,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Step 2',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w700,
+                                      // fontFamily: "DefaultFontFamily",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(9),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: const Icon(
+                                      Iconsax.login,
+                                      color: brandOne,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Text(
+                                    'Friends sign up with your referral code',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 8.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600,
+                                      // fontFamily: "DefaultFontFamily",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(
+                              Iconsax.arrow_right_3,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                            const Icon(
+                              Iconsax.arrow_right_3,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 4,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Step 3',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w700,
+                                      // fontFamily: "DefaultFontFamily",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(9),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: const Icon(
+                                      Iconsax.house_25,
+                                      color: brandOne,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  Text(
+                                    'Friends start using the space rent and you both earn 500 naira',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 8.0,
+                                      // letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600,
+                                      // fontFamily: "DefaultFontFamily",
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -325,48 +348,46 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ' ${userController.userModel!.userDetails![0].referralCode}',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 30.0,
-                                    // letterSpacing: 0.5,
-                                    fontWeight: FontWeight.w700,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Theme.of(context).primaryColor,
+                            InkWell(
+                              onTap: () {
+                                Clipboard.setData(
+                                  ClipboardData(
+                                    text: userController.userModel!
+                                        .userDetails![0].referralCode,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text: userController.userModel!
-                                            .userDetails![0].referralCode,
-                                      ),
-                                    );
-                                    Fluttertoast.showToast(
-                                      msg: "Copied to clipboard!",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.white,
-                                      textColor: brandOne,
-                                      fontSize: 16.0,
-                                    );
-                                  },
-                                  child: Icon(
+                                );
+                                Fluttertoast.showToast(
+                                  msg: "Copied to clipboard!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.white,
+                                  textColor: brandOne,
+                                  fontSize: 16.0,
+                                );
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    ' ${userController.userModel!.userDetails![0].referralCode}',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  const Icon(
                                     Icons.copy,
-                                    size: 16,
+                                    size: 20,
                                     color: brandOne,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: 10.h,
@@ -397,7 +418,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             children: [
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(300, 50),
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width - 50,
+                                      50),
                                   backgroundColor: Colors.white,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -414,7 +437,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.share_outlined,
                                       size: 20,
                                       color: brandOne,

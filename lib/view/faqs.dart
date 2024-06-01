@@ -401,32 +401,28 @@ class _FaqsPageState extends State<FaqsPage> {
             left: 20,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 50, 50),
-                    backgroundColor: brandTwo,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize:
+                      Size(MediaQuery.of(context).size.width - 50, 50),
+                  backgroundColor: brandTwo,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      10,
                     ),
                   ),
-                  onPressed: () {
-                    Get.to(const ContactUsPage());
-                  },
-                  child: Text(
-                    'Contact Us',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                      color: colorWhite,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                ),
+                onPressed: () {
+                  Get.to(const ContactUsPage());
+                },
+                child: Text(
+                  'Contact Us',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: colorWhite,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),

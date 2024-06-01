@@ -178,30 +178,30 @@ class _SpaceRentConfirmationPageState
         backgroundColor: brandOne,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorWhite,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Confirmation',
-              style: GoogleFonts.lato(
-                color: colorWhite,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Confirmation',
+                style: GoogleFonts.lato(
+                  color: colorWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           Padding(
@@ -223,515 +223,716 @@ class _SpaceRentConfirmationPageState
             topRight: Radius.circular(20),
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Almost Done!',
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: colorBlack,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 280.w,
-                    child: Text(
-                      'Confirm the following details to create your Space Rent plan.',
-                      style: GoogleFonts.lato(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: colorBlack,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.h),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      // height: 92.h,
-                      padding: const EdgeInsets.all(17),
-                      decoration: BoxDecoration(
-                        color: colorWhite,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Rent Amount',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: brandOne,
-                            ),
-                          ),
-                          Text(
-                            currencyFormat.format(widget.rentValue),
-                            style: GoogleFonts.lato(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600,
-                              color: brandOne,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    // height: 92.h,
-                    padding: const EdgeInsets.all(17),
-                    decoration: BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                child: ListView(
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Space Rent Name',
-                              style: GoogleFonts.lato(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
-                              ),
+                        Text(
+                          'Almost Done!',
+                          style: GoogleFonts.lato(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: colorBlack,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 280.w,
+                          child: Text(
+                            'Confirm the following details to create your Space Rent plan.',
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: colorBlack,
                             ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-                            Text(
-                              widget.rentName.capitalize!,
-                              style: GoogleFonts.lato(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: colorBlack,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 0.h),
-                          child: const Divider(
-                            thickness: 1,
-                            color: Color(0xffC9C9C9),
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            // height: 92.h,
+                            padding: const EdgeInsets.all(17),
+                            decoration: BoxDecoration(
+                              color: colorWhite,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Rent Amount',
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: brandOne,
+                                  ),
+                                ),
+                                Text(
+                                  currencyFormat.format(widget.rentValue),
+                                  style: GoogleFonts.lato(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w600,
+                                    color: brandOne,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Saving Duration',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          // height: 92.h,
+                          padding: const EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                            color: colorWhite,
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Space Rent Name',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xff4B4B4B),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  '${widget.duration} months',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
+                                  SizedBox(
+                                    height: 8.h,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Days',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
+                                  Text(
+                                    widget.rentName.capitalize!,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorBlack,
+                                    ),
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: 17.h),
+                                child: const Divider(
+                                  thickness: 1,
+                                  color: Color(0xffC9C9C9),
                                 ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  _calculateDaysDifference(
-                                          DateFormat('dd/MM/yyyy')
-                                              .format(widget.receivalDate),
-                                          widget.startDate)
-                                      .toString(),
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Saving Duration',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        '${widget.duration} months',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          color: Color(0xffC9C9C9),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Start Date',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                      Text(
+                                        'Days',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        _calculateDaysDifference(
+                                                DateFormat('dd/MM/yyyy')
+                                                    .format(widget
+                                                        .receivalDate),
+                                                widget.startDate)
+                                            .toString(),
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                    ],
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: 17.h),
+                                child: const Divider(
+                                  thickness: 1,
+                                  color: Color(0xffC9C9C9),
                                 ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  widget.startDate,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                      Text(
+                                        'Start Date',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        widget.startDate,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'End Date',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                      Text(
+                                        'End Date',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        DateFormat('dd/MM/yyyy')
+                                            .format(widget.receivalDate),
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 17.h,
+                                      // ),
+                                    ],
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: 17.h),
+                                child: const Divider(
+                                  thickness: 1,
+                                  color: Color(0xffC9C9C9),
                                 ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  DateFormat('dd/MM/yyyy')
-                                      .format(widget.receivalDate),
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Frequency',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        widget.durationType,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          color: Color(0xffC9C9C9),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Frequency',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text(
+                                        '${currencyFormat.format(widget.savingsValue)}/${widget.durationType.toLowerCase() == 'weekly' ? 'wk' : 'mth'}',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  widget.durationType,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xff4B4B4B),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Text(
-                                  '${currencyFormat.format(widget.savingsValue)}/${widget.durationType.toLowerCase() == 'weekly' ? 'wk' : 'mth'}',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 25.h),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: const Color(0xffF6F6F8),
-                          // showDragHandle: true,
-                          isDismissible: false,
-                          enableDrag: true,
-                          isScrollControlled: true,
-                          builder: (BuildContext context) {
-                            return FractionallySizedBox(
-                              heightFactor: 0.64,
-                              // constraints: BoxConstraints(
-                              //   maxHeight: 900 // Adjust the value as needed
-                              // ),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffF6F6F8),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30.0),
-                                    topRight: Radius.circular(30.0),
-                                  ),
-                                ),
-                                // padding:
-                                //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    // SizedBox(
-                                    //   height: 30.h,
-                                    // ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 17.w, top: 28.h),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_back_ios,
-                                              size: 27.w,
-                                              color: colorBlack,
-                                            ),
-                                            Text(
-                                              'Cancel',
-                                              style: GoogleFonts.lato(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
-                                                color: colorBlack,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 0.h, top: 40),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width - 50, 50),
+                            backgroundColor: brandTwo,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            showModalBottomSheet(
+                                context: context,
+                                backgroundColor: const Color(0xffF6F6F8),
+                                // showDragHandle: true,
+                                isDismissible: false,
+                                enableDrag: true,
+                                isScrollControlled: true,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height /1.5,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffF6F6F8),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 20.h, horizontal: 24.w),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 22, horizontal: 27),
-                                        decoration: BoxDecoration(
-                                          color: colorWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                    // padding:
+                                    //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // SizedBox(
+                                        //   height: 30.h,
+                                        // ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 17.w, top: 28.h),
+                                            child: Row(
                                               children: [
-                                                Image.asset(
-                                                  'assets/icons/lock_filled.png',
-                                                  width: 23.w,
-                                                  color: brandOne,
-                                                ),
-                                                SizedBox(
-                                                  width: 5.w,
+                                                Icon(
+                                                  Icons.arrow_back_ios,
+                                                  size: 27.w,
+                                                  color: colorBlack,
                                                 ),
                                                 Text(
-                                                  'Transaction Pin',
+                                                  'Cancel',
                                                   style: GoogleFonts.lato(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: colorDark,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w500,
+                                                    color: colorBlack,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
-                                              height: 28.h,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 20.h,
+                                              horizontal: 24.w),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 22,
+                                                    horizontal: 27),
+                                            decoration: BoxDecoration(
+                                              color: colorWhite,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                             ),
-                                            Pinput(
-                                              obscuringCharacter: '*',
-                                              useNativeKeyboard: false,
-                                              obscureText: true,
-                                              defaultPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
-                                                      width: 1.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              focusedPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/icons/lock_filled.png',
+                                                      width: 23.w,
                                                       color: brandOne,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5.w,
+                                                    ),
+                                                    Text(
+                                                      'Transaction Pin',
+                                                      style: GoogleFonts.lato(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: colorDark,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              submittedPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
+                                                SizedBox(
+                                                  height: 28.h,
+                                                ),
+                                                Pinput(
+                                                  obscuringCharacter: '*',
+                                                  useNativeKeyboard: false,
+                                                  obscureText: true,
+                                                  defaultPinTheme: PinTheme(
+                                                    width: 67,
+                                                    height: 60,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
                                                         horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
+                                                    textStyle:
+                                                        GoogleFonts.lato(
+                                                      fontSize: 25,
                                                       color: brandOne,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              followingPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: const Color(
+                                                              0xffBDBDBD),
+                                                          width: 1.0),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
+                                                    ),
+                                                  ),
+                                                  focusedPinTheme: PinTheme(
+                                                    width: 67,
+                                                    height: 60,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
                                                         horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              onCompleted: (String val) async {
-                                                setState(() {
-                                                  isFilled = true;
-                                                });
-                                                if (BCrypt.checkpw(
-                                                  _aPinController.text
-                                                      .trim()
-                                                      .toString(),
-                                                  userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .wallet
-                                                      .pin,
-                                                )) {
-                                                  await fetchUserData()
-                                                      .then((value) {
-                                                    final hasSufficientBalance =
-                                                        checkSufficientBalance();
-                                                    (widget.startDate ==
-                                                            formattedCurrentDate)
-                                                        ? (hasSufficientBalance)
-                                                            ? rentState.createRent(
+                                                    textStyle:
+                                                        GoogleFonts.lato(
+                                                      fontSize: 25,
+                                                      color: brandOne,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: brandOne,
+                                                          width: 1.0),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
+                                                    ),
+                                                  ),
+                                                  submittedPinTheme: PinTheme(
+                                                    width: 67,
+                                                    height: 60,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 5),
+                                                    textStyle:
+                                                        GoogleFonts.lato(
+                                                      fontSize: 25,
+                                                      color: brandOne,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: brandOne,
+                                                          width: 1.0),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
+                                                    ),
+                                                  ),
+                                                  followingPinTheme: PinTheme(
+                                                    width: 67,
+                                                    height: 60,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 5),
+                                                    textStyle:
+                                                        GoogleFonts.lato(
+                                                      fontSize: 25,
+                                                      color: brandOne,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: const Color(
+                                                              0xffBDBDBD),
+                                                          width: 1.0),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
+                                                    ),
+                                                  ),
+                                                  onCompleted:
+                                                      (String val) async {
+                                                    setState(() {
+                                                      isFilled = true;
+                                                    });
+                                                    if (BCrypt.checkpw(
+                                                      _aPinController.text
+                                                          .trim()
+                                                          .toString(),
+                                                      userController
+                                                          .userModel!
+                                                          .userDetails![0]
+                                                          .wallet
+                                                          .pin,
+                                                    )) {
+                                                      await fetchUserData()
+                                                          .then((value) {
+                                                        final hasSufficientBalance =
+                                                            checkSufficientBalance();
+                                                        (widget.startDate ==
+                                                                formattedCurrentDate)
+                                                            ? (hasSufficientBalance)
+                                                                ? rentState.createRent(
+                                                                    context,
+                                                                    widget
+                                                                        .rentName,
+                                                                    DateFormat(
+                                                                            'dd/MM/yyyy')
+                                                                        .format(
+                                                                            widget
+                                                                                .receivalDate),
+                                                                    widget
+                                                                        .durationType,
+                                                                    widget
+                                                                        .savingsValue,
+                                                                    widget
+                                                                        .rentValue,
+                                                                    widget
+                                                                        .paymentCount,
+                                                                    widget
+                                                                        .startDate,
+                                                                    widget
+                                                                        .duration
+                                                                    // fundingController.text,
+                                                                    )
+                                                                : showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    barrierDismissible:
+                                                                        true,
+                                                                    builder:
+                                                                        (BuildContext
+                                                                            context) {
+                                                                      return AlertDialog(
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(16),
+                                                                        ),
+                                                                        title:
+                                                                            null,
+                                                                        scrollable:
+                                                                            true,
+                                                                        elevation:
+                                                                            0,
+                                                                        content:
+                                                                            SizedBox(
+                                                                          // height: 220.h,
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width,
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                                                                            child: Column(
+                                                                              children: [
+                                                                                Wrap(
+                                                                                  alignment: WrapAlignment.center,
+                                                                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                                                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    const Icon(
+                                                                                      Icons.info_outline_rounded,
+                                                                                      color: colorBlack,
+                                                                                      size: 24,
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 4,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      'Insufficient fund.',
+                                                                                      style: GoogleFonts.lato(
+                                                                                        color: colorBlack,
+                                                                                        fontSize: 24,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  height: 14,
+                                                                                ),
+                                                                                Text(
+                                                                                  'You need to fund your wallet to perform this transaction.',
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: GoogleFonts.lato(
+                                                                                    color: colorBlack,
+                                                                                    fontSize: 14,
+                                                                                    fontWeight: FontWeight.w400,
+                                                                                  ),
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  height: 29,
+                                                                                ),
+                                                                                Align(
+                                                                                  alignment: Alignment.bottomCenter,
+                                                                                  child: ElevatedButton(
+                                                                                    style: ElevatedButton.styleFrom(
+                                                                                      minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
+                                                                                      backgroundColor: brandTwo,
+                                                                                      elevation: 0,
+                                                                                      shape: RoundedRectangleBorder(
+                                                                                        borderRadius: BorderRadius.circular(
+                                                                                          10,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    onPressed: () {
+                                                                                      Navigator.of(context).pop();
+                                                                                      Get.to(const FundWallet());
+                                                                                    },
+                                                                                    child: Text(
+                                                                                      'Ok',
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: GoogleFonts.lato(
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 14,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    })
+                                                            : rentState.createRent(
                                                                 context,
-                                                                widget.rentName,
-                                                                DateFormat('dd/MM/yyyy')
+                                                                widget
+                                                                    .rentName,
+                                                                DateFormat(
+                                                                        'dd/MM/yyyy')
                                                                     .format(widget
                                                                         .receivalDate),
                                                                 widget
@@ -744,241 +945,125 @@ class _SpaceRentConfirmationPageState
                                                                     .paymentCount,
                                                                 widget
                                                                     .startDate,
-                                                                widget.duration
+                                                                widget
+                                                                    .duration
                                                                 // fundingController.text,
-                                                                )
-                                                            : showDialog(
-                                                                context:
-                                                                    context,
-                                                                barrierDismissible:
-                                                                    true,
-                                                                builder:
-                                                                    (BuildContext
-                                                                        context) {
-                                                                  return AlertDialog(
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              16),
-                                                                    ),
-                                                                    title: null,
-                                                                    scrollable:
-                                                                        true,
-                                                                    elevation:
-                                                                        0,
-                                                                    content:
-                                                                        SizedBox(
-                                                                      // height: 220.h,
-                                                                      width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width,
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                            vertical:
-                                                                                10,
-                                                                            horizontal:
-                                                                                0),
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Wrap(
-                                                                              alignment: WrapAlignment.center,
-                                                                              crossAxisAlignment: WrapCrossAlignment.center,
-                                                                              // mainAxisAlignment: MainAxisAlignment.center,
-                                                                              children: [
-                                                                                const Icon(
-                                                                                  Icons.info_outline_rounded,
-                                                                                  color: colorBlack,
-                                                                                  size: 24,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  width: 4,
-                                                                                ),
-                                                                                Text(
-                                                                                  'Insufficient fund.',
-                                                                                  style: GoogleFonts.lato(
-                                                                                    color: colorBlack,
-                                                                                    fontSize: 24,
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 14,
-                                                                            ),
-                                                                            Text(
-                                                                              'You need to fund your wallet to perform this transaction.',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: GoogleFonts.lato(
-                                                                                color: colorBlack,
-                                                                                fontSize: 14,
-                                                                                fontWeight: FontWeight.w400,
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 29,
-                                                                            ),
-                                                                            Align(
-                                                                              alignment: Alignment.bottomCenter,
-                                                                              child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(
-                                                                                  minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
-                                                                                  backgroundColor: brandTwo,
-                                                                                  elevation: 0,
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius: BorderRadius.circular(
-                                                                                      10,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                onPressed: () {
-                                                                                  Navigator.of(context).pop();
-                                                                                  Get.to(FundWallet());
-                                                                                },
-                                                                                child: Text(
-                                                                                  'Ok',
-                                                                                  textAlign: TextAlign.center,
-                                                                                  style: GoogleFonts.lato(
-                                                                                    color: Colors.white,
-                                                                                    fontSize: 14,
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                })
-                                                        : rentState.createRent(
+                                                                );
+                                                      }).catchError(
+                                                        (error) {
+                                                          setState(() {
+                                                            isFilled = false;
+                                                          });
+                                                          customErrorDialog(
+                                                              context,
+                                                              'Oops',
+                                                              'Something went wrong. Try again later');
+                                                        },
+                                                      );
+                                                    } else {
+                                                      _aPinController.clear();
+                                                      if (context.mounted) {
+                                                        setState(() {
+                                                          isFilled = false;
+                                                        });
+                                                        customErrorDialog(
                                                             context,
-                                                            widget.rentName,
-                                                            DateFormat(
-                                                                    'dd/MM/yyyy')
-                                                                .format(widget
-                                                                    .receivalDate),
-                                                            widget.durationType,
-                                                            widget.savingsValue,
-                                                            widget.rentValue,
-                                                            widget.paymentCount,
-                                                            widget.startDate,
-                                                            widget.duration
-                                                            // fundingController.text,
-                                                            );
-                                                  }).catchError(
-                                                    (error) {
-                                                      setState(() {
-                                                        isFilled = false;
-                                                      });
-                                                      customErrorDialog(
-                                                          context,
-                                                          'Oops',
-                                                          'Something went wrong. Try again later');
-                                                    },
-                                                  );
-                                                } else {
-                                                  _aPinController.clear();
-                                                  if (context.mounted) {
-                                                    setState(() {
-                                                      isFilled = false;
-                                                    });
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Invalid PIN",
-                                                        'Enter correct PIN to proceed');
-                                                  }
-                                                }
-                                              },
-                                              // validator: validatePinOne,
-                                              // onChanged: validatePinOne,
-                                              controller: _aPinController,
-                                              length: 4,
-                                              closeKeyboardWhenCompleted: true,
-                                              keyboardType:
-                                                  TextInputType.number,
+                                                            "Invalid PIN",
+                                                            'Enter correct PIN to proceed');
+                                                      }
+                                                    }
+                                                  },
+                                                  // validator: validatePinOne,
+                                                  // onChanged: validatePinOne,
+                                                  controller: _aPinController,
+                                                  length: 4,
+                                                  closeKeyboardWhenCompleted:
+                                                      true,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 24.w,
-                                          right: 24.w,
-                                          bottom: 30.h),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2, horizontal: 7),
-                                        decoration: BoxDecoration(
-                                          color: colorWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        child: NumericKeyboard(
-                                          onKeyboardTap: onKeyboardTap,
-                                          textStyle: GoogleFonts.lato(
-                                              color: brandOne,
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w500),
-                                          rightButtonFn: () {
-                                            if (_aPinController.text.isEmpty)
-                                              return;
-                                            setState(() {
-                                              _aPinController.text =
-                                                  _aPinController
-                                                      .text
-                                                      .substring(
-                                                          0,
-                                                          _aPinController
-                                                                  .text.length -
-                                                              1);
-                                            });
-                                          },
-                                          rightButtonLongPressFn: () {
-                                            if (_aPinController.text.isEmpty)
-                                              return;
-                                            setState(() {
-                                              _aPinController.text = '';
-                                            });
-                                          },
-                                          rightIcon: const Icon(
-                                            Icons.backspace_outlined,
-                                            color: Colors.red,
                                           ),
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 24.w,
+                                              right: 24.w,
+                                              bottom: 30.h),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 2,
+                                                    horizontal: 7),
+                                            decoration: BoxDecoration(
+                                              color: colorWhite,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
+                                            ),
+                                            child: NumericKeyboard(
+                                              onKeyboardTap: onKeyboardTap,
+                                              textStyle: GoogleFonts.lato(
+                                                  color: brandOne,
+                                                  fontSize: 32,
+                                                  fontWeight:
+                                                      FontWeight.w500),
+                                              rightButtonFn: () {
+                                                if (_aPinController
+                                                    .text.isEmpty) return;
+                                                setState(() {
+                                                  _aPinController.text =
+                                                      _aPinController.text
+                                                          .substring(
+                                                              0,
+                                                              _aPinController
+                                                                      .text
+                                                                      .length -
+                                                                  1);
+                                                });
+                                              },
+                                              rightButtonLongPressFn: () {
+                                                if (_aPinController
+                                                    .text.isEmpty) return;
+                                                setState(() {
+                                                  _aPinController.text = '';
+                                                });
+                                              },
+                                              rightIcon: const Icon(
+                                                Icons.backspace_outlined,
+                                                color: Colors.red,
+                                              ),
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                    child: Text(
-                      'Create Space Rent',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                                  );
+                                });
+                          },
+                          child: Text(
+                            'Create Space Rent',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

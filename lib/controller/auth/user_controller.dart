@@ -168,9 +168,9 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print(result);
 
         userModel = UserModel.fromJson(result);
+        print(userModel);
         isLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {

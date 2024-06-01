@@ -86,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -165,7 +165,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -223,7 +223,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -276,30 +276,30 @@ class _ChangePasswordState extends State<ChangePassword> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Change Password',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Change Password',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -386,37 +386,33 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width - 50, 50),
+                    backgroundColor: brandTwo,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
                       ),
                     ),
-                    onPressed: () async {
-                      if (changePwdFormKey.currentState != null &&
-                          changePwdFormKey.currentState!.validate()) {
-                        FocusScope.of(context).unfocus();
-                        userController.changePassword(
-                            context,
-                            oldPasswordController.text.trim(),
-                            newPasswordController.text.trim(),
-                            repeatPasswordController.text.trim());
-                        //  storedData['data'];
-                      }
-                    },
-                    child: const Text(
-                      'Change',
-                      textAlign: TextAlign.center,
-                    ),
+                  ),
+                  onPressed: () async {
+                    if (changePwdFormKey.currentState != null &&
+                        changePwdFormKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+                      userController.changePassword(
+                          context,
+                          oldPasswordController.text.trim(),
+                          newPasswordController.text.trim(),
+                          repeatPasswordController.text.trim());
+                      //  storedData['data'];
+                    }
+                  },
+                  child: const Text(
+                    'Change',
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

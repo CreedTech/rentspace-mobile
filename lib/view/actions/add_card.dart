@@ -163,7 +163,7 @@
 //     border = OutlineInputBorder(
 //       borderSide: BorderSide(
 //         color: Colors.grey.withOpacity(0.7),
-//         width: 2.0,
+//         width: 1.0,
 //       ),
 //     );
 //     super.initState();
@@ -310,7 +310,7 @@
 //     //       ),
 //     //     ),
 //     //     focusedBorder: const OutlineInputBorder(
-//     //       borderSide: BorderSide(color: brandOne, width: 2.0),
+//     //       borderSide: BorderSide(color: brandOne, width: 1.0),
 //     //     ),
 //     //     enabledBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
@@ -319,7 +319,7 @@
 //     //     ),
 //     //     errorBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
-//     //           color: Colors.red, width: 2.0), // Change color to yellow
+//     //           color: Colors.red, width: 1.0), // Change color to yellow
 //     //     ),
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //   ),
@@ -396,7 +396,7 @@
 //     //       ),
 //     //     ),
 //     //     focusedBorder: const OutlineInputBorder(
-//     //       borderSide: BorderSide(color: brandOne, width: 2.0),
+//     //       borderSide: BorderSide(color: brandOne, width: 1.0),
 //     //     ),
 //     //     enabledBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
@@ -405,7 +405,7 @@
 //     //     ),
 //     //     errorBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
-//     //           color: Colors.red, width: 2.0), // Change color to yellow
+//     //           color: Colors.red, width: 1.0), // Change color to yellow
 //     //     ),
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //     filled: false,
@@ -511,7 +511,7 @@
 //         ),
 //         focusedBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
-//           borderSide: const BorderSide(color: brandOne, width: 2.0),
+//           borderSide: const BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
@@ -522,7 +522,7 @@
 //         errorBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
 //           borderSide: const BorderSide(
-//               color: Colors.red, width: 2.0), // Change color to yellow
+//               color: Colors.red, width: 1.0), // Change color to yellow
 //         ),
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
@@ -621,7 +621,7 @@
 //                           focusedBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide:
-//                                 const BorderSide(color: brandOne, width: 2.0),
+//                                 const BorderSide(color: brandOne, width: 1.0),
 //                           ),
 //                           enabledBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
@@ -633,7 +633,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 2.0), // Change color to yellow
+//                                 width: 1.0), // Change color to yellow
 //                           ),
 //                           labelText: 'Number',
 //                           hintText: 'XXXX XXXX XXXX XXXX',
@@ -655,7 +655,7 @@
 //                             focusedBorder: OutlineInputBorder(
 //                               borderRadius: BorderRadius.circular(15.0),
 //                               borderSide:
-//                                   const BorderSide(color: brandOne, width: 2.0),
+//                                   const BorderSide(color: brandOne, width: 1.0),
 //                             ),
 //                             enabledBorder: OutlineInputBorder(
 //                               borderRadius: BorderRadius.circular(15.0),
@@ -667,7 +667,7 @@
 //                               borderRadius: BorderRadius.circular(15.0),
 //                               borderSide: const BorderSide(
 //                                   color: Colors.red,
-//                                   width: 2.0), // Change color to yellow
+//                                   width: 1.0), // Change color to yellow
 //                             ),
 //                             hintStyle: GoogleFonts.lato(
 //                               color: Theme.of(context).primaryColor,
@@ -694,7 +694,7 @@
 //                           focusedBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide:
-//                                 const BorderSide(color: brandOne, width: 2.0),
+//                                 const BorderSide(color: brandOne, width: 1.0),
 //                           ),
 //                           enabledBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
@@ -706,7 +706,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 2.0), // Change color to yellow
+//                                 width: 1.0), // Change color to yellow
 //                           ),
 //                           labelText: 'CVV',
 //                           hintText: 'XXX',
@@ -728,7 +728,7 @@
 //                           focusedBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide:
-//                                 const BorderSide(color: brandOne, width: 2.0),
+//                                 const BorderSide(color: brandOne, width: 1.0),
 //                           ),
 //                           enabledBorder: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(15.0),
@@ -740,7 +740,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 2.0), // Change color to yellow
+//                                 width: 1.0), // Change color to yellow
 //                           ),
 //                           labelText: 'Card Holder',
 //                           contentPadding: const EdgeInsets.all(14),

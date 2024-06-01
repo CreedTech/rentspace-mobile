@@ -858,7 +858,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandOne,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),
@@ -874,7 +874,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandOne,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),
@@ -890,7 +890,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandTwo,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),

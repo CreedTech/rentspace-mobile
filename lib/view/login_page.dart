@@ -133,10 +133,11 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     // final isConnected = ref.watch(internetConnectionProvider).isConnected;
     //email field
     final email = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: colorBlack,
-      style: GoogleFonts.lato(color: colorBlack, fontSize: 14),
+      style: GoogleFonts.lato(
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -148,7 +149,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -159,7 +160,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -189,12 +190,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     );
 //Textform field
     final password = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: colorBlack,
       controller: _passwordController,
       obscureText: obscurity,
-      style: GoogleFonts.lato(color: colorBlack, fontSize: 14),
+      style: GoogleFonts.lato(
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         suffix: InkWell(
@@ -209,7 +211,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -220,7 +222,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -247,357 +249,344 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
 
     //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
-    return UpgradeAlert(
-      upgrader: Upgrader(
-        showIgnore: false,
-        durationUntilAlertAgain: const Duration(seconds: 5),
-        debugLogging: true,
-        // debugDisplayAlways:true,
-        dialogStyle: UpgradeDialogStyle.cupertino,
-        showLater: false,
-        canDismissDialog: false,
-        showReleaseNotes: true,
-      ),
-      child: Scaffold(
-        backgroundColor: brandOne,
-        body: Container(
+    return Scaffold(
+      backgroundColor: brandOne,
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             color: brandOne,
           ),
-          child: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 0,
-                  right: -50,
-                  child: Image.asset(
-                    'assets/logo_transparent.png',
-                    width: 205.47.w,
-                    height: 292.51.h,
-                  ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: 0,
+                right: -50,
+                child: Image.asset(
+                  'assets/logo_transparent.png',
+                  width: 205.47.w,
+                  height: 292.51.h,
                 ),
-                Positioned(
-                  top: 40,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 55),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/logo_main.png',
-                          width: 168,
-                          height: 50.4.h,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 12.h, left: 30),
-                          child: Text(
-                            'your financial power...',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.italic,
-                              color: colorWhite,
-                            ),
+              ),
+              Positioned(
+                top: 40,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 55),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/logo_main.png',
+                        width: 168,
+                        height: 50.4.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 12.h, left: 30),
+                        child: Text(
+                          'your financial power...',
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic,
+                            color: colorWhite,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.height / 4,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 40, horizontal: 24),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height / 4,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome Back👋',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.lato(
-                                color: colorBlack,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 24,
-                              ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Welcome Back👋',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: colorBlack,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
                             ),
-                            Text(
-                              'Keep your rent journey seamless. \nLog in to manage payments effortlessly.',
-                              style: GoogleFonts.lato(
-                                color: const Color(0xff4B4B4B),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                // fontFamily: "DefaultFontFamily",
-                              ),
+                          ),
+                          Text(
+                            'Keep your rent journey seamless. \nLog in to manage payments effortlessly.',
+                            style: GoogleFonts.lato(
+                              color: const Color(0xff4B4B4B),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              // fontFamily: "DefaultFontFamily",
                             ),
-                            const SizedBox(
-                              height: 49,
-                            ),
-                            Form(
-                              key: loginFormKey,
-                              child: Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 3.h, horizontal: 3.w),
-                                        child: Text(
-                                          'Email',
-                                          style: GoogleFonts.lato(
-                                            color: colorBlack,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      email,
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 36,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 3.h, horizontal: 3.w),
-                                        child: Text(
-                                          'Password',
-                                          style: GoogleFonts.lato(
-                                            color: colorBlack,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      password,
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 21,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.zero,
-                                            // alignment: Alignment.centerLeft,
-                                            child: Checkbox.adaptive(
-                                              visualDensity: VisualDensity
-                                                  .adaptivePlatformDensity,
-                                              value: _rememberMe,
-                                              onChanged: (bool? value) {
-                                                setState(() {
-                                                  _rememberMe = value!;
-                                                });
-                                              },
-                                              overlayColor: MaterialStateColor
-                                                  .resolveWith(
-                                                (states) => brandTwo,
-                                              ),
-                                              fillColor: MaterialStateProperty
-                                                  .resolveWith<Color>(
-                                                      (Set<MaterialState>
-                                                          states) {
-                                                if (states.contains(
-                                                    MaterialState.selected)) {
-                                                  return brandTwo;
-                                                }
-                                                return const Color(0xffF2F2F2);
-                                              }),
-                                              focusColor: MaterialStateColor
-                                                  .resolveWith(
-                                                (states) => brandTwo,
-                                              ),
-                                              activeColor: MaterialStateColor
-                                                  .resolveWith(
-                                                (states) => brandTwo,
-                                              ),
-                                              side: const BorderSide(
-                                                color: Color(0xffBDBDBD),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Remember me',
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.lato(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: colorDark,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      // : const Row(
-                                      //     children: [],
-                                      //   ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.to(const ForgotPassword());
-                                          // Navigator.of(context).pushNamed(forgotPass);
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            'Forgot Password?',
-                                            style: GoogleFonts.lato(
-                                              color: brandFive,
-                                              fontSize: 14,
-                                              // leadingDistribution:
-                                              //     TextLeadingDistribution.even,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            // width: MediaQuery.of(context).size.width * 2,
-                            alignment: Alignment.center,
-                            // height: 110.h,
+                          ),
+                          const SizedBox(
+                            height: 49,
+                          ),
+                          Form(
+                            key: loginFormKey,
                             child: Column(
                               children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width - 50,
-                                        50),
-                                    backgroundColor: brandTwo,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        10,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Email',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  onPressed: () {
-                                    FocusScope.of(context).unfocus();
-                                    if (loginFormKey.currentState!.validate()) {
-                                      authState.signIn(
-                                        context,
-                                        _emailController.text.trim(),
-                                        _passwordController.text.trim(),
-                                        token,
-                                        deviceType,
-                                        deviceModel,
-                                        widget.loggedOutReason,
-                                        widget.sessionStateStream,
-                                        rememberMe: _rememberMe,
-                                        // usernameController.text.trim(),
-                                      );
-                                      // emailController.clear();
-                                      // passwordController.clear();
-                                    }
-                                  },
-                                  child: Text(
-                                    'Sign in',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
+                                    email,
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 20.h,
+                                const SizedBox(
+                                  height: 36,
                                 ),
-                                Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: GoogleFonts.lato(
-                                        color: Colors.black54,
-                                        fontSize: 14,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3.h, horizontal: 3.w),
+                                      child: Text(
+                                        'Password',
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: 'Didn’t get the code? ',
-                                            style: GoogleFonts.lato(
-                                              color: colorBlack,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14,
-                                            )),
-                                        TextSpan(
-                                          text: 'Sign up',
-                                          style: GoogleFonts.lato(
-                                            color: brandFive,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              Get.to(const SignupPage());
-                                              // authState.sendOTP(
-                                              //   context,
-                                              //   widget.email,
-                                              // );
+                                    ),
+                                    password,
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 21,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.zero,
+                                          // alignment: Alignment.centerLeft,
+                                          child: Checkbox.adaptive(
+                                            visualDensity: VisualDensity
+                                                .adaptivePlatformDensity,
+                                            value: _rememberMe,
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                _rememberMe = value!;
+                                              });
                                             },
-                                        )
+                                            overlayColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandTwo,
+                                            ),
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return brandTwo;
+                                              }
+                                              return const Color(0xffF2F2F2);
+                                            }),
+                                            focusColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandTwo,
+                                            ),
+                                            activeColor:
+                                                MaterialStateColor.resolveWith(
+                                              (states) => brandTwo,
+                                            ),
+                                            side: const BorderSide(
+                                              color: Color(0xffBDBDBD),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Remember me',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: colorDark,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                (currentCount != 0)
-                                    ? Text(
-                                        "Remaining attempts: ${5 - currentCount}",
-                                        style: GoogleFonts.lato(
-                                          color: Colors.red,
+                                    // : const Row(
+                                    //     children: [],
+                                    //   ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(const ForgotPassword());
+                                        // Navigator.of(context).pushNamed(forgotPass);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: GoogleFonts.lato(
+                                            color: brandFive,
+                                            fontSize: 14,
+                                            // leadingDistribution:
+                                            //     TextLeadingDistribution.even,
+                                            fontWeight: FontWeight.w400,
+                                          ),
                                         ),
-                                      )
-                                    : Text(
-                                        d1,
                                       ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 2,
+                          alignment: Alignment.center,
+                          // height: 110.h,
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width - 50,
+                                      50),
+                                  backgroundColor: brandTwo,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  if (loginFormKey.currentState!.validate()) {
+                                    authState.signIn(
+                                      context,
+                                      _emailController.text.trim(),
+                                      _passwordController.text.trim(),
+                                      token,
+                                      deviceType,
+                                      deviceModel,
+                                      widget.loggedOutReason,
+                                      widget.sessionStateStream,
+                                      rememberMe: _rememberMe,
+                                      // usernameController.text.trim(),
+                                    );
+                                    // emailController.clear();
+                                    // passwordController.clear();
+                                  }
+                                },
+                                child: Text(
+                                  'Sign in',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Center(
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: GoogleFonts.lato(
+                                      color: Colors.black54,
+                                      fontSize: 14,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'Didn’t get the code? ',
+                                          style: GoogleFonts.lato(
+                                            color: colorBlack,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                          )),
+                                      TextSpan(
+                                        text: 'Sign up',
+                                        style: GoogleFonts.lato(
+                                          color: brandFive,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Get.to(const SignupPage());
+                                            // authState.sendOTP(
+                                            //   context,
+                                            //   widget.email,
+                                            // );
+                                          },
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              (currentCount != 0)
+                                  ? Text(
+                                      "Remaining attempts: ${5 - currentCount}",
+                                      style: GoogleFonts.lato(
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  : Text(
+                                      d1,
+                                    ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -653,8 +642,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
                           backgroundColor: Theme.of(context).primaryColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(

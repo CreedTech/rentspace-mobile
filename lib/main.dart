@@ -471,7 +471,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final sessionConfig = SessionConfig(
-      invalidateSessionForAppLostFocus: const Duration(minutes: 3),
+      invalidateSessionForAppLostFocus: const Duration(minutes: 1),
       invalidateSessionForUserInactivity: const Duration(minutes: 5),
     );
     sessionConfig.stream.listen((SessionTimeoutState timeoutEvent) {

@@ -156,7 +156,7 @@
 //         ),
 //         focusedBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
-//           borderSide: const BorderSide(color: brandOne, width: 2.0),
+//           borderSide: const BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
@@ -167,7 +167,7 @@
 //         errorBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
 //           borderSide: const BorderSide(
-//               color: Colors.red, width: 2.0), // Change color to yellow
+//               color: Colors.red, width: 1.0), // Change color to yellow
 //         ),
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
@@ -216,7 +216,7 @@
 //                 padding:
 //                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
 //                 decoration: BoxDecoration(
-//                   color: brandTwo.withOpacity(0.2),
+//                   color: Color(0xffEEF8FF)),
 //                   borderRadius: BorderRadius.circular(20),
 //                 ),
 //                 child: Text(
@@ -788,7 +788,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandOne,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),
@@ -804,7 +804,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandOne,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),
@@ -820,7 +820,7 @@
 //                                                       decoration: BoxDecoration(
 //                                                         border: Border.all(
 //                                                             color: brandTwo,
-//                                                             width: 2.0),
+//                                                             width: 1.0),
 //                                                         borderRadius:
 //                                                             BorderRadius
 //                                                                 .circular(5),

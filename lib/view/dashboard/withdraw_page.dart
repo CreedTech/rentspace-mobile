@@ -18,6 +18,8 @@ import '../../constants/bank_constants.dart';
 import '../../constants/colors.dart';
 import 'package:http/http.dart' as http;
 
+import '../../constants/widgets/custom_button.dart';
+
 class WithdrawalPage extends StatefulWidget {
   const WithdrawalPage({super.key});
 
@@ -46,6 +48,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
   String verifyAccountError = "";
   String? selectedBankName;
   String? selectedBankCode;
+  List<String> filteredBanks = [];
+  List<MapEntry<String, String>> bankEntries = [];
+  List<MapEntry<String, String>> filteredBankEntries = [];
 
   void _onSearchChanged() {
     setState(() {
@@ -217,7 +222,23 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     _searchController = TextEditingController();
     _searchController.addListener(_onSearchChanged);
     _message = '';
-    // fetchUserData();
+    bankEntries = BankConstants.bankData.entries.toList();
+
+    filteredBankEntries = bankEntries;
+  }
+
+  void _filterBanks(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredBankEntries = bankEntries; // Show all banks if query is empty
+      } else {
+        filteredBankEntries = bankEntries.where((entry) {
+          final bankName = entry.value.toLowerCase();
+          final queryLower = query.toLowerCase();
+          return bankName.contains(queryLower);
+        }).toList();
+      }
+    });
   }
 
   void getConnectivity() {
@@ -284,9 +305,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -382,7 +403,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -393,7 +414,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -413,30 +434,30 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Withdraw',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Withdraw',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -531,348 +552,28 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             ),
                             TextFormField(
                               onTap: () async {
+                                _accountNumberController.clear();
+                                setState(() {
+                                  _bankAccountName = '';
+                                });
                                 showModalBottomSheet(
                                   backgroundColor: const Color(0xffF6F6F8),
                                   isDismissible: false,
                                   enableDrag: true,
                                   isScrollControlled: true,
                                   context: context,
-                                  builder: (
-                                    BuildContext context,
-                                  ) {
-                                    return StatefulBuilder(builder:
-                                        (BuildContext context,
-                                            StateSetter setState) {
-                                      // String searchQuery = '';
-                                      // List<String> filteredBanks(
-                                      //     String query) {
-                                      //   if (query.isEmpty) {
-                                      //     return selectedBankName;
-                                      //   } else {
-                                      //     setState(() {});
+                                  builder: (context) => BankSelection(
+                                    onBankSelected:
+                                        (selectedBank, selectedCode) {
+                                      _bankController.text = selectedBank;
+                                      selectedBankCode = selectedCode;
+                                      selectedBankName = selectedBank;
 
-                                      //     return selectedBankName
-                                      //         .where((bankName) => bankName
-                                      //             .toLowerCase()
-                                      //             .contains(
-                                      //                 query.toLowerCase()))
-                                      //         .toList();
-                                      //   }
-                                      // }
-
-                                      return FractionallySizedBox(
-                                        heightFactor: 0.8,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 26, horizontal: 24),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          'Select Bank',
-                                                          style:
-                                                              GoogleFonts.lato(
-                                                                  color:
-                                                                      colorBlack,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize: 24),
-                                                        ),
-                                                        GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: const Icon(
-                                                              Icons.close,
-                                                              size: 24,
-                                                              color: colorBlack,
-                                                            )),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 18,
-                                                    ),
-                                                    Container(
-                                                      color: const Color(
-                                                          0xffEBEBEB),
-                                                      child: TextFormField(
-                                                        style: GoogleFonts.lato(
-                                                            color: colorBlack,
-                                                            fontSize: 14),
-                                                        cursorColor: colorBlack,
-                                                        controller:
-                                                            _searchController,
-                                                        onChanged:
-                                                            (String value) {
-                                                          _onSearchChanged();
-                                                          print(
-                                                              "searchQuery here");
-                                                          // print(searchQuery);
-                                                        },
-                                                        // onChanged: (value) {
-                                                        //   setState(() {
-                                                        //     searchQuery = value;
-                                                        //   });
-
-                                                        // },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          filled: false,
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .all(3),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons
-                                                                .search_outlined,
-                                                            color: colorBlack,
-                                                            size: 24,
-                                                          ),
-                                                          suffixIcon:
-                                                              _isTyping // Show clear button only when typing
-                                                                  ? IconButton(
-                                                                      icon:
-                                                                          const Icon(
-                                                                        Iconsax
-                                                                            .close_circle5,
-                                                                        size:
-                                                                            18,
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        _searchController
-                                                                            .clear(); // Clear the text field
-                                                                      },
-                                                                    )
-                                                                  : null,
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: brandOne,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: brandOne,
-                                                            ),
-                                                            // borderSide: BorderSide.none
-                                                          ),
-                                                          errorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    width: 2.0),
-                                                          ),
-                                                          hintStyle:
-                                                              const TextStyle(
-                                                            color: colorBlack,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                          hintText:
-                                                              "Search Bank",
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15.h,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Expanded(
-                                                  child: ListView.builder(
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    itemCount:
-                                                        sortedBanks.length,
-                                                    itemBuilder:
-                                                        (context, idx) {
-                                                      String bankCode =
-                                                          sortedBanks[idx].key;
-                                                      String bankName =
-                                                          sortedBanks[idx]
-                                                              .value;
-                                                      // final bankName =
-                                                      //     filteredBanks(
-                                                      //             searchQuery)[
-                                                      //         idx];
-                                                      return Column(
-                                                        children: [
-                                                          StatefulBuilder(builder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  StateSetter
-                                                                      setState) {
-                                                            return ListTileTheme(
-                                                              selectedColor: Theme
-                                                                      .of(context)
-                                                                  .colorScheme
-                                                                  .secondary,
-                                                              child: ListTile(
-                                                                contentPadding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                  left: 0.0,
-                                                                  right: 0.0,
-                                                                ),
-                                                                minLeadingWidth:
-                                                                    0,
-                                                                leading:
-                                                                    Image.asset(
-                                                                  'assets/icons/bank_icon.png',
-                                                                  width: 44,
-                                                                  height: 44,
-                                                                  fit: BoxFit
-                                                                      .fitWidth, // Ensure the image fits inside the circle
-                                                                ),
-                                                                title: SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      1.5,
-                                                                  child: Text(
-                                                                    bankName,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color:
-                                                                            colorBlack),
-                                                                  ),
-                                                                ),
-                                                                onTap: () {
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus();
-                                                                  setState(() {
-                                                                    selectedBankName =
-                                                                        bankName;
-                                                                    selectedBankCode =
-                                                                        bankCode;
-                                                                    // saveSelectedBankCode(bankCode);
-                                                                    // ScaffoldMessenger.of(
-                                                                    //         context)
-                                                                    //     .showSnackBar(
-                                                                    //         SnackBar(
-                                                                    //   content:
-                                                                    //       Text('Bank code saved: $selectedBankCode'),
-                                                                    // ));
-                                                                  });
-                                                                  // setState(
-                                                                  //     () {
-                                                                  //   selectedBankName =
-                                                                  //       bankName;
-                                                                  //   selectedBankCode = BankConstants
-                                                                  //       .bankData
-                                                                  //       .keys
-                                                                  //       .firstWhere(
-                                                                  //           (key) => BankConstants.bankData[key] == bankName,
-                                                                  //           orElse: () => null);
-                                                                  // });
-
-                                                                  _bankController
-                                                                          .text =
-                                                                      selectedBankName!;
-                                                                  _checkFieldsAndHitApi();
-                                                                  // _selectedTVCode = tvBill[idx];
-                                                                  // tvCable = name[idx];
-                                                                  // tvImage = image[idx];
-                                                                  // canProceed = true;
-
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                  // print(
-                                                                  //     selectedBankName);
-
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                              ),
-                                                            );
-                                                          }),
-                                                          const Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        20),
-                                                            child: Divider(
-                                                              thickness: 1,
-                                                              color: Color(
-                                                                  0xffC9C9C9),
-                                                              height: 1,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  },
+                                      _handleBankSelection(
+                                          selectedBank, selectedCode);
+                                    },
+                                  ),
+                                  // },
                                 );
                               },
                               onChanged: (e) {
@@ -904,7 +605,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: const BorderSide(
-                                      color: brandOne, width: 2.0),
+                                      color: brandOne, width: 1.0),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -916,7 +617,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: const BorderSide(
                                       color: Colors.red,
-                                      width: 2.0), // Change color to yellow
+                                      width: 1.0), // Change color to yellow
                                 ),
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -1075,61 +776,296 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
+                child: CustomButton(
+                  text: 'Proceed',
+                  onTap: withdrawalFormKey.currentState != null &&
+                          withdrawalFormKey.currentState!.validate() &&
+                          _bankAccountName != ''
+                      ? () async {
+                          FocusScope.of(context).unfocus();
+                          userController.createWithdrawalAccount(
+                            context,
+                            selectedBankCode!,
+                            _accountNumberController.text.trim(),
+                            selectedBankName,
+                            _bankAccountName,
+                          );
+                        }
+                      : null,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleBankSelection(String selectedBank, String selectedCode) {
+    // Perform additional actions based on the selected bank
+    selectedBankCode = selectedCode;
+    selectedBankName = selectedBank;
+    print('Bank selected in MyApp: $selectedBank');
+    // You can add more actions here
+  }
+}
+
+class BankSelection extends StatefulWidget {
+  final Function(String, String) onBankSelected;
+  BankSelection({required this.onBankSelected});
+
+  @override
+  State<BankSelection> createState() => _BankSelectionState();
+}
+
+class _BankSelectionState extends State<BankSelection> {
+  List<MapEntry<String, String>> bankEntries = [];
+  List<MapEntry<String, String>> filteredBankEntries = [];
+
+  TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    bankEntries = BankConstants.bankData.entries.toList();
+    filteredBankEntries = bankEntries; // Display all banks initially
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    _filterBanks(_searchController.text);
+  }
+
+  // void _onSearchChanged() {
+  //   setState(() {
+  //     // _searchQuery = _searchController.text.toLowerCase();
+  //     _isTyping = searchQuery.isNotEmpty;
+  //   });
+  // }
+
+  void _filterBanks(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredBankEntries = bankEntries; // Show all banks if query is empty
+      } else {
+        filteredBankEntries = bankEntries.where((entry) {
+          final bankName = entry.value.toLowerCase();
+          final queryLower = query.toLowerCase();
+          return bankName.contains(queryLower);
+        }).toList();
+      }
+    });
+  }
+
+  void _clearSearch() {
+    _searchController.clear();
+    setState(() {
+      filteredBankEntries = bankEntries; // Reset to show all banks
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      heightFactor: 0.8,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Select Bank',
+                        style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24),
                       ),
-                    ),
-                    onPressed: withdrawalFormKey.currentState != null &&
-                            withdrawalFormKey.currentState!.validate() &&
-                            _bankAccountName != ''
-                        ? () async {
-                            FocusScope.of(context).unfocus();
-                            userController.createWithdrawalAccount(
-                              context,
-                              selectedBankCode!,
-                              _accountNumberController.text.trim(),
-                              selectedBankName,
-                              _bankAccountName,
-                            );
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         TransferConfirmationPage(
-                            //       bankName: _bankController.text,
-                            //       accountNumber:
-                            //           _accountNumberController.text,
-                            //       bankCode: _currentBankCode,
-                            //       accountName: _bankAccountName,
-                            //       amount: _amountController.text,
-                            //       narration: _narrationController.text,
-                            //     ),
-                            //   ),
-                            // );
-                            // Proceed with the action
-                          }
-                        : null,
-                    child: Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: colorWhite,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 24,
+                            color: colorBlack,
+                          )),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Container(
+                    color: const Color(0xffEBEBEB),
+                    child: TextFormField(
+                      style: GoogleFonts.lato(color: colorBlack, fontSize: 14),
+                      cursorColor: colorBlack,
+                      controller: _searchController,
+                      onChanged: (query) => _filterBanks(query),
+                      // onChanged:
+                      //     (String value) {
+                      //   _onSearchChanged();
+                      //   print(
+                      //       "searchQuery here");
+                      //   // print(searchQuery);
+                      // },
+                      // onChanged: (value) {
+                      //   setState(() {
+                      //     searchQuery = value;
+                      //   });
+
+                      // },
+                      decoration: InputDecoration(
+                        filled: false,
+                        contentPadding: const EdgeInsets.all(3),
+                        prefixIcon: const Icon(
+                          Icons.search_outlined,
+                          color: colorBlack,
+                          size: 24,
+                        ),
+                        // suffixIcon: _searchController.text.isNotEmpty
+                        //     ? IconButton(
+                        //         icon: Icon(Icons.clear),
+                        //         onPressed: _clearSearch,
+                        //       )
+                        //     : null,
+                        suffixIcon: _searchController.text
+                                .isNotEmpty // Show clear button only when typing
+                            ? IconButton(
+                                icon: const Icon(
+                                  Iconsax.close_circle5,
+                                  size: 18,
+                                ),
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  _clearSearch(); // Clear the text field
+                                },
+                              )
+                            : null,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                          ),
+                          // borderSide: BorderSide.none
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: brandOne,
+                          ),
+                          // borderSide: BorderSide.none
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: brandOne,
+                          ),
+                          // borderSide: BorderSide.none
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 1.0),
+                        ),
+                        hintStyle: const TextStyle(
+                          color: colorBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        hintText: "Search Bank",
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: filteredBankEntries.length,
+                  itemBuilder: (context, idx) {
+                    final bankEntry = filteredBankEntries[idx];
+                    String bankCode = filteredBankEntries[idx].key;
+                    String bankName = filteredBankEntries[idx].value;
+                    print('bankName');
+                    print(bankName);
+                    // final bankName =
+                    //     filteredBanks(
+                    //             searchQuery)[
+                    //         idx];
+                    return Column(
+                      children: [
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return ListTileTheme(
+                            selectedColor:
+                                Theme.of(context).colorScheme.secondary,
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.only(
+                                left: 0.0,
+                                right: 0.0,
+                              ),
+                              minLeadingWidth: 0,
+                              leading: Image.asset(
+                                'assets/icons/bank_icon.png',
+                                width: 44,
+                                height: 44,
+                                fit: BoxFit
+                                    .fitWidth, // Ensure the image fits inside the circle
+                              ),
+                              title: SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.5,
+                                child: Text(
+                                  bankName,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.lato(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: colorBlack),
+                                ),
+                              ),
+                              onTap: () {
+                                final selectedBank = bankEntry.value;
+                                final selectedCode = bankCode;
+                                // Handle bank selection
+                                widget.onBankSelected(
+                                    selectedBank, selectedCode);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                        }),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Divider(
+                            thickness: 1,
+                            color: Color(0xffC9C9C9),
+                            height: 1,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],

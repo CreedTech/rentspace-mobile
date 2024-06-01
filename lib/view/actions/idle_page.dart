@@ -82,7 +82,7 @@ class _IdlePageState extends State<IdlePage> {
     //pin theme
 
     //Pin
-  
+
     return WillPopScope(
       onWillPop: () async {
         exit(0);
@@ -185,7 +185,7 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandOne, width: 2.0),
+                                      Border.all(color: brandOne, width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -198,7 +198,7 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandOne, width: 2.0),
+                                      Border.all(color: brandOne, width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -211,7 +211,7 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandTwo, width: 2.0),
+                                      Border.all(color: brandTwo, width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),

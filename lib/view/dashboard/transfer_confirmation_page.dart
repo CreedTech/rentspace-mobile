@@ -84,30 +84,30 @@ class _TransferConfirmationPageState
         backgroundColor: brandOne,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorWhite,
               ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Confirmation',
-              style: GoogleFonts.lato(
-                color: colorWhite,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              const SizedBox(
+                width: 4,
               ),
-            ),
-          ],
+              Text(
+                'Confirmation',
+                style: GoogleFonts.lato(
+                  color: colorWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Container(
@@ -192,7 +192,11 @@ class _TransferConfirmationPageState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                       children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,7 +223,7 @@ class _TransferConfirmationPageState
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 0.h),
+                          padding: EdgeInsets.symmetric(vertical: 17.h),
                           child: const Divider(
                             thickness: 1,
                             color: Color(0xffC9C9C9),
@@ -251,7 +255,7 @@ class _TransferConfirmationPageState
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 0.h),
+                          padding: EdgeInsets.symmetric(vertical: 17.h),
                           child: const Divider(
                             thickness: 1,
                             color: Color(0xffC9C9C9),
@@ -281,6 +285,9 @@ class _TransferConfirmationPageState
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
                         ),
                       ],
                     ),
@@ -318,323 +325,316 @@ class _TransferConfirmationPageState
                               // constraints: BoxConstraints(
                               //   maxHeight: 900 // Adjust the value as needed
                               // ),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffF6F6F8),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30.0),
-                                    topRight: Radius.circular(30.0),
+                              child: SingleChildScrollView(
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffF6F6F8),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0),
+                                    ),
                                   ),
-                                ),
-                                // padding:
-                                //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    // SizedBox(
-                                    //   height: 30.h,
-                                    // ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 17.w, top: 28.h),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_back_ios,
-                                              size: 27.w,
-                                              color: colorBlack,
-                                            ),
-                                            Text(
-                                              'Cancel',
-                                              style: GoogleFonts.lato(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
+                                  // padding:
+                                  //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      // SizedBox(
+                                      //   height: 30.h,
+                                      // ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 17.w, top: 28.h),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_back_ios,
+                                                size: 27.w,
                                                 color: colorBlack,
                                               ),
-                                            ),
-                                          ],
+                                              Text(
+                                                'Cancel',
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: colorBlack,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 20.h, horizontal: 24.w),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 22, horizontal: 27),
-                                        decoration: BoxDecoration(
-                                          color: colorWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/lock_filled.png',
-                                                  width: 23.w,
-                                                  color: brandOne,
-                                                ),
-                                                SizedBox(
-                                                  width: 5.w,
-                                                ),
-                                                Text(
-                                                  'Transaction Pin',
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: colorDark,
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20.h, horizontal: 24.w),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 22, horizontal: 27),
+                                          decoration: BoxDecoration(
+                                            color: colorWhite,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/lock_filled.png',
+                                                    width: 23.w,
+                                                    color: brandOne,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Text(
+                                                    'Transaction Pin',
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: colorDark,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 28.h,
+                                              ),
+                                              Pinput(
+                                                obscuringCharacter: '*',
+                                                useNativeKeyboard: false,
+                                                obscureText: true,
+                                                defaultPinTheme: PinTheme(
+                                                  width: 67,
+                                                  height: 60,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  textStyle: GoogleFonts.lato(
+                                                    fontSize: 25,
+                                                    color: brandOne,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: const Color(
+                                                            0xffBDBDBD),
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 28.h,
-                                            ),
-                                            Pinput(
-                                              obscuringCharacter: '*',
-                                              useNativeKeyboard: false,
-                                              obscureText: true,
-                                              defaultPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
+                                                focusedPinTheme: PinTheme(
+                                                  width: 67,
+                                                  height: 60,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  textStyle: GoogleFonts.lato(
+                                                    fontSize: 25,
+                                                    color: brandOne,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: brandOne,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
-                                                      width: 1.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                                submittedPinTheme: PinTheme(
+                                                  width: 67,
+                                                  height: 60,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  textStyle: GoogleFonts.lato(
+                                                    fontSize: 25,
+                                                    color: brandOne,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: brandOne,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
-                                              ),
-                                              focusedPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
+                                                followingPinTheme: PinTheme(
+                                                  width: 67,
+                                                  height: 60,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  textStyle: GoogleFonts.lato(
+                                                    fontSize: 25,
+                                                    color: brandOne,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: const Color(
+                                                            0xffBDBDBD),
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: brandOne,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              submittedPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: brandOne,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              followingPinTheme: PinTheme(
-                                                width: 67,
-                                                height: 60,
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                textStyle: GoogleFonts.lato(
-                                                  fontSize: 25,
-                                                  color: brandOne,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              onCompleted: (String val) async {
-                                                setState(() {
-                                                  isFilled = true;
-                                                });
-                                                if (BCrypt.checkpw(
-                                                  _aPinController.text
-                                                      .trim()
-                                                      .toString(),
-                                                  userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .wallet
-                                                      .pin,
-                                                )) {
-                                                  print(widget.accountName);
-                                                  print(widget.amount);
-                                                  print(widget.narration);
-                                                  print(userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .dvaName);
-                                                  print(widget.accountNumber);
-                                                  print(widget.bankCode);
-                                                  print(_aPinController.text
-                                                      .trim());
-                                                  await fetchUserData()
-                                                      .then((value) {
-                                                    // Get.to(
-                                                    //   WithdrawalSuccessfulScreen(
-                                                    //     name:
-                                                    //         widget.accountName,
-                                                    //     image: 'bank_icon',
-                                                    //     category: 'withdrawal',
-                                                    //     amount:
-                                                    //         widget.amount,
-                                                    //     bank: widget.bankName,
-                                                    //     number:
-                                                    //         widget.accountNumber,
-                                                    //     date: DateTime.now()
-                                                    //         .toString(),
-                                                    //   ),
-                                                    // );
-                                                    walletController
-                                                        .walletWithdrawal(
+                                                onCompleted:
+                                                    (String val) async {
+                                                  setState(() {
+                                                    isFilled = true;
+                                                  });
+                                                  if (BCrypt.checkpw(
+                                                    _aPinController.text
+                                                        .trim()
+                                                        .toString(),
+                                                    userController
+                                                        .userModel!
+                                                        .userDetails![0]
+                                                        .wallet
+                                                        .pin,
+                                                  )) {
+                                                    // print(widget.accountName);
+                                                    // print(widget.amount);
+                                                    // print(widget.narration);
+                                                    // print(userController
+                                                    //     .userModel!
+                                                    //     .userDetails![0]
+                                                    //     .dvaName);
+                                                    // print(widget.accountNumber);
+                                                    // print(widget.bankCode);
+                                                    // print(_aPinController.text
+                                                    //     .trim());
+                                                    await fetchUserData()
+                                                        .then((value) {
+                                                      walletController
+                                                          .walletWithdrawal(
+                                                              context,
+                                                              widget
+                                                                  .accountName,
+                                                              widget.amount,
+                                                              widget.narration,
+                                                              userController
+                                                                  .userModel!
+                                                                  .userDetails![
+                                                                      0]
+                                                                  .dvaName,
+                                                              widget
+                                                                  .accountNumber,
+                                                              widget.bankCode,
+                                                              _aPinController
+                                                                  .text
+                                                                  .trim(),
+                                                              widget.bankName);
+                                                      // _aPinController.clear();
+                                                      // Get.back();
+                                                    }).catchError(
+                                                      (error) {
+                                                        setState(() {
+                                                          isFilled = false;
+                                                        });
+
+                                                        customErrorDialog(
                                                             context,
-                                                            widget.accountName,
-                                                            widget.amount,
-                                                            widget.narration,
-                                                            userController
-                                                                .userModel!
-                                                                .userDetails![0]
-                                                                .dvaName,
-                                                            widget
-                                                                .accountNumber,
-                                                            widget.bankCode,
-                                                            _aPinController.text
-                                                                .trim(),
-                                                            widget.bankName);
-                                                    _aPinController.clear();
-                                                    // Get.back();
-                                                  }).catchError(
-                                                    (error) {
+                                                            'Oops',
+                                                            'Something went wrong. Try again later');
+                                                        _aPinController.clear();
+                                                      },
+                                                    );
+                                                  } else {
+                                                    if (context.mounted) {
                                                       setState(() {
                                                         isFilled = false;
                                                       });
-
                                                       customErrorDialog(
                                                           context,
-                                                          'Oops',
-                                                          'Something went wrong. Try again later');
+                                                          "Invalid Transaction Pin!",
+                                                          'Please confirm your transaction pin.');
                                                       _aPinController.clear();
-                                                    },
-                                                  );
-                                                } else {
-                                                  if (context.mounted) {
-                                                    setState(() {
-                                                      isFilled = false;
-                                                    });
-                                                    customErrorDialog(
-                                                        context,
-                                                        "Invalid Transaction Pin!",
-                                                        'Please confirm your transaction pin.');
-                                                    _aPinController.clear();
+                                                    }
                                                   }
-                                                }
-                                              },
-                                              // validator: validatePinOne,
-                                              // onChanged: validatePinOne,
-                                              controller: _aPinController,
-                                              length: 4,
-                                              closeKeyboardWhenCompleted: true,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 24.w,
-                                          right: 24.w,
-                                          bottom: 30.h),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2, horizontal: 7),
-                                        decoration: BoxDecoration(
-                                          color: colorWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(10.r),
-                                        ),
-                                        child: NumericKeyboard(
-                                          onKeyboardTap: onKeyboardTap,
-                                          textStyle: GoogleFonts.lato(
-                                              color: brandOne,
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w500),
-                                          rightButtonFn: () {
-                                            if (_aPinController.text.isEmpty)
-                                              return;
-                                            setState(() {
-                                              _aPinController.text =
-                                                  _aPinController
-                                                      .text
-                                                      .substring(
-                                                          0,
-                                                          _aPinController
-                                                                  .text.length -
-                                                              1);
-                                            });
-                                          },
-                                          rightButtonLongPressFn: () {
-                                            if (_aPinController.text.isEmpty)
-                                              return;
-                                            setState(() {
-                                              _aPinController.text = '';
-                                            });
-                                          },
-                                          rightIcon: const Icon(
-                                            Icons.backspace_outlined,
-                                            color: Colors.red,
+                                                },
+                                                // validator: validatePinOne,
+                                                // onChanged: validatePinOne,
+                                                controller: _aPinController,
+                                                length: 4,
+                                                closeKeyboardWhenCompleted:
+                                                    true,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                              ),
+                                            ],
                                           ),
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 24.w,
+                                            right: 24.w,
+                                            bottom: 30.h),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 7),
+                                          decoration: BoxDecoration(
+                                            color: colorWhite,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                          ),
+                                          child: NumericKeyboard(
+                                            onKeyboardTap: onKeyboardTap,
+                                            textStyle: GoogleFonts.lato(
+                                                color: brandOne,
+                                                fontSize: 32,
+                                                fontWeight: FontWeight.w500),
+                                            rightButtonFn: () {
+                                              if (_aPinController.text.isEmpty)
+                                                return;
+                                              setState(() {
+                                                _aPinController.text =
+                                                    _aPinController.text
+                                                        .substring(
+                                                            0,
+                                                            _aPinController.text
+                                                                    .length -
+                                                                1);
+                                              });
+                                            },
+                                            rightButtonLongPressFn: () {
+                                              if (_aPinController.text.isEmpty)
+                                                return;
+                                              setState(() {
+                                                _aPinController.text = '';
+                                              });
+                                            },
+                                            rightIcon: const Icon(
+                                              Icons.backspace_outlined,
+                                              color: Colors.red,
+                                            ),
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

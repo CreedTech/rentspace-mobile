@@ -6,20 +6,15 @@ import 'package:get/get.dart';
 
 import 'package:rentspace/view/actions/bank_transfer.dart';
 
-
 class FundWallet extends StatefulWidget {
   const FundWallet({super.key});
 
   @override
-    State<FundWallet> createState() => _FundWalletState();
+  State<FundWallet> createState() => _FundWalletState();
   // _FundWalletState createState() => _FundWalletState();
 }
 
-
-
 class _FundWalletState extends State<FundWallet> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,30 +24,30 @@ class _FundWalletState extends State<FundWallet> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Add Money',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Add Money',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Stack(
@@ -142,11 +137,33 @@ class _FundWalletState extends State<FundWallet> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 20,
-                    color: colorBlack,
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 7, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Color(0xffEEF8FF),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          "Coming Soon",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: brandOne,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  // trailing: const Icon(
+                  //   Icons.keyboard_arrow_right_outlined,
+                  //   size: 20,
+                  //   color: colorBlack,
+                  // ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -180,10 +197,27 @@ class _FundWalletState extends State<FundWallet> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 20,
-                    color: colorBlack,
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 7, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Color(0xffEEF8FF),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          "Coming Soon",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: brandOne,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 // const SizedBox(
@@ -346,7 +380,6 @@ class _FundWalletState extends State<FundWallet> {
                 //     color: Theme.of(context).primaryColor,
                 //   ),
                 // ),
-             
               ],
             ),
           ),

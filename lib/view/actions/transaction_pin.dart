@@ -197,7 +197,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -212,7 +212,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -228,7 +228,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                             color: const Color(0xffBDBDBD),
-                                            width: 2.0),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -299,7 +299,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -314,7 +314,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -330,7 +330,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                             color: const Color(0xffBDBDBD),
-                                            width: 2.0),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -385,7 +385,10 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                 children: [
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(400, 50),
+                                      minimumSize: Size(
+                                          MediaQuery.of(context).size.width -
+                                              50,
+                                          50),
                                       backgroundColor: brandTwo,
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(

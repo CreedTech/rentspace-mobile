@@ -87,7 +87,7 @@ class _CardTopUpState extends State<CardTopUp> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -98,7 +98,7 @@ class _CardTopUpState extends State<CardTopUp> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),

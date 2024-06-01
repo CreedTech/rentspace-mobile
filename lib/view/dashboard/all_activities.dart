@@ -68,30 +68,30 @@ class _AllActivitiesState extends State<AllActivities> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Space Wallet History',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Space Wallet History',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -180,7 +180,6 @@ class _AllActivitiesState extends State<AllActivities> {
                       child: ListView(
                         children: groupedByMonth.entries
                             .toList()
-                            .reversed
                             .map((entry) {
                           return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,39 +229,17 @@ class _AllActivitiesState extends State<AllActivities> {
                                                     //     .userModel!
                                                     //     .userDetails![0]
                                                     //     .walletHistories[item]);
-                                                       Navigator.push(
+                                                    Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             const TransactionReceipt(),
                                                         settings: RouteSettings(
-                                                            arguments:item,
-
+                                                          arguments: item,
                                                         ),
                                                       ),
                                                     );
 
-                                                    // Get.to(TransactionReceipt(
-                                                    //   amount: item['amount'],
-                                                    //   status: item['status'],
-                                                    //   fees: item['fees'] ?? 0,
-                                                    //   transactionType: item[
-                                                    //       'transactionType'],
-                                                    //   description:
-                                                    //       item['description'] ??
-                                                    //           '',
-                                                    //   transactionGroup: item[
-                                                    //       'transactionGroup'],
-                                                    //   transactionDate:
-                                                    //       item['createdAt'],
-                                                    //   transactionRef: item[
-                                                    //           'transactionReference'] ??
-                                                    //       '',
-                                                    //   merchantRef: item[
-                                                    //           'merchantReference'] ??
-                                                    //       '',
-                                                    //   // sessionId: item['sessionId'] ?? '',
-                                                    // ));
                                                   },
                                                   leading: Container(
                                                     padding:
@@ -300,7 +277,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "${item['description'] ?? item['message']  ?? 'No Description Found'} ",
+                                                        "${item['description'] ?? item['message'] ?? 'No Description Found'} ",
                                                         maxLines: 2,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -380,8 +357,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                               ],
                                             );
                                           })
-                                          .toList()
-                                          .reversed,
+                                          .toList(),
                                     ],
                                   ),
                                 ),

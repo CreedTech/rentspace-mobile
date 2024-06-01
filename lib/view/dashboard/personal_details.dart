@@ -1,17 +1,28 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 // import 'package:iconsax/iconsax.dart';
 
+import '../../api/global_services.dart';
+import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 // import '../../constants/utils/obscureEmail.dart';
 // import '../../controller/user_controller.dart';
+import '../../constants/widgets/copy_widget.dart';
+import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 // import '../actions/onboarding_page.dart';
 
@@ -27,7 +38,13 @@ bool _isEmailVerified = false;
 // User? _user;
 
 class _PersonalDetailsState extends State<PersonalDetails> {
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  File? selectedImage;
   final UserController userController = Get.find();
+  // final WalletController walletController = Get.find();
+  late AnimationController controller;
+  bool isRefresh = false;
 
   @override
   initState() {
@@ -39,6 +56,80 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
     // checkingForBioMetrics();
     // print(_isEmailVerified);
+  }
+
+  Future<bool> fetchUserData({bool refresh = true}) async {
+    if (refresh) {
+      await userController.fetchData();
+      setState(() {}); // Move setState inside fetchData
+    }
+    return true;
+  }
+
+  uploadImage(BuildContext context, File imageFile) async {
+    String authToken =
+        await GlobalService.sharedPreferencesManager.getAuthToken();
+
+    var headers = {'Authorization': 'Bearer $authToken'};
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(AppConstants.BASE_URL + AppConstants.UPDATE_PHOTO));
+    request.files
+        .add(await http.MultipartFile.fromPath('image', imageFile.path));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    EasyLoading.dismiss();
+    if (response.statusCode == 200) {
+      EasyLoading.dismiss();
+      print('Image uploaded successfully');
+      // Get.back();
+
+      refreshController.refreshCompleted();
+      if (mounted) {
+        setState(() {
+          isRefresh = true;
+        });
+      }
+
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          backgroundColor: Colors.green,
+          message: 'Your profile picture has been updated successfully. !!',
+          textStyle: GoogleFonts.poppins(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+      await fetchUserData(refresh: true);
+      // Get.to(FirstPage());
+    } else {
+      EasyLoading.dismiss();
+      print(response.request);
+      print(response.reasonPhrase);
+      print('Image upload failed with status ${response.statusCode}');
+    }
+  }
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 100, // Ensure only images are picked
+    );
+
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      uploadImage(context, imageFile);
+    } else {
+      print('No image selected.');
+    }
   }
 
   Future updateVerification() async {
@@ -60,30 +151,30 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+            onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Account Details',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Profile Details',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -96,23 +187,48 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             children: [
               Column(
                 children: [
-                  Container(
-                    width: 42.5,
-                    height: 42.5,
-                    // padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        colorFilter: const ColorFilter.mode(
-                          brandThree,
-                          BlendMode.darken,
-                        ),
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          userController.userModel!.userDetails![0].avatar,
+                  Stack(
+                    children: [
+                      Container(
+                        width: 52.5,
+                        height: 52.5,
+                        // padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            colorFilter: const ColorFilter.mode(
+                              brandThree,
+                              BlendMode.darken,
+                            ),
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                              userController.userModel!.userDetails![0].avatar,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            _pickImage(context, ImageSource.gallery);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: brandTwo,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt_outlined,
+                              color: Colors.white,
+                              size: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
@@ -132,7 +248,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               ),
               Container(
                 padding: const EdgeInsets.only(
-                    left: 17, top: 17, right: 17, bottom: 0),
+                    left: 17, top: 5, right: 17, bottom: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -170,45 +286,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           color: colorBlack,
                         ),
                       ),
-                      trailing: Wrap(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: userController
-                                      .userModel!.userDetails![0].userName,
-                                ),
-                              );
-                              Fluttertoast.showToast(
-                                msg: "Copied to clipboard!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.SNACKBAR,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: brandOne,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            },
-                            child: Image.asset(
-                              'assets/icons/copy_icon.png',
-                              width: 24,
-                              height: 24,
-                              color: colorBlack,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          Text(
-                            'Copy',
-                            style: GoogleFonts.lato(
-                              color: brandTwo,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                      trailing: CopyWidget(
+                        text:
+                            userController.userModel!.userDetails![0].userName,
                       ),
                     ),
                     const Divider(
@@ -236,45 +316,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           color: colorBlack,
                         ),
                       ),
-                      trailing: Wrap(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: userController
-                                      .userModel!.userDetails![0].dvaNumber,
-                                ),
-                              );
-                              Fluttertoast.showToast(
-                                msg: "Copied to clipboard!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.SNACKBAR,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: brandOne,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            },
-                            child: Image.asset(
-                              'assets/icons/copy_icon.png',
-                              width: 24,
-                              height: 24,
-                              color: colorBlack,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          Text(
-                            'Copy',
-                            style: GoogleFonts.lato(
-                              color: brandTwo,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                      trailing: CopyWidget(
+                        text:
+                            userController.userModel!.userDetails![0].dvaNumber,
                       ),
                     ),
                   ],
@@ -285,7 +329,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               ),
               Container(
                 padding: const EdgeInsets.only(
-                    left: 17, top: 17, right: 17, bottom: 0),
+                    left: 17, top: 5, right: 17, bottom: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -325,7 +369,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),
@@ -357,7 +401,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),
@@ -389,7 +433,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),
@@ -420,7 +464,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),
@@ -451,7 +495,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),
@@ -482,7 +526,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       trailing: const Icon(
                         Icons.keyboard_arrow_right,
-                        color: colorBlack,
+                        color: Color(0xff787878),
                         size: 20,
                       ),
                     ),

@@ -83,8 +83,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 50),
-                  maximumSize: const Size(400, 50),
+                  minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
                   backgroundColor: Theme.of(context).primaryColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

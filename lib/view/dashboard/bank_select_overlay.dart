@@ -181,7 +181,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
-                              const BorderSide(color: Colors.red, width: 2.0),
+                              const BorderSide(color: Colors.red, width: 1.0),
                         ),
                         hintStyle: TextStyle(
                           fontSize: 12,

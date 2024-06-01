@@ -91,7 +91,7 @@ class _ConfirmTransactionPinPageState
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
+          border: Border.all(color: brandOne, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
@@ -103,7 +103,7 @@ class _ConfirmTransactionPinPageState
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
+          border: Border.all(color: brandOne, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),
@@ -115,7 +115,7 @@ class _ConfirmTransactionPinPageState
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 2.0),
+          border: Border.all(color: brandTwo, width: 1.0),
           borderRadius: BorderRadius.circular(5),
         ),
       ),

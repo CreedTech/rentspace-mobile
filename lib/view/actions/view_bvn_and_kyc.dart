@@ -61,7 +61,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: brandOne, // Color of the border
-                  width: 2.0, // Width of the border
+                  width: 1.0, // Width of the border
                 ),
                 image: const DecorationImage(
                   image: AssetImage('assets/icons/RentSpace-icon.png'),
@@ -89,7 +89,7 @@ class _ViewBvnAndKycState extends State<ViewBvnAndKyc> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: brandOne, // Color of the border
-                  width: 2.0, // Width of the border
+                  width: 1.0, // Width of the border
                 ),
                 image: const DecorationImage(
                   image: AssetImage('assets/icons/RentSpace-icon.png'),

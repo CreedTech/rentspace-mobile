@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,7 @@ import 'package:rentspace/controller/wallet_controller.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_confirmation.dart';
 
 import '../../../constants/colors.dart';
+import '../../../constants/widgets/custom_button.dart';
 import '../../../constants/widgets/custom_dialog.dart';
 import '../../../constants/widgets/custom_loader.dart';
 import '../../../controller/app_controller.dart';
@@ -270,7 +272,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+            contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -313,9 +315,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -568,15 +570,14 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
     final rentName = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: colorBlack,
       controller: _rentNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateName,
       // update the state variable when the text changes
       // onChanged: (text) => setState(() => _nameValue = text),
       style: GoogleFonts.lato(
-        color: Theme.of(context).primaryColor,
-      ),
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       inputFormatters: const [],
       decoration: InputDecoration(
@@ -596,7 +597,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -607,7 +608,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -641,8 +642,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         setState(() => _amountValue = text);
       },
       style: GoogleFonts.lato(
-        color: Theme.of(context).primaryColor,
-      ),
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
@@ -661,19 +661,19 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         prefixText: "₦ ",
         prefixStyle: GoogleFonts.roboto(
@@ -695,9 +695,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       controller: _endDateController,
       cursorColor: Theme.of(context).primaryColor,
       validator: validateEndDate,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-      ),
+      style: GoogleFonts.lato(
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       readOnly: true,
       // onTap: _showDatePicker,
       onTap: () => selectEndDate(context),
@@ -719,19 +718,19 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Color(0xffE0E0E0),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -752,7 +751,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                 resetCalculator();
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
@@ -775,251 +774,239 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Form(
-                    key: rentFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Column(
                       children: [
-                        Image.asset(
-                          'assets/space_rent_img_round.png',
-                          width: 86.w,
-                        ),
-                        SizedBox(
-                          height: 32.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 3),
-                              child: Text(
-                                'Space Rent Name',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
+                        Form(
+                          key: rentFormKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/space_rent_img_round.png',
+                                width: 86.w,
                               ),
-                            ),
-                            rentName,
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 3),
-                              child: Text(
-                                'Rent Amount',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
+                              SizedBox(
+                                height: 32.h,
                               ),
-                            ),
-                            rentAmount,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 3),
-                              child: Text(
-                                'Select Frequency',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Space Rent Name',
+                                      style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  rentName,
+                                ],
                               ),
-                            ),
-                            CustomDropdown(
-                              selectedStyle: GoogleFonts.lato(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12),
-                              // hintText: 'Select frequency',
-                              hintStyle: GoogleFonts.lato(fontSize: 12),
-                              excludeSelected: true,
-                              fillColor: Colors.transparent,
-                              listItemStyle: GoogleFonts.lato(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  fontSize: 12),
-                              items: intervalLabels,
-                              controller: _intervalController,
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
-                              fieldSuffixIcon: Icon(
-                                Iconsax.arrow_down5,
-                                size: 25.h,
-                                color: colorBlack,
+                              SizedBox(
+                                height: 20.h,
                               ),
-                              onChanged: (String val) {
-                                setState(() {
-                                  idSelected = true;
-                                  // durationType = _intervalController.text;
-                                  // durationType = _intervalController.text;
-                                });
-
-                                // print(val);
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 3),
-                              child: Text(
-                                'Start Date',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Rent Amount',
+                                      style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  rentAmount,
+                                ],
                               ),
-                            ),
-                            endDate,
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 3),
-                              child: Text(
-                                'Select Duration',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
+                              const SizedBox(
+                                height: 20,
                               ),
-                            ),
-                            CustomDropdown(
-                              selectedStyle: GoogleFonts.lato(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12),
-                              // hintText: 'Select Duration',
-                              hintStyle: GoogleFonts.lato(fontSize: 12),
-                              excludeSelected: true,
-                              fillColor: Colors.transparent,
-                              listItemStyle: GoogleFonts.lato(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  fontSize: 12),
-                              items: durations,
-                              controller: _durationController,
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
-                              fieldSuffixIcon: Icon(
-                                Iconsax.arrow_down5,
-                                size: 25.h,
-                                color: colorBlack,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Select Frequency',
+                                      style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  CustomDropdown(
+                                    selectedStyle: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    // hintText: 'Select frequency',
+                                    hintStyle: GoogleFonts.lato(fontSize: 12),
+                                    excludeSelected: true,
+                                    fillColor: Colors.transparent,
+                                    listItemStyle: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    items: intervalLabels,
+                                    controller: _intervalController,
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                    fieldSuffixIcon: Icon(
+                                      Iconsax.arrow_down5,
+                                      size: 25.h,
+                                      color: colorBlack,
+                                    ),
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        idSelected = true;
+                                        // durationType = _intervalController.text;
+                                        // durationType = _intervalController.text;
+                                      });
+                    
+                                      // print(val);
+                                    },
+                                  ),
+                                ],
                               ),
-                              onChanged: (String val) {
-                                print(val.split(' ')[0]);
-                                setState(() {
-                                  idSelected = true;
-                                  _duration = int.parse(val.split(' ')[0]);
-                                  // durationType = _intervalController.text;
-                                });
-
-                                print(_duration);
-                              },
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Start Date',
+                                      style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  endDate,
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Select Duration',
+                                      style: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  CustomDropdown(
+                                    selectedStyle: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    // hintText: 'Select Duration',
+                                    hintStyle: GoogleFonts.lato(fontSize: 12),
+                                    excludeSelected: true,
+                                    fillColor: Colors.transparent,
+                                    listItemStyle: GoogleFonts.lato(
+                                        color: colorBlack,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    items: durations,
+                                    controller: _durationController,
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor),
+                                    fieldSuffixIcon: Icon(
+                                      Iconsax.arrow_down5,
+                                      size: 25.h,
+                                      color: colorBlack,
+                                    ),
+                                    onChanged: (String val) {
+                                      print(val.split(' ')[0]);
+                                      setState(() {
+                                        idSelected = true;
+                                        _duration = int.parse(val.split(' ')[0]);
+                                        // durationType = _intervalController.text;
+                                      });
+                    
+                                      print(_duration);
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
+                     const SizedBox(height: 30,),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
-                      if (rentFormKey.currentState!.validate()) {
-                        await calculateRent(double.tryParse(
-                                _rentAmountController.text
+                  ],
+                ),
+                   Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CustomButton(
+                        text: 'Proceed',
+                        onTap: () async {
+                          FocusScope.of(context).unfocus();
+                          if (rentFormKey.currentState!.validate()) {
+                            await calculateRent(double.tryParse(_rentAmountController
+                                    .text
                                     .trim()
                                     .replaceAll(',', '')))
-                            .then((value) {
-                          Get.to(
-                            SpaceRentConfirmationPage(
-                              rentValue: _rentValue,
-                              savingsValue: _savingValue,
-                              startDate: _endDateController.text,
-                              receivalDate: receivalDate,
-                              durationType: _intervalController.text,
-                              paymentCount: paymentCount,
-                              rentName: _rentNameController.text,
-                              duration: _duration,
-                            ),
-                          );
-                        });
-                      } else {
-                        customErrorDialog(context, "Invalid",
-                            "Please Fill All Required Fields");
-                      }
-                    },
-                    child: Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          color: colorWhite,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              )
-            ],
+                                .then((value) {
+                              Get.to(
+                                SpaceRentConfirmationPage(
+                                  rentValue: _rentValue,
+                                  savingsValue: _savingValue,
+                                  startDate: _endDateController.text,
+                                  receivalDate: receivalDate,
+                                  durationType: _intervalController.text,
+                                  paymentCount: paymentCount,
+                                  rentName: _rentNameController.text,
+                                  duration: _duration,
+                                ),
+                              );
+                            });
+                          } else {
+                            customErrorDialog(context, "Invalid",
+                                "Please Fill All Required Fields");
+                          }
+                        },
+                      ),
+                    )
+                 
+              ],
+            ),
           ),
         ),
       ),

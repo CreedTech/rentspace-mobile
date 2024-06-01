@@ -124,34 +124,34 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title:GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Text(
-                rentController.rentModel!.rents![widget.current].rentName,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.lato(
-                  color: colorBlack,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24,
+              SizedBox(
+                width: 4.h,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Text(
+                  rentController.rentModel!.rents![widget.current].rentName,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       //
@@ -160,7 +160,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
             child: ListView(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 0, bottom: 20.h),
+                  padding: EdgeInsets.only(top: 0, bottom: 10.h),
                   child: IntrinsicHeight(
                     child: Column(
                       children: [
@@ -516,9 +516,16 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                if ((((rentController.rentModel!.rents![widget.current]
+                                    .paidAmount /
+                                rentController
+                                    .rentModel!.rents![widget.current].amount) *
+                            100)
+                        .toInt() >=
+                    70))
+                  SizedBox(
+                    height: 20.h,
+                  ),
                 (((rentController.rentModel!.rents![widget.current].paidAmount /
                                     rentController.rentModel!
                                         .rents![widget.current].amount) *
@@ -630,25 +637,35 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 ),
                 (rentController.rentModel!.rents![widget.current].rentHistories
                         .isEmpty)
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Image.asset(
-                            'assets/card_empty.png',
-                            height: 150.h,
-                          ),
-                          Center(
-                            child: Text(
-                              "No Transaction history",
-                              style: GoogleFonts.lato(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
+                    ? SizedBox(
+                        height: 240,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Image.asset(
+                              'assets/icons/history_icon.png',
+                              height: 33.5.h,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                width: 180,
+                                child: Text(
+                                  "Your transactions will be displayed here",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     : Container(
                         height: rentController.rentModel!.rents![widget.current]

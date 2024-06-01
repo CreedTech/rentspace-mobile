@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,6 +9,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/view/actions/contact_us.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:rentspace/controller/rent_controller.dart';
 // import 'package:rentspace/controller/user_controller.dart';
@@ -108,11 +110,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
           ],
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 23.w),
-            child: Image.asset(
-              'assets/icons/message_icon.png',
-              height: 30.h,
+          GestureDetector(
+            onTap: () {
+              Get.to(ContactUsPage());
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 23.w),
+              child: Image.asset(
+                'assets/icons/message_icon.png',
+                height: 30.h,
+              ),
             ),
           ),
         ],
@@ -223,6 +230,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                           color: colorWhite,
                                         ),
                                       ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -264,6 +274,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                           fontWeight: FontWeight.w400,
                                           color: colorWhite,
                                         ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
                                       ),
                                       Text(
                                         nairaFormaet.format(_totalInterest),
@@ -915,7 +928,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 7, vertical: 3),
                                     decoration: BoxDecoration(
-                                      color: brandTwo.withOpacity(0.2),
+                                      color: const Color(0xffEEF8FF),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(

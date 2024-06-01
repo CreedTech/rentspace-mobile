@@ -52,7 +52,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -63,7 +63,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -78,30 +78,35 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios_sharp,
-                size: 27,
-                color: colorBlack,
+        title:  GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 27,
+                  color: colorBlack,
+                ),
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Withdrawal Account',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Withdrawal Account',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -162,7 +167,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
                                         borderSide: const BorderSide(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
@@ -264,7 +269,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                         GestureDetector(
                           onTap: () {
                             customErrorDialog(context, 'Contact Support!',
-                                'Please contact support on 09038937485 or email contact@rentspace.com to change your withdrawal account');
+                                'Please contact support on email support@rentspace.tech to change your withdrawal account');
                           },
                           child: Text(
                             'Change Account',

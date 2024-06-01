@@ -1025,7 +1025,7 @@ class _ElectricityState extends State<Electricity> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: const BorderSide(
-                                        color: brandOne, width: 2.0),
+                                        color: brandOne, width: 1.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -1037,7 +1037,7 @@ class _ElectricityState extends State<Electricity> {
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: const BorderSide(
                                         color: Colors.red,
-                                        width: 2.0), // Change color to yellow
+                                        width: 1.0), // Change color to yellow
                                   ),
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),

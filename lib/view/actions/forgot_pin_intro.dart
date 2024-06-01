@@ -81,7 +81,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -93,7 +93,7 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Colors.red,
-            width: 2.0,
+            width: 1.0,
           ),
         ),
         suffix: InkWell(
@@ -175,7 +175,9 @@ class _ForgotPinIntroConsumerState extends ConsumerState<ForgotPinIntro> {
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(400, 50),
+                                    minimumSize: Size(
+                                        MediaQuery.of(context).size.width - 50,
+                                        50),
                                     backgroundColor: brandOne,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(

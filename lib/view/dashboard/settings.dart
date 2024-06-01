@@ -39,6 +39,7 @@ import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
 // import '../../constants/firebase_auth_constants.dart';
 // import '../../constants/theme_services.dart';
+import '../../constants/widgets/copy_widget.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 // import '../../controller/user_controller.dart';
@@ -398,7 +399,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         elevation: 0.0,
+        // toolbarHeight: 59,
+        titleSpacing: 24,
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -425,7 +429,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
         child: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: 15.h,
+            vertical: 1.h,
             horizontal: 24.w,
           ),
           child: ListView(
@@ -538,45 +542,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text: userController.userModel!
-                                              .userDetails![0].dvaNumber,
-                                        ),
-                                      );
-                                      Fluttertoast.showToast(
-                                        msg: "Copied to clipboard!",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.SNACKBAR,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: brandOne,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                    },
-                                    child: Image.asset(
-                                      'assets/icons/copy_icon.png',
-                                      width: 24,
-                                      height: 24,
-                                      color: colorBlack,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Text(
-                                    'Copy',
-                                    style: GoogleFonts.lato(
-                                      color: brandTwo,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
+                              CopyWidget(
+                                text: userController
+                                    .userModel!.userDetails![0].dvaNumber,
                               ),
                             ],
                           ),
@@ -645,7 +613,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               ),
               Container(
                 padding: const EdgeInsets.only(
-                    left: 17, top: 17, right: 17, bottom: 17),
+                    left: 17, top: 10, right: 17, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -670,7 +638,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/security.png'),
+                        leading: Image.asset(
+                          'assets/security.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
                           "Security",
                           style: GoogleFonts.lato(
@@ -703,7 +675,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         (walletController.walletModel!.wallet![0]
                                     .nextWithdrawalDate !=
                                 '')
-                            ? ((DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day))
+                            ? ((DateTime(
+                                        DateTime.now().year,
+                                        DateTime.now().month,
+                                        DateTime.now().day))
                                     .isBefore(DateTime(
                                         DateTime.parse(walletController
                                                 .walletModel!
@@ -832,9 +807,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                         ),
                                       );
                                     })
-                                : (userController.userModel!.userDetails![0]
-                                        .withdrawalAccount!.isBlank!)
-                                    ? Get.to(WithdrawalPage())
+                                : (userController.userModel!.userDetails![0].withdrawalAccount == null)
+                                    ? Get.to(const WithdrawalPage())
                                     : Get.to(WithdrawContinuationPage(
                                         bankCode: userController
                                             .userModel!
@@ -857,9 +831,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                             .withdrawalAccount!
                                             .accountHolderName,
                                       ))
-                            : (userController.userModel!.userDetails![0]
-                                    .withdrawalAccount!.isBlank!)
-                                ? Get.to(WithdrawalPage())
+                            : (userController.userModel!.userDetails![0].withdrawalAccount == null)
+                                ? Get.to(const WithdrawalPage())
                                 : Get.to(WithdrawContinuationPage(
                                     bankCode: userController
                                         .userModel!
@@ -888,9 +861,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/icons/withdraw.png'),
+                        leading: Image.asset(
+                          'assets/icons/withdraw.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
-                          "WIthdraw Funds",
+                          "Withdraw Funds",
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -898,7 +875,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           ),
                         ),
                         subtitle: Text(
-                          "Withdrawal once a monthy",
+                          "Withdraw once a month",
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -924,7 +901,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/theme_mode.png'),
+                        leading: Image.asset(
+                          'assets/theme_mode.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
                           "Dark Mode",
                           style: GoogleFonts.lato(
@@ -941,10 +922,27 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             color: colorBlack,
                           ),
                         ),
-                        trailing: const Icon(
-                          Icons.keyboard_arrow_right,
-                          color: colorBlack,
-                          size: 20,
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 7, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: Color(0xffEEF8FF),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text(
+                                "Coming Soon",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.lato(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: brandOne,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -960,7 +958,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/referrals.png'),
+                        leading: Image.asset(
+                          'assets/referrals.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
                           "Referral",
                           style: GoogleFonts.lato(
@@ -996,7 +998,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/contact.png'),
+                        leading: Image.asset(
+                          'assets/contact.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
                           "Contact us",
                           style: GoogleFonts.lato(
@@ -1032,7 +1038,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         minVerticalPadding: 0,
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
-                        leading: Image.asset('assets/faq.png'),
+                        leading: Image.asset(
+                          'assets/faq.png',
+                          width: 42.5,
+                          height: 42.5,
+                        ),
                         title: Text(
                           "FAQ",
                           style: GoogleFonts.lato(

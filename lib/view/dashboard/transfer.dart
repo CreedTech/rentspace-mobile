@@ -375,9 +375,9 @@ class _TransferPageState extends State<TransferPage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -517,7 +517,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -528,7 +528,7 @@ class _TransferPageState extends State<TransferPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -555,7 +555,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -566,7 +566,7 @@ class _TransferPageState extends State<TransferPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -602,7 +602,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -613,7 +613,7 @@ class _TransferPageState extends State<TransferPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -663,7 +663,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -674,7 +674,7 @@ class _TransferPageState extends State<TransferPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -694,30 +694,30 @@ class _TransferPageState extends State<TransferPage> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title:  GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Send Money',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Send Money',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: (userController.userModel!.userDetails![0].hasBvn == true)
@@ -1328,7 +1328,7 @@ class _TransferPageState extends State<TransferPage> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: const BorderSide(
-                                          color: brandOne, width: 2.0),
+                                          color: brandOne, width: 1.0),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -1340,7 +1340,7 @@ class _TransferPageState extends State<TransferPage> {
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: const BorderSide(
                                           color: Colors.red,
-                                          width: 2.0), // Change color to yellow
+                                          width: 1.0), // Change color to yellow
                                     ),
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -1545,60 +1545,56 @@ class _TransferPageState extends State<TransferPage> {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize:
-                              Size(MediaQuery.of(context).size.width - 50, 50),
-                          backgroundColor: (withdrawFormKey.currentState !=
-                                      null &&
-                                  withdrawFormKey.currentState!.validate() &&
-                                  _bankAccountName != '')
-                              ? brandTwo
-                              : Colors.grey,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                          ),
-                        ),
-                        onPressed: withdrawFormKey.currentState != null &&
-                                withdrawFormKey.currentState!.validate()
-                            ? () async {
-                                FocusScope.of(context).unfocus();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        TransferConfirmationPage(
-                                      bankName: _bankController.text,
-                                      accountNumber:
-                                          _accountNumberController.text,
-                                      bankCode: _currentBankCode,
-                                      accountName: _bankAccountName,
-                                      amount: _amountController.text,
-                                      narration: _narrationController.text,
-                                    ),
-                                  ),
-                                );
-                                // Proceed with the action
-                              }
-                            : null,
-                        child: Text(
-                          'Proceed',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
-                            color: (withdrawFormKey.currentState != null &&
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize:
+                            Size(MediaQuery.of(context).size.width - 50, 50),
+                        backgroundColor:
+                            (withdrawFormKey.currentState != null &&
                                     withdrawFormKey.currentState!.validate() &&
                                     _bankAccountName != '')
-                                ? colorWhite
-                                : colorBlack,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                                ? brandTwo
+                                : Colors.grey,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
                           ),
+                        ),
+                      ),
+                      onPressed: withdrawFormKey.currentState != null &&
+                              withdrawFormKey.currentState!.validate()
+                          ? () async {
+                              FocusScope.of(context).unfocus();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      TransferConfirmationPage(
+                                    bankName: _bankController.text,
+                                    accountNumber:
+                                        _accountNumberController.text,
+                                    bankCode: _currentBankCode,
+                                    accountName: _bankAccountName,
+                                    amount: _amountController.text,
+                                    narration: _narrationController.text,
+                                  ),
+                                ),
+                              );
+                              // Proceed with the action
+                            }
+                          : null,
+                      child: Text(
+                        'Proceed',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          color: (withdrawFormKey.currentState != null &&
+                                  withdrawFormKey.currentState!.validate() &&
+                                  _bankAccountName != '')
+                              ? colorWhite
+                              : colorBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
@@ -1635,7 +1631,8 @@ class _TransferPageState extends State<TransferPage> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 50),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 50, 50),
                       backgroundColor: brandOne,
                       elevation: 0,
                       shape: RoundedRectangleBorder(

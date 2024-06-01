@@ -337,16 +337,16 @@
 //         ),
 //         border: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(10.0),
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         focusedBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         errorBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         filled: true,
 //         fillColor: brandThree,
@@ -393,16 +393,16 @@
 //         ),
 //         border: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(10.0),
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         focusedBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         errorBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         filled: true,
 //         fillColor: brandThree,
@@ -441,16 +441,16 @@
 //         ),
 //         border: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(10.0),
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         focusedBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         errorBorder: OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         filled: true,
 //         fillColor: brandThree,

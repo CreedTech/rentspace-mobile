@@ -12,6 +12,7 @@ import 'package:pinput/pinput.dart';
 import 'package:rentspace/controller/airtime_controller.dart';
 
 import '../../constants/colors.dart';
+import '../../constants/widgets/custom_button.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/app_controller.dart';
@@ -90,30 +91,30 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
         backgroundColor: brandOne,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorWhite,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Confirmation',
-              style: GoogleFonts.lato(
-                color: colorWhite,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Confirmation',
+                style: GoogleFonts.lato(
+                  color: colorWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Container(
@@ -126,229 +127,246 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
             topRight: Radius.circular(20),
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Almost Done!',
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: colorBlack,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 280.w,
-                    child: Text(
-                      'Confirm the following details to complete your transaction.',
-                      style: GoogleFonts.lato(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: colorBlack,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.h),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      // height: 92.h,
-                      padding: const EdgeInsets.all(17),
-                      decoration: BoxDecoration(
-                        color: colorWhite,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Airtime Amount',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: brandOne,
-                            ),
-                          ),
-                          Text(
-                            currencyFormat.format(widget.amount),
-                            style: GoogleFonts.lato(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600,
-                              color: brandOne,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    // height: 92.h,
-                    padding: const EdgeInsets.all(17),
-                    decoration: BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                child: ListView(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'To',
-                              style: GoogleFonts.lato(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Text(
-                              '${widget.customerName ?? ''} ${widget.number}',
+                              'Almost Done!',
                               style: GoogleFonts.lato(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 color: colorBlack,
                               ),
                             ),
                             SizedBox(
-                              height: 17.h,
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 0.h),
-                          child: const Divider(
-                            thickness: 1,
-                            color: Color(0xffC9C9C9),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 17.h,
-                            ),
-                            Text(
-                              'Network',
-                              style: GoogleFonts.lato(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
+                              width: 280.w,
+                              child: Text(
+                                'Confirm the following details to complete your transaction.',
+                                style: GoogleFonts.lato(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: colorBlack,
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 9.h,
-                            ),
-                            Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                  child: Image.asset(
-                                    widget.image,
-                                    height: 20.h,
-                                    width: 20.h,
-                                  ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.h),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                // height: 92.h,
+                                padding: const EdgeInsets.all(17),
+                                decoration: BoxDecoration(
+                                  color: colorWhite,
+                                  borderRadius: BorderRadius.circular(10.r),
                                 ),
-                                const SizedBox(
-                                  width: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Airtime Amount',
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                    Text(
+                                      currencyFormat.format(widget.amount),
+                                      style: GoogleFonts.lato(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w600,
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  widget.name,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorBlack,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 17.h,
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 0.h),
-                          child: const Divider(
-                            thickness: 1,
-                            color: Color(0xffC9C9C9),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 17.h,
-                            ),
-                            Text(
-                              'Description',
-                              style: GoogleFonts.lato(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
                               ),
                             ),
-                            SizedBox(
-                              height: 9.h,
-                            ),
-                            Text(
-                              widget.category.capitalize!,
-                              style: GoogleFonts.lato(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              // height: 92.h,
+                              padding: const EdgeInsets.all(17),
+                              decoration: BoxDecoration(
+                                color: colorWhite,
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'To',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                      Text(
+                                        '${widget.customerName ?? ''} ${widget.number}',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 17.h,
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 0.h),
+                                    child: const Divider(
+                                      thickness: 1,
+                                      color: Color(0xffC9C9C9),
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 17.h,
+                                      ),
+                                      Text(
+                                        'Network',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 9.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100.0),
+                                            child: Image.asset(
+                                              widget.image,
+                                              height: 20.h,
+                                              width: 20.h,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            widget.name,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: colorBlack,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 17.h,
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 0.h),
+                                    child: const Divider(
+                                      thickness: 1,
+                                      color: Color(0xffC9C9C9),
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 17.h,
+                                      ),
+                                      Text(
+                                        'Description',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff4B4B4B),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 9.h,
+                                      ),
+                                      Text(
+                                        widget.category.capitalize!,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: colorBlack,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 25.h),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: const Color(0xffF6F6F8),
-                          // showDragHandle: true,
-                          isDismissible: false,
-                          enableDrag: true,
-                          isScrollControlled: true,
-                          builder: (BuildContext context) {
-                            return FractionallySizedBox(
-                              heightFactor: 0.64,
-                              // constraints: BoxConstraints(
-                              //   maxHeight: 900 // Adjust the value as needed
-                              // ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 50.h),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomButton(
+                  text: 'Confirm',
+                  onTap: () async {
+                    showModalBottomSheet(
+                        context: context,
+                        backgroundColor: const Color(0xffF6F6F8),
+                        // showDragHandle: true,
+                        isDismissible: false,
+                        enableDrag: true,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return FractionallySizedBox(
+                            heightFactor: 0.64,
+                            // constraints: BoxConstraints(
+                            //   maxHeight: 900 // Adjust the value as needed
+                            // ),
+                            child: SingleChildScrollView(
                               child: Container(
                                 decoration: const BoxDecoration(
                                   color: Color(0xffF6F6F8),
@@ -396,8 +414,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                       padding: EdgeInsets.symmetric(
                                           vertical: 20.h, horizontal: 24.w),
                                       child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 22, horizontal: 27),
                                         decoration: BoxDecoration(
@@ -457,8 +474,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                 ),
                                               ),
                                               hapticFeedbackType:
-                                                  HapticFeedbackType
-                                                      .heavyImpact,
+                                                  HapticFeedbackType.heavyImpact,
                                               defaultPinTheme: PinTheme(
                                                 width: 67,
                                                 height: 60,
@@ -471,8 +487,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
+                                                      color:
+                                                          const Color(0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -526,8 +542,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: const Color(
-                                                          0xffBDBDBD),
+                                                      color:
+                                                          const Color(0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -541,11 +557,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   _aPinController.text
                                                       .trim()
                                                       .toString(),
-                                                  userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .wallet
-                                                      .pin,
+                                                  userController.userModel!
+                                                      .userDetails![0].wallet.pin,
                                                 )) {
                                                   FocusScope.of(context)
                                                       .unfocus();
@@ -607,8 +620,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               controller: _aPinController,
                                               length: 4,
                                               closeKeyboardWhenCompleted: true,
-                                              keyboardType:
-                                                  TextInputType.number,
+                                              keyboardType: TextInputType.number,
                                             ),
                                           ],
                                         ),
@@ -616,12 +628,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 24.w,
-                                          right: 24.w,
-                                          bottom: 30.h),
+                                          left: 24.w, right: 24.w, bottom: 30.h),
                                       child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 2, horizontal: 7),
                                         decoration: BoxDecoration(
@@ -640,13 +649,11 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               return;
                                             setState(() {
                                               _aPinController.text =
-                                                  _aPinController
-                                                      .text
-                                                      .substring(
-                                                          0,
-                                                          _aPinController
-                                                                  .text.length -
-                                                              1);
+                                                  _aPinController.text.substring(
+                                                      0,
+                                                      _aPinController
+                                                              .text.length -
+                                                          1);
                                             });
                                           },
                                           rightButtonLongPressFn: () {
@@ -668,23 +675,14 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                   ],
                                 ),
                               ),
-                            );
-                          });
-                    },
-                    child: Text(
-                      'Confirm',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                            ),
+                          );
+                        });
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

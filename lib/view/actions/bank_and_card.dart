@@ -254,7 +254,7 @@
 //               //             padding: const EdgeInsets.symmetric(
 //               //                 vertical: 20, horizontal: 25),
 //               //             decoration: BoxDecoration(
-//               //               color: brandTwo.withOpacity(0.2),
+//               //               color: Color(0xffEEF8FF)),
 //               //               borderRadius: BorderRadius.circular(10),
 //               //             ),
 //               //             child: Column(

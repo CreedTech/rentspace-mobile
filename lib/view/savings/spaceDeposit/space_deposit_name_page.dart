@@ -207,7 +207,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: const BorderSide(
-                                        color: brandOne, width: 2.0),
+                                        color: brandOne, width: 1.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -219,7 +219,7 @@ class _SpaceDepositNamePageState extends State<SpaceDepositNamePage> {
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: const BorderSide(
                                         color: Colors.red,
-                                        width: 2.0), // Change color to yellow
+                                        width: 1.0), // Change color to yellow
                                   ),
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),

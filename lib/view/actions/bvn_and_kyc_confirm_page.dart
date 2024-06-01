@@ -255,7 +255,7 @@
 //           ),
 //         ),
 //         focusedBorder: const OutlineInputBorder(
-//           borderSide: BorderSide(color: brandOne, width: 2.0),
+//           borderSide: BorderSide(color: brandOne, width: 1.0),
 //         ),
 //         enabledBorder: const OutlineInputBorder(
 //           borderSide: BorderSide(
@@ -265,7 +265,7 @@
 //         errorBorder: const OutlineInputBorder(
 //           borderSide: BorderSide(
 //             color: Colors.red,
-//             width: 2.0,
+//             width: 1.0,
 //           ),
 //         ),
 //         suffix: InkWell(

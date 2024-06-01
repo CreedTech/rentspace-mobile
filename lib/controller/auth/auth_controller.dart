@@ -288,19 +288,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       // print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: brandOne,
-            message: 'BVN Verified Successfully!!',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-        createDva(
+        isLoading = false;
+        createProvidusDva(
           context,
           email.toString().toLowerCase(),
         );
@@ -389,11 +378,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           ),
         );
         EasyLoading.dismiss();
+        isLoading = false;
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.success(
             backgroundColor: brandOne,
-            message: 'BVN Verified Successfully!!',
+            message: 'Account Verified Successfully!!',
             textStyle: GoogleFonts.lato(
               fontSize: 14,
               color: Colors.white,
@@ -482,18 +472,19 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           ),
         );
         EasyLoading.dismiss();
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.success(
-        //     backgroundColor: brandOne,
-        //     message: 'BVN Verified Successfully!!',
-        //     textStyle: GoogleFonts.lato(
-        //       fontSize: 14,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.w700,
-        //     ),
-        //   ),
-        // );
+        isLoading = false;
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            backgroundColor: brandOne,
+            message: 'Account Verified Successfully!!',
+            textStyle: GoogleFonts.lato(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        );
 
         return;
       } else {
@@ -739,7 +730,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.success == false &&
           response.message.contains(
-              "BVN not verified, please verify your bvn to continue")) {
+              "BVN not verified, please verify your BVN to continue")) {
         // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "BVN not verified, please verify your bvn to continue";
 
@@ -1284,17 +1275,16 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         state = const AsyncValue.data(false);
         // final GetStorage storage = GetStorage();
         final prefs = await SharedPreferences.getInstance();
-        
+
         await GetStorage().erase();
         await prefs.clear();
-       
+
         await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();
         await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
 
         prefs.setBool('hasSeenOnboarding', false);
-      
-       
+
         // // print(prefs.get('hasSeenOnboarding'));
         // Get.offAll(const LoginPage());
 

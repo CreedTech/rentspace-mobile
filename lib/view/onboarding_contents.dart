@@ -15,13 +15,13 @@ List<OnboardingContents> contents = [
     title: "SpaceRent",
     image: "assets/onboarding_img1.png",
     desc:
-        "Save 70% of your rent for a minimum of 180 days and get up to 30% as loan.",
+        "We’re excited to have you join Spacerent!!! Save 70% of your rent consistently & have access to 30% to complete it.",
   ),
   OnboardingContents(
     title: "Virtual Account",
     image: "assets/onboarding_img2.png",
     desc:
-        "Instantly recharge Airtime, Data, Cable TV, Electricity, and more with RentSpace Technology. Our advanced tech ensures seamless utility payments.",
+        "Earn Space Points for airtime top-ups by completing various saving activities on our app.",
   ),
   // OnboardingContents(
   //   title: "On demand and runtime location",

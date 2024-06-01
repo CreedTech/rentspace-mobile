@@ -89,21 +89,6 @@ class AirtimesController extends GetxController {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
-    // print('informations');
-    // print(authToken);
-    // print(customerId);
-    // print(division);
-    // print("paymentItem : $paymentItem");
-    // print(productId);
-    // print('biller id $billerId');
-    // print('amount');
-    // print(customerId);
-    // print(division);
-    // print(paymentItem);
-    // print(productId);
-    // print(amount);
-    // print(category);
-    // print(name);
 
     try {
       var headers = {

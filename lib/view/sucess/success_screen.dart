@@ -277,92 +277,94 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 ],
                               )
                             : SizedBox(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  minimumSize: const Size(180, 45),
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                        color: Color(0xffCCCCCC), width: 1),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  // Get.offAll(
-                                  //     LoginPage(sessionStateStream: sessionStateStream));
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Icon(
-                                      Icons.share_outlined,
-                                      color: colorBlack,
-                                      size: 26,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Share',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  minimumSize: const Size(180, 45),
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                        color: Color(0xffCCCCCC), width: 1),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  // Get.offAll(
-                                  //     LoginPage(sessionStateStream: sessionStateStream));
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Icon(
-                                      Icons.file_download_outlined,
-                                      color: colorBlack,
-                                      size: 26,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Download',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 24),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: [
+                        //       ElevatedButton(
+                        //         style: ElevatedButton.styleFrom(
+                        //           elevation: 0,
+                        //           minimumSize: const Size(180, 45),
+                        //           backgroundColor: Colors.transparent,
+                        //           shape: RoundedRectangleBorder(
+                        //             side: const BorderSide(
+                        //                 color: Color(0xffCCCCCC), width: 1),
+                        //             borderRadius: BorderRadius.circular(10),
+                        //           ),
+                        //         ),
+                        //         onPressed: () {
+                        //           // Get.offAll(
+                        //           //     LoginPage(sessionStateStream: sessionStateStream));
+                        //         },
+                        //         child: Row(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceBetween,
+                        //           children: [
+                        //             const Icon(
+                        //               Icons.share_outlined,
+                        //               color: colorBlack,
+                        //               size: 26,
+                        //             ),
+                        //             const SizedBox(
+                        //               width: 10,
+                        //             ),
+                        //             Text(
+                        //               'Share',
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.lato(
+                        //                 color: colorBlack,
+                        //                 fontSize: 14,
+                        //                 fontWeight: FontWeight.w500,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       ElevatedButton(
+                        //         style: ElevatedButton.styleFrom(
+                        //           elevation: 0,
+                        //           minimumSize: const Size(180, 45),
+                        //           backgroundColor: Colors.transparent,
+                        //           shape: RoundedRectangleBorder(
+                        //             side: const BorderSide(
+                        //                 color: Color(0xffCCCCCC), width: 1),
+                        //             borderRadius: BorderRadius.circular(10),
+                        //           ),
+                        //         ),
+                        //         onPressed: () {
+                        //           // Get.offAll(
+                        //           //     LoginPage(sessionStateStream: sessionStateStream));
+                        //         },
+                        //         child: Row(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceBetween,
+                        //           children: [
+                        //             const Icon(
+                        //               Icons.file_download_outlined,
+                        //               color: colorBlack,
+                        //               size: 26,
+                        //             ),
+                        //             const SizedBox(
+                        //               width: 10,
+                        //             ),
+                        //             Text(
+                        //               'Download',
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.lato(
+                        //                 color: colorBlack,
+                        //                 fontSize: 14,
+                        //                 fontWeight: FontWeight.w500,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                           
+                        //     ],
+                        //   ),
+                        // ),
+                       
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Align(

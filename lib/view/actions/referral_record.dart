@@ -24,7 +24,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: brandTwo.withOpacity(0.2),
+      backgroundColor: Color(0xffEEF8FF),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,

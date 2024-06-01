@@ -91,7 +91,7 @@ String formattedDate = formatter.format(now);
 // String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
-bool hideBalance = false;
+bool hideBalance = true;
 int currentPos = 0;
 
 class _DashboardConsumerState extends ConsumerState<Dashboard> {
@@ -212,7 +212,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
     getConnectivity();
     // print("isLoading");
-    hideBalance = false;
+    hideBalance = true;
     // print(userController.isLoading.value);
 
     greeting();
@@ -254,6 +254,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     // double screenWidth = MediaQuery.of(context).size.width;
     // double screenHeight = MediaQuery.of(context).size.height;
     // double sliderHeight = sliderDynamicScreen(screenHeight);
+
     return Scaffold(
       backgroundColor: brandOne,
       body: Obx(
@@ -265,288 +266,27 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           showChildOpacityTransition: false,
           onRefresh: onRefresh,
           child: SafeArea(
-            child: ListView(
+            // top: false,
+            child: Column(
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: brandOne,
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: -30,
-                        right: -50,
-                        child: Image.asset(
-                          'assets/logo_transparent.png',
-                          width: 255.47,
-                          height: 291.75,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              24.0.w,
-                              0.0.h,
-                              24.0.w,
-                              0.0.h,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Hi, ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
-                                              style: GoogleFonts.lato(
-                                                fontSize: 24.0,
-                                                fontWeight: FontWeight.w500,
-                                                color: colorWhite,
-                                              ),
-                                            ),
-                                            Text(
-                                              _greeting,
-                                              style: GoogleFonts.lato(
-                                                fontSize: 12.0,
-                                                // letterSpacing: 1.0,
-                                                fontWeight: FontWeight.w500,
-                                                color: colorWhite,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.to(const ContactUsPage());
-                                      },
-                                      child: Image.asset(
-                                        'assets/icons/message_icon.png',
-                                        width: 24,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                // SizedBox(
-                                //   height: 15.h,
-                                // ),
-                                // (rentController.isLoading.value.obs() == true &&
-                                //         walletController.isLoading.value.obs() == true)
-                                //     ? const CustomLoader()
-                                //     : SizedBox(
-                                //         height: 20,
-                                //         child: ListView.builder(
-                                //           physics: const BouncingScrollPhysics(),
-                                //           scrollDirection: Axis.horizontal,
-                                //           itemCount: rentspaceProducts.length,
-                                //           itemBuilder: (context, index) {
-                                //             return Padding(
-                                //               padding: EdgeInsets.only(right: 10.w),
-                                //               child: GestureDetector(
-                                //                 onTap: () {
-                                //                   setState(() {
-                                //                     selectedIndex =
-                                //                         rentspaceProducts[index];
-                                //                   });
-                                //                   if (selectedIndex ==
-                                //                       'Space Deposit') {
-                                //                     showTopSnackBar(
-                                //                       Overlay.of(context),
-                                //                       CustomSnackBar.error(
-                                //                         backgroundColor: brandOne,
-                                //                         message: 'Coming Soon :)',
-                                //                         textStyle: GoogleFonts.lato(
-                                //                           fontSize: 14,
-                                //                           color: Colors.white,
-                                //                           fontWeight: FontWeight.w500,
-                                //                         ),
-                                //                       ),
-                                //                     );
-                                //                   }
-                                //                   // print(selectedIndex);
-                                //                   // Handle tap event
-                                //                 },
-                                //                 child: Container(
-                                //                   padding: const EdgeInsets.symmetric(
-                                //                     horizontal: 10,
-                                //                     vertical: 3,
-                                //                   ),
-                                //                   decoration: BoxDecoration(
-                                //                     borderRadius:
-                                //                         BorderRadius.circular(5.0),
-                                //                     color: colorWhite,
-                                //                   ),
-                                //                   child: Center(
-                                //                     child: Text(
-                                //                       rentspaceProducts[index],
-                                //                       textAlign: TextAlign.center,
-                                //                       style: TextStyle(
-                                //                         fontSize: 12,
-                                //                         color: (selectedIndex ==
-                                //                                 rentspaceProducts[
-                                //                                     index])
-                                //                             ? brandOne
-                                //                             : const Color(0xff9DA6AD),
-                                //                         fontWeight: FontWeight.w300,
-                                //                       ),
-                                //                     ),
-                                //                   ),
-                                //                 ),
-                                //               ),
-                                //             );
-                                //           },
-                                //         ),
-                                //       ),
-                                SizedBox(
-                                  height: 23.h,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Space Wallet',
-                                          style: GoogleFonts.lato(
-                                            color: colorWhite,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              hideBalance = !hideBalance;
-                                            });
-                                          },
-                                          child: Icon(
-                                            hideBalance
-                                                ? Iconsax.eye
-                                                : Iconsax.eye_slash,
-                                            color: colorWhite,
-                                            size: 20,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Text(
-                                      hideBalance
-                                          ? nairaFormaet
-                                              .format((selectedIndex ==
-                                                          rentspaceProducts[0]
-                                                      ? walletController
-                                                          .walletModel!
-                                                          .wallet![0]
-                                                          .mainBalance
-                                                      : selectedIndex ==
-                                                              rentspaceProducts[
-                                                                  1]
-                                                          ? rentBalance
-                                                          : selectedIndex ==
-                                                                  rentspaceProducts[
-                                                                      2]
-                                                              ? 0
-                                                              : walletController
-                                                                  .walletModel!
-                                                                  .wallet![0]
-                                                                  .mainBalance) ??
-                                                  0)
-                                              .toString()
-                                          : "******",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                          color: colorWhite,
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.to(const FundWallet());
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 39, vertical: 12),
-                                            decoration: BoxDecoration(
-                                              color: colorWhite,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color(
-                                                      0x1A000000), // Color with 15% opacity
-                                                  blurRadius: 19.0,
-                                                  spreadRadius: -4.0,
-                                                ),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                const Icon(
-                                                  Icons.add_circle,
-                                                  color: brandTwo,
-                                                  size: 26,
-                                                ),
-                                                SizedBox(
-                                                  width: 10.w,
-                                                ),
-                                                Text(
-                                                  'Add Money ',
-                                                  style: GoogleFonts.lato(
-                                                    color: brandTwo,
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 22.h,
-                                ),
-                              ],
-                            ),
+                SizedBox(
+                  // height: 250.0.h,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: -30,
+                          right: -50,
+                          child: Image.asset(
+                            'assets/logo_transparent.png',
+                            width: 255.47,
+                            height: 291.75,
                           ),
-                          Container(
-                            // padding: const EdgeInsets.symmetric(
-                            //     vertical: 40, horizontal: 24),
-                            // height: MediaQuery.of(context).size.height *,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                            child: Padding(
+                        ),
+                        Column(
+                          children: [
+                            Padding(
                               padding: EdgeInsets.fromLTRB(
                                 24.0.w,
                                 0.0.h,
@@ -554,435 +294,542 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                 0.0.h,
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Text(
-                                    'Quick Payment',
-                                    style: GoogleFonts.lato(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: colorBlack),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0,
-                                          minimumSize: const Size(180, 45),
-                                          backgroundColor: colorWhite,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Get.to(const AirtimePage());
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 18),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Image.asset(
-                                                'assets/icons/call_icon.png',
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                              const SizedBox(
-                                                height: 14,
-                                              ),
-                                              Text(
-                                                'Buy Airtime',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.lato(
-                                                  color: colorBlack,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0,
-                                          minimumSize: const Size(180, 45),
-                                          backgroundColor: colorWhite,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Get.to(const SpaceRentCreation());
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 18),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Image.asset(
-                                                'assets/icons/space_rent.png',
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                              const SizedBox(
-                                                height: 14,
-                                              ),
-                                              Text(
-                                                'New Space Rent',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.lato(
-                                                  color: colorBlack,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     SizedBox(
-                                  //       width: 80.w,
-                                  //       height: 80.h,
-                                  //       child: Container(
-                                  //         decoration: BoxDecoration(
-                                  //           color: colorWhite,
-                                  //           borderRadius:
-                                  //               BorderRadius.circular(10.r),
-                                  //         ),
-                                  //         child: IconsContainer(
-                                  //           IconsName: 'Airtime',
-                                  //           icon: Iconsax.call5,
-                                  //           iconColor: brandOne,
-                                  //           onTap: () {
-                                  //             Navigator.pushNamed(
-                                  //                 context, airtime);
-                                  //           },
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 80.w,
-                                  //       height: 80.h,
-                                  //       child: Container(
-                                  //         decoration: BoxDecoration(
-                                  //           color: colorWhite,
-                                  //           borderRadius:
-                                  //               BorderRadius.circular(10.r),
-                                  //         ),
-                                  //         child: IconsContainer(
-                                  //           IconsName: 'Data',
-                                  //           icon: Icons.wifi,
-                                  //           iconColor: brandOne,
-                                  //           onTap: () {
-                                  //             Navigator.pushNamed(
-                                  //                 context, dataBundle);
-                                  //           },
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 80.w,
-                                  //       height: 80.h,
-                                  //       child: Container(
-                                  //         decoration: BoxDecoration(
-                                  //           color: colorWhite,
-                                  //           borderRadius:
-                                  //               BorderRadius.circular(10.r),
-                                  //         ),
-                                  //         child: IconsContainer(
-                                  //           IconsName: 'Cable',
-                                  //           icon: Icons.tv_rounded,
-                                  //           iconColor: brandOne,
-                                  //           onTap: () {
-                                  //             Navigator.pushNamed(
-                                  //                 context, cable);
-                                  //           },
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 80.w,
-                                  //       height: 80.h,
-                                  //       child: Container(
-                                  //         decoration: BoxDecoration(
-                                  //           color: colorWhite,
-                                  //           borderRadius:
-                                  //               BorderRadius.circular(10.r),
-                                  //         ),
-                                  //         child: Center(
-                                  //           child: IconsContainer(
-                                  //             IconsName: 'Electricity',
-                                  //             icon: Icons.lightbulb_sharp,
-                                  //             iconColor: brandOne,
-                                  //             onTap: () {
-                                  //               Navigator.pushNamed(
-                                  //                   context, electricity);
-                                  //             },
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Transactions',
-                                        style: GoogleFonts.lato(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: colorBlack,
-                                        ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Hi ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 24.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: colorWhite,
+                                                ),
+                                              ),
+                                              Text(
+                                                _greeting,
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12.0,
+                                                  // letterSpacing: 1.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: colorWhite,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.to(const AllActivities());
+                                          Get.to(const ContactUsPage());
                                         },
-                                        child: Text(
-                                          'View All',
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: brandTwo,
-                                          ),
+                                        child: Image.asset(
+                                          'assets/icons/message_icon.png',
+                                          width: 24,
                                         ),
                                       ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 10.h,
+                                    height: 23.h,
                                   ),
-                                  Container(
-                                    height: userController
-                                                .userModel!
-                                                .userDetails![0]
-                                                .walletHistories
-                                                .length <
-                                            3
-                                        ? userController
-                                                .userModel!
-                                                .userDetails![0]
-                                                .walletHistories
-                                                .length *
-                                            80
-                                        : 240.h,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Space Wallet',
+                                            style: GoogleFonts.lato(
+                                              color: colorWhite,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                hideBalance = !hideBalance;
+                                              });
+                                            },
+                                            child: Icon(
+                                              hideBalance
+                                                  ? Iconsax.eye
+                                                  : Iconsax.eye_slash,
+                                              color: colorWhite,
+                                              size: 20,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text(
+                                        hideBalance
+                                            ? nairaFormaet
+                                                .format((selectedIndex ==
+                                                            rentspaceProducts[0]
+                                                        ? walletController
+                                                            .walletModel!
+                                                            .wallet![0]
+                                                            .mainBalance
+                                                        : selectedIndex ==
+                                                                rentspaceProducts[
+                                                                    1]
+                                                            ? rentBalance
+                                                            : selectedIndex ==
+                                                                    rentspaceProducts[
+                                                                        2]
+                                                                ? 0
+                                                                : walletController
+                                                                    .walletModel!
+                                                                    .wallet![0]
+                                                                    .mainBalance) ??
+                                                    0)
+                                                .toString()
+                                            : "******",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.lato(
+                                            color: colorWhite,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.to(const FundWallet());
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 39,
+                                                      vertical: 12),
+                                              decoration: BoxDecoration(
+                                                color: colorWhite,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color(
+                                                        0x1A000000), // Color with 15% opacity
+                                                    blurRadius: 19.0,
+                                                    spreadRadius: -4.0,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  const Icon(
+                                                    Icons.add_circle,
+                                                    color: brandTwo,
+                                                    size: 26,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.w,
+                                                  ),
+                                                  Text(
+                                                    'Add Money ',
+                                                    style: GoogleFonts.lato(
+                                                      color: brandTwo,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 22.h,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        24.0.w,
+                        0.0.h,
+                        24.0.w,
+                        0.0.h,
+                      ),
+                      child: ListView(
+                        children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Text(
+                            'Quick Actions',
+                            style: GoogleFonts.lato(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: colorBlack),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width / 2.45,
+                                      45),
+                                  backgroundColor: colorWhite,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Get.to(const AirtimePage());
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/call_icon.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(
+                                        height: 14,
+                                      ),
+                                      Text(
+                                        'Buy Airtime',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width / 2.45,
+                                      45),
+                                  backgroundColor: colorWhite,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Get.to(const SpaceRentCreation());
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/space_rent.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(
+                                        height: 14,
+                                      ),
+                                      Text(
+                                        'New Space Rent',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Transactions',
+                                style: GoogleFonts.lato(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: colorBlack,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(const AllActivities());
+                                },
+                                child: Text(
+                                  'View All',
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: brandTwo,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          (userController.userModel!.userDetails![0]
+                                  .walletHistories.isEmpty)
+                              ? SizedBox(
+                                  height: 240,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/history_icon.png',
+                                        height: 33.5.h,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Center(
+                                        child: SizedBox(
+                                          width: 180,
+                                          child: Text(
+                                            "Your transactions will be displayed here",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              color: colorBlack,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SingleChildScrollView(
+                                  child: Container(
+                                    // height: 249,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
                                     decoration: BoxDecoration(
                                       color: colorWhite,
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
-                                    child: (userController
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: const ClampingScrollPhysics(),
+                                      itemCount: (userController
+                                                  .userModel!
+                                                  .userDetails![0]
+                                                  .walletHistories
+                                                  .length <
+                                              3)
+                                          ? userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .walletHistories
+                                              .length
+                                          : 3,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        int reversedIndex = userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .walletHistories
+                                                .length -
+                                            1 -
+                                            index;
+                                        final history = userController
                                             .userModel!
                                             .userDetails![0]
-                                            .walletHistories
-                                            .isEmpty)
-                                        ? Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              Image.asset(
-                                                'assets/card_empty.png',
-                                                height: 150.h,
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  "No Transaction history",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 16,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                            .walletHistories[index];
+
+                                        final item = userController
+                                            .userModel!
+                                            .userDetails![0]
+                                            .walletHistories[index];
+                                        final itemLength = item.length;
+
+                                        bool showDivider = true;
+
+                                        if (index <
+                                            userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .walletHistories
+                                                    .length -
+                                                1) {
+                                          if ((itemLength == 1 &&
+                                                  index % 2 == 0) ||
+                                              (itemLength == 2 &&
+                                                  (index + 1) % 2 == 0) ||
+                                              (itemLength >= 3 &&
+                                                  (index + 1) % 3 == 0)) {
+                                            showDivider = false;
+                                          }
+                                        } else {
+                                          showDivider = false;
+                                        }
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const TransactionReceipt(),
+                                                settings: RouteSettings(
+                                                  arguments: userController
+                                                      .userModel!
+                                                      .userDetails![0]
+                                                      .walletHistories[index],
                                                 ),
                                               ),
-                                            ],
-                                          )
-                                        : ListView.builder(
-                                            scrollDirection: Axis.vertical,
-                                            shrinkWrap: true,
-                                            physics:
-                                                const ClampingScrollPhysics(),
-                                            itemCount: (userController
-                                                        .userModel!
-                                                        .userDetails![0]
-                                                        .walletHistories
-                                                        .length <
-                                                    3)
-                                                ? userController
-                                                        .userModel!
-                                                        .userDetails![0]
-                                                        .walletHistories
-                                                        .length -
-                                                    1
-                                                : 3,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              int reversedIndex = userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .walletHistories
-                                                      .length -
-                                                  1 -
-                                                  index;
-                                              // Access the activities in reverse order
-                                              final history = userController
-                                                      .userModel!
-                                                      .userDetails![0]
-                                                      .walletHistories[
-                                                  reversedIndex];
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const TransactionReceipt(),
-                                                      settings: RouteSettings(
-                                                        arguments: userController
-                                                                .userModel!
-                                                                .userDetails![0]
-                                                                .walletHistories[
-                                                            reversedIndex],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Column(
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              // const SizedBox(
+                                              //   height: 24,
+                                              // ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 10),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    ListTile(
-                                                      leading: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(12),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: (history[
-                                                                      'transactionType'] ==
-                                                                  'Credit')
-                                                              ? brandTwo
-                                                              : brandTwo,
-                                                        ),
-                                                        child: (history[
-                                                                    'transactionType'] ==
-                                                                'Credit')
-                                                            ? const Icon(
-                                                                Icons
-                                                                    .call_received,
-                                                                color: Color(
-                                                                    0xff80FF00),
-                                                                size: 20,
-                                                              )
-                                                            : const Icon(
-                                                                Icons
-                                                                    .arrow_outward_sharp,
-                                                                color:
-                                                                    colorWhite,
-                                                                size: 20,
+                                                    Flexible(
+                                                      flex: 7,
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        // mainAxisAlignment:
+                                                        //     MainAxisAlignment
+                                                        //         .spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            flex: 2,
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(12),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: (history[
+                                                                            'transactionType'] ==
+                                                                        'Credit')
+                                                                    ? brandTwo
+                                                                    : brandTwo,
                                                               ),
-                                                      ),
-                                                      title: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "${history['description'] ?? history['message'] ?? 'No Description Found'} "
-                                                                .capitalize!,
-                                                            // maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: GoogleFonts
-                                                                .lato(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: colorBlack,
+                                                              child: (history[
+                                                                          'transactionType'] ==
+                                                                      'Credit')
+                                                                  ? const Icon(
+                                                                      Icons
+                                                                          .call_received,
+                                                                      color: Color(
+                                                                          0xff80FF00),
+                                                                      size: 20,
+                                                                    )
+                                                                  : const Icon(
+                                                                      Icons
+                                                                          .arrow_outward_sharp,
+                                                                      color:
+                                                                          colorWhite,
+                                                                      size: 20,
+                                                                    ),
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      subtitle: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
                                                           const SizedBox(
-                                                            height: 9,
-                                                          ),
-                                                          Text(
-                                                            formatDateTime(
-                                                                history[
-                                                                    'createdAt']),
-                                                            style: GoogleFonts
-                                                                .lato(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: const Color(
-                                                                  0xff4B4B4B),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      trailing: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          (history['transactionType'] ==
-                                                                  'Credit')
-                                                              ? Text(
-                                                                  "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: const Color(
-                                                                        0xff56AB00),
-                                                                  ),
-                                                                )
-                                                              : Text(
-                                                                  nairaFormaet.format(
-                                                                      double.parse(
-                                                                          history['amount']
-                                                                              .toString())),
+                                                              width: 12),
+                                                          Flexible(
+                                                            flex: 8,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  "${history['description'] ?? history['message'] ?? 'No Description Found'} "
+                                                                      .capitalize!,
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style:
                                                                       GoogleFonts
                                                                           .lato(
@@ -995,574 +842,87 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                         colorBlack,
                                                                   ),
                                                                 ),
+                                                                const SizedBox(
+                                                                    height: 5),
+                                                                Text(
+                                                                  formatDateTime(
+                                                                      history[
+                                                                          'createdAt']),
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .lato(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: const Color(
+                                                                        0xff4B4B4B),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
-                                                    const Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 13),
-                                                      child: Divider(
-                                                        thickness: 1,
-                                                        color:
-                                                            Color(0xffC9C9C9),
-                                                      ),
+                                                    Flexible(
+                                                      flex: 3,
+                                                      child: (history[
+                                                                  'transactionType'] ==
+                                                              'Credit')
+                                                          ? Text(
+                                                              "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
+                                                              style: GoogleFonts
+                                                                  .lato(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: const Color(
+                                                                    0xff56AB00),
+                                                              ),
+                                                            )
+                                                          : Text(
+                                                              nairaFormaet.format(
+                                                                  double.parse(history[
+                                                                          'amount']
+                                                                      .toString())),
+                                                              style: GoogleFonts
+                                                                  .lato(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color:
+                                                                    colorBlack,
+                                                              ),
+                                                            ),
                                                     ),
                                                   ],
                                                 ),
-                                              );
-                                            },
+                                              ),
+
+                                              if (showDivider)
+                                                const Divider(
+                                                  thickness: 1,
+                                                  color: Color(0xffC9C9C9),
+                                                  indent: 17,
+                                                  endIndent: 17,
+                                                ),
+                                            ],
                                           ),
+                                        );
+                                      },
+                                    ),
                                   ),
-
-                                  SizedBox(
-                                    height: 60.h,
-                                  ),
-                                ],
-                              ),
-                            ),
+                                ),
+                          SizedBox(
+                            height: 60.h,
                           ),
-
-                          // Row(
-                          //   children: [
-                          //     Expanded(
-                          //       child: GestureDetector(
-                          //         onTap: () {
-                          //           Get.to(const TransferPage());
-                          //         },
-                          //         child: Container(
-                          //           padding: const EdgeInsets.symmetric(
-                          //               horizontal: 15, vertical: 7),
-                          //           decoration: BoxDecoration(
-                          //             color: colorWhite,
-                          //             borderRadius: BorderRadius.circular(10),
-                          //             boxShadow: const [
-                          //               BoxShadow(
-                          //                 color: Color(
-                          //                     0x1A000000), // Color with 15% opacity
-                          //                 blurRadius: 19.0,
-                          //                 spreadRadius: -4.0,
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           child: Row(
-                          //             mainAxisAlignment: MainAxisAlignment.start,
-                          //             children: [
-                          //               const Icon(
-                          //                 Icons.swap_horizontal_circle,
-                          //                 color: brandTwo,
-                          //                 size: 26,
-                          //               ),
-                          //               SizedBox(
-                          //                 width: 10.w,
-                          //               ),
-                          //               Text(
-                          //                 'Send Money',
-                          //                 style: GoogleFonts.lato(
-                          //                   color: brandTwo,
-                          //                   fontSize: 14,
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-
-                          //     const SizedBox(
-                          //         width: 10), // Adjust spacing between boxes
-                          //     Expanded(
-                          //       child: GestureDetector(
-                          //         onTap: () {
-                          //           Get.to(const FundWallet());
-                          //         },
-                          //         child: Container(
-                          //           padding: const EdgeInsets.symmetric(
-                          //               horizontal: 15, vertical: 7),
-                          //           decoration: BoxDecoration(
-                          //             color: colorWhite,
-                          //             borderRadius: BorderRadius.circular(10),
-                          //             boxShadow: const [
-                          //               BoxShadow(
-                          //                 color: Color(
-                          //                     0x1A000000), // Color with 15% opacity
-                          //                 blurRadius: 19.0,
-                          //                 spreadRadius: -4.0,
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           child: Row(
-                          //             mainAxisAlignment: MainAxisAlignment.start,
-                          //             children: [
-                          //               const Icon(
-                          //                 Icons.add_circle,
-                          //                 color: brandTwo,
-                          //                 size: 26,
-                          //               ),
-                          //               SizedBox(
-                          //                 width: 10.w,
-                          //               ),
-                          //               Text(
-                          //                 'Add Money ',
-                          //                 style: GoogleFonts.lato(
-                          //                   color: brandTwo,
-                          //                   fontSize: 14,
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                         ],
                       ),
-
-                      // FractionallySizedBox(
-                      //   child: Container(
-                      //     // padding: const EdgeInsets.symmetric(
-                      //     //     vertical: 40, horizontal: 24),
-                      //     height: MediaQuery.of(context).size.height,
-                      //     width: MediaQuery.of(context).size.width,
-                      //     decoration: const BoxDecoration(
-                      //       color: colorWhite,
-                      //       borderRadius: BorderRadius.only(
-                      //         topLeft: Radius.circular(20),
-                      //         topRight: Radius.circular(20),
-                      //       ),
-                      //     ),
-                      //     child: Padding(
-                      //       padding: EdgeInsets.fromLTRB(
-                      //         24.0.w,
-                      //         0.0.h,
-                      //         24.0.w,
-                      //         0.0.h,
-                      //       ),
-                      //       child: Column(
-                      //         children: [
-                      //           SizedBox(
-                      //             height: 20.h,
-                      //           ),
-                      //           Text(
-                      //             'Quick Payment',
-                      //             style: GoogleFonts.lato(
-                      //                 fontSize: 16,
-                      //                 fontWeight: FontWeight.w500,
-                      //                 color: colorBlack),
-                      //           ),
-                      //           SizedBox(
-                      //             height: 10.h,
-                      //           ),
-                      //           Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               SizedBox(
-                      //                 width: 80.w,
-                      //                 height: 80.h,
-                      //                 child: Container(
-                      //                   decoration: BoxDecoration(
-                      //                     color: colorWhite,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.r),
-                      //                   ),
-                      //                   child: IconsContainer(
-                      //                     IconsName: 'Airtime',
-                      //                     icon: Iconsax.call5,
-                      //                     iconColor: brandOne,
-                      //                     onTap: () {
-                      //                       Navigator.pushNamed(context, airtime);
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               SizedBox(
-                      //                 width: 80.w,
-                      //                 height: 80.h,
-                      //                 child: Container(
-                      //                   decoration: BoxDecoration(
-                      //                     color: colorWhite,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.r),
-                      //                   ),
-                      //                   child: IconsContainer(
-                      //                     IconsName: 'Data',
-                      //                     icon: Icons.wifi,
-                      //                     iconColor: brandOne,
-                      //                     onTap: () {
-                      //                       Navigator.pushNamed(
-                      //                           context, dataBundle);
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               SizedBox(
-                      //                 width: 80.w,
-                      //                 height: 80.h,
-                      //                 child: Container(
-                      //                   decoration: BoxDecoration(
-                      //                     color: colorWhite,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.r),
-                      //                   ),
-                      //                   child: IconsContainer(
-                      //                     IconsName: 'Cable',
-                      //                     icon: Icons.tv_rounded,
-                      //                     iconColor: brandOne,
-                      //                     onTap: () {
-                      //                       Navigator.pushNamed(context, cable);
-                      //                     },
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               SizedBox(
-                      //                 width: 80.w,
-                      //                 height: 80.h,
-                      //                 child: Container(
-                      //                   decoration: BoxDecoration(
-                      //                     color: colorWhite,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.r),
-                      //                   ),
-                      //                   child: Center(
-                      //                     child: IconsContainer(
-                      //                       IconsName: 'Electricity',
-                      //                       icon: Icons.lightbulb_sharp,
-                      //                       iconColor: brandOne,
-                      //                       onTap: () {
-                      //                         Navigator.pushNamed(
-                      //                             context, electricity);
-                      //                       },
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           SizedBox(
-                      //             height: 20.h,
-                      //           ),
-                      //           Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               Text(
-                      //                 'Transactions',
-                      //                 style: GoogleFonts.lato(
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w600,
-                      //                   color: colorBlack,
-                      //                 ),
-                      //               ),
-                      //               GestureDetector(
-                      //                 onTap: () {
-                      //                   Get.to(const AllActivities());
-                      //                 },
-                      //                 child: Text(
-                      //                   'View All',
-                      //                   style: GoogleFonts.lato(
-                      //                     fontSize: 14,
-                      //                     fontWeight: FontWeight.w600,
-                      //                     color: brandTwo,
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           SizedBox(
-                      //             height: 10.h,
-                      //           ),
-                      //           Container(
-                      //             height: userController
-                      //                         .userModel!
-                      //                         .userDetails![0]
-                      //                         .walletHistories
-                      //                         .length <
-                      //                     3
-                      //                 ? userController.userModel!.userDetails![0]
-                      //                         .walletHistories.length *
-                      //                     80
-                      //                 : 240.h,
-                      //             decoration: BoxDecoration(
-                      //               color: colorWhite,
-                      //               borderRadius: BorderRadius.circular(10.r),
-                      //             ),
-                      //             child: (userController
-                      //                     .userModel!
-                      //                     .userDetails![0]
-                      //                     .walletHistories
-                      //                     .isEmpty)
-                      //                 ? Column(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.center,
-                      //                     crossAxisAlignment:
-                      //                         CrossAxisAlignment.stretch,
-                      //                     children: [
-                      //                       Image.asset(
-                      //                         'assets/card_empty.png',
-                      //                         height: 150.h,
-                      //                       ),
-                      //                       Center(
-                      //                         child: Text(
-                      //                           "No Transaction history",
-                      //                           style: GoogleFonts.lato(
-                      //                             fontSize: 16,
-                      //                             color: Theme.of(context)
-                      //                                 .primaryColor,
-                      //                             fontWeight: FontWeight.bold,
-                      //                           ),
-                      //                         ),
-                      //                       ),
-                      //                     ],
-                      //                   )
-                      //                 : ListView.builder(
-                      //                     scrollDirection: Axis.vertical,
-                      //                     shrinkWrap: true,
-                      //                     physics: const ClampingScrollPhysics(),
-                      //                     itemCount: (userController
-                      //                                 .userModel!
-                      //                                 .userDetails![0]
-                      //                                 .walletHistories
-                      //                                 .length <
-                      //                             3)
-                      //                         ? userController
-                      //                                 .userModel!
-                      //                                 .userDetails![0]
-                      //                                 .walletHistories
-                      //                                 .length -
-                      //                             1
-                      //                         : 3,
-                      //                     itemBuilder:
-                      //                         (BuildContext context, int index) {
-                      //                       int reversedIndex = userController
-                      //                               .userModel!
-                      //                               .userDetails![0]
-                      //                               .walletHistories
-                      //                               .length -
-                      //                           1 -
-                      //                           index;
-                      //                       // Access the activities in reverse order
-                      //                       final history = userController
-                      //                           .userModel!
-                      //                           .userDetails![0]
-                      //                           .walletHistories[reversedIndex];
-                      //                       return GestureDetector(
-                      //                         onTap: () {
-                      //                           Get.to(TransactionReceipt(
-                      //                             amount: history['amount'],
-                      //                             status: history['status'],
-                      //                             fees: history['fees'] ?? 0,
-                      //                             transactionType:
-                      //                                 history['transactionType'],
-                      //                             description:
-                      //                                 history['description'] ??
-                      //                                     '',
-                      //                             transactionGroup:
-                      //                                 history['transactionGroup'],
-                      //                             transactionDate:
-                      //                                 history['createdAt'],
-                      //                             transactionRef: history[
-                      //                                     'transactionReference'] ??
-                      //                                 '',
-                      //                             merchantRef: history[
-                      //                                     'merchantReference'] ??
-                      //                                 '',
-                      //                             // sessionId: history['sessionId'] ?? '',
-                      //                           ));
-                      //                           // Get.to(
-                      //                           //   (history['transactionGroup']
-                      //                           //               .toString()
-                      //                           //               .toLowerCase() ==
-                      //                           //           'transfer')
-                      //                           //       ? TransactionReceiptTransfer(
-                      //                           //           amount: history['amount'],
-                      //                           //           status: history['status'],
-                      //                           //           fees: history['fees'] ?? 0,
-                      //                           //           transactionType:
-                      //                           //               history['transactionType'],
-                      //                           //           description: history['description'],
-                      //                           //           transactionGroup:
-                      //                           //               history['transactionGroup'],
-                      //                           //           transactionDate:
-                      //                           //               history['createdAt'],
-                      //                           //           transactionRef: history[
-                      //                           //                   'transactionReference'] ??
-                      //                           //               '',
-                      //                           //           merchantRef:
-                      //                           //               history['merchantReference'],
-                      //                           //           // sessionId: history['sessionId'] ?? '',
-                      //                           //         )
-                      //                           //       : (history['transactionGroup']
-                      //                           //                   .toString()
-                      //                           //                   .toLowerCase() ==
-                      //                           //               'static-account-transfer')
-                      //                           //           ? TransactionReceiptDVA(
-                      //                           //               amount: history['amount'],
-                      //                           //               status: history['status'],
-                      //                           //               fees: history['fees'] ?? 0,
-                      //                           //               transactionType:
-                      //                           //                   history['transactionType'],
-                      //                           //               description:
-                      //                           //                   history['description'],
-                      //                           //               transactionGroup:
-                      //                           //                   history['transactionGroup'],
-                      //                           //               transactionDate:
-                      //                           //                   history['createdAt'],
-                      //                           //               transactionRef: history[
-                      //                           //                       'transactionReference'] ??
-                      //                           //                   '',
-                      //                           //               merchantRef: history[
-                      //                           //                   'merchantReference'],
-                      //                           //               remarks: history['remarks'],
-                      //                           //             )
-                      //                           //           : TransactionReceipt(
-                      //                           //               amount: history['amount'],
-                      //                           //               status: history['status'],
-                      //                           //               fees: history['fees'] ?? 0,
-                      //                           //               transactionType:
-                      //                           //                   history['transactionType'],
-                      //                           //               description:
-                      //                           //                   history['description'],
-                      //                           //               transactionGroup:
-                      //                           //                   history['transactionGroup'],
-                      //                           //               transactionDate:
-                      //                           //                   history['createdAt'],
-                      //                           //               transactionRef: history[
-                      //                           //                       'transactionReference'] ??
-                      //                           //                   '',
-                      //                           //               merchantRef: history[
-                      //                           //                   'merchantReference'],
-                      //                           //             ),
-                      //                           // );
-                      //                         },
-                      //                         child: Column(
-                      //                           children: [
-                      //                             ListTile(
-                      //                               leading: Container(
-                      //                                 padding:
-                      //                                     const EdgeInsets.all(
-                      //                                         12),
-                      //                                 decoration: BoxDecoration(
-                      //                                   shape: BoxShape.circle,
-                      //                                   color: (history[
-                      //                                               'transactionType'] ==
-                      //                                           'Credit')
-                      //                                       ? brandTwo
-                      //                                       : brandTwo,
-                      //                                 ),
-                      //                                 child: (history[
-                      //                                             'transactionType'] ==
-                      //                                         'Credit')
-                      //                                     ? const Icon(
-                      //                                         Icons.call_received,
-                      //                                         color: Color(
-                      //                                             0xff80FF00),
-                      //                                         size: 20,
-                      //                                       )
-                      //                                     : const Icon(
-                      //                                         Icons
-                      //                                             .arrow_outward_sharp,
-                      //                                         color: colorWhite,
-                      //                                         size: 20,
-                      //                                       ),
-                      //                               ),
-                      //                               title: Column(
-                      //                                 crossAxisAlignment:
-                      //                                     CrossAxisAlignment
-                      //                                         .start,
-                      //                                 children: [
-                      //                                   Text(
-                      //                                     "${history['description'] ?? 'No Description Found'} ",
-                      //                                     maxLines: 2,
-                      //                                     overflow: TextOverflow
-                      //                                         .ellipsis,
-                      //                                     style: GoogleFonts.lato(
-                      //                                       fontSize: 14,
-                      //                                       fontWeight:
-                      //                                           FontWeight.w500,
-                      //                                       color: colorBlack,
-                      //                                     ),
-                      //                                   ),
-                      //                                 ],
-                      //                               ),
-                      //                               subtitle: Column(
-                      //                                 crossAxisAlignment:
-                      //                                     CrossAxisAlignment
-                      //                                         .start,
-                      //                                 children: [
-                      //                                   const SizedBox(
-                      //                                     height: 9,
-                      //                                   ),
-                      //                                   Text(
-                      //                                     formatDateTime(history[
-                      //                                         'createdAt']),
-                      //                                     style: GoogleFonts.lato(
-                      //                                       fontSize: 12,
-                      //                                       fontWeight:
-                      //                                           FontWeight.w400,
-                      //                                       color: const Color(
-                      //                                           0xff4B4B4B),
-                      //                                     ),
-                      //                                   ),
-                      //                                 ],
-                      //                               ),
-                      //                               trailing: Column(
-                      //                                 crossAxisAlignment:
-                      //                                     CrossAxisAlignment.end,
-                      //                                 children: [
-                      //                                   (history['transactionType'] ==
-                      //                                           'Credit')
-                      //                                       ? Text(
-                      //                                           "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
-                      //                                           style: GoogleFonts
-                      //                                               .lato(
-                      //                                             fontSize: 14,
-                      //                                             fontWeight:
-                      //                                                 FontWeight
-                      //                                                     .w500,
-                      //                                             color: const Color(
-                      //                                                 0xff56AB00),
-                      //                                           ),
-                      //                                         )
-                      //                                       : Text(
-                      //                                           nairaFormaet.format(
-                      //                                               double.parse(history[
-                      //                                                       'amount']
-                      //                                                   .toString())),
-                      //                                           style: GoogleFonts
-                      //                                               .lato(
-                      //                                             fontSize: 14,
-                      //                                             fontWeight:
-                      //                                                 FontWeight
-                      //                                                     .w500,
-                      //                                             color:
-                      //                                                 colorBlack,
-                      //                                           ),
-                      //                                         ),
-                      //                                 ],
-                      //                               ),
-                      //                             ),
-                      //                             const Padding(
-                      //                               padding: EdgeInsets.symmetric(
-                      //                                   horizontal: 13),
-                      //                               child: Divider(
-                      //                                 thickness: 1,
-                      //                                 color: Color(0xffC9C9C9),
-                      //                               ),
-                      //                             ),
-                      //                           ],
-                      //                         ),
-                      //                       );
-                      //                     },
-                      //                   ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
+                    ),
                   ),
                 ),
               ],
@@ -1670,14 +1030,12 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
                           elevation: 0,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                         onPressed: () async {

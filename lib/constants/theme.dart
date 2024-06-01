@@ -6,16 +6,19 @@ class Themes {
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: brandOne,
 
-    appBarTheme: const AppBarTheme(backgroundColor: Color(0xffF6F6F8)),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xffF6F6F8),
+      surfaceTintColor: Colors.transparent,
+    ),
     scaffoldBackgroundColor: const Color(0xffF6F6F8),
     iconTheme: const IconThemeData(
       color: brandOne,
     ),
     canvasColor: const Color(0xffF6F6F8),
-    cardColor: brandTwo.withOpacity(0.2),
+    cardColor: Color(0xffF6F6F8),
     primaryColorLight: brandOne,
     textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: brandTwo, // Color of the selection highlight
+      selectionColor: Color(0xffF6F6F8), // Color of the selection highlight
       // cursorColor: brandOne, // Color of the text cursor
       selectionHandleColor: brandOne,
     ),

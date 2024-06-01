@@ -906,7 +906,7 @@ class _CableScreenState extends State<CableScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: const BorderSide(
-                                        color: brandOne, width: 2.0),
+                                        color: brandOne, width: 1.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -918,7 +918,7 @@ class _CableScreenState extends State<CableScreen> {
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: const BorderSide(
                                         color: Colors.red,
-                                        width: 2.0), // Change color to yellow
+                                        width: 1.0), // Change color to yellow
                                   ),
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),
@@ -1078,7 +1078,7 @@ class _CableScreenState extends State<CableScreen> {
                         //             padding: const EdgeInsets.symmetric(
                         //                 horizontal: 15, vertical: 10),
                         //             decoration: BoxDecoration(
-                        //               color: brandTwo.withOpacity(0.2),
+                        //               color: Color(0xffEEF8FF)),
                         //               borderRadius: BorderRadius.circular(15),
                         //             ),
                         //             child: Row(
@@ -1163,7 +1163,7 @@ class _CableScreenState extends State<CableScreen> {
                         //           padding: const EdgeInsets.symmetric(
                         //               horizontal: 15, vertical: 10),
                         //           decoration: BoxDecoration(
-                        //             color: brandTwo.withOpacity(0.2),
+                        //             color: Color(0xffEEF8FF)),
                         //             borderRadius: BorderRadius.circular(15),
                         //           ),
                         //           child: Row(
@@ -1268,7 +1268,7 @@ class _CableScreenState extends State<CableScreen> {
                         FocusScope.of(context).unfocus();
                         var billerLists = Hive.box('Cable TV');
                         var storedData = billerLists.get('Cable TV');
-                         storedData['data'];
+                        storedData['data'];
                         // print(_selectedCarrier!);
                         var outputList = storedData['data']
                             .where((o) => o['name'] == _selectedCarrier!)

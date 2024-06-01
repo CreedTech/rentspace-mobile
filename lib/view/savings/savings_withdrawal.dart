@@ -869,7 +869,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -880,7 +880,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -938,7 +938,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -949,7 +949,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -1239,7 +1239,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: brandOne,
-                                                      width: 2.0),
+                                                      width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(5),
                                                 ),
@@ -1254,7 +1254,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: brandOne,
-                                                      width: 2.0),
+                                                      width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(5),
                                                 ),
@@ -1269,7 +1269,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: brandTwo,
-                                                      width: 2.0),
+                                                      width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(5),
                                                 ),

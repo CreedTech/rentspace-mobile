@@ -371,11 +371,11 @@
 //                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
 //                 border: OutlineInputBorder(
 //                   borderRadius: BorderRadius.circular(20),
-//                   borderSide: const BorderSide(color: brandOne, width: 2.0),
+//                   borderSide: const BorderSide(color: brandOne, width: 1.0),
 //                 ),
 //                 focusedBorder: OutlineInputBorder(
 //                   borderRadius: BorderRadius.circular(20),
-//                   borderSide: const BorderSide(color: brandOne, width: 2.0),
+//                   borderSide: const BorderSide(color: brandOne, width: 1.0),
 //                 ),
 //                 enabledBorder: OutlineInputBorder(
 //                   borderRadius: BorderRadius.circular(20),

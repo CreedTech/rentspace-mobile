@@ -640,16 +640,16 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         filled: true,
         fillColor: brandThree,
@@ -767,16 +767,16 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: brandOne, width: 2.0),
+          borderSide: BorderSide(color: brandOne, width: 1.0),
         ),
         filled: true,
         fillColor: brandThree,
@@ -1073,7 +1073,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       //                                             decoration: BoxDecoration(
       //                                               border: Border.all(
       //                                                   color: brandOne,
-      //                                                   width: 2.0),
+      //                                                   width: 1.0),
       //                                               borderRadius:
       //                                                   BorderRadius.circular(
       //                                                       10),
@@ -1200,7 +1200,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       //                                               decoration: BoxDecoration(
       //                                                 border: Border.all(
       //                                                     color: brandOne,
-      //                                                     width: 2.0),
+      //                                                     width: 1.0),
       //                                                 borderRadius:
       //                                                     BorderRadius.circular(
       //                                                         10),
@@ -1322,7 +1322,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
       //                                               decoration: BoxDecoration(
       //                                                 border: Border.all(
       //                                                     color: brandOne,
-      //                                                     width: 2.0),
+      //                                                     width: 1.0),
       //                                                 borderRadius:
       //                                                     BorderRadius.circular(
       //                                                         10),

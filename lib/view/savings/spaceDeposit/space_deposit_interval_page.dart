@@ -592,7 +592,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                         borderSide: const BorderSide(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
@@ -668,7 +668,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                         borderSide: const BorderSide(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),

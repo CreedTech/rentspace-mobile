@@ -56,7 +56,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                 children: [
                   Positioned(
                     top: 0,
-                    right: -100,
+                    right: -110,
                     child: Image.asset(
                       'assets/logo_transparent.png',
                       width: 349.w,
@@ -134,7 +134,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height - 490,
+                    top: MediaQuery.of(context).size.height / 2.35,
                     left: 0,
                     right: 0,
                     bottom: 0,
@@ -230,10 +230,10 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height - 520,
+                    top: MediaQuery.of(context).size.height / 2.55,
                     child: Image.asset(
                       'assets/icons/success_glow_icon.png',
-                      width: 74.w,
+                      width: 74,
                     ),
                   ),
                 ],

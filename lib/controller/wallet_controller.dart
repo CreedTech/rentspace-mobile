@@ -15,6 +15,7 @@ import '../api/global_services.dart';
 import '../constants/app_constants.dart';
 import '../constants/utils/errorMessageExtraction.dart';
 import '../constants/widgets/custom_dialog.dart';
+import '../constants/widgets/custom_loader.dart';
 import '../view/sucess/success_screen.dart';
 
 class WalletController extends GetxController {
@@ -82,7 +83,13 @@ class WalletController extends GetxController {
       beneficiaryBank,
       pin,
       bankName) async {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
     isLoading(true);
+
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
@@ -109,22 +116,19 @@ class WalletController extends GetxController {
         headers: headers,
         body: body,
       );
+      var result = jsonDecode(response.body);
+      print('result first');
+      // print(result);
+      // print(jsonDecode(response.statusCode.toString()));
 
       if (response.statusCode == 200) {
-        // print(response.body);
-        // print('fetched successfully');
-        // Request successful, handle the response data
-        // final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        EasyLoading.dismiss();
-        isLoading(false);
-        // Get.to(
-        //   WithdrawContinuationPage(
-        //     bankCode: bankCode,
-        //     accountNumber: accountNumber,
-        //     bankName: bankName,
-        //     accountHolderName: accountHolderName,
-        //   ),
-        // );
+        var result = jsonDecode(response.body);
+        print('result here');
+        print(result);
+
+        // EasyLoading.dismiss();
+        // isLoading(false);
+
         Get.to(
           WithdrawalSuccessfulScreen(
             name: beneficiaryAccountName,
@@ -158,10 +162,6 @@ class WalletController extends GetxController {
         }
         EasyLoading.dismiss();
         isLoading(false);
-        // print('error fetching details');
-
-        // print(
-        // 'Request failed with status: ${response.statusCode}, ${response.body}');
       }
     } on TimeoutException {
       if (context.mounted) {
@@ -171,9 +171,6 @@ class WalletController extends GetxController {
       isLoading(false);
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      // EasyLoading.dismiss();
-      // isLoading(false);
-      // print('Error while getting data is $e');
       if (context.mounted) {
         customErrorDialog(context, 'Error', 'Something went Wrong');
       }
@@ -182,18 +179,11 @@ class WalletController extends GetxController {
       // Get.back();
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      // EasyLoading.dismiss();
-      // isLoading(false);
+      print(e);
       if (context.mounted) {
-        customErrorDialog(context, 'Error', 'Something went Wrong');
+        customErrorDialog(context, 'Error', 'Something went Wrong. Try Again Later.');
       }
-      //  EasyLoading.dismiss();
-      // isLoading(false);
-      // Get.back();
-      // print('Error while getting data activities is $e');
-      if (context.mounted) {
-        customErrorDialog(context, 'Error', 'Something went Wrong');
-      }
+
       EasyLoading.dismiss();
       isLoading(false);
       throw http.Response('Error: $e', 504);

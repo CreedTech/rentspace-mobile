@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 
+import '../../constants/utils/obscureEmail.dart';
+import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/auth_controller.dart';
 
 class VerifyUserPage extends ConsumerStatefulWidget {
@@ -72,6 +75,8 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.read(authControllerProvider.notifier);
+    String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
     validateOTP(pinOneValue) {
       if (pinOneValue.isEmpty) {
         return 'otp cannot be empty';
@@ -87,86 +92,117 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
 
     //Pin
     final otp = Pinput(
-      useNativeKeyboard: true,
+      // useNativeKeyboard: true,
       obscureText: false,
       defaultPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: TextStyle(
+        width: 67,
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 1.0),
-          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xffBDBDBD), width: 1.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       focusedPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: TextStyle(
+        width: 67,
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: brandOne, width: 1.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       submittedPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: TextStyle(
+        width: 67,
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandOne, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: brandOne, width: 1.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       followingPinTheme: PinTheme(
-        width: 50,
-        height: 50,
-        textStyle: TextStyle(
+        width: 67,
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: brandTwo, width: 2.0),
-          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: const Color(0xffBDBDBD), width: 1.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       controller: otpController,
       length: 4,
       validator: validateOTP,
       onChanged: validateOTP,
-      onCompleted: (String isSet) {
+      onCompleted: (String val) async {
         setState(() {
           isFilled = true;
         });
+        if (otpformKey.currentState!.validate() && isFilled == true) {
+          // verifyBVN();
+          authState.verifyOtp(
+            context,
+            widget.email,
+            otpController.text,
+          );
+        } else {
+          customErrorDialog(context, 'Invalid! :)',
+              'Please fill the form properly to proceed');
+        }
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
     );
 
-    final authState = ref.read(authControllerProvider.notifier);
-    String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: const Color(0xffFAFAFA),
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Get.back();
           },
-          child: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+          child: const Icon(
+            Icons.arrow_back_ios,
+            size: 27,
+            color: colorBlack,
           ),
         ),
+        centerTitle: true,
+        title: Text(
+          'Email Verification',
+          style: GoogleFonts.lato(
+            color: colorBlack,
+            fontWeight: FontWeight.w500,
+            fontSize: 24,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 23.w),
+            child: Image.asset(
+              'assets/icons/logo_icon.png',
+              height: 35.7.h,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -183,100 +219,93 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 20),
+                            padding: const EdgeInsets.only(
+                              top: 95,
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'assets/icons/verify_mail.png',
-                                  width: 105.w,
+                                  'assets/mail_send.png',
+                                  width: 170,
+                                  height: 170,
                                 ),
                                 SizedBox(
-                                  height: 65.h,
+                                  height: 28.h,
                                 ),
-                                Text(
-                                  'Verify your email',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 22,
-                                    // fontFamily: "DefaultFontFamily",
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    'Enter OTP',
+                                    style: GoogleFonts.lato(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                      // fontFamily: "DefaultFontFamily",
+                                    ),
                                   ),
                                 ),
                                 Text(
-                                  'Enter a four-digit OTP sent to ${widget.email}',
+                                  'One-Time Password sent to your email \n ${obscureEmail(widget.email)}',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                    color: Theme.of(context).primaryColor,
+                                    color: const Color(0xff4E4B4B),
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14,
-                                    // fontFamily: "DefaultFontFamily",
                                   ),
                                 ),
                                 SizedBox(
                                   height: 32.h,
                                 ),
+                                otp,
+                                SizedBox(
+                                  height: 30.h,
+                                ),
                               ],
                             ),
                           ),
-                          otp,
-                          SizedBox(
-                            height: 32.h,
-                          ),
-                          (_seconds == 0)
-                              ? GestureDetector(
-                                  onTap: () {
-                                    resetCountdown();
-                                    // resendVerification(context);
-                                    authState.resendOtp(context, widget.email);
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: RichText(
-                                      textAlign: TextAlign.left,
-                                      text: TextSpan(children: <TextSpan>[
-                                        TextSpan(
-                                          text: "Didn’t receive code? ",
-                                          style: GoogleFonts.lato(
-                                              color: brandOne,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        TextSpan(
-                                          text: 'Resend OTP',
-                                          style: GoogleFonts.lato(
-                                              color: brandOne,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12),
-                                        ),
-                                      ]),
+                          GestureDetector(
+                            onTap: () {
+                              resetCountdown();
+                              // resendVerification(context);
+                              authState.resendOtp(context, widget.email);
+                            },
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: "Didn’t receive code? ",
+                                      style: GoogleFonts.lato(
+                                          color: colorBlack,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
                                     ),
-                                  ),
-                                )
-                              : const SizedBox(),
-                          Text(
-                            formattedTime,
-                            style: GoogleFonts.lato(
-                                color: brandOne,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12),
+                                    (_seconds == 0)
+                                        ? TextSpan(
+                                            text: 'Resend OTP ',
+                                            style: GoogleFonts.lato(
+                                                color: const Color(0xff6E6E6E),
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14),
+                                          )
+                                        : TextSpan(
+                                            text: ' ($formattedTime)',
+                                            style: GoogleFonts.lato(
+                                                color: const Color(0xff6E6E6E),
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14),
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          const SizedBox(
-                            height: 70,
-                          ),
-                          // Text(
-                          //   'If you did not get the OTP please go back to re-confirm you entered the correct email address',
-                          //   textAlign: TextAlign.center,
-                          //   style: GoogleFonts.lato(
-                          //     color: const Color(0xff828282),
-                          //     fontWeight: FontWeight.w400,
-                          //     fontSize: 10,
-                          //     // fontFamily: "DefaultFontFamily",
-                          //   ),
-                          // ),
                           SizedBox(
-                            height: 32.h,
+                            height: 120.h,
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
@@ -286,11 +315,12 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                               // height: 110.h,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(350, 50),
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width - 50,
+                                      50),
                                   backgroundColor: (isFilled == true)
-                                      ? brandOne
-                                      : const Color.fromARGB(
-                                          255, 150, 156, 172),
+                                      ? brandTwo
+                                      : const Color(0xffD0D0D0),
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
@@ -300,22 +330,33 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                 ),
                                 onPressed: () {
                                   FocusScope.of(context).unfocus();
-                                  if (isFilled == true) {
+                                  if (otpformKey.currentState!.validate() &&
+                                      isFilled == true) {
+                                    // verifyBVN();
                                     authState.verifyOtp(
                                       context,
                                       widget.email,
                                       otpController.text,
                                     );
+                                  } else {
+                                    customErrorDialog(context, 'Invalid! :)',
+                                        'Please fill the form properly to proceed');
                                   }
                                 },
                                 child: Text(
-                                  'Proceed',
+                                  'Verify',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(color: Colors.white),
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
-                          )
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
                     ),

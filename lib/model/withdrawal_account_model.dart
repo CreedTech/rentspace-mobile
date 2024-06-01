@@ -5,16 +5,15 @@ class WithdrawalAccountModel {
   List<WithdrawalAccount>? withdrawalAccount;
 
   WithdrawalAccountModel.fromJson(Map<String, dynamic> json) {
-    final dynamic withdrawalAccountData = json['withdrawalAccount'];
+    final dynamic withdrawalAccountData = json['withdrawalAccount'] ?? '';
+      print('withdrawalAccountdata');
+      print(withdrawalAccountData);
     if (withdrawalAccountData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       withdrawalAccount = [WithdrawalAccount.fromJson(withdrawalAccountData)];
-      // print(withdrawalAccount);
+      print('withdrawalAccount');
+      print(withdrawalAccount);
     } else {
-      // Handle the case where userDetailsData is not a Map (e.g., it's a List).
-      // You might want to log an error or handle this case differently based on your requirements.
-      // print('userDetailsData is not a Map: $withdrawalAccountData');
-      // Set userDetails to an empty list or null, depending on your needs.
       withdrawalAccount = [];
     }
   }

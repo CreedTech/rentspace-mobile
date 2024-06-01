@@ -54,30 +54,30 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title:  GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Change Transaction Pin',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Change Transaction Pin',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -156,7 +156,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -171,7 +171,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -187,7 +187,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                             color: const Color(0xffBDBDBD),
-                                            width: 2.0),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -258,7 +258,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -273,7 +273,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 2.0),
+                                            color: brandOne, width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -289,7 +289,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                             color: const Color(0xffBDBDBD),
-                                            width: 2.0),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -340,37 +340,33 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor:
-                          (isFilled = true) ? brandTwo : Colors.grey,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width - 50, 50),
+                    backgroundColor:
+                        (isFilled = true) ? brandTwo : Colors.grey,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
                       ),
                     ),
-                    onPressed: () async {
-                      if (changeTransactionPinFormKey.currentState != null &&
-                          changeTransactionPinFormKey.currentState!
-                              .validate()) {
-                        FocusScope.of(context).unfocus();
-                        authState.setNewPin(
-                            context,
-                            _pinOneController.text.trim(),
-                            _confirmPinController.text.trim());
-                      }
-                    },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
-                    ),
+                  ),
+                  onPressed: () async {
+                    if (changeTransactionPinFormKey.currentState != null &&
+                        changeTransactionPinFormKey.currentState!
+                            .validate()) {
+                      FocusScope.of(context).unfocus();
+                      authState.setNewPin(
+                          context,
+                          _pinOneController.text.trim(),
+                          _confirmPinController.text.trim());
+                    }
+                  },
+                  child: const Text(
+                    'Proceed',
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

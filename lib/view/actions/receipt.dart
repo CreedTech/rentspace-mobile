@@ -146,7 +146,7 @@ class _ReceiptState extends State<Receipt> {
       final file = File('${tempDir.path}/receipt.pdf');
       await file.writeAsBytes(await pdf.save());
 
-      await Share.shareFiles([file.path], text: 'Here is the receipt');
+      await Share.shareFiles([file.path]);
     } else {
       print('Failed to capture image for PDF.');
     }
@@ -199,15 +199,15 @@ class _ReceiptState extends State<Receipt> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments;
-    print('arguments ==========================');
-    print(arguments);
+    // print('arguments ==========================');
+    // print(arguments);
     Map<String, dynamic>? transactionData;
 
     // Check if arguments are not null and of the correct type
     if (arguments != null && arguments is Map<String, dynamic>) {
       transactionData = arguments;
-      print('transactionData ==========================');
-      print(transactionData);
+      // print('transactionData ==========================');
+      // print(transactionData);
     }
 
     final bankCode = transactionData!['bankName'] ??
@@ -337,7 +337,7 @@ class _ReceiptState extends State<Receipt> {
                                                 ? transactionData['biller']
                                                     .toString()
                                                     .toUpperCase()
-                                                : '(${bankName ?? transactionData['bankName'] ?? ''} | ${transactionData['accountNumber'] ?? ''} )',
+                                                : '(${bankName ?? transactionData['bankName'] ?? 'Payment'} | ${transactionData['accountNumber'] ?? 'Rent'} )',
                                             textAlign: TextAlign.end,
                                             style: GoogleFonts.lato(
                                               fontSize: 14,
@@ -406,7 +406,8 @@ class _ReceiptState extends State<Receipt> {
                                                         .toLowerCase() ==
                                                     'bill')
                                                 ? ''
-                                                : '(${transactionData['paymentGateway'].toString().capitalize ?? 'Rentspace'} | ${userController.userModel!.userDetails![0].dvaNumber})',
+                                                : '(${transactionData['paymentGateway'] ?? 'Rentspace'} | ${userController.userModel!.userDetails![0].dvaNumber})'
+                                                    .capitalize!,
                                             textAlign: TextAlign.end,
                                             style: GoogleFonts.lato(
                                               fontSize: 14,
@@ -569,8 +570,7 @@ class _ReceiptState extends State<Receipt> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              transactionData[
-                                                      'transactionGroup']
+                                              '${transactionData['transactionGroup'] ?? 'Rentspace'}'
                                                   .toString()
                                                   .capitalize!,
                                               textAlign: TextAlign.end,

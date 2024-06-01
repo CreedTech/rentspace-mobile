@@ -80,37 +80,36 @@ class _ChangetransactionPinOtpPageState
     final authState = ref.read(authControllerProvider.notifier);
     String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
     return Scaffold(
-      
       backgroundColor: const Color(0xffF6F6F8),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Change Transaction Pin',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Change Transaction Pin',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -160,6 +159,7 @@ class _ChangetransactionPinOtpPageState
                             TextFormField(
                               enableSuggestions: true,
                               cursorColor: colorBlack,
+                              keyboardType: TextInputType.number,
                               style: GoogleFonts.lato(
                                   color: colorBlack, fontSize: 14),
                               autovalidateMode:
@@ -272,33 +272,29 @@ class _ChangetransactionPinOtpPageState
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width - 50, 50),
-                      backgroundColor: brandTwo,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width - 50, 50),
+                    backgroundColor: brandTwo,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
                       ),
                     ),
-                    onPressed: () async {
-                      if (changePinOtpformKey.currentState != null &&
-                          changePinOtpformKey.currentState!.validate()) {
-                        FocusScope.of(context).unfocus();
-                        authState.verifyForgotPinOtp(
-                            context, widget.email, otpController.text.trim());
-                      }
-                    },
-                    child: const Text(
-                      'Proceed',
-                      textAlign: TextAlign.center,
-                    ),
+                  ),
+                  onPressed: () async {
+                    if (changePinOtpformKey.currentState != null &&
+                        changePinOtpformKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+                      authState.verifyForgotPinOtp(
+                          context, widget.email, otpController.text.trim());
+                    }
+                  },
+                  child: const Text(
+                    'Proceed',
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

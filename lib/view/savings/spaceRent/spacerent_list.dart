@@ -116,30 +116,30 @@ class _RentSpaceListState extends State<RentSpaceList> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Space Rent',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Space Rent',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: Obx(
@@ -424,7 +424,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                               .start,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
-                                                                              .start,
+                                                                              .center,
                                                                       children: [
                                                                         AutoSizeText(
                                                                           formatMoney(rentController
@@ -789,7 +789,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   String formatMoney(double amount) {
     if (amount >= 1000000) {
-      return '${(amount / 1000000).toStringAsFixed(2)}M';
+      return '${(amount / 1000000).toStringAsFixed(0)}M';
     } else if (amount >= 1000) {
       // Check if the amount is an exact multiple of 1000
       if (amount % 1000 == 0) {

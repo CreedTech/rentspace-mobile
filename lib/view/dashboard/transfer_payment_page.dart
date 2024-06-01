@@ -125,7 +125,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.fromLTRB(30, 30, 30, 20),
+            contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
             insetPadding: const EdgeInsets.all(0),
@@ -168,14 +168,12 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
                           elevation: 0,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                         onPressed: () async {
@@ -292,7 +290,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -303,7 +301,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+              color: Colors.red, width: 1.0), // Change color to yellow
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -350,7 +348,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: brandTwo.withOpacity(0.2),
+                color: const Color(0xffEEF8FF),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -456,7 +454,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               alignment: Alignment.center,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(250, 50),
+                  minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
                   backgroundColor: (isTextFieldEmpty) ? brandOne : Colors.grey,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -811,7 +809,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.arrow_forward_ios,
                                               color: brandOne,
                                               size: 20,
@@ -819,7 +817,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                           ],
                                         ),
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.check,
                                         color: brandOne,
                                         size: 20,
@@ -831,7 +829,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(250, 50),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width - 50, 50),
                                 backgroundColor: (((amount + transactionFee) >
                                         walletController.walletModel!.wallet![0]
                                             .mainBalance))
@@ -884,7 +883,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     defaultPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -900,14 +900,15 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     focusedPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
                                                             color: brandOne,
-                                                            width: 2.0),
+                                                            width: 1.0),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
@@ -916,14 +917,15 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     submittedPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
                                                             color: brandOne,
-                                                            width: 2.0),
+                                                            width: 1.0),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
@@ -932,14 +934,15 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     followingPinTheme: PinTheme(
                                                       width: 50,
                                                       height: 50,
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
                                                             color: brandTwo,
-                                                            width: 2.0),
+                                                            width: 1.0),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
@@ -989,7 +992,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                     keyboardType:
                                                         TextInputType.number,
                                                   ),
-
                                                   NumericKeyboard(
                                                     onKeyboardTap:
                                                         onKeyboardTap,
@@ -1027,71 +1029,6 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                   ),
-
-                                                  // const SizedBox(
-                                                  //   height: 20,
-                                                  // ),
-                                                  // const SizedBox(
-                                                  //   height: 40,
-                                                  // ),
-                                                  // ElevatedButton(
-                                                  //   style: ElevatedButton
-                                                  //       .styleFrom(
-                                                  //     minimumSize:
-                                                  //         const Size(300, 50),
-                                                  //     backgroundColor: brandOne,
-                                                  //     elevation: 0,
-                                                  //     shape:
-                                                  //         RoundedRectangleBorder(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(
-                                                  //         10,
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  //   onPressed: () {
-                                                  //     // if (BCrypt.checkpw(
-                                                  //     //   _aPinController.text
-                                                  //     //       .trim()
-                                                  //     //       .toString(),
-                                                  //     //   userController
-                                                  //     //       .userModel!
-                                                  //     //       .userDetails![0]
-                                                  //     //       .wallet
-                                                  //     //       .pin,
-                                                  //     // )) {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   Get.back();
-                                                  //     //   // _doWallet();
-                                                  //     //   appState.buyAirtime(
-                                                  //     //       context,
-                                                  //     //       amount,
-                                                  //     //       number.toString(),
-                                                  //     //       bill,
-                                                  //     //       biller);
-                                                  //     // } else {
-                                                  //     //   _aPinController.clear();
-                                                  //     //   if (context.mounted) {
-                                                  //     //     customErrorDialog(
-                                                  //     //         context,
-                                                  //     //         "Invalid PIN",
-                                                  //     //         'Enter correct PIN to proceed');
-                                                  //     //   }
-                                                  //     // }
-                                                  //   },
-                                                  //   child: Text(
-                                                  //     'Proceed to Payment',
-                                                  //     textAlign:
-                                                  //         TextAlign.center,
-                                                  //     style: GoogleFonts.lato(
-                                                  //       color: Colors.white,
-                                                  //       fontSize: 16,
-                                                  //       fontWeight:
-                                                  //           FontWeight.w700,
-                                                  //     ),
-                                                  //   ),
-                                                  // ),
                                                 ],
                                               ),
                                             ),
@@ -1194,7 +1131,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 50),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width - 50, 50),
                               backgroundColor: brandOne,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
@@ -1222,7 +1160,8 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 50),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width - 50, 50),
                               backgroundColor: Colors.white,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
@@ -1255,7 +1194,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               );
             });
       },
-      child: Icon(
+      child: const Icon(
         Icons.close,
         color: brandOne,
         size: 20,

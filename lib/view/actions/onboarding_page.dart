@@ -92,25 +92,16 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
     //Phone number
     final bvn = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: colorBlack,
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-      style: GoogleFonts.lato(
-        color: Theme.of(context).primaryColor,
-      ),
+       style: GoogleFonts.lato(
+          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       // maxLength: 11,
       decoration: InputDecoration(
-        // label: Text(
-        //   "11 digits BVN",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
@@ -119,7 +110,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -131,7 +122,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
             color: Colors.red,
-            width: 2.0,
+            width: 1.0,
           ),
         ),
         filled: false,
@@ -149,7 +140,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAFAFA),
+        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
@@ -166,7 +157,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
           'BVN Verification',
           style: GoogleFonts.lato(
             color: colorBlack,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontSize: 24,
           ),
         ),
@@ -203,12 +194,15 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            height: 95.h,
+                          ),
                           Image.asset(
                             'assets/bank_img.png',
                             width: 138.w,
                           ),
                           SizedBox(
-                            height: 54.h,
+                            height: 44.h,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -235,9 +229,26 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                           SizedBox(
                             height: 32.h,
                           ),
-                          bvn,
-                          SizedBox(
-                            height: 23.h,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.h, horizontal: 3.w),
+                                child: Text(
+                                  'Bvn',
+                                  style: GoogleFonts.lato(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              bvn,
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 23,
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
@@ -247,7 +258,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                               children: [
                                 const Icon(
                                   Icons.info_outline,
-                                  size: 14,
+                                  size: 24,
                                   color: Color(0xff4E4B4B),
                                 ),
                                 SizedBox(
@@ -257,8 +268,8 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                   'Please confirm number before proceeding',
                                   softWrap: true,
                                   style: GoogleFonts.lato(
-                                    color: const Color(0xff828282),
-                                    fontSize: 10,
+                                    color: const Color(0xff4E4B4B),
+                                    fontSize: 14,
                                     // fontStyle: FontStyle.italic,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -267,7 +278,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                             ),
                           ),
                           SizedBox(
-                            height: 120.h,
+                            height: 100.h,
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
@@ -279,7 +290,10 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                 children: [
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(400, 50),
+                                      minimumSize: Size(
+                                          MediaQuery.of(context).size.width -
+                                              50,
+                                          50),
                                       backgroundColor: brandTwo,
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(

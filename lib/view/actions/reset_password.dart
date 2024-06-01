@@ -84,7 +84,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -135,7 +135,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 2.0),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -150,7 +150,6 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
             width: 1.0,
           ),
         ),
-        
         suffix: GestureDetector(
           onTap: () {
             setState(() {

@@ -11,9 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/change_password.dart';
-// import 'package:rentspace/view/actions/change_pin_intro.dart';
-import 'package:rentspace/view/actions/change_transaction_pin_otp_page.dart';
 import 'package:rentspace/view/dashboard/withdrawal_account.dart';
+// import 'package:rentspace/view/actions/change_pin_intro.dart';
 // import 'package:rentspace/view/actions/forgot_pin_intro.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -22,6 +21,7 @@ import '../../constants/colors.dart';
 // import '../../controller/user_controller.dart';
 import '../../controller/auth/auth_controller.dart';
 import '../../controller/auth/user_controller.dart';
+import 'withdraw_page.dart';
 // import '../actions/forgot_password.dart';
 
 class Security extends ConsumerStatefulWidget {
@@ -228,30 +228,30 @@ class _SecurityState extends ConsumerState<Security> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Security',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Security',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -266,7 +266,7 @@ class _SecurityState extends ConsumerState<Security> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                        left: 17, top: 17, right: 17, bottom: 10),
+                        left: 17, top: 10, right: 17, bottom: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
@@ -343,7 +343,11 @@ class _SecurityState extends ConsumerState<Security> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            Get.to(WithdrawalAccount());
+                            (userController.userModel!.userDetails![0]
+                                        .withdrawalAccount ==
+                                    null)
+                                ? Get.to(const WithdrawalPage())
+                                : Get.to(const WithdrawalAccount());
                           },
                           title: Text(
                             'Withdrawal Account',

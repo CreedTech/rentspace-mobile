@@ -212,9 +212,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       fundedAmount = "0";
     });
-    Future.delayed(const Duration(seconds: 1), () {
-      checkIsOpenedApp();
-    });
+    // Future.delayed(const Duration(seconds: 1), () {
+    //   checkIsOpenedApp();
+    // });
   }
 
   // Future<bool> checkingForBioMetrics() async {
@@ -452,9 +452,9 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 50),
-                          maximumSize: const Size(400, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width - 50, 50),
+                          backgroundColor: brandTwo,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
@@ -611,9 +611,9 @@ class _HomePageState extends State<HomePage> {
       // ?TODO CHANGE UPGRADER
       child: UpgradeAlert(
         upgrader: Upgrader(
-          showIgnore: true,
+          showIgnore: false,
           durationUntilAlertAgain: const Duration(seconds: 5),
-          debugLogging: false,
+          debugLogging: true,
           // debugDisplayAlways:true,
           dialogStyle: UpgradeDialogStyle.cupertino,
           showLater: false,
@@ -689,22 +689,32 @@ class _HomePageState extends State<HomePage> {
                       textColor: Colors.white,
                       overlayPadding: const EdgeInsets.all(5),
                       animationDuration: const Duration(seconds: 2),
-                      child: Icon(
+                      // child: Icon(
+                      //   index == currentIndex
+                      //       ? listOfIcons[index]
+                      //       : listOfUnselectedIcons[index],
+                      //   size: 30,
+                      //   color: index == currentIndex
+                      //       ? brandTwo
+                      //       : navigationcolorText,
+                      // ),
+                      child: Image.asset(
                         index == currentIndex
-                            ? listOfIcons[index]
-                            : listOfUnselectedIcons[index],
-                        size: 30,
-                        color: index == currentIndex
-                            ? brandTwo
-                            : navigationcolorText,
+                            ? listOfHomeIcons[index]
+                            : listOfUnselectedHomeIcons[index],
+                        width: iconSize[index],
+                        height: iconSize[index],
                       ),
                     ),
                     Text(
                       navText[index],
                       style: GoogleFonts.lato(
-                          fontSize: 12,
-                          color: index == currentIndex ? brandTwo : Colors.grey,
-                          fontWeight: FontWeight.w600),
+                        fontSize: 12,
+                        color: index == currentIndex ? brandTwo : Colors.grey,
+                        fontWeight: index == currentIndex
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                      ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * .03),
                   ],
@@ -886,6 +896,12 @@ class _HomePageState extends State<HomePage> {
     'Portfolio',
     'Profile',
   ];
+  List<double> iconSize = [
+    31,
+    29,
+    29,
+    32,
+  ];
   List showCaseCounter = [
     counter._one,
     counter._two,
@@ -893,16 +909,28 @@ class _HomePageState extends State<HomePage> {
     counter._four,
   ];
   List<IconData> listOfIcons = [
-    Iconsax.home5,
+    Icons.home,
     Iconsax.activity5,
     Iconsax.chart_square5,
     Icons.person,
   ];
+  List<String> listOfHomeIcons = [
+    'assets/icons/home_icon.png',
+    'assets/icons/savings_icon_filled.png',
+    'assets/icons/portfolio_filled_icon.png',
+    'assets/icons/profile_filled_icon.png',
+  ];
   List<IconData> listOfUnselectedIcons = [
-    Iconsax.home,
+    Icons.home,
     Iconsax.activity,
     Iconsax.chart_square,
     Icons.person_outline,
+  ];
+  List<String> listOfUnselectedHomeIcons = [
+    'assets/icons/home_outline_icon.png',
+    'assets/icons/savings_icon.png',
+    'assets/icons/portfolio_icon.png',
+    'assets/icons/person_icon.png',
   ];
 
   Widget _buildPage(int index) {

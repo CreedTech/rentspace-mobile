@@ -13,7 +13,6 @@ class UserModel {
     if (userDetailsData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       userDetails = [UserDetailsModel.fromJson(userDetailsData)];
-      // print(userDetails);
     } else {
       // Handle the case where userDetailsData is not a Map (e.g., it's a List).
       // You might want to log an error or handle this case differently based on your requirements.
@@ -96,7 +95,7 @@ class UserDetailsModel {
   final List<dynamic> activities;
   final List<dynamic> walletHistories;
   final List<dynamic> referredUsers;
-  final WithdrawalAccount? withdrawalAccount;
+  WithdrawalAccount? withdrawalAccount;
   final Wallet wallet;
 
   UserDetailsModel({
@@ -227,8 +226,9 @@ class UserDetailsModel {
         // accountDate: json["account_date"] ?? '',
         // activities: Activities.fromJson(json["activities"]),
         wallet: Wallet.fromJson(json["wallet"]),
-        withdrawalAccount:
-            WithdrawalAccount.fromJson(json["withdrawalAccount"]),
+        withdrawalAccount: json['withdrawalAccount'] != null
+            ? WithdrawalAccount.fromJson(json['withdrawalAccount'])
+            : null,
         activities: json["activities"],
         walletHistories: json["walletHistories"],
         referredUsers: json["referredUsers"],
@@ -296,6 +296,6 @@ class UserDetailsModel {
         "walletHistories": walletHistories,
         "referredUsers": referredUsers,
         "wallet": wallet.toJson(),
-        "withdrawalAccount": withdrawalAccount!.toJson(),
+        'withdrawalAccount': withdrawalAccount?.toJson(),
       };
 }

@@ -88,6 +88,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
 
   @override
   Widget build(BuildContext context) {
+    print(_payments);
     var groupedByMonth = {};
 
     for (var item in _payments) {
@@ -106,34 +107,34 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Text(
-                rentController.rentModel!.rents![widget.current].rentName,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.lato(
-                  color: colorBlack,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24,
+              SizedBox(
+                width: 4.h,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Text(
+                  rentController.rentModel!.rents![widget.current].rentName,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.lato(
+                    color: colorBlack,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -281,8 +282,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                         ),
                                                       ),
                                                     );
-
-                                          
                                                   },
                                                   leading: Container(
                                                     padding:

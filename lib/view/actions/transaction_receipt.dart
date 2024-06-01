@@ -37,15 +37,15 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments;
-    print('arguments ==========================');
-    print(arguments);
+    // print('arguments ==========================');
+    // print(arguments);
     Map<String, dynamic>? transactionData;
 
     // Check if arguments are not null and of the correct type
     if (arguments != null && arguments is Map<String, dynamic>) {
       transactionData = arguments;
-      print('transactionData ==========================');
-      print(transactionData);
+      // print('transactionData ==========================');
+      // print(transactionData);
     }
 
     final bankCode = transactionData!['bankName'] ??
@@ -69,35 +69,35 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
+        title:  GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+          child: Row(
+            children: [
+              const Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: colorBlack,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Transaction Details',
-              style: GoogleFonts.lato(
-                color: colorBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Transaction Details',
+                style: GoogleFonts.lato(
+                  color: colorBlack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
         child: Container(
-          color: colorWhite,
+          color: Theme.of(context).canvasColor,
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: 18.h,
@@ -484,7 +484,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(
-                                flex: 9,
+                                flex: 8,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -514,13 +514,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               ),
                               Flexible(
                                 flex: 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const SizedBox(),
-                                    GestureDetector(
-                                      onTap: () {
+                                child: GestureDetector(
+                                         onTap: () {
                                         Clipboard.setData(
                                           ClipboardData(
                                             text: transactionData![
@@ -537,7 +532,12 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                           fontSize: 16.0,
                                         );
                                       },
-                                      child: Row(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      const SizedBox(),
+                                      Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
@@ -560,8 +560,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -706,7 +706,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                     //         padding: const EdgeInsets.symmetric(
                     //             horizontal: 15, vertical: 10),
                     //         decoration: BoxDecoration(
-                    //           color: brandTwo.withOpacity(0.2),
+                    //           color: Color(0xffEEF8FF)),
                     //           borderRadius: BorderRadius.circular(20),
                     //         ),
                     //         child: Text(
