@@ -194,7 +194,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                         Text(
                           nairaFormaet.format(double.parse(_loanAmount)),
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.roboto(
                             fontSize: 30,
                             fontWeight: FontWeight.w600,
                             // letterSpacing: 0.5,
@@ -280,7 +280,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                       ),
                                       Text(
                                         nairaFormaet.format(_totalInterest),
-                                        style: GoogleFonts.lato(
+                                        style: GoogleFonts.roboto(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           color: colorWhite,

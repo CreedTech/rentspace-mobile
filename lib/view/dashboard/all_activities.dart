@@ -127,7 +127,7 @@ class _AllActivitiesState extends State<AllActivities> {
                       Text(
                         nairaFormaet.format(walletController
                             .walletModel!.wallet![0].mainBalance),
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.roboto(
                           color: brandOne,
                           fontWeight: FontWeight.w600,
                           fontSize: 30,
@@ -375,7 +375,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                   ? Text(
                                                                       "+ ${nairaFormaet.format(double.parse(item['amount'].toString()))}",
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
@@ -388,7 +388,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                       nairaFormaet
                                                                           .format(double.parse(item['amount'].toString())),
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:

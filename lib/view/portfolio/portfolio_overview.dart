@@ -118,7 +118,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                           userController
                               .userModel!.userDetails![0].totalSavings,
                         ),
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: colorBlack,
@@ -147,7 +147,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         nairaFormaet.format(
                           totalInterest,
                         ),
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: colorBlack,
@@ -211,7 +211,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                                 userController
                                     .userModel!.userDetails![0].loanAmount,
                               ),
-                              style: GoogleFonts.lato(
+                              style: GoogleFonts.roboto(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: colorBlack,
@@ -280,7 +280,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                                     .userModel!.userDetails![0].loanAmount,
                               ),
                               textAlign: TextAlign.end,
-                              style: GoogleFonts.lato(
+                              style: GoogleFonts.roboto(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: colorBlack,

@@ -171,7 +171,7 @@ class _TransferConfirmationPageState
                           Text(
                             currencyFormat.format(double.parse(
                                 widget.amount.trim().replaceAll(',', ''))),
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               fontSize: 30,
                               fontWeight: FontWeight.w600,
                               color: brandOne,

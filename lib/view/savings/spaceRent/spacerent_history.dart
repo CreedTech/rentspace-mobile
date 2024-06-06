@@ -167,8 +167,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                   Text(
                     nairaFormaet.format(rentController
                         .rentModel!.rents![widget.current].paidAmount),
-                    style: GoogleFonts.lato(
-                      color: Color(0xff278210),
+                    style: GoogleFonts.roboto(
+                      color: const Color(0xff278210),
                       fontWeight: FontWeight.w600,
                       fontSize: 30,
                     ),
@@ -402,7 +402,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                                   ? Text(
                                                                       "+ ${nairaFormaet.format(double.parse(item['amount'].toString()))}",
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
@@ -416,7 +416,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                                           .format(
                                                                               double.parse(item['amount'].toString())),
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:

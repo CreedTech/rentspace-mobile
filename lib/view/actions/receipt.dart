@@ -272,7 +272,7 @@ class _ReceiptState extends State<Receipt> {
                               currencyFormat.format(
                                 (transactionData!['amount']),
                               ),
-                              style: GoogleFonts.lato(
+                              style: GoogleFonts.roboto(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
                                 color: brandOne,
@@ -320,7 +320,8 @@ class _ReceiptState extends State<Receipt> {
                                                         .toLowerCase() ==
                                                     'bill')
                                                 ? transactionData[
-                                                    'userUtilityNumber']
+                                                        'userUtilityNumber'] ??
+                                                    '00000000000'
                                                 : '${transactionData['accountName'] ?? 'Rentspace'}'
                                                     .capitalize,
                                             textAlign: TextAlign.end,
@@ -335,10 +336,11 @@ class _ReceiptState extends State<Receipt> {
                                                         .toString()
                                                         .toLowerCase() ==
                                                     'bill')
-                                                ? transactionData['biller']
+                                                ? transactionData['biller'] ??
+                                                    'Bill'
+                                                : '(${bankName ?? transactionData['bankName'] ?? 'Payment'} | ${transactionData['accountNumber'] ?? 'Rent'} )'
                                                     .toString()
-                                                    .toUpperCase()
-                                                : '(${bankName ?? transactionData['bankName'] ?? 'Payment'} | ${transactionData['accountNumber'] ?? 'Rent'} )',
+                                                    .toUpperCase(),
                                             textAlign: TextAlign.end,
                                             style: GoogleFonts.lato(
                                               fontSize: 14,
@@ -391,7 +393,7 @@ class _ReceiptState extends State<Receipt> {
                                                         .toLowerCase() ==
                                                     'bill')
                                                 ? transactionData[
-                                                    'userUtilityNumber']
+                                                    'userUtilityNumber'] ?? '00000000000'
                                                 : '${transactionData['accountName'] ?? 'Rentspace'}'
                                                     .capitalize,
                                             textAlign: TextAlign.end,
@@ -466,7 +468,7 @@ class _ReceiptState extends State<Receipt> {
                                                               'fees'])) ??
                                                   currencyFormat.format(0),
                                               textAlign: TextAlign.end,
-                                              style: GoogleFonts.lato(
+                                              style: GoogleFonts.roboto(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
                                                 color: colorBlack,

@@ -185,7 +185,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
           ),
         ),
         prefixText: "₦",
-        prefixStyle: GoogleFonts.lato(
+        prefixStyle: GoogleFonts.roboto(
           color: Colors.grey,
           fontSize: 14,
           fontWeight: FontWeight.w400,

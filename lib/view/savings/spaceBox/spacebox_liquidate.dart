@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -761,7 +762,7 @@ class _BoxLiquidateState extends State<BoxLiquidate> {
           ),
         ),
         prefixText: "₦",
-        prefixStyle: const TextStyle(
+        prefixStyle:  GoogleFonts.roboto(
           color: Colors.grey,
           fontSize: 13,
         ),

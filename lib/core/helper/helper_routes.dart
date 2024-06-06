@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rentspace/view/actions/referral_record.dart';
 import 'package:rentspace/view/actions/transaction_receipt.dart';
+import 'package:rentspace/view/dashboard/personal_details.dart';
+import 'package:rentspace/view/dashboard/withdraw_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/signup_page.dart';
 import 'package:rentspace/view/utility/airtime.dart';
@@ -15,11 +17,20 @@ class RouterGenerator {
   Route<dynamic> generate(RouteSettings settings) {
     // final arguments = settings.arguments;
     switch (settings.name) {
- 
       case referral_record:
         return MaterialPageRoute(
           builder: (context) => const ReferralRecord(),
           settings: const RouteSettings(name: referral_record),
+        );
+      case withdrawal:
+        return MaterialPageRoute(
+          builder: (context) => const WithdrawalPage(),
+          settings: const RouteSettings(name: withdrawal),
+        );
+      case personalInfo:
+        return MaterialPageRoute(
+          builder: (context) => const PersonalDetails(),
+          settings: const RouteSettings(name: personalInfo),
         );
       case rentList:
         return MaterialPageRoute(

@@ -94,7 +94,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         child: Text(
                           currencyFormat.format(int.parse(widget.amount)),
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.roboto(
                             fontSize: 36,
                             fontWeight: FontWeight.w600,
                             color: colorWhite,

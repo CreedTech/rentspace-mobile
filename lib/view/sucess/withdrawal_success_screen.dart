@@ -96,9 +96,9 @@ class _WithdrawalSuccessfulScreenState
                       Padding(
                         padding: EdgeInsets.only(bottom: 12.h),
                         child: Text(
-                          currencyFormat.format(int.parse(widget.amount)),
+                          currencyFormat.format(widget.amount),
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.roboto(
                             fontSize: 36,
                             fontWeight: FontWeight.w600,
                             color: colorWhite,

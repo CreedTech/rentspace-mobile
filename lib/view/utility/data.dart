@@ -719,7 +719,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                                     .amount,
                                               ),
                                             ),
-                                            style: GoogleFonts.lato(
+                                            style: GoogleFonts.roboto(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: colorBlack),
@@ -905,7 +905,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                           TextSpan(
                             text: ch8t.format(walletController
                                 .walletModel!.wallet![0].mainBalance),
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               color: brandOne,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -1044,7 +1044,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                   contentPadding: const EdgeInsets.all(14),
                                   fillColor: brandThree,
                                   prefixText: "₦ ",
-                                  prefixStyle: GoogleFonts.lato(
+                                  prefixStyle: GoogleFonts.roboto(
                                     color: colorBlack,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,

@@ -247,7 +247,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(int.parse(widget.amount)),
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,
@@ -282,7 +282,7 @@ class _SpaceDepositConfirmationPageState
                                   Text(
                                     nairaFormaet
                                         .format(double.parse(interestValue)),
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                       // letterSpacing: 0.5,

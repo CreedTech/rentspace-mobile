@@ -216,7 +216,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                               child: Text(
                                                 nairaFormaet
                                                     .format(rentBalance),
-                                                style: GoogleFonts.lato(
+                                                style: GoogleFonts.roboto(
                                                   fontSize: 30,
                                                   color: colorWhite,
                                                   fontWeight: FontWeight.w600,

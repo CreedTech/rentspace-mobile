@@ -277,7 +277,7 @@ class _SpaceRentConfirmationPageState
                                 ),
                                 Text(
                                   currencyFormat.format(widget.rentValue),
-                                  style: GoogleFonts.lato(
+                                  style: GoogleFonts.roboto(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w600,
                                     color: brandOne,
@@ -550,7 +550,7 @@ class _SpaceRentConfirmationPageState
                                       ),
                                       Text(
                                         '${currencyFormat.format(widget.savingsValue)}/${widget.durationType.toLowerCase() == 'weekly' ? 'wk' : 'mth'}',
-                                        style: GoogleFonts.lato(
+                                        style: GoogleFonts.roboto(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                           color: colorBlack,

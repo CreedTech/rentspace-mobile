@@ -74,7 +74,7 @@ class _CardTopUpState extends State<CardTopUp> {
           ),
         ),
         prefixText: "₦ ",
-        prefixStyle: GoogleFonts.lato(
+        prefixStyle: GoogleFonts.roboto(
           color: brandOne,
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -176,7 +176,7 @@ class _CardTopUpState extends State<CardTopUp> {
                                   vertical: 6, horizontal: 10),
                               child: Text(
                                 'Use Bank Transfer if amount exceeds ₦9,999.99',
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.roboto(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,

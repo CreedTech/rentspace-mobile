@@ -215,7 +215,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                   .rents![widget.current]
                                                   .paidAmount)
                                               .obs(),
-                                          style: GoogleFonts.lato(
+                                          style: GoogleFonts.roboto(
                                             fontSize: 30,
                                             color: colorWhite,
                                             fontWeight: FontWeight.w600,
@@ -304,7 +304,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                           .amount),
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  style: GoogleFonts.lato(
+                                                  style: GoogleFonts.roboto(
                                                     fontSize: 16.0,
                                                     fontWeight: FontWeight.w600,
                                                     color: colorWhite,
@@ -399,7 +399,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                           .rentModel!
                                           .rents![widget.current]
                                           .spaceRentInterest),
-                                      style: GoogleFonts.lato(
+                                      style: GoogleFonts.roboto(
                                           color: const Color(0xff278210),
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700),
@@ -450,7 +450,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           ),
                           Text(
                             '${ch8t.format(rentController.rentModel!.rents![widget.current].intervalAmount)}/${rentController.rentModel!.rents![widget.current].interval.toLowerCase()}',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: colorDark,
@@ -834,7 +834,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                       double.parse(
                                                           history['amount']
                                                               .toString())),
-                                                  style: GoogleFonts.lato(
+                                                  style: GoogleFonts.roboto(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     color: colorBlack,

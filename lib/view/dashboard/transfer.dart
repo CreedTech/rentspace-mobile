@@ -756,7 +756,7 @@ class _TransferPageState extends State<TransferPage> {
                               TextSpan(
                                 text: currencyFormat.format(walletController
                                     .walletModel!.wallet![0].mainBalance),
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.roboto(
                                   color: brandOne,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,

@@ -353,7 +353,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
               ),
               child: Text(
                 'Please note that charging of ₦20.00 on all  transfers will be according to our Terms of use',
-                style: GoogleFonts.lato(
+                style: GoogleFonts.roboto(
                   color: brandOne.withOpacity(0.7),
                   fontSize: 10,
                   fontWeight: FontWeight.w500,

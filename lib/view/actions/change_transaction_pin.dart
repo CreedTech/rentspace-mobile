@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,10 +55,10 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:  GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -86,11 +87,12 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
             vertical: 15.h,
             horizontal: 24.w,
           ),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ListView(
-                children: [
-                  Column(
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -334,9 +336,12 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 50,
+                      ),
                     ],
                   ),
-                ],
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -344,8 +349,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                   style: ElevatedButton.styleFrom(
                     minimumSize:
                         Size(MediaQuery.of(context).size.width - 50, 50),
-                    backgroundColor:
-                        (isFilled = true) ? brandTwo : Colors.grey,
+                    backgroundColor: (isFilled = true) ? brandTwo : Colors.grey,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -355,8 +359,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                   ),
                   onPressed: () async {
                     if (changeTransactionPinFormKey.currentState != null &&
-                        changeTransactionPinFormKey.currentState!
-                            .validate()) {
+                        changeTransactionPinFormKey.currentState!.validate()) {
                       FocusScope.of(context).unfocus();
                       authState.setNewPin(
                           context,

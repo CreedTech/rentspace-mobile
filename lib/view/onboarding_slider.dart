@@ -146,33 +146,34 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                 alignment: Alignment.bottomCenter,
                                 child: Column(
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.w),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.to(const SignupPage());
-                                        },
-                                        child: Container(
-                                          // width: MediaQuery.of(context).size.width,
-                                          height: 50,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 15.h),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: brandTwo,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                          ),
-                                          child: Text(
-                                            'Sign up',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(
+                                            MediaQuery.of(context).size.width -
+                                                50,
+                                            50),
+                                        backgroundColor: brandTwo,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
                                           ),
                                         ),
                                       ),
+                                      onPressed: () {
+                                        Get.to(const SignupPage());
+                                      },
+                                      child: Text(
+                                        "Sign up",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.lato(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
+                                  
                                     Padding(
                                       padding:
                                           EdgeInsets.symmetric(vertical: 16.h),
@@ -216,36 +217,67 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                               )
                             : Align(
                                 alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 20.w),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _controller.nextPage(
-                                        duration:
-                                            const Duration(milliseconds: 200),
-                                        curve: Curves.easeIn,
-                                      );
-                                    },
-                                    child: Container(
-                                      // width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.h),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: brandTwo,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      child: Text(
-                                        'Continue',
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.white),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(
+                                        MediaQuery.of(context).size.width - 50,
+                                        50),
+                                    backgroundColor: brandTwo,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        10,
                                       ),
                                     ),
                                   ),
+                                  onPressed: () {
+                                    _controller.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      curve: Curves.easeIn,
+                                    );
+                                  },
+                                  child: Text(
+                                    "Continue",
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
+
+                                // Padding(
+                                //   padding:
+                                //       EdgeInsets.symmetric(horizontal: 20.w),
+                                //   child: GestureDetector(
+                                //     onTap: () {
+                                //       _controller.nextPage(
+                                //         duration:
+                                //             const Duration(milliseconds: 200),
+                                //         curve: Curves.easeIn,
+                                //       );
+                                //     },
+                                //     child: Container(
+                                //       // width: MediaQuery.of(context).size.width,
+                                //       height: 50,
+                                //       padding:
+                                //           EdgeInsets.symmetric(vertical: 15.h),
+                                //       alignment: Alignment.center,
+                                //       decoration: const BoxDecoration(
+                                //         color: brandTwo,
+                                //         borderRadius: BorderRadius.all(
+                                //             Radius.circular(10)),
+                                //       ),
+                                //       child: const Text(
+                                //         'Continue',
+                                //         style: TextStyle(
+                                //             fontSize: 14, color: Colors.white),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                               ),
                       ],
                     ),

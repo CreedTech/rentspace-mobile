@@ -2,6 +2,7 @@
 
 // import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ import '../../core/helper/helper_route_path.dart';
 // import '../actions/onboarding_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../provider/task_provider.dart';
 import '../actions/transaction_pin.dart';
 import '../actions/transaction_receipt.dart';
 import '../actions/transaction_receipt_dva.dart';
@@ -111,6 +113,21 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   final form = intl.NumberFormat.decimalPattern();
   bool isContainerVisible = true;
+  // final List<Map<String, dynamic>> _slides = [
+  //   {
+  //     'label': 'Add your profile picture',
+  //     'subTitle': 'Complete your profile by adding a profile picture',
+  //     'completed': false,
+  //     'image': 'assets/face.png',
+  //   },
+  //   {
+  //     'label': 'Set up your withdrawal account',
+  //     'subTitle': 'Save an account to withdraw your funds',
+  //     'completed': false,
+  //     'image': 'assets/bank_tilt.png',
+  //   },
+  //   // {'label': 'Task 3', 'completed': false},
+  // ];
   // List<dynamic> _articles = [];
   greeting() {
     var hour = DateTime.now().hour;
@@ -134,6 +151,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
+      if (userController.userModel!.userDetails![0].withdrawalAccount != null) {
+        ref
+            .read(taskProvider.notifier)
+            .completeTask('Set up your withdrawal account');
+        // setState(() {
+        //   _slides.remove(value);
+        // });
+      }
       setState(() {}); // Move setState inside fetchData
     }
     return true;
@@ -270,7 +295,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           child: SafeArea(
             top: false,
             child: ListView(
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               children: [
                 Container(
                   decoration: const BoxDecoration(
@@ -404,7 +429,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               .toString()
                                           : "******",
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
+                                      style: GoogleFonts.roboto(
                                           color: colorWhite,
                                           fontSize: 30,
                                           fontWeight: FontWeight.w600),
@@ -472,7 +497,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           Container(
                             height: (screenHeight >= 1000)
                                 ? MediaQuery.of(context).size.height / 1.2
-                                : MediaQuery.of(context).size.height / 1.8,
+                                : MediaQuery.of(context).size.height / 1.6,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               color: Theme.of(context).canvasColor,
@@ -494,6 +519,186 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   SizedBox(
                                     height: 20.h,
                                   ),
+                                  Consumer(
+                                    builder: (context, watch, child) {
+                                      final slides = ref.watch(taskProvider);
+                                      return slides.isEmpty
+                                          ? const SizedBox()
+                                          : Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CarouselSlider(
+                                                  options: CarouselOptions(
+                                                    viewportFraction: 1,
+                                                    height: 71,
+                                                    enableInfiniteScroll: false,
+                                                    enlargeCenterPage: false,
+                                                    onPageChanged:
+                                                        (index, reason) {
+                                                      setState(() {
+                                                        currentPos = index;
+                                                      });
+                                                    },
+                                                  ),
+                                                  items: slides.map((slide) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            print(
+                                                                slide['page']);
+                                                            Navigator.pushNamed(
+                                                              context,
+                                                              slide['page'],
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        0,
+                                                                    vertical:
+                                                                        0),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: colorWhite,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              // mainAxisAlignment:
+                                                              //     MainAxisAlignment
+                                                              //         .spaceBetween,
+                                                              children: [
+                                                                Flexible(
+                                                                  flex: 2,
+                                                                  child: Image
+                                                                      .asset(
+                                                                    slide[
+                                                                        'image'],
+                                                                    width:
+                                                                        66.43,
+                                                                    height:
+                                                                        66.43,
+                                                                  ),
+                                                                ),
+                                                                // const SizedBox(
+                                                                //     width: 5),
+                                                                Flexible(
+                                                                  flex: 8,
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        slide[
+                                                                            'label'],
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts
+                                                                            .lato(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          color:
+                                                                              colorBlack,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          height:
+                                                                              9),
+                                                                      Text(
+                                                                        slide[
+                                                                            'subTitle'],
+                                                                        style: GoogleFonts
+                                                                            .lato(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontWeight:
+                                                                              FontWeight.w400,
+                                                                          color:
+                                                                              const Color(0xff4B4B4B),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: slides
+                                                      .asMap()
+                                                      .entries
+                                                      .map((entry) {
+                                                    return GestureDetector(
+                                                      onTap: () {},
+                                                      child: Container(
+                                                        width: 6.0,
+                                                        height: 6.0,
+                                                        margin: const EdgeInsets
+                                                            .symmetric(
+                                                            vertical: 10.0,
+                                                            horizontal: 2.0),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: currentPos ==
+                                                                  entry.key
+                                                              ? brandOne
+                                                              : const Color(
+                                                                  0xffD9D9D9),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ],
+                                            );
+                                    },
+                                  ),
+                                  // CarouselSlider.builder(
+                                  //     itemCount: 3,
+                                  //     itemBuilder: (context, indexOfSlider,
+                                  //         realIndex) {
+                                  //       return Text(
+                                  //           'Index ${indexOfSlider}');
+                                  //     },
+                                  //     options: CarouselOptions(
+                                  //       onPageChanged: ((index, reason) {
+                                  //         setState(() {
+                                  //           currentPos = index;
+                                  //         });
+                                  //       }),
+                                  //       height: 200.0,
+                                  //       enableInfiniteScroll: false,
+                                  //       enlargeCenterPage: true,
+                                  //     ),
+                                  //   ),
+
                                   Text(
                                     'Quick Actions',
                                     style: GoogleFonts.lato(
@@ -885,7 +1090,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                   ? Text(
                                                                       "+ ${nairaFormaet.format(double.parse(history['amount'].toString()))}",
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
@@ -899,7 +1104,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                           .format(
                                                                               double.parse(history['amount'].toString())),
                                                                       style: GoogleFonts
-                                                                          .lato(
+                                                                          .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:

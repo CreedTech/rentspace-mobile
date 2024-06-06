@@ -3,6 +3,8 @@
 // AUTH
 // const login = "/login";
 const register = "/register";
+const personalInfo = "/personalInfo";
+const withdrawal = "/withdrawal";
 
 /// Home Path
 const rentList = "/rentList";

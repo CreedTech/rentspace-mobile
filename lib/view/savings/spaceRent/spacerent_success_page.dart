@@ -90,7 +90,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                           padding: EdgeInsets.only(bottom: 12.h),
                           child: Text(
                             currencyFormat.format(widget.rentValue),
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               fontSize: 36,
                               fontWeight: FontWeight.w600,
                               color: colorWhite,
@@ -101,7 +101,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                           padding: EdgeInsets.only(bottom: 12.h),
                           child: Text(
                             '${currencyFormat.format(widget.savingsValue)}/${widget.durationType.toLowerCase() == 'weekly' ? 'wk' : 'mth'}',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: colorWhite,

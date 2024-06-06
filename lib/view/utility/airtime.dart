@@ -704,7 +704,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                                   1.0), // Change color to yellow
                                         ),
                                         prefixText: "₦ ",
-                                        prefixStyle: GoogleFonts.lato(
+                                        prefixStyle: GoogleFonts.roboto(
                                           color: colorBlack,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -968,7 +968,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
             padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 20.w),
             child: Text(
               '₦$amount',
-              style: GoogleFonts.lato(
+              style: GoogleFonts.roboto(
                 color: brandOne,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

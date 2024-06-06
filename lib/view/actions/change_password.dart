@@ -1,5 +1,6 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -277,9 +278,9 @@ class _ChangePasswordState extends State<ChangePassword> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -308,81 +309,86 @@ class _ChangePasswordState extends State<ChangePassword> {
             vertical: 15.h,
             horizontal: 24.w,
           ),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Column(
-                children: [
-                  Form(
-                    key: changePwdFormKey,
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Form(
+                        key: changePwdFormKey,
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Old Password',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Old Password',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                oldPassword,
+                              ],
                             ),
-                            oldPassword,
+                            SizedBox(
+                              height: 13.h,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'New Password',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                password,
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13.h,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Re-enter New Password',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                confirmPassword,
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13.h,
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 13.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'New Password',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            password,
-                          ],
-                        ),
-                        SizedBox(
-                          height: 13.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Re-enter New Password',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            confirmPassword,
-                          ],
-                        ),
-                        SizedBox(
-                          height: 13.h,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -118,157 +119,165 @@ class _ChangetransactionPinOtpPageState
             vertical: 15.h,
             horizontal: 24.w,
           ),
-          child: Stack(
+          child: Column(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: Text(
-                      'Verify OTP sent to your mail to change your Transaction Pin. Click ‘Send OTP’ to get the code',
-                      style: GoogleFonts.lato(
-                        color: colorBlack,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: Text(
+                          'Verify OTP sent to your mail to change your Transaction Pin. Click ‘Send OTP’ to get the code',
+                          style: GoogleFonts.lato(
+                            color: colorBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Form(
-                    key: changePinOtpformKey,
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Form(
+                        key: changePinOtpformKey,
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3.h, horizontal: 3.w),
-                              child: Text(
-                                'Enter OTP',
-                                style: GoogleFonts.lato(
-                                  color: colorBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              enableSuggestions: true,
-                              cursorColor: colorBlack,
-                              keyboardType: TextInputType.number,
-                              style: GoogleFonts.lato(
-                                  color: colorBlack, fontSize: 14),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              controller: otpController,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                // hintText: 'Amount',
-                                errorStyle: GoogleFonts.lato(
-                                    fontSize: 12, fontWeight: FontWeight.w500),
-
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: brandOne,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffBDBDBD),
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffBDBDBD),
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Colors.red,
-                                      width: 1.0), // Change color to yellow
-                                ),
-
-                                filled: false,
-                                contentPadding: const EdgeInsets.all(14),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Enter Otp';
-                                }
-
-                                if (!value.isNum) {
-                                  return 'Please enter valid digits';
-                                }
-                                // if (value.length > 4) {
-                                //   return 'Otp cannot be more than 4 digits';
-                                // }
-                                return null;
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 28,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Didn\'t receive the OTP? ',
-                                  style: GoogleFonts.lato(
-                                    color: colorBlack,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 3.h, horizontal: 3.w),
+                                  child: Text(
+                                    'Enter OTP',
+                                    style: GoogleFonts.lato(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
-                                if (isClicked == false)
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isClicked = true;
-                                      });
-                                      resetCountdown();
-                                      authState.resendPinOtp(
-                                          context, widget.email);
-                                    },
-                                    child: Text(
-                                      'Resend OTP',
+                                TextFormField(
+                                  enableSuggestions: true,
+                                  cursorColor: colorBlack,
+                                  keyboardType: TextInputType.number,
+                                  style: GoogleFonts.lato(
+                                      color: colorBlack, fontSize: 14),
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  controller: otpController,
+                                  onChanged: (value) {},
+                                  decoration: InputDecoration(
+                                    // hintText: 'Amount',
+                                    errorStyle: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500),
+
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: brandOne,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffBDBDBD),
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffBDBDBD),
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 1.0), // Change color to yellow
+                                    ),
+
+                                    filled: false,
+                                    contentPadding: const EdgeInsets.all(14),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Enter Otp';
+                                    }
+
+                                    if (!value.isNum) {
+                                      return 'Please enter valid digits';
+                                    }
+                                    // if (value.length > 4) {
+                                    //   return 'Otp cannot be more than 4 digits';
+                                    // }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 28,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Didn\'t receive the OTP? ',
                                       style: GoogleFonts.lato(
-                                        color: const Color(0xff6E6E6E),
+                                        color: colorBlack,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                  ),
-                                if (isClicked == true)
-                                  Text(
-                                    '($formattedTime)',
-                                    style: GoogleFonts.lato(
-                                      color: const Color(0xff6E6E6E),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
+                                    if (isClicked == false)
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isClicked = true;
+                                          });
+                                          resetCountdown();
+                                          authState.resendPinOtp(
+                                              context, widget.email);
+                                        },
+                                        child: Text(
+                                          'Resend OTP',
+                                          style: GoogleFonts.lato(
+                                            color: const Color(0xff6E6E6E),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    if (isClicked == true)
+                                      Text(
+                                        '($formattedTime)',
+                                        style: GoogleFonts.lato(
+                                          color: const Color(0xff6E6E6E),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

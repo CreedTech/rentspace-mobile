@@ -474,7 +474,7 @@ class _ElectricityState extends State<Electricity> {
                           TextSpan(
                             text: ch8t.format(walletController
                                 .walletModel!.wallet![0].mainBalance),
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.roboto(
                               color: brandOne,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -1043,7 +1043,7 @@ class _ElectricityState extends State<Electricity> {
                                   contentPadding: const EdgeInsets.all(14),
                                   fillColor: brandThree,
                                   prefixText: "₦ ",
-                                  prefixStyle: GoogleFonts.lato(
+                                  prefixStyle: GoogleFonts.roboto(
                                     color: colorBlack,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,

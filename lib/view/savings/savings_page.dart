@@ -202,7 +202,7 @@ class _SavingsPageState extends State<SavingsPage> {
                                       MediaQuery.of(context).size.width / 1.5,
                                   child: Text(
                                     nairaFormaet.format(totalSavings),
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       fontSize: 30,
                                       color: colorWhite,
                                       fontWeight: FontWeight.w600,

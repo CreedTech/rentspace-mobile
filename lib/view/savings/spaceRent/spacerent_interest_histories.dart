@@ -128,7 +128,7 @@ class _SpaceRentInterestHistoryPageState
                   Text(
                     nairaFormaet.format(rentController
                         .rentModel!.rents![widget.current].spaceRentInterest),
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.roboto(
                       color: const Color(0xff278210),
                       fontWeight: FontWeight.w600,
                       fontSize: 30,
@@ -323,7 +323,7 @@ class _SpaceRentInterestHistoryPageState
                                                             child: Text(
                                                               "+ ₦${item['interestAmount']}",
                                                               style: GoogleFonts
-                                                                  .lato(
+                                                                  .roboto(
                                                                 fontSize: 14,
                                                                 fontWeight:
                                                                     FontWeight

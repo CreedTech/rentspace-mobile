@@ -69,10 +69,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:  GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -240,7 +240,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                             ),
                             Text(
                               '${(transactionData['transactionType'] == 'Credit') ? '+' : '-'} ${currencyFormat.format((transactionData['amount']))}',
-                              style: GoogleFonts.lato(
+                              style: GoogleFonts.roboto(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w600,
                                 color: colorBlack,
@@ -293,7 +293,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                                       .toLowerCase() ==
                                                   'bill')
                                               ? transactionData[
-                                                  'userUtilityNumber']
+                                                      'userUtilityNumber'] ??
+                                                  '00000000'
                                               : '${transactionData['accountName'] ?? 'Rentspace'}'
                                                   .capitalize!,
                                           style: GoogleFonts.lato(
@@ -307,10 +308,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                                       .toString()
                                                       .toLowerCase() ==
                                                   'bill')
-                                              ? transactionData['biller']
+                                              ? transactionData['biller'] ??
+                                                  'Bill'
+                                              : '${bankName ?? transactionData['bankName'] ?? ''}'
                                                   .toString()
                                                   .toUpperCase()
-                                              : '${bankName ?? transactionData['bankName'] ?? ''}'
                                                   .capitalize!,
                                           style: GoogleFonts.lato(
                                             fontSize: 16,
@@ -462,7 +464,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                   Text(
                                     currencyFormat.format(
                                         double.parse(transactionData['fees'])),
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: colorBlack,
@@ -515,23 +517,23 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               Flexible(
                                 flex: 2,
                                 child: GestureDetector(
-                                         onTap: () {
-                                        Clipboard.setData(
-                                          ClipboardData(
-                                            text: transactionData![
-                                                'transactionReference'],
-                                          ),
-                                        );
-                                        Fluttertoast.showToast(
-                                          msg: "Copied to clipboard!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.SNACKBAR,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: brandOne,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      },
+                                  onTap: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: transactionData![
+                                            'transactionReference'],
+                                      ),
+                                    );
+                                    Fluttertoast.showToast(
+                                      msg: "Copied to clipboard!",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.SNACKBAR,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: brandOne,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                  },
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisAlignment: MainAxisAlignment.end,

@@ -185,7 +185,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                     ),
                                     Text(
                                       currencyFormat.format(widget.amount),
-                                      style: GoogleFonts.lato(
+                                      style: GoogleFonts.roboto(
                                         fontSize: 30,
                                         fontWeight: FontWeight.w600,
                                         color: brandOne,

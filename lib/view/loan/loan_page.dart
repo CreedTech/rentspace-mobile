@@ -252,15 +252,15 @@ class _LoanPageState extends State<LoanPage> {
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        label: Text(
+      decoration:  InputDecoration(
+        label: const Text(
           "How much loan do you want to take?",
           style: TextStyle(
             color: Colors.black,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: GoogleFonts.roboto(
           color: Colors.black,
           fontSize: 13,
         ),
@@ -268,7 +268,7 @@ class _LoanPageState extends State<LoanPage> {
         filled: true,
         fillColor: brandThree,
         hintText: 'enter amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.black,
           fontSize: 13,
         ),
@@ -485,7 +485,7 @@ class _LoanPageState extends State<LoanPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         ElevatedButton(
@@ -517,7 +517,7 @@ class _LoanPageState extends State<LoanPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Row(
@@ -708,7 +708,7 @@ class _LoanPageState extends State<LoanPage> {
                                             //     .split(" ")
                                             //     .last
                                             ,
-                                            style: GoogleFonts.lato(
+                                            style: GoogleFonts.roboto(
                                               color: Theme.of(context)
                                                   .primaryColor,
                                               fontSize: 16,
