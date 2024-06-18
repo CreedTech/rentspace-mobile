@@ -652,7 +652,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
     //       border: const BorderSide(color: Colors.black12, width: 1),
     //       dropdownButtonColor: Theme.of(context).canvasColor,
     //       dropdownColor: Theme.of(context).canvasColor,
-    //       style: TextStyle(
+    //       style: GoogleFonts.lato(
     //         color: Theme.of(context).primaryColor,
     //       ),
     //       value: durationType,
@@ -960,7 +960,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                                                 ),
       //                                                 Text(
       //                                                   'SpaceDeposit created',
-      //                                                   style: TextStyle(
+      //                                                   style: GoogleFonts.lato(
       //                                                     fontFamily:
       //                                                         "DefaultFontFamily",
       //                                                     fontSize: 16,
@@ -1008,7 +1008,7 @@ class _SpaceDepositSubscriptionState extends State<SpaceDepositSubscription> {
       //                                                   color: brandOne,
       //                                                   child: const Text(
       //                                                     'Proceed to payment',
-      //                                                     style: TextStyle(
+      //                                                     style: GoogleFonts.lato(
       //                                                       fontFamily:
       //                                                           "DefaultFontFamily",
       //                                                       color: Colors.white,

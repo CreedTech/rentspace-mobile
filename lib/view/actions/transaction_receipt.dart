@@ -63,10 +63,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     // print(bankName!);
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -75,10 +75,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -86,7 +86,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
               Text(
                 'Transaction Details',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -97,7 +97,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       ),
       body: SafeArea(
         child: Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: 18.h,
@@ -165,7 +165,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                   style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: colorBlack),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                                 ),
                               ],
                             ),
@@ -177,7 +179,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               style: GoogleFonts.lato(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: colorBlack),
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                           ],
                         ),
@@ -223,7 +225,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 14),
                         decoration: BoxDecoration(
-                          color: colorWhite,
+                          color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Column(
@@ -235,7 +237,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: brandOne,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(
@@ -243,7 +245,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               style: GoogleFonts.roboto(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -255,7 +257,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                       // height: 92.h,
                       padding: const EdgeInsets.all(17),
                       decoration: BoxDecoration(
-                        color: colorWhite,
+                        color: Theme.of(context).canvasColor,
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Column(
@@ -277,7 +279,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                       style: GoogleFonts.lato(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: const Color(0xff4B4B4B),
+                                        color:
+                                            Theme.of(context).primaryColorLight,
                                       ),
                                     ),
                                     SizedBox(
@@ -300,7 +303,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                           style: GoogleFonts.lato(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                           ),
                                         ),
                                         Text(
@@ -317,7 +322,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                           style: GoogleFonts.lato(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                           ),
                                         ),
                                       ],
@@ -365,11 +372,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 7),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
                             child: Divider(
                               thickness: 1,
-                              color: Color(0xffC9C9C9),
+                              color: Theme.of(context).dividerColor,
                             ),
                           ),
                           Column(
@@ -381,7 +388,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                 style: GoogleFonts.lato(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: const Color(0xff4B4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
                               SizedBox(
@@ -399,16 +406,16 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 7),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
                             child: Divider(
                               thickness: 1,
-                              color: Color(0xffC9C9C9),
+                              color: Theme.of(context).dividerColor,
                             ),
                           ),
                           Row(
@@ -424,7 +431,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color(0xff4B4B4B),
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                     ),
                                   ),
                                   SizedBox(
@@ -440,7 +448,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
@@ -455,7 +464,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color(0xff4B4B4B),
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                     ),
                                   ),
                                   SizedBox(
@@ -467,18 +477,19 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     style: GoogleFonts.roboto(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 7),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
                             child: Divider(
                               thickness: 1,
-                              color: Color(0xffC9C9C9),
+                              color: Theme.of(context).dividerColor,
                             ),
                           ),
                           Row(
@@ -497,7 +508,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                       style: GoogleFonts.lato(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: const Color(0xff4B4B4B),
+                                        color:
+                                            Theme.of(context).primaryColorLight,
                                       ),
                                     ),
                                     SizedBox(
@@ -508,7 +520,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                       style: GoogleFonts.lato(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                     ),
                                   ],
@@ -547,7 +561,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                             'assets/icons/copy_icon.png',
                                             width: 24,
                                             height: 24,
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                           ),
                                           const SizedBox(
                                             width: 5,
@@ -568,11 +584,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 7),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 7),
                             child: Divider(
                               thickness: 1,
-                              color: Color(0xffC9C9C9),
+                              color: Theme.of(context).dividerColor,
                             ),
                           ),
                           Column(
@@ -584,7 +600,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                 style: GoogleFonts.lato(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: const Color(0xff4B4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
                               SizedBox(
@@ -645,7 +661,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],

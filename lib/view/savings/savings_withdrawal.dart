@@ -1217,7 +1217,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               defaultPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: TextStyle(
+                                                textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
                                                   color: brandOne,
                                                 ),
@@ -1232,7 +1232,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               focusedPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: TextStyle(
+                                                textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
                                                   color: brandOne,
                                                 ),
@@ -1247,7 +1247,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               submittedPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: TextStyle(
+                                                textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
                                                   color: brandOne,
                                                 ),
@@ -1262,7 +1262,7 @@ class _WalletWithdrawalState extends State<WalletWithdrawal> {
                                               followingPinTheme: PinTheme(
                                                 width: 50,
                                                 height: 50,
-                                                textStyle: TextStyle(
+                                                textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
                                                   color: brandOne,
                                                 ),

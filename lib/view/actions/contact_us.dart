@@ -65,22 +65,22 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:  GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -88,7 +88,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               Text(
                 'Contact Us',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -118,7 +118,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                       style: GoogleFonts.lato(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     Column(
@@ -237,7 +237,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                             // width: 450,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: colorWhite,
+                              color: Theme.of(context).canvasColor,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -258,7 +258,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                   Text(
                                     "Email address",
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -283,10 +284,11 @@ class _ContactUsPageState extends State<ContactUsPage> {
                                             );
                                           },
                                           child: Text(
-                                            'support@rentspace.tech'
-                                                .capitalize!,
+                                            'support@rentspace.tech',
                                             style: GoogleFonts.lato(
-                                              color: colorBlack,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -462,9 +464,9 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title: const Text(
+        title: Text(
           'RentSpace',
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: brandOne,
             fontWeight: FontWeight.w600,
             fontSize: 16,

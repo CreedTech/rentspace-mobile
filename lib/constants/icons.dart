@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:rentspace/constants/colors.dart';
 
 class WishIcon {
   Icon normal = const Icon(Icons.favorite_border);
@@ -13,23 +13,23 @@ class BookmarkIcon {
 }
 
 class LockIcon {
-  Icon close = const Icon(
+  Icon close = Icon(
     Iconsax.eye_slash,
-    color: colorBlack,
+    color: Theme.of(Get.context!).colorScheme.primary,
   );
-  Icon open = const Icon(
+  Icon open = Icon(
     Iconsax.eye,
-    color: colorBlack,
+    color: Theme.of(Get.context!).colorScheme.primary,
   );
 }
 
 class ThemeIcon {
-  Icon dark = const Icon(
+  Icon dark = Icon(
     Icons.dark_mode,
-    color: Colors.black,
+    color: Theme.of(Get.context!).colorScheme.primary,
   );
-  Icon light = const Icon(
+  Icon light = Icon(
     Icons.light_mode,
-    color: Colors.black,
+    color: Theme.of(Get.context!).colorScheme.primary,
   );
 }

@@ -13,6 +13,7 @@ import 'package:flutter/widgets.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -146,9 +147,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     }
   }
 
-  Future<bool> fetchUserData({bool refresh = true}) async {
-    setState(() {});
-    if (refresh) {
+  bool _isDisposed = false;
+  Future<void> fetchUserData() async {
+    if (!_isDisposed) {
+      // Check if the widget is disposed before proceeding
+      setState(() {});
       await userController.fetchData();
       await walletController.fetchWallet();
       if (userController.userModel!.userDetails![0].withdrawalAccount != null) {
@@ -159,9 +162,42 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         //   _slides.remove(value);
         // });
       }
+      if (userController.userModel!.userDetails![0].imageUpdated == true) {
+        ref
+            .read(taskProvider.notifier)
+            .completeTask('Add your profile picture');
+        // setState(() {
+        //   _slides.remove(value);
+        // });
+      }
+
       setState(() {}); // Move setState inside fetchData
     }
-    return true;
+  }
+
+  UserModel? _user;
+  bool _loading = true;
+
+  Future<void> _loadUserData() async {
+    final box = Hive.box('settings');
+    final user = box.get('userInfo') as UserModel?;
+    print('user');
+    print(user);
+
+    if (user != null) {
+      setState(() {
+        _user = user;
+        _loading = false;
+      });
+    } else {
+      final fetchedUser = await userController.fetchData();
+      print('fetchedUser');
+      print(fetchedUser);
+      setState(() {
+        _user = fetchedUser;
+        _loading = false;
+      });
+    }
   }
 
   getSavings() async {
@@ -275,7 +311,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
     // print('nextWithdrawalDate');
     // print(walletController.walletModel!.wallet![0].nextWithdrawalDate != '');
     // final data = ref.watch(userProfileDetailsProvider);
@@ -283,17 +318,19 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     double screenHeight = MediaQuery.of(context).size.height;
     // double sliderHeight = sliderDynamicScreen(screenHeight);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: brandOne,
       body: Obx(
         () => LiquidPullToRefresh(
           height: 100,
           animSpeedFactor: 2,
           color: brandOne,
-          backgroundColor: Colors.white,
+          backgroundColor: colorWhite,
           showChildOpacityTransition: false,
           onRefresh: onRefresh,
           child: SafeArea(
             top: false,
+            bottom: false,
             child: ListView(
               physics: const ClampingScrollPhysics(),
               children: [
@@ -309,7 +346,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                         child: Image.asset(
                           'assets/logo_transparent.png',
                           width: 255.47,
-                          height: 291.75,
+                          height: 291.7.h,
                         ),
                       ),
                       Column(
@@ -336,7 +373,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Hi, ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
+                                              "Hi ${userController.userModel!.userDetails![0].firstName.obs}, $dum1",
                                               style: GoogleFonts.lato(
                                                 fontSize: 24.0,
                                                 fontWeight: FontWeight.w500,
@@ -434,8 +471,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           fontSize: 30,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    const SizedBox(
-                                      height: 20,
+                                    SizedBox(
+                                      height: 20.h,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -497,10 +534,12 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           Container(
                             height: (screenHeight >= 1000)
                                 ? MediaQuery.of(context).size.height / 1.2
-                                : MediaQuery.of(context).size.height / 1.6,
+                                : (screenHeight <= 700)
+                                    ? MediaQuery.of(context).size.height / 1.2
+                                    : MediaQuery.of(context).size.height / 1.4,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
@@ -554,7 +593,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                             );
                                                           },
                                                           child: Container(
-                                                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        5),
                                                             padding:
                                                                 const EdgeInsets
                                                                     .symmetric(
@@ -564,7 +607,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                         0),
                                                             decoration:
                                                                 BoxDecoration(
-                                                              color: colorWhite,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .canvasColor,
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
@@ -585,9 +630,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                     slide[
                                                                         'image'],
                                                                     width:
-                                                                        66.43,
+                                                                        66.43.h,
                                                                     height:
-                                                                        66.43,
+                                                                        66.43.h,
                                                                   ),
                                                                 ),
                                                                 // const SizedBox(
@@ -615,13 +660,14 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                               14,
                                                                           fontWeight:
                                                                               FontWeight.w600,
-                                                                          color:
-                                                                              colorBlack,
+                                                                          color: Theme.of(context)
+                                                                              .colorScheme
+                                                                              .primary,
                                                                         ),
                                                                       ),
-                                                                      const SizedBox(
+                                                                      SizedBox(
                                                                           height:
-                                                                              9),
+                                                                              9.h),
                                                                       Text(
                                                                         slide[
                                                                             'subTitle'],
@@ -632,7 +678,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                           fontWeight:
                                                                               FontWeight.w400,
                                                                           color:
-                                                                              const Color(0xff4B4B4B),
+                                                                              Theme.of(context).primaryColorLight,
                                                                         ),
                                                                       ),
                                                                     ],
@@ -656,8 +702,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                     return GestureDetector(
                                                       onTap: () {},
                                                       child: Container(
-                                                        width: 6.0,
-                                                        height: 6.0,
+                                                        width: 6.0.w,
+                                                        height: 6.0.h,
                                                         margin: const EdgeInsets
                                                             .symmetric(
                                                             vertical: 10.0,
@@ -704,7 +750,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     style: GoogleFonts.lato(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
-                                        color: colorBlack),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
                                   ),
                                   SizedBox(
                                     height: 10.h,
@@ -722,7 +770,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       .width /
                                                   2.45,
                                               45),
-                                          backgroundColor: colorWhite,
+                                          backgroundColor:
+                                              Theme.of(context).canvasColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -741,16 +790,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               Image.asset(
                                                 'assets/icons/call_icon.png',
                                                 width: 24,
-                                                height: 24,
+                                                height: 24.h,
                                               ),
-                                              const SizedBox(
-                                                height: 14,
+                                              SizedBox(
+                                                height: 14.h,
                                               ),
                                               Text(
                                                 'Buy Airtime',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.lato(
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -768,7 +819,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       .width /
                                                   2.45,
                                               45),
-                                          backgroundColor: colorWhite,
+                                          backgroundColor:
+                                              Theme.of(context).canvasColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -787,16 +839,18 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               Image.asset(
                                                 'assets/icons/space_rent.png',
                                                 width: 24,
-                                                height: 24,
+                                                height: 24.h,
                                               ),
-                                              const SizedBox(
-                                                height: 14,
+                                              SizedBox(
+                                                height: 14.h,
                                               ),
                                               Text(
                                                 'New Space Rent',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.lato(
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -820,7 +874,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       GestureDetector(
@@ -844,7 +900,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                   (userController.userModel!.userDetails![0]
                                           .walletHistories.isEmpty)
                                       ? SizedBox(
-                                          height: 240,
+                                          height: 240.h,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -853,10 +909,15 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             children: [
                                               Image.asset(
                                                 'assets/icons/history_icon.png',
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? const Color(0xffffffff)
+                                                    : const Color(0xffEEF8FF),
                                                 height: 33.5.h,
                                               ),
-                                              const SizedBox(
-                                                height: 10,
+                                              SizedBox(
+                                                height: 10.h,
                                               ),
                                               Center(
                                                 child: SizedBox(
@@ -866,7 +927,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.lato(
                                                       fontSize: 14,
-                                                      color: colorBlack,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                     ),
@@ -882,7 +945,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 15),
                                             decoration: BoxDecoration(
-                                              color: colorWhite,
+                                              color:
+                                                  Theme.of(context).canvasColor,
                                               borderRadius:
                                                   BorderRadius.circular(10.r),
                                             ),
@@ -1001,33 +1065,45 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                 children: [
                                                                   Flexible(
                                                                     flex: 2,
-                                                                    child:
-                                                                        Container(
-                                                                      padding: const EdgeInsets
-                                                                          .all(
-                                                                          12),
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                        color: (history['transactionType'] ==
-                                                                                'Credit')
-                                                                            ? brandTwo
-                                                                            : brandTwo,
-                                                                      ),
-                                                                      child: (history['transactionType'] ==
-                                                                              'Credit')
-                                                                          ? const Icon(
-                                                                              Icons.call_received,
-                                                                              color: Color(0xff80FF00),
-                                                                              size: 20,
-                                                                            )
-                                                                          : const Icon(
-                                                                              Icons.arrow_outward_sharp,
-                                                                              color: colorWhite,
-                                                                              size: 20,
+                                                                    child: (history['transactionGroup'].toString().toLowerCase() ==
+                                                                            'bill')
+                                                                        ? ClipOval(
+                                                                            child:
+                                                                                Image.asset(
+                                                                              (history['biller'].toString().toLowerCase() == 'mtnng')
+                                                                                  ? 'assets/utility/mtn.jpg'
+                                                                                  : (history['biller'].toString().toLowerCase() == 'airng')
+                                                                                      ? 'assets/utility/airtel.jpg'
+                                                                                      : (history['biller'].toString().toLowerCase() == 'glo_vbank')
+                                                                                          ? 'assets/utility/glo.jpg'
+                                                                                          : (history['biller'].toString().toLowerCase() == '9mobile_nigeria')
+                                                                                              ? 'assets/utility/9mobile.jpg'
+                                                                                              : 'assets/icons/RentSpace-icon.jpg',
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              fit: BoxFit.fitWidth, // Ensure the image fits inside the circle
                                                                             ),
-                                                                    ),
+                                                                          )
+                                                                        : Container(
+                                                                            padding:
+                                                                                const EdgeInsets.all(12),
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              shape: BoxShape.circle,
+                                                                              color: (history['transactionType'] == 'Credit') ? brandTwo : brandTwo,
+                                                                            ),
+                                                                            child: (history['transactionType'] == 'Credit')
+                                                                                ? const Icon(
+                                                                                    Icons.call_received,
+                                                                                    color: Color(0xff80FF00),
+                                                                                    size: 20,
+                                                                                  )
+                                                                                : const Icon(
+                                                                                    Icons.arrow_outward_sharp,
+                                                                                    color: colorWhite,
+                                                                                    size: 20,
+                                                                                  ),
+                                                                          ),
                                                                   ),
                                                                   const SizedBox(
                                                                       width:
@@ -1057,24 +1133,19 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                             fontWeight:
                                                                                 FontWeight.w500,
                                                                             color:
-                                                                                colorBlack,
+                                                                                Theme.of(context).colorScheme.primary,
                                                                           ),
                                                                         ),
-                                                                        const SizedBox(
+                                                                        SizedBox(
                                                                             height:
-                                                                                5),
+                                                                                5.h),
                                                                         Text(
                                                                           formatDateTime(
                                                                               history['createdAt']),
-                                                                          style:
-                                                                              GoogleFonts.lato(
-                                                                            fontSize:
-                                                                                12,
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
-                                                                            color:
-                                                                                const Color(0xff4B4B4B),
-                                                                          ),
+                                                                          style: GoogleFonts.lato(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Theme.of(context).primaryColorLight),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1109,8 +1180,9 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            colorBlack,
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                             ),
@@ -1119,10 +1191,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                       ),
 
                                                       if (showDivider)
-                                                        const Divider(
+                                                        Divider(
                                                           thickness: 1,
                                                           color:
-                                                              Color(0xffC9C9C9),
+                                                              Theme.of(context)
+                                                                  .dividerColor,
                                                           indent: 17,
                                                           endIndent: 17,
                                                         ),
@@ -1158,6 +1231,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   void dispose() {
     subscription.cancel();
     // valueNotifier.dispose();
+    _isDisposed = true;
     super.dispose();
   }
 
@@ -1208,6 +1282,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -1229,7 +1304,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -1240,7 +1315,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -1262,15 +1337,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           ),
                         ),
                         onPressed: () async {
-                          // Timer
-
-                          // EasyLoading.show(
-                          //   indicator: const CustomLoader(),
-                          //   maskType: EasyLoadingMaskType.black,
-                          //   dismissOnTap: false,
-                          // );
-
-                          // Navigator.pop(context, 'Cancel');
                           Navigator.pop(context);
                           // EasyLoading.dismiss();
                           setState(() => isAlertSet = false);
@@ -1278,9 +1344,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
                             // showDialogBox();
-                            if (context.mounted) {
-                              noInternetConnectionScreen(context);
-                            }
+                            noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
                         },

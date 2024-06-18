@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/icons.dart';
+import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -41,6 +42,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     validatePass(passValue) {
@@ -68,12 +71,12 @@ class _ChangePasswordState extends State<ChangePassword> {
     //password field
     final oldPassword = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: oldPasswordController,
       autovalidateMode: AutovalidateMode.disabled,
       obscureText: obscureText,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
@@ -81,8 +84,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -91,8 +96,10 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -115,7 +122,9 @@ class _ChangePasswordState extends State<ChangePassword> {
           },
           child: Icon(
             obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: colorBlack,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? colorWhite
+                : Colors.black,
           ),
         ),
         filled: false,
@@ -147,12 +156,12 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: newPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
@@ -160,8 +169,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -170,8 +181,10 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -194,7 +207,9 @@ class _ChangePasswordState extends State<ChangePassword> {
           },
           child: Icon(
             obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: colorBlack,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? colorWhite
+                : Colors.black,
           ),
         ),
         filled: false,
@@ -205,12 +220,12 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     final confirmPassword = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: repeatPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
@@ -218,8 +233,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -228,8 +245,10 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -252,7 +271,9 @@ class _ChangePasswordState extends State<ChangePassword> {
           },
           child: Icon(
             obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: colorBlack,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? colorWhite
+                : Colors.black,
           ),
         ),
         filled: false,
@@ -271,10 +292,10 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -283,10 +304,10 @@ class _ChangePasswordState extends State<ChangePassword> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -294,7 +315,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               Text(
                 'Change Password',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -329,7 +350,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   child: Text(
                                     'Old Password',
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                     ),
@@ -350,7 +372,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   child: Text(
                                     'New Password',
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                     ),
@@ -371,7 +394,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   child: Text(
                                     'Re-enter New Password',
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                     ),

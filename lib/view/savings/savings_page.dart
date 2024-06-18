@@ -8,6 +8,7 @@ import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
+import 'package:rentspace/theme/theme_p.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_intro.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -145,10 +146,10 @@ class _SavingsPageState extends State<SavingsPage> {
   Widget build(BuildContext context) {
     // print(MediaQuery.of(context).size.width);
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Padding(
@@ -156,7 +157,7 @@ class _SavingsPageState extends State<SavingsPage> {
           child: Text(
             'Savings',
             style: GoogleFonts.lato(
-              color: colorBlack,
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 24,
               fontWeight: FontWeight.w500,
             ),
@@ -599,9 +600,10 @@ class _SavingsPageState extends State<SavingsPage> {
             padding: EdgeInsets.only(left: 24.w, right: 24.w, bottom: 10.h),
             child: Text(
               'Top Savings',
-              textScaleFactor: 1.0,
-              style:
-                  GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
+              style: GoogleFonts.lato(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.primary),
             ),
           ),
           Padding(
@@ -613,7 +615,7 @@ class _SavingsPageState extends State<SavingsPage> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: colorWhite,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -633,52 +635,50 @@ class _SavingsPageState extends State<SavingsPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          child: ListTile(
-                            leading: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color(0xffEEF8FF),
-                              ),
-                              // child: const Icon(
-                              //   Iconsax.security,
-                              //   color: brandOne,
-                              // ),
-                              child: Image.asset(
-                                'assets/icons/space_rent.png',
-                                width: 19.5,
-                                height: 19.5,
-                                color: brandTwo,
-                                // color: brandOne,
-                              ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        child: ListTile(
+                          leading: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xffEEF8FF),
                             ),
-                            title: Text(
-                              'Space Rent',
-                              style: GoogleFonts.lato(
-                                color: brandOne,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            // child: const Icon(
+                            //   Iconsax.security,
+                            //   color: brandOne,
+                            // ),
+                            child: Image.asset(
+                              'assets/icons/space_rent.png',
+                              width: 19.5,
+                              height: 19.5,
+                              color: brandTwo,
+                              // color: brandOne,
                             ),
-                            subtitle: Text(
-                              'Save 70% of your rent and get up to 30% loan.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.lato(
-                                color: const Color(0xff4B4B4B),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
+                          ),
+                          title: Text(
+                            'Space Rent',
+                            style: GoogleFonts.lato(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
                             ),
-                            trailing: const Icon(
-                              Iconsax.arrow_right_3,
-                              color: colorBlack,
-                              size: 20,
+                          ),
+                          subtitle: Text(
+                            'Save 70% of your rent and get up to 30% loan.',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.lato(
+                              color: Theme.of(context).primaryColorLight,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
                             ),
+                          ),
+                          trailing: const Icon(
+                            Iconsax.arrow_right_3,
+                            color: colorBlack,
+                            size: 20,
                           ),
                         ),
                       ),
@@ -687,9 +687,9 @@ class _SavingsPageState extends State<SavingsPage> {
 
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 17.w),
-                    child: const Divider(
+                    child: Divider(
                       thickness: 1,
-                      color: Color(0xffC9C9C9),
+                      color: Theme.of(context).dividerColor,
                     ),
                   ),
                   GestureDetector(
@@ -709,71 +709,69 @@ class _SavingsPageState extends State<SavingsPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          child: ListTile(
-                            leading: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(10),
-                                   color: const Color(0xffEEF8FF),
-                              ),
-                              // child: const Icon(
-                              //   Iconsax.security,
-                              //   color: brandOne,
-                              // ),
-                              child: Image.asset(
-                                'assets/icons/lock_deposit_icon.png',
-                                width: 19.5,
-                                height: 19.5,
-                                // scale: 4,
-                                // color: brandOne,
-                              ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        child: ListTile(
+                          leading: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xffEEF8FF),
                             ),
-                            title: Text(
-                              'Space Deposit',
-                              style: GoogleFonts.lato(
-                                color: brandOne,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            // child: const Icon(
+                            //   Iconsax.security,
+                            //   color: brandOne,
+                            // ),
+                            child: Image.asset(
+                              'assets/icons/lock_deposit_icon.png',
+                              width: 19.5,
+                              height: 19.5,
+                              // scale: 4,
+                              // color: brandOne,
                             ),
-                            subtitle: Text(
-                              'Lock your money safely for later use.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.lato(
-                                color: const Color(0xff4B4B4B),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          ),
+                          title: Text(
+                            'Space Deposit',
+                            style: GoogleFonts.lato(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
                             ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 7, vertical: 3),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffEEF8FF),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(
-                                    "Coming Soon",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 12.0,
-                                      // fontFamily: "DefaultFontFamily",
-                                      // letterSpacing: 0.5,
-                                      fontWeight: FontWeight.w600,
-                                      color: brandOne,
-                                    ),
+                          ),
+                          subtitle: Text(
+                            'Lock your money safely for later use.',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.lato(
+                              color: Theme.of(context).primaryColorLight,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 7, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: Color(0xffEEF8FF),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Text(
+                                  "Coming Soon",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 12.0,
+                                    // fontFamily: "DefaultFontFamily",
+                                    // letterSpacing: 0.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: brandOne,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

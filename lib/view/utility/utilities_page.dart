@@ -252,7 +252,7 @@
 //                   ),
 //                   Text(
 //                     "Fund your account and earn 1 SpacePoint!",
-//                     style: TextStyle(
+//                     style: GoogleFonts.lato(
 //                       color: Theme.of(context).primaryColor,
 //                       fontSize: 18,
 //                     ),
@@ -262,7 +262,7 @@
 //                   ),
 //                   Text(
 //                     "(₦50 charges applies)",
-//                     style: TextStyle(
+//                     style: GoogleFonts.lato(
 //                       color: Theme.of(context).primaryColor,
 //                       fontSize: 12,
 //                     ),
@@ -272,7 +272,7 @@
 //                   ),
 //                   Text(
 //                     " $userBetName",
-//                     style: TextStyle(
+//                     style: GoogleFonts.lato(
 //                       color: Theme.of(context).primaryColor,
 //                       fontSize: 20,
 //                       fontWeight: FontWeight.bold,
@@ -289,20 +289,20 @@
 //                     keyboardType: TextInputType.phone,
 //                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
 //                     maxLength: 11,
-//                     style: const TextStyle(
+//                     style: const GoogleFonts.lato(
 //                       color: Colors.black,
 //                     ),
 //                     decoration: InputDecoration(
 //                       prefix: Text(
 //                         "$varValue",
-//                         style: const TextStyle(
+//                         style: const GoogleFonts.lato(
 //                           fontSize: 15,
 //                           color: Colors.black,
 //                         ),
 //                       ),
 //                       label: const Text(
 //                         "Amount in naira",
-//                         style: TextStyle(
+//                         style: GoogleFonts.lato(
 //                           color: Colors.grey,
 //                         ),
 //                       ),
@@ -320,7 +320,7 @@
 //                       filled: true,
 //                       fillColor: brandThree,
 //                       hintText: '',
-//                       hintStyle: const TextStyle(
+//                       hintStyle: const GoogleFonts.lato(
 //                         color: Colors.black,
 //                         fontSize: 13,
 //                       ),
@@ -335,7 +335,7 @@
 //                     defaultPinTheme: PinTheme(
 //                       width: 50,
 //                       height: 50,
-//                       textStyle: TextStyle(
+//                       textStyle: GoogleFonts.lato(
 //                         fontSize: 25,
 //                         color: brandOne,
 //                       ),
@@ -347,7 +347,7 @@
 //                     focusedPinTheme: PinTheme(
 //                       width: 50,
 //                       height: 50,
-//                       textStyle: TextStyle(
+//                       textStyle: GoogleFonts.lato(
 //                         fontSize: 25,
 //                         color: brandOne,
 //                       ),
@@ -359,7 +359,7 @@
 //                     submittedPinTheme: PinTheme(
 //                       width: 50,
 //                       height: 50,
-//                       textStyle: TextStyle(
+//                       textStyle: GoogleFonts.lato(
 //                         fontSize: 25,
 //                         color: brandOne,
 //                       ),
@@ -371,7 +371,7 @@
 //                     followingPinTheme: PinTheme(
 //                       width: 50,
 //                       height: 50,
-//                       textStyle: TextStyle(
+//                       textStyle: GoogleFonts.lato(
 //                         fontSize: 25,
 //                         color: brandOne,
 //                       ),
@@ -484,7 +484,7 @@
 //                                                                     vertical:
 //                                                                         15),
 //                                                             textStyle:
-//                                                                 const TextStyle(
+//                                                                 const GoogleFonts.lato(
 //                                                                     color:
 //                                                                         brandFour,
 //                                                                     fontSize:
@@ -492,7 +492,7 @@
 //                                                           ),
 //                                                           child: const Text(
 //                                                             "Fund Wallet",
-//                                                             style: TextStyle(
+//                                                             style: GoogleFonts.lato(
 //                                                               color:
 //                                                                   Colors.white,
 //                                                               fontWeight:
@@ -777,7 +777,7 @@
 //                     ),
 //                     Text(
 //                       "Success! You just earned a Space point!",
-//                       style: TextStyle(
+//                       style: GoogleFonts.lato(
 //                         color: Theme.of(context).primaryColor,
 //                         fontSize: 18,
 //                         fontWeight: FontWeight.bold,
@@ -788,7 +788,7 @@
 //                     ),
 //                     Text(
 //                       "Here is your Token: $electricToken",
-//                       style: TextStyle(
+//                       style: GoogleFonts.lato(
 //                         color: Theme.of(context).primaryColor,
 //                         fontSize: 22,
 //                         fontWeight: FontWeight.bold,
@@ -905,7 +905,7 @@
 //                     //   defaultPinTheme: PinTheme(
 //                     //     width: 30,
 //                     //     height: 30,
-//                     //     textStyle: TextStyle(
+//                     //     textStyle: GoogleFonts.lato(
 //                     //       fontSize: 20,
 //                     //       color: Theme.of(context).primaryColor,
 //                     //     ),
@@ -1056,7 +1056,7 @@
 //                         controller: _electricNumberController,
 //                         autovalidateMode: AutovalidateMode.onUserInteraction,
 //                         // validator: validateNumber,
-//                         style: TextStyle(
+//                         style: GoogleFonts.lato(
 //                           color: Theme.of(context).primaryColor,
 //                         ),
 //                         keyboardType: TextInputType.phone,
@@ -1065,7 +1065,7 @@
 //                         decoration: InputDecoration(
 //                           prefix: Text(
 //                             "$varValue",
-//                             style: const TextStyle(
+//                             style: const GoogleFonts.lato(
 //                               fontSize: 15,
 //                               color: Colors.black,
 //                             ),
@@ -1202,7 +1202,7 @@
 //                                           " $userElectricAddress",
 //                                           maxLines: 2,
 //                                           overflow: TextOverflow.ellipsis,
-//                                           style: TextStyle(
+//                                           style: GoogleFonts.lato(
 //                                             color:
 //                                                 Theme.of(context).primaryColor,
 //                                             fontSize: 18,
@@ -1222,7 +1222,7 @@
 //                                               autovalidateMode: AutovalidateMode
 //                                                   .onUserInteraction,
 //                                               // validator: validateNumber,
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Theme.of(context)
 //                                                     .primaryColor,
 //                                               ),
@@ -1233,7 +1233,7 @@
 //                                               decoration: InputDecoration(
 //                                                 prefix: Text(
 //                                                   "$varValue",
-//                                                   style: const TextStyle(
+//                                                   style: const GoogleFonts.lato(
 //                                                     fontSize: 15,
 //                                                     color: Colors.black,
 //                                                   ),
@@ -1299,7 +1299,7 @@
 //                                           defaultPinTheme: PinTheme(
 //                                             width: 30,
 //                                             height: 30,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 20,
 //                                               color: Theme.of(context)
 //                                                   .primaryColor,
@@ -1424,11 +1424,11 @@
 //                                                                                     borderRadius: BorderRadius.circular(8),
 //                                                                                   ),
 //                                                                                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-//                                                                                   textStyle: const TextStyle(color: brandFour, fontSize: 13),
+//                                                                                   textStyle: const GoogleFonts.lato(color: brandFour, fontSize: 13),
 //                                                                                 ),
 //                                                                                 child: const Text(
 //                                                                                   "Fund Wallet",
-//                                                                                   style: TextStyle(
+//                                                                                   style: GoogleFonts.lato(
 //                                                                                     color: Colors.white,
 //                                                                                     fontWeight: FontWeight.w700,
 //                                                                                     fontSize: 16,
@@ -1621,11 +1621,11 @@
 //                                                                                     borderRadius: BorderRadius.circular(8),
 //                                                                                   ),
 //                                                                                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-//                                                                                   textStyle: const TextStyle(color: brandFour, fontSize: 13),
+//                                                                                   textStyle: const GoogleFonts.lato(color: brandFour, fontSize: 13),
 //                                                                                 ),
 //                                                                                 child: const Text(
 //                                                                                   "Fund Wallet",
-//                                                                                   style: TextStyle(
+//                                                                                   style: GoogleFonts.lato(
 //                                                                                     color: Colors.white,
 //                                                                                     fontWeight: FontWeight.w700,
 //                                                                                     fontSize: 16,
@@ -1802,7 +1802,7 @@
 //                                                     AutovalidateMode
 //                                                         .onUserInteraction,
 //                                                 // validator: validateNumber,
-//                                                 style: TextStyle(
+//                                                 style: GoogleFonts.lato(
 //                                                   color: Theme.of(context)
 //                                                       .primaryColor,
 //                                                 ),
@@ -1815,7 +1815,7 @@
 //                                                 decoration: InputDecoration(
 //                                                   prefix: Text(
 //                                                     "$varValue",
-//                                                     style: const TextStyle(
+//                                                     style: const GoogleFonts.lato(
 //                                                       fontSize: 15,
 //                                                       color: Colors.black,
 //                                                     ),
@@ -2060,7 +2060,7 @@
 //                                           autovalidateMode: AutovalidateMode
 //                                               .onUserInteraction,
 //                                           // validator: validateNumber,
-//                                           style: TextStyle(
+//                                           style: GoogleFonts.lato(
 //                                             color:
 //                                                 Theme.of(context).primaryColor,
 //                                           ),
@@ -2071,7 +2071,7 @@
 //                                           decoration: InputDecoration(
 //                                             prefix: Text(
 //                                               "$varValue",
-//                                               style: const TextStyle(
+//                                               style: const GoogleFonts.lato(
 //                                                 fontSize: 15,
 //                                                 color: Colors.black,
 //                                               ),
@@ -2345,7 +2345,7 @@
 //     final defaultPinTheme = PinTheme(
 //       width: 30,
 //       height: 30,
-//       textStyle: TextStyle(
+//       textStyle: GoogleFonts.lato(
 //         fontSize: 20,
 //         color: Theme.of(context).primaryColor,
 //       ),
@@ -2421,7 +2421,7 @@
 //       controller: _airtimeNumberController,
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
 //       validator: validateNumber,
-//       style: TextStyle(
+//       style: GoogleFonts.lato(
 //         color: Theme.of(context).primaryColor,
 //       ),
 //       keyboardType: TextInputType.phone,
@@ -3616,7 +3616,7 @@
 //                                           defaultPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -3631,7 +3631,7 @@
 //                                           focusedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -3645,7 +3645,7 @@
 //                                           submittedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -3659,7 +3659,7 @@
 //                                           followingPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4044,7 +4044,7 @@
 //                                           defaultPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4059,7 +4059,7 @@
 //                                           focusedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4073,7 +4073,7 @@
 //                                           submittedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4087,7 +4087,7 @@
 //                                           followingPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4472,7 +4472,7 @@
 //                                           defaultPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4487,7 +4487,7 @@
 //                                           focusedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4501,7 +4501,7 @@
 //                                           submittedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4515,7 +4515,7 @@
 //                                           followingPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4894,7 +4894,7 @@
 //                                           defaultPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4909,7 +4909,7 @@
 //                                           focusedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4923,7 +4923,7 @@
 //                                           submittedPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -4937,7 +4937,7 @@
 //                                           followingPinTheme: PinTheme(
 //                                             width: 50,
 //                                             height: 50,
-//                                             textStyle: TextStyle(
+//                                             textStyle: GoogleFonts.lato(
 //                                               fontSize: 25,
 //                                               color: brandOne,
 //                                             ),
@@ -5218,11 +5218,11 @@
 //                                               //                                         borderRadius: BorderRadius.circular(8),
 //                                               //                                       ),
 //                                               //                                       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-//                                               //                                       textStyle: const TextStyle(color: brandFour, fontSize: 13),
+//                                               //                                       textStyle: const GoogleFonts.lato(color: brandFour, fontSize: 13),
 //                                               //                                     ),
 //                                               //                                     child: const Text(
 //                                               //                                       "Fund Wallet",
-//                                               //                                       style: TextStyle(
+//                                               //                                       style: GoogleFonts.lato(
 //                                               //                                         color: Colors.white,
 //                                               //                                         fontWeight: FontWeight.w700,
 //                                               //                                         fontSize: 16,

@@ -149,9 +149,9 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 60),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -175,7 +175,8 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 style: GoogleFonts.lato(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
-                                  color: brandOne,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                               SizedBox(
@@ -187,7 +188,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                  color: colorDark,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],
@@ -202,7 +203,8 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
-                                      color: colorDark,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   Wrap(
@@ -220,7 +222,9 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                             style: GoogleFonts.lato(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
-                                              color: colorDark,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                             ),
                                           ),
                                           const SizedBox(
@@ -245,8 +249,12 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                                     gravity:
                                                         ToastGravity.SNACKBAR,
                                                     timeInSecForIosWeb: 1,
-                                                    backgroundColor: brandOne,
-                                                    textColor: Colors.white,
+                                                    backgroundColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                    textColor: Theme.of(context)
+                                                        .canvasColor,
                                                     fontSize: 16.0,
                                                   );
                                                 },
@@ -254,7 +262,9 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                                   'assets/icons/copy_icon.png',
                                                   width: 24,
                                                   height: 24,
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                               ),
                                               const SizedBox(
@@ -276,7 +286,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                   ),
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         // Padding(
                         //   padding: const EdgeInsets.symmetric(horizontal: 24),
                         //   child: Row(
@@ -303,7 +313,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         //           children: [
                         //             const Icon(
                         //               Icons.share_outlined,
-                        //               color: colorBlack,
+                        //               color: Theme.of(context).colorScheme.primary,
                         //               size: 26,
                         //             ),
                         //             const SizedBox(
@@ -313,7 +323,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         //               'Share',
                         //               textAlign: TextAlign.center,
                         //               style: GoogleFonts.lato(
-                        //                 color: colorBlack,
+                        //                 color: Theme.of(context).colorScheme.primary,
                         //                 fontSize: 14,
                         //                 fontWeight: FontWeight.w500,
                         //               ),
@@ -342,7 +352,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         //           children: [
                         //             const Icon(
                         //               Icons.file_download_outlined,
-                        //               color: colorBlack,
+                        //               color: Theme.of(context).colorScheme.primary,
                         //               size: 26,
                         //             ),
                         //             const SizedBox(
@@ -352,7 +362,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         //               'Download',
                         //               textAlign: TextAlign.center,
                         //               style: GoogleFonts.lato(
-                        //                 color: colorBlack,
+                        //                 color: Theme.of(context).colorScheme.primary,
                         //                 fontSize: 14,
                         //                 fontWeight: FontWeight.w500,
                         //               ),
@@ -360,11 +370,11 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                         //           ],
                         //         ),
                         //       ),
-                           
+
                         //     ],
                         //   ),
                         // ),
-                       
+
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Align(

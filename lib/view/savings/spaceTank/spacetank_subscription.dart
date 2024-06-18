@@ -316,7 +316,7 @@
 
 //       // update the state variable when the text changes
 
-//       style: TextStyle(
+//       style: GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       keyboardType: TextInputType.number,
@@ -324,14 +324,14 @@
 //       decoration: InputDecoration(
 //         prefix: Text(
 //           "₦" + varValue.toString(),
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: 15,
 //             color: Colors.black,
 //           ),
 //         ),
 //         label: Text(
 //           "How much do you want to fix?",
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Colors.grey,
 //           ),
 //         ),
@@ -351,7 +351,7 @@
 //         filled: true,
 //         fillColor: brandThree,
 //         hintText: 'Amount in Naira',
-//         hintStyle: TextStyle(
+//         hintStyle: GoogleFonts.lato(
 //           color: Colors.black,
 //           fontSize: 13,
 //         ),
@@ -380,14 +380,14 @@
 //           });
 //         }
 //       },
-//       style: TextStyle(
+//       style: GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       keyboardType: TextInputType.number,
 //       decoration: InputDecoration(
 //         label: Text(
 //           "How long do you want to fix this amount for?",
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Colors.grey,
 //           ),
 //         ),
@@ -409,12 +409,12 @@
 //         hintText: 'Enter a value',
 //         suffix: Text(
 //           "Months" + varValue.toString(),
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: 15,
 //             color: Colors.grey,
 //           ),
 //         ),
-//         hintStyle: TextStyle(
+//         hintStyle: GoogleFonts.lato(
 //           color: Colors.black,
 //           fontSize: 13,
 //         ),
@@ -428,14 +428,14 @@
 //       validator: validateName,
 //       // update the state variable when the text changes
 //       onChanged: (text) => setState(() => _nameValue = text),
-//       style: TextStyle(
+//       style: GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       keyboardType: TextInputType.text,
 //       decoration: InputDecoration(
 //         label: Text(
 //           " What would you like to call this savings?",
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Colors.grey,
 //           ),
 //         ),
@@ -455,7 +455,7 @@
 //         filled: true,
 //         fillColor: brandThree,
 //         hintText: 'e.g My travel expenses',
-//         hintStyle: TextStyle(
+//         hintStyle: GoogleFonts.lato(
 //           color: Colors.grey,
 //           fontSize: 13,
 //         ),
@@ -500,7 +500,7 @@
 //                 ),
 //                 Text(
 //                   "Let's get you started" + varValue.toString(),
-//                   style: TextStyle(
+//                   style: GoogleFonts.lato(
 //                     fontSize: 20,
 //                     fontWeight: FontWeight.bold,
 //                     letterSpacing: 0.5,
@@ -536,7 +536,7 @@
 //                             ? Text(
 //                                 "You get : ${ch8t.format(((((double.tryParse(_tankAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_tankAmountController.text.trim().replaceAll(',', '')))!) : 1)) * 0.01 * ((((int.tryParse(_planDurationController.text.trim()))) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))} upfront!" +
 //                                     varValue.toString(),
-//                                 style: TextStyle(
+//                                 style: GoogleFonts.lato(
 //                                   fontSize: 14,
 //                                   fontFamily: "DefaultFontFamily",
 //                                   fontWeight: FontWeight.bold,
@@ -547,7 +547,7 @@
 //                             : SizedBox(),
 //                         Text(
 //                           interestText,
-//                           style: TextStyle(
+//                           style: GoogleFonts.lato(
 //                             fontSize: 14,
 //                             fontFamily: "DefaultFontFamily",
 //                             //height: 1.5,
@@ -557,7 +557,7 @@
 //                         (showNotice)
 //                             ? Text(
 //                                 amountNotice,
-//                                 style: TextStyle(
+//                                 style: GoogleFonts.lato(
 //                                   fontSize: 14,
 //                                   fontFamily: "DefaultFontFamily",
 //                                   //height: 1.5,
@@ -672,7 +672,7 @@
 //                                                       ),
 //                                                       Text(
 //                                                         'Awesome! Click proceed to payment to complete SpaceTank',
-//                                                         style: TextStyle(
+//                                                         style: GoogleFonts.lato(
 //                                                           fontSize: 16,
 //                                                           fontFamily:
 //                                                               "DefaultFontFamily",
@@ -713,7 +713,7 @@
 //                                                             2,
 //                                                         child: Text(
 //                                                           'Proceed to payment',
-//                                                           style: TextStyle(
+//                                                           style: GoogleFonts.lato(
 //                                                             color: Colors.white,
 //                                                             fontSize: 13,
 //                                                             fontFamily:
@@ -777,7 +777,7 @@
 //                                       },
 //                                 child: Text(
 //                                   "Fix ${ch8t.format((double.tryParse(((((double.tryParse(_tankAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_tankAmountController.text.trim().replaceAll(',', '')))!).toString() : "1")))))} for ${_planDurationController.text.trim()} months",
-//                                   style: TextStyle(
+//                                   style: GoogleFonts.lato(
 //                                     color: Colors.white,
 //                                     fontSize: 13,
 //                                     fontFamily: "DefaultFontFamily",
@@ -796,7 +796,7 @@
 //                                 },
 //                                 child: Text(
 //                                   "By proceeding, you agree with our terms and conditions",
-//                                   style: TextStyle(
+//                                   style: GoogleFonts.lato(
 //                                     decoration: TextDecoration.underline,
 //                                     color: Colors.red,
 //                                     fontFamily: "DefaultFontFamily",

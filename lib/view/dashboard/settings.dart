@@ -31,6 +31,7 @@ import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/view/actions/contact_us.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/security.dart';
+import 'package:rentspace/view/dashboard/theme_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -397,13 +398,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         elevation: 0.0,
         // toolbarHeight: 59,
         titleSpacing: 24,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Row(
@@ -411,7 +412,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
             Text(
               'Profile',
               style: GoogleFonts.lato(
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 24,
               ),
@@ -439,15 +440,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     left: 17, top: 17, right: 17, bottom: 0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1), // Shadow color
-                      spreadRadius: 0.5, // Spread radius
-                      blurRadius: 2, // Blur radius
-                      offset: const Offset(0, 3), // Offset
-                    ),
-                  ],
-                  color: colorWhite,
+                  // boxShadow: [
+                  //   if ((Theme.of(context).brightness == Brightness.dark))
+                  //     BoxShadow(
+                  //       color: Colors.grey.withOpacity(0.1), // Shadow color
+                  //       spreadRadius: 0.5, // Spread radius
+                  //       blurRadius: 2, // Blur radius
+                  //       offset: const Offset(0, 3), // Offset
+                  //     ),
+                  // ],
+                  color: Theme.of(context).canvasColor,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -464,7 +466,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 13, vertical: 5),
                             decoration: BoxDecoration(
-                              color: const Color(0xffF2F2F2),
+                              color: (Theme.of(context).brightness ==
+                                      Brightness.dark)
+                                  ? const Color(0xffF2F2F2).withAlpha(20)
+                                  : const Color(0xffF2F2F2),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Row(
@@ -474,7 +479,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 const SizedBox(
@@ -528,7 +534,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   Text(
@@ -537,7 +544,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
@@ -551,8 +559,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         ],
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -587,7 +595,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -595,12 +603,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
@@ -616,15 +624,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     left: 17, top: 10, right: 17, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1), // Shadow color
-                      spreadRadius: 0.5, // Spread radius
-                      blurRadius: 2, // Blur radius
-                      offset: const Offset(0, 3), // Offset
-                    ),
-                  ],
-                  color: colorWhite,
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.withOpacity(0.1), // Shadow color
+                  //     spreadRadius: 0.5, // Spread radius
+                  //     blurRadius: 2, // Blur radius
+                  //     offset: const Offset(0, 3), // Offset
+                  //   ),
+                  // ],
+                  color: Theme.of(context).canvasColor,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -639,7 +647,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/security.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/security_dark.png'
+                              : 'assets/security.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -648,7 +658,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -656,18 +666,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -703,6 +713,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                     barrierDismissible: true,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                        backgroundColor: Theme.of(context)
+                                            .scaffoldBackgroundColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(16),
@@ -726,10 +738,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                                       WrapCrossAlignment.center,
                                                   // mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    const Icon(
+                                                    Icon(
                                                       Icons
                                                           .info_outline_rounded,
-                                                      color: colorBlack,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                       size: 24,
                                                     ),
                                                     const SizedBox(
@@ -738,7 +752,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                                     Text(
                                                       'Oops!',
                                                       style: GoogleFonts.lato(
-                                                        color: colorBlack,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         fontSize: 24,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -753,7 +769,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                                   'You have used up your withdrawal for this month.\nGreat job managing your funds! Your next withdrawal date is ${formatMongoDBDate(walletController.walletModel!.wallet![0].nextWithdrawalDate!)}.',
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.lato(
-                                                    color: colorBlack,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w400,
                                                   ),
@@ -862,7 +880,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/icons/withdraw.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/withdraw_dark.png'
+                              : 'assets/icons/withdraw.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -871,7 +891,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -879,22 +899,22 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Get.to(const Security());
+                        Get.to(const ThemePage());
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -902,7 +922,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/theme_mode.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/theme_dark.png'
+                              : 'assets/theme_mode.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -911,7 +933,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -919,35 +941,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 7, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: Color(0xffEEF8FF),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text(
-                                "Coming Soon",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.lato(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: brandOne,
-                                ),
-                              ),
-                            ),
-                          ],
+                        trailing: Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 20,
                         ),
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -959,7 +964,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/referrals.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/referrals_dark.png'
+                              : 'assets/referrals.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -968,7 +975,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -976,18 +983,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -999,7 +1006,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/contact.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/contact_dark.png'
+                              : 'assets/contact.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -1008,7 +1017,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -1016,18 +1025,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
                     ),
-                    const Divider(
-                      color: Color(0xffC9C9C9),
+                    Divider(
+                      color: Theme.of(context).dividerColor,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -1039,7 +1048,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                         // horizontalTitleGap: 0,
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          'assets/faq.png',
+                          (Theme.of(context).brightness == Brightness.dark)
+                              ? 'assets/icons/faq_dark.png'
+                              : 'assets/faq.png',
                           width: 42.5,
                           height: 42.5,
                         ),
@@ -1048,7 +1059,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         subtitle: Text(
@@ -1056,12 +1067,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                           style: GoogleFonts.lato(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Icons.keyboard_arrow_right,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 20,
                         ),
                       ),
@@ -1122,7 +1133,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle: const TextStyle(
+                                          textStyle:  GoogleFonts.lato(
                                               color: brandFour, fontSize: 13),
                                         ),
                                         child: Text(

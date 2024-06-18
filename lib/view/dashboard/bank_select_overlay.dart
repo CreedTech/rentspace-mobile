@@ -183,7 +183,7 @@ class _BankSelectorOverlayState extends State<BankSelectorOverlay> {
                           borderSide:
                               const BorderSide(color: Colors.red, width: 1.0),
                         ),
-                        hintStyle: TextStyle(
+                        hintStyle: GoogleFonts.lato(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),

@@ -43,7 +43,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -55,7 +55,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -67,7 +67,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -79,7 +79,7 @@ class _ResetPINState extends ConsumerState<ResetPIN> {
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),

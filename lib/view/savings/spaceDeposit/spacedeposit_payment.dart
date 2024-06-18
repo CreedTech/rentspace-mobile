@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -132,9 +133,8 @@ class _SpaceDepositPaymentState extends State<SpaceDepositPayment> {
                   children: [
                     Text(
                       _mssg,
-                      style: TextStyle(
+                      style: GoogleFonts.lato(
                         fontSize: 20,
-                        fontFamily: "DefaultFontFamily",
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
@@ -144,9 +144,8 @@ class _SpaceDepositPaymentState extends State<SpaceDepositPayment> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
                     _mssgBody,
-                    style: TextStyle(
+                    style: GoogleFonts.lato(
                       fontSize: 15,
-                      fontFamily: "DefaultFontFamily",
                       color: Theme.of(context).primaryColor,
                     ),
                   ),

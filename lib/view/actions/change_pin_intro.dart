@@ -51,7 +51,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -63,7 +63,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -75,7 +75,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -87,7 +87,7 @@ class _ChangePinIntroState extends State<ChangePinIntro> {
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),

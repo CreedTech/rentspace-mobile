@@ -62,10 +62,10 @@ class _AllActivitiesState extends State<AllActivities> {
       groupedByMonth[monthKey]!.add(item);
     }
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -74,10 +74,10 @@ class _AllActivitiesState extends State<AllActivities> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -85,7 +85,7 @@ class _AllActivitiesState extends State<AllActivities> {
               Text(
                 'Space Wallet History',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -107,10 +107,10 @@ class _AllActivitiesState extends State<AllActivities> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   decoration: BoxDecoration(
-                    color: colorWhite,
+                    color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
@@ -119,7 +119,7 @@ class _AllActivitiesState extends State<AllActivities> {
                       Text(
                         'Space Wallet: ',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                           fontSize: 12,
                         ),
@@ -128,7 +128,7 @@ class _AllActivitiesState extends State<AllActivities> {
                         nairaFormaet.format(walletController
                             .walletModel!.wallet![0].mainBalance),
                         style: GoogleFonts.roboto(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.w600,
                           fontSize: 30,
                         ),
@@ -142,7 +142,7 @@ class _AllActivitiesState extends State<AllActivities> {
                 Text(
                   'Transactions',
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),
@@ -150,34 +150,43 @@ class _AllActivitiesState extends State<AllActivities> {
               ],
             ),
           ),
-          const Divider(
-            color: Color(0xffC9C9C9),
+          Divider(
+            color: Theme.of(context).dividerColor,
             thickness: 1,
           ),
           Expanded(
             child:
                 (userController
                         .userModel!.userDetails![0].walletHistories.isEmpty)
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15.h,
-                          horizontal: 24.w,
-                        ),
+                    ? Container(
+                        height: MediaQuery.of(context).size.height / 2,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/card_empty.png',
-                              height: 300.h,
+                              'assets/icons/history_icon.png',
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const Color(0xffffffff)
+                                  : const Color(0xffEEF8FF),
+                              height: 33.5.h,
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Center(
-                              child: Text(
-                                "No Transaction history",
-                                style: GoogleFonts.lato(
-                                  fontSize: 20,
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
+                              child: SizedBox(
+                                width: 180,
+                                child: Text(
+                                  "Your interest history will be displayed here",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 14,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -200,14 +209,15 @@ class _AllActivitiesState extends State<AllActivities> {
                                 horizontal: 24.w,
                               ),
                               child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       DateFormat.MMMM().format(
                                           DateTime.parse('${entry.key}-01')),
                                       style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -218,20 +228,19 @@ class _AllActivitiesState extends State<AllActivities> {
                                       padding: const EdgeInsets.only(
                                           left: 12.75, top: 20, right: 12.75),
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(
-                                                  0.5), // Shadow color
-                                              spreadRadius:
-                                                  0.5, // Spread radius
-                                              blurRadius: 2, // Blur radius
-                                              offset: const Offset(
-                                                  0, 3), // Offset
-                                            ),
-                                          ],
-                                          color: colorWhite),
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(
+                                                0.5), // Shadow color
+                                            spreadRadius: 0.5, // Spread radius
+                                            blurRadius: 2, // Blur radius
+                                            offset:
+                                                const Offset(0, 3), // Offset
+                                          ),
+                                        ],
+                                        color: Theme.of(context).canvasColor,
+                                      ),
                                       child: Column(
                                         children: [
                                           ...entry.value.map<Widget>((item) {
@@ -244,8 +253,7 @@ class _AllActivitiesState extends State<AllActivities> {
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             const TransactionReceipt(),
-                                                        settings:
-                                                            RouteSettings(
+                                                        settings: RouteSettings(
                                                           arguments: item,
                                                         ),
                                                       ),
@@ -258,8 +266,8 @@ class _AllActivitiesState extends State<AllActivities> {
                                                         vertical: 10),
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(6),
+                                                          BorderRadius.circular(
+                                                              6),
                                                     ),
                                                     child: Row(
                                                       crossAxisAlignment:
@@ -281,36 +289,54 @@ class _AllActivitiesState extends State<AllActivities> {
                                                             children: [
                                                               Flexible(
                                                                 flex: 2,
-                                                                child:
-                                                                    Container(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(
-                                                                          12),
-                                                                  decoration:
-                                                                      const BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        brandTwo,
-                                                                  ),
-                                                                  child: (item['transactionType'] ==
-                                                                          'Credit')
-                                                                      ? const Icon(
-                                                                          Icons.call_received,
-                                                                          color:
-                                                                              Color(0xff80FF00),
-                                                                          size:
-                                                                              20,
-                                                                        )
-                                                                      : const Icon(
-                                                                          Icons.arrow_outward_sharp,
-                                                                          color:
-                                                                              colorWhite,
-                                                                          size:
-                                                                              20,
+                                                                child: (item['transactionGroup']
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        'bill')
+                                                                    ? ClipOval(
+                                                                        child: Image
+                                                                            .asset(
+                                                                          (item['biller'].toString().toLowerCase() == 'mtnng')
+                                                                              ? 'assets/utility/mtn.jpg'
+                                                                              : (item['biller'].toString().toLowerCase() == 'airng')
+                                                                                  ? 'assets/utility/airtel.jpg'
+                                                                                  : (item['biller'].toString().toLowerCase() == 'glo_vbank')
+                                                                                      ? 'assets/utility/glo.jpg'
+                                                                                      : (item['biller'].toString().toLowerCase() == '9mobile_nigeria')
+                                                                                          ? 'assets/utility/9mobile.jpg'
+                                                                                          : 'assets/icons/RentSpace-icon.jpg',
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
+                                                                          fit: BoxFit
+                                                                              .fitWidth, // Ensure the image fits inside the circle
                                                                         ),
-                                                                ),
+                                                                      )
+                                                                    : Container(
+                                                                        padding: const EdgeInsets
+                                                                            .all(
+                                                                            12),
+                                                                        decoration:
+                                                                            const BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle,
+                                                                          color:
+                                                                              brandTwo,
+                                                                        ),
+                                                                        child: item['transactionType'] ==
+                                                                                'Credit'
+                                                                            ? const Icon(
+                                                                                Icons.call_received,
+                                                                                color: Color(0xff80FF00),
+                                                                                size: 20,
+                                                                              )
+                                                                            : const Icon(
+                                                                                Icons.arrow_outward_sharp,
+                                                                                color: colorWhite,
+                                                                                size: 20,
+                                                                              ),
+                                                                      ),
                                                               ),
                                                               const SizedBox(
                                                                   width: 12),
@@ -330,15 +356,17 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                       maxLines:
                                                                           1,
                                                                       overflow:
-                                                                          TextOverflow.ellipsis,
+                                                                          TextOverflow
+                                                                              .ellipsis,
                                                                       style: GoogleFonts
                                                                           .lato(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            colorBlack,
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
@@ -346,15 +374,16 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                             5),
                                                                     Text(
                                                                       formatDateTime(
-                                                                          item['createdAt']),
+                                                                          item[
+                                                                              'createdAt']),
                                                                       style: GoogleFonts
                                                                           .lato(
                                                                         fontSize:
                                                                             12,
                                                                         fontWeight:
                                                                             FontWeight.w400,
-                                                                        color:
-                                                                            const Color(0xff4B4B4B),
+                                                                        color: const Color(
+                                                                            0xff4B4B4B),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -380,21 +409,23 @@ class _AllActivitiesState extends State<AllActivities> {
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            const Color(0xff56AB00),
+                                                                        color: const Color(
+                                                                            0xff56AB00),
                                                                       ),
                                                                     )
                                                                   : Text(
                                                                       nairaFormaet
-                                                                          .format(double.parse(item['amount'].toString())),
+                                                                          .format(
+                                                                              double.parse(item['amount'].toString())),
                                                                       style: GoogleFonts
                                                                           .roboto(
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            colorBlack,
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                             ],
@@ -404,9 +435,10 @@ class _AllActivitiesState extends State<AllActivities> {
                                                     ),
                                                   ),
                                                 ),
-                                                const Divider(
+                                                Divider(
                                                   thickness: 1,
-                                                  color: Color(0xffC9C9C9),
+                                                  color: Theme.of(context)
+                                                      .dividerColor,
                                                   indent: 17,
                                                   endIndent: 17,
                                                 ),

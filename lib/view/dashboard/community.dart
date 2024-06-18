@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RentSpaceCommunity extends StatefulWidget {
   const RentSpaceCommunity({Key? key}) : super(key: key);
@@ -31,10 +32,9 @@ class _RentSpaceCommunityState extends State<RentSpaceCommunity> {
         children: [
           Text(
             "We are building the community!\nBuild with us by referring others!",
-            style: TextStyle(
+            style: GoogleFonts.lato(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
-              fontFamily: "DefaultFontFamily",
               fontSize: 20,
             ),
             textAlign: TextAlign.center,

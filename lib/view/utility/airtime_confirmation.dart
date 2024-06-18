@@ -120,9 +120,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Color(0xffF6F6F8),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
@@ -146,7 +146,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             SizedBox(
@@ -156,7 +156,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                 style: GoogleFonts.lato(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ),
@@ -167,7 +167,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                 // height: 92.h,
                                 padding: const EdgeInsets.all(17),
                                 decoration: BoxDecoration(
-                                  color: colorWhite,
+                                  color: Theme.of(context).canvasColor,
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: Column(
@@ -180,7 +180,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                       style: GoogleFonts.lato(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                     ),
                                     Text(
@@ -188,7 +190,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                       style: GoogleFonts.roboto(
                                         fontSize: 30,
                                         fontWeight: FontWeight.w600,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                     ),
                                   ],
@@ -200,7 +204,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                               // height: 92.h,
                               padding: const EdgeInsets.all(17),
                               decoration: BoxDecoration(
-                                color: colorWhite,
+                                color: Theme.of(context).canvasColor,
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
                               child: Column(
@@ -218,7 +222,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -229,7 +234,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       SizedBox(
@@ -240,9 +247,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 0.h),
-                                    child: const Divider(
+                                    child: Divider(
                                       thickness: 1,
-                                      color: Color(0xffC9C9C9),
+                                      color: Theme.of(context).dividerColor,
                                     ),
                                   ),
                                   Column(
@@ -259,7 +266,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -284,7 +292,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                             style: GoogleFonts.lato(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600,
-                                              color: colorBlack,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                             ),
                                           ),
                                         ],
@@ -297,9 +307,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 0.h),
-                                    child: const Divider(
+                                    child: Divider(
                                       thickness: 1,
-                                      color: Color(0xffC9C9C9),
+                                      color: Theme.of(context).dividerColor,
                                     ),
                                   ),
                                   Column(
@@ -316,7 +326,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -327,7 +338,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ],
@@ -355,7 +368,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                   onTap: () async {
                     showModalBottomSheet(
                         context: context,
-                        backgroundColor: const Color(0xffF6F6F8),
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
                         // showDragHandle: true,
                         isDismissible: false,
                         enableDrag: true,
@@ -368,9 +382,10 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                             // ),
                             child: SingleChildScrollView(
                               child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffF6F6F8),
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(30.0),
                                     topRight: Radius.circular(30.0),
                                   ),
@@ -396,14 +411,18 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                             Icon(
                                               Icons.arrow_back_ios,
                                               size: 27.w,
-                                              color: colorBlack,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                             ),
                                             Text(
                                               'Cancel',
                                               style: GoogleFonts.lato(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w500,
-                                                color: colorBlack,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                               ),
                                             ),
                                           ],
@@ -414,11 +433,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                       padding: EdgeInsets.symmetric(
                                           vertical: 20.h, horizontal: 24.w),
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 22, horizontal: 27),
                                         decoration: BoxDecoration(
-                                          color: colorWhite,
+                                          color: Theme.of(context).canvasColor,
                                           borderRadius:
                                               BorderRadius.circular(10.r),
                                         ),
@@ -447,7 +467,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   style: GoogleFonts.lato(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w400,
-                                                    color: colorDark,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
                                                   ),
                                                 ),
                                               ],
@@ -468,13 +490,15 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   "*",
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.lato(
-                                                      fontSize: 44,
-                                                      fontWeight:
-                                                          FontWeight.w500),
+                                                    fontSize: 44,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Theme.of(context).colorScheme.primary
+                                                  ),
                                                 ),
                                               ),
                                               hapticFeedbackType:
-                                                  HapticFeedbackType.heavyImpact,
+                                                  HapticFeedbackType
+                                                      .heavyImpact,
                                               defaultPinTheme: PinTheme(
                                                 width: 67,
                                                 height: 60,
@@ -483,12 +507,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color: brandOne,
+                                                  color: Theme.of(context).colorScheme.primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color:
-                                                          const Color(0xffBDBDBD),
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -502,11 +526,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color: brandOne,
+                                                  color:  Theme.of(context).colorScheme.primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: brandOne,
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -520,11 +545,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color: brandOne,
+                                                  color:  Theme.of(context).colorScheme.primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: brandOne,
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -538,12 +564,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color: brandOne,
+                                                  color:  Theme.of(context).colorScheme.primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color:
-                                                          const Color(0xffBDBDBD),
+                                                      color: const Color(
+                                                          0xffBDBDBD),
                                                       width: 1.0),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -557,8 +583,11 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   _aPinController.text
                                                       .trim()
                                                       .toString(),
-                                                  userController.userModel!
-                                                      .userDetails![0].wallet.pin,
+                                                  userController
+                                                      .userModel!
+                                                      .userDetails![0]
+                                                      .wallet
+                                                      .pin,
                                                 )) {
                                                   FocusScope.of(context)
                                                       .unfocus();
@@ -620,7 +649,8 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               controller: _aPinController,
                                               length: 4,
                                               closeKeyboardWhenCompleted: true,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                             ),
                                           ],
                                         ),
@@ -628,20 +658,23 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 24.w, right: 24.w, bottom: 30.h),
+                                          left: 24.w,
+                                          right: 24.w,
+                                          bottom: 30.h),
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 2, horizontal: 7),
                                         decoration: BoxDecoration(
-                                          color: colorWhite,
+                                          color: Theme.of(context).canvasColor,
                                           borderRadius:
                                               BorderRadius.circular(10.r),
                                         ),
                                         child: NumericKeyboard(
                                           onKeyboardTap: onKeyboardTap,
                                           textStyle: GoogleFonts.lato(
-                                              color: brandOne,
+                                              color:  Theme.of(context).colorScheme.secondary,
                                               fontSize: 32,
                                               fontWeight: FontWeight.w500),
                                           rightButtonFn: () {
@@ -649,11 +682,13 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               return;
                                             setState(() {
                                               _aPinController.text =
-                                                  _aPinController.text.substring(
-                                                      0,
-                                                      _aPinController
-                                                              .text.length -
-                                                          1);
+                                                  _aPinController
+                                                      .text
+                                                      .substring(
+                                                          0,
+                                                          _aPinController
+                                                                  .text.length -
+                                                              1);
                                             });
                                           },
                                           rightButtonLongPressFn: () {

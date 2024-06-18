@@ -64,113 +64,21 @@ class _SpaceRentConfirmationPageState
       dismissOnTap: false,
     );
     if (refresh) {
-      await userController.fetchData();
+      // await userController.fetchData();
       await walletController.fetchWallet();
       // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
   }
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  // }
-  //    calculateInterest() {
-  //   //50k to 1m, 7% interest
-  //   if (((widget.rentValue) >= 1000) &&
-  //       ((widget.rentValue) < 49999)) {
-  //     setState(() {
-  //       // showSaveButton = true;
-  //       interestRate = "7";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.07 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //1m to 2m, 7.5% interest
-  //   else if (((widget.rentValue) >= 1000000) &&
-  //       ((widget.rentValue) < 2000000)) {
-  //     setState(() {
-  //       interestRate = "7.5";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.075 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //2m to 5m, 8.25% interest
-  //   else if (((widget.rentValue) >= 2000000) &&
-  //       ((widget.rentValue) < 5000000)) {
-  //     setState(() {
-  //       interestRate = "8.5";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.0825 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //5m to 10m, 9% interest
-  //   else if (((widget.rentValue) >= 5000000) &&
-  //       ((widget.rentValue) < 10000000)) {
-  //     setState(() {
-  //       interestRate = "9";
-  //       // showSaveButton = true;
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.09 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //10m to 20m, 10.25% interest
-  //   else if (((widget.rentValue) >= 10000000) &&
-  //       ((widget.rentValue) < 20000000)) {
-  //     setState(() {
-  //       interestRate = "10.25";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.1025 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //20m to 30m, 12% interest
-  //   else if (((widget.rentValue) >= 20000000) &&
-  //       ((widget.rentValue) < 30000000)) {
-  //     setState(() {
-  //       interestRate = "12";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.12 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  //   //30m to 50m, 14% interest
-  //   else if (((widget.rentValue) >= 30000000) &&
-  //       ((widget.rentValue) < 50000000)) {
-  //     setState(() {
-  //       interestRate = "14";
-  //     });
-  //     // return interestValue = ((widget.rentValue) *
-  //     //         0.14 *
-  //     //         (int.parse(widget.dateDifference) / widget.durationVal))
-  //     //     .toString();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     final rentState = ref.watch(appControllerProvider.notifier);
     final currentDate = DateTime.now();
-    final formattedReceivalDate =
-        DateFormat('dd/MM/yyyy').format(widget.receivalDate);
+
     final formattedCurrentDate = DateFormat('dd/MM/yyyy').format(currentDate);
-    // print('formattedCurrentDate');
-    // print(formattedCurrentDate);
-    // print(widget.startDate);
-    // print('width');
-    // print(MediaQuery.of(context).size.height -
-    //     (MediaQuery.of(context).size.height / 3));
+
     return Scaffold(
       backgroundColor: brandOne,
       appBar: AppBar(
@@ -216,9 +124,9 @@ class _SpaceRentConfirmationPageState
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Color(0xffF6F6F8),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
@@ -238,7 +146,7 @@ class _SpaceRentConfirmationPageState
                           style: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         SizedBox(
@@ -248,7 +156,7 @@ class _SpaceRentConfirmationPageState
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
@@ -259,20 +167,19 @@ class _SpaceRentConfirmationPageState
                             // height: 92.h,
                             padding: const EdgeInsets.all(17),
                             decoration: BoxDecoration(
-                              color: colorWhite,
+                              color: Theme.of(context).canvasColor,
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Rent Amount',
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 Text(
@@ -280,7 +187,7 @@ class _SpaceRentConfirmationPageState
                                   style: GoogleFonts.roboto(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w600,
-                                    color: brandOne,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ],
@@ -292,7 +199,7 @@ class _SpaceRentConfirmationPageState
                           // height: 92.h,
                           padding: const EdgeInsets.all(17),
                           decoration: BoxDecoration(
-                            color: colorWhite,
+                            color: Theme.of(context).canvasColor,
                             borderRadius: BorderRadius.circular(10.r),
                           ),
                           child: Column(
@@ -303,8 +210,7 @@ class _SpaceRentConfirmationPageState
                                 height: 10,
                               ),
                               Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -313,7 +219,8 @@ class _SpaceRentConfirmationPageState
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color(0xff4B4B4B),
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                     ),
                                   ),
                                   SizedBox(
@@ -324,17 +231,17 @@ class _SpaceRentConfirmationPageState
                                     style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: 17.h),
-                                child: const Divider(
+                                padding: EdgeInsets.symmetric(vertical: 17.h),
+                                child: Divider(
                                   thickness: 1,
-                                  color: Color(0xffC9C9C9),
+                                  color: Theme.of(context).dividerColor,
                                 ),
                               ),
                               Row(
@@ -352,7 +259,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -363,7 +271,9 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       // SizedBox(
@@ -372,8 +282,7 @@ class _SpaceRentConfirmationPageState
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -385,7 +294,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -393,15 +303,16 @@ class _SpaceRentConfirmationPageState
                                       ),
                                       Text(
                                         _calculateDaysDifference(
-                                                DateFormat('dd/MM/yyyy')
-                                                    .format(widget
-                                                        .receivalDate),
+                                                DateFormat('dd/MM/yyyy').format(
+                                                    widget.receivalDate),
                                                 widget.startDate)
                                             .toString(),
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       // SizedBox(
@@ -412,11 +323,10 @@ class _SpaceRentConfirmationPageState
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: 17.h),
-                                child: const Divider(
+                                padding: EdgeInsets.symmetric(vertical: 17.h),
+                                child: Divider(
                                   thickness: 1,
-                                  color: Color(0xffC9C9C9),
+                                  color: Theme.of(context).dividerColor,
                                 ),
                               ),
                               Row(
@@ -437,7 +347,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -448,7 +359,9 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       // SizedBox(
@@ -457,8 +370,7 @@ class _SpaceRentConfirmationPageState
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -470,7 +382,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -482,7 +395,9 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                       // SizedBox(
@@ -493,11 +408,10 @@ class _SpaceRentConfirmationPageState
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: 17.h),
-                                child: const Divider(
+                                padding: EdgeInsets.symmetric(vertical: 17.h),
+                                child: Divider(
                                   thickness: 1,
-                                  color: Color(0xffC9C9C9),
+                                  color: Theme.of(context).dividerColor,
                                 ),
                               ),
                               Row(
@@ -515,7 +429,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -526,14 +441,15 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -542,7 +458,8 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          color: const Color(0xff4B4B4B),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                         ),
                                       ),
                                       SizedBox(
@@ -553,7 +470,9 @@ class _SpaceRentConfirmationPageState
                                         style: GoogleFonts.roboto(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ],
@@ -587,17 +506,20 @@ class _SpaceRentConfirmationPageState
                           onPressed: () async {
                             showModalBottomSheet(
                                 context: context,
-                                backgroundColor: const Color(0xffF6F6F8),
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
                                 // showDragHandle: true,
                                 isDismissible: false,
                                 enableDrag: true,
                                 isScrollControlled: true,
                                 builder: (BuildContext context) {
                                   return Container(
-                                    height: MediaQuery.of(context).size.height /1.5,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xffF6F6F8),
-                                      borderRadius: BorderRadius.only(
+                                    height: MediaQuery.of(context).size.height /
+                                        1.5,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(30.0),
                                         topRight: Radius.circular(30.0),
                                       ),
@@ -625,15 +547,18 @@ class _SpaceRentConfirmationPageState
                                                 Icon(
                                                   Icons.arrow_back_ios,
                                                   size: 27.w,
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 Text(
                                                   'Cancel',
                                                   style: GoogleFonts.lato(
                                                     fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w500,
-                                                    color: colorBlack,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                 ),
                                               ],
@@ -642,18 +567,16 @@ class _SpaceRentConfirmationPageState
                                         ),
                                         Padding(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 20.h,
-                                              horizontal: 24.w),
+                                              vertical: 20.h, horizontal: 24.w),
                                           child: Container(
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 22,
-                                                    horizontal: 27),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 22, horizontal: 27),
                                             decoration: BoxDecoration(
-                                              color: colorWhite,
+                                              color:
+                                                  Theme.of(context).canvasColor,
                                               borderRadius:
                                                   BorderRadius.circular(10.r),
                                             ),
@@ -666,11 +589,9 @@ class _SpaceRentConfirmationPageState
                                               children: [
                                                 Row(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .center,
+                                                      CrossAxisAlignment.center,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     Image.asset(
                                                       'assets/icons/lock_filled.png',
@@ -686,7 +607,9 @@ class _SpaceRentConfirmationPageState
                                                         fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: colorDark,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                       ),
                                                     ),
                                                   ],
@@ -704,10 +627,11 @@ class _SpaceRentConfirmationPageState
                                                     margin: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 5),
-                                                    textStyle:
-                                                        GoogleFonts.lato(
+                                                    textStyle: GoogleFonts.lato(
                                                       fontSize: 25,
-                                                      color: brandOne,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
@@ -715,8 +639,8 @@ class _SpaceRentConfirmationPageState
                                                               0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
                                                   ),
                                                   focusedPinTheme: PinTheme(
@@ -725,18 +649,20 @@ class _SpaceRentConfirmationPageState
                                                     margin: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 5),
-                                                    textStyle:
-                                                        GoogleFonts.lato(
+                                                    textStyle: GoogleFonts.lato(
                                                       fontSize: 25,
-                                                      color: brandOne,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color: brandOne,
+                                                          color:
+                                                              Color(0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
                                                   ),
                                                   submittedPinTheme: PinTheme(
@@ -745,18 +671,20 @@ class _SpaceRentConfirmationPageState
                                                     margin: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 5),
-                                                    textStyle:
-                                                        GoogleFonts.lato(
+                                                    textStyle: GoogleFonts.lato(
                                                       fontSize: 25,
-                                                      color: brandOne,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color: brandOne,
+                                                          color:
+                                                              Color(0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
                                                   ),
                                                   followingPinTheme: PinTheme(
@@ -765,10 +693,11 @@ class _SpaceRentConfirmationPageState
                                                     margin: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 5),
-                                                    textStyle:
-                                                        GoogleFonts.lato(
+                                                    textStyle: GoogleFonts.lato(
                                                       fontSize: 25,
-                                                      color: brandOne,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
@@ -776,8 +705,8 @@ class _SpaceRentConfirmationPageState
                                                               0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
-                                                          BorderRadius
-                                                              .circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
                                                   ),
                                                   onCompleted:
@@ -799,7 +728,16 @@ class _SpaceRentConfirmationPageState
                                                           .then((value) {
                                                         final hasSufficientBalance =
                                                             checkSufficientBalance();
-                                                        (widget.startDate ==
+                                                        print(widget.startDate);
+                                                        print(
+                                                            formattedCurrentDate);
+                                                        print(widget
+                                                                .startDate ==
+                                                            formattedCurrentDate);
+                                                        print(
+                                                            hasSufficientBalance);
+                                                        (widget
+                                                                    .startDate ==
                                                                 formattedCurrentDate)
                                                             ? (hasSufficientBalance)
                                                                 ? rentState.createRent(
@@ -825,112 +763,11 @@ class _SpaceRentConfirmationPageState
                                                                         .duration
                                                                     // fundingController.text,
                                                                     )
-                                                                : showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    barrierDismissible:
-                                                                        true,
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return AlertDialog(
-                                                                        shape:
-                                                                            RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(16),
-                                                                        ),
-                                                                        title:
-                                                                            null,
-                                                                        scrollable:
-                                                                            true,
-                                                                        elevation:
-                                                                            0,
-                                                                        content:
-                                                                            SizedBox(
-                                                                          // height: 220.h,
-                                                                          width:
-                                                                              MediaQuery.of(context).size.width,
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                                                                            child: Column(
-                                                                              children: [
-                                                                                Wrap(
-                                                                                  alignment: WrapAlignment.center,
-                                                                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                                                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                                                                  children: [
-                                                                                    const Icon(
-                                                                                      Icons.info_outline_rounded,
-                                                                                      color: colorBlack,
-                                                                                      size: 24,
-                                                                                    ),
-                                                                                    const SizedBox(
-                                                                                      width: 4,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      'Insufficient fund.',
-                                                                                      style: GoogleFonts.lato(
-                                                                                        color: colorBlack,
-                                                                                        fontSize: 24,
-                                                                                        fontWeight: FontWeight.w500,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 14,
-                                                                                ),
-                                                                                Text(
-                                                                                  'You need to fund your wallet to perform this transaction.',
-                                                                                  textAlign: TextAlign.center,
-                                                                                  style: GoogleFonts.lato(
-                                                                                    color: colorBlack,
-                                                                                    fontSize: 14,
-                                                                                    fontWeight: FontWeight.w400,
-                                                                                  ),
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 29,
-                                                                                ),
-                                                                                Align(
-                                                                                  alignment: Alignment.bottomCenter,
-                                                                                  child: ElevatedButton(
-                                                                                    style: ElevatedButton.styleFrom(
-                                                                                      minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
-                                                                                      backgroundColor: brandTwo,
-                                                                                      elevation: 0,
-                                                                                      shape: RoundedRectangleBorder(
-                                                                                        borderRadius: BorderRadius.circular(
-                                                                                          10,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                    onPressed: () {
-                                                                                      Navigator.of(context).pop();
-                                                                                      Get.to(const FundWallet());
-                                                                                    },
-                                                                                    child: Text(
-                                                                                      'Ok',
-                                                                                      textAlign: TextAlign.center,
-                                                                                      style: GoogleFonts.lato(
-                                                                                        color: Colors.white,
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w500,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    })
+                                                                : insufficientFundsDialog(
+                                                                    context)
                                                             : rentState.createRent(
                                                                 context,
-                                                                widget
-                                                                    .rentName,
+                                                                widget.rentName,
                                                                 DateFormat(
                                                                         'dd/MM/yyyy')
                                                                     .format(widget
@@ -945,8 +782,7 @@ class _SpaceRentConfirmationPageState
                                                                     .paymentCount,
                                                                 widget
                                                                     .startDate,
-                                                                widget
-                                                                    .duration
+                                                                widget.duration
                                                                 // fundingController.text,
                                                                 );
                                                       }).catchError(
@@ -995,22 +831,22 @@ class _SpaceRentConfirmationPageState
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 2,
-                                                    horizontal: 7),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 2, horizontal: 7),
                                             decoration: BoxDecoration(
-                                              color: colorWhite,
+                                              color:
+                                                  Theme.of(context).canvasColor,
                                               borderRadius:
                                                   BorderRadius.circular(10.r),
                                             ),
                                             child: NumericKeyboard(
                                               onKeyboardTap: onKeyboardTap,
                                               textStyle: GoogleFonts.lato(
-                                                  color: brandOne,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   fontSize: 32,
-                                                  fontWeight:
-                                                      FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                               rightButtonFn: () {
                                                 if (_aPinController
                                                     .text.isEmpty) return;
@@ -1068,6 +904,7 @@ class _SpaceRentConfirmationPageState
       ),
     );
   }
+
 
   int _calculateDaysDifference(String endDateString, String startDateString) {
     // Parse the provided date strings into DateTime objects

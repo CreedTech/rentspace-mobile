@@ -202,75 +202,8 @@ class _TransferPageState extends State<TransferPage> {
       });
       _updateMessage();
 
-      if (context.mounted) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: null,
-                elevation: 0,
-                content: SizedBox(
-                  height: 250,
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              // color: brandOne,
-                            ),
-                            child: const Icon(
-                              Iconsax.close_circle,
-                              color: brandOne,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Iconsax.warning_24,
-                          color: Colors.red,
-                          size: 75,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        'Error!',
-                        style: GoogleFonts.lato(
-                          color: Colors.red,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Something went wrong",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(color: brandOne, fontSize: 18),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            });
+      if (mounted) {
+        customErrorDialog(context, 'Error!', "Somethign went Wrong");
       }
 
       print(
@@ -332,6 +265,7 @@ class _TransferPageState extends State<TransferPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -353,7 +287,7 @@ class _TransferPageState extends State<TransferPage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -364,7 +298,7 @@ class _TransferPageState extends State<TransferPage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -396,7 +330,6 @@ class _TransferPageState extends State<TransferPage> {
                             noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
-                          // fetchUserData();
                         },
                         child: Text(
                           "Try Again",
@@ -694,10 +627,10 @@ class _TransferPageState extends State<TransferPage> {
         backgroundColor: const Color(0xffF6F6F8),
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:  GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -1126,7 +1059,8 @@ class _TransferPageState extends State<TransferPage> {
                                                                             2.0),
                                                               ),
                                                               hintStyle:
-                                                                  const TextStyle(
+                                                                   GoogleFonts
+                                                                      .lato(
                                                                 color:
                                                                     colorBlack,
                                                                 fontSize: 14,

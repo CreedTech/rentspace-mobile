@@ -1,4 +1,5 @@
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/icons/RentSpace-icon.png"),
             fit: BoxFit.cover,
@@ -62,7 +63,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
         child: ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
@@ -71,8 +72,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
                 children: [
                   Text(
                     'Transaction history',
-                    style: TextStyle(
-                      fontFamily: "DefaultFontFamily",
+                    style: GoogleFonts.lato(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -81,7 +81,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             // ListView.builder(
@@ -94,7 +94,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
             //       return Center(
             //         child: Text(
             //           "Nothing to show",
-            //           style: TextStyle(
+            //           style: GoogleFonts.lato(
             //             fontSize: 20,
             //             fontFamily: "DefaultFontFamily",
             //             color: brandOne,
@@ -123,7 +123,7 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
             //                   ),
             //                   Text(
             //                     _payments[index],
-            //                     style: TextStyle(
+            //                     style: GoogleFonts.lato(
             //                       fontSize: 20,
             //                       color: Theme.of(context).primaryColor,
             //                       fontFamily: "DefaultFontFamily",
@@ -141,7 +141,6 @@ class _SpaceBoxHistoryState extends State<SpaceBoxHistory> {
             //     }
             //   },
             // ),
-        
           ],
         ),
       ),

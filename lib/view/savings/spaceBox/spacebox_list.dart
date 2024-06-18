@@ -95,7 +95,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                               ),
       //                                               Text(
       //                                                 'Are you sure you want to delete this SpaceBox?',
-      //                                                 style: TextStyle(
+      //                                                 style: GoogleFonts.lato(
       //                                                   fontSize: 14,
       //                                                   fontFamily:
       //                                                       "DefaultFontFamily",
@@ -135,7 +135,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                                               20, 5),
       //                                                       child: Text(
       //                                                         'No',
-      //                                                         style: TextStyle(
+      //                                                         style: GoogleFonts.lato(
       //                                                           fontSize: 12,
       //                                                           fontFamily:
       //                                                               "DefaultFontFamily",
@@ -231,7 +231,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                                               20, 5),
       //                                                       child: Text(
       //                                                         'Yes',
-      //                                                         style: TextStyle(
+      //                                                         style: GoogleFonts.lato(
       //                                                           fontSize: 12,
       //                                                           fontFamily:
       //                                                               "DefaultFontFamily",
@@ -287,7 +287,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                 title: Text(
       //                                   boxController.box[index].planName +
       //                                       changeOne,
-      //                                   style: TextStyle(
+      //                                   style: GoogleFonts.lato(
       //                                     fontSize: 18,
       //                                     fontFamily: "DefaultFontFamily",
       //                                     color: Colors.white,
@@ -305,7 +305,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                     nairaFormaet.format(boxController
       //                                             .box[index].targetAmount) +
       //                                         " Target",
-      //                                     style: TextStyle(
+      //                                     style: GoogleFonts.lato(
       //                                       fontSize: 12,
       //                                       fontFamily: "DefaultFontFamily",
       //                                       color: Colors.white,
@@ -315,7 +315,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                 description: LinearPercentIndicator(
       //                                   center: Text(
       //                                     ' ${((boxController.box[index].savedAmount / boxController.box[index].targetAmount) * 100).toInt()}%',
-      //                                     style: TextStyle(
+      //                                     style: GoogleFonts.lato(
       //                                       fontSize: MediaQuery.of(context)
       //                                               .size
       //                                               .width /
@@ -374,7 +374,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       child: Text(
       //                                         '    History    ',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.white,
       //                                           fontSize: 13,
       //                                           fontFamily: "DefaultFontFamily",
@@ -414,7 +414,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                     ),
       //                                   ),
       //                                   title: "View details",
-      //                                   textStyle: TextStyle(
+      //                                   textStyle: GoogleFonts.lato(
       //                                     color: Colors.black,
       //                                     fontFamily: "DefaultFontFamily",
       //                                   ),
@@ -430,7 +430,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                     children: [
       //                                       Text(
       //                                         'SpaceBox ID: ${boxController.box[index].boxId}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -440,7 +440,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Created: ${boxController.box[index].date}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -450,7 +450,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Target no of payments: ${boxController.box[index].numPayment}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -460,7 +460,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'No of payments: ${boxController.box[index].currentPayment}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -470,7 +470,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Payment intervals: ${nairaFormaet.format(double.parse(boxController.box[index].intervalAmount.toString()))} ${boxController.box[index].interval}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -480,7 +480,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Paid Amount: ${nairaFormaet.format(double.parse(boxController.box[index].savedAmount.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -490,7 +490,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Target Amount: ${nairaFormaet.format(double.parse(boxController.box[index].targetAmount.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -500,7 +500,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Remaining Amount: ${nairaFormaet.format(double.parse((boxController.box[index].targetAmount - boxController.box[index].savedAmount).toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -510,7 +510,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //                                       ),
       //                                       Text(
       //                                         'Interest accrued: ${nairaFormaet.format(double.parse(boxController.box[index].interest.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -532,7 +532,7 @@ class _SpaceBoxListState extends State<SpaceBoxList> {
       //               : Center(
       //                   child: Text(
       //                     "Nothing to show here",
-      //                     style: TextStyle(
+      //                     style: GoogleFonts.lato(
       //                       fontSize: 22,
       //                       color: Colors.red,
       //                       fontFamily: "DefaultFontFamily",

@@ -36,7 +36,7 @@
 //         ),
 //         title: Text(
 //           'Create Savings Plans',
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Theme.of(context).primaryColor,
 //             fontSize: 16,
 //             fontFamily: "DefaultFontFamily",
@@ -57,7 +57,7 @@
 //             ),
 //             Text(
 //               "SpaceTank",
-//               style: TextStyle(
+//               style: GoogleFonts.lato(
 //                 fontSize: 18.0,
 //                 fontWeight: FontWeight.bold,
 //                 letterSpacing: 0.5,
@@ -70,7 +70,7 @@
 //             ),
 //             Text(
 //               "Save and get 12% upfront! Start today and receive an instant 12% boost to your wallet. Don’t wait, click now to kickstart your savings journey",
-//               style: TextStyle(
+//               style: GoogleFonts.lato(
 //                 fontSize: 14.0,
 //                 letterSpacing: 0.5,
 //                 fontFamily: "DefaultFontFamily",

@@ -41,10 +41,10 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -53,10 +53,10 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
           },
           child: Row(
             children: [
-              const Icon(
+               Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -64,7 +64,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
               Text(
                 'Portfolio Overview',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -93,7 +93,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                     offset: const Offset(0, 3), // Offset
                   ),
                 ],
-                color: colorWhite,
+                color: Theme.of(context).canvasColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         style: GoogleFonts.lato(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(
@@ -121,7 +121,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],
@@ -137,7 +137,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         style: GoogleFonts.lato(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(
@@ -150,7 +150,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],
@@ -172,7 +172,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             const SizedBox(
@@ -183,7 +183,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -200,7 +200,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             const SizedBox(
@@ -214,7 +214,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.roboto(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -239,7 +239,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             const SizedBox(
@@ -250,7 +250,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -268,7 +268,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             const SizedBox(
@@ -283,7 +283,7 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
                               style: GoogleFonts.roboto(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],

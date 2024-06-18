@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceBox/spacebox_payment.dart';
 import 'package:rentspace/view/terms_and_conditions.dart';
@@ -310,21 +311,21 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
           print("nothing");
         }
       },
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         prefix: Text(
           "₦" + varValue.toString(),
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: 15,
             color: Colors.black,
           ),
         ),
         label: Text(
           "How much do you want to save?",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.grey,
           ),
         ),
@@ -344,7 +345,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
         filled: true,
         fillColor: brandThree,
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -377,21 +378,21 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
           print("nothing");
         }
       },
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         suffix: Text(
           "Months" + varValue.toString(),
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: 15,
             color: Colors.grey,
           ),
         ),
         label: Text(
           "How long do you want to save for?",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.grey,
           ),
         ),
@@ -411,7 +412,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter a value',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -425,14 +426,14 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       validator: validateName,
       // update the state variable when the text changes
       onChanged: (text) => setState(() => _nameValue = text),
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         label: Text(
           " What goal are you savings towards?",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.grey,
           ),
         ),
@@ -452,7 +453,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
         filled: true,
         fillColor: brandThree,
         hintText: 'E.g My travel expenses',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -469,7 +470,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
           border: const BorderSide(color: Colors.black12, width: 1),
           dropdownButtonColor: Theme.of(context).canvasColor,
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
           ),
           value: durationType,
@@ -539,7 +540,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //           ),
       //           Text(
       //             "Let's get you started" + varValue.toString(),
-      //             style: TextStyle(
+      //             style: GoogleFonts.lato(
       //               fontSize: 20,
       //               fontFamily: "DefaultFontFamily",
       //               letterSpacing: 0.5,
@@ -572,7 +573,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                   Text(
       //                     "Interest: ${ch8t.format(double.tryParse(interestValue))} per annum" +
       //                         varValue.toString(),
-      //                     style: TextStyle(
+      //                     style: GoogleFonts.lato(
       //                       fontSize: 14,
       //                       fontFamily: "DefaultFontFamily",
       //                       //height: 1.5,
@@ -581,7 +582,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                   ),
       //                   Text(
       //                     interestText,
-      //                     style: TextStyle(
+      //                     style: GoogleFonts.lato(
       //                       fontSize: 14,
       //                       fontFamily: "DefaultFontFamily",
       //                       //height: 1.5,
@@ -591,7 +592,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                   (showNotice)
       //                       ? Text(
       //                           amountNotice,
-      //                           style: TextStyle(
+      //                           style: GoogleFonts.lato(
       //                             fontSize: 14,
       //                             fontFamily: "DefaultFontFamily",
       //                             //height: 1.5,
@@ -701,7 +702,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                                                 ),
       //                                                 Text(
       //                                                   'SpaceBox created',
-      //                                                   style: TextStyle(
+      //                                                   style: GoogleFonts.lato(
       //                                                     fontSize: 16,
       //                                                     fontFamily:
       //                                                         "DefaultFontFamily",
@@ -742,7 +743,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                                                       2,
       //                                                   child: Text(
       //                                                     'Proceed to payment',
-      //                                                     style: TextStyle(
+      //                                                     style: GoogleFonts.lato(
       //                                                       color: Colors.white,
       //                                                       fontSize: 13,
       //                                                       fontFamily:
@@ -786,7 +787,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                                 },
       //                           child: Text(
       //                             "Save ${ch8t.format((((double.tryParse(_boxAmountController.text.trim().replaceAll(',', ''))) != null) ? ((double.tryParse(_boxAmountController.text.trim().replaceAll(',', '')))!) : 1) / (((int.tryParse(_planDurationController.text.trim())) != null) ? ((int.tryParse(_planDurationController.text.trim()))!) : 1))} monthly for ${_planDurationController.text.trim()} months",
-      //                             style: TextStyle(
+      //                             style: GoogleFonts.lato(
       //                               color: Colors.white,
       //                               fontSize: 13,
       //                               fontFamily: "DefaultFontFamily",
@@ -805,7 +806,7 @@ class _SpaceBoxSubscriptionState extends State<SpaceBoxSubscription> {
       //                           },
       //                           child: Text(
       //                             "By proceeding, you agree with our terms and conditions",
-      //                             style: TextStyle(
+      //                             style: GoogleFonts.lato(
       //                               decoration: TextDecoration.underline,
       //                               color: Colors.red,
       //                               fontFamily: "DefaultFontFamily",

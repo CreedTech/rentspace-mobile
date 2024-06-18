@@ -77,12 +77,12 @@ class _WithdrawalSuccessfulScreenState
                         child: ClipOval(
                           child: Image.asset(
                             'assets/icons/${widget.image.toLowerCase()}.png',
-                            height: 50,
+                            height: 50.h,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 6, bottom: 6.h),
+                        padding: EdgeInsets.only(top: 6.h, bottom: 6.h),
                         child: Text(
                           widget.name.capitalize!,
                           textAlign: TextAlign.center,
@@ -96,7 +96,7 @@ class _WithdrawalSuccessfulScreenState
                       Padding(
                         padding: EdgeInsets.only(bottom: 12.h),
                         child: Text(
-                          currencyFormat.format(widget.amount),
+                          currencyFormat.format(double.parse(widget.amount)),
                           textAlign: TextAlign.center,
                           style: GoogleFonts.roboto(
                             fontSize: 36,
@@ -153,9 +153,9 @@ class _WithdrawalSuccessfulScreenState
                     padding: const EdgeInsets.symmetric(vertical: 60),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -179,7 +179,8 @@ class _WithdrawalSuccessfulScreenState
                                 style: GoogleFonts.lato(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
-                                  color: brandOne,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                               SizedBox(
@@ -191,7 +192,7 @@ class _WithdrawalSuccessfulScreenState
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                  color: colorDark,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],

@@ -176,13 +176,13 @@ class _LoanPageState extends State<LoanPage> {
           value: duration,
           hint: Text(
             'select duration',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: MediaQuery.of(context).size.height / 60,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: MediaQuery.of(context).size.height / 60,
             color: Theme.of(context).primaryColor,
           ),
@@ -248,14 +248,14 @@ class _LoanPageState extends State<LoanPage> {
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: const TextStyle(
+      style:  GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
-      decoration:  InputDecoration(
-        label: const Text(
+      decoration: InputDecoration(
+        label:  Text(
           "How much loan do you want to take?",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.black,
           ),
         ),
@@ -268,7 +268,7 @@ class _LoanPageState extends State<LoanPage> {
         filled: true,
         fillColor: brandThree,
         hintText: 'enter amount in Naira',
-        hintStyle: const TextStyle(
+        hintStyle:  GoogleFonts.lato(
           color: Colors.black,
           fontSize: 13,
         ),
@@ -280,14 +280,14 @@ class _LoanPageState extends State<LoanPage> {
       controller: _durationController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateDuration,
-      style: const TextStyle(
+      style:  GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
+      decoration:  InputDecoration(
         label: Text(
           "Duration",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.black,
           ),
         ),
@@ -295,7 +295,7 @@ class _LoanPageState extends State<LoanPage> {
         filled: true,
         fillColor: brandThree,
         hintText: 'enter duration',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.black,
           fontSize: 13,
         ),
@@ -307,14 +307,14 @@ class _LoanPageState extends State<LoanPage> {
       controller: _reasonController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateReason,
-      style: const TextStyle(
+      style:  GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.name,
-      decoration: const InputDecoration(
+      decoration:  InputDecoration(
         label: Text(
           "Description",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.black,
           ),
         ),
@@ -322,7 +322,7 @@ class _LoanPageState extends State<LoanPage> {
         filled: true,
         fillColor: brandThree,
         hintText: 'why are you taking the loan?',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.black,
           fontSize: 13,
         ),

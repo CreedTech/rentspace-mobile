@@ -75,7 +75,7 @@
 //                 children: [
 //                   Text(
 //                     "A New Way To Save and get Loan",
-//                     style: TextStyle(
+//                     style: GoogleFonts.lato(
 //                         fontSize: 30.0,
 //                         fontFamily: "DefaultFontFamily",
 //                         color: Colors.white,

@@ -160,12 +160,12 @@
 //     //                                         ),
 //     //                                         padding: const EdgeInsets.symmetric(
 //     //                                             horizontal: 40, vertical: 15),
-//     //                                         textStyle: const TextStyle(
+//     //                                         textStyle: const GoogleFonts.lato(
 //     //                                             color: brandFour, fontSize: 13),
 //     //                                       ),
 //     //                                       child: const Text(
 //     //                                         "Proceed",
-//     //                                         style: TextStyle(
+//     //                                         style: GoogleFonts.lato(
 //     //                                           color: Colors.white,
 //     //                                           fontWeight: FontWeight.w700,
 //     //                                           fontSize: 16,
@@ -192,12 +192,12 @@
 //     //                                         ),
 //     //                                         padding: const EdgeInsets.symmetric(
 //     //                                             horizontal: 40, vertical: 15),
-//     //                                         textStyle: const TextStyle(
+//     //                                         textStyle: const GoogleFonts.lato(
 //     //                                             color: brandFour, fontSize: 13),
 //     //                                       ),
 //     //                                       child: const Text(
 //     //                                         "Dismiss",
-//     //                                         style: TextStyle(
+//     //                                         style: GoogleFonts.lato(
 //     //                                           color: Colors.white,
 //     //                                           fontWeight: FontWeight.w700,
 //     //                                           fontSize: 16,

@@ -102,7 +102,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                               ),
       //                                               Text(
       //                                                 'Are you sure you want to delete this SpaceDeposit?',
-      //                                                 style: TextStyle(
+      //                                                 style: GoogleFonts.lato(
       //                                                   fontSize: 14,
       //                                                   fontFamily:
       //                                                       "DefaultFontFamily",
@@ -142,7 +142,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                                               20, 5),
       //                                                       child: Text(
       //                                                         'No',
-      //                                                         style: TextStyle(
+      //                                                         style: GoogleFonts.lato(
       //                                                           fontSize: 12,
       //                                                           fontFamily:
       //                                                               "DefaultFontFamily",
@@ -238,7 +238,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                                               20, 5),
       //                                                       child: Text(
       //                                                         'Yes',
-      //                                                         style: TextStyle(
+      //                                                         style: GoogleFonts.lato(
       //                                                           fontSize: 12,
       //                                                           fontFamily:
       //                                                               "DefaultFontFamily",
@@ -295,7 +295,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                   depositController
       //                                           .deposit[index].planName +
       //                                       changeOne,
-      //                                   style: TextStyle(
+      //                                   style: GoogleFonts.lato(
       //                                     fontSize: 18,
       //                                     fontFamily: "DefaultFontFamily",
       //                                     color: Colors.white,
@@ -314,7 +314,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                             .deposit[index]
       //                                             .targetAmount) +
       //                                         " Target",
-      //                                     style: TextStyle(
+      //                                     style: GoogleFonts.lato(
       //                                       fontSize: 12,
       //                                       fontFamily: "DefaultFontFamily",
       //                                       color: Colors.white,
@@ -324,7 +324,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                 description: LinearPercentIndicator(
       //                                   center: Text(
       //                                     ' ${((depositController.deposit[index].savedAmount / depositController.deposit[index].targetAmount) * 100).toInt()}%',
-      //                                     style: TextStyle(
+      //                                     style: GoogleFonts.lato(
       //                                       fontSize: MediaQuery.of(context)
       //                                               .size
       //                                               .width /
@@ -385,7 +385,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       child: Text(
       //                                         '    History    ',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.white,
       //                                           fontSize: 13,
       //                                           fontFamily: "DefaultFontFamily",
@@ -425,7 +425,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                     ),
       //                                   ),
       //                                   title: "View details",
-      //                                   textStyle: TextStyle(
+      //                                   textStyle: GoogleFonts.lato(
       //                                     color: Colors.black,
       //                                     fontFamily: "DefaultFontFamily",
       //                                   ),
@@ -441,7 +441,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                     children: [
       //                                       Text(
       //                                         'SpaceDeposit ID: ${depositController.deposit[index].depositId}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -451,7 +451,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Created: ${depositController.deposit[index].date}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -461,7 +461,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Target no of payments: ${depositController.deposit[index].numPayment}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -471,7 +471,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'No of payments: ${depositController.deposit[index].currentPayment}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -481,7 +481,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Payment intervals: ${nairaFormaet.format(double.parse(depositController.deposit[index].intervalAmount.toString()))} ${depositController.deposit[index].interval}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -491,7 +491,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Paid Amount: ${nairaFormaet.format(double.parse(depositController.deposit[index].savedAmount.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -501,7 +501,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Target Amount: ${nairaFormaet.format(double.parse(depositController.deposit[index].targetAmount.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -511,7 +511,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Remaining Amount: ${nairaFormaet.format(double.parse((depositController.deposit[index].targetAmount - depositController.deposit[index].savedAmount).toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -521,7 +521,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //                                       ),
       //                                       Text(
       //                                         'Interest accrued: ${nairaFormaet.format(double.parse(depositController.deposit[index].interest.toString()))}',
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           color: Colors.black,
       //                                           fontFamily: "DefaultFontFamily",
       //                                         ),
@@ -543,7 +543,7 @@ class _SpaceDepositListState extends State<SpaceDepositList> {
       //               : Center(
       //                   child: Text(
       //                     "Nothing to show here",
-      //                     style: TextStyle(
+      //                     style: GoogleFonts.lato(
       //                       fontSize: 22,
       //                       color: Colors.red,
       //                       fontFamily: "DefaultFontFamily",

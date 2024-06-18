@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -64,8 +65,9 @@ class _SpaceRentInterestHistoryPageState
       groupedByMonth[monthKey]!.add(item);
     }
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -74,10 +76,10 @@ class _SpaceRentInterestHistoryPageState
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -88,7 +90,7 @@ class _SpaceRentInterestHistoryPageState
                   'Interest History',
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
                   ),
@@ -111,7 +113,7 @@ class _SpaceRentInterestHistoryPageState
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: colorWhite,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
@@ -120,7 +122,7 @@ class _SpaceRentInterestHistoryPageState
                   Text(
                     '${rentController.rentModel!.rents![widget.current].rentName} balance',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
                       fontSize: 12,
                     ),
@@ -150,6 +152,9 @@ class _SpaceRentInterestHistoryPageState
                       children: [
                         Image.asset(
                           'assets/icons/history_icon.png',
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? const Color(0xffffffff)
+                              : const Color(0xffEEF8FF),
                           height: 33.5.h,
                         ),
                         const SizedBox(
@@ -163,7 +168,7 @@ class _SpaceRentInterestHistoryPageState
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lato(
                                 fontSize: 14,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -188,21 +193,34 @@ class _SpaceRentInterestHistoryPageState
                           return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text(
+                                  DateFormat.MMMM().format(
+                                      DateTime.parse('${entry.key}-01')),
+                                  style: GoogleFonts.lato(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Container(
                                   padding: const EdgeInsets.only(
                                       left: 12.75, top: 16, right: 12.75),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(0.5), // Shadow color
-                                          spreadRadius: 0.5, // Spread radius
-                                          blurRadius: 2, // Blur radius
-                                          offset: const Offset(0, 3), // Offset
-                                        ),
-                                      ],
-                                      color: colorWhite),
+                                    borderRadius: BorderRadius.circular(10),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey
+                                    //         .withOpacity(0.5), // Shadow color
+                                    //     spreadRadius: 0.5, // Spread radius
+                                    //     blurRadius: 2, // Blur radius
+                                    //     offset: const Offset(0, 3), // Offset
+                                    //   ),
+                                    // ],
+                                    color: Theme.of(context).canvasColor,
+                                  ),
                                   child: Column(
                                     children: [
                                       ...entry.value
@@ -292,8 +310,9 @@ class _SpaceRentInterestHistoryPageState
                                                                               14,
                                                                           fontWeight:
                                                                               FontWeight.w500,
-                                                                          color:
-                                                                              colorBlack,
+                                                                          color: Theme.of(context)
+                                                                              .colorScheme
+                                                                              .primary,
                                                                         ),
                                                                       ),
                                                                       const SizedBox(
@@ -337,9 +356,10 @@ class _SpaceRentInterestHistoryPageState
                                                       ),
                                                     ),
 
-                                                    const Divider(
+                                                    Divider(
                                                       thickness: 1,
-                                                      color: Color(0xffC9C9C9),
+                                                      color: Theme.of(context)
+                                                          .dividerColor,
                                                       indent: 17,
                                                       endIndent: 17,
                                                     ),

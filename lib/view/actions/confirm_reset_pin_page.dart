@@ -46,7 +46,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -58,7 +58,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -70,7 +70,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -82,7 +82,7 @@ class _ConfirmResetPinPageState extends ConsumerState<ConfirmResetPinPage> {
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),

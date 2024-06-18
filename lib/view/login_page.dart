@@ -99,19 +99,19 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     final prefs = await SharedPreferences.getInstance();
     final savedDeviceType = prefs.getString('device_type');
     final savedDeviceModel = prefs.getString('device_model');
-    print('device info');
-    print(savedDeviceType);
-    print(savedDeviceModel);
-    print(fcmToken);
+    // print('device info');
+    // print(savedDeviceType);
+    // print(savedDeviceModel);
+    // print(fcmToken);
     if (savedDeviceType != null && savedDeviceModel != null && fcmToken != '') {
       setState(() {
         deviceType = savedDeviceType;
         deviceModel = savedDeviceModel;
         token = fcmToken;
       });
-      print(savedDeviceType);
-      print(savedDeviceModel);
-      print(fcmToken);
+      // print(savedDeviceType);
+      // print(savedDeviceModel);
+      // print(fcmToken);
     }
   }
 
@@ -135,16 +135,20 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     final email = TextFormField(
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -153,8 +157,10 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -164,12 +170,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
-        // hintText: 'Enter your email',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
       ),
       maxLines: 1,
       validator: (value) {
@@ -192,11 +192,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     final password = TextFormField(
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _passwordController,
       obscureText: obscurity,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         suffix: InkWell(
@@ -205,8 +207,10 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -215,30 +219,21 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
-        // hintText: 'Enter your password',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
       ),
       maxLines: 1,
       validator: (value) {
-        // RegExp uppercaseRegex = RegExp(r'[A-Z]');
-        // RegExp lowercaseRegex = RegExp(r'[a-z]');
-        // RegExp digitsRegex = RegExp(r'[0-9]');
-        // RegExp specialCharRegex = RegExp(r'[#\$%&*?@]');
         if (value == null || value.isEmpty) {
           return 'Input a valid password';
         } else {
@@ -246,8 +241,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         }
       },
     );
-
-    //     \t"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!\%*?&])[A-Za-z@\t$\d!\t%*?&]{8,10}$\t
 
     return Scaffold(
       backgroundColor: brandOne,
@@ -270,11 +263,11 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                 ),
               ),
               Positioned(
-                top: 40,
+                top: 40.h,
                 left: 0,
                 right: 0,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 55),
+                  padding: EdgeInsets.only(top: 55.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -306,13 +299,12 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                 right: 0,
                 bottom: 0,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+                  padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 24),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: colorWhite,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -327,7 +319,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             'Welcome Back👋',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w600,
                               fontSize: 24,
                             ),
@@ -335,14 +327,14 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                           Text(
                             'Keep your rent journey seamless. \nLog in to manage payments effortlessly.',
                             style: GoogleFonts.lato(
-                              color: const Color(0xff4B4B4B),
+                              color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                               // fontFamily: "DefaultFontFamily",
                             ),
                           ),
-                          const SizedBox(
-                            height: 49,
+                          SizedBox(
+                            height: 49.h,
                           ),
                           Form(
                             key: loginFormKey,
@@ -357,7 +349,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                       child: Text(
                                         'Email',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -366,8 +360,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                     email,
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 36,
+                                SizedBox(
+                                  height: 36.h,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,7 +372,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                       child: Text(
                                         'Password',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -387,8 +383,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                     password,
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 21,
+                                SizedBox(
+                                  height: 21.h,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -445,7 +441,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                             style: GoogleFonts.lato(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
-                                              color: colorDark,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                             ),
                                           ),
                                         ),
@@ -479,6 +477,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 50,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
@@ -544,7 +545,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                       TextSpan(
                                           text: 'Didn’t get the code? ',
                                           style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14,
                                           )),
@@ -599,6 +602,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -620,7 +624,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -631,7 +635,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -644,7 +648,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                         style: ElevatedButton.styleFrom(
                           minimumSize:
                               Size(MediaQuery.of(context).size.width - 50, 50),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor: brandTwo,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(

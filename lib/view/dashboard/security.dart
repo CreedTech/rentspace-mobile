@@ -32,200 +32,20 @@ class Security extends ConsumerStatefulWidget {
 }
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
-String _message = "Not Authorized";
-bool _hasBiometric = false;
-final hasBiometricStorage = GetStorage();
+
 
 class _SecurityState extends ConsumerState<Security> {
   final UserController userController = Get.find();
 
-  enableBiometrics() {
-    if (hasBiometricStorage.read('hasBiometric') == null ||
-        hasBiometricStorage.read('hasBiometric') == false) {
-      hasBiometricStorage.write('hasBiometric', true);
-      Get.back();
-
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Biometrics enabled',
-          textStyle: GoogleFonts.lato(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
-
-      if (hasBiometricStorage.read('hasBiometric') == false) {
-        setState(
-          () {
-            _hasBiometric = true;
-            hasBiometricStorage.write('hasBiometric', _hasBiometric);
-          },
-        );
-        Get.back();
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: brandOne,
-            message: 'Biometrics enabled',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-      } else {
-        return;
-      }
-    } else {
-      if (kDebugMode) {
-        print(hasBiometricStorage.read('hasBiometric').toString());
-      }
-    }
-    //print()
-  }
-
-  disableBiometrics() {
-    if (hasBiometricStorage.read('hasBiometric') == null ||
-        hasBiometricStorage.read('hasBiometric') == true) {
-      hasBiometricStorage.write('hasBiometric', false);
-      Get.back();
-      showTopSnackBar(
-        Overlay.of(context),
-        CustomSnackBar.success(
-          backgroundColor: brandOne,
-          message: 'Biometrics disabled',
-          textStyle: GoogleFonts.lato(
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      );
-      // Get.snackbar(
-      //   "Disabled",
-      //   "Biometrics disabled",
-      //   animationDuration: const Duration(seconds: 1),
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
-      if (hasBiometricStorage.read('hasBiometric') == true) {
-        setState(
-          () {
-            _hasBiometric = false;
-            hasBiometricStorage.write('hasBiometric', _hasBiometric);
-          },
-        );
-        Get.back();
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            backgroundColor: brandOne,
-            message: 'Biometrics disabled',
-            textStyle: GoogleFonts.lato(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        );
-        // Get.snackbar(
-        //   "Disabled",
-        //   "Biometrics disabled",
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
-      } else {
-        return;
-      }
-    } else {
-      print(hasBiometricStorage.read('hasBiometric').toString());
-    }
-    //print()
-  }
-
-  Future<bool> checkingForBioMetrics() async {
-    bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-    print(canCheckBiometrics);
-    return canCheckBiometrics;
-  }
-
-  Future<void> _authenticateMe() async {
-    bool authenticated = false;
-    try {
-      authenticated = await _localAuthentication.authenticate(
-        localizedReason: "Touch fingerprint scanner to enable Biometrics",
-      );
-      setState(() {
-        _message = authenticated ? "Authorized" : "Not Authorized";
-      });
-      if (authenticated) {
-        enableBiometrics();
-      } else {
-        customErrorDialog(context, 'Error', "Could not authenticate");
-        // Get.snackbar(
-        //   "Error",
-        //   "could not authenticate",
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
-      }
-
-      print("Authenticated");
-    } catch (e) {
-      print("Not authenticated");
-    }
-    if (!mounted) return;
-  }
-
-  Future<void> _NotAuthenticateMe() async {
-    bool authenticated = false;
-    try {
-      authenticated = await _localAuthentication.authenticate(
-        localizedReason: "Touch fingerprint scanner to disable Biometrics",
-      );
-      setState(() {
-        _message = authenticated ? "Authorized" : "Not Authorized";
-      });
-
-      if (authenticated) {
-        disableBiometrics();
-      } else {
-        customErrorDialog(context, 'Error', "Could not authenticate");
-        // Get.snackbar(
-        //   "Error",
-        //   "could not authenticate",
-        //   animationDuration: const Duration(seconds: 1),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   snackPosition: SnackPosition.BOTTOM,
-        // );
-      }
-
-      print("Authenticated");
-    } catch (e) {
-      print("Not authenticated");
-    }
-    if (!mounted) return;
-  }
 
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -234,10 +54,10 @@ class _SecurityState extends ConsumerState<Security> {
                 },
           child: Row(
             children: [
-              const Icon(
+               Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -245,7 +65,7 @@ class _SecurityState extends ConsumerState<Security> {
               Text(
                 'Security',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -277,7 +97,7 @@ class _SecurityState extends ConsumerState<Security> {
                           offset: const Offset(0, 3), // Offset
                         ),
                       ],
-                      color: colorWhite,
+                      color: Theme.of(context).canvasColor,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,18 +115,18 @@ class _SecurityState extends ConsumerState<Security> {
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
 
-                          trailing: const Icon(
+                          trailing:  Icon(
                             Icons.keyboard_arrow_right,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                         ),
-                        const Divider(
-                          color: Color(0xffC9C9C9),
+                         Divider(
+                          color: Theme.of(context).dividerColor,
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.zero,
@@ -324,18 +144,18 @@ class _SecurityState extends ConsumerState<Security> {
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
 
-                          trailing: const Icon(
+                          trailing:  Icon(
                             Icons.keyboard_arrow_right,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                         ),
-                        const Divider(
-                          color: Color(0xffC9C9C9),
+                         Divider(
+                          color: Theme.of(context).dividerColor,
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.zero,
@@ -354,13 +174,13 @@ class _SecurityState extends ConsumerState<Security> {
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
 
-                          trailing: const Icon(
+                          trailing:  Icon(
                             Icons.keyboard_arrow_right,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                         ),

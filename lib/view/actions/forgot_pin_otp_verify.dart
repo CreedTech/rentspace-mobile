@@ -102,7 +102,7 @@ class _ForgotPinOTPVerificationPageState
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -114,7 +114,7 @@ class _ForgotPinOTPVerificationPageState
       focusedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -126,7 +126,7 @@ class _ForgotPinOTPVerificationPageState
       submittedPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -138,7 +138,7 @@ class _ForgotPinOTPVerificationPageState
       followingPinTheme: PinTheme(
         width: 50,
         height: 50,
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.lato(
           fontSize: 25,
           color: brandOne,
         ),
@@ -185,7 +185,7 @@ class _ForgotPinOTPVerificationPageState
         centerTitle: true,
         title: Text(
           'OTP',
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w700,
             fontSize: 16,

@@ -113,9 +113,9 @@ class _TransferConfirmationPageState
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Color(0xffF6F6F8),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
@@ -132,7 +132,7 @@ class _TransferConfirmationPageState
                     style: GoogleFonts.lato(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   SizedBox(
@@ -142,7 +142,7 @@ class _TransferConfirmationPageState
                       style: GoogleFonts.lato(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
@@ -153,7 +153,7 @@ class _TransferConfirmationPageState
                       // height: 92.h,
                       padding: const EdgeInsets.all(17),
                       decoration: BoxDecoration(
-                        color: colorWhite,
+                        color: Theme.of(context).canvasColor,
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Column(
@@ -165,7 +165,7 @@ class _TransferConfirmationPageState
                             style: GoogleFonts.lato(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: brandOne,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
                           Text(
@@ -174,7 +174,7 @@ class _TransferConfirmationPageState
                             style: GoogleFonts.roboto(
                               fontSize: 30,
                               fontWeight: FontWeight.w600,
-                              color: brandOne,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
                         ],
@@ -186,7 +186,7 @@ class _TransferConfirmationPageState
                     // height: 92.h,
                     padding: const EdgeInsets.all(17),
                     decoration: BoxDecoration(
-                      color: colorWhite,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Column(
@@ -206,7 +206,7 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                               ),
                             ),
                             SizedBox(
@@ -217,16 +217,16 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 17.h),
-                          child: const Divider(
+                          child: Divider(
                             thickness: 1,
-                            color: Color(0xffC9C9C9),
+                            color: Theme.of(context).dividerColor,
                           ),
                         ),
                         Column(
@@ -238,7 +238,7 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                               ),
                             ),
                             SizedBox(
@@ -249,16 +249,16 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 17.h),
-                          child: const Divider(
+                          child: Divider(
                             thickness: 1,
-                            color: Color(0xffC9C9C9),
+                            color: Theme.of(context).dividerColor,
                           ),
                         ),
                         Column(
@@ -270,7 +270,7 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                               ),
                             ),
                             SizedBox(
@@ -281,7 +281,7 @@ class _TransferConfirmationPageState
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -314,7 +314,8 @@ class _TransferConfirmationPageState
                       _aPinController.clear();
                       showModalBottomSheet(
                           context: context,
-                          backgroundColor: const Color(0xffF6F6F8),
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                           // showDragHandle: true,
                           isDismissible: false,
                           enableDrag: true,
@@ -327,9 +328,10 @@ class _TransferConfirmationPageState
                               // ),
                               child: SingleChildScrollView(
                                 child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffF6F6F8),
-                                    borderRadius: BorderRadius.only(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(30.0),
                                       topRight: Radius.circular(30.0),
                                     ),
@@ -356,14 +358,18 @@ class _TransferConfirmationPageState
                                               Icon(
                                                 Icons.arrow_back_ios,
                                                 size: 27.w,
-                                                color: colorBlack,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                               ),
                                               Text(
                                                 'Cancel',
                                                 style: GoogleFonts.lato(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w500,
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                               ),
                                             ],
@@ -379,7 +385,8 @@ class _TransferConfirmationPageState
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 22, horizontal: 27),
                                           decoration: BoxDecoration(
-                                            color: colorWhite,
+                                            color:
+                                                Theme.of(context).canvasColor,
                                             borderRadius:
                                                 BorderRadius.circular(10.r),
                                           ),
@@ -428,7 +435,9 @@ class _TransferConfirmationPageState
                                                       .symmetric(horizontal: 5),
                                                   textStyle: GoogleFonts.lato(
                                                     fontSize: 25,
-                                                    color: brandOne,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   decoration: BoxDecoration(
                                                     border: Border.all(
@@ -447,11 +456,15 @@ class _TransferConfirmationPageState
                                                       .symmetric(horizontal: 5),
                                                   textStyle: GoogleFonts.lato(
                                                     fontSize: 25,
-                                                    color: brandOne,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color: brandOne,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         width: 1.0),
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -465,11 +478,15 @@ class _TransferConfirmationPageState
                                                       .symmetric(horizontal: 5),
                                                   textStyle: GoogleFonts.lato(
                                                     fontSize: 25,
-                                                    color: brandOne,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color: brandOne,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         width: 1.0),
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -510,17 +527,6 @@ class _TransferConfirmationPageState
                                                         .wallet
                                                         .pin,
                                                   )) {
-                                                    // print(widget.accountName);
-                                                    // print(widget.amount);
-                                                    // print(widget.narration);
-                                                    // print(userController
-                                                    //     .userModel!
-                                                    //     .userDetails![0]
-                                                    //     .dvaName);
-                                                    // print(widget.accountNumber);
-                                                    // print(widget.bankCode);
-                                                    // print(_aPinController.text
-                                                    //     .trim());
                                                     await fetchUserData()
                                                         .then((value) {
                                                       walletController
@@ -594,14 +600,16 @@ class _TransferConfirmationPageState
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 2, horizontal: 7),
                                           decoration: BoxDecoration(
-                                            color: colorWhite,
+                                            color: Theme.of(context).canvasColor,
                                             borderRadius:
                                                 BorderRadius.circular(10.r),
                                           ),
                                           child: NumericKeyboard(
                                             onKeyboardTap: onKeyboardTap,
                                             textStyle: GoogleFonts.lato(
-                                                color: brandOne,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 32,
                                                 fontWeight: FontWeight.w500),
                                             rightButtonFn: () {

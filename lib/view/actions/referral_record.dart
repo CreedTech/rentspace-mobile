@@ -24,10 +24,10 @@ class _ReferralRecordState extends State<ReferralRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffEEF8FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: GestureDetector(
           onTap: () {
             Get.back();
@@ -35,14 +35,14 @@ class _ReferralRecordState extends State<ReferralRecord> {
           child: Icon(
             Icons.arrow_back_ios,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Referral Record',
           style: GoogleFonts.lato(
-            color: brandOne,
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
@@ -59,7 +59,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).canvasColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -71,7 +71,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                         Text(
                           'Total Earned',
                           style: GoogleFonts.lato(
-                            color: brandOne,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -85,7 +85,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                 .userModel!.userDetails![0].referralPoints,
                           ),
                           style: GoogleFonts.roboto(
-                            color: brandOne,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -98,7 +98,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                         Text(
                           'Referred Users',
                           style: GoogleFonts.lato(
-                            color: brandOne,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -110,7 +110,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                           userController.userModel!.userDetails![0].referrals
                               .toString(),
                           style: GoogleFonts.lato(
-                            color: brandOne,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -126,7 +126,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                   padding:
                       EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
@@ -135,7 +135,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                         style: GoogleFonts.lato(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       Padding(
@@ -143,7 +143,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                           horizontal: 35.w,
                         ),
                         child: MySeparator(
-                          color: brandOne.withOpacity(0.2),
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
                         ),
                       ),
                       SizedBox(
@@ -212,7 +212,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                       ),
                                     ],
@@ -222,7 +222,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                     style: GoogleFonts.lato(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   trailing: Container(
@@ -244,8 +244,6 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.lato(
                                         fontSize: 10.0,
-                                        // fontFamily: "DefaultFontFamily",
-                                        // letterSpacing: 0.5,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.white,
                                       ),
@@ -261,8 +259,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                   "No Referred User",
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

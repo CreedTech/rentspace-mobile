@@ -45,70 +45,6 @@ bool hideBalance = false;
 class _SpaceRentPageState extends State<SpaceRentPage> {
   final RentController rentController = Get.find();
 
-  // DateTime parseDate(String dateString) {
-  //   List<int> parts = dateString.split('-').map(int.parse).toList();
-  //   return DateTime(parts[0], parts[1], parts[2]);
-  // }
-  // DateTime parseDate(String dateString) {
-  //   // Split the dateString by 'T' to get only the date part
-  //   String datePart = dateString.split('T')[0];
-
-  //   // Split the datePart by '-' to extract year, month, and day
-  //   List<int> parts = datePart.split('-').map(int.parse).toList();
-
-  //   // Create a DateTime object using the extracted parts
-  //   return DateTime(parts[0], parts[1], parts[2]);
-  // }
-
-  // void main() {
-  //   String dateString = '2024-02-16T16:14:29.466Z';
-  //   DateTime parsedDate = parseDate(dateString);
-  //   print(parsedDate); // Output: 2024-02-16 00:00:00.000
-  // }
-
-  // String formatDate(DateTime date) {
-  //   print(date);
-  //   print(DateFormat('dd/MM/yyyy').format(date));
-  //   return DateFormat('dd/MM/yyyy').format(date);
-  // }
-
-  // DateTime calculateNextPaymentDateUpdate(
-  //     DateTime lastPaymentDate, String interval) {
-  //   // Calculate the next payment date based on the interval
-  //   DateTime nextPaymentDate;
-  //   if (interval == 'weekly') {
-  //     nextPaymentDate = lastPaymentDate.add(const Duration(days: 7));
-  //   } else {
-  //     // Assuming monthly intervals, you can adjust this logic as needed
-  //     nextPaymentDate = lastPaymentDate.add(const Duration(days: 30));
-  //   }
-  //   return nextPaymentDate;
-  // }
-
-  // DateTime calculateNextPaymentDate(
-  //     String chosenDateString, String interval, int numberOfIntervals) {
-  //   DateTime chosenDate = parseDate(chosenDateString);
-  //   print('chosen date: $chosenDate' );
-  //   DateTime nextPaymentDate;
-
-  //   switch (interval.toLowerCase()) {
-  //     // case 'daily':
-  //     //   nextPaymentDate = chosenDate.add(const Duration(days: 1));
-  //     //   break;
-  //     case 'weekly':
-  //       nextPaymentDate = chosenDate.add(const Duration(days: 7));
-  //       break;
-  //     case 'monthly':
-  //       nextPaymentDate =
-  //           DateTime(chosenDate.year, chosenDate.month + 1, chosenDate.day);
-  //       break;
-  //     default:
-  //       throw Exception("Invalid interval: $interval");
-  //   }
-
-  //   return nextPaymentDate;
-  // }
-
   @override
   initState() {
     super.initState();
@@ -121,7 +57,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -130,10 +66,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -141,10 +77,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
-                  rentController.rentModel!.rents![widget.current].rentName,
+                  rentController.rentModel!.rents![widget.current].rentName
+                      .capitalizeFirst!,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
                   ),
@@ -201,7 +138,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${rentController.rentModel!.rents![widget.current].rentName} Balance',
+                                          '${rentController.rentModel!.rents![widget.current].rentName.capitalizeFirst!} Balance',
                                           style: GoogleFonts.lato(
                                             fontSize: 12,
                                             color: colorWhite,
@@ -366,9 +303,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 14, vertical: 6),
                             width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                              color: colorWhite,
-                              borderRadius: BorderRadius.only(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(10),
                                 bottomRight: Radius.circular(10),
                               ),
@@ -390,7 +327,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     Text(
                                       'Total Interest accrued: ',
                                       style: GoogleFonts.lato(
-                                          color: colorDark,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),
@@ -408,9 +347,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {},
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.keyboard_arrow_right,
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: 20,
                                   ),
                                 ),
@@ -427,7 +367,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                   // height: 92.h,
                   padding: const EdgeInsets.all(17),
                   decoration: BoxDecoration(
-                    color: colorWhite,
+                    color: Theme.of(context).canvasColor,
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Row(
@@ -442,7 +382,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: colorDark,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           SizedBox(
@@ -453,7 +393,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             style: GoogleFonts.roboto(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: colorDark,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ],
@@ -477,7 +417,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             text: TextSpan(
                                 style: GoogleFonts.lato(
                                   // fontWeight: FontWeight.w700,
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 12,
                                 ),
                                 children: <TextSpan>[
@@ -522,7 +462,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                         // height: 92.h,
                         padding: const EdgeInsets.all(17),
                         decoration: BoxDecoration(
-                          color: colorWhite,
+                          color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Row(
@@ -541,7 +481,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     style: GoogleFonts.lato(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
-                                      color: colorDark,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   SizedBox(
@@ -552,7 +493,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: colorDark,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
@@ -574,9 +516,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   // SizedBox(
                                   //   height: 8.h,
                                   // ),
-                                  const Icon(
+                                  Icon(
                                     Icons.keyboard_arrow_right,
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: 20,
                                   ),
                                 ],
@@ -585,7 +528,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           ],
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -597,7 +540,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                       style: GoogleFonts.lato(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     GestureDetector(
@@ -630,6 +573,10 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                           children: [
                             Image.asset(
                               'assets/icons/history_icon.png',
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const Color(0xffffffff)
+                                  : const Color(0xffEEF8FF),
                               height: 33.5.h,
                             ),
                             const SizedBox(
@@ -643,7 +590,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                     fontSize: 14,
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -664,7 +612,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 ? 240.h
                                 : 240.h,
                         decoration: BoxDecoration(
-                          color: colorWhite,
+                          color: Theme.of(context).canvasColor,
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: ListView.builder(
@@ -729,7 +677,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 10),
+                                        horizontal: 12, vertical: 15),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
                                     ),
@@ -795,7 +743,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                         fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w500,
-                                                        color: colorBlack,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                       ),
                                                     ),
                                                     const SizedBox(height: 5),
@@ -806,8 +756,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: const Color(
-                                                            0xff4B4B4B),
+                                                        color: Theme.of(context)
+                                                            .primaryColorLight,
                                                       ),
                                                     ),
                                                   ],
@@ -837,7 +787,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                   style: GoogleFonts.roboto(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
-                                                    color: colorBlack,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                 ),
                                         ),
@@ -845,9 +797,9 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     ),
                                   ),
                                   if (showDivider)
-                                    const Divider(
+                                    Divider(
                                       thickness: 1,
-                                      color: Color(0xffC9C9C9),
+                                      color: Theme.of(context).dividerColor,
                                       indent: 17,
                                       endIndent: 17,
                                     ),
@@ -861,7 +813,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
             ),
           )),
 
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 

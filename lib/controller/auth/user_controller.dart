@@ -6,12 +6,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:rentspace/view/dashboard/withdraw_continuation_page.dart';
+import 'package:rentspace/view/login_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/widgets/custom_dialog.dart';
@@ -80,27 +82,15 @@ class UserController extends GetxController {
           customSuccessDialog(
               context, 'Success', 'Password Changed Successfully');
         }
+        Get.offAll(
+          LoginPage(sessionStateStream: sessionStateStream),
+        );
         // print(result);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         // print('error auth');
         multipleLoginRedirectModal();
-      }
-      // else if (response.body.contains('error')) {
-      //   EasyLoading.dismiss();
-      //   isLoading(false);
-      //   var errorResponse = jsonDecode(response.body)['error'];
-      //   // print('Status: ${errorResponse['error']}');
-      //   // print(response.body);
-      //   // print('status fetching data');
-      //   if (context.mounted) {
-      //     // print('Context is mounted, showing dialog');
-      //     customErrorDialog(context, 'Error', errorResponse);
-      //   } else {
-      //     // print('Context is not mounted, cannot show dialog');
-      //   }
-      // }
-      else if (response.body.contains('Server Error')) {
+      } else if (response.body.contains('Server Error')) {
         EasyLoading.dismiss();
         isLoading(false);
         if (context.mounted) {
@@ -170,8 +160,22 @@ class UserController extends GetxController {
         var result = jsonDecode(response.body);
 
         userModel = UserModel.fromJson(result);
-        print(userModel);
+        // final Box<dynamic> settingsHiveBox = Hive.box('settings');
+        //     settingsHiveBox.put('userInfo', userModel!.userDetails![0]);
+
+        final box = Hive.box('settings');
+        final existingUser = box.get('userInfo') as String?;
+
+        // if (existingUser == null || existingUser != userModel) {
+        //   box.put('userInfo', userModel);
+        // }
+        if (existingUser == null || existingUser != jsonEncode(result)) {
+          box.put('userInfo', jsonEncode(result));
+        }
+
+        // print(userModel);
         isLoading(false);
+        return userModel;
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         print('error auth');

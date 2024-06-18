@@ -143,7 +143,7 @@
 //                                             //         50,
 //                                             //     vertical:
 //                                             //         10),
-//                                             textStyle: const TextStyle(
+//                                             textStyle: const GoogleFonts.lato(
 //                                                 color: brandFour, fontSize: 13),
 //                                           ),
 //                                           child: const Row(
@@ -157,7 +157,7 @@
 //                                               ),
 //                                               Text(
 //                                                 "Next",
-//                                                 style: TextStyle(
+//                                                 style: GoogleFonts.lato(
 //                                                   color: Colors.white,
 //                                                   fontWeight: FontWeight.w700,
 //                                                   fontSize: 16,
@@ -319,7 +319,7 @@
 //     final dob = TextFormField(
 //       controller: dateController,
 //       cursorColor: Colors.black,
-//       style: const TextStyle(
+//       style: const GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       readOnly: true,
@@ -362,7 +362,7 @@
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
 //       enableSuggestions: true,
 //       cursorColor: Colors.black,
-//       style: const TextStyle(
+//       style: const GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 
@@ -464,7 +464,7 @@
 //       cursorColor: Colors.black,
 //       controller: _usernameController,
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
-//       style: const TextStyle(
+//       style: const GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       keyboardType: TextInputType.text,
@@ -548,7 +548,7 @@
 //         // ),
 //         title: const Text(
 //           'Update Your Information',
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Color(0xff4E4B4B),
 //             fontWeight: FontWeight.w700,
 //             fontSize: 16,

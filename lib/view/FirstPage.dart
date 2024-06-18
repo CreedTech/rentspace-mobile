@@ -184,7 +184,7 @@ class _FirstPageState extends State<FirstPage> {
     return Obx(
       () => (userController.isHomePageLoading.value.obs() == true)
           ? Scaffold(
-              backgroundColor: const Color(0xffF6F6F8),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               body: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -214,12 +214,14 @@ class _FirstPageState extends State<FirstPage> {
                       barrierDismissible: true,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                           title: Text(
                             'Discover',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
                               fontSize: 20.0,
-                              color: brandOne,
+                              color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -247,7 +249,9 @@ class _FirstPageState extends State<FirstPage> {
                                         "Virtual Account: This provides a streamlined solution for receiving funds directly, utilizing a unique assigned bank account. It's accessible to anyone seeking to send you funds.",
                                         style: GoogleFonts.lato(
                                           fontSize: 13.0,
-                                          color: brandOne,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -258,7 +262,9 @@ class _FirstPageState extends State<FirstPage> {
                                         "Space Rent: Save 70% of rent for a minimum of 6 months (maximum of 8 months) and get up to 30% loan. Embark on your savings journey today!",
                                         style: GoogleFonts.lato(
                                           fontSize: 13.0,
-                                          color: brandOne,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -279,7 +285,7 @@ class _FirstPageState extends State<FirstPage> {
                                           elevation: 0,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle: const TextStyle(
+                                          textStyle:  GoogleFonts.lato(
                                               color: Colors.white,
                                               fontSize: 17),
                                         ),
@@ -307,7 +313,8 @@ class _FirstPageState extends State<FirstPage> {
                   builder: (context) => (isInternetConnected)
                       ? (userController.userModel == null)
                           ? SomethingWentWrong(onTap: onReloadAgain)
-                          : (userController.userModel!.userDetails![0].isPinSet ==
+                          : (userController
+                                      .userModel!.userDetails![0].isPinSet ==
                                   false)
                               ? const TransactionPin()
                               : const HomePage()

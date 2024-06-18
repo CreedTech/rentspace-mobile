@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
@@ -125,11 +126,11 @@ class _MultipleDeviceLoginOtpPageState
                     ),
                   ),
                   Positioned(
-                    top: 40,
+                    top: 40.h,
                     left: 0,
                     right: 0,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 55),
+                      padding: EdgeInsets.only(top: 55.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -137,10 +138,10 @@ class _MultipleDeviceLoginOtpPageState
                           Image.asset(
                             'assets/logo_main.png',
                             width: 168,
-                            height: 50.4,
+                            height: 50.4.h,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 12, left: 30),
+                            padding: EdgeInsets.only(bottom: 12.h, left: 30),
                             child: Text(
                               'your financial power...',
                               style: GoogleFonts.lato(
@@ -161,13 +162,13 @@ class _MultipleDeviceLoginOtpPageState
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 40, horizontal: 24),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 40.h, horizontal: 24),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: colorWhite,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
@@ -182,23 +183,25 @@ class _MultipleDeviceLoginOtpPageState
                               children: [
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 10, bottom: 20),
+                                      EdgeInsets.only(top: 10.h, bottom: 20.h),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
                                         'assets/mail_send.png',
                                         width: 84,
-                                        height: 84,
+                                        height: 84.h,
                                       ),
-                                      const SizedBox(
-                                        height: 31,
+                                      SizedBox(
+                                        height: 31.h,
                                       ),
                                       Text(
                                         'Enter OTP',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.lato(
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 20,
                                         ),
@@ -215,37 +218,40 @@ class _MultipleDeviceLoginOtpPageState
                                                 text:
                                                     "Email Verification! Enter One-Time Password ",
                                                 style: GoogleFonts.lato(
-                                                  color: const Color(0xff4E4B4B),
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
                                               TextSpan(
                                                 text:
-                                                    '\n sent to ${obscureEmail(widget.email)}',
+                                                    '\n sent to ${widget.email}',
                                                 style: GoogleFonts.lato(
-                                                  color: const Color(0xff4E4B4B),
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
                                             ]),
                                       ),
-                                      const SizedBox(
-                                        height: 32,
+                                      SizedBox(
+                                        height: 32.h,
                                       ),
                                     ],
                                   ),
                                 ),
                                 Pinput(
-                                  useNativeKeyboard: true,
+                                  // useNativeKeyboard: true,
                                   obscureText: false,
                                   defaultPinTheme: PinTheme(
                                     width: 67,
                                     height: 60,
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
                                     textStyle: GoogleFonts.lato(
                                       fontSize: 25,
-                                      color: brandOne,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     decoration: BoxDecoration(
                                       border: Border.all(
@@ -257,41 +263,46 @@ class _MultipleDeviceLoginOtpPageState
                                   focusedPinTheme: PinTheme(
                                     width: 67,
                                     height: 60,
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
                                     textStyle: GoogleFonts.lato(
                                       fontSize: 25,
-                                      color: brandOne,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: brandOne, width: 1.0),
+                                      border: Border.all(
+                                          color: const Color(0xffBDBDBD),
+                                          width: 1.0),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   submittedPinTheme: PinTheme(
                                     width: 67,
                                     height: 60,
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
                                     textStyle: GoogleFonts.lato(
                                       fontSize: 25,
-                                      color: brandOne,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: brandOne, width: 1.0),
+                                      border: Border.all(
+                                          color: const Color(0xffBDBDBD),
+                                          width: 1.0),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   followingPinTheme: PinTheme(
                                     width: 67,
                                     height: 60,
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
                                     textStyle: GoogleFonts.lato(
                                       fontSize: 25,
-                                      color: brandOne,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     decoration: BoxDecoration(
                                       border: Border.all(
@@ -317,8 +328,8 @@ class _MultipleDeviceLoginOtpPageState
                                   closeKeyboardWhenCompleted: true,
                                   keyboardType: TextInputType.number,
                                 ),
-                                const SizedBox(
-                                  height: 32,
+                                SizedBox(
+                                  height: 3.h,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -335,24 +346,26 @@ class _MultipleDeviceLoginOtpPageState
                                         TextSpan(
                                           text: "Didn’t receive code? ",
                                           style: GoogleFonts.lato(
-                                              color: colorBlack,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        (_minutes == 0)
+                                        (_seconds == 0)
                                             ? TextSpan(
                                                 text: 'Resend OTP ',
                                                 style: GoogleFonts.lato(
-                                                    color:
-                                                        const Color(0xff6E6E6E),
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight,
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 14),
                                               )
                                             : TextSpan(
                                                 text: ' ($formattedTime)',
                                                 style: GoogleFonts.lato(
-                                                    color:
-                                                        const Color(0xff6E6E6E),
+                                                    color: Theme.of(context)
+                                                        .primaryColorLight,
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 14),
                                               ),
@@ -376,7 +389,9 @@ class _MultipleDeviceLoginOtpPageState
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: Size(
-                                              MediaQuery.of(context).size.width -
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width -
                                                   50,
                                               50),
                                           backgroundColor: (isFilled == true)
@@ -404,7 +419,9 @@ class _MultipleDeviceLoginOtpPageState
                                           style: GoogleFonts.lato(
                                             color: (isFilled == true)
                                                 ? colorWhite
-                                                : colorBlack,
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                           ),
@@ -413,8 +430,8 @@ class _MultipleDeviceLoginOtpPageState
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 20,
+                                SizedBox(
+                                  height: 20.h,
                                 ),
                                 Container(
                                   // width: MediaQuery.of(context).size.width * 2,
@@ -425,7 +442,9 @@ class _MultipleDeviceLoginOtpPageState
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: Size(
-                                              MediaQuery.of(context).size.width -
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width -
                                                   50,
                                               50),
                                           backgroundColor: Colors.transparent,
@@ -453,8 +472,8 @@ class _MultipleDeviceLoginOtpPageState
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
+                                SizedBox(
+                                  height: 10.h,
                                 ),
                               ],
                             ),

@@ -18,46 +18,60 @@ class WithdrawalAccount extends StatefulWidget {
 }
 
 class _WithdrawalAccountState extends State<WithdrawalAccount> {
+  final TextEditingController _bankController = TextEditingController();
+  final TextEditingController _accountNumberController =
+      TextEditingController();
   final UserController userController = Get.find();
   final withdrawalAccFormKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _bankController.text = userController
+        .userModel!.userDetails![0].withdrawalAccount!.bankName
+        .toUpperCase();
+    _accountNumberController.text = userController
+        .userModel!.userDetails![0].withdrawalAccount!.accountNumber;
+  }
 
   @override
   Widget build(BuildContext context) {
     final accountNumber = TextFormField(
       readOnly: true,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
+      controller: _accountNumberController,
       autovalidateMode: AutovalidateMode.disabled,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        label: Text(
-          userController
-              .userModel!.userDetails![0].withdrawalAccount!.accountNumber,
-          style: GoogleFonts.lato(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
         //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
+          borderSide: BorderSide(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color.fromRGBO(189, 189, 189, 30)
+                  : const Color.fromRGBO(189, 189, 189, 100),
+              width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -67,31 +81,31 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
-        enabled: false,
+        // enabled: false,
       ),
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title:  GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+        title: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               GestureDetector(
                 onTap: () {
                   Get.back();
                 },
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_back_ios_sharp,
                   size: 27,
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               SizedBox(
@@ -100,7 +114,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
               Text(
                 'Withdrawal Account',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -129,7 +143,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                         Column(
                           children: [
                             Opacity(
-                              opacity: 0.9,
+                              opacity: 0.6,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -139,40 +153,63 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                                     child: Text(
                                       'Bank',
                                       style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12),
                                     ),
                                   ),
                                   TextFormField(
-                                    enabled: false,
+                                    // enabled: false,
                                     readOnly: true,
                                     autovalidateMode: AutovalidateMode.disabled,
                                     enableSuggestions: true,
-                                    cursorColor: colorBlack,
+                                    cursorColor:
+                                        Theme.of(context).colorScheme.primary,
                                     style: GoogleFonts.lato(
-                                        color: colorBlack, fontSize: 14),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        fontSize: 14),
 
-                                    // controller: widget.bankName,
+                                    controller: _bankController,
                                     textAlignVertical: TextAlignVertical.center,
                                     // textCapitalization: TextCapitalization.sentences,
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xffE0E0E0),
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? const Color.fromRGBO(
+                                                  189, 189, 189, 30)
+                                              : const Color.fromRGBO(
+                                                  189, 189, 189, 100),
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                            color: brandOne, width: 1.0),
+                                        borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? const Color.fromRGBO(
+                                                        189, 189, 189, 30)
+                                                    : const Color.fromRGBO(
+                                                        189, 189, 189, 100),
+                                            width: 1.0),
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xffE0E0E0),
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? const Color.fromRGBO(
+                                                  189, 189, 189, 30)
+                                              : const Color.fromRGBO(
+                                                  189, 189, 189, 100),
                                         ),
                                       ),
                                       errorBorder: OutlineInputBorder(
@@ -191,18 +228,6 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                                           // Ensure the image fits inside the circle
                                         ),
                                       ),
-                                      label: Text(
-                                        userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .bankName
-                                            .toUpperCase(),
-                                        style: GoogleFonts.lato(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
                                       filled: false,
                                       fillColor: Colors.transparent,
                                       contentPadding: const EdgeInsets.all(14),
@@ -216,7 +241,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                               height: 20,
                             ),
                             Opacity(
-                              opacity: 0.9,
+                              opacity: 0.6,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -226,7 +251,9 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                                     child: Text(
                                       'Account Number',
                                       style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12),
                                     ),
@@ -236,7 +263,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                               ),
                             ),
                             Opacity(
-                              opacity: 0.9,
+                              opacity: 0.6,
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                   top: 5,
@@ -247,7 +274,7 @@ class _WithdrawalAccountState extends State<WithdrawalAccount> {
                                       horizontal: 15, vertical: 5),
                                   decoration: BoxDecoration(
                                     color: const Color(0xffEEF8FF),
-                                    borderRadius: BorderRadius.circular(15),
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Text(
                                     userController.userModel!.userDetails![0]

@@ -156,9 +156,9 @@ class _ForgotPasswordOTPVerificationPageState
                         vertical: 40, horizontal: 24),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -189,7 +189,7 @@ class _ForgotPasswordOTPVerificationPageState
                                       'Enter OTP',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.lato(
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context).colorScheme.primary,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 20,
                                       ),
@@ -206,7 +206,7 @@ class _ForgotPasswordOTPVerificationPageState
                                               text:
                                                   "Email Verification! Enter One-Time Password ",
                                               style: GoogleFonts.lato(
-                                                color: const Color(0xff4E4B4B),
+                                                color: Theme.of(context).primaryColorLight,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -214,7 +214,7 @@ class _ForgotPasswordOTPVerificationPageState
                                               text:
                                                   '\n sent to ${obscureEmail(widget.email)}',
                                               style: GoogleFonts.lato(
-                                                color: const Color(0xff4E4B4B),
+                                                color: Theme.of(context).primaryColorLight,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -236,7 +236,7 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: brandOne,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -252,11 +252,11 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: brandOne,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: brandOne, width: 1.0),
+                                        Border.all(color: const Color(0xffBDBDBD), width: 1.0),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -267,11 +267,11 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: brandOne,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: brandOne, width: 1.0),
+                                        Border.all(color: const Color(0xffBDBDBD), width: 1.0),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -282,7 +282,7 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: brandOne,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -326,7 +326,7 @@ class _ForgotPasswordOTPVerificationPageState
                                       TextSpan(
                                         text: "Didn’t receive code? ",
                                         style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -335,7 +335,7 @@ class _ForgotPasswordOTPVerificationPageState
                                               text: 'Resend OTP ',
                                               style: GoogleFonts.lato(
                                                   color:
-                                                      const Color(0xff6E6E6E),
+                                                      Theme.of(context).primaryColorLight,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14),
                                             )
@@ -343,7 +343,7 @@ class _ForgotPasswordOTPVerificationPageState
                                               text: ' ($formattedTime)',
                                               style: GoogleFonts.lato(
                                                   color:
-                                                      const Color(0xff6E6E6E),
+                                                      Theme.of(context).primaryColorLight,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14),
                                             ),
@@ -395,7 +395,7 @@ class _ForgotPasswordOTPVerificationPageState
                                         style: GoogleFonts.lato(
                                           color: (isFilled == true)
                                               ? colorWhite
-                                              : colorBlack,
+                                              : Theme.of(context).colorScheme.primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                         ),

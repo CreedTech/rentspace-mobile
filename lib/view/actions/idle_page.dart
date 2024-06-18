@@ -143,7 +143,7 @@ class _IdlePageState extends State<IdlePage> {
                         'Enter Your Rentspace Pin to Return to Rentspace',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                           // fontFamily: "DefaultFontFamily",
@@ -167,12 +167,12 @@ class _IdlePageState extends State<IdlePage> {
                                 width: 50,
                                 height: 50,
                                 textStyle: GoogleFonts.lato(
-                                  color: brandOne,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 28,
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.grey, width: 1.0),
+                                      color: Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -181,11 +181,11 @@ class _IdlePageState extends State<IdlePage> {
                                 height: 50,
                                 textStyle: GoogleFonts.lato(
                                   fontSize: 25,
-                                  color: brandOne,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandOne, width: 1.0),
+                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -194,11 +194,11 @@ class _IdlePageState extends State<IdlePage> {
                                 height: 50,
                                 textStyle: GoogleFonts.lato(
                                   fontSize: 25,
-                                  color: brandOne,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandOne, width: 1.0),
+                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -207,11 +207,11 @@ class _IdlePageState extends State<IdlePage> {
                                 height: 50,
                                 textStyle: GoogleFonts.lato(
                                   fontSize: 25,
-                                  color: brandOne,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: brandTwo, width: 1.0),
+                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -259,7 +259,7 @@ class _IdlePageState extends State<IdlePage> {
                     child: NumericKeyboard(
                       onKeyboardTap: onKeyboardTap,
                       textStyle: GoogleFonts.lato(
-                        color: brandOne,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 28,
                       ),
                       rightButtonFn: () {

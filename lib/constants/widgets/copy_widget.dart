@@ -25,8 +25,8 @@ class CopyWidget extends StatelessWidget {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.SNACKBAR,
           timeInSecForIosWeb: 1,
-          backgroundColor: brandOne,
-          textColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          textColor: Theme.of(context).canvasColor,
           fontSize: 16.0,
         );
       },
@@ -39,7 +39,7 @@ class CopyWidget extends StatelessWidget {
             'assets/icons/copy_icon.png',
             width: 24,
             height: 24,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
           ),
           const SizedBox(
             width: 6,

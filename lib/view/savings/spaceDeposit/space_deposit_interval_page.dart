@@ -566,7 +566,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                   TextFormField(
                                     controller: _startDateController,
                                     cursorColor: Theme.of(context).primaryColor,
-                                    style: TextStyle(
+                                    style: GoogleFonts.lato(
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     readOnly: true,
@@ -637,7 +637,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                   TextFormField(
                                     controller: _endDateController,
                                     cursorColor: Theme.of(context).primaryColor,
-                                    style: TextStyle(
+                                    style: GoogleFonts.lato(
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     readOnly: true,
